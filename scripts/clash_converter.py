@@ -621,27 +621,62 @@ def parse_proxy(line: str):
     return None
 
 def validate_proxy(p) -> bool:
-    if not p or not p.get("type"):
+    """اعتبارسنجی انطباق پروکسی با استانداردهای میهومو به همراه بررسی نوع و ساختار متغیرها"""
+    if not p or not isinstance(p, dict) or not p.get("type"):
         return False
+        
     p_type = p["type"]
+    
+    # صحت‌سنجی فیلد نام
+    if not p.get("name") or not isinstance(p["name"], str):
+        return False
+        
     if p_type == "tailscale":
         return bool(p.get("auth-key") or p.get("hostname"))
-    if not p.get("server") or not p.get("port"):
+        
+    # صحت‌سنجی فیلد سرور
+    server = p.get("server")
+    if not server or not isinstance(server, str):
         return False
-    server = p["server"].lower()
+        
+    # صحت‌سنجی دقیق پورت و تبدیل آن به مقدار عددی معتبر (بین ۱ تا ۶۵۵۳۵)
+    port = p.get("port")
+    try:
+        port_num = int(port)
+        if port_num < 1 or port_num > 65535:
+            return False
+        p["port"] = port_num  # ذخیره‌سازی قطعی پورت به صورت عدد (integer) نه رشته
+    except (ValueError, TypeError):
+        return False
+    
+    # فیلترینگ دامنه‌های مسدود شده
+    server_lower = server.lower()
     blocked = ["127.0.0.1", "0.0.0.0", "localhost", "t.me", "github.com", "raw.githubusercontent.com", "google.com"]
-    if any(b in server for b in blocked):
+    if any(b in server_lower for b in blocked):
         return False
-    if p_type in ["vless", "vmess"] and not p.get("uuid"): return False
-    if p_type in ["trojan", "hysteria2"] and not p.get("password"): return False
-    if p_type == "wireguard" and not p.get("private-key"): return False
-    if p_type == "hysteria" and not p.get("auth_str"): return False
-    if p_type == "tuic" and (not p.get("uuid") or not p.get("password")): return False
-    if p_type == "ss" and (not p.get("cipher") or not p.get("password")): return False
-    if p_type == "sudoku" and not p.get("key"): return False
-    if p_type == "masque" and (not p.get("private-key") or not p.get("public-key")): return False
-    if p_type == "trusttunnel" and (not p.get("username") or not p.get("password")): return False
-    if p_type == "openvpn" and not p.get("ca"): return False
+        
+    # بررسی صحت ساختاری متغیرهای اختصاصی هر پروتکل
+    if p_type in ["vless", "vmess"]:
+        if not p.get("uuid") or not isinstance(p["uuid"], str): return False
+    elif p_type in ["trojan", "hysteria2"]:
+        if not p.get("password") or not isinstance(p["password"], str): return False
+    elif p_type == "wireguard":
+        if not p.get("private-key") or not isinstance(p["private-key"], str): return False
+    elif p_type == "hysteria":
+        if not p.get("auth_str") or not isinstance(p["auth_str"], str): return False
+    elif p_type == "tuic":
+        if not p.get("uuid") or not isinstance(p["uuid"], str) or not p.get("password") or not isinstance(p["password"], str): return False
+    elif p_type == "ss":
+        if not p.get("cipher") or not isinstance(p["cipher"], str) or not p.get("password") or not isinstance(p["password"], str): return False
+    elif p_type == "sudoku":
+        if not p.get("key") or not isinstance(p["key"], str): return False
+    elif p_type == "masque":
+        if not p.get("private-key") or not isinstance(p["private-key"], str) or not p.get("public-key") or not isinstance(p["public-key"], str): return False
+    elif p_type == "trusttunnel":
+        if not p.get("username") or not isinstance(p["username"], str) or not p.get("password") or not isinstance(p["password"], str): return False
+    elif p_type == "openvpn":
+        if not p.get("ca") or not isinstance(p["ca"], str): return False
+        
     return True
 
 # --- بخش فیلتر، مرتب‌سازی و حفظ نام اصلی به همراه رفع تکراری‌ها ---
@@ -682,14 +717,13 @@ def process_and_filter_proxies(proxies_list):
             
     final_proxies = final_proxies[:CLASH_CONFIG["limit_total"]]
     
-    # تصحیح نام‌گذاری پروکسی‌ها: حفظ نام اصلی + افزودن شمارنده افزایشی برای جلوگیری از خطای تکراری
+    # تصحیح نام‌گذاری پروکسی‌ها: حفظ نام اصلی + شمارنده افزایشی
     seen_names = {}
     for p in final_proxies:
         original_name = p.get("name", "").strip()
         if not original_name:
             original_name = get_display_type(p["type"]).upper()
             
-        # حل مشکل تکراری بودن نام‌ها بدون ایجاد ساختار نام‌گذاری تصنعی
         name = original_name
         if name in seen_names:
             seen_names[original_name] += 1
@@ -701,11 +735,17 @@ def process_and_filter_proxies(proxies_list):
         
     return final_proxies
 
-# --- مبدل پایتونی بومی برای ساختن YAML بدون وابستگی PyYAML ---
+# --- مبدل پایتونی بومی برای ساختن YAML بدون وابستگی PyYAML (با امنیت کوتیشن‌گذاری ۱۰۰ درصدی) ---
 
 def dump_yaml(data, indent=0) -> str:
+    """
+    تولید خروجی کاملاً معتبر و سازگار YAML.
+    برای جلوگیری از تداخل کاراکترهای خاص (نظیر @، %، بک‌تیک و فضای خالی) در کلش،
+    تمامی رشته‌های تک‌خطی به صورت خودکار و ایمن درون دابل‌کوتیشن (") قرار می‌گیرند.
+    """
     lines = []
     spacing = " " * indent
+    
     if isinstance(data, dict):
         for k, v in data.items():
             if v is None:
@@ -716,16 +756,20 @@ def dump_yaml(data, indent=0) -> str:
             else:
                 if isinstance(v, bool):
                     val_str = "true" if v else "false"
+                elif isinstance(v, (int, float)):
+                    val_str = str(v)
                 elif isinstance(v, str):
                     if "\n" in v:
+                        # نگه‌داری ساختار برای گواهی‌های چندخطی (مانند OpenVPN)
                         val_str = "|\n" + "\n".join(" " * (indent + 2) + line for line in v.splitlines())
-                    elif any(char in v for char in [":", "{", "}", "[", "]", ",", "*", "&", "?", "|", "-", "<", ">", "=", "!"]):
-                        val_str = f'"{v}"'
                     else:
-                        val_str = v
+                        # اسکیپ و محصور کردن تمام رشته‌ها در دابل‌کوتیشن جهت رفع باگ کاراکترهایی نظیر @
+                        escaped_v = v.replace('\\', '\\\\').replace('"', '\\"')
+                        val_str = f'"{escaped_v}"'
                 else:
-                    val_str = str(v)
+                    val_str = f'"{str(v)}"'
                 lines.append(f"{spacing}{k}: {val_str}")
+                
     elif isinstance(data, list):
         for item in data:
             if isinstance(item, (dict, list)):
@@ -734,14 +778,15 @@ def dump_yaml(data, indent=0) -> str:
             else:
                 if isinstance(item, bool):
                     val_str = "true" if item else "false"
-                elif isinstance(item, str):
-                    if any(char in item for char in [":", "{", "}", "[", "]", ",", "*", "&", "?", "|", "-", "<", ">", "=", "!"]):
-                        val_str = f'"{item}"'
-                    else:
-                        val_str = item
-                else:
+                elif isinstance(item, (int, float)):
                     val_str = str(item)
+                elif isinstance(item, str):
+                    escaped_item = item.replace('\\', '\\\\').replace('"', '\\"')
+                    val_str = f'"{escaped_item}"'
+                else:
+                    val_str = f'"{str(item)}"'
                 lines.append(f"{spacing}- {val_str}")
+                
     return "\n".join(lines)
 
 def convert_single_file(src_txt_path, dest_yaml_path):
