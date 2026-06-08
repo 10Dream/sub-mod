@@ -17,7 +17,7 @@ def main():
     arg_parser = argparse.ArgumentParser(description="Modular Subscription Updater and Process Coordinator")
     arg_parser.add_argument(
         "--mode",
-        choices=["all", "download_only", "mix_only", "base64_only"],
+        choices=["all", "download_only", "mix_only", "base64_only", "clash_only"],
         default="all",
         help="حالت اجرای اسکریپت (پیش‌فرض: all)"
     )
@@ -68,6 +68,11 @@ def main():
         print("اجرای فاز تولید کدهای بیس۶۴ اختصاصی برای فایل‌های موجود...")
         # در این حالت فقط فایل‌های متنی محلی موجود به بیس۶۴ انکود می‌شوند
         encoder.generate_base64_files(sources, normal_dir, base64_dir)
+        
+    elif mode == "clash_only":
+        print("اجرای اختصاصی فاز ساخت کانفیگ کلش میهومو...")
+        # ساخت فایل کلش میهومو از روی فایل میکس محلیِ موجود
+        clash_converter.run_converter(mix_txt_path, normal_dir)
 
     print("=== فرآیند بروزرسانی با موفقیت خاتمه یافت ===")
 
