@@ -620,6 +620,49 @@ def parse_proxy(line: str):
     if prefix.startswith("openvpn://"): return parse_openvpn(line)
     return None
 
+# --- اعتبارسنجی اختصاصی کلیدهای شادوساکس ۲۰۲۲ ---
+
+def validate_ss_2022_key(cipher: str, key_b64: str) -> bool:
+    """
+    اعتبارسنجی Base64 بودن کلید Shadowsocks 2022 و همخوانی دقیق طول بایت آن با الگوریتم رمزنگاری [11].
+    هرگونه کلید معیوب یا نامنطبق با استاندارد بلافاصله رد می‌شود تا از کرش کردن کلاینت کلش جلوگیری شود.
+    """
+    cipher = cipher.lower()
+    parts = key_b64.split(":")
+    
+    # صحت‌سنجی Base64 کلید اصلی و بخش‌های اختیاری
+    for part in parts:
+        part_clean = part.strip().replace('-', '+').replace('_', '/')
+        padding = len(part_clean) % 4
+        if padding:
+            part_clean += '=' * (4 - padding)
+        try:
+            base64.b64decode(part_clean)
+        except Exception:
+            return False
+            
+    # ارزیابی بایت کلید اصلی (بخش اول)
+    main_key = parts[0].strip().replace('-', '+').replace('_', '/')
+    padding = len(main_key) % 4
+    if padding:
+        main_key += '=' * (4 - padding)
+        
+    try:
+        decoded_bytes = base64.b64decode(main_key)
+        decoded_len = len(decoded_bytes)
+    except Exception:
+        return False
+        
+    # تعیین طول بایت مورد نیاز بر اساس نوع سایفر ۲۰۲۲ [11]
+    if "128" in cipher:
+        expected_len = 16  # ۱۶ بایت برای ۱۲۸ بیت [11]
+    elif "256" in cipher or "chacha" in cipher:
+        expected_len = 32  # ۳۲ بایت برای ۲۵۶ بیت [11]
+    else:
+        expected_len = 32
+        
+    return decoded_len == expected_len
+
 def validate_proxy(p) -> bool:
     """اعتبارسنجی انطباق پروکسی با استانداردهای میهومو به همراه بررسی نوع و ساختار متغیرها"""
     if not p or not isinstance(p, dict) or not p.get("type"):
@@ -667,7 +710,14 @@ def validate_proxy(p) -> bool:
     elif p_type == "tuic":
         if not p.get("uuid") or not isinstance(p["uuid"], str) or not p.get("password") or not isinstance(p["password"], str): return False
     elif p_type == "ss":
-        if not p.get("cipher") or not isinstance(p["cipher"], str) or not p.get("password") or not isinstance(p["password"], str): return False
+        cipher = p.get("cipher")
+        password = p.get("password")
+        if not cipher or not isinstance(cipher, str) or not password or not isinstance(password, str):
+            return False
+        # ارزیابی کلیدهای سایفر ۲۰۲۲ شادوساکس جهت جلوگیری از خطای مقدار بایت Base64 [11]
+        if cipher.lower().startswith("2022-"):
+            if not validate_ss_2022_key(cipher, password):
+                return False
     elif p_type == "sudoku":
         if not p.get("key") or not isinstance(p["key"], str): return False
     elif p_type == "masque":
@@ -735,14 +785,9 @@ def process_and_filter_proxies(proxies_list):
         
     return final_proxies
 
-# --- مبدل پایتونی بومی برای ساختن YAML بدون وابستگی PyYAML (با امنیت کوتیشن‌گذاری ۱۰۰ درصدی) ---
+# --- مبدل پایتونی بومی برای ساختن YAML (با امنیت کوتیشن‌گذاری ۱۰۰ درصدی) ---
 
 def dump_yaml(data, indent=0) -> str:
-    """
-    تولید خروجی کاملاً معتبر و سازگار YAML.
-    برای جلوگیری از تداخل کاراکترهای خاص (نظیر @، %، بک‌تیک و فضای خالی) در کلش،
-    تمامی رشته‌های تک‌خطی به صورت خودکار و ایمن درون دابل‌کوتیشن (") قرار می‌گیرند.
-    """
     lines = []
     spacing = " " * indent
     
@@ -760,10 +805,8 @@ def dump_yaml(data, indent=0) -> str:
                     val_str = str(v)
                 elif isinstance(v, str):
                     if "\n" in v:
-                        # نگه‌داری ساختار برای گواهی‌های چندخطی (مانند OpenVPN)
                         val_str = "|\n" + "\n".join(" " * (indent + 2) + line for line in v.splitlines())
                     else:
-                        # اسکیپ و محصور کردن تمام رشته‌ها در دابل‌کوتیشن جهت رفع باگ کاراکترهایی نظیر @
                         escaped_v = v.replace('\\', '\\\\').replace('"', '\\"')
                         val_str = f'"{escaped_v}"'
                 else:
