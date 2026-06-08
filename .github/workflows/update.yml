@@ -2,7 +2,7 @@ name: Modular Sub Subscription Updater
 
 on:
   schedule:
-    - cron: '0 */3 * * *' # اجرا به صورت خودکار هر ۳ ساعت
+    - cron: '0 */3 * * *' # اجرا به صورت خودکار هر ۳ ساعت یک‌بار
   workflow_dispatch:
     inputs:
       run_mode:
@@ -15,6 +15,7 @@ on:
           - download_only
           - mix_only
           - base64_only
+          - clash_only
 
 permissions:
   contents: write
@@ -31,8 +32,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-level: '3.11'
-          cache: 'pip'
+          python-version: '3.11'
 
       - name: Run Modular Subscription Updater
         run: |
