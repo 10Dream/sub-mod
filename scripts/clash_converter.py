@@ -6,29 +6,31 @@ from urllib.parse import urlparse, parse_qs, unquote
 import clash_template
 
 # تنظیمات پیش‌فرض تبدیل به کلش میهومو با اعمال فیلتر و اولویت‌ها
+# شما می‌توانید با تغییر چیدمان (ترتیب خطوط) در priorities، اولویت هر پروتکل را جابه‌جا کنید.
+# اگر مقدار limit را برابر با -1 یا None یا "unlimited" قرار دهید، آن پروتکل بدون هیچ محدودیتی (نامحدود) ایمپورت می‌شود.
 CLASH_CONFIG = {
     "limit_total": 600,             # حداکثر تعداد کل کانفیگ‌های خروجی
     "priorities": [                 # اولویت‌بندی از بالا به پایین به همراه محدودیت برای هر پروتکل
         {"type": "anytls", "limit": 200},
-        {"type": "hy2", "limit": 200},      # hysteria2 به اختصار hy2
-        {"type": "vless", "limit": 200},
-        {"type": "ss", "limit": 100},       # shadowsocks
-        {"type": "sudoku", "limit": 100},   # پروتکل سودوکو
-        {"type": "masque", "limit": 50},    # پروتکل مسک
-        {"type": "trusttunnel", "limit": 50},# پروتکل تراست تانل
-        {"type": "openvpn", "limit": 30},   # پروتکل اوپن وی پی ان
-        {"type": "tailscale", "limit": 20}, # پروتکل تیل اسکیل
-        {"type": "vmess", "limit": 50},
-        {"type": "trojan", "limit": 50},
-        {"type": "wireguard", "limit": 50},
-        {"type": "tuic", "limit": 50},
-        {"type": "hysteria", "limit": 50},
-        {"type": "socks5", "limit": 20},
-        {"type": "http", "limit": 20},
-        {"type": "snell", "limit": 20},
-        {"type": "ssh", "limit": 10},
+        {"type": "vless", "limit": 300},
+        {"type": "ss", "limit": 100},
+        {"type": "ssh", "limit": 100},
+        {"type": "socks5", "limit": 100},
+        {"type": "sudoku", "limit": 100},
+        {"type": "masque", "limit": 100},
+        {"type": "trusttunnel", "limit": 50},
+        {"type": "snell", "limit": 100},
+        {"type": "openvpn", "limit": 30},
+        {"type": "tailscale", "limit": 20}, 
+        {"type": "vmess", "limit": 100},
+        {"type": "trojan", "limit": 100},
+        {"type": "hy2", "limit": 100},
+        {"type": "wireguard", "limit": 100},
+        {"type": "tuic", "limit": 100},
+        {"type": "hysteria", "limit": 100},
+        {"type": "http", "limit": 100},
     ],
-    "default_limit_for_others": 0
+    "default_limit_for_others": 0  # محدودیت پیش‌فرض برای پروتکل‌هایی که در لیست بالا نیستند (0 یعنی حذف)
 }
 
 def safe_b64decode(s: str) -> str:
@@ -629,8 +631,6 @@ def validate_ss_2022_key(cipher: str, key_b64: str) -> bool:
     """
     cipher = cipher.lower()
     parts = key_b64.split(":")
-    
-    # صحت‌سنجی Base64 کلید اصلی و بخش‌های اختیاری
     for part in parts:
         part_clean = part.strip().replace('-', '+').replace('_', '/')
         padding = len(part_clean) % 4
@@ -641,7 +641,6 @@ def validate_ss_2022_key(cipher: str, key_b64: str) -> bool:
         except Exception:
             return False
             
-    # ارزیابی بایت کلید اصلی (بخش اول)
     main_key = parts[0].strip().replace('-', '+').replace('_', '/')
     padding = len(main_key) % 4
     if padding:
@@ -653,7 +652,6 @@ def validate_ss_2022_key(cipher: str, key_b64: str) -> bool:
     except Exception:
         return False
         
-    # تعیین طول بایت مورد نیاز بر اساس نوع سایفر ۲۰۲۲ [11]
     if "128" in cipher:
         expected_len = 16  # ۱۶ بایت برای ۱۲۸ بیت [11]
     elif "256" in cipher or "chacha" in cipher:
@@ -664,41 +662,28 @@ def validate_ss_2022_key(cipher: str, key_b64: str) -> bool:
     return decoded_len == expected_len
 
 def validate_proxy(p) -> bool:
-    """اعتبارسنجی انطباق پروکسی با استانداردهای میهومو به همراه بررسی نوع و ساختار متغیرها"""
     if not p or not isinstance(p, dict) or not p.get("type"):
         return False
-        
     p_type = p["type"]
-    
-    # صحت‌سنجی فیلد نام
     if not p.get("name") or not isinstance(p["name"], str):
         return False
-        
     if p_type == "tailscale":
         return bool(p.get("auth-key") or p.get("hostname"))
-        
-    # صحت‌سنجی فیلد سرور
     server = p.get("server")
     if not server or not isinstance(server, str):
         return False
-        
-    # صحت‌سنجی دقیق پورت و تبدیل آن به مقدار عددی معتبر (بین ۱ تا ۶۵۵۳۵)
     port = p.get("port")
     try:
         port_num = int(port)
         if port_num < 1 or port_num > 65535:
             return False
-        p["port"] = port_num  # ذخیره‌سازی قطعی پورت به صورت عدد (integer) نه رشته
+        p["port"] = port_num
     except (ValueError, TypeError):
         return False
-    
-    # فیلترینگ دامنه‌های مسدود شده
     server_lower = server.lower()
     blocked = ["127.0.0.1", "0.0.0.0", "localhost", "t.me", "github.com", "raw.githubusercontent.com", "google.com"]
     if any(b in server_lower for b in blocked):
         return False
-        
-    # بررسی صحت ساختاری متغیرهای اختصاصی هر پروتکل
     if p_type in ["vless", "vmess"]:
         if not p.get("uuid") or not isinstance(p["uuid"], str): return False
     elif p_type in ["trojan", "hysteria2"]:
@@ -714,7 +699,6 @@ def validate_proxy(p) -> bool:
         password = p.get("password")
         if not cipher or not isinstance(cipher, str) or not password or not isinstance(password, str):
             return False
-        # ارزیابی کلیدهای سایفر ۲۰۲۲ شادوساکس جهت جلوگیری از خطای مقدار بایت Base64 [11]
         if cipher.lower().startswith("2022-"):
             if not validate_ss_2022_key(cipher, password):
                 return False
@@ -726,7 +710,6 @@ def validate_proxy(p) -> bool:
         if not p.get("username") or not isinstance(p["username"], str) or not p.get("password") or not isinstance(p["password"], str): return False
     elif p_type == "openvpn":
         if not p.get("ca") or not isinstance(p["ca"], str): return False
-        
     return True
 
 # --- بخش فیلتر، مرتب‌سازی و حفظ نام اصلی به همراه رفع تکراری‌ها ---
@@ -754,15 +737,25 @@ def process_and_filter_proxies(proxies_list):
     final_proxies = []
     for prio in CLASH_CONFIG["priorities"]:
         ptype = prio["type"]
-        plimit = prio["limit"]
+        plimit = prio.get("limit")
+        
         if ptype in grouped_proxies:
-            selected = grouped_proxies[ptype][:plimit]
+            # اعمال پشتیبانی از محدودیت بی نهایت (unlimited)
+            if plimit is None or plimit == -1 or plimit in ["unlimited", "∞"]:
+                selected = grouped_proxies[ptype] # دریافت کل پروکسی‌های پروتکل بدون هیچ برشی
+            else:
+                selected = grouped_proxies[ptype][:int(plimit)]
             final_proxies.extend(selected)
             del grouped_proxies[ptype]
             
-    if CLASH_CONFIG["default_limit_for_others"] > 0:
+    # پردازش سایرین در صورت تعریف محدودیت پیش‌فرض
+    default_limit = CLASH_CONFIG.get("default_limit_for_others", 0)
+    if default_limit is None or default_limit == -1 or default_limit in ["unlimited", "∞"]:
         for ptype, items in grouped_proxies.items():
-            selected = items[:CLASH_CONFIG["default_limit_for_others"]]
+            final_proxies.extend(items)
+    elif default_limit > 0:
+        for ptype, items in grouped_proxies.items():
+            selected = items[:int(default_limit)]
             final_proxies.extend(selected)
             
     final_proxies = final_proxies[:CLASH_CONFIG["limit_total"]]
@@ -790,7 +783,6 @@ def process_and_filter_proxies(proxies_list):
 def dump_yaml(data, indent=0) -> str:
     lines = []
     spacing = " " * indent
-    
     if isinstance(data, dict):
         for k, v in data.items():
             if v is None:
@@ -812,7 +804,6 @@ def dump_yaml(data, indent=0) -> str:
                 else:
                     val_str = f'"{str(v)}"'
                 lines.append(f"{spacing}{k}: {val_str}")
-                
     elif isinstance(data, list):
         for item in data:
             if isinstance(item, (dict, list)):
@@ -829,11 +820,9 @@ def dump_yaml(data, indent=0) -> str:
                 else:
                     val_str = f'"{str(item)}"'
                 lines.append(f"{spacing}- {val_str}")
-                
     return "\n".join(lines)
 
 def convert_single_file(src_txt_path, dest_yaml_path):
-    """تبدیل خط‌به‌خط یک فایل متنی اشتراک خام به کانفیگ بومی کلش میهومو با اعمال اولویت‌ها"""
     if not os.path.exists(src_txt_path):
         return False
         
@@ -874,19 +863,12 @@ def convert_single_file(src_txt_path, dest_yaml_path):
     return True
 
 def run_converter_for_all(sources, normal_dir, clash_dir):
-    """
-    اجرای حلقه تبدیل مجزا برای تمام تک‌فایل‌ها و فایل میکس نهایی.
-    تک‌تک خروجی‌ها در پوشه sub/clash ذخیره خواهند شد.
-    """
     os.makedirs(clash_dir, exist_ok=True)
     print(f"[تبدیل کلش] شروع تبدیل چندگانه منابع در مسیر: {clash_dir}")
     
-    # ۱. تبدیل تک‌تک منابع اشتراک به فایل کلش جداگانه
     for src in sources:
         name = src['name']
         src_path = os.path.join(normal_dir, name)
-        
-        # مشخص کردن نام فایل خروجی کلش با پسوند مناسب .yaml
         base_name = os.path.splitext(name)[0]
         dest_path = os.path.join(clash_dir, f"{base_name}.yaml")
         
@@ -897,7 +879,6 @@ def run_converter_for_all(sources, normal_dir, clash_dir):
             else:
                 print(f"[اسکیپ] تبدیل منبع {name} به دلیل عدم وجود کانفیگ‌های معتبر اسکیپ شد.")
                 
-    # ۲. تبدیل فایل میکس تجمیعی به کانفیگ کلش میکس نهایی
     mix_txt_path = os.path.join(normal_dir, "mix.txt")
     mix_yaml_path = os.path.join(clash_dir, "mix.yaml")
     if os.path.exists(mix_txt_path):
