@@ -13,11 +13,11 @@ CLASH_CONFIG = {
         {"type": "hy2", "limit": 200},      # hysteria2 به اختصار hy2
         {"type": "vless", "limit": 200},
         {"type": "ss", "limit": 100},       # shadowsocks
-        {"type": "sudoku", "limit": 100},   # پروتکل سودوکو جدید
-        {"type": "masque", "limit": 50},    # پروتکل مسک جدید
-        {"type": "trusttunnel", "limit": 50},# پروتکل تراست تانل جدید
-        {"type": "openvpn", "limit": 30},   # پروتکل اوپن وی پی ان جدید
-        {"type": "tailscale", "limit": 20}, # پروتکل تیل اسکیل جدید
+        {"type": "sudoku", "limit": 100},   # پروتکل سودوکو
+        {"type": "masque", "limit": 50},    # پروتکل مسک
+        {"type": "trusttunnel", "limit": 50},# پروتکل تراست تانل
+        {"type": "openvpn", "limit": 30},   # پروتکل اوپن وی پی ان
+        {"type": "tailscale", "limit": 20}, # پروتکل تیل اسکیل
         {"type": "vmess", "limit": 50},
         {"type": "trojan", "limit": 50},
         {"type": "wireguard", "limit": 50},
@@ -408,12 +408,9 @@ def parse_ssh(link: str):
 # --- پارسرهای پروتکل‌های تازه اضافه شده ---
 
 def parse_sudoku(link: str):
-    """پارس پروتکل جدید Sudoku"""
     try:
         url = urlparse(link.replace("sudoku://", "http://", 1))
         qs = parse_qs(url.query)
-        
-        # استخراج داده‌های فرعی httpmask
         disable_hm = qs.get("httpmask-disable", ["false"])[0].lower() in ["1", "true"]
         mode_hm = qs.get("httpmask-mode", ["legacy"])[0]
         tls_hm = qs.get("httpmask-tls", ["true"])[0].lower() in ["1", "true"]
@@ -441,20 +438,16 @@ def parse_sudoku(link: str):
                 "multiplex": multiplex_hm
             }
         }
-        
         custom_table = qs.get("custom-table", [""])[0]
         if custom_table: proxy["custom-table"] = custom_table
-        
         custom_tables = qs.get("custom-tables", [])
         if custom_tables:
             proxy["custom-tables"] = custom_tables[0].split(",") if "," in custom_tables[0] else custom_tables
-
         return proxy
     except Exception:
         return None
 
 def parse_tailscale(link: str):
-    """پارس پروتکل Tailscale"""
     try:
         url = urlparse(link.replace("tailscale://", "http://", 1))
         qs = parse_qs(url.query)
@@ -485,7 +478,6 @@ def parse_tailscale(link: str):
         return None
 
 def parse_masque(link: str):
-    """پارس پروتکل MASQUE"""
     try:
         url = urlparse(link.replace("masque://", "http://", 1))
         qs = parse_qs(url.query)
@@ -519,7 +511,6 @@ def parse_masque(link: str):
         return None
 
 def parse_trusttunnel(link: str):
-    """پارس پروتکل TrustTunnel"""
     try:
         url = urlparse(link.replace("trusttunnel://", "http://", 1))
         qs = parse_qs(url.query)
@@ -548,8 +539,6 @@ def parse_trusttunnel(link: str):
         if cc: proxy["congestion-controller"] = cc
         bbr = qs.get("bbr-profile", [""])[0]
         if bbr: proxy["bbr-profile"] = bbr
-        
-        # مقادیر بهینه‌سازی جریان
         max_conn = qs.get("max-connections", [""])[0]
         if max_conn.isdigit(): proxy["max-connections"] = int(max_conn)
         min_str = qs.get("min-streams", [""])[0]
@@ -561,7 +550,6 @@ def parse_trusttunnel(link: str):
         return None
 
 def parse_openvpn(link: str):
-    """پارس پروتکل OpenVPN"""
     try:
         url = urlparse(link.replace("openvpn://", "http://", 1))
         qs = parse_qs(url.query)
@@ -578,14 +566,12 @@ def parse_openvpn(link: str):
         password = safe_decode(url.password or qs.get("password", [""])[0])
         if user: proxy["username"] = user
         if password: proxy["password"] = password
-        
         cert = safe_decode(qs.get("cert", [""])[0])
         if cert: proxy["cert"] = cert
         key = safe_decode(qs.get("key", [""])[0])
         if key: proxy["key"] = key
         tc = safe_decode(qs.get("tls-crypt", [""])[0])
         if tc: proxy["tls-crypt"] = tc
-        
         ping = qs.get("ping", [""])[0]
         if ping.isdigit(): proxy["ping"] = int(ping)
         ping_res = qs.get("ping-restart", [""])[0]
@@ -612,7 +598,6 @@ def parse_openvpn(link: str):
         return None
 
 def parse_proxy(line: str):
-    """شناسایی پروتکل و ارجاع به پارسر مناسب"""
     prefix = line[:15].lower()
     if prefix.startswith("vless://"): return parse_vless(line)
     if prefix.startswith("vmess://"): return parse_vmess(line)
@@ -636,24 +621,17 @@ def parse_proxy(line: str):
     return None
 
 def validate_proxy(p) -> bool:
-    """اعتبارسنجی انطباق پروکسی با استانداردهای میهومو (Mihomo)"""
     if not p or not p.get("type"):
         return False
-        
     p_type = p["type"]
-    
-    # برای Tailscale نیازی به فیلدهای پورت شبکه یا سرور عمومی استاندارد نیست
     if p_type == "tailscale":
         return bool(p.get("auth-key") or p.get("hostname"))
-        
     if not p.get("server") or not p.get("port"):
         return False
-    
     server = p["server"].lower()
     blocked = ["127.0.0.1", "0.0.0.0", "localhost", "t.me", "github.com", "raw.githubusercontent.com", "google.com"]
     if any(b in server for b in blocked):
         return False
-        
     if p_type in ["vless", "vmess"] and not p.get("uuid"): return False
     if p_type in ["trojan", "hysteria2"] and not p.get("password"): return False
     if p_type == "wireguard" and not p.get("private-key"): return False
@@ -666,7 +644,7 @@ def validate_proxy(p) -> bool:
     if p_type == "openvpn" and not p.get("ca"): return False
     return True
 
-# --- بخش فیلتر، مرتب‌سازی و اولویت‌بندی ---
+# --- بخش فیلتر، مرتب‌سازی و حفظ نام اصلی به همراه رفع تکراری‌ها ---
 
 def process_and_filter_proxies(proxies_list):
     valid_proxies = []
@@ -675,8 +653,6 @@ def process_and_filter_proxies(proxies_list):
     for p in proxies_list:
         if not validate_proxy(p):
             continue
-            
-        # تولید کلید یکتا برای حذف تکراری‌ها
         ukey = f"{p['type']}|{p['server']}|{p.get('port', 0)}"
         if ukey in unique_keys:
             continue
@@ -691,12 +667,9 @@ def process_and_filter_proxies(proxies_list):
         grouped_proxies[dtype].append(p)
         
     final_proxies = []
-    
-    # مرتب‌سازی طبق ترتیب اولویت‌ها
     for prio in CLASH_CONFIG["priorities"]:
         ptype = prio["type"]
         plimit = prio["limit"]
-        
         if ptype in grouped_proxies:
             selected = grouped_proxies[ptype][:plimit]
             final_proxies.extend(selected)
@@ -709,22 +682,30 @@ def process_and_filter_proxies(proxies_list):
             
     final_proxies = final_proxies[:CLASH_CONFIG["limit_total"]]
     
-    # نام‌گذاری ترتیبی
-    type_counters = {}
+    # تصحیح نام‌گذاری پروکسی‌ها: حفظ نام اصلی + افزودن شمارنده افزایشی برای جلوگیری از خطای تکراری
+    seen_names = {}
     for p in final_proxies:
-        dtype = get_display_type(p["type"])
-        type_counters[dtype] = type_counters.get(dtype, 0) + 1
-        p["name"] = f"{dtype.upper()} {type_counters[dtype]}"
+        original_name = p.get("name", "").strip()
+        if not original_name:
+            original_name = get_display_type(p["type"]).upper()
+            
+        # حل مشکل تکراری بودن نام‌ها بدون ایجاد ساختار نام‌گذاری تصنعی
+        name = original_name
+        if name in seen_names:
+            seen_names[original_name] += 1
+            name = f"{original_name}-{seen_names[original_name]}"
+        else:
+            seen_names[name] = 0
+            
+        p["name"] = name
         
     return final_proxies
 
 # --- مبدل پایتونی بومی برای ساختن YAML بدون وابستگی PyYAML ---
 
 def dump_yaml(data, indent=0) -> str:
-    """تولید خروجی استاندارد YAML از داده‌های دیکشنری پایتون به صورت بومی و بدون وابستگی خارجی"""
     lines = []
     spacing = " " * indent
-    
     if isinstance(data, dict):
         for k, v in data.items():
             if v is None:
@@ -737,7 +718,6 @@ def dump_yaml(data, indent=0) -> str:
                     val_str = "true" if v else "false"
                 elif isinstance(v, str):
                     if "\n" in v:
-                        # برای رشته‌های چند خطی مثل گواهینامه‌های اوپن‌وی‌پی‌ان
                         val_str = "|\n" + "\n".join(" " * (indent + 2) + line for line in v.splitlines())
                     elif any(char in v for char in [":", "{", "}", "[", "]", ",", "*", "&", "?", "|", "-", "<", ">", "=", "!"]):
                         val_str = f'"{v}"'
@@ -746,7 +726,6 @@ def dump_yaml(data, indent=0) -> str:
                 else:
                     val_str = str(v)
                 lines.append(f"{spacing}{k}: {val_str}")
-                
     elif isinstance(data, list):
         for item in data:
             if isinstance(item, (dict, list)):
@@ -763,41 +742,32 @@ def dump_yaml(data, indent=0) -> str:
                 else:
                     val_str = str(item)
                 lines.append(f"{spacing}- {val_str}")
-                
     return "\n".join(lines)
 
-def run_converter(mix_txt_path, normal_dir):
-    """تابع هماهنگ‌کننده تبدیل پروکسی به میهومو"""
-    if not os.path.exists(mix_txt_path):
-        print(f"[تبدیل کلش] فایل منبع تجمیعی در مسیر '{mix_txt_path}' یافت نشد.")
-        return
+def convert_single_file(src_txt_path, dest_yaml_path):
+    """تبدیل خط‌به‌خط یک فایل متنی اشتراک خام به کانفیگ بومی کلش میهومو با اعمال اولویت‌ها"""
+    if not os.path.exists(src_txt_path):
+        return False
         
-    print("[تبدیل کلش] شروع واکشی و تبدیل پروکسی‌ها...")
-    
     raw_proxies = []
-    with open(mix_txt_path, 'r', encoding='utf-8') as f:
+    with open(src_txt_path, 'r', encoding='utf-8') as f:
         for line in f:
             line = line.strip()
             if not line or line.startswith("#"):
                 continue
-            
             p = parse_proxy(line)
             if p:
                 raw_proxies.append(p)
                 
-    print(f"[تبدیل کلش] تعداد پروکسی‌های خام پارس شده: {len(raw_proxies)}")
-    
-    processed = process_and_filter_proxies(raw_proxies)
-    print(f"[تبدیل کلش] {len(processed)} پروکسی طبق اولویت‌ها فیلتر و آماده شدند.")
-    
-    if not processed:
-        print("[تبدیل کلش] پروکسی معتبری پیدا نشد. ذخیره فایل اسکیپ شد.")
-        return
+    if not raw_proxies:
+        return False
         
-    # واکشی اسامی پروکسی‌ها جهت اختصاص به گروه‌ها
+    processed = process_and_filter_proxies(raw_proxies)
+    if not processed:
+        return False
+        
     proxy_names = [p["name"] for p in processed]
     
-    # مونتاژ نهایی سند پیکربندی کلش به صورت ماژولار با ایمپورت تنظیمات از تمپلت
     final_dict = {}
     final_dict.update(clash_template.GENERAL_SETTINGS)
     final_dict["dns"] = clash_template.DNS_SETTINGS
@@ -808,13 +778,41 @@ def run_converter(mix_txt_path, normal_dir):
     final_dict["proxy-groups"] = clash_template.get_proxy_groups(proxy_names)
     final_dict["rules"] = clash_template.RULES
     
-    # خروجی گرفتن به صورت بومی با سرعت بالا
     final_yaml_content = dump_yaml(final_dict)
     
-    # ذخیره‌سازی فایل در پوشه معمولی (بیس۶۴ به درخواست کاربر حذف شد)
-    os.makedirs(normal_dir, exist_ok=True)
-    clash_normal_path = os.path.join(normal_dir, "clash.yaml")
-    with open(clash_normal_path, 'w', encoding='utf-8') as f:
+    os.makedirs(os.path.dirname(dest_yaml_path), exist_ok=True)
+    with open(dest_yaml_path, 'w', encoding='utf-8') as f:
         f.write(final_yaml_content)
+    return True
+
+def run_converter_for_all(sources, normal_dir, clash_dir):
+    """
+    اجرای حلقه تبدیل مجزا برای تمام تک‌فایل‌ها و فایل میکس نهایی.
+    تک‌تک خروجی‌ها در پوشه sub/clash ذخیره خواهند شد.
+    """
+    os.makedirs(clash_dir, exist_ok=True)
+    print(f"[تبدیل کلش] شروع تبدیل چندگانه منابع در مسیر: {clash_dir}")
+    
+    # ۱. تبدیل تک‌تک منابع اشتراک به فایل کلش جداگانه
+    for src in sources:
+        name = src['name']
+        src_path = os.path.join(normal_dir, name)
         
-    print(f"[تبدیل کلش] فایل خروجی کلش میهومو با موفقیت در '{clash_normal_path}' ذخیره شد.")
+        # مشخص کردن نام فایل خروجی کلش با پسوند مناسب .yaml
+        base_name = os.path.splitext(name)[0]
+        dest_path = os.path.join(clash_dir, f"{base_name}.yaml")
+        
+        if os.path.exists(src_path):
+            success = convert_single_file(src_path, dest_path)
+            if success:
+                print(f"[موفقیت] کانفیگ کلش اختصاصی منبع {name} در مسیر '{dest_path}' ایجاد شد.")
+            else:
+                print(f"[اسکیپ] تبدیل منبع {name} به دلیل عدم وجود کانفیگ‌های معتبر اسکیپ شد.")
+                
+    # ۲. تبدیل فایل میکس تجمیعی به کانفیگ کلش میکس نهایی
+    mix_txt_path = os.path.join(normal_dir, "mix.txt")
+    mix_yaml_path = os.path.join(clash_dir, "mix.yaml")
+    if os.path.exists(mix_txt_path):
+        success = convert_single_file(mix_txt_path, mix_yaml_path)
+        if success:
+            print(f"[موفقیت] کانفیگ کلش میکس نهایی (mix.yaml) با موفقیت تولید شد.")
