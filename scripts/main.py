@@ -27,9 +27,10 @@ def main():
     
     print(f"=== شروع فرآیند بروزرسانی با حالت اجرا: {mode} ===")
     
-    # پوشه‌های هدف ذخیره‌سازی داده‌ها
+    # پوشه‌های هدف ذخیره‌سازی داده‌ها به صورت تفکیک شده و استاندارد
     normal_dir = os.path.abspath(os.path.join(current_dir, "../sub/normal"))
     base64_dir = os.path.abspath(os.path.join(current_dir, "../sub/base64"))
+    clash_dir = os.path.abspath(os.path.join(current_dir, "../sub/clash"))
     sources_file = os.path.abspath(os.path.join(current_dir, "../sources.txt"))
     
     # ۱. استخراج منابع از فایل منابع
@@ -40,8 +41,6 @@ def main():
         print("[خطا] هیچ منبع معتبری برای پردازش یافت نشد. عملیات متوقف می‌شود.")
         sys.exit(0)
         
-    mix_txt_path = os.path.join(normal_dir, "mix.txt")
-        
     # ۲. مدیریت سناریوهای مختلف بر اساس آرگومان mode
     if mode == "all":
         # دانلود منابع فعال و معتبر
@@ -50,8 +49,8 @@ def main():
         encoder.generate_base64_files(successful_sources, normal_dir, base64_dir)
         # تولید فایل میکس معمولی و بیس۶۴ برای منابع موفق
         encoder.create_mixed_files(successful_sources, normal_dir, base64_dir)
-        # اجرای خودکار فاز تبدیل به کلش میهومو (Clash YAML) پس از آماده‌سازی میکس
-        clash_converter.run_converter(mix_txt_path, normal_dir)
+        # اجرای خودکار فاز تبدیل به کلش میهومو (Clash YAML) برای تک‌تک فایلهای منابع و فایل میکس تجمیعی
+        clash_converter.run_converter_for_all(successful_sources, normal_dir, clash_dir)
         
     elif mode == "download_only":
         print("اجرای فاز دانلود منابع...")
@@ -59,20 +58,18 @@ def main():
         
     elif mode == "mix_only":
         print("اجرای فاز ادغام و میکس مجدد فایلهای موجود...")
-        # در این حالت فقط از فایل‌های محلی دانلودی موجود برای تولید مجدد فایل میکس استفاده می‌شود
         encoder.create_mixed_files(sources, normal_dir, base64_dir)
-        # بازسازی مجدد فایل کلش میهومو
-        clash_converter.run_converter(mix_txt_path, normal_dir)
+        # بازسازی مجدد تمام کانفیگ‌های کلش به ازای تک‌تک منابع به همراه فایل میکس
+        clash_converter.run_converter_for_all(sources, normal_dir, clash_dir)
         
     elif mode == "base64_only":
         print("اجرای فاز تولید کدهای بیس۶۴ اختصاصی برای فایل‌های موجود...")
-        # در این حالت فقط فایل‌های متنی محلی موجود به بیس۶۴ انکود می‌شوند
         encoder.generate_base64_files(sources, normal_dir, base64_dir)
         
     elif mode == "clash_only":
-        print("اجرای اختصاصی فاز ساخت کانفیگ کلش میهومو...")
-        # ساخت فایل کلش میهومو از روی فایل میکس محلیِ موجود
-        clash_converter.run_converter(mix_txt_path, normal_dir)
+        print("اجرای اختصاصی فاز ساخت کانفیگ کلش میهومو برای هر منبع...")
+        # بازسازی فایل‌های مستقل کلش بدون دانلود مجدد، با خواندن از دایرکتوری sub/normal
+        clash_converter.run_converter_for_all(sources, normal_dir, clash_dir)
 
     print("=== فرآیند بروزرسانی با موفقیت خاتمه یافت ===")
 
