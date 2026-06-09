@@ -27,7 +27,7 @@ GENERAL_SETTINGS = {
     "unified-delay": False,
 }
 
-# پروفایل فروشگاه وضعیت اتصالات
+# پروفایل وضعیت اتصالات
 PROFILE_SETTINGS = {
     "store-selected": True,
     "store-fake-ip": True,
@@ -657,7 +657,7 @@ RULES = [
     "RULE-SET,steam,استیم 🖥️",
     "RULE-SET,SteamRegionCheck,استیم 🖥️",
     "RULE-SET,game,گیم 🎮",
-    "RULE-SET,GameDownload,گیم 🎮
+    "RULE-SET,GameDownload,گیم 🎮",
     "RULE-SET,category-games,گیم 🎮",
     "RULE-SET,Xbox,گیم 🎮",
     "RULE-SET,discord,دیسکورد 🗣️",
