@@ -1,4 +1,7 @@
 global-client-fingerprint: "chrome"
+keep-alive-interval: 5
+keep-alive-idle: 10
+disable-keep-alive: false
 port: 7890
 socks-port: 7891
 redir-port: 7892
@@ -8,21 +11,17 @@ allow-lan: true
 tcp-concurrent: true
 enable-process: true
 find-process-mode: "always"
-ipv6: true
+ipv6: false
 log-level: "info"
 geo-auto-update: true
 geo-update-interval: 168
 secret: ""
 bind-address: "*"
 unified-delay: false
-disable-keep-alive: false
-keep-alive-idle: 30
-keep-alive-interval: 30
 dns:
   enable: true
-  ipv6: true
-  respect-rules: false
-  prefer-h3: true
+  ipv6: false
+  prefer-h3: false
   cache-algorithm: "arc"
   use-system-hosts: true
   use-host: true
@@ -42,19 +41,74 @@ dns:
     - "ntp.*.com"
     - "*.ir"
   default-nameserver:
-    - "8.8.8.8"
-    - "8.8.4.4"
     - "1.1.1.1"
+    - "8.8.8.8"
     - "9.9.9.9"
   nameserver:
-    - "https://dns.google/dns-query"
-    - "https://cloudflare-dns.com/dns-query"
+    - "tcp://1.1.1.1"
+    - "tcp://1.0.0.1"
+    - "tcp://8.8.8.8"
+    - "tcp://8.8.4.4"
+    - "tcp://9.9.9.9"
+    - "tcp://149.112.112.112"
+    - "tcp://208.67.222.222"
+    - "tcp://208.67.220.222"
+  fallback:
+    - "tcp://76.76.19.19"
+    - "tcp://76.223.122.150"
+    - "tcp://185.228.168.9"
+    - "tcp://185.228.169.9"
+    - "tcp://8.26.56.26"
+    - "tcp://8.20.247.20"
+    - "tcp://76.76.2.11"
+    - "tcp://76.76.10.11"
+    - "tcp://84.200.69.80"
+    - "tcp://84.200.70.40"
+    - "tcp://45.33.97.5"
+    - "tcp://37.235.1.177"
+    - "tcp://209.244.0.3"
+    - "tcp://209.244.0.4"
+    - "tcp://156.154.70.5"
+    - "tcp://156.154.71.5"
+    - "tcp://103.86.96.100"
+    - "tcp://103.86.99.100"
+    - "tcp://199.85.126.10"
+    - "tcp://199.85.127.10"
+    - "tcp://129.250.35.250"
+    - "tcp://129.250.35.251"
+    - "tcp://94.16.114.254"
+    - "tcp://94.247.43.254"
+    - "tcp://208.67.222.20"
+    - "tcp://195.46.39.39"
+    - "tcp://195.46.39.40"
+    - "tcp://204.117.214.10"
+    - "tcp://199.2.252.10"
+    - "tcp://194.169.169.169"
+    - "tcp://156.154.70.1"
+    - "tcp://156.154.71.1"
+    - "tcp://91.239.100.100"
+    - "tcp://89.233.43.71"
+    - "tcp://64.6.64.6"
+    - "tcp://64.6.65.6"
+    - "tcp://77.88.8.8"
+    - "tcp://77.88.8.1"
+  fallback-filter:
+    geoip: true
+    geoip-code: "IR"
+    geosite:
+      - "gfw"
+    ipcidr:
+      - "240.0.0.0/4"
+    domain:
+      - "+.google.com"
+      - "+.facebook.com"
+      - "+.youtube.com"
+  proxy-server-nameserver:
+    - "tcp://1.1.1.1"
+    - "tcp://8.8.8.8"
   direct-nameserver:
     - "78.157.42.100"
     - "78.157.42.101"
-  proxy-server-nameserver:
-    - "1.1.1.1"
-    - "8.8.8.8"
 sniffer:
   enable: true
   force-dns-mapping: true
@@ -88,12 +142,60 @@ tun:
     - "any:53"
     - "tcp://any:53"
 rule-providers:
+  category_public_tracker:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-public-tracker.yaml"
+    interval: 86400
+    path: "./ruleset/category_public_tracker.yaml"
+  iran_ads:
+    type: "http"
+    behavior: "domain"
+    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    interval: 86400
+    path: "./ruleset/iran_ads.yaml"
+  PersianBlocker:
+    type: "http"
+    behavior: "domain"
+    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    interval: 86400
+    path: "./ruleset/PersianBlocker.yaml"
+  youtube:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
+    interval: 86400
+    path: "./ruleset/youtube.yaml"
+  telegram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
+    interval: 86400
+    path: "./ruleset/telegram.yaml"
+  twitch:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
+    interval: 86400
+    path: "./ruleset/twitch.yaml"
+  censor:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
+    interval: 86400
+    path: "./ruleset/censor.yaml"
   local_ips:
     type: "http"
     behavior: "ipcidr"
     url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
     interval: 86400
     path: "./ruleset/local_ips.yaml"
+  private:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
+    interval: 86400
+    path: "./ruleset/private.yaml"
   category_ir:
     type: "http"
     behavior: "domain"
@@ -106,6 +208,296 @@ rule-providers:
     url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
     interval: 86400
     path: "./ruleset/iran.yaml"
+  steam:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
+    interval: 86400
+    path: "./ruleset/steam.yaml"
+  game:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
+    interval: 86400
+    path: "./ruleset/game.yaml"
+  category-games:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
+    interval: 86400
+    path: "./ruleset/category-games.yaml"
+  ir:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
+    interval: 86400
+    path: "./ruleset/ir.yaml"
+  apps:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
+    interval: 86400
+    path: "./ruleset/apps.yaml"
+  ircidr:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
+    interval: 86400
+    path: "./ruleset/ircidr.yaml"
+  irasn:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
+    interval: 86400
+    path: "./ruleset/irasn.yaml"
+  arvancloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
+    interval: 86400
+    path: "./ruleset/arvancloud.yaml"
+  derakcloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
+    interval: 86400
+    path: "./ruleset/derakcloud.yaml"
+  iranserver:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
+    interval: 86400
+    path: "./ruleset/iranserver.yaml"
+  parspack:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
+    interval: 86400
+    path: "./ruleset/parspack.yaml"
+  malware:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/malware.yaml"
+    interval: 86400
+    path: "./ruleset/malware.yaml"
+  phishing:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/phishing.yaml"
+    interval: 86400
+    path: "./ruleset/phishing.yaml"
+  cryptominers:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/cryptominers.yaml"
+    interval: 86400
+    path: "./ruleset/cryptominers.yaml"
+  ads:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/Chocolate4U/Iran-clash-rules/releases/download/202606060815/category-ads-all.yaml"
+    interval: 86400
+    path: "./ruleset/ads.yaml"
+  DownloadManagers:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
+    interval: 86400
+    path: "./ruleset/DownloadManagers.yaml"
+  BanProgramAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanProgramAD.yaml"
+  BanAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanAD.yaml"
+  PrivateTracker:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
+    interval: 86400
+    path: "./ruleset/PrivateTracker.yaml"
+  BanEasyList:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
+    interval: 86400
+    path: "./ruleset/BanEasyList.yaml"
+  Download:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
+    interval: 86400
+    path: "./ruleset/Download.yaml"
+  GameDownload:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
+    interval: 86400
+    path: "./ruleset/GameDownload.yaml"
+  SteamRegionCheck:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
+    interval: 86400
+    path: "./ruleset/SteamRegionCheck.yaml"
+  Xbox:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
+    interval: 86400
+    path: "./ruleset/Xbox.yaml"
+  YouTubeMusic:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
+    interval: 86400
+    path: "./ruleset/YouTubeMusic.yaml"
+  YouTube:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
+    interval: 86400
+    path: "./ruleset/YouTube.yaml"
+  Ponzi:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
+    interval: 86400
+    path: "./ruleset/Ponzi.yaml"
+  warninglist:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/warning-list.yaml"
+    interval: 86400
+    path: "./ruleset/warninglist.yaml"
+  google:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
+    interval: 86400
+    path: "./ruleset/google.yaml"
+  google-play:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
+    interval: 86400
+    path: "./ruleset/google-play.yaml"
+  xiaomi_block_list:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_block_list.yaml"
+  xiaomi_white_list:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_white_list.yaml"
+  cloudflare:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
+    interval: 86400
+    path: "./ruleset/cloudflare.yaml"
+  github:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
+    interval: 86400
+    path: "./ruleset/xgithub.yaml"
+  whatsapp:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
+    interval: 86400
+    path: "./ruleset/whatsapp.yaml"
+  LiteAds:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/LiteAds.yaml"
+    interval: 86400
+    path: "./ruleset/LiteAds.yaml"
+  discord:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
+    interval: 86400
+    path: "./ruleset/discord.yaml"
+  instagram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    interval: 86400
+    path: "./ruleset/instagram.yaml"
+  category-ai:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    interval: 86400
+    path: "./ruleset/category-ai.yaml"
+  stremio:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    interval: 86400
+    path: "./ruleset/stremio.yaml"
+  windows:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    interval: 86400
+    path: "./ruleset/windows.yaml"
+  Chotwitter:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/twitter.yaml"
+    interval: 86400
+    path: "./ruleset/Chotwitter.yaml"
+  mihTwitter:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Twitter.yaml"
+    interval: 86400
+    path: "./ruleset/mihTwitter.yaml"
+  Domtwitter:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/twitter.yaml"
+    interval: 86400
+    path: "./ruleset/Domtwitter.yaml"
+  DomainSpotify:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/spotify.yaml"
+    interval: 86400
+    path: "./ruleset/DomainSpotify.yaml"
+  mihspotify:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Spotify.yaml"
+    interval: 86400
+    path: "./ruleset/mihSpotify.yaml"
 proxies:
   - name: "qol_001"
     type: "vless"
@@ -231,6 +623,42 @@ proxies:
     client-fingerprint: "chrome"
     grpc-opts:
       grpc-service-name: "presstv.ir.iribnews.ir.tasnimnews.com.irannewsdaily.com.ifpnews.com.kayhan.ir.irdiplomacy.ir"
+  - name: "qol_010"
+    type: "vless"
+    server: "104.18.32.47"
+    port: 2096
+    uuid: "266f49ab-e823-4497-b7a9-78ff51809f2d"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "bItTEr-BreADh48GRdp1Bf.cARBONBLacKBMW.IR"
+    client-fingerprint: "chrome"
+    grpc-opts:
+      grpc-service-name: "asriran.com.tasnimnews.com.sharghdaily.com.entekhab.ir.farsnews.ir.isna.ir.irdiplomacy.ir"
+  - name: "qol_011"
+    type: "vless"
+    server: "104.18.32.47"
+    port: 2096
+    uuid: "ac0517ac-af76-4436-bfa4-0a8b2b6bb433"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "eVoLVIng-CHAnCeR6CS39rs25.caRBoNblAcKbMw.Ir"
+    client-fingerprint: "chrome"
+    grpc-opts:
+      grpc-service-name: "fararu.com.parstoday.com.ilna.news.financialtribune.com.presstv.ir.jamejamonline.ir.alalamtv.net"
+  - name: "qol_012"
+    type: "vless"
+    server: "104.18.32.47"
+    port: 2096
+    uuid: "fad00171-5df8-442e-a208-54dea7f474f2"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "Humble-FigUREFnHk81kxjx.CarboNblaCkBmw.iR"
+    client-fingerprint: "chrome"
+    grpc-opts:
+      grpc-service-name: "donya-e-eqtesad.com.tasnimnews.com.alef.ir.en.mehrnews.com.entekhab.ir.tasnimnews.com.tehrantimes.com"
   - name: "qol_013"
     type: "vless"
     server: "104.18.32.47"
@@ -245,6 +673,32 @@ proxies:
       path: "/222.167.202.31:7443"
       headers:
         Host: "2026.hhhhh.eu.org"
+  - name: "qol_014"
+    type: "vless"
+    server: "104.18.32.47"
+    port: 443
+    uuid: "e4824193-4f54-453b-d037-88368e85ef0e"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "pqh30v5.carwashipdir.shop"
+    client-fingerprint: "random"
+    grpc-opts:
+      grpc-service-name: "/"
+  - name: "qol_015"
+    type: "vless"
+    server: "104.18.32.47"
+    port: 443
+    uuid: "fef4a93d-eb4f-4657-b56b-32a0dc060045"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "dev.twistsparrow.xyz"
+    client-fingerprint: "random"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "dev.twistsparrow.xyz"
   - name: "qol_016"
     type: "vless"
     server: "104.18.4.130"
@@ -313,6 +767,48 @@ proxies:
       path: "/ArEyOuMaD"
       headers:
         Host: "amphetamine.adaspoloandco.com"
+  - name: "qol_021"
+    type: "vless"
+    server: "104.19.64.105"
+    port: 8443
+    uuid: "96e05c60-cfe5-4365-9c41-b76ec30b4381"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "chopin.adaspoloandco.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/download.php"
+      headers:
+        Host: "chopin.adaspoloandco.com"
+  - name: "qol_022"
+    type: "vless"
+    server: "104.19.64.105"
+    port: 8443
+    uuid: "a47c49ec-6eaa-44ce-9108-8427426a1123"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ratatouille.adaspoloandco.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/admin.php"
+      headers:
+        Host: "ratatouille.adaspoloandco.com"
+  - name: "qol_023"
+    type: "vless"
+    server: "104.19.64.105"
+    port: 8443
+    uuid: "bf116897-eca4-459c-9f97-4019fa0ace7f"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "focalin.adaspoloandco.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/RizZrAcK"
+      headers:
+        Host: "focalin.adaspoloandco.com"
   - name: "qol_025"
     type: "vless"
     server: "104.21.224.5"
@@ -337,6 +833,20 @@ proxies:
     network: "ws"
     servername: "ovhwuxian.pai50288.uk"
     client-fingerprint: "chrome"
+    ws-opts:
+      path: "/57ba2ab1"
+      headers:
+        Host: "ovhwuxian.pai50288.uk"
+  - name: "qol_027"
+    type: "vless"
+    server: "104.21.3.219"
+    port: 8443
+    uuid: "57ba2ab1-a283-42eb-82ee-dc3561a805b8"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ovhwuxian.pai50288.uk"
+    client-fingerprint: "random"
     ws-opts:
       path: "/57ba2ab1"
       headers:
@@ -395,6 +905,20 @@ proxies:
       path: "/download.php"
       headers:
         Host: "chopin.adaspoloandco.com"
+  - name: "qol_032"
+    type: "vless"
+    server: "104.27.66.214"
+    port: 8443
+    uuid: "a47c49ec-6eaa-44ce-9108-8427426a1123"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ratatouille.adaspoloandco.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/admin.php"
+      headers:
+        Host: "ratatouille.adaspoloandco.com"
   - name: "qol_033"
     type: "vless"
     server: "106.251.70.75"
@@ -535,6 +1059,20 @@ proxies:
     reality-opts:
       public-key: "_CjW0Khlrr5z5oc9Oy6-w2ZEanz-zMBktVn5EOX9oTM"
       short-id: "6419bed7fd0a2cff"
+  - name: "qol_043"
+    type: "vless"
+    server: "130.193.59.133"
+    port: 8443
+    uuid: "6b5ba45c-3b88-466f-9ca5-3214ce1b1c16"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yandex.ru"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "_CjW0Khlrr5z5oc9Oy6-w2ZEanz-zMBktVn5EOX9oTM"
+      short-id: "f32140952ba18e18"
   - name: "qol_045"
     type: "vless"
     server: "135.84.73.69"
@@ -603,6 +1141,34 @@ proxies:
       path: "/ArEyOuMaD"
       headers:
         Host: "amphetamine.adaspoloandco.com"
+  - name: "qol_050"
+    type: "vless"
+    server: "141.101.115.71"
+    port: 8443
+    uuid: "96e05c60-cfe5-4365-9c41-b76ec30b4381"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "chopin.adaspoloandco.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/download.php"
+      headers:
+        Host: "chopin.adaspoloandco.com"
+  - name: "qol_051"
+    type: "vless"
+    server: "141.101.115.71"
+    port: 8443
+    uuid: "e8c61352-444f-4154-ba34-9d3141154a8d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "maple.adaspoloandco.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/uploader.php"
+      headers:
+        Host: "maple.adaspoloandco.com"
   - name: "qol_052"
     type: "vless"
     server: "142.171.220.62"
@@ -743,6 +1309,34 @@ proxies:
       path: "/download.php"
       headers:
         Host: "chopin.adaspoloandco.com"
+  - name: "qol_062"
+    type: "vless"
+    server: "162.159.253.41"
+    port: 8443
+    uuid: "bb3f7d41-a044-4937-bf6f-4a3d1a70db06"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "interim.adaspoloandco.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/RoBeRt"
+      headers:
+        Host: "interim.adaspoloandco.com"
+  - name: "qol_063"
+    type: "vless"
+    server: "162.159.253.41"
+    port: 8443
+    uuid: "bf116897-eca4-459c-9f97-4019fa0ace7f"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "focalin.adaspoloandco.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/RizZrAcK"
+      headers:
+        Host: "focalin.adaspoloandco.com"
   - name: "qol_064"
     type: "vless"
     server: "165.232.79.158"
@@ -827,6 +1421,34 @@ proxies:
       path: "/ArEyOuMaD"
       headers:
         Host: "amphetamine.adaspoloandco.com"
+  - name: "qol_071"
+    type: "vless"
+    server: "172.64.155.209"
+    port: 8443
+    uuid: "bb3f7d41-a044-4937-bf6f-4a3d1a70db06"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "interim.adaspoloandco.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/RoBeRt"
+      headers:
+        Host: "interim.adaspoloandco.com"
+  - name: "qol_072"
+    type: "vless"
+    server: "172.64.155.209"
+    port: 8443
+    uuid: "e8c61352-444f-4154-ba34-9d3141154a8d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "maple.adaspoloandco.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/uploader.php"
+      headers:
+        Host: "maple.adaspoloandco.com"
   - name: "qol_073"
     type: "vless"
     server: "172.64.53.241"
@@ -1098,6 +1720,20 @@ proxies:
       path: "/"
       headers:
         Host: "ir6.hnbyme.online"
+  - name: "qol_093"
+    type: "vless"
+    server: "188.114.96.3"
+    port: 2053
+    uuid: "ec77b9ff-ba31-4b1d-8a81-ee9de133bcf0"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ds2-mx-hel22-protection.iranlease.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "ds2-mx-hel22-protection.iranlease.com"
   - name: "qol_094"
     type: "vless"
     server: "188.114.98.0"
@@ -1112,6 +1748,34 @@ proxies:
       path: "/upload/?ed=2560"
       headers:
         Host: "fr.uploadsho.com"
+  - name: "qol_095"
+    type: "vless"
+    server: "188.114.98.0"
+    port: 443
+    uuid: "3f9c8463-8610-3ed8-86c8-a26713067825"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "dabaius2.sylu.net"
+    client-fingerprint: "random"
+    ws-opts:
+      path: "/db10240eb751d6ab"
+      headers:
+        Host: "dabaius2.sylu.net"
+  - name: "qol_096"
+    type: "vless"
+    server: "188.114.98.0"
+    port: 443
+    uuid: "fef4a93d-eb4f-4657-b56b-32a0dc060045"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "dev.twistsparrow.xyz"
+    client-fingerprint: "random"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "dev.twistsparrow.xyz"
   - name: "qol_097"
     type: "vless"
     server: "188.114.98.0"
@@ -1140,6 +1804,20 @@ proxies:
       path: "/RoBeRt"
       headers:
         Host: "interim.adaspoloandco.com"
+  - name: "qol_099"
+    type: "vless"
+    server: "188.114.99.160"
+    port: 8443
+    uuid: "e8c61352-444f-4154-ba34-9d3141154a8d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "maple.adaspoloandco.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/uploader.php"
+      headers:
+        Host: "maple.adaspoloandco.com"
   - name: "qol_100"
     type: "vless"
     server: "190.93.244.138"
@@ -1623,6 +2301,16 @@ proxies:
     client-fingerprint: "chrome"
     grpc-opts:
       grpc-service-name: "irannewsdaily.com.hamshahrionline.ir.irdiplomacy.ir.irandaily.ir.alef.ir.rajanews.com.irannewsdaily.com"
+  - name: "qol_135"
+    type: "vless"
+    server: "45.130.125.69"
+    port: 2096
+    uuid: "5e8c894b-1efa-48d4-85ee-9daf5d574c16"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "bad-AppLicatIon22nBd8j5OK.CArBoNbLaCkBmw.Ir"
+    client-fingerprint: "chrome"
   - name: "qol_136"
     type: "vless"
     server: "45.142.215.61"
@@ -1726,6 +2414,20 @@ proxies:
     server: "46.8.209.137"
     port: 2443
     uuid: "3732b941-b3ea-4dab-b2ff-b4d468555992"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "api-maps.yandex.ru"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "YnT2UJbXooiJNwq0YAILlBNubfEIT4hz560q5r3nHSg"
+      short-id: "ad844ecf706b8302"
+  - name: "qol_144"
+    type: "vless"
+    server: "46.8.209.137"
+    port: 2443
+    uuid: "4b39d2d4-8e14-4c36-b1bf-6e91339b9679"
     udp: true
     tls: true
     network: "tcp"
@@ -2165,6 +2867,20 @@ proxies:
       path: "/"
       headers:
         Host: "kh2tiyozkxybazdibomyhih.mahdi383ir.website"
+  - name: "qol_179"
+    type: "vless"
+    server: "cf.mahdi383ir.website"
+    port: 2083
+    uuid: "5a923f93-30d2-4f8b-ba28-afc637901e54"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "kh2tiyozkxybazdibomyhih.mahdi383ir.website"
+    client-fingerprint: "firefox"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "kh2tiyozkxybazdibomyhih.mahdi383ir.website"
   - name: "qol_180"
     type: "vless"
     server: "cf.mahdi383ir.website"
@@ -2519,6 +3235,20 @@ proxies:
     reality-opts:
       public-key: "m5ERM5v2Z1bGWZe6AoXIlnvLsSoIzS3D64KoWggwMlg"
       short-id: "ce6a0f9f"
+  - name: "qol_208"
+    type: "vless"
+    server: "ru-node.vopn.net"
+    port: 443
+    uuid: "314a1df8-b088-4241-a9aa-b853ef35e657"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ru-node.vopn.net"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "lBCt9m_PzWWdm1HvyZtJyCupmcySkfphwArSyPLPKXk"
+      short-id: "acb5cbaad2c6650b"
   - name: "qol_209"
     type: "vless"
     server: "rus.scroogethebest.com"
@@ -2835,13 +3565,16 @@ proxies:
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
+    icon: "https://www.svgrepo.com/show/412721/choose.svg"
     proxies:
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
+      - "توزیع بار چرخشی ⚖️"
       - "قطع اینترنت ⛔"
+      - "بدون فیلترشکن 🛡️"
   - name: "دستی 🤏🏻"
     type: "select"
+    icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
       - "qol_001"
       - "qol_002"
@@ -2852,18 +3585,28 @@ proxy-groups:
       - "qol_007"
       - "qol_008"
       - "qol_009"
+      - "qol_010"
+      - "qol_011"
+      - "qol_012"
       - "qol_013"
+      - "qol_014"
+      - "qol_015"
       - "qol_016"
       - "qol_017"
       - "qol_018"
       - "qol_019"
       - "qol_020"
+      - "qol_021"
+      - "qol_022"
+      - "qol_023"
       - "qol_025"
       - "qol_026"
+      - "qol_027"
       - "qol_028"
       - "qol_029"
       - "qol_030"
       - "qol_031"
+      - "qol_032"
       - "qol_033"
       - "qol_034"
       - "qol_035"
@@ -2874,11 +3617,14 @@ proxy-groups:
       - "qol_040"
       - "qol_041"
       - "qol_042"
+      - "qol_043"
       - "qol_045"
       - "qol_046"
       - "qol_047"
       - "qol_048"
       - "qol_049"
+      - "qol_050"
+      - "qol_051"
       - "qol_052"
       - "qol_053"
       - "qol_054"
@@ -2889,12 +3635,16 @@ proxy-groups:
       - "qol_059"
       - "qol_060"
       - "qol_061"
+      - "qol_062"
+      - "qol_063"
       - "qol_064"
       - "qol_065"
       - "qol_066"
       - "qol_068"
       - "qol_069"
       - "qol_070"
+      - "qol_071"
+      - "qol_072"
       - "qol_073"
       - "qol_074"
       - "qol_075"
@@ -2915,9 +3665,13 @@ proxy-groups:
       - "qol_090"
       - "qol_091"
       - "qol_092"
+      - "qol_093"
       - "qol_094"
+      - "qol_095"
+      - "qol_096"
       - "qol_097"
       - "qol_098"
+      - "qol_099"
       - "qol_100"
       - "qol_101"
       - "qol_102"
@@ -2953,6 +3707,7 @@ proxy-groups:
       - "qol_132"
       - "qol_133"
       - "qol_134"
+      - "qol_135"
       - "qol_136"
       - "qol_137"
       - "qol_138"
@@ -2961,6 +3716,7 @@ proxy-groups:
       - "qol_141"
       - "qol_142"
       - "qol_143"
+      - "qol_144"
       - "qol_146"
       - "qol_147"
       - "qol_148"
@@ -2994,6 +3750,7 @@ proxy-groups:
       - "qol_176"
       - "qol_177"
       - "qol_178"
+      - "qol_179"
       - "qol_180"
       - "qol_181"
       - "qol_182"
@@ -3020,6 +3777,7 @@ proxy-groups:
       - "qol_205"
       - "qol_206"
       - "qol_207"
+      - "qol_208"
       - "qol_209"
       - "qol_210"
       - "qol_211"
@@ -3048,10 +3806,13 @@ proxy-groups:
       - "qol_189"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
+    icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
     url: "https://www.gstatic.com/generate_204"
-    interval: 300
+    interval: 600
     tolerance: 50
-    lazy: true
+    timeout: 3200
+    lazy: false
+    max-failed-times: 2
     proxies:
       - "qol_001"
       - "qol_002"
@@ -3062,18 +3823,28 @@ proxy-groups:
       - "qol_007"
       - "qol_008"
       - "qol_009"
+      - "qol_010"
+      - "qol_011"
+      - "qol_012"
       - "qol_013"
+      - "qol_014"
+      - "qol_015"
       - "qol_016"
       - "qol_017"
       - "qol_018"
       - "qol_019"
       - "qol_020"
+      - "qol_021"
+      - "qol_022"
+      - "qol_023"
       - "qol_025"
       - "qol_026"
+      - "qol_027"
       - "qol_028"
       - "qol_029"
       - "qol_030"
       - "qol_031"
+      - "qol_032"
       - "qol_033"
       - "qol_034"
       - "qol_035"
@@ -3084,11 +3855,14 @@ proxy-groups:
       - "qol_040"
       - "qol_041"
       - "qol_042"
+      - "qol_043"
       - "qol_045"
       - "qol_046"
       - "qol_047"
       - "qol_048"
       - "qol_049"
+      - "qol_050"
+      - "qol_051"
       - "qol_052"
       - "qol_053"
       - "qol_054"
@@ -3099,12 +3873,16 @@ proxy-groups:
       - "qol_059"
       - "qol_060"
       - "qol_061"
+      - "qol_062"
+      - "qol_063"
       - "qol_064"
       - "qol_065"
       - "qol_066"
       - "qol_068"
       - "qol_069"
       - "qol_070"
+      - "qol_071"
+      - "qol_072"
       - "qol_073"
       - "qol_074"
       - "qol_075"
@@ -3125,9 +3903,13 @@ proxy-groups:
       - "qol_090"
       - "qol_091"
       - "qol_092"
+      - "qol_093"
       - "qol_094"
+      - "qol_095"
+      - "qol_096"
       - "qol_097"
       - "qol_098"
+      - "qol_099"
       - "qol_100"
       - "qol_101"
       - "qol_102"
@@ -3163,6 +3945,7 @@ proxy-groups:
       - "qol_132"
       - "qol_133"
       - "qol_134"
+      - "qol_135"
       - "qol_136"
       - "qol_137"
       - "qol_138"
@@ -3171,6 +3954,7 @@ proxy-groups:
       - "qol_141"
       - "qol_142"
       - "qol_143"
+      - "qol_144"
       - "qol_146"
       - "qol_147"
       - "qol_148"
@@ -3204,6 +3988,7 @@ proxy-groups:
       - "qol_176"
       - "qol_177"
       - "qol_178"
+      - "qol_179"
       - "qol_180"
       - "qol_181"
       - "qol_182"
@@ -3230,6 +4015,7 @@ proxy-groups:
       - "qol_205"
       - "qol_206"
       - "qol_207"
+      - "qol_208"
       - "qol_209"
       - "qol_210"
       - "qol_211"
@@ -3256,8 +4042,273 @@ proxy-groups:
       - "qol_145"
       - "qol_188"
       - "qol_189"
-  - name: "سایتای ایرانی 🇮🇷"
+  - name: "توزیع بار چرخشی ⚖️"
+    type: "load-balance"
+    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
+    strategy: "round-robin"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 30
+    timeout: 1500
+    lazy: false
+    proxies:
+      - "qol_001"
+      - "qol_002"
+      - "qol_003"
+      - "qol_004"
+      - "qol_005"
+      - "qol_006"
+      - "qol_007"
+      - "qol_008"
+      - "qol_009"
+      - "qol_010"
+      - "qol_011"
+      - "qol_012"
+      - "qol_013"
+      - "qol_014"
+      - "qol_015"
+      - "qol_016"
+      - "qol_017"
+      - "qol_018"
+      - "qol_019"
+      - "qol_020"
+      - "qol_021"
+      - "qol_022"
+      - "qol_023"
+      - "qol_025"
+      - "qol_026"
+      - "qol_027"
+      - "qol_028"
+      - "qol_029"
+      - "qol_030"
+      - "qol_031"
+      - "qol_032"
+      - "qol_033"
+      - "qol_034"
+      - "qol_035"
+      - "qol_036"
+      - "qol_037"
+      - "qol_038"
+      - "qol_039"
+      - "qol_040"
+      - "qol_041"
+      - "qol_042"
+      - "qol_043"
+      - "qol_045"
+      - "qol_046"
+      - "qol_047"
+      - "qol_048"
+      - "qol_049"
+      - "qol_050"
+      - "qol_051"
+      - "qol_052"
+      - "qol_053"
+      - "qol_054"
+      - "qol_055"
+      - "qol_056"
+      - "qol_057"
+      - "qol_058"
+      - "qol_059"
+      - "qol_060"
+      - "qol_061"
+      - "qol_062"
+      - "qol_063"
+      - "qol_064"
+      - "qol_065"
+      - "qol_066"
+      - "qol_068"
+      - "qol_069"
+      - "qol_070"
+      - "qol_071"
+      - "qol_072"
+      - "qol_073"
+      - "qol_074"
+      - "qol_075"
+      - "qol_076"
+      - "qol_077"
+      - "qol_078"
+      - "qol_079"
+      - "qol_080"
+      - "qol_081"
+      - "qol_082"
+      - "qol_083"
+      - "qol_084"
+      - "qol_085"
+      - "qol_086"
+      - "qol_087"
+      - "qol_088"
+      - "qol_089"
+      - "qol_090"
+      - "qol_091"
+      - "qol_092"
+      - "qol_093"
+      - "qol_094"
+      - "qol_095"
+      - "qol_096"
+      - "qol_097"
+      - "qol_098"
+      - "qol_099"
+      - "qol_100"
+      - "qol_101"
+      - "qol_102"
+      - "qol_103"
+      - "qol_104"
+      - "qol_105"
+      - "qol_106"
+      - "qol_107"
+      - "qol_108"
+      - "qol_109"
+      - "qol_110"
+      - "qol_111"
+      - "qol_112"
+      - "qol_113"
+      - "qol_114"
+      - "qol_115"
+      - "qol_116"
+      - "qol_117"
+      - "qol_118"
+      - "qol_119"
+      - "qol_120"
+      - "qol_121"
+      - "qol_122"
+      - "qol_123"
+      - "qol_124"
+      - "qol_125"
+      - "qol_126"
+      - "qol_127"
+      - "qol_128"
+      - "qol_129"
+      - "qol_130"
+      - "qol_131"
+      - "qol_132"
+      - "qol_133"
+      - "qol_134"
+      - "qol_135"
+      - "qol_136"
+      - "qol_137"
+      - "qol_138"
+      - "qol_139"
+      - "qol_140"
+      - "qol_141"
+      - "qol_142"
+      - "qol_143"
+      - "qol_144"
+      - "qol_146"
+      - "qol_147"
+      - "qol_148"
+      - "qol_149"
+      - "qol_150"
+      - "qol_151"
+      - "qol_152"
+      - "qol_153"
+      - "qol_154"
+      - "qol_155"
+      - "qol_156"
+      - "qol_157"
+      - "qol_158"
+      - "qol_159"
+      - "qol_160"
+      - "qol_161"
+      - "qol_162"
+      - "qol_163"
+      - "qol_164"
+      - "qol_165"
+      - "qol_166"
+      - "qol_167"
+      - "qol_168"
+      - "qol_169"
+      - "qol_170"
+      - "qol_171"
+      - "qol_172"
+      - "qol_173"
+      - "qol_174"
+      - "qol_175"
+      - "qol_176"
+      - "qol_177"
+      - "qol_178"
+      - "qol_179"
+      - "qol_180"
+      - "qol_181"
+      - "qol_182"
+      - "qol_183"
+      - "qol_184"
+      - "qol_185"
+      - "qol_186"
+      - "qol_187"
+      - "qol_190"
+      - "qol_191"
+      - "qol_192"
+      - "qol_193"
+      - "qol_194"
+      - "qol_195"
+      - "qol_196"
+      - "qol_197"
+      - "qol_198"
+      - "qol_199"
+      - "qol_200"
+      - "qol_201"
+      - "qol_202"
+      - "qol_203"
+      - "qol_204"
+      - "qol_205"
+      - "qol_206"
+      - "qol_207"
+      - "qol_208"
+      - "qol_209"
+      - "qol_210"
+      - "qol_211"
+      - "qol_212"
+      - "qol_213"
+      - "qol_214"
+      - "qol_215"
+      - "qol_216"
+      - "qol_217"
+      - "qol_218"
+      - "qol_219"
+      - "qol_220"
+      - "qol_221"
+      - "qol_222"
+      - "qol_223"
+      - "qol_224"
+      - "qol_225"
+      - "qol_226"
+      - "qol_227"
+      - "qol_228"
+      - "qol_024"
+      - "qol_044"
+      - "qol_067"
+      - "qol_145"
+      - "qol_188"
+      - "qol_189"
+  - name: "المنت 💬"
     type: "select"
+    icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تیم‌اسپیک 🎧"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/331567/teamspeak.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دلتاچت ✉️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/373771/mail.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دانلود منیجر 📥"
+    type: "select"
+    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
     proxies:
       - "بدون فیلترشکن 🛡️"
       - "نوع انتخاب پروکسی 🔀"
@@ -3266,32 +4317,323 @@ proxy-groups:
       - "اجازه ندادن 🚫"
   - name: "تلگرام 💬"
     type: "select"
+    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+  - name: "یوتیوب ▶️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "گوگل 🌍"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475656/google-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "واتس آپ 🟢"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "هوش مصنوعی 🤖"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/306500/openai.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "توییتر 🐦"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475689/twitter-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "اسپاتیفای 🎵"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "اینستاگرام 📸"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/452229/instagram-1.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "تبلیغات 🆎"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/336358/ad.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "تبلیغات اپ ها 🍃"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "رهگیری جهانی 🛑"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "سایتای مخرب ⚠️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "استیم 🖥️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/452107/steam.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "گیم 🎮"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "توییچ 📡"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/343527/twitch-network-communication-interaction-connection.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "ویندوز 🧊"
+    type: "select"
+    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "اجازه ندادن 🚫"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+  - name: "کلودفلر ☁️"
+    type: "select"
+    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "گیتهاب 🐙"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/355033/github.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دیسکورد 🗣️"
+    type: "select"
+    icon: "https://automatorplugin.com/wp-content/uploads/2024/10/discord-icon.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "استریمیو 🎬"
+    type: "select"
+    icon: "https://stremio.github.io/stremio-addon-guide/img/stremio.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "انی‌دسک 🔴"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "سایتای سانسوری 🤬"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Censorship.svg/300px-Censorship.svg.png"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
   - name: "بدون فیلترشکن 🛡️"
     type: "select"
+    icon: "https://www.svgrepo.com/show/6318/connection.svg"
     proxies:
       - "DIRECT"
     hidden: true
   - name: "قطع اینترنت ⛔"
     type: "select"
+    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
     proxies:
       - "REJECT"
     hidden: true
   - name: "اجازه ندادن 🚫"
     type: "select"
+    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
     proxies:
       - "REJECT"
     hidden: true
 rules:
-  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,DownloadManagers,دانلود منیجر 📥"
+  - "RULE-SET,Download,دانلود منیجر 📥"
+  - "RULE-SET,stremio,استریمیو 🎬"
+  - "PROCESS-NAME,im.vector.app,المنت 💬"
+  - "PROCESS-NAME,io.element.android.x,المنت 💬"
+  - "PROCESS-NAME,Element.exe,المنت 💬"
+  - "DOMAIN-SUFFIX,aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,chat.aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,site.aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,electonet.xyz,المنت 💬"
+  - "DOMAIN-SUFFIX,chat.electonet.xyz,المنت 💬"
+  - "DOMAIN-SUFFIX,rainbuwu.ir,المنت 💬"
+  - "DOMAIN-SUFFIX,cinny.rainbuwu.ir,المنت 💬"
+  - "PROCESS-NAME,chat.delta,دلتاچت ✉️"
+  - "PROCESS-NAME,DeltaChat.exe,دلتاچت ✉️"
+  - "DOMAIN-SUFFIX,arsalandalvand.ir,دلتاچت ✉️"
+  - "DST-PORT,993,دلتاچت ✉️"
+  - "DST-PORT,465,دلتاچت ✉️"
+  - "DST-PORT,587,دلتاچت ✉️"
+  - "PROCESS-NAME,com.teamspeak.ts3client,تیم‌اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win64.exe,تیم‌اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win32.exe,تیم‌اسپیک 🎧"
+  - "DOMAIN-SUFFIX,ag.tssq.ir,تیم‌اسپیک 🎧"
+  - "DST-PORT,9987,تیم‌اسپیک 🎧"
+  - "RULE-SET,BanProgramAD,تبلیغات اپ ها 🍃"
+  - "RULE-SET,BanAD,رهگیری جهانی 🛑"
+  - "RULE-SET,PrivateTracker,رهگیری جهانی 🛑"
+  - "RULE-SET,category_public_tracker,رهگیری جهانی 🛑"
+  - "RULE-SET,malware,سایتای مخرب ⚠️"
+  - "RULE-SET,phishing,سایتای مخرب ⚠️"
+  - "RULE-SET,cryptominers,سایتای مخرب ⚠️"
+  - "RULE-SET,warninglist,سایتای مخرب ⚠️"
+  - "RULE-SET,Ponzi,سایتای مخرب ⚠️"
+  - "RULE-SET,LiteAds,تبلیغات 🆎"
+  - "RULE-SET,iran_ads,تبلیغات 🆎"
+  - "RULE-SET,PersianBlocker,تبلیغات 🆎"
+  - "RULE-SET,ads,تبلیغات 🆎"
+  - "RULE-SET,BanEasyList,تبلیغات 🆎"
+  - "RULE-SET,twitch,توییچ 📡"
   - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
   - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger.web,تلگرام 💬"
+  - "RULE-SET,telegram,تلگرام 💬"
+  - "RULE-SET,YouTube,یوتیوب ▶️"
+  - "RULE-SET,youtube,یوتیوب ▶️"
+  - "RULE-SET,YouTubeMusic,یوتیوب ▶️"
+  - "PROCESS-NAME,com.anydesk.anydeskandroid,انی‌دسک 🔴"
+  - "PROCESS-NAME,AnyDesk.exe,انی‌دسک 🔴"
+  - "DOMAIN-SUFFIX,anydesk.com,انی‌دسک 🔴"
+  - "PROCESS-NAME,Twitter.exe,توییتر 🐦"
+  - "PROCESS-NAME,com.twitter.android,توییتر 🐦"
+  - "RULE-SET,Chotwitter,توییتر 🐦"
+  - "RULE-SET,mihTwitter,توییتر 🐦"
+  - "RULE-SET,Domtwitter,توییتر 🐦"
+  - "PROCESS-NAME,com.spotify.music,اسپاتیفای 🎵"
+  - "PROCESS-NAME,Spotify.exe,اسپاتیفای 🎵"
+  - "RULE-SET,DomainSpotify,اسپاتیفای 🎵"
+  - "RULE-SET,mihspotify,اسپاتیفای 🎵"
+  - "PROCESS-NAME,com.instagram.android,اینستاگرام 📸"
+  - "RULE-SET,instagram,اینستاگرام 📸"
+  - "DOMAIN-SUFFIX,deepseek.com,هوش مصنوعی 🤖"
+  - "DOMAIN-SUFFIX,qwen.ai,هوش مصنوعی 🤖"
+  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
+  - "RULE-SET,censor,سایتای سانسوری 🤬"
+  - "RULE-SET,apps,سایتای ایرانی 🇮🇷"
   - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,arvancloud,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,derakcloud,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,iranserver,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,parspack,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,irasn,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,ircidr,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,ir,سایتای ایرانی 🇮🇷"
   - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
-  - "GEOIP,ir,سایتای ایرانی 🇮🇷"
+  - "DOMAIN-SUFFIX,unimics.com,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,whatsapp,واتس آپ 🟢"
+  - "RULE-SET,steam,استیم 🖥️"
+  - "RULE-SET,SteamRegionCheck,استیم 🖥️"
+  - "RULE-SET,game,گیم 🎮"
+  - "RULE-SET,GameDownload,گیم 🎮"
+  - "RULE-SET,category-games,گیم 🎮"
+  - "RULE-SET,Xbox,گیم 🎮"
+  - "RULE-SET,discord,دیسکورد 🗣️"
+  - "RULE-SET,xiaomi_white_list,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,xiaomi_block_list,تبلیغات اپ ها 🍃"
+  - "RULE-SET,windows,ویندوز 🧊"
+  - "RULE-SET,cloudflare,کلودفلر ☁️"
+  - "RULE-SET,github,گیتهاب 🐙"
+  - "PROCESS-NAME,com.android.vending,نوع انتخاب پروکسی 🔀"
+  - "PROCESS-NAME,com.google.android.gms,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google,گوگل 🌍"
+  - "IP-CIDR,10.10.34.0/24,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,private,بدون فیلترشکن 🛡️"
   - "MATCH,نوع انتخاب پروکسی 🔀"

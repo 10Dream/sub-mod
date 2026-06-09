@@ -1,4 +1,7 @@
 global-client-fingerprint: "chrome"
+keep-alive-interval: 5
+keep-alive-idle: 10
+disable-keep-alive: false
 port: 7890
 socks-port: 7891
 redir-port: 7892
@@ -8,21 +11,17 @@ allow-lan: true
 tcp-concurrent: true
 enable-process: true
 find-process-mode: "always"
-ipv6: true
+ipv6: false
 log-level: "info"
 geo-auto-update: true
 geo-update-interval: 168
 secret: ""
 bind-address: "*"
 unified-delay: false
-disable-keep-alive: false
-keep-alive-idle: 30
-keep-alive-interval: 30
 dns:
   enable: true
-  ipv6: true
-  respect-rules: false
-  prefer-h3: true
+  ipv6: false
+  prefer-h3: false
   cache-algorithm: "arc"
   use-system-hosts: true
   use-host: true
@@ -42,19 +41,74 @@ dns:
     - "ntp.*.com"
     - "*.ir"
   default-nameserver:
-    - "8.8.8.8"
-    - "8.8.4.4"
     - "1.1.1.1"
+    - "8.8.8.8"
     - "9.9.9.9"
   nameserver:
-    - "https://dns.google/dns-query"
-    - "https://cloudflare-dns.com/dns-query"
+    - "tcp://1.1.1.1"
+    - "tcp://1.0.0.1"
+    - "tcp://8.8.8.8"
+    - "tcp://8.8.4.4"
+    - "tcp://9.9.9.9"
+    - "tcp://149.112.112.112"
+    - "tcp://208.67.222.222"
+    - "tcp://208.67.220.222"
+  fallback:
+    - "tcp://76.76.19.19"
+    - "tcp://76.223.122.150"
+    - "tcp://185.228.168.9"
+    - "tcp://185.228.169.9"
+    - "tcp://8.26.56.26"
+    - "tcp://8.20.247.20"
+    - "tcp://76.76.2.11"
+    - "tcp://76.76.10.11"
+    - "tcp://84.200.69.80"
+    - "tcp://84.200.70.40"
+    - "tcp://45.33.97.5"
+    - "tcp://37.235.1.177"
+    - "tcp://209.244.0.3"
+    - "tcp://209.244.0.4"
+    - "tcp://156.154.70.5"
+    - "tcp://156.154.71.5"
+    - "tcp://103.86.96.100"
+    - "tcp://103.86.99.100"
+    - "tcp://199.85.126.10"
+    - "tcp://199.85.127.10"
+    - "tcp://129.250.35.250"
+    - "tcp://129.250.35.251"
+    - "tcp://94.16.114.254"
+    - "tcp://94.247.43.254"
+    - "tcp://208.67.222.20"
+    - "tcp://195.46.39.39"
+    - "tcp://195.46.39.40"
+    - "tcp://204.117.214.10"
+    - "tcp://199.2.252.10"
+    - "tcp://194.169.169.169"
+    - "tcp://156.154.70.1"
+    - "tcp://156.154.71.1"
+    - "tcp://91.239.100.100"
+    - "tcp://89.233.43.71"
+    - "tcp://64.6.64.6"
+    - "tcp://64.6.65.6"
+    - "tcp://77.88.8.8"
+    - "tcp://77.88.8.1"
+  fallback-filter:
+    geoip: true
+    geoip-code: "IR"
+    geosite:
+      - "gfw"
+    ipcidr:
+      - "240.0.0.0/4"
+    domain:
+      - "+.google.com"
+      - "+.facebook.com"
+      - "+.youtube.com"
+  proxy-server-nameserver:
+    - "tcp://1.1.1.1"
+    - "tcp://8.8.8.8"
   direct-nameserver:
     - "78.157.42.100"
     - "78.157.42.101"
-  proxy-server-nameserver:
-    - "1.1.1.1"
-    - "8.8.8.8"
 sniffer:
   enable: true
   force-dns-mapping: true
@@ -88,12 +142,60 @@ tun:
     - "any:53"
     - "tcp://any:53"
 rule-providers:
+  category_public_tracker:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-public-tracker.yaml"
+    interval: 86400
+    path: "./ruleset/category_public_tracker.yaml"
+  iran_ads:
+    type: "http"
+    behavior: "domain"
+    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    interval: 86400
+    path: "./ruleset/iran_ads.yaml"
+  PersianBlocker:
+    type: "http"
+    behavior: "domain"
+    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    interval: 86400
+    path: "./ruleset/PersianBlocker.yaml"
+  youtube:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
+    interval: 86400
+    path: "./ruleset/youtube.yaml"
+  telegram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
+    interval: 86400
+    path: "./ruleset/telegram.yaml"
+  twitch:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
+    interval: 86400
+    path: "./ruleset/twitch.yaml"
+  censor:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
+    interval: 86400
+    path: "./ruleset/censor.yaml"
   local_ips:
     type: "http"
     behavior: "ipcidr"
     url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
     interval: 86400
     path: "./ruleset/local_ips.yaml"
+  private:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
+    interval: 86400
+    path: "./ruleset/private.yaml"
   category_ir:
     type: "http"
     behavior: "domain"
@@ -106,6 +208,296 @@ rule-providers:
     url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
     interval: 86400
     path: "./ruleset/iran.yaml"
+  steam:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
+    interval: 86400
+    path: "./ruleset/steam.yaml"
+  game:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
+    interval: 86400
+    path: "./ruleset/game.yaml"
+  category-games:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
+    interval: 86400
+    path: "./ruleset/category-games.yaml"
+  ir:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
+    interval: 86400
+    path: "./ruleset/ir.yaml"
+  apps:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
+    interval: 86400
+    path: "./ruleset/apps.yaml"
+  ircidr:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
+    interval: 86400
+    path: "./ruleset/ircidr.yaml"
+  irasn:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
+    interval: 86400
+    path: "./ruleset/irasn.yaml"
+  arvancloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
+    interval: 86400
+    path: "./ruleset/arvancloud.yaml"
+  derakcloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
+    interval: 86400
+    path: "./ruleset/derakcloud.yaml"
+  iranserver:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
+    interval: 86400
+    path: "./ruleset/iranserver.yaml"
+  parspack:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
+    interval: 86400
+    path: "./ruleset/parspack.yaml"
+  malware:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/malware.yaml"
+    interval: 86400
+    path: "./ruleset/malware.yaml"
+  phishing:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/phishing.yaml"
+    interval: 86400
+    path: "./ruleset/phishing.yaml"
+  cryptominers:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/cryptominers.yaml"
+    interval: 86400
+    path: "./ruleset/cryptominers.yaml"
+  ads:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/Chocolate4U/Iran-clash-rules/releases/download/202606060815/category-ads-all.yaml"
+    interval: 86400
+    path: "./ruleset/ads.yaml"
+  DownloadManagers:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
+    interval: 86400
+    path: "./ruleset/DownloadManagers.yaml"
+  BanProgramAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanProgramAD.yaml"
+  BanAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanAD.yaml"
+  PrivateTracker:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
+    interval: 86400
+    path: "./ruleset/PrivateTracker.yaml"
+  BanEasyList:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
+    interval: 86400
+    path: "./ruleset/BanEasyList.yaml"
+  Download:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
+    interval: 86400
+    path: "./ruleset/Download.yaml"
+  GameDownload:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
+    interval: 86400
+    path: "./ruleset/GameDownload.yaml"
+  SteamRegionCheck:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
+    interval: 86400
+    path: "./ruleset/SteamRegionCheck.yaml"
+  Xbox:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
+    interval: 86400
+    path: "./ruleset/Xbox.yaml"
+  YouTubeMusic:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
+    interval: 86400
+    path: "./ruleset/YouTubeMusic.yaml"
+  YouTube:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
+    interval: 86400
+    path: "./ruleset/YouTube.yaml"
+  Ponzi:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
+    interval: 86400
+    path: "./ruleset/Ponzi.yaml"
+  warninglist:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/warning-list.yaml"
+    interval: 86400
+    path: "./ruleset/warninglist.yaml"
+  google:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
+    interval: 86400
+    path: "./ruleset/google.yaml"
+  google-play:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
+    interval: 86400
+    path: "./ruleset/google-play.yaml"
+  xiaomi_block_list:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_block_list.yaml"
+  xiaomi_white_list:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_white_list.yaml"
+  cloudflare:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
+    interval: 86400
+    path: "./ruleset/cloudflare.yaml"
+  github:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
+    interval: 86400
+    path: "./ruleset/xgithub.yaml"
+  whatsapp:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
+    interval: 86400
+    path: "./ruleset/whatsapp.yaml"
+  LiteAds:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/LiteAds.yaml"
+    interval: 86400
+    path: "./ruleset/LiteAds.yaml"
+  discord:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
+    interval: 86400
+    path: "./ruleset/discord.yaml"
+  instagram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    interval: 86400
+    path: "./ruleset/instagram.yaml"
+  category-ai:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    interval: 86400
+    path: "./ruleset/category-ai.yaml"
+  stremio:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    interval: 86400
+    path: "./ruleset/stremio.yaml"
+  windows:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    interval: 86400
+    path: "./ruleset/windows.yaml"
+  Chotwitter:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/twitter.yaml"
+    interval: 86400
+    path: "./ruleset/Chotwitter.yaml"
+  mihTwitter:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Twitter.yaml"
+    interval: 86400
+    path: "./ruleset/mihTwitter.yaml"
+  Domtwitter:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/twitter.yaml"
+    interval: 86400
+    path: "./ruleset/Domtwitter.yaml"
+  DomainSpotify:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/spotify.yaml"
+    interval: 86400
+    path: "./ruleset/DomainSpotify.yaml"
+  mihspotify:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Spotify.yaml"
+    interval: 86400
+    path: "./ruleset/mihSpotify.yaml"
 proxies:
   - name: "hamedp71::🏴‍☠️"
     type: "vless"
@@ -290,6 +682,16 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
+  - name: "hamedp71::🇩🇪-3"
+    type: "vless"
+    server: "cdn9-33.vk-cdnvideo.com"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn9-33.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
   - name: "hamedp71::🇮🇹-2"
     type: "vless"
     server: "sca8.myfymain.com"
@@ -450,7 +852,7 @@ proxies:
     reality-opts:
       public-key: "FGnWfD70nPQhiMZUQETB_mKaR-J_2DonpOpy9eqQ_F0"
       short-id: "8c4907b7884b31"
-  - name: "hamedp71::🇩🇪-3"
+  - name: "hamedp71::🇩🇪-4"
     type: "vless"
     server: "144.31.157.56"
     port: 443
@@ -509,7 +911,7 @@ proxies:
     udp: true
     tls: false
     network: "grpc"
-  - name: "hamedp71::🇩🇪-4"
+  - name: "hamedp71::🇩🇪-5"
     type: "vless"
     server: "91.107.191.12"
     port: 29376
@@ -527,7 +929,7 @@ proxies:
     network: "ws"
     ws-opts:
       path: "/vless/"
-  - name: "hamedp71::🇩🇪-5"
+  - name: "hamedp71::🇩🇪-6"
     type: "vless"
     server: "64.226.109.18"
     port: 4399
@@ -540,6 +942,18 @@ proxies:
       path: "/@Marisa_kristifp=chrome"
       headers:
         Host: "ooa858iqkhza12.mesa.ip-ddns.com"
+  - name: "hamedp71::🇮🇹-8"
+    type: "vless"
+    server: "ov-italy1.09vpn.com"
+    port: 80
+    uuid: "049e56d8-0ba0-49e3-b764-ee04122b9f00"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/vless/"
+      headers:
+        Host: "OV-Italy1.09vpn.com"
   - name: "hamedp71::🇨🇦"
     type: "vless"
     server: "ov-canada1.09vpn.com"
@@ -575,7 +989,7 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "ZJRnFU-1s1JOnO8E9uZ7b00l1fPEh63fGRbdBANFRno"
-  - name: "hamedp71::🇩🇪-6"
+  - name: "hamedp71::🇩🇪-7"
     type: "vless"
     server: "31.76.126.129"
     port: 2040
@@ -587,7 +1001,7 @@ proxies:
     reality-opts:
       public-key: "LidllyozUeeSbuzJ0ZfieGoy8YjVzqXX9H2m9whPaG0"
       short-id: "53197c66aef53c44"
-  - name: "hamedp71::🇩🇪-7"
+  - name: "hamedp71::🇩🇪-8"
     type: "vless"
     server: "96.126.129.195"
     port: 2040
@@ -599,7 +1013,7 @@ proxies:
     reality-opts:
       public-key: "LidllyozUeeSbuzJ0ZfieGoy8YjVzqXX9H2m9whPaG0"
       short-id: "53197c66aef53c44"
-  - name: "hamedp71::🇩🇪-8"
+  - name: "hamedp71::🇩🇪-9"
     type: "vless"
     server: "108.165.236.144"
     port: 2040
@@ -694,7 +1108,7 @@ proxies:
     servername: "uk1.fromblancwithlove.com"
     alpn:
       - "h2"
-  - name: "hamedp71::🇩🇪-9"
+  - name: "hamedp71::🇩🇪-10"
     type: "vless"
     server: "152.233.35.228"
     port: 8443
@@ -940,6 +1354,18 @@ proxies:
     network: "tcp"
     alpn:
       - "h2"
+  - name: "hamedp71::🇫🇷-5"
+    type: "vless"
+    server: "152.228.162.19"
+    port: 80
+    uuid: "5ce84688-f535-46ad-a512-37b17becf6ea"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/vless/"
+      headers:
+        Host: "akamaized.net"
   - name: "hamedp71::🇵🇱-3"
     type: "vless"
     server: "pl.moktana.app"
@@ -1073,7 +1499,19 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "Fp0-VrMBeaQe9xOrehDYHt0mqTZL-5CdfuMEzoXkOE8"
-  - name: "hamedp71::🇩🇪-10"
+  - name: "hamedp71::🇫🇮-9"
+    type: "vless"
+    server: "31.76.53.0"
+    port: 443
+    uuid: "749a5df1-2d12-45cf-80f3-f85ea6b2e405"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "google.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "Fp0-VrMBeaQe9xOrehDYHt0mqTZL-5CdfuMEzoXkOE8"
+  - name: "hamedp71::🇩🇪-11"
     type: "vless"
     server: "ov-germany1.09vpn.com"
     port: 80
@@ -1111,7 +1549,7 @@ proxies:
     alpn:
       - "h2"
     flow: "xtls-rprx-vision"
-  - name: "hamedp71::🇫🇷-5"
+  - name: "hamedp71::🇫🇷-6"
     type: "vless"
     server: "fr.noooo.win"
     port: 443
@@ -1138,7 +1576,7 @@ proxies:
       path: "/"
       headers:
         Host: "orange-math-8a2e.parsa-esfandpoor89.workers.dev"
-  - name: "hamedp71::🇩🇪-11"
+  - name: "hamedp71::🇩🇪-12"
     type: "vless"
     server: "57.129.41.216"
     port: 80
@@ -1150,7 +1588,7 @@ proxies:
       path: "/vless/"
       headers:
         Host: "OV-Germany1.09vpn.com"
-  - name: "hamedp71::🇩🇪-12"
+  - name: "hamedp71::🇩🇪-13"
     type: "vless"
     server: "bero-3.bexum.fun"
     port: 9443
@@ -1189,7 +1627,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "cdn7-09.vk-cdnvideo.com"
-  - name: "hamedp71::🇩🇪-13"
+  - name: "hamedp71::🇩🇪-14"
     type: "vless"
     server: "87.120.93.240"
     port: 443
@@ -1259,7 +1697,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "cdn7-09.vk-cdnvideo.com"
-  - name: "hamedp71::🇩🇪-14"
+  - name: "hamedp71::🇩🇪-15"
     type: "vless"
     server: "87.120.93.242"
     port: 443
@@ -1446,6 +1884,24 @@ proxies:
     network: "tcp"
     servername: "cdn3-87.vk-cdnvideo.com"
     client-fingerprint: "chrome"
+  - name: "hamedp71::🇳🇱-16"
+    type: "vless"
+    server: "cdn3-87.vk-cdnvideo.com"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn3-87.vk-cdnvideo.com"
+  - name: "hamedp71::🇸🇰-6"
+    type: "vless"
+    server: "cdn7-39.vk-cdnvideo.com"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    client-fingerprint: "safari"
   - name: "hamedp71::🇭🇰-1"
     type: "vless"
     server: "47.83.153.19"
@@ -1459,7 +1915,7 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "W9BjX6YmCIVsjhKMlz233Yoe0xcf0SVHfvPKqbf3vCg"
-  - name: "hamedp71::🇮🇹-8"
+  - name: "hamedp71::🇮🇹-9"
     type: "vless"
     server: "204.216.216.23"
     port: 10086
@@ -1467,7 +1923,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "hamedp71::🇳🇱-16"
+  - name: "hamedp71::🇳🇱-17"
     type: "vless"
     server: "89.124.78.248"
     port: 1310
@@ -1479,7 +1935,7 @@ proxies:
       path: "/@v2raydia--@v2raydia--@v2raydia--@v2raydia--@v2raydia--@v2raydia--@v2raydia--@v2raydia--@v2raydia--@v2raydia"
       headers:
         Host: "play.google.com"
-  - name: "hamedp71::🇳🇱-17"
+  - name: "hamedp71::🇳🇱-18"
     type: "vless"
     server: "72.56.59.177"
     port: 22231
@@ -1494,7 +1950,7 @@ proxies:
       - "h2"
       - "http/1.1"
     flow: "xtls-rprx-vision"
-  - name: "hamedp71::🇳🇱-18"
+  - name: "hamedp71::🇳🇱-19"
     type: "vless"
     server: "72.56.59.223"
     port: 22231
@@ -1508,7 +1964,7 @@ proxies:
       - "h2"
       - "http/1.1"
     flow: "xtls-rprx-vision"
-  - name: "hamedp71::🇳🇱-19"
+  - name: "hamedp71::🇳🇱-20"
     type: "vless"
     server: "85.234.114.53"
     port: 22231
@@ -1519,7 +1975,18 @@ proxies:
     servername: "r1.mizulina.top"
     client-fingerprint: "edge"
     flow: "xtls-rprx-vision"
-  - name: "hamedp71::🇫🇷-6"
+  - name: "hamedp71::🇳🇱-21"
+    type: "vless"
+    server: "r1.mizulina.top"
+    port: 22231
+    uuid: "afcac633-0e1a-46c3-bef2-cc01cc0097c8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "r1.mizulina.top"
+    client-fingerprint: "edge"
+    flow: "xtls-rprx-vision"
+  - name: "hamedp71::🇫🇷-7"
     type: "vless"
     server: "149.202.58.99"
     port: 443
@@ -1533,7 +2000,7 @@ proxies:
       path: "/vws/"
       headers:
         Host: "bab-6.site"
-  - name: "hamedp71::🇫🇷-7"
+  - name: "hamedp71::🇫🇷-8"
     type: "vless"
     server: "bab-6.site"
     port: 443
@@ -1547,7 +2014,7 @@ proxies:
       path: "/vws/"
       headers:
         Host: "bab-6.site"
-  - name: "hamedp71::🇫🇮-9"
+  - name: "hamedp71::🇫🇮-10"
     type: "vless"
     server: "172.64.33.162"
     port: 443
@@ -1560,7 +2027,7 @@ proxies:
       path: "/udfyfws"
       headers:
         Host: "octopusss5.info"
-  - name: "hamedp71::🇫🇮-10"
+  - name: "hamedp71::🇫🇮-11"
     type: "vless"
     server: "elliot.ns.cloudflare.com"
     port: 443
@@ -1586,7 +2053,7 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "lJ9INPpO4rdnm2Tek_yg0PGFyUrBB6MoKyvqt_Mfqm0"
-  - name: "hamedp71::🇩🇪-15"
+  - name: "hamedp71::🇩🇪-16"
     type: "vless"
     server: "162.19.228.119"
     port: 80
@@ -1624,7 +2091,7 @@ proxies:
       path: "/"
       headers:
         Host: "pimxpass.alex96336997.workers.dev"
-  - name: "hamedp71::🇩🇪-16"
+  - name: "hamedp71::🇩🇪-17"
     type: "vless"
     server: "de.vpnbase.net"
     port: 80
@@ -1662,7 +2129,7 @@ proxies:
       path: "/fp=chrome"
       headers:
         Host: "hhlfy.twiladaphne.ndjp.net"
-  - name: "hamedp71::🇫🇮-11"
+  - name: "hamedp71::🇫🇮-12"
     type: "vless"
     server: "109.120.132.142"
     port: 40617
@@ -1696,7 +2163,7 @@ proxies:
       path: "/fp=chrome"
       headers:
         Host: "hhlfy.twiladaphne.ndjp.net"
-  - name: "hamedp71::🇮🇹-9"
+  - name: "hamedp71::🇮🇹-10"
     type: "vless"
     server: "ov-italy1.09vpn.com"
     port: 8443
@@ -1706,7 +2173,7 @@ proxies:
     network: "ws"
     ws-opts:
       path: "/vless/"
-  - name: "hamedp71::🇳🇱-20"
+  - name: "hamedp71::🇳🇱-22"
     type: "vless"
     server: "sc-thenetherlands2.09vpn.com"
     port: 80
@@ -1746,7 +2213,7 @@ proxies:
       path: "/"
       headers:
         Host: "crimson-king-301d.nexoxnet.workers.dev"
-  - name: "hamedp71::🇫🇮-12"
+  - name: "hamedp71::🇫🇮-13"
     type: "vless"
     server: "104.21.23.131"
     port: 80
@@ -1771,7 +2238,7 @@ proxies:
       path: "/fp=random"
       headers:
         Host: "hhlfy.twiladaphne.ndjp.net"
-  - name: "hamedp71::🇫🇮-13"
+  - name: "hamedp71::🇫🇮-14"
     type: "vless"
     server: "188.114.97.3"
     port: 80
@@ -1783,7 +2250,7 @@ proxies:
       path: "/"
       headers:
         Host: "main.boobie.eu.cc"
-  - name: "hamedp71::🇫🇮-14"
+  - name: "hamedp71::🇫🇮-15"
     type: "vless"
     server: "188.114.96.3"
     port: 80
@@ -1795,7 +2262,7 @@ proxies:
       path: "/"
       headers:
         Host: "main.boobie.eu.cc"
-  - name: "hamedp71::🇫🇷-8"
+  - name: "hamedp71::🇫🇷-9"
     type: "vless"
     server: "83.243.86.118"
     port: 10443
@@ -1807,7 +2274,7 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "WeShDM0MdunM6N8btrY8tXlL0GT1Ah-0jcplNQf9FEo"
-  - name: "hamedp71::🇩🇪-17"
+  - name: "hamedp71::🇩🇪-18"
     type: "vless"
     server: "213.108.20.152"
     port: 443
@@ -1820,7 +2287,7 @@ proxies:
       - "http/1.1"
       - "h2"
     flow: "xtls-rprx-vision"
-  - name: "hamedp71::🇫🇮-15"
+  - name: "hamedp71::🇫🇮-16"
     type: "vless"
     server: "141.193.213.21"
     port: 443
@@ -1833,7 +2300,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-16"
+  - name: "hamedp71::🇫🇮-17"
     type: "vless"
     server: "141.193.213.11"
     port: 443
@@ -1847,7 +2314,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-17"
+  - name: "hamedp71::🇫🇮-18"
     type: "vless"
     server: "108.162.192.75"
     port: 443
@@ -1861,7 +2328,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-18"
+  - name: "hamedp71::🇫🇮-19"
     type: "vless"
     server: "141.193.213.30"
     port: 443
@@ -1874,7 +2341,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-19"
+  - name: "hamedp71::🇫🇮-20"
     type: "vless"
     server: "104.17.108.189"
     port: 443
@@ -1887,7 +2354,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-20"
+  - name: "hamedp71::🇫🇮-21"
     type: "vless"
     server: "162.159.193.138"
     port: 443
@@ -1901,7 +2368,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-21"
+  - name: "hamedp71::🇫🇮-22"
     type: "vless"
     server: "141.193.213.10"
     port: 443
@@ -1915,7 +2382,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-22"
+  - name: "hamedp71::🇫🇮-23"
     type: "vless"
     server: "185.18.250.252"
     port: 443
@@ -1928,7 +2395,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-23"
+  - name: "hamedp71::🇫🇮-24"
     type: "vless"
     server: "162.159.36.5"
     port: 443
@@ -1941,7 +2408,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-24"
+  - name: "hamedp71::🇫🇮-25"
     type: "vless"
     server: "172.64.32.75"
     port: 443
@@ -1954,7 +2421,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-25"
+  - name: "hamedp71::🇫🇮-26"
     type: "vless"
     server: "172.64.147.137"
     port: 443
@@ -1967,7 +2434,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-26"
+  - name: "hamedp71::🇫🇮-27"
     type: "vless"
     server: "172.66.47.45"
     port: 443
@@ -1980,7 +2447,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-27"
+  - name: "hamedp71::🇫🇮-28"
     type: "vless"
     server: "162.159.36.20"
     port: 443
@@ -1993,7 +2460,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-28"
+  - name: "hamedp71::🇫🇮-29"
     type: "vless"
     server: "172.64.146.68"
     port: 443
@@ -2009,7 +2476,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-29"
+  - name: "hamedp71::🇫🇮-30"
     type: "vless"
     server: "185.18.250.245"
     port: 443
@@ -2023,7 +2490,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-30"
+  - name: "hamedp71::🇫🇮-31"
     type: "vless"
     server: "173.245.58.75"
     port: 443
@@ -2037,7 +2504,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-31"
+  - name: "hamedp71::🇫🇮-32"
     type: "vless"
     server: "172.64.146.138"
     port: 443
@@ -2050,7 +2517,25 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-32"
+  - name: "hamedp71::🇫🇮-33"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "hamedp71::🇫🇮-34"
     type: "vless"
     server: "188.114.97.3"
     port: 443
@@ -2064,7 +2549,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-33"
+  - name: "hamedp71::🇫🇮-35"
     type: "vless"
     server: "216.24.57.7"
     port: 443
@@ -2078,7 +2563,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-34"
+  - name: "hamedp71::🇫🇮-36"
     type: "vless"
     server: "188.114.98.0"
     port: 443
@@ -2092,7 +2577,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-35"
+  - name: "hamedp71::🇫🇮-37"
     type: "vless"
     server: "45.130.125.0"
     port: 443
@@ -2106,7 +2591,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-36"
+  - name: "hamedp71::🇫🇮-38"
     type: "vless"
     server: "45.130.125.160"
     port: 443
@@ -2119,7 +2604,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-37"
+  - name: "hamedp71::🇫🇮-39"
     type: "vless"
     server: "45.130.125.96"
     port: 443
@@ -2132,7 +2617,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-38"
+  - name: "hamedp71::🇫🇮-40"
     type: "vless"
     server: "66.81.247.155"
     port: 443
@@ -2146,7 +2631,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-39"
+  - name: "hamedp71::🇫🇮-41"
     type: "vless"
     server: "89.116.46.210"
     port: 443
@@ -2160,7 +2645,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-40"
+  - name: "hamedp71::🇫🇮-42"
     type: "vless"
     server: "89.116.46.68"
     port: 443
@@ -2173,7 +2658,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-41"
+  - name: "hamedp71::🇫🇮-43"
     type: "vless"
     server: "89.116.46.8"
     port: 443
@@ -2186,7 +2671,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇫🇮-42"
+  - name: "hamedp71::🇫🇮-44"
     type: "vless"
     server: "betty.ns.cloudflare.com"
     port: 443
@@ -2224,7 +2709,7 @@ proxies:
     reality-opts:
       public-key: "8h8t5eBWL9oERK7xWHQLFJE5j6sZdgNDQAs3EGnNbho"
       short-id: "2f49bccf11150ef2"
-  - name: "hamedp71::🇮🇹-10"
+  - name: "hamedp71::🇮🇹-11"
     type: "vless"
     server: "sca23.myfymain.com"
     port: 8880
@@ -2232,6 +2717,19 @@ proxies:
     udp: true
     tls: false
     network: "grpc"
+  - name: "hamedp71::🇺🇸-23"
+    type: "vless"
+    server: "104.18.34.124"
+    port: 443
+    uuid: "e5cc16a6-ea42-46b2-82ae-ad2157e1641b"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "hhlfy.twiladaphne.ndjp.net"
+    ws-opts:
+      path: "/?TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=512"
+      headers:
+        Host: "hhlfy.twiladaphne.ndjp.net"
   - name: "hamedp71::🏴‍☠️-8"
     type: "vless"
     server: "151.115.164.120"
@@ -2240,7 +2738,7 @@ proxies:
     udp: true
     tls: false
     network: "grpc"
-  - name: "hamedp71::🇮🇹-11"
+  - name: "hamedp71::🇮🇹-12"
     type: "vless"
     server: "sca17.myfymain.com"
     port: 8880
@@ -2248,7 +2746,7 @@ proxies:
     udp: true
     tls: false
     network: "grpc"
-  - name: "hamedp71::🇳🇱-21"
+  - name: "hamedp71::🇳🇱-23"
     type: "vless"
     server: "144.124.253.4"
     port: 8443
@@ -2260,7 +2758,27 @@ proxies:
     reality-opts:
       public-key: "bVhVy1hZY_iw-sljlaeVbTBBa6SPvMm0Kg0tCC8CKHM"
       short-id: "ffffffffff"
-  - name: "hamedp71::🇳🇱-22"
+  - name: "hamedp71::🇳🇱-24"
+    type: "vless"
+    server: "195.181.173.199"
+    port: 8443
+    uuid: "394f6981-a782-4779-9a85-e6cf22935d93"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ams1.fromblancwithlove.com"
+  - name: "hamedp71::🇳🇱-25"
+    type: "vless"
+    server: "195.181.173.199"
+    port: 8443
+    uuid: "394f6981-a782-4779-9a85-e6cf22935d93"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ams1.fromblancwithlove.com"
+    alpn:
+      - "http/1.1"
+  - name: "hamedp71::🇳🇱-26"
     type: "vless"
     server: "51.158.206.29"
     port: 23576
@@ -2274,7 +2792,7 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "hamedp71::🇳🇱-23"
+  - name: "hamedp71::🇳🇱-27"
     type: "vless"
     server: "51.158.206.87"
     port: 23576
@@ -2288,7 +2806,16 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "hamedp71::🇳🇱-24"
+  - name: "hamedp71::🇬🇧-18"
+    type: "vless"
+    server: "46.229.243.137"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-09.vk-cdnvideo.com"
+  - name: "hamedp71::🇳🇱-28"
     type: "vless"
     server: "89.124.78.248"
     port: 8880
@@ -2296,7 +2823,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "hamedp71::🇩🇪-18"
+  - name: "hamedp71::🇩🇪-19"
     type: "vless"
     server: "144.31.233.236"
     port: 9443
@@ -2310,7 +2837,7 @@ proxies:
     reality-opts:
       public-key: "MbYR2O0XBSeG74gGYpFIofXsILcf5lG2gc36GyURBXQ"
       short-id: "0199436dd359351b"
-  - name: "hamedp71::🇳🇱-25"
+  - name: "hamedp71::🇳🇱-29"
     type: "vless"
     server: "77.246.109.191"
     port: 34045
@@ -2338,7 +2865,7 @@ proxies:
       path: "/eyJqdW5rIjoiY0Y0cENQUmxsNyIsInByb3RvY29sIjoidmwiLCJtb2RlIjoicHJveHlpcCIsInBhbmVsSVBzIjpbXX0=?ed=2560"
       headers:
         Host: "fans.liverpool.qzz.io"
-  - name: "hamedp71::🇫🇮-43"
+  - name: "hamedp71::🇫🇮-45"
     type: "vless"
     server: "fi2.vitok.cc"
     port: 443
@@ -2365,6 +2892,18 @@ proxies:
     reality-opts:
       public-key: "BrGL0gTKK_Ir2VwJOa91Vd8870DswnOXhA6-F92RBGI"
       short-id: "a987b6bd1781daa3"
+  - name: "hamedp71::🇬🇧-19"
+    type: "vless"
+    server: "162.249.126.68"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-09.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "networld_vpn-channel@.networld_vpn-channel@.networld_vpn-channel@.networld_vpn-channel@.networld_vpn-channel@.networld_vpn-channel@.networld_vpn-"
   - name: "hamedp71::🇱🇻"
     type: "vless"
     server: "83.222.20.64"
@@ -2405,7 +2944,7 @@ proxies:
     reality-opts:
       public-key: "7ReQIe2kMtP4rCrptgH5glkOM-JGcSAPzHNxOED-Z0s"
       short-id: "247fd6dab1a34a48"
-  - name: "hamedp71::🇳🇱-26"
+  - name: "hamedp71::🇳🇱-30"
     type: "vless"
     server: "163.172.213.174"
     port: 80
@@ -2425,7 +2964,7 @@ proxies:
     udp: true
     tls: false
     network: "ws"
-  - name: "hamedp71::🇳🇱-27"
+  - name: "hamedp71::🇳🇱-31"
     type: "vless"
     server: "nid.pink-perfect.ru"
     port: 443
@@ -2439,7 +2978,7 @@ proxies:
     reality-opts:
       public-key: "2fgsbEAn-ALVpjnE4ZTPrzaZY70vVplYwldCnslInE0"
       short-id: "86b80f1e713a33ad"
-  - name: "hamedp71::🇳🇱-28"
+  - name: "hamedp71::🇳🇱-32"
     type: "vless"
     server: "213.176.16.179"
     port: 443
@@ -2466,7 +3005,7 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "KfKYcURcfQ207VZCXG4g2cxltWvG2Zk7j3WCjvpa8Sg"
-  - name: "hamedp71::🇮🇹-12"
+  - name: "hamedp71::🇮🇹-13"
     type: "vless"
     server: "151.115.164.117"
     port: 8880
@@ -2474,7 +3013,7 @@ proxies:
     udp: true
     tls: false
     network: "grpc"
-  - name: "hamedp71::🇫🇮-44"
+  - name: "hamedp71::🇫🇮-46"
     type: "vless"
     server: "208.103.161.170"
     port: 443
@@ -2488,7 +3027,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "hamedp71::🇩🇪-19"
+  - name: "hamedp71::🇩🇪-20"
     type: "vless"
     server: "www.speedtest.net"
     port: 443
@@ -2506,7 +3045,20 @@ proxies:
       path: "/ws?ed"
       headers:
         Host: "ar.onlineshopmehran.ir."
-  - name: "hamedp71::🇬🇧-18"
+  - name: "hamedp71::🇫🇮-47"
+    type: "vless"
+    server: "2.26.88.109"
+    port: 443
+    uuid: "749a5df1-2d12-45cf-80f3-f85ea6b2e405"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "google.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "Fp0-VrMBeaQe9xOrehDYHt0mqTZL-5CdfuMEzoXkOE8"
+  - name: "hamedp71::🇬🇧-20"
     type: "vless"
     server: "54.36.162.217"
     port: 443
@@ -2522,7 +3074,7 @@ proxies:
     reality-opts:
       public-key: "upTVUrc_t7xF1ULni8pHRDhRES1sT4BDm1r8rugTzyQ"
       short-id: "ff815f58c7e77aa9"
-  - name: "hamedp71::🇳🇱-29"
+  - name: "hamedp71::🇳🇱-33"
     type: "vless"
     server: "45.43.92.110"
     port: 7443
@@ -2536,7 +3088,7 @@ proxies:
     reality-opts:
       public-key: "5QAO98ot2U7TcGs_f6EEaQjCzNOJLNHqPf6smYsdFVI"
       short-id: "d82fb387"
-  - name: "hamedp71::🇺🇸-23"
+  - name: "hamedp71::🇺🇸-24"
     type: "vless"
     server: "77.110.115.192"
     port: 443
@@ -2550,7 +3102,7 @@ proxies:
     reality-opts:
       public-key: "2fgsbEAn-ALVpjnE4ZTPrzaZY70vVplYwldCnslInE0"
       short-id: "86b80f1e713a33ad"
-  - name: "hamedp71::🇮🇹-13"
+  - name: "hamedp71::🇮🇹-14"
     type: "vless"
     server: "sca22.myfymain.com"
     port: 8880
@@ -2568,7 +3120,7 @@ proxies:
     network: "ws"
     ws-opts:
       path: "/vless/"
-  - name: "hamedp71::🇫🇮-45"
+  - name: "hamedp71::🇫🇮-48"
     type: "vless"
     server: "193.25.216.201"
     port: 36019
@@ -2595,7 +3147,7 @@ proxies:
     reality-opts:
       public-key: "5QAO98ot2U7TcGs_f6EEaQjCzNOJLNHqPf6smYsdFVI"
       short-id: "be0ce047"
-  - name: "hamedp71::🇫🇮-46"
+  - name: "hamedp71::🇫🇮-49"
     type: "vless"
     server: "89.22.230.82"
     port: 443
@@ -2623,7 +3175,7 @@ proxies:
       path: "/fl?ed=2560"
       headers:
         Host: "mjtbknetmkhremge.ordak.qzz.io"
-  - name: "hamedp71::🇩🇪-20"
+  - name: "hamedp71::🇩🇪-21"
     type: "vless"
     server: "89.125.19.237"
     port: 47200
@@ -2644,7 +3196,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "hamedp71::🇩🇪-21"
+  - name: "hamedp71::🇩🇪-22"
     type: "vless"
     server: "144.31.135.162"
     port: 9443
@@ -2657,7 +3209,7 @@ proxies:
     reality-opts:
       public-key: "MbYR2O0XBSeG74gGYpFIofXsILcf5lG2gc36GyURBXQ"
       short-id: "0199436dd359351b"
-  - name: "hamedp71::🇮🇹-14"
+  - name: "hamedp71::🇮🇹-15"
     type: "vless"
     server: "sca18.myfymain.com"
     port: 8880
@@ -2665,7 +3217,7 @@ proxies:
     udp: true
     tls: false
     network: "grpc"
-  - name: "hamedp71::🇳🇱-30"
+  - name: "hamedp71::🇳🇱-34"
     type: "vless"
     server: "5.255.110.147"
     port: 443
@@ -2679,7 +3231,7 @@ proxies:
     reality-opts:
       public-key: "AYQOZFxjvHN-RIzKYEibwFiFsp03cdlWGdCmyFfuNVc"
       short-id: "4fa44664f6a566d3"
-  - name: "hamedp71::🇮🇹-15"
+  - name: "hamedp71::🇮🇹-16"
     type: "vless"
     server: "151.115.165.172"
     port: 8880
@@ -2687,7 +3239,7 @@ proxies:
     udp: true
     tls: false
     network: "grpc"
-  - name: "hamedp71::🇺🇸-24"
+  - name: "hamedp71::🇺🇸-25"
     type: "vless"
     server: "38.55.146.153"
     port: 13000
@@ -2696,6 +3248,18 @@ proxies:
     tls: false
     network: "tcp"
   - name: "hamedp71::🏴‍☠️-10"
+    type: "vless"
+    server: "87.120.93.184"
+    port: 585
+    uuid: "bae2fd3a-55fb-4094-99f6-c94e25d7d15d"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "flow-3983.atlanta-games.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "h3X9wHgvXZeLAmsfCIyQdPJIaeaxwcqL_FDZuZL2IWE"
+  - name: "hamedp71::🏴‍☠️-11"
     type: "vless"
     server: "finporkzov.com"
     port: 443
@@ -2709,7 +3273,7 @@ proxies:
     reality-opts:
       public-key: "_0N3gACBkKvGKTh0q5-dmt-XqSHB3xfEHSANRXu-U0I"
       short-id: "f00f58383241c807"
-  - name: "hamedp71::🇩🇪-22"
+  - name: "hamedp71::🇩🇪-23"
     type: "vless"
     server: "de.riotvpn.eu"
     port: 8443
@@ -2724,7 +3288,7 @@ proxies:
       short-id: "844352756c1fabba"
     grpc-opts:
       grpc-service-name: "grpc-yandex"
-  - name: "hamedp71::🇮🇹-16"
+  - name: "hamedp71::🇮🇹-17"
     type: "vless"
     server: "151.115.164.43"
     port: 8880
@@ -2732,7 +3296,20 @@ proxies:
     udp: true
     tls: false
     network: "grpc"
-  - name: "hamedp71::🇬🇧-19"
+  - name: "hamedp71::🇫🇷-10"
+    type: "vless"
+    server: "fr.noooo.win"
+    port: 443
+    uuid: "7b241232-208d-4d36-857e-913f91b044f4"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "api-6a20f558.noooo.win"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+    flow: "xtls-rprx-vision"
+  - name: "hamedp71::🇬🇧-21"
     type: "vless"
     server: "167.104.223.57"
     port: 7443
@@ -2745,7 +3322,7 @@ proxies:
     reality-opts:
       public-key: "5QAO98ot2U7TcGs_f6EEaQjCzNOJLNHqPf6smYsdFVI"
       short-id: "d82fb387"
-  - name: "hamedp71::🇺🇸-25"
+  - name: "hamedp71::🇺🇸-26"
     type: "vless"
     server: "customer.arabtimesonline.qzz.io"
     port: 2096
@@ -2761,7 +3338,19 @@ proxies:
       path: "/eyJqdW5rIjoiVG9CMkc4c0hXRFk5RFJtOSIsInByb3RvY29sIjoidmwiLCJtb2RlIjoicHJveHlpcCIsInBhbmVsSVBzIjpbXX0=?ed=2560"
       headers:
         Host: "customer.arabtimesonline.qzz.io"
-  - name: "hamedp71::🇫🇷-9"
+  - name: "hamedp71::🇬🇧-22"
+    type: "vless"
+    server: "77.74.123.169"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-09.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "networld_vpn-channel@.networld_vpn-channel@.networld_vpn-channel@.networld_vpn-channel@.networld_vpn-channel@.networld_vpn-channel@.networld_vpn-"
+  - name: "hamedp71::🇫🇷-11"
     type: "vless"
     server: "151.241.228.254"
     port: 34754
@@ -2775,7 +3364,7 @@ proxies:
     reality-opts:
       public-key: "eMijZKuJlNEciXbhyzdbewk-ot_JLMZVaA42bxKFcBM"
       short-id: "c9eb0359fac0c345"
-  - name: "hamedp71::🇩🇪-23"
+  - name: "hamedp71::🇩🇪-24"
     type: "vless"
     server: "108.165.33.6"
     port: 2040
@@ -2788,7 +3377,7 @@ proxies:
     reality-opts:
       public-key: "LidllyozUeeSbuzJ0ZfieGoy8YjVzqXX9H2m9whPaG0"
       short-id: "53197c66aef53c44"
-  - name: "hamedp71::🇩🇪-24"
+  - name: "hamedp71::🇩🇪-25"
     type: "vless"
     server: "23.26.37.119"
     port: 8443
@@ -2800,7 +3389,20 @@ proxies:
     reality-opts:
       public-key: "upDCW94g-pSYQrmXvOrTVYlwBUrSKhYFF9QwrqObdVo"
       short-id: "3ca620a7ed5f3196"
-  - name: "hamedp71::🇺🇸-26"
+  - name: "hamedp71::🇫🇮-50"
+    type: "vless"
+    server: "144.31.217.99"
+    port: 443
+    uuid: "749a5df1-2d12-45cf-80f3-f85ea6b2e405"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "google.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "Fp0-VrMBeaQe9xOrehDYHt0mqTZL-5CdfuMEzoXkOE8"
+  - name: "hamedp71::🇺🇸-27"
     type: "vless"
     server: "fans.liverpool.qzz.io"
     port: 2053
@@ -2816,7 +3418,7 @@ proxies:
       path: "/eyJqdW5rIjoiZXlpMnFWRURmWkp5ZCIsInByb3RvY29sIjoidmwiLCJtb2RlIjoicHJveHlpcCIsInBhbmVsSVBzIjpbXX0=?ed=2560"
       headers:
         Host: "fans.liverpool.qzz.io"
-  - name: "hamedp71::🇫🇮-47"
+  - name: "hamedp71::🇫🇮-51"
     type: "vless"
     server: "150.241.71.35"
     port: 443
@@ -2829,7 +3431,34 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "mDDDyruO33nuqcTS7pZOjd9oOpDHUf0aEv2TQ1DFGV4"
-  - name: "hamedp71::🇮🇹-17"
+  - name: "hamedp71::🇨🇦-2"
+    type: "vless"
+    server: "162.159.44.195"
+    port: 443
+    uuid: "e5cc16a6-ea42-46b2-82ae-ad2157e1641b"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "hhlfy.twiladaphne.ndjp.net"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "hhlfy.twiladaphne.ndjp.net"
+  - name: "hamedp71::🇫🇮-52"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "hamedp71::🇮🇹-18"
     type: "vless"
     server: "sca14.myfymain.com"
     port: 8880
@@ -2837,6 +3466,20 @@ proxies:
     udp: true
     tls: false
     network: "grpc"
+  - name: "hamedp71::🇫🇮-53"
+    type: "vless"
+    server: "185.18.250.252"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
   - name: "hamedp71::🇦🇺-1"
     type: "vless"
     server: "54.252.231.115"
@@ -2851,7 +3494,7 @@ proxies:
     reality-opts:
       public-key: "kPx16abMZD2x6dv7NW_hn1HSc2P8RsPptytcCT-neQs"
       short-id: "bd711c02c8dc9955"
-  - name: "hamedp71::🇫🇮-48"
+  - name: "hamedp71::🇫🇮-54"
     type: "vless"
     server: "divar.ir.shakhle.ir"
     port: 25000
@@ -2880,7 +3523,7 @@ proxies:
     reality-opts:
       public-key: "xHaPe5SLprSSqGccSor5d3tCRuwyowBwFeYrVXoSz3w"
       short-id: "6ba85179e30d4fc2"
-  - name: "hamedp71::🇮🇹-18"
+  - name: "hamedp71::🇮🇹-19"
     type: "vless"
     server: "151.115.164.129"
     port: 8880
@@ -2888,7 +3531,7 @@ proxies:
     udp: true
     tls: false
     network: "grpc"
-  - name: "hamedp71::🇬🇧-20"
+  - name: "hamedp71::🇬🇧-23"
     type: "vless"
     server: "217.179.221.234"
     port: 24986
@@ -2910,7 +3553,33 @@ proxies:
     reality-opts:
       public-key: "LaGTRJ1CJnnYV7FnyqQnU28I0xFTPFKI8xmUFwig5ic"
       short-id: "c410508e9721512b"
-  - name: "hamedp71::🇩🇪-25"
+  - name: "hamedp71::🇩🇪-26"
+    type: "vless"
+    server: "144.31.157.56"
+    port: 443
+    uuid: "3e0c34a4-1c38-4d93-88c6-5155e81f8b52"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "saorg.ir"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "D-7qX4fqUFKDS2dQWFgGT4fXJnABnpM6IkU8SDHLMC0"
+      short-id: "6ba85179e30d4fc2"
+  - name: "hamedp71::🇺🇸-28"
+    type: "vless"
+    server: "137.184.218.169"
+    port: 36925
+    uuid: "c9fd0fb1-8251-4106-b09a-f4b426736f67"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "lJ9INPpO4rdnm2Tek_yg0PGFyUrBB6MoKyvqt_Mfqm0"
+  - name: "hamedp71::🇩🇪-27"
     type: "vless"
     server: "sw1tzerl4nd.gxcore.net"
     port: 443
@@ -2924,7 +3593,7 @@ proxies:
     reality-opts:
       public-key: "127zCnB9vtae6HnpowaSW8eFqflCAaBV0iM1oKHBWwY"
       short-id: "a1ab5a56bc42"
-  - name: "hamedp71::🇩🇪-26"
+  - name: "hamedp71::🇩🇪-28"
     type: "vless"
     server: "193.23.222.99"
     port: 55152
@@ -2945,7 +3614,30 @@ proxies:
     udp: true
     tls: false
     network: "httpupgrade"
-  - name: "hamedp71::🇩🇪-27"
+  - name: "hamedp71::🇫🇷-12"
+    type: "vless"
+    server: "79.127.196.11"
+    port: 8443
+    uuid: "55f7d143-a594-4a91-b030-f227039f85ef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdg-1.fromblancwithlove.com"
+  - name: "hamedp71::🇫🇮-55"
+    type: "vless"
+    server: "45.130.125.160"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "hamedp71::🇩🇪-29"
     type: "vless"
     server: "185.143.234.122"
     port: 80
@@ -2968,7 +3660,7 @@ proxies:
     servername: "hkg1.fromblancwithlove.com"
     alpn:
       - "h2"
-  - name: "hamedp71::🇺🇸-27"
+  - name: "hamedp71::🇺🇸-29"
     type: "vless"
     server: "193.233.202.7"
     port: 443
@@ -2981,7 +3673,7 @@ proxies:
     reality-opts:
       public-key: "rSL9RX3anDN8Un4ImlYVa94n9wDdUmHdubxoMKnaXgE"
       short-id: "5a55"
-  - name: "hamedp71::🇮🇹-19"
+  - name: "hamedp71::🇮🇹-20"
     type: "vless"
     server: "sca15.myfymain.com"
     port: 8880
@@ -2989,7 +3681,7 @@ proxies:
     udp: true
     tls: false
     network: "grpc"
-  - name: "hamedp71::🇫🇷-10"
+  - name: "hamedp71::🇫🇷-13"
     type: "vless"
     server: "bypass.fr-gt-01.com"
     port: 8443
@@ -3003,7 +3695,7 @@ proxies:
     reality-opts:
       public-key: "1oUeBtHH4DskTM_jCh-6enWRkFMDX9l1OU5kWYl4kxA"
       short-id: "f34818a561dfd1fe"
-  - name: "hamedp71::🇳🇱-31"
+  - name: "hamedp71::🇳🇱-35"
     type: "vless"
     server: "148.253.213.81"
     port: 443
@@ -3029,7 +3721,20 @@ proxies:
     reality-opts:
       public-key: "Yg0SBHkbrgAxsRKnsNXn4SStVURNYMiPor2oMSRTblA"
       short-id: "3a81ee2c998d0e"
-  - name: "hamedp71::🇩🇪-28"
+  - name: "hamedp71::🇺🇸-30"
+    type: "vless"
+    server: "162.159.12.41"
+    port: 443
+    uuid: "e5cc16a6-ea42-46b2-82ae-ad2157e1641b"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "hhlfy.twiladaphne.ndjp.net"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "hhlfy.twiladaphne.ndjp.net"
+  - name: "hamedp71::🇩🇪-30"
     type: "vless"
     server: "85.208.139.98"
     port: 8444
@@ -3042,7 +3747,30 @@ proxies:
     reality-opts:
       public-key: "Hp6K5hsiPY4_zATgAtef9YTxNGpSkhAHTTo9MUO7fik"
       short-id: "77e934f68f02ab4c"
-  - name: "hamedp71::🇩🇪-29"
+  - name: "hamedp71::🇳🇱-36"
+    type: "vless"
+    server: "85.234.114.53"
+    port: 22231
+    uuid: "afcac633-0e1a-46c3-bef2-cc01cc0097c8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "r1.mizulina.top"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+  - name: "hamedp71::🇩🇪-31"
+    type: "vless"
+    server: "ov-germany1.09vpn.com"
+    port: 80
+    uuid: "18535741-e8b3-4b43-9348-785b55936751"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/vless/"
+      headers:
+        Host: "OV-Germany1.09vpn.com"
+  - name: "hamedp71::🇩🇪-32"
     type: "vless"
     server: "213.176.77.65"
     port: 443
@@ -3069,7 +3797,7 @@ proxies:
     reality-opts:
       public-key: "vl5WQd9UDA3DvLxPPS1yF9ivUipxkxoxhaBRHpnyLho"
       short-id: "67fb"
-  - name: "hamedp71::🇮🇹-20"
+  - name: "hamedp71::🇮🇹-21"
     type: "vless"
     server: "sca20.myfymain.com"
     port: 8880
@@ -3077,7 +3805,7 @@ proxies:
     udp: true
     tls: false
     network: "grpc"
-  - name: "hamedp71::🇬🇧-21"
+  - name: "hamedp71::🇬🇧-24"
     type: "vless"
     server: "213.171.24.172"
     port: 8443
@@ -3087,7 +3815,7 @@ proxies:
     network: "tcp"
     servername: "cdn7-09.vk-cdnvideo.com"
     client-fingerprint: "chrome"
-  - name: "hamedp71::🇮🇹-21"
+  - name: "hamedp71::🇮🇹-22"
     type: "vless"
     server: "151.115.167.188"
     port: 8880
@@ -3095,6 +3823,15 @@ proxies:
     udp: true
     tls: false
     network: "grpc"
+  - name: "hamedp71::🇬🇧-25"
+    type: "vless"
+    server: "152.233.28.198"
+    port: 8443
+    uuid: "394f6981-a782-4779-9a85-e6cf22935d93"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "uk1.fromblancwithlove.com"
   - name: "hamedp71::🇹🇷"
     type: "vless"
     server: "141.98.118.70"
@@ -3108,7 +3845,7 @@ proxies:
     reality-opts:
       public-key: "LjEQR0FEtsOs5eQoVsZgJX5ZI0yeadUKTCLoGD641RQ"
       short-id: "44"
-  - name: "hamedp71::🇫🇷-11"
+  - name: "hamedp71::🇫🇷-14"
     type: "vless"
     server: "213.108.2.130"
     port: 443
@@ -3122,7 +3859,7 @@ proxies:
     reality-opts:
       public-key: "c9eCHF41FReFLIdarpg8M5edw4_E133EJBzrvYS02Ck"
       short-id: "cd9a5f0edff48da4"
-  - name: "hamedp71::🇫🇮-49"
+  - name: "hamedp71::🇫🇮-56"
     type: "vless"
     server: "194.238.57.104"
     port: 443
@@ -3136,7 +3873,7 @@ proxies:
     reality-opts:
       public-key: "56RJlIcxwncUs5m9QSfd3waHxm6vJFBKso5IkMSsyCA"
       short-id: "5d"
-  - name: "hamedp71::🇮🇹-22"
+  - name: "hamedp71::🇮🇹-23"
     type: "vless"
     server: "31.76.113.34"
     port: 443
@@ -3150,7 +3887,22 @@ proxies:
     reality-opts:
       public-key: "zPi2L9vrl2hkaCTT3lZTzBna-qz6JrteRjDz1i-DsxY"
       short-id: "7a3f9e2b1c8d4f6a"
-  - name: "hamedp71::🇬🇧-22"
+  - name: "hamedp71::🇸🇪-2"
+    type: "vless"
+    server: "148.253.211.47"
+    port: 443
+    uuid: "980231fb-4372-5c81-b696-20aa34d33af0"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.microsoft.com"
+    alpn:
+      - "networld_vpn-channel@.networld_vpn-channel@.networld_vpn-channel@.networld_vpn-channel@.networld_vpn-channel@.networld_vpn-channel@.networld_vpn-"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "978-Yxgtd3AWTVfiXEQqCstdwrT1qgsgleGPIRGQDl8"
+      short-id: "bdac121c7debdaba"
+  - name: "hamedp71::🇬🇧-26"
     type: "vless"
     server: "152.114.193.11"
     port: 47200
@@ -3163,7 +3915,7 @@ proxies:
     reality-opts:
       public-key: "aom9XGtg9tre2RGo8XkCaRqlE02nrZ4smmnpLpzidRE"
       short-id: "b2a9bd658fc81dc6"
-  - name: "hamedp71::🇬🇧-23"
+  - name: "hamedp71::🇬🇧-27"
     type: "vless"
     server: "77.74.123.166"
     port: 8443
@@ -3173,7 +3925,17 @@ proxies:
     network: "tcp"
     servername: "cdn7-09.vk-cdnvideo.com"
     client-fingerprint: "chrome"
-  - name: "hamedp71::🇩🇪-30"
+  - name: "hamedp71::🇸🇰-7"
+    type: "vless"
+    server: "162.249.126.69"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-39.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
+  - name: "hamedp71::🇩🇪-33"
     type: "vless"
     server: "de.pink-perfect.ru"
     port: 443
@@ -3187,7 +3949,18 @@ proxies:
     reality-opts:
       public-key: "2fgsbEAn-ALVpjnE4ZTPrzaZY70vVplYwldCnslInE0"
       short-id: "86b80f1e713a33ad"
-  - name: "hamedp71::🇳🇱-32"
+  - name: "hamedp71::🇳🇱-37"
+    type: "vless"
+    server: "r1.mizulina.top"
+    port: 22231
+    uuid: "afcac633-0e1a-46c3-bef2-cc01cc0097c8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "r1.mizulina.top"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+  - name: "hamedp71::🇳🇱-38"
     type: "vless"
     server: "141.98.6.113"
     port: 603
@@ -3199,7 +3972,7 @@ proxies:
     client-fingerprint: "chrome"
     reality-opts:
       public-key: "lWJaKBaMPs0NYHGCbfsrmn64R4juEQEvfmHNnL741Ek"
-  - name: "hamedp71::🇩🇪-31"
+  - name: "hamedp71::🇩🇪-34"
     type: "vless"
     server: "fr.pink-perfect.ru"
     port: 443
@@ -3239,7 +4012,21 @@ proxies:
       path: "/FREE by Tharuwa (0767597317)"
       headers:
         Host: "m.zoom.us"
-  - name: "hamedp71::🇫🇷-12"
+  - name: "hamedp71::🇮🇹-24"
+    type: "vless"
+    server: "31.76.113.25"
+    port: 443
+    uuid: "dfc0cb9d-f005-41b0-848c-7703bd39d0de"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "it.s3-cloud.xyz"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "zPi2L9vrl2hkaCTT3lZTzBna-qz6JrteRjDz1i-DsxY"
+      short-id: "7a3f9e2b1c8d4f6a"
+  - name: "hamedp71::🇫🇷-15"
     type: "vless"
     server: "greb.loralden.com"
     port: 443
@@ -3253,7 +4040,7 @@ proxies:
     reality-opts:
       public-key: "EUK_ePvEKUGcezQYHqgJ5P462XxLPXPm9CZWGLaL33k"
       short-id: "3620820fe66d6731"
-  - name: "hamedp71::🇫🇮-50"
+  - name: "hamedp71::🇫🇮-57"
     type: "vless"
     server: "fin.pink-perfect.ru"
     port: 443
@@ -3281,400 +4068,20 @@ proxies:
       path: "/fl?ed=2560"
       headers:
         Host: "mjtbknetmkhremge.ordak.qzz.io"
-  - name: "hamedp71::🇮🇹-23"
+  - name: "hamedp71::🇬🇧-28"
     type: "vless"
-    server: "sca21.myfymain.com"
-    port: 8880
-    uuid: "8dc7722c-2767-4eea-a28b-2f8daacc07e3"
-    udp: true
-    tls: false
-    network: "grpc"
-  - name: "hamedp71::🇺🇸-28"
-    type: "vless"
-    server: "38.107.233.130"
+    server: "uk.noooo.win"
     port: 443
-    uuid: "5d8fcd24-9634-4dd7-845c-3dc2d6291942"
+    uuid: "7b241232-208d-4d36-857e-913f91b044f4"
     udp: true
     tls: true
     network: "tcp"
-    servername: "www.google.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "2fgsbEAn-ALVpjnE4ZTPrzaZY70vVplYwldCnslInE0"
-      short-id: "86b80f1e713a33ad"
-  - name: "hamedp71::🇮🇹-24"
-    type: "vless"
-    server: "sca32.myfymain.com"
-    port: 8880
-    uuid: "8dc7722c-2767-4eea-a28b-2f8daacc07e3"
-    udp: true
-    tls: false
-    network: "grpc"
-  - name: "hamedp71::🇮🇹-25"
-    type: "vless"
-    server: "sca27.myfymain.com"
-    port: 8880
-    uuid: "8dc7722c-2767-4eea-a28b-2f8daacc07e3"
-    udp: true
-    tls: false
-    network: "grpc"
-  - name: "hamedp71::🇩🇪-32"
-    type: "vless"
-    server: "51.195.116.82"
-    port: 443
-    uuid: "21c25bef-eb3b-44a8-9b26-fa7f674e5bfc"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "speedtest.net"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "RWE5ORdQ2SzuFWX8DlaRP415wbhee9ynJkqC7yFPgQw"
-      short-id: "d13ddfca12760d03"
-  - name: "hamedp71::🇳🇱-33"
-    type: "vless"
-    server: "51.158.206.98"
-    port: 23576
-    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "fuck.rkn"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-      short-id: "01"
-  - name: "hamedp71::🇹🇭"
-    type: "vless"
-    server: "bm.xq-vpn.com"
-    port: 80
-    uuid: "FREE"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "hamedp71::🇬🇧-24"
-    type: "vless"
-    server: "82.202.159.141"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn7-09.vk-cdnvideo.com"
-  - name: "hamedp71::🇩🇪-33"
-    type: "vless"
-    server: "de2.niekotin.de"
-    port: 80
-    uuid: "12e2b366-6426-4e09-9c6f-9c894262b923"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/vless"
-  - name: "hamedp71::🇩🇪-34"
-    type: "vless"
-    server: "45.131.214.45"
-    port: 443
-    uuid: "e64100fd-773d-4cc6-adbe-a4c94876d07a"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "d.primarymaster.online"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "ID6lMOmt7BiuPHjZkoLSWNR9ONmB6b4L9skIIFjtXxU"
-  - name: "hamedp71::🇩🇪-35"
-    type: "vless"
-    server: "87.120.93.181"
-    port: 443
-    uuid: "85b6a235-9444-4ba4-8f0c-187b8c70874a"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "www.google.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "uETlsZl76uCFvu_qpmSMsd60_bqplotK4m_In8d0-0k"
-      short-id: "43"
-  - name: "hamedp71::🇩🇪-36"
-    type: "vless"
-    server: "104.16.174.39"
-    port: 443
-    uuid: "1c4046d3-333f-4e8d-b9cc-333e7ec3143b"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "Drping.nscl.ir"
+    servername: "api-6a20f558.noooo.win"
     client-fingerprint: "chrome"
     alpn:
       - "h2"
-      - "http/1.1"
-    ws-opts:
-      path: "/DrPing_channel"
-      headers:
-        Host: "Drping.nscl.ir"
-  - name: "hamedp71::🇩🇪-37"
-    type: "vless"
-    server: "185.189.58.195"
-    port: 29703
-    uuid: "53707df1-4a41-4b9f-82b1-84e3ee6c76d8"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/ws"
-      headers:
-        Host: "185.189.58.195"
-  - name: "hamedp71::🇩🇪-38"
-    type: "vless"
-    server: "subs.casr.ir"
-    port: 2096
-    uuid: "6a3d568e-c3ed-4c22-b13e-d519312d7c61"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "subs.casr.ir"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/subscasr?ed=2048/@AhmadV2ray"
-  - name: "hamedp71::🇩🇪-39"
-    type: "vless"
-    server: "185.189.58.195"
-    port: 22096
-    uuid: "1cb6f6ef-c398-4193-9f66-8de17f9bd004"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "185.189.58.195"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-      - "http/1.1"
-    ws-opts:
-      path: "/ws"
-      headers:
-        Host: "185.189.58.195"
-  - name: "hamedp71::🇩🇰"
-    type: "vless"
-    server: "45.148.31.0"
-    port: 15855
-    uuid: "e4fc4761-154f-490e-bbaa-b4fa193f1073"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/"
-  - name: "hamedp71::🇫🇷-13"
-    type: "vless"
-    server: "213.199.39.156"
-    port: 30001
-    uuid: "3e5da4f6-93c4-4701-911b-1a5091d2430f"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/ws"
-  - name: "hamedp71::🇮🇹-26"
-    type: "vless"
-    server: "57.131.32.191"
-    port: 80
-    uuid: "1e280316-0408-47c4-b058-05b8f1f17f02"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/vless/"
-      headers:
-        Host: "OV-Italy1.09vpn.com"
-  - name: "hamedp71::🏴‍☠️-11"
-    type: "vless"
-    server: "104.17.128.1"
-    port: 2096
-    uuid: "d0298536-d670-4045-bbb1-ddd5ea68683e"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "azadnet-1ml.pages.dev"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/azadnet-1ml.pages.dev/?ed=2560"
-      headers:
-        Host: "azadnet-1ml.pages.dev"
-  - name: "hamedp71::🏴‍☠️-12"
-    type: "vless"
-    server: "62.152.56.226"
-    port: 8443
-    uuid: "1da3b96e-55af-0012-9147-39e79074aaea"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "loadtest.dev.urent.ru"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "36F7ul7R68ih8TAKPfHnqEvw_23kWNgOXCrfQKK3MXQ"
-      short-id: "3722621913893e97"
-    grpc-opts:
-      grpc-service-name: "/api"
-  - name: "hamedp71::🇲🇩-1"
-    type: "vless"
-    server: "185.242.19.249"
-    port: 443
-    uuid: "cfb70000-ed61-4a7e-89a3-2b9c2caa6001"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "top707762634.mwscdn.ru"
-    ws-opts:
-      path: "/livestreamcontent/"
-  - name: "hamedp71::🇳🇱-34"
-    type: "vless"
-    server: "199.232.78.159"
-    port: 443
-    uuid: "984fac58-576e-42bd-ab99-83db7074a729"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "default.ssl.fastly.net"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "bazaryabab.global.ssl.fastly.net"
-  - name: "hamedp71::🇵🇱-7"
-    type: "vless"
-    server: "82.26.91.244"
-    port: 443
-    uuid: "6f99ed2f-9879-40e3-b5b4-5590c60f8e4a"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "vk.ru"
-    reality-opts:
-      public-key: "g8IbVqG1g7ht5ckWvYgOxZ9CrStwZt8QYQmTEwIWsTU"
-      short-id: "b5"
-  - name: "hamedp71::🇵🇱-8"
-    type: "vless"
-    server: "panel.dibaux.ir"
-    port: 80
-    uuid: "c3117cc5-9528-4177-ac05-73b5e8ebcd23"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/stream"
-      headers:
-        Host: "panel.dibaux.ir"
-  - name: "hamedp71::🇺🇸-29"
-    type: "vless"
-    server: "104.16.158.249"
-    port: 443
-    uuid: "e5cc16a6-ea42-46b2-82ae-ad2157e1641b"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "hhlfy.twiladaphne.ndjp.net"
-    client-fingerprint: "random"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "hhlfy.twiladaphne.ndjp.net"
-  - name: "hamedp71::🇹🇷-1"
-    type: "vless"
-    server: "37.221.79.69"
-    port: 8443
-    uuid: "15115772-74b5-4c9b-9049-d7237a9c68f9"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "www.yahoo.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "kSqgT4C5AcpCMLdW1VCvFSiv5UX6UDLaF33ECFpzUgQ"
-      short-id: "41"
-  - name: "hamedp71::🇺🇸-30"
-    type: "vless"
-    server: "77.110.127.191"
-    port: 9443
-    uuid: "e0de62c9-f317-4275-b7e5-8da7b7fa9bc6"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/pourya"
-  - name: "hamedp71::🇹🇷-2"
-    type: "vless"
-    server: "104.18.139.67"
-    port: 443
-    uuid: "c2f0a8f0-36fe-4a94-824b-bca271ca642b"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "alphacdn.alphashops.shop"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-      - "http/1.1"
-    ws-opts:
-      path: "/ws"
-      headers:
-        Host: "alphacdn.alphashops.shop"
-  - name: "hamedp71::🇺🇸-31"
-    type: "vless"
-    server: "45.90.12.239"
-    port: 443
-    uuid: "360045e9-30d9-4f13-b9d6-9c57f6baab1d"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "apple.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "fviTlCtkzpbYhTpHObiVtlgCaAT8LytP9eWUoa6Jfy4"
-      short-id: "66f80bb224a5065a"
-    grpc-opts:
-      grpc-service-name: "xyz"
-  - name: "hamedp71::🇮🇹-27"
-    type: "vless"
-    server: "151.115.167.190"
-    port: 8880
-    uuid: "8dc7722c-2767-4eea-a28b-2f8daacc07e3"
-    udp: true
-    tls: false
-    network: "grpc"
-  - name: "hamedp71::🇮🇹-28"
-    type: "vless"
-    server: "151.115.164.134"
-    port: 8880
-    uuid: "8dc7722c-2767-4eea-a28b-2f8daacc07e3"
-    udp: true
-    tls: false
-    network: "grpc"
-  - name: "hamedp71::🇮🇹-29"
-    type: "vless"
-    server: "sca16.myfymain.com"
-    port: 8880
-    uuid: "8dc7722c-2767-4eea-a28b-2f8daacc07e3"
-    udp: true
-    tls: false
-    network: "grpc"
-  - name: "hamedp71::🇮🇹-30"
-    type: "vless"
-    server: "151.115.166.68"
-    port: 8880
-    uuid: "8dc7722c-2767-4eea-a28b-2f8daacc07e3"
-    udp: true
-    tls: false
-    network: "grpc"
-  - name: "hamedp71::🇮🇹-31"
-    type: "vless"
-    server: "sca31.myfymain.com"
-    port: 8880
-    uuid: "8dc7722c-2767-4eea-a28b-2f8daacc07e3"
-    udp: true
-    tls: false
-    network: "grpc"
-  - name: "hamedp71::🇬🇧-25"
+    flow: "xtls-rprx-vision"
+  - name: "hamedp71::🇬🇧-29"
     type: "ss"
     server: "series-a2.samanehha.co"
     port: 443
@@ -3695,7 +4102,7 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "7e731ec3-f8e1-43f6-92cf-3978d14705c4"
     udp: true
-  - name: "hamedp71::🇳🇱-35"
+  - name: "hamedp71::🇳🇱-39"
     type: "ss"
     server: "82.38.31.15"
     port: 443
@@ -3716,14 +4123,14 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "7SEstdmLhf-aFK_G9eaYHKT_YpSov58B"
     udp: true
-  - name: "hamedp71::🇺🇸-32"
+  - name: "hamedp71::🇺🇸-31"
     type: "ss"
     server: "62.146.231.112"
     port: 12012
     cipher: "chacha20-ietf-poly1305"
     password: "4e287631dc4fc8fc"
     udp: true
-  - name: "hamedp71::🇩🇪-40"
+  - name: "hamedp71::🇩🇪-35"
     type: "ss"
     server: "57.129.121.230"
     port: 10443
@@ -3737,259 +4144,280 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "Ll6cYfXM5DzQbdtMMb72A_jqVnNljU3yqe"
     udp: true
-  - name: "hamedp71::🇮🇹-32"
+  - name: "hamedp71::🇮🇹-25"
     type: "ss"
     server: "185.213.20.110"
     port: 7001
     cipher: "aes-256-gcm"
     password: "RexnBgU7EV5ADxG"
     udp: true
-  - name: "hamedp71::🇳🇱-36"
+  - name: "hamedp71::🇳🇱-40"
     type: "ss"
     server: "82.38.31.176"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
     udp: true
-  - name: "hamedp71::🇳🇱-37"
+  - name: "hamedp71::🇳🇱-41"
     type: "ss"
     server: "82.38.31.179"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
     udp: true
-  - name: "hamedp71::🇳🇱-38"
+  - name: "hamedp71::🇳🇱-42"
     type: "ss"
     server: "82.38.31.184"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
     udp: true
-  - name: "hamedp71::🇳🇱-39"
+  - name: "hamedp71::🇳🇱-43"
     type: "ss"
     server: "82.38.31.190"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
     udp: true
-  - name: "hamedp71::🇳🇱-40"
+  - name: "hamedp71::🇳🇱-44"
     type: "ss"
     server: "82.38.31.187"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
     udp: true
-  - name: "hamedp71::🇳🇱-41"
+  - name: "hamedp71::🇳🇱-45"
     type: "ss"
     server: "82.38.31.194"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
     udp: true
-  - name: "hamedp71::🇳🇱-42"
+  - name: "hamedp71::🇳🇱-46"
     type: "ss"
     server: "82.38.31.191"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
     udp: true
-  - name: "hamedp71::🇳🇱-43"
+  - name: "hamedp71::🇳🇱-47"
     type: "ss"
     server: "82.38.31.202"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
     udp: true
-  - name: "hamedp71::🇳🇱-44"
+  - name: "hamedp71::🇳🇱-48"
     type: "ss"
     server: "82.38.31.199"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
     udp: true
-  - name: "hamedp71::🇳🇱-45"
+  - name: "hamedp71::🇳🇱-49"
     type: "ss"
     server: "82.38.31.205"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
     udp: true
-  - name: "hamedp71::🇳🇱-46"
+  - name: "hamedp71::🇳🇱-50"
     type: "ss"
     server: "82.38.31.208"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
     udp: true
-  - name: "hamedp71::🇳🇱-47"
+  - name: "hamedp71::🇳🇱-51"
     type: "ss"
     server: "82.38.31.210"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
     udp: true
-  - name: "hamedp71::🇳🇱-48"
+  - name: "hamedp71::🇳🇱-52"
     type: "ss"
     server: "82.38.31.214"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
     udp: true
-  - name: "hamedp71::🇳🇱-49"
+  - name: "hamedp71::🇳🇱-53"
     type: "ss"
     server: "82.38.31.217"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
     udp: true
-  - name: "hamedp71::🇳🇱-50"
+  - name: "hamedp71::🇳🇱-54"
     type: "ss"
     server: "82.38.31.218"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
     udp: true
-  - name: "hamedp71::🇩🇪-41"
+  - name: "hamedp71::🇩🇪-36"
     type: "ss"
     server: "135.125.219.2"
     port: 12911
     cipher: "chacha20-ietf-poly1305"
     password: "4368f055243e225f"
     udp: true
-  - name: "hamedp71::🇩🇪-42"
+  - name: "hamedp71::🇩🇪-37"
     type: "ss"
     server: "46.225.30.16"
     port: 49534
     cipher: "2022-blake3-aes-256-gcm"
     password: "tEY1W9tCYB6R5Y22378dJ9yh4H4PAZlAM/m31aG1PYM="
     udp: true
-  - name: "hamedp71::🇬🇧-26"
+  - name: "hamedp71::🇬🇧-30"
     type: "ss"
     server: "57.129.129.247"
     port: 19308
     cipher: "chacha20-ietf-poly1305"
     password: "4a055e9e903128a1"
     udp: true
-  - name: "hamedp71::🇳🇱-51"
+  - name: "hamedp71::🇳🇱-55"
     type: "ss"
     server: "193.29.139.157"
     port: 443
     cipher: "chacha20-ietf-poly1305"
     password: "4a2rfixophdjffa8KVA4Aa"
     udp: true
-  - name: "hamedp71::🇳🇱-52"
+  - name: "hamedp71::🇳🇱-56"
     type: "ss"
     server: "193.29.139.157"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "4a2rfixophdjffa8KVA4Aa"
     udp: true
-  - name: "hamedp71::🇳🇱-53"
+  - name: "hamedp71::🇳🇱-57"
     type: "ss"
     server: "193.29.139.217"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "4a2rfixophdjffa8KVA4Aa"
     udp: true
-  - name: "hamedp71::🇬🇧-27"
+  - name: "hamedp71::🇬🇧-31"
     type: "ss"
     server: "51.75.168.50"
     port: 26179
     cipher: "chacha20-ietf-poly1305"
     password: "78b6e93e54225803"
     udp: true
-  - name: "hamedp71::🇳🇱-54"
+  - name: "hamedp71::🇳🇱-58"
     type: "ss"
     server: "193.29.139.206"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "4a2rfixophdjffa8KVA4Aa"
     udp: true
-  - name: "hamedp71::🇵🇱-9"
+  - name: "hamedp71::🇵🇱-7"
     type: "ss"
     server: "54.36.174.134"
     port: 443
     cipher: "chacha20-ietf-poly1305"
     password: "8zw5j9h"
     udp: true
-  - name: "hamedp71::🇬🇧-28"
+  - name: "hamedp71::🇬🇧-32"
     type: "ss"
     server: "149.102.144.110"
     port: 18337
     cipher: "chacha20-ietf-poly1305"
     password: "7a5af500cb295935"
     udp: true
-  - name: "hamedp71::🇬🇧-29"
+  - name: "hamedp71::🇬🇧-33"
     type: "ss"
     server: "admin.c1.havij.co"
     port: 443
     cipher: "chacha20-ietf-poly1305"
     password: "1kVr0KATIJI7mwOF"
     udp: true
-  - name: "hamedp71::🇳🇱-55"
+  - name: "hamedp71::🇳🇱-59"
     type: "ss"
     server: "193.29.139.175"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "1RWwXhwfAB5gAEozU4G2Pg"
     udp: true
-  - name: "hamedp71::🇳🇱-56"
+  - name: "hamedp71::🇳🇱-60"
     type: "ss"
     server: "108.181.58.239"
     port: 8388
     cipher: "chacha20-ietf-poly1305"
     password: "CJmTCCx7Ltud"
     udp: true
-  - name: "hamedp71::🇳🇱-57"
+  - name: "hamedp71::🇳🇱-61"
     type: "ss"
     server: "195.93.253.245"
     port: 49137
     cipher: "chacha20-ietf-poly1305"
     password: "FDeCHSu4lt8qflCS5zDOy8"
     udp: true
-  - name: "hamedp71::🇺🇸-33"
+  - name: "hamedp71::🇺🇸-32"
     type: "ss"
     server: "149.28.255.6"
     port: 816
     cipher: "chacha20-ietf-poly1305"
     password: "GyZ5Xo0ht41vYmW3H4"
     udp: true
-  - name: "hamedp71::🇺🇸-34"
+  - name: "hamedp71::🇺🇸-33"
     type: "ss"
     server: "107.172.250.161"
     port: 59556
     cipher: "chacha20-ietf-poly1305"
     password: "QTmLViU4VEmuwbOxUw4IXd"
     udp: true
-  - name: "hamedp71::🇩🇪-43"
+  - name: "hamedp71::🇩🇪-38"
     type: "ss"
     server: "8.209.74.72"
     port: 20001
     cipher: "chacha20-ietf-poly1305"
     password: "PWpjPo3tqhPN4yRZ"
     udp: true
-  - name: "hamedp71::🇬🇧-30"
+  - name: "hamedp71::🇳🇱-62"
+    type: "ss"
+    server: "193.29.139.217"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "QCXDxuDlTTMD7jtgHUjIoj"
+    udp: true
+  - name: "hamedp71::🇳🇱-63"
+    type: "ss"
+    server: "193.29.139.157"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "cvII85TrW6n0OGyfpHVS1u"
+    udp: true
+  - name: "hamedp71::🇬🇧-34"
     type: "ss"
     server: "admin.c1.webramz.co"
     port: 443
     cipher: "chacha20-ietf-poly1305"
     password: "W74XFALLLuw6m5IA"
     udp: true
-  - name: "hamedp71::🇺🇸-35"
+  - name: "hamedp71::🇺🇸-34"
     type: "ss"
     server: "hackney-latest-strike.freesocks.work"
     port: 443
     cipher: "chacha20-ietf-poly1305"
     password: "XUMTygEM1jVYIvysXKqA5T"
     udp: true
-  - name: "hamedp71::🇬🇧-31"
+  - name: "hamedp71::🇬🇧-35"
     type: "ss"
     server: "series-a1.samanehha.co"
     port: 443
     cipher: "chacha20-ietf-poly1305"
     password: "W74XFALLLuw6m5IA"
     udp: true
-  - name: "hamedp71::🇬🇧-32"
+  - name: "hamedp71::🇳🇱-64"
+    type: "ss"
+    server: "193.29.139.217"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "cvII85TrW6n0OGyfpHVS1u"
+    udp: true
+  - name: "hamedp71::🇬🇧-36"
     type: "ss"
     server: "185.5.38.111"
     port: 55988
@@ -4003,77 +4431,77 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "aduB9HGxQHjA2SBMRjkHX6"
     udp: true
-  - name: "hamedp71::🇳🇱-58"
+  - name: "hamedp71::🇳🇱-65"
     type: "ss"
     server: "195.93.253.240"
     port: 14130
     cipher: "chacha20-ietf-poly1305"
     password: "bvGa054MauyCOmaeYtWuOJ"
     udp: true
-  - name: "hamedp71::🇳🇱-59"
+  - name: "hamedp71::🇳🇱-66"
     type: "ss"
     server: "193.29.139.179"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "cvII85TrW6n0OGyfpHVS1u"
     udp: true
-  - name: "hamedp71::🇳🇱-60"
+  - name: "hamedp71::🇳🇱-67"
     type: "ss"
     server: "193.29.139.189"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "cvII85TrW6n0OGyfpHVS1u"
     udp: true
-  - name: "hamedp71::🇺🇸-36"
+  - name: "hamedp71::🇺🇸-35"
     type: "ss"
     server: "tinkered-pennies-puppies.freesocks.work"
     port: 443
     cipher: "chacha20-ietf-poly1305"
     password: "hbGrpfvNrJsUmKmPbR3iY2"
     udp: true
-  - name: "hamedp71::🇳🇱-61"
+  - name: "hamedp71::🇳🇱-68"
     type: "ss"
     server: "82.38.31.35"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "oZIoA69Q8yhcQV8ka3Pa3A"
     udp: true
-  - name: "hamedp71::🇳🇱-62"
+  - name: "hamedp71::🇳🇱-69"
     type: "ss"
     server: "82.38.31.155"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "oZIoA69Q8yhcQV8ka3Pa3A"
     udp: true
-  - name: "hamedp71::🇫🇮-51"
+  - name: "hamedp71::🇫🇮-58"
     type: "ss"
     server: "193.47.60.186"
     port: 28687
     cipher: "chacha20-ietf-poly1305"
     password: "yKVMoB3AwiTEznpnoq2FYR"
     udp: true
-  - name: "hamedp71::🇳🇱-63"
+  - name: "hamedp71::🇳🇱-70"
     type: "ss"
     server: "82.38.31.149"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "oZIoA69Q8yhcQV8ka3Pa3A"
     udp: true
-  - name: "hamedp71::🇳🇱-64"
+  - name: "hamedp71::🇳🇱-71"
     type: "ss"
     server: "82.38.31.189"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
     udp: true
-  - name: "hamedp71::🇺🇸-37"
+  - name: "hamedp71::🇺🇸-36"
     type: "ss"
     server: "216.105.168.18"
     port: 443
     cipher: "chacha20-ietf-poly1305"
     password: "hCCWOcIsK5wrFz4OX70rWf"
     udp: true
-  - name: "hamedp71::🇺🇸-38"
+  - name: "hamedp71::🇺🇸-37"
     type: "ss"
     server: "147.90.234.133"
     port: 443
@@ -4094,21 +4522,21 @@ proxies:
     cipher: "aes-256-gcm"
     password: "g5MeD6Ft3CWlJId"
     udp: true
-  - name: "hamedp71::🇺🇸-39"
+  - name: "hamedp71::🇺🇸-38"
     type: "ss"
     server: "38.135.24.131"
     port: 443
     cipher: "chacha20-ietf-poly1305"
     password: "hbGrpfvNrJsUmKmPbR3iY2"
     udp: true
-  - name: "hamedp71::🇳🇱-65"
+  - name: "hamedp71::🇳🇱-72"
     type: "ss"
     server: "193.29.139.143"
     port: 443
     cipher: "chacha20-ietf-poly1305"
     password: "1RWwXhwfAB5gAEozU4G2Pg"
     udp: true
-  - name: "hamedp71::🇳🇱-66"
+  - name: "hamedp71::🇳🇱-73"
     type: "ss"
     server: "82.38.31.186"
     port: 8080
@@ -4122,21 +4550,28 @@ proxies:
     cipher: "aes-256-gcm"
     password: "123"
     udp: true
-  - name: "hamedp71::🇳🇱-67"
+  - name: "hamedp71::🇳🇱-74"
     type: "ss"
     server: "193.29.139.151"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "oZIoA69Q8yhcQV8ka3Pa3A"
     udp: true
-  - name: "hamedp71::🇺🇸-40"
+  - name: "hamedp71::🇺🇸-39"
     type: "ss"
     server: "71.19.148.74"
     port: 443
     cipher: "chacha20-ietf-poly1305"
     password: "gqkUCvmeOTghYJXF1YIuk5"
     udp: true
-  - name: "hamedp71::🇳🇱-68"
+  - name: "hamedp71::🇺🇸-40"
+    type: "ss"
+    server: "71.19.148.74"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "XUMTygEM1jVYIvysXKqA5T"
+    udp: true
+  - name: "hamedp71::🇳🇱-75"
     type: "ss"
     server: "193.29.139.235"
     port: 8080
@@ -4157,21 +4592,21 @@ proxies:
     cipher: "aes-128-gcm"
     password: "shadowsocks"
     udp: true
-  - name: "hamedp71::🇹🇷-3"
+  - name: "hamedp71::🇹🇷-1"
     type: "ss"
     server: "62.133.63.169"
     port: 37096
     cipher: "chacha20-ietf-poly1305"
     password: "Y5EJZojVMENvkDVFYliEqE"
     udp: true
-  - name: "hamedp71::🇩🇪-44"
+  - name: "hamedp71::🇩🇪-39"
     type: "ss"
     server: "49.13.3.249"
     port: 23997
     cipher: "2022-blake3-aes-256-gcm"
     password: "dyL+KqX8hIMn+UyADwSJOPm72A0A83TsDOFXBn6I2mA="
     udp: true
-  - name: "hamedp71::🇩🇪-45"
+  - name: "hamedp71::🇩🇪-40"
     type: "ss"
     server: "e1.cover20.ir"
     port: 51570
@@ -4192,14 +4627,14 @@ proxies:
     cipher: "aes-128-gcm"
     password: "shadowsocks"
     udp: true
-  - name: "hamedp71::🇳🇱-69"
+  - name: "hamedp71::🇳🇱-76"
     type: "ss"
     server: "193.29.139.204"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "oZIoA69Q8yhcQV8ka3Pa3A"
     udp: true
-  - name: "hamedp71::🇳🇱-70"
+  - name: "hamedp71::🇳🇱-77"
     type: "ss"
     server: "193.29.139.227"
     port: 8080
@@ -4213,7 +4648,7 @@ proxies:
     cipher: "aes-128-gcm"
     password: "shadowsocks"
     udp: true
-  - name: "hamedp71::🇳🇱-71"
+  - name: "hamedp71::🇳🇱-78"
     type: "ss"
     server: "82.38.31.192"
     port: 8080
@@ -4262,7 +4697,7 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "G5p6ww4o67HB"
     udp: true
-  - name: "hamedp71::🇩🇪-46"
+  - name: "hamedp71::🇩🇪-41"
     type: "ss"
     server: "209.46.102.22"
     port: 8388
@@ -4283,7 +4718,7 @@ proxies:
     cipher: "aes-128-gcm"
     password: "shadowsocks"
     udp: true
-  - name: "hamedp71::🇳🇱-72"
+  - name: "hamedp71::🇳🇱-79"
     type: "ss"
     server: "108.181.126.122"
     port: 8388
@@ -4297,28 +4732,28 @@ proxies:
     cipher: "aes-128-gcm"
     password: "shadowsocks"
     udp: true
-  - name: "hamedp71::🇨🇦-2"
+  - name: "hamedp71::🇨🇦-3"
     type: "ss"
     server: "149.22.95.183"
     port: 443
     cipher: "aes-128-gcm"
     password: "shadowsocks"
     udp: true
-  - name: "hamedp71::🇬🇧-33"
+  - name: "hamedp71::🇬🇧-37"
     type: "ss"
     server: "94.156.250.148"
     port: 7001
     cipher: "aes-256-gcm"
     password: "RexnBgU7EV5ADxG"
     udp: true
-  - name: "hamedp71::🇬🇧-34"
+  - name: "hamedp71::🇬🇧-38"
     type: "ss"
     server: "141.98.101.178"
     port: 443
     cipher: "aes-128-gcm"
     password: "shadowsocks"
     udp: true
-  - name: "hamedp71::🇫🇷-14"
+  - name: "hamedp71::🇫🇷-16"
     type: "ss"
     server: "51.254.128.106"
     port: 2083
@@ -4346,7 +4781,7 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44="
     udp: true
-  - name: "hamedp71::🇬🇧-35"
+  - name: "hamedp71::🇬🇧-39"
     type: "ss"
     server: "141.98.101.179"
     port: 443
@@ -4360,19 +4795,201 @@ proxies:
     cipher: "aes-256-gcm"
     password: "XKFKl2rULjIp74"
     udp: true
-  - name: "hamedp71::🇬🇧-36"
+  - name: "hamedp71::🇬🇧-40"
     type: "ss"
     server: "141.98.101.182"
     port: 443
     cipher: "aes-128-gcm"
     password: "shadowsocks"
     udp: true
-  - name: "hamedp71::🇬🇧-37"
+  - name: "hamedp71::🇬🇧-41"
     type: "ss"
     server: "141.98.101.181"
     port: 443
     cipher: "aes-128-gcm"
     password: "shadowsocks"
+    udp: true
+  - name: "hamedp71::🇿🇦-1"
+    type: "ss"
+    server: "102.133.165.160"
+    port: 16233
+    cipher: "chacha20-ietf-poly1305"
+    password: "Xsy8Ox4yOV3xLlpxtjzs3X"
+    udp: true
+  - name: "hamedp71::🇩🇪-42"
+    type: "ss"
+    server: "213.202.208.199"
+    port: 7001
+    cipher: "aes-256-gcm"
+    password: "RexnBgU7EV5ADxG"
+    udp: true
+  - name: "hamedp71::🇫🇮-59"
+    type: "ss"
+    server: "download.riferoser.icu"
+    port: 56594
+    cipher: "chacha20-ietf-poly1305"
+    password: "mzeMYBJYp4Bo7nA1qYLvv7QG73igtAA85nt4pr8A9ntx2qhDfYgRtiJ7iH7VrcneQKNmtvpbsvvFKPaUATYELi18iH56Ttr4"
+    udp: true
+  - name: "hamedp71::🇳🇱-80"
+    type: "ss"
+    server: "193.29.139.199"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "QCXDxuDlTTMD7jtgHUjIoj"
+    udp: true
+  - name: "hamedp71::🇰🇷"
+    type: "ss"
+    server: "141.164.45.187"
+    port: 6679
+    cipher: "aes-256-gcm"
+    password: "TEzjfAYq2IjtuoS"
+    udp: true
+  - name: "hamedp71::🇰🇷-1"
+    type: "ss"
+    server: "141.164.45.187"
+    port: 7001
+    cipher: "aes-256-gcm"
+    password: "RexnBgU7EV5ADxG"
+    udp: true
+  - name: "hamedp71::🇯🇵-11"
+    type: "ss"
+    server: "47.79.144.115"
+    port: 40003
+    cipher: "aes-256-gcm"
+    password: "GTZI5AbjNAeWQG0oVNptvWJogHNKiiKA"
+    udp: true
+  - name: "hamedp71::🇳🇱-81"
+    type: "ss"
+    server: "195.93.253.245"
+    port: 49137
+    cipher: "chacha20-ietf-poly1305"
+    password: "LcGimYDBXoaJ2gU2k2t76G"
+    udp: true
+  - name: "hamedp71::🇳🇱-82"
+    type: "ss"
+    server: "185.18.54.70"
+    port: 31348
+    cipher: "chacha20-ietf-poly1305"
+    password: "MPS4QxIySO20yGnFTGEbyYTOwd2HlEmcC0ksqogxZtLyLYRl"
+    udp: true
+  - name: "hamedp71::🇳🇱-83"
+    type: "ss"
+    server: "193.29.139.227"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "QCXDxuDlTTMD7jtgHUjIoj"
+    udp: true
+  - name: "hamedp71::🇳🇱-84"
+    type: "ss"
+    server: "193.29.139.233"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "QCXDxuDlTTMD7jtgHUjIoj"
+    udp: true
+  - name: "hamedp71::🇳🇱-85"
+    type: "ss"
+    server: "195.93.253.245"
+    port: 49137
+    cipher: "chacha20-ietf-poly1305"
+    password: "ZwHDaB59evUPtpwfZT2FA5"
+    udp: true
+  - name: "hamedp71::🇳🇱-86"
+    type: "ss"
+    server: "195.93.253.245"
+    port: 49137
+    cipher: "chacha20-ietf-poly1305"
+    password: "gwX0aD7rr0yPP18A0T6a5T"
+    udp: true
+  - name: "hamedp71::🇳🇱-87"
+    type: "ss"
+    server: "193.29.139.164"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "cvII85TrW6n0OGyfpHVS1u"
+    udp: true
+  - name: "hamedp71::🇳🇱-88"
+    type: "ss"
+    server: "195.93.253.245"
+    port: 49137
+    cipher: "chacha20-ietf-poly1305"
+    password: "jvRO81Jx6IiOKM8R0cBAAR"
+    udp: true
+  - name: "hamedp71::🇳🇱-89"
+    type: "ss"
+    server: "195.93.253.245"
+    port: 49137
+    cipher: "chacha20-ietf-poly1305"
+    password: "rMeJhia9HhCw1hGcxeVFQf"
+    udp: true
+  - name: "hamedp71::🇳🇱-90"
+    type: "ss"
+    server: "195.93.253.240"
+    port: 14130
+    cipher: "chacha20-ietf-poly1305"
+    password: "sVsoUk7CYNHOfsW45ZgNKV"
+    udp: true
+  - name: "hamedp71::🇳🇱-91"
+    type: "ss"
+    server: "195.93.253.245"
+    port: 49137
+    cipher: "chacha20-ietf-poly1305"
+    password: "3ago9QZ15i6jpmSFZSKoEf"
+    udp: true
+  - name: "hamedp71::🇳🇱-92"
+    type: "ss"
+    server: "195.93.253.245"
+    port: 49137
+    cipher: "chacha20-ietf-poly1305"
+    password: "XjMuvZ3CLgmNpopI4kXb6h"
+    udp: true
+  - name: "hamedp71::🇳🇱-93"
+    type: "ss"
+    server: "82.38.31.185"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "hamedp71::🇩🇪-43"
+    type: "ss"
+    server: "84.200.91.158"
+    port: 443
+    cipher: "aes-256-gcm"
+    password: "a742bd85-0f97-42bd-891f-aa00dbd1a461"
+    udp: true
+  - name: "hamedp71::🇳🇱-94"
+    type: "ss"
+    server: "195.93.253.240"
+    port: 14130
+    cipher: "chacha20-ietf-poly1305"
+    password: "zfRwdreLaBOGwUzCaWmvIN"
+    udp: true
+  - name: "hamedp71::🇩🇪-44"
+    type: "ss"
+    server: "de5.taskflowhub.org"
+    port: 2083
+    cipher: "aes-256-gcm"
+    password: "7NuB0Y5m3aNzkKMKlFoMwkiajsu6F36c9ok4VKEZnB4="
+    udp: true
+  - name: "hamedp71::🇳🇱-95"
+    type: "ss"
+    server: "195.93.253.245"
+    port: 49137
+    cipher: "chacha20-ietf-poly1305"
+    password: "CwG4D80g4m9AAs1Ha4MZjW"
+    udp: true
+  - name: "hamedp71::🇪🇪-1"
+    type: "ss"
+    server: "38.180.216.114"
+    port: 7307
+    cipher: "aes-256-gcm"
+    password: "FoOiGlkAA9yPEGP"
+    udp: true
+  - name: "hamedp71::🇬🇧-42"
+    type: "ss"
+    server: "mx2.drawnrisha.one"
+    port: 55988
+    cipher: "chacha20-ietf-poly1305"
+    password: "bZ87amPpdG7KuWM62bKtm1KHoowuVjnV8CKtq653ymHcg2dPYcPJfnaQ61stuAjr2ZiLDaqH56XpkxEYuwDzzRrMWieebWGt"
     udp: true
   - name: "hamedp71::🇺🇸-54"
     type: "vmess"
@@ -4437,7 +5054,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "hamedp71::🇩🇪-47"
+  - name: "hamedp71::🇩🇪-45"
     type: "vmess"
     server: "de5.taskflowhub.org"
     port: 2053
@@ -4445,7 +5062,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "hamedp71::🇩🇪-48"
+  - name: "hamedp71::🇩🇪-46"
     type: "vmess"
     server: "node-de.connectsuite.org"
     port: 2053
@@ -4453,7 +5070,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "hamedp71::🏴‍☠️-13"
+  - name: "hamedp71::🏴‍☠️-12"
     type: "vmess"
     server: "renderer-stream-1-411.mirra.now"
     port: 443
@@ -4461,7 +5078,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "hamedp71::🇩🇪-49"
+  - name: "hamedp71::🇩🇪-47"
     type: "vmess"
     server: "82.198.246.214"
     port: 180
@@ -4493,7 +5110,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "hamedp71::🇰🇷"
+  - name: "hamedp71::🇰🇷-2"
     type: "vmess"
     server: "152.67.218.38"
     port: 443
@@ -4509,7 +5126,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "hamedp71::🇰🇷-1"
+  - name: "hamedp71::🇰🇷-3"
     type: "vmess"
     server: "140.238.2.250"
     port: 443
@@ -4517,7 +5134,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "hamedp71::🇫🇷-15"
+  - name: "hamedp71::🇫🇷-17"
     type: "vmess"
     server: "node-fr.connectsuite.org"
     port: 2053
@@ -4580,13 +5197,20 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "hamedp71::🇩🇪-50"
+  - name: "hamedp71::🇩🇪-48"
     type: "vmess"
     server: "speedtest.org"
     port: 80
     uuid: "58fe1542-5290-40ad-815a-77707a81afe5"
     alterId: 0
     cipher: "chacha20-poly1305"
+    udp: true
+  - name: "hamedp71::🇮🇳-3"
+    type: "vmess"
+    server: "172.232.103.186"
+    port: 22324
+    uuid: "04621bae-ab36-11ec-b909-0242ac120002"
+    alterId: 0
     udp: true
   - name: "hamedp71::🇺🇸-61"
     type: "vmess"
@@ -4603,14 +5227,14 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "hamedp71::🇨🇦-3"
+  - name: "hamedp71::🇨🇦-4"
     type: "vmess"
     server: "134.195.196.211"
     port: 18000
     uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
     alterId: 0
     udp: true
-  - name: "hamedp71::🇯🇵-11"
+  - name: "hamedp71::🇯🇵-12"
     type: "vmess"
     server: "172.111.146.64"
     port: 80
@@ -4618,7 +5242,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "hamedp71::🇯🇵-12"
+  - name: "hamedp71::🇯🇵-13"
     type: "vmess"
     server: "153.121.73.175"
     port: 49803
@@ -4634,7 +5258,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "hamedp71::🇯🇵-13"
+  - name: "hamedp71::🇯🇵-14"
     type: "vmess"
     server: "168.138.43.75"
     port: 80
@@ -4642,7 +5266,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "hamedp71::🇮🇹-33"
+  - name: "hamedp71::🇮🇹-26"
     type: "vmess"
     server: "57.131.32.191"
     port: 8443
@@ -4675,7 +5299,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.jewelapp.click"
-  - name: "hamedp71::🇩🇪-51"
+  - name: "hamedp71::🇩🇪-49"
     type: "trojan"
     server: "de-1.hysteria.ltd"
     port: 9443
@@ -4684,7 +5308,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "de-1.hysteria.ltd"
-  - name: "hamedp71::🇩🇪-52"
+  - name: "hamedp71::🇩🇪-50"
     type: "trojan"
     server: "91.233.8.138"
     port: 443
@@ -4693,7 +5317,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.homelywebs.click"
-  - name: "hamedp71::🇵🇱-10"
+  - name: "hamedp71::🇵🇱-8"
     type: "trojan"
     server: "64.176.65.85"
     port: 443
@@ -4710,7 +5334,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "45.79.8.17"
-  - name: "hamedp71::🇫🇷-16"
+  - name: "hamedp71::🇫🇷-18"
     type: "trojan"
     server: "217.69.2.107"
     port: 443
@@ -4719,7 +5343,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.weavenet.click"
-  - name: "hamedp71::🇩🇪-53"
+  - name: "hamedp71::🇩🇪-51"
     type: "trojan"
     server: "185.137.157.254"
     port: 443
@@ -4728,7 +5352,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.directorypipeline.click"
-  - name: "hamedp71::🇮🇳-3"
+  - name: "hamedp71::🇮🇳-4"
     type: "trojan"
     server: "65.20.90.225"
     port: 443
@@ -4737,7 +5361,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.sandbox-cloud.click"
-  - name: "hamedp71::🇵🇱-11"
+  - name: "hamedp71::🇵🇱-9"
     type: "trojan"
     server: "43.169.18.179"
     port: 443
@@ -4772,7 +5396,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.registry-monitor.click"
-  - name: "hamedp71::🇳🇱-73"
+  - name: "hamedp71::🇳🇱-96"
     type: "trojan"
     server: "104.18.12.149"
     port: 443
@@ -4785,7 +5409,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.multiplydose.com"
-  - name: "hamedp71::🇫🇷-17"
+  - name: "hamedp71::🇫🇷-19"
     type: "trojan"
     server: "104.16.174.12"
     port: 443
@@ -4798,7 +5422,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.ignitelimit.com"
-  - name: "hamedp71::🇫🇷-18"
+  - name: "hamedp71::🇫🇷-20"
     type: "trojan"
     server: "104.17.121.71"
     port: 443
@@ -4811,7 +5435,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmloud.com"
-  - name: "hamedp71::🇫🇷-19"
+  - name: "hamedp71::🇫🇷-21"
     type: "trojan"
     server: "104.17.121.9"
     port: 443
@@ -4824,7 +5448,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "hamedp71::🇫🇷-20"
+  - name: "hamedp71::🇫🇷-22"
     type: "trojan"
     server: "104.18.13.149"
     port: 443
@@ -4837,7 +5461,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmloud.com"
-  - name: "hamedp71::🇫🇷-21"
+  - name: "hamedp71::🇫🇷-23"
     type: "trojan"
     server: "104.20.6.134"
     port: 443
@@ -4850,7 +5474,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmloud.com"
-  - name: "hamedp71::🇫🇷-22"
+  - name: "hamedp71::🇫🇷-24"
     type: "trojan"
     server: "104.18.152.225"
     port: 443
@@ -4863,7 +5487,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.ignitelimit.com"
-  - name: "hamedp71::🇫🇷-23"
+  - name: "hamedp71::🇫🇷-25"
     type: "trojan"
     server: "104.18.32.37"
     port: 443
@@ -4874,7 +5498,7 @@ proxies:
     servername: "www.gossipglove.com"
     ws-opts:
       path: "/assignment"
-  - name: "hamedp71::🇫🇷-24"
+  - name: "hamedp71::🇫🇷-26"
     type: "trojan"
     server: "104.18.32.47"
     port: 443
@@ -4887,7 +5511,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.gossipglove.com"
-  - name: "hamedp71::🇫🇷-25"
+  - name: "hamedp71::🇫🇷-27"
     type: "trojan"
     server: "141.193.213.11"
     port: 443
@@ -4900,7 +5524,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmloud.com"
-  - name: "hamedp71::🇫🇷-26"
+  - name: "hamedp71::🇫🇷-28"
     type: "trojan"
     server: "104.20.42.250"
     port: 443
@@ -4913,7 +5537,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmloud.com"
-  - name: "hamedp71::🇫🇷-27"
+  - name: "hamedp71::🇫🇷-29"
     type: "trojan"
     server: "104.19.229.21"
     port: 443
@@ -4924,7 +5548,7 @@ proxies:
     servername: "www.gossipglove.com"
     ws-opts:
       path: "/assignment?L=tls"
-  - name: "hamedp71::🇫🇷-28"
+  - name: "hamedp71::🇫🇷-30"
     type: "trojan"
     server: "188.114.96.4"
     port: 443
@@ -4935,7 +5559,7 @@ proxies:
     servername: "www.calmloud.com"
     ws-opts:
       path: "/assignment"
-  - name: "hamedp71::🇫🇷-29"
+  - name: "hamedp71::🇫🇷-31"
     type: "trojan"
     server: "141.193.213.21"
     port: 443
@@ -4948,7 +5572,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmloud.com"
-  - name: "hamedp71::🇫🇷-30"
+  - name: "hamedp71::🇫🇷-32"
     type: "trojan"
     server: "172.64.147.24"
     port: 443
@@ -4961,7 +5585,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.gossipglove.com"
-  - name: "hamedp71::🇫🇷-31"
+  - name: "hamedp71::🇫🇷-33"
     type: "trojan"
     server: "104.21.40.34"
     port: 443
@@ -4974,7 +5598,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.gossipglove.com"
-  - name: "hamedp71::🇫🇷-32"
+  - name: "hamedp71::🇫🇷-34"
     type: "trojan"
     server: "165.215.250.14"
     port: 443
@@ -4987,7 +5611,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.ignitelimit.com"
-  - name: "hamedp71::🇫🇷-33"
+  - name: "hamedp71::🇫🇷-35"
     type: "trojan"
     server: "212.183.88.136"
     port: 443
@@ -5000,7 +5624,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "hamedp71::🇫🇷-34"
+  - name: "hamedp71::🇫🇷-36"
     type: "trojan"
     server: "185.18.250.245"
     port: 443
@@ -5013,7 +5637,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "hamedp71::🇫🇷-35"
+  - name: "hamedp71::🇫🇷-37"
     type: "trojan"
     server: "141.101.90.101"
     port: 443
@@ -5026,7 +5650,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.ignitelimit.com"
-  - name: "hamedp71::🇫🇷-36"
+  - name: "hamedp71::🇫🇷-38"
     type: "trojan"
     server: "185.18.250.252"
     port: 443
@@ -5039,7 +5663,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "hamedp71::🇫🇷-37"
+  - name: "hamedp71::🇫🇷-39"
     type: "trojan"
     server: "188.114.96.3"
     port: 443
@@ -5052,7 +5676,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "hamedp71::🇫🇷-38"
+  - name: "hamedp71::🇫🇷-40"
     type: "trojan"
     server: "188.114.98.0"
     port: 443
@@ -5065,7 +5689,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "hamedp71::🇳🇱-74"
+  - name: "hamedp71::🇳🇱-97"
     type: "trojan"
     server: "162.159.17.189"
     port: 443
@@ -5078,7 +5702,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.multiplydose.com"
-  - name: "hamedp71::🇵🇱-12"
+  - name: "hamedp71::🇵🇱-10"
     type: "trojan"
     server: "188.114.97.6"
     port: 443
@@ -5091,7 +5715,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.creationlong.org"
-  - name: "hamedp71::🇫🇷-39"
+  - name: "hamedp71::🇫🇷-41"
     type: "trojan"
     server: "45.130.125.76"
     port: 443
@@ -5104,7 +5728,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "hamedp71::🇵🇱-13"
+  - name: "hamedp71::🇵🇱-11"
     type: "trojan"
     server: "208.103.161.110"
     port: 443
@@ -5117,7 +5741,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.creationlong.org"
-  - name: "hamedp71::🇫🇷-40"
+  - name: "hamedp71::🇫🇷-42"
     type: "trojan"
     server: "216.24.57.7"
     port: 443
@@ -5130,7 +5754,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.ignitelimit.com"
-  - name: "hamedp71::🇫🇷-41"
+  - name: "hamedp71::🇫🇷-43"
     type: "trojan"
     server: "45.80.111.7"
     port: 443
@@ -5141,7 +5765,7 @@ proxies:
     servername: "www.calmlunch.com"
     ws-opts:
       path: "/assignment"
-  - name: "hamedp71::🇫🇷-42"
+  - name: "hamedp71::🇫🇷-44"
     type: "trojan"
     server: "45.130.125.0"
     port: 443
@@ -5154,7 +5778,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmloud.com"
-  - name: "hamedp71::🇫🇷-43"
+  - name: "hamedp71::🇫🇷-45"
     type: "trojan"
     server: "45.130.125.69"
     port: 443
@@ -5167,7 +5791,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmloud.com"
-  - name: "hamedp71::🇫🇷-44"
+  - name: "hamedp71::🇫🇷-46"
     type: "trojan"
     server: "45.130.125.160"
     port: 443
@@ -5180,7 +5804,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmloud.com"
-  - name: "hamedp71::🇫🇷-45"
+  - name: "hamedp71::🇫🇷-47"
     type: "trojan"
     server: "8.6.112.6"
     port: 443
@@ -5193,7 +5817,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmloud.com"
-  - name: "hamedp71::🇫🇷-46"
+  - name: "hamedp71::🇫🇷-48"
     type: "trojan"
     server: "66.81.247.155"
     port: 443
@@ -5206,7 +5830,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmloud.com"
-  - name: "hamedp71::🇫🇷-47"
+  - name: "hamedp71::🇫🇷-49"
     type: "trojan"
     server: "sourceforge.net"
     port: 443
@@ -5219,7 +5843,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmloud.com"
-  - name: "hamedp71::🇫🇷-48"
+  - name: "hamedp71::🇫🇷-50"
     type: "trojan"
     server: "chatgpt.com"
     port: 443
@@ -5232,7 +5856,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.gossipglove.com"
-  - name: "hamedp71::🇫🇷-49"
+  - name: "hamedp71::🇫🇷-51"
     type: "trojan"
     server: "www.calmlunch.com"
     port: 443
@@ -5244,7 +5868,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "hamedp71::🇫🇷-50"
+  - name: "hamedp71::🇫🇷-52"
     type: "trojan"
     server: "www.ignitelimit.com"
     port: 443
@@ -5254,7 +5878,7 @@ proxies:
     network: "ws"
     ws-opts:
       path: "/assignment"
-  - name: "hamedp71::🇫🇷-51"
+  - name: "hamedp71::🇫🇷-53"
     type: "trojan"
     server: "www.gossipglove.com"
     port: 443
@@ -5277,7 +5901,7 @@ proxies:
       path: "/"
       headers:
         Host: "flat-firefly-6022.rixewi3168.workers.dev"
-  - name: "hamedp71::🇫🇷-52"
+  - name: "hamedp71::🇫🇷-54"
     type: "trojan"
     server: "v3.dabache.top"
     port: 443
@@ -5290,7 +5914,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.gossipglove.com"
-  - name: "hamedp71::🇵🇱-14"
+  - name: "hamedp71::🇵🇱-12"
     type: "trojan"
     server: "216.24.57.1"
     port: 443
@@ -5301,7 +5925,7 @@ proxies:
     servername: "www.creationlong.org"
     ws-opts:
       path: "/assignment"
-  - name: "hamedp71::🇳🇱-75"
+  - name: "hamedp71::🇳🇱-98"
     type: "trojan"
     server: "www.multiplydose.com"
     port: 443
@@ -5313,7 +5937,7 @@ proxies:
       path: "//assignment"
       headers:
         Host: "www.multiplydose.com"
-  - name: "hamedp71::🏴‍☠️-14"
+  - name: "hamedp71::🏴‍☠️-13"
     type: "trojan"
     server: "109.234.211.66"
     port: 8443
@@ -5326,6 +5950,14 @@ proxies:
       path: "/"
       headers:
         Host: "store.timimi.dpdns.org"
+  - name: "hamedp71::🇺🇸-66"
+    type: "trojan"
+    server: "45.79.8.17"
+    port: 443
+    password: "rXyShM8Jni+5Sbq3k4gkyr5Lq0zOMRL2Uf"
+    udp: true
+    tls: true
+    network: "tcp"
   - name: "hamedp71::🇨🇿"
     type: "trojan"
     server: "ch-2.bexum.fun"
@@ -5335,7 +5967,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "ch-2.bexum.fun"
-  - name: "hamedp71::🇫🇷-53"
+  - name: "hamedp71::🇫🇷-55"
     type: "trojan"
     server: "89.116.46.68"
     port: 443
@@ -5348,7 +5980,20 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmloud.com"
-  - name: "hamedp71::🇫🇷-54"
+  - name: "hamedp71::🇫🇷-56"
+    type: "trojan"
+    server: "45.130.125.160"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "hamedp71::🇫🇷-57"
     type: "trojan"
     server: "104.18.152.219"
     port: 443
@@ -5361,7 +6006,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.ignitelimit.com"
-  - name: "hamedp71::🇫🇷-55"
+  - name: "hamedp71::🇫🇷-58"
     type: "trojan"
     server: "104.18.152.208"
     port: 443
@@ -5374,7 +6019,18 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.ignitelimit.com"
-  - name: "hamedp71::🇫🇷-56"
+  - name: "hamedp71::🇳🇱-99"
+    type: "trojan"
+    server: "www.multiplydose.com"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.multiplydose.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "hamedp71::🇫🇷-59"
     type: "trojan"
     server: "104.18.152.108"
     port: 443
@@ -5387,7 +6043,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.ignitelimit.com"
-  - name: "hamedp71::🏴‍☠️-15"
+  - name: "hamedp71::🏴‍☠️-14"
     type: "trojan"
     server: "customer.arabtimesonline.qzz.io"
     port: 443
@@ -5400,7 +6056,20 @@ proxies:
       path: "/eyJqdW5rIjoieWluc042Sm5kIiwicHJvdG9jb2wiOiJ0ciIsIm1vZGUiOiJwcm94eWlwIiwicGFuZWxJUHMiOltdfQ==?ed=2560"
       headers:
         Host: "customer.arabtimesonline.qzz.io"
-  - name: "hamedp71::🇫🇷-57"
+  - name: "hamedp71::🇫🇷-60"
+    type: "trojan"
+    server: "188.114.97.6"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "hamedp71::🇫🇷-61"
     type: "trojan"
     server: "162.159.195.173"
     port: 443
@@ -5413,7 +6082,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmloud.com"
-  - name: "hamedp71::🇵🇱-15"
+  - name: "hamedp71::🇵🇱-13"
     type: "trojan"
     server: "www.creationlong.org"
     port: 443
@@ -5425,7 +6094,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.creationlong.org"
-  - name: "hamedp71::🇫🇷-58"
+  - name: "hamedp71::🇫🇷-62"
     type: "trojan"
     server: "104.18.152.50"
     port: 443
@@ -5438,7 +6107,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.ignitelimit.com"
-  - name: "hamedp71::🇫🇷-59"
+  - name: "hamedp71::🇫🇷-63"
     type: "trojan"
     server: "104.18.152.233"
     port: 443
@@ -5451,7 +6120,31 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmloud.com"
-  - name: "hamedp71::🇫🇷-60"
+  - name: "hamedp71::🇵🇱-14"
+    type: "trojan"
+    server: "43.169.18.179"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+  - name: "hamedp71::🇳🇱-100"
+    type: "trojan"
+    server: "185.18.250.252"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.multiplydose.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.multiplydose.com"
+  - name: "hamedp71::🇫🇷-64"
     type: "trojan"
     server: "104.18.152.229"
     port: 443
@@ -5464,7 +6157,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.ignitelimit.com"
-  - name: "hamedp71::🇫🇷-61"
+  - name: "hamedp71::🇫🇷-65"
     type: "trojan"
     server: "208.103.161.170"
     port: 443
@@ -5477,7 +6170,20 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmloud.com"
-  - name: "hamedp71::🇫🇷-62"
+  - name: "hamedp71::🇫🇷-66"
+    type: "trojan"
+    server: "104.19.229.21"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "hamedp71::🇫🇷-67"
     type: "trojan"
     server: "srv1.khatibirepair.ir"
     port: 443
@@ -5488,7 +6194,7 @@ proxies:
     servername: "www.calmlunch.com"
     ws-opts:
       path: "/assignment"
-  - name: "hamedp71::🇫🇷-63"
+  - name: "hamedp71::🇫🇷-68"
     type: "trojan"
     server: "104.16.174.44"
     port: 443
@@ -5501,7 +6207,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.ignitelimit.com"
-  - name: "hamedp71::🇫🇷-64"
+  - name: "hamedp71::🇫🇷-69"
     type: "trojan"
     server: "141.193.213.30"
     port: 443
@@ -5514,7 +6220,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmloud.com"
-  - name: "hamedp71::🇫🇷-65"
+  - name: "hamedp71::🇫🇷-70"
     type: "trojan"
     server: "198.62.62.23"
     port: 443
@@ -5527,7 +6233,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "hamedp71::🇫🇷-66"
+  - name: "hamedp71::🇫🇷-71"
     type: "trojan"
     server: "141.193.213.10"
     port: 443
@@ -5540,7 +6246,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmloud.com"
-  - name: "hamedp71::🇰🇷-2"
+  - name: "hamedp71::🇰🇷-4"
     type: "trojan"
     server: "130.94.29.102"
     port: 443
@@ -5558,7 +6264,15 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.archiveselector.click"
-  - name: "hamedp71::🇫🇷-67"
+  - name: "hamedp71::🇨🇿-1"
+    type: "trojan"
+    server: "ch-2.bexum.fun"
+    port: 443
+    password: "LYaEYwjN8LjWTRJdCCTzW7V6gK7atJVu"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "hamedp71::🇫🇷-72"
     type: "trojan"
     server: "104.16.174.36"
     port: 443
@@ -5571,7 +6285,20 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.ignitelimit.com"
-  - name: "hamedp71::🇵🇱-16"
+  - name: "hamedp71::🇫🇷-73"
+    type: "trojan"
+    server: "165.215.250.14"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "hamedp71::🇵🇱-15"
     type: "trojan"
     server: "81.255.155.10"
     port: 443
@@ -5584,7 +6311,125 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.creationlong.org"
-  - name: "hamedp71::🇺🇸-66"
+  - name: "hamedp71::🇫🇷-74"
+    type: "trojan"
+    server: "188.114.98.0"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.gossipglove.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "hamedp71::🇵🇱-16"
+    type: "trojan"
+    server: "81.255.155.10"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+  - name: "hamedp71::🇵🇱-17"
+    type: "trojan"
+    server: "188.114.98.0"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.creationlong.org"
+  - name: "hamedp71::🇳🇱-101"
+    type: "trojan"
+    server: "188.114.98.0"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.multiplydose.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "hamedp71::🇵🇱-18"
+    type: "trojan"
+    server: "www.creationlong.org"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+  - name: "hamedp71::🇫🇷-75"
+    type: "trojan"
+    server: "www.gossipglove.com"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.gossipglove.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "hamedp71::🇳🇱-102"
+    type: "trojan"
+    server: "188.114.96.3"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.multiplydose.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.multiplydose.com"
+  - name: "hamedp71::🇫🇷-76"
+    type: "trojan"
+    server: "188.114.96.3"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.gossipglove.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "hamedp71::🇵🇱-19"
+    type: "trojan"
+    server: "188.114.96.3"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.creationlong.org"
+  - name: "hamedp71::🇫🇷-77"
+    type: "trojan"
+    server: "www.calmlunch.com"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "hamedp71::🇺🇸-67"
     type: "trojan"
     server: "irancell.buzzmuzzpanel.online"
     port: 443
@@ -5597,7 +6442,7 @@ proxies:
       path: "/eyJqdW5rIjoidDJ0UDljR2ZIaVBQakg2byIsInByb3RvY29sIjoidHIiLCJtb2RlIjoicHJveHlpcCIsInBhbmVsSVBzIjpbXX0=?ed=2560"
       headers:
         Host: "027.electrocellco-cf-027.workers.dev"
-  - name: "hamedp71::🇺🇸-67"
+  - name: "hamedp71::🇺🇸-68"
     type: "trojan"
     server: "www.speedtest.net"
     port: 443
@@ -5610,16 +6455,42 @@ proxies:
       path: "/eyJqdW5rIjoidlhnMXN5OXFUSiIsInByb3RvY29sIjoidHIiLCJtb2RlIjoicHJveHlpcCIsInBhbmVsSVBzIjpbXX0=?ed=2560"
       headers:
         Host: "027.electrocellco-cf-027.workers.dev"
+  - name: "hamedp71::🇳🇱-103"
+    type: "trojan"
+    server: "www.multiplydose.com"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.multiplydose.com"
+    ws-opts:
+      path: "//assignment"
+      headers:
+        Host: "www.multiplydose.com"
+  - name: "hamedp71::🇳🇱-104"
+    type: "trojan"
+    server: "www.multiplydose.com"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/assignment"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
+    icon: "https://www.svgrepo.com/show/412721/choose.svg"
     proxies:
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
+      - "توزیع بار چرخشی ⚖️"
       - "قطع اینترنت ⛔"
+      - "بدون فیلترشکن 🛡️"
   - name: "دستی 🤏🏻"
     type: "select"
+    icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
       - "hamedp71::🏴‍☠️"
       - "hamedp71::🇬🇧"
@@ -5637,6 +6508,7 @@ proxy-groups:
       - "hamedp71::🇮🇹-1"
       - "hamedp71::🇩🇪-2"
       - "hamedp71::🇸🇰"
+      - "hamedp71::🇩🇪-3"
       - "hamedp71::🇮🇹-2"
       - "hamedp71::🇪🇸"
       - "hamedp71::🇭🇰"
@@ -5651,20 +6523,21 @@ proxy-groups:
       - "hamedp71::🇫🇮-4"
       - "hamedp71::🇳🇴"
       - "hamedp71::🇦🇺"
-      - "hamedp71::🇩🇪-3"
+      - "hamedp71::🇩🇪-4"
       - "hamedp71::🇷🇸"
       - "hamedp71::🇳🇱-1"
       - "hamedp71::🇫🇷"
       - "hamedp71::🇮🇹-6"
-      - "hamedp71::🇩🇪-4"
-      - "hamedp71::🇮🇹-7"
       - "hamedp71::🇩🇪-5"
+      - "hamedp71::🇮🇹-7"
+      - "hamedp71::🇩🇪-6"
+      - "hamedp71::🇮🇹-8"
       - "hamedp71::🇨🇦"
       - "hamedp71::🇳🇱-2"
       - "hamedp71::🇺🇸-1"
-      - "hamedp71::🇩🇪-6"
       - "hamedp71::🇩🇪-7"
       - "hamedp71::🇩🇪-8"
+      - "hamedp71::🇩🇪-9"
       - "hamedp71::🇫🇷-1"
       - "hamedp71::🇫🇷-2"
       - "hamedp71::🇺🇸-2"
@@ -5673,7 +6546,7 @@ proxy-groups:
       - "hamedp71::🇸🇪"
       - "hamedp71::🇬🇧-1"
       - "hamedp71::🇬🇧-2"
-      - "hamedp71::🇩🇪-9"
+      - "hamedp71::🇩🇪-10"
       - "hamedp71::🇧🇪"
       - "hamedp71::🇧🇪-1"
       - "hamedp71::🇯🇵-2"
@@ -5694,6 +6567,7 @@ proxy-groups:
       - "hamedp71::🇳🇱-6"
       - "hamedp71::🇫🇷-3"
       - "hamedp71::🇫🇷-4"
+      - "hamedp71::🇫🇷-5"
       - "hamedp71::🇵🇱-3"
       - "hamedp71::🇫🇮-6"
       - "hamedp71::🇺🇸-10"
@@ -5705,24 +6579,25 @@ proxy-groups:
       - "hamedp71::🇫🇮-7"
       - "hamedp71::🇪🇪"
       - "hamedp71::🇫🇮-8"
-      - "hamedp71::🇩🇪-10"
+      - "hamedp71::🇫🇮-9"
+      - "hamedp71::🇩🇪-11"
       - "hamedp71::🏴‍☠️-4"
       - "hamedp71::🇬🇧-4"
-      - "hamedp71::🇫🇷-5"
+      - "hamedp71::🇫🇷-6"
       - "hamedp71::🇺🇸-14"
-      - "hamedp71::🇩🇪-11"
       - "hamedp71::🇩🇪-12"
+      - "hamedp71::🇩🇪-13"
       - "hamedp71::🇬🇧-5"
       - "hamedp71::🇬🇧-6"
       - "hamedp71::🇬🇧-7"
-      - "hamedp71::🇩🇪-13"
+      - "hamedp71::🇩🇪-14"
       - "hamedp71::🇳🇱-7"
       - "hamedp71::🇳🇱-8"
       - "hamedp71::🇳🇱-9"
       - "hamedp71::🇳🇱-10"
       - "hamedp71::🇸🇰-1"
       - "hamedp71::🇬🇧-8"
-      - "hamedp71::🇩🇪-14"
+      - "hamedp71::🇩🇪-15"
       - "hamedp71::🇬🇧-9"
       - "hamedp71::🇬🇧-10"
       - "hamedp71::🇬🇧-11"
@@ -5741,37 +6616,39 @@ proxy-groups:
       - "hamedp71::🇳🇱-13"
       - "hamedp71::🇳🇱-14"
       - "hamedp71::🇳🇱-15"
-      - "hamedp71::🇭🇰-1"
-      - "hamedp71::🇮🇹-8"
       - "hamedp71::🇳🇱-16"
+      - "hamedp71::🇸🇰-6"
+      - "hamedp71::🇭🇰-1"
+      - "hamedp71::🇮🇹-9"
       - "hamedp71::🇳🇱-17"
       - "hamedp71::🇳🇱-18"
       - "hamedp71::🇳🇱-19"
-      - "hamedp71::🇫🇷-6"
+      - "hamedp71::🇳🇱-20"
+      - "hamedp71::🇳🇱-21"
       - "hamedp71::🇫🇷-7"
-      - "hamedp71::🇫🇮-9"
+      - "hamedp71::🇫🇷-8"
       - "hamedp71::🇫🇮-10"
+      - "hamedp71::🇫🇮-11"
       - "hamedp71::🇺🇸-15"
-      - "hamedp71::🇩🇪-15"
+      - "hamedp71::🇩🇪-16"
       - "hamedp71::🇺🇸-16"
       - "hamedp71::🇺🇸-17"
-      - "hamedp71::🇩🇪-16"
+      - "hamedp71::🇩🇪-17"
       - "hamedp71::🇺🇸-18"
       - "hamedp71::🇺🇸-19"
-      - "hamedp71::🇫🇮-11"
+      - "hamedp71::🇫🇮-12"
       - "hamedp71::🏴‍☠️-5"
       - "hamedp71::🇨🇦-1"
-      - "hamedp71::🇮🇹-9"
-      - "hamedp71::🇳🇱-20"
+      - "hamedp71::🇮🇹-10"
+      - "hamedp71::🇳🇱-22"
       - "hamedp71::🇺🇸-20"
       - "hamedp71::🇺🇸-21"
-      - "hamedp71::🇫🇮-12"
-      - "hamedp71::🇺🇸-22"
       - "hamedp71::🇫🇮-13"
+      - "hamedp71::🇺🇸-22"
       - "hamedp71::🇫🇮-14"
-      - "hamedp71::🇫🇷-8"
-      - "hamedp71::🇩🇪-17"
       - "hamedp71::🇫🇮-15"
+      - "hamedp71::🇫🇷-9"
+      - "hamedp71::🇩🇪-18"
       - "hamedp71::🇫🇮-16"
       - "hamedp71::🇫🇮-17"
       - "hamedp71::🇫🇮-18"
@@ -5799,142 +6676,132 @@ proxy-groups:
       - "hamedp71::🇫🇮-40"
       - "hamedp71::🇫🇮-41"
       - "hamedp71::🇫🇮-42"
+      - "hamedp71::🇫🇮-43"
+      - "hamedp71::🇫🇮-44"
       - "hamedp71::🏴‍☠️-6"
       - "hamedp71::🏴‍☠️-7"
-      - "hamedp71::🇮🇹-10"
-      - "hamedp71::🏴‍☠️-8"
       - "hamedp71::🇮🇹-11"
-      - "hamedp71::🇳🇱-21"
-      - "hamedp71::🇳🇱-22"
+      - "hamedp71::🇺🇸-23"
+      - "hamedp71::🏴‍☠️-8"
+      - "hamedp71::🇮🇹-12"
       - "hamedp71::🇳🇱-23"
       - "hamedp71::🇳🇱-24"
-      - "hamedp71::🇩🇪-18"
       - "hamedp71::🇳🇱-25"
+      - "hamedp71::🇳🇱-26"
+      - "hamedp71::🇳🇱-27"
+      - "hamedp71::🇬🇧-18"
+      - "hamedp71::🇳🇱-28"
+      - "hamedp71::🇩🇪-19"
+      - "hamedp71::🇳🇱-29"
       - "hamedp71::🏴‍☠️-9"
-      - "hamedp71::🇫🇮-43"
+      - "hamedp71::🇫🇮-45"
       - "hamedp71::🇲🇩"
+      - "hamedp71::🇬🇧-19"
       - "hamedp71::🇱🇻"
       - "hamedp71::🇸🇪-1"
       - "hamedp71::🇷🇴"
-      - "hamedp71::🇳🇱-26"
-      - "hamedp71::🇵🇱-4"
-      - "hamedp71::🇳🇱-27"
-      - "hamedp71::🇳🇱-28"
-      - "hamedp71::🇧🇪-2"
-      - "hamedp71::🇮🇹-12"
-      - "hamedp71::🇫🇮-44"
-      - "hamedp71::🇩🇪-19"
-      - "hamedp71::🇬🇧-18"
-      - "hamedp71::🇳🇱-29"
-      - "hamedp71::🇺🇸-23"
-      - "hamedp71::🇮🇹-13"
-      - "hamedp71::🇲🇽"
-      - "hamedp71::🇫🇮-45"
-      - "hamedp71::🇵🇱-5"
-      - "hamedp71::🇫🇮-46"
-      - "hamedp71::🇯🇵-4"
-      - "hamedp71::🇩🇪-20"
-      - "hamedp71::🇭🇰-2"
-      - "hamedp71::🇩🇪-21"
-      - "hamedp71::🇮🇹-14"
       - "hamedp71::🇳🇱-30"
-      - "hamedp71::🇮🇹-15"
-      - "hamedp71::🇺🇸-24"
-      - "hamedp71::🏴‍☠️-10"
-      - "hamedp71::🇩🇪-22"
-      - "hamedp71::🇮🇹-16"
-      - "hamedp71::🇬🇧-19"
-      - "hamedp71::🇺🇸-25"
-      - "hamedp71::🇫🇷-9"
-      - "hamedp71::🇩🇪-23"
-      - "hamedp71::🇩🇪-24"
-      - "hamedp71::🇺🇸-26"
-      - "hamedp71::🇫🇮-47"
-      - "hamedp71::🇮🇹-17"
-      - "hamedp71::🇦🇺-1"
-      - "hamedp71::🇫🇮-48"
-      - "hamedp71::🇯🇵-5"
-      - "hamedp71::🇮🇹-18"
-      - "hamedp71::🇬🇧-20"
-      - "hamedp71::🇦🇹-2"
-      - "hamedp71::🇩🇪-25"
-      - "hamedp71::🇩🇪-26"
-      - "hamedp71::🇨🇭"
-      - "hamedp71::🇩🇪-27"
-      - "hamedp71::🇭🇰-3"
-      - "hamedp71::🇺🇸-27"
-      - "hamedp71::🇮🇹-19"
-      - "hamedp71::🇫🇷-10"
+      - "hamedp71::🇵🇱-4"
       - "hamedp71::🇳🇱-31"
-      - "hamedp71::🇭🇰-4"
-      - "hamedp71::🇩🇪-28"
-      - "hamedp71::🇩🇪-29"
-      - "hamedp71::🇵🇱-6"
-      - "hamedp71::🇮🇹-20"
-      - "hamedp71::🇬🇧-21"
-      - "hamedp71::🇮🇹-21"
-      - "hamedp71::🇹🇷"
-      - "hamedp71::🇫🇷-11"
-      - "hamedp71::🇫🇮-49"
-      - "hamedp71::🇮🇹-22"
-      - "hamedp71::🇬🇧-22"
-      - "hamedp71::🇬🇧-23"
-      - "hamedp71::🇩🇪-30"
       - "hamedp71::🇳🇱-32"
-      - "hamedp71::🇩🇪-31"
-      - "hamedp71::🇦🇺-2"
-      - "hamedp71::🇸🇬"
-      - "hamedp71::🇫🇷-12"
-      - "hamedp71::🇫🇮-50"
-      - "hamedp71::🇯🇵-6"
-      - "hamedp71::🇮🇹-23"
-      - "hamedp71::🇺🇸-28"
-      - "hamedp71::🇮🇹-24"
-      - "hamedp71::🇮🇹-25"
-      - "hamedp71::🇩🇪-32"
+      - "hamedp71::🇧🇪-2"
+      - "hamedp71::🇮🇹-13"
+      - "hamedp71::🇫🇮-46"
+      - "hamedp71::🇩🇪-20"
+      - "hamedp71::🇫🇮-47"
+      - "hamedp71::🇬🇧-20"
       - "hamedp71::🇳🇱-33"
-      - "hamedp71::🇹🇭"
-      - "hamedp71::🇬🇧-24"
-      - "hamedp71::🇩🇪-33"
-      - "hamedp71::🇩🇪-34"
-      - "hamedp71::🇩🇪-35"
-      - "hamedp71::🇩🇪-36"
-      - "hamedp71::🇩🇪-37"
-      - "hamedp71::🇩🇪-38"
-      - "hamedp71::🇩🇪-39"
-      - "hamedp71::🇩🇰"
-      - "hamedp71::🇫🇷-13"
-      - "hamedp71::🇮🇹-26"
-      - "hamedp71::🏴‍☠️-11"
-      - "hamedp71::🏴‍☠️-12"
-      - "hamedp71::🇲🇩-1"
+      - "hamedp71::🇺🇸-24"
+      - "hamedp71::🇮🇹-14"
+      - "hamedp71::🇲🇽"
+      - "hamedp71::🇫🇮-48"
+      - "hamedp71::🇵🇱-5"
+      - "hamedp71::🇫🇮-49"
+      - "hamedp71::🇯🇵-4"
+      - "hamedp71::🇩🇪-21"
+      - "hamedp71::🇭🇰-2"
+      - "hamedp71::🇩🇪-22"
+      - "hamedp71::🇮🇹-15"
       - "hamedp71::🇳🇱-34"
-      - "hamedp71::🇵🇱-7"
-      - "hamedp71::🇵🇱-8"
+      - "hamedp71::🇮🇹-16"
+      - "hamedp71::🇺🇸-25"
+      - "hamedp71::🏴‍☠️-10"
+      - "hamedp71::🏴‍☠️-11"
+      - "hamedp71::🇩🇪-23"
+      - "hamedp71::🇮🇹-17"
+      - "hamedp71::🇫🇷-10"
+      - "hamedp71::🇬🇧-21"
+      - "hamedp71::🇺🇸-26"
+      - "hamedp71::🇬🇧-22"
+      - "hamedp71::🇫🇷-11"
+      - "hamedp71::🇩🇪-24"
+      - "hamedp71::🇩🇪-25"
+      - "hamedp71::🇫🇮-50"
+      - "hamedp71::🇺🇸-27"
+      - "hamedp71::🇫🇮-51"
+      - "hamedp71::🇨🇦-2"
+      - "hamedp71::🇫🇮-52"
+      - "hamedp71::🇮🇹-18"
+      - "hamedp71::🇫🇮-53"
+      - "hamedp71::🇦🇺-1"
+      - "hamedp71::🇫🇮-54"
+      - "hamedp71::🇯🇵-5"
+      - "hamedp71::🇮🇹-19"
+      - "hamedp71::🇬🇧-23"
+      - "hamedp71::🇦🇹-2"
+      - "hamedp71::🇩🇪-26"
+      - "hamedp71::🇺🇸-28"
+      - "hamedp71::🇩🇪-27"
+      - "hamedp71::🇩🇪-28"
+      - "hamedp71::🇨🇭"
+      - "hamedp71::🇫🇷-12"
+      - "hamedp71::🇫🇮-55"
+      - "hamedp71::🇩🇪-29"
+      - "hamedp71::🇭🇰-3"
       - "hamedp71::🇺🇸-29"
-      - "hamedp71::🇹🇷-1"
-      - "hamedp71::🇺🇸-30"
-      - "hamedp71::🇹🇷-2"
-      - "hamedp71::🇺🇸-31"
-      - "hamedp71::🇮🇹-27"
-      - "hamedp71::🇮🇹-28"
-      - "hamedp71::🇮🇹-29"
-      - "hamedp71::🇮🇹-30"
-      - "hamedp71::🇮🇹-31"
-      - "hamedp71::🇬🇧-25"
-      - "hamedp71::🇹🇼"
-      - "hamedp71::🇹🇼-1"
+      - "hamedp71::🇮🇹-20"
+      - "hamedp71::🇫🇷-13"
       - "hamedp71::🇳🇱-35"
-      - "hamedp71::🇹🇼-2"
-      - "hamedp71::🇷🇺"
-      - "hamedp71::🇺🇸-32"
-      - "hamedp71::🇩🇪-40"
-      - "hamedp71::🇵🇭"
-      - "hamedp71::🇮🇹-32"
+      - "hamedp71::🇭🇰-4"
+      - "hamedp71::🇺🇸-30"
+      - "hamedp71::🇩🇪-30"
       - "hamedp71::🇳🇱-36"
+      - "hamedp71::🇩🇪-31"
+      - "hamedp71::🇩🇪-32"
+      - "hamedp71::🇵🇱-6"
+      - "hamedp71::🇮🇹-21"
+      - "hamedp71::🇬🇧-24"
+      - "hamedp71::🇮🇹-22"
+      - "hamedp71::🇬🇧-25"
+      - "hamedp71::🇹🇷"
+      - "hamedp71::🇫🇷-14"
+      - "hamedp71::🇫🇮-56"
+      - "hamedp71::🇮🇹-23"
+      - "hamedp71::🇸🇪-2"
+      - "hamedp71::🇬🇧-26"
+      - "hamedp71::🇬🇧-27"
+      - "hamedp71::🇸🇰-7"
+      - "hamedp71::🇩🇪-33"
       - "hamedp71::🇳🇱-37"
       - "hamedp71::🇳🇱-38"
+      - "hamedp71::🇩🇪-34"
+      - "hamedp71::🇦🇺-2"
+      - "hamedp71::🇸🇬"
+      - "hamedp71::🇮🇹-24"
+      - "hamedp71::🇫🇷-15"
+      - "hamedp71::🇫🇮-57"
+      - "hamedp71::🇯🇵-6"
+      - "hamedp71::🇬🇧-28"
+      - "hamedp71::🇬🇧-29"
+      - "hamedp71::🇹🇼"
+      - "hamedp71::🇹🇼-1"
       - "hamedp71::🇳🇱-39"
+      - "hamedp71::🇹🇼-2"
+      - "hamedp71::🇷🇺"
+      - "hamedp71::🇺🇸-31"
+      - "hamedp71::🇩🇪-35"
+      - "hamedp71::🇵🇭"
+      - "hamedp71::🇮🇹-25"
       - "hamedp71::🇳🇱-40"
       - "hamedp71::🇳🇱-41"
       - "hamedp71::🇳🇱-42"
@@ -5946,81 +6813,115 @@ proxy-groups:
       - "hamedp71::🇳🇱-48"
       - "hamedp71::🇳🇱-49"
       - "hamedp71::🇳🇱-50"
-      - "hamedp71::🇩🇪-41"
-      - "hamedp71::🇩🇪-42"
-      - "hamedp71::🇬🇧-26"
       - "hamedp71::🇳🇱-51"
       - "hamedp71::🇳🇱-52"
       - "hamedp71::🇳🇱-53"
-      - "hamedp71::🇬🇧-27"
       - "hamedp71::🇳🇱-54"
-      - "hamedp71::🇵🇱-9"
-      - "hamedp71::🇬🇧-28"
-      - "hamedp71::🇬🇧-29"
+      - "hamedp71::🇩🇪-36"
+      - "hamedp71::🇩🇪-37"
+      - "hamedp71::🇬🇧-30"
       - "hamedp71::🇳🇱-55"
       - "hamedp71::🇳🇱-56"
       - "hamedp71::🇳🇱-57"
-      - "hamedp71::🇺🇸-33"
-      - "hamedp71::🇺🇸-34"
-      - "hamedp71::🇩🇪-43"
-      - "hamedp71::🇬🇧-30"
-      - "hamedp71::🇺🇸-35"
       - "hamedp71::🇬🇧-31"
-      - "hamedp71::🇬🇧-32"
-      - "hamedp71::🇿🇦"
       - "hamedp71::🇳🇱-58"
+      - "hamedp71::🇵🇱-7"
+      - "hamedp71::🇬🇧-32"
+      - "hamedp71::🇬🇧-33"
       - "hamedp71::🇳🇱-59"
       - "hamedp71::🇳🇱-60"
-      - "hamedp71::🇺🇸-36"
       - "hamedp71::🇳🇱-61"
+      - "hamedp71::🇺🇸-32"
+      - "hamedp71::🇺🇸-33"
+      - "hamedp71::🇩🇪-38"
       - "hamedp71::🇳🇱-62"
-      - "hamedp71::🇫🇮-51"
       - "hamedp71::🇳🇱-63"
+      - "hamedp71::🇬🇧-34"
+      - "hamedp71::🇺🇸-34"
+      - "hamedp71::🇬🇧-35"
       - "hamedp71::🇳🇱-64"
-      - "hamedp71::🇺🇸-37"
-      - "hamedp71::🇺🇸-38"
-      - "hamedp71::🇨🇴"
-      - "hamedp71::🇸🇦"
-      - "hamedp71::🇺🇸-39"
+      - "hamedp71::🇬🇧-36"
+      - "hamedp71::🇿🇦"
       - "hamedp71::🇳🇱-65"
       - "hamedp71::🇳🇱-66"
-      - "hamedp71::🇨🇳"
       - "hamedp71::🇳🇱-67"
-      - "hamedp71::🇺🇸-40"
+      - "hamedp71::🇺🇸-35"
       - "hamedp71::🇳🇱-68"
+      - "hamedp71::🇳🇱-69"
+      - "hamedp71::🇫🇮-58"
+      - "hamedp71::🇳🇱-70"
+      - "hamedp71::🇳🇱-71"
+      - "hamedp71::🇺🇸-36"
+      - "hamedp71::🇺🇸-37"
+      - "hamedp71::🇨🇴"
+      - "hamedp71::🇸🇦"
+      - "hamedp71::🇺🇸-38"
+      - "hamedp71::🇳🇱-72"
+      - "hamedp71::🇳🇱-73"
+      - "hamedp71::🇨🇳"
+      - "hamedp71::🇳🇱-74"
+      - "hamedp71::🇺🇸-39"
+      - "hamedp71::🇺🇸-40"
+      - "hamedp71::🇳🇱-75"
       - "hamedp71::🇺🇸-41"
       - "hamedp71::🇯🇵-7"
-      - "hamedp71::🇹🇷-3"
-      - "hamedp71::🇩🇪-44"
-      - "hamedp71::🇩🇪-45"
+      - "hamedp71::🇹🇷-1"
+      - "hamedp71::🇩🇪-39"
+      - "hamedp71::🇩🇪-40"
       - "hamedp71::🇺🇸-42"
       - "hamedp71::🇺🇸-43"
-      - "hamedp71::🇳🇱-69"
-      - "hamedp71::🇳🇱-70"
+      - "hamedp71::🇳🇱-76"
+      - "hamedp71::🇳🇱-77"
       - "hamedp71::🇺🇸-44"
-      - "hamedp71::🇳🇱-71"
+      - "hamedp71::🇳🇱-78"
       - "hamedp71::🇺🇸-45"
       - "hamedp71::🇺🇸-46"
       - "hamedp71::🇺🇸-47"
       - "hamedp71::🇺🇸-48"
       - "hamedp71::🇺🇸-49"
       - "hamedp71::🇺🇸-50"
-      - "hamedp71::🇩🇪-46"
+      - "hamedp71::🇩🇪-41"
       - "hamedp71::🇺🇸-51"
       - "hamedp71::🇺🇸-52"
-      - "hamedp71::🇳🇱-72"
+      - "hamedp71::🇳🇱-79"
       - "hamedp71::🇺🇸-53"
-      - "hamedp71::🇨🇦-2"
-      - "hamedp71::🇬🇧-33"
-      - "hamedp71::🇬🇧-34"
-      - "hamedp71::🇫🇷-14"
+      - "hamedp71::🇨🇦-3"
+      - "hamedp71::🇬🇧-37"
+      - "hamedp71::🇬🇧-38"
+      - "hamedp71::🇫🇷-16"
       - "hamedp71::🇯🇵-8"
       - "hamedp71::🇯🇵-9"
       - "hamedp71::🇳🇴-1"
-      - "hamedp71::🇬🇧-35"
+      - "hamedp71::🇬🇧-39"
       - "hamedp71::🇯🇵-10"
-      - "hamedp71::🇬🇧-36"
-      - "hamedp71::🇬🇧-37"
+      - "hamedp71::🇬🇧-40"
+      - "hamedp71::🇬🇧-41"
+      - "hamedp71::🇿🇦-1"
+      - "hamedp71::🇩🇪-42"
+      - "hamedp71::🇫🇮-59"
+      - "hamedp71::🇳🇱-80"
+      - "hamedp71::🇰🇷"
+      - "hamedp71::🇰🇷-1"
+      - "hamedp71::🇯🇵-11"
+      - "hamedp71::🇳🇱-81"
+      - "hamedp71::🇳🇱-82"
+      - "hamedp71::🇳🇱-83"
+      - "hamedp71::🇳🇱-84"
+      - "hamedp71::🇳🇱-85"
+      - "hamedp71::🇳🇱-86"
+      - "hamedp71::🇳🇱-87"
+      - "hamedp71::🇳🇱-88"
+      - "hamedp71::🇳🇱-89"
+      - "hamedp71::🇳🇱-90"
+      - "hamedp71::🇳🇱-91"
+      - "hamedp71::🇳🇱-92"
+      - "hamedp71::🇳🇱-93"
+      - "hamedp71::🇩🇪-43"
+      - "hamedp71::🇳🇱-94"
+      - "hamedp71::🇩🇪-44"
+      - "hamedp71::🇳🇱-95"
+      - "hamedp71::🇪🇪-1"
+      - "hamedp71::🇬🇧-42"
       - "hamedp71::🇺🇸-54"
       - "hamedp71::🇲🇾"
       - "hamedp71::🇺🇸-55"
@@ -6029,17 +6930,17 @@ proxy-groups:
       - "hamedp71::🇺🇸-57"
       - "hamedp71::🇹🇼-3"
       - "hamedp71::🇮🇳-1"
+      - "hamedp71::🇩🇪-45"
+      - "hamedp71::🇩🇪-46"
+      - "hamedp71::🏴‍☠️-12"
       - "hamedp71::🇩🇪-47"
-      - "hamedp71::🇩🇪-48"
-      - "hamedp71::🏴‍☠️-13"
-      - "hamedp71::🇩🇪-49"
       - "hamedp71::🇮🇳-2"
       - "hamedp71::🇲🇾-1"
       - "hamedp71::🇲🇾-2"
-      - "hamedp71::🇰🇷"
+      - "hamedp71::🇰🇷-2"
       - "hamedp71::🇸🇬-1"
-      - "hamedp71::🇰🇷-1"
-      - "hamedp71::🇫🇷-15"
+      - "hamedp71::🇰🇷-3"
+      - "hamedp71::🇫🇷-17"
       - "hamedp71::🇺🇸-58"
       - "hamedp71::🇺🇸-59"
       - "hamedp71::🇸🇬-2"
@@ -6047,31 +6948,30 @@ proxy-groups:
       - "hamedp71::🇰🇿"
       - "hamedp71::🇸🇬-3"
       - "hamedp71::🇪🇸-2"
-      - "hamedp71::🇩🇪-50"
+      - "hamedp71::🇩🇪-48"
+      - "hamedp71::🇮🇳-3"
       - "hamedp71::🇺🇸-61"
       - "hamedp71::🇺🇸-62"
-      - "hamedp71::🇨🇦-3"
-      - "hamedp71::🇯🇵-11"
+      - "hamedp71::🇨🇦-4"
       - "hamedp71::🇯🇵-12"
-      - "hamedp71::🇵🇭-1"
       - "hamedp71::🇯🇵-13"
-      - "hamedp71::🇮🇹-33"
+      - "hamedp71::🇵🇭-1"
+      - "hamedp71::🇯🇵-14"
+      - "hamedp71::🇮🇹-26"
       - "hamedp71::🇭🇰-5"
       - "hamedp71::🇰🇿-1"
       - "hamedp71::🇲🇽-1"
-      - "hamedp71::🇩🇪-51"
-      - "hamedp71::🇩🇪-52"
-      - "hamedp71::🇵🇱-10"
+      - "hamedp71::🇩🇪-49"
+      - "hamedp71::🇩🇪-50"
+      - "hamedp71::🇵🇱-8"
       - "hamedp71::🇺🇸-63"
-      - "hamedp71::🇫🇷-16"
-      - "hamedp71::🇩🇪-53"
-      - "hamedp71::🇮🇳-3"
-      - "hamedp71::🇵🇱-11"
+      - "hamedp71::🇫🇷-18"
+      - "hamedp71::🇩🇪-51"
+      - "hamedp71::🇮🇳-4"
+      - "hamedp71::🇵🇱-9"
       - "hamedp71::🇺🇸-64"
       - "hamedp71::🇵🇰"
-      - "hamedp71::🇳🇱-73"
-      - "hamedp71::🇫🇷-17"
-      - "hamedp71::🇫🇷-18"
+      - "hamedp71::🇳🇱-96"
       - "hamedp71::🇫🇷-19"
       - "hamedp71::🇫🇷-20"
       - "hamedp71::🇫🇷-21"
@@ -6092,12 +6992,12 @@ proxy-groups:
       - "hamedp71::🇫🇷-36"
       - "hamedp71::🇫🇷-37"
       - "hamedp71::🇫🇷-38"
-      - "hamedp71::🇳🇱-74"
-      - "hamedp71::🇵🇱-12"
       - "hamedp71::🇫🇷-39"
-      - "hamedp71::🇵🇱-13"
       - "hamedp71::🇫🇷-40"
+      - "hamedp71::🇳🇱-97"
+      - "hamedp71::🇵🇱-10"
       - "hamedp71::🇫🇷-41"
+      - "hamedp71::🇵🇱-11"
       - "hamedp71::🇫🇷-42"
       - "hamedp71::🇫🇷-43"
       - "hamedp71::🇫🇷-44"
@@ -6108,40 +7008,66 @@ proxy-groups:
       - "hamedp71::🇫🇷-49"
       - "hamedp71::🇫🇷-50"
       - "hamedp71::🇫🇷-51"
-      - "hamedp71::🇺🇸-65"
       - "hamedp71::🇫🇷-52"
-      - "hamedp71::🇵🇱-14"
-      - "hamedp71::🇳🇱-75"
-      - "hamedp71::🏴‍☠️-14"
-      - "hamedp71::🇨🇿"
       - "hamedp71::🇫🇷-53"
+      - "hamedp71::🇺🇸-65"
       - "hamedp71::🇫🇷-54"
+      - "hamedp71::🇵🇱-12"
+      - "hamedp71::🇳🇱-98"
+      - "hamedp71::🏴‍☠️-13"
+      - "hamedp71::🇺🇸-66"
+      - "hamedp71::🇨🇿"
       - "hamedp71::🇫🇷-55"
       - "hamedp71::🇫🇷-56"
-      - "hamedp71::🏴‍☠️-15"
       - "hamedp71::🇫🇷-57"
-      - "hamedp71::🇵🇱-15"
       - "hamedp71::🇫🇷-58"
+      - "hamedp71::🇳🇱-99"
       - "hamedp71::🇫🇷-59"
+      - "hamedp71::🏴‍☠️-14"
       - "hamedp71::🇫🇷-60"
       - "hamedp71::🇫🇷-61"
+      - "hamedp71::🇵🇱-13"
       - "hamedp71::🇫🇷-62"
       - "hamedp71::🇫🇷-63"
+      - "hamedp71::🇵🇱-14"
+      - "hamedp71::🇳🇱-100"
       - "hamedp71::🇫🇷-64"
       - "hamedp71::🇫🇷-65"
       - "hamedp71::🇫🇷-66"
-      - "hamedp71::🇰🇷-2"
-      - "hamedp71::🇬🇷"
       - "hamedp71::🇫🇷-67"
+      - "hamedp71::🇫🇷-68"
+      - "hamedp71::🇫🇷-69"
+      - "hamedp71::🇫🇷-70"
+      - "hamedp71::🇫🇷-71"
+      - "hamedp71::🇰🇷-4"
+      - "hamedp71::🇬🇷"
+      - "hamedp71::🇨🇿-1"
+      - "hamedp71::🇫🇷-72"
+      - "hamedp71::🇫🇷-73"
+      - "hamedp71::🇵🇱-15"
+      - "hamedp71::🇫🇷-74"
       - "hamedp71::🇵🇱-16"
-      - "hamedp71::🇺🇸-66"
+      - "hamedp71::🇵🇱-17"
+      - "hamedp71::🇳🇱-101"
+      - "hamedp71::🇵🇱-18"
+      - "hamedp71::🇫🇷-75"
+      - "hamedp71::🇳🇱-102"
+      - "hamedp71::🇫🇷-76"
+      - "hamedp71::🇵🇱-19"
+      - "hamedp71::🇫🇷-77"
       - "hamedp71::🇺🇸-67"
+      - "hamedp71::🇺🇸-68"
+      - "hamedp71::🇳🇱-103"
+      - "hamedp71::🇳🇱-104"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
+    icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
     url: "https://www.gstatic.com/generate_204"
-    interval: 300
+    interval: 600
     tolerance: 50
-    lazy: true
+    timeout: 3200
+    lazy: false
+    max-failed-times: 2
     proxies:
       - "hamedp71::🏴‍☠️"
       - "hamedp71::🇬🇧"
@@ -6159,6 +7085,7 @@ proxy-groups:
       - "hamedp71::🇮🇹-1"
       - "hamedp71::🇩🇪-2"
       - "hamedp71::🇸🇰"
+      - "hamedp71::🇩🇪-3"
       - "hamedp71::🇮🇹-2"
       - "hamedp71::🇪🇸"
       - "hamedp71::🇭🇰"
@@ -6173,20 +7100,21 @@ proxy-groups:
       - "hamedp71::🇫🇮-4"
       - "hamedp71::🇳🇴"
       - "hamedp71::🇦🇺"
-      - "hamedp71::🇩🇪-3"
+      - "hamedp71::🇩🇪-4"
       - "hamedp71::🇷🇸"
       - "hamedp71::🇳🇱-1"
       - "hamedp71::🇫🇷"
       - "hamedp71::🇮🇹-6"
-      - "hamedp71::🇩🇪-4"
-      - "hamedp71::🇮🇹-7"
       - "hamedp71::🇩🇪-5"
+      - "hamedp71::🇮🇹-7"
+      - "hamedp71::🇩🇪-6"
+      - "hamedp71::🇮🇹-8"
       - "hamedp71::🇨🇦"
       - "hamedp71::🇳🇱-2"
       - "hamedp71::🇺🇸-1"
-      - "hamedp71::🇩🇪-6"
       - "hamedp71::🇩🇪-7"
       - "hamedp71::🇩🇪-8"
+      - "hamedp71::🇩🇪-9"
       - "hamedp71::🇫🇷-1"
       - "hamedp71::🇫🇷-2"
       - "hamedp71::🇺🇸-2"
@@ -6195,7 +7123,7 @@ proxy-groups:
       - "hamedp71::🇸🇪"
       - "hamedp71::🇬🇧-1"
       - "hamedp71::🇬🇧-2"
-      - "hamedp71::🇩🇪-9"
+      - "hamedp71::🇩🇪-10"
       - "hamedp71::🇧🇪"
       - "hamedp71::🇧🇪-1"
       - "hamedp71::🇯🇵-2"
@@ -6216,6 +7144,7 @@ proxy-groups:
       - "hamedp71::🇳🇱-6"
       - "hamedp71::🇫🇷-3"
       - "hamedp71::🇫🇷-4"
+      - "hamedp71::🇫🇷-5"
       - "hamedp71::🇵🇱-3"
       - "hamedp71::🇫🇮-6"
       - "hamedp71::🇺🇸-10"
@@ -6227,24 +7156,25 @@ proxy-groups:
       - "hamedp71::🇫🇮-7"
       - "hamedp71::🇪🇪"
       - "hamedp71::🇫🇮-8"
-      - "hamedp71::🇩🇪-10"
+      - "hamedp71::🇫🇮-9"
+      - "hamedp71::🇩🇪-11"
       - "hamedp71::🏴‍☠️-4"
       - "hamedp71::🇬🇧-4"
-      - "hamedp71::🇫🇷-5"
+      - "hamedp71::🇫🇷-6"
       - "hamedp71::🇺🇸-14"
-      - "hamedp71::🇩🇪-11"
       - "hamedp71::🇩🇪-12"
+      - "hamedp71::🇩🇪-13"
       - "hamedp71::🇬🇧-5"
       - "hamedp71::🇬🇧-6"
       - "hamedp71::🇬🇧-7"
-      - "hamedp71::🇩🇪-13"
+      - "hamedp71::🇩🇪-14"
       - "hamedp71::🇳🇱-7"
       - "hamedp71::🇳🇱-8"
       - "hamedp71::🇳🇱-9"
       - "hamedp71::🇳🇱-10"
       - "hamedp71::🇸🇰-1"
       - "hamedp71::🇬🇧-8"
-      - "hamedp71::🇩🇪-14"
+      - "hamedp71::🇩🇪-15"
       - "hamedp71::🇬🇧-9"
       - "hamedp71::🇬🇧-10"
       - "hamedp71::🇬🇧-11"
@@ -6263,37 +7193,39 @@ proxy-groups:
       - "hamedp71::🇳🇱-13"
       - "hamedp71::🇳🇱-14"
       - "hamedp71::🇳🇱-15"
-      - "hamedp71::🇭🇰-1"
-      - "hamedp71::🇮🇹-8"
       - "hamedp71::🇳🇱-16"
+      - "hamedp71::🇸🇰-6"
+      - "hamedp71::🇭🇰-1"
+      - "hamedp71::🇮🇹-9"
       - "hamedp71::🇳🇱-17"
       - "hamedp71::🇳🇱-18"
       - "hamedp71::🇳🇱-19"
-      - "hamedp71::🇫🇷-6"
+      - "hamedp71::🇳🇱-20"
+      - "hamedp71::🇳🇱-21"
       - "hamedp71::🇫🇷-7"
-      - "hamedp71::🇫🇮-9"
+      - "hamedp71::🇫🇷-8"
       - "hamedp71::🇫🇮-10"
+      - "hamedp71::🇫🇮-11"
       - "hamedp71::🇺🇸-15"
-      - "hamedp71::🇩🇪-15"
+      - "hamedp71::🇩🇪-16"
       - "hamedp71::🇺🇸-16"
       - "hamedp71::🇺🇸-17"
-      - "hamedp71::🇩🇪-16"
+      - "hamedp71::🇩🇪-17"
       - "hamedp71::🇺🇸-18"
       - "hamedp71::🇺🇸-19"
-      - "hamedp71::🇫🇮-11"
+      - "hamedp71::🇫🇮-12"
       - "hamedp71::🏴‍☠️-5"
       - "hamedp71::🇨🇦-1"
-      - "hamedp71::🇮🇹-9"
-      - "hamedp71::🇳🇱-20"
+      - "hamedp71::🇮🇹-10"
+      - "hamedp71::🇳🇱-22"
       - "hamedp71::🇺🇸-20"
       - "hamedp71::🇺🇸-21"
-      - "hamedp71::🇫🇮-12"
-      - "hamedp71::🇺🇸-22"
       - "hamedp71::🇫🇮-13"
+      - "hamedp71::🇺🇸-22"
       - "hamedp71::🇫🇮-14"
-      - "hamedp71::🇫🇷-8"
-      - "hamedp71::🇩🇪-17"
       - "hamedp71::🇫🇮-15"
+      - "hamedp71::🇫🇷-9"
+      - "hamedp71::🇩🇪-18"
       - "hamedp71::🇫🇮-16"
       - "hamedp71::🇫🇮-17"
       - "hamedp71::🇫🇮-18"
@@ -6321,142 +7253,132 @@ proxy-groups:
       - "hamedp71::🇫🇮-40"
       - "hamedp71::🇫🇮-41"
       - "hamedp71::🇫🇮-42"
+      - "hamedp71::🇫🇮-43"
+      - "hamedp71::🇫🇮-44"
       - "hamedp71::🏴‍☠️-6"
       - "hamedp71::🏴‍☠️-7"
-      - "hamedp71::🇮🇹-10"
-      - "hamedp71::🏴‍☠️-8"
       - "hamedp71::🇮🇹-11"
-      - "hamedp71::🇳🇱-21"
-      - "hamedp71::🇳🇱-22"
+      - "hamedp71::🇺🇸-23"
+      - "hamedp71::🏴‍☠️-8"
+      - "hamedp71::🇮🇹-12"
       - "hamedp71::🇳🇱-23"
       - "hamedp71::🇳🇱-24"
-      - "hamedp71::🇩🇪-18"
       - "hamedp71::🇳🇱-25"
+      - "hamedp71::🇳🇱-26"
+      - "hamedp71::🇳🇱-27"
+      - "hamedp71::🇬🇧-18"
+      - "hamedp71::🇳🇱-28"
+      - "hamedp71::🇩🇪-19"
+      - "hamedp71::🇳🇱-29"
       - "hamedp71::🏴‍☠️-9"
-      - "hamedp71::🇫🇮-43"
+      - "hamedp71::🇫🇮-45"
       - "hamedp71::🇲🇩"
+      - "hamedp71::🇬🇧-19"
       - "hamedp71::🇱🇻"
       - "hamedp71::🇸🇪-1"
       - "hamedp71::🇷🇴"
-      - "hamedp71::🇳🇱-26"
-      - "hamedp71::🇵🇱-4"
-      - "hamedp71::🇳🇱-27"
-      - "hamedp71::🇳🇱-28"
-      - "hamedp71::🇧🇪-2"
-      - "hamedp71::🇮🇹-12"
-      - "hamedp71::🇫🇮-44"
-      - "hamedp71::🇩🇪-19"
-      - "hamedp71::🇬🇧-18"
-      - "hamedp71::🇳🇱-29"
-      - "hamedp71::🇺🇸-23"
-      - "hamedp71::🇮🇹-13"
-      - "hamedp71::🇲🇽"
-      - "hamedp71::🇫🇮-45"
-      - "hamedp71::🇵🇱-5"
-      - "hamedp71::🇫🇮-46"
-      - "hamedp71::🇯🇵-4"
-      - "hamedp71::🇩🇪-20"
-      - "hamedp71::🇭🇰-2"
-      - "hamedp71::🇩🇪-21"
-      - "hamedp71::🇮🇹-14"
       - "hamedp71::🇳🇱-30"
-      - "hamedp71::🇮🇹-15"
-      - "hamedp71::🇺🇸-24"
-      - "hamedp71::🏴‍☠️-10"
-      - "hamedp71::🇩🇪-22"
-      - "hamedp71::🇮🇹-16"
-      - "hamedp71::🇬🇧-19"
-      - "hamedp71::🇺🇸-25"
-      - "hamedp71::🇫🇷-9"
-      - "hamedp71::🇩🇪-23"
-      - "hamedp71::🇩🇪-24"
-      - "hamedp71::🇺🇸-26"
-      - "hamedp71::🇫🇮-47"
-      - "hamedp71::🇮🇹-17"
-      - "hamedp71::🇦🇺-1"
-      - "hamedp71::🇫🇮-48"
-      - "hamedp71::🇯🇵-5"
-      - "hamedp71::🇮🇹-18"
-      - "hamedp71::🇬🇧-20"
-      - "hamedp71::🇦🇹-2"
-      - "hamedp71::🇩🇪-25"
-      - "hamedp71::🇩🇪-26"
-      - "hamedp71::🇨🇭"
-      - "hamedp71::🇩🇪-27"
-      - "hamedp71::🇭🇰-3"
-      - "hamedp71::🇺🇸-27"
-      - "hamedp71::🇮🇹-19"
-      - "hamedp71::🇫🇷-10"
+      - "hamedp71::🇵🇱-4"
       - "hamedp71::🇳🇱-31"
-      - "hamedp71::🇭🇰-4"
-      - "hamedp71::🇩🇪-28"
-      - "hamedp71::🇩🇪-29"
-      - "hamedp71::🇵🇱-6"
-      - "hamedp71::🇮🇹-20"
-      - "hamedp71::🇬🇧-21"
-      - "hamedp71::🇮🇹-21"
-      - "hamedp71::🇹🇷"
-      - "hamedp71::🇫🇷-11"
-      - "hamedp71::🇫🇮-49"
-      - "hamedp71::🇮🇹-22"
-      - "hamedp71::🇬🇧-22"
-      - "hamedp71::🇬🇧-23"
-      - "hamedp71::🇩🇪-30"
       - "hamedp71::🇳🇱-32"
-      - "hamedp71::🇩🇪-31"
-      - "hamedp71::🇦🇺-2"
-      - "hamedp71::🇸🇬"
-      - "hamedp71::🇫🇷-12"
-      - "hamedp71::🇫🇮-50"
-      - "hamedp71::🇯🇵-6"
-      - "hamedp71::🇮🇹-23"
-      - "hamedp71::🇺🇸-28"
-      - "hamedp71::🇮🇹-24"
-      - "hamedp71::🇮🇹-25"
-      - "hamedp71::🇩🇪-32"
+      - "hamedp71::🇧🇪-2"
+      - "hamedp71::🇮🇹-13"
+      - "hamedp71::🇫🇮-46"
+      - "hamedp71::🇩🇪-20"
+      - "hamedp71::🇫🇮-47"
+      - "hamedp71::🇬🇧-20"
       - "hamedp71::🇳🇱-33"
-      - "hamedp71::🇹🇭"
-      - "hamedp71::🇬🇧-24"
-      - "hamedp71::🇩🇪-33"
-      - "hamedp71::🇩🇪-34"
-      - "hamedp71::🇩🇪-35"
-      - "hamedp71::🇩🇪-36"
-      - "hamedp71::🇩🇪-37"
-      - "hamedp71::🇩🇪-38"
-      - "hamedp71::🇩🇪-39"
-      - "hamedp71::🇩🇰"
-      - "hamedp71::🇫🇷-13"
-      - "hamedp71::🇮🇹-26"
-      - "hamedp71::🏴‍☠️-11"
-      - "hamedp71::🏴‍☠️-12"
-      - "hamedp71::🇲🇩-1"
+      - "hamedp71::🇺🇸-24"
+      - "hamedp71::🇮🇹-14"
+      - "hamedp71::🇲🇽"
+      - "hamedp71::🇫🇮-48"
+      - "hamedp71::🇵🇱-5"
+      - "hamedp71::🇫🇮-49"
+      - "hamedp71::🇯🇵-4"
+      - "hamedp71::🇩🇪-21"
+      - "hamedp71::🇭🇰-2"
+      - "hamedp71::🇩🇪-22"
+      - "hamedp71::🇮🇹-15"
       - "hamedp71::🇳🇱-34"
-      - "hamedp71::🇵🇱-7"
-      - "hamedp71::🇵🇱-8"
+      - "hamedp71::🇮🇹-16"
+      - "hamedp71::🇺🇸-25"
+      - "hamedp71::🏴‍☠️-10"
+      - "hamedp71::🏴‍☠️-11"
+      - "hamedp71::🇩🇪-23"
+      - "hamedp71::🇮🇹-17"
+      - "hamedp71::🇫🇷-10"
+      - "hamedp71::🇬🇧-21"
+      - "hamedp71::🇺🇸-26"
+      - "hamedp71::🇬🇧-22"
+      - "hamedp71::🇫🇷-11"
+      - "hamedp71::🇩🇪-24"
+      - "hamedp71::🇩🇪-25"
+      - "hamedp71::🇫🇮-50"
+      - "hamedp71::🇺🇸-27"
+      - "hamedp71::🇫🇮-51"
+      - "hamedp71::🇨🇦-2"
+      - "hamedp71::🇫🇮-52"
+      - "hamedp71::🇮🇹-18"
+      - "hamedp71::🇫🇮-53"
+      - "hamedp71::🇦🇺-1"
+      - "hamedp71::🇫🇮-54"
+      - "hamedp71::🇯🇵-5"
+      - "hamedp71::🇮🇹-19"
+      - "hamedp71::🇬🇧-23"
+      - "hamedp71::🇦🇹-2"
+      - "hamedp71::🇩🇪-26"
+      - "hamedp71::🇺🇸-28"
+      - "hamedp71::🇩🇪-27"
+      - "hamedp71::🇩🇪-28"
+      - "hamedp71::🇨🇭"
+      - "hamedp71::🇫🇷-12"
+      - "hamedp71::🇫🇮-55"
+      - "hamedp71::🇩🇪-29"
+      - "hamedp71::🇭🇰-3"
       - "hamedp71::🇺🇸-29"
-      - "hamedp71::🇹🇷-1"
-      - "hamedp71::🇺🇸-30"
-      - "hamedp71::🇹🇷-2"
-      - "hamedp71::🇺🇸-31"
-      - "hamedp71::🇮🇹-27"
-      - "hamedp71::🇮🇹-28"
-      - "hamedp71::🇮🇹-29"
-      - "hamedp71::🇮🇹-30"
-      - "hamedp71::🇮🇹-31"
-      - "hamedp71::🇬🇧-25"
-      - "hamedp71::🇹🇼"
-      - "hamedp71::🇹🇼-1"
+      - "hamedp71::🇮🇹-20"
+      - "hamedp71::🇫🇷-13"
       - "hamedp71::🇳🇱-35"
-      - "hamedp71::🇹🇼-2"
-      - "hamedp71::🇷🇺"
-      - "hamedp71::🇺🇸-32"
-      - "hamedp71::🇩🇪-40"
-      - "hamedp71::🇵🇭"
-      - "hamedp71::🇮🇹-32"
+      - "hamedp71::🇭🇰-4"
+      - "hamedp71::🇺🇸-30"
+      - "hamedp71::🇩🇪-30"
       - "hamedp71::🇳🇱-36"
+      - "hamedp71::🇩🇪-31"
+      - "hamedp71::🇩🇪-32"
+      - "hamedp71::🇵🇱-6"
+      - "hamedp71::🇮🇹-21"
+      - "hamedp71::🇬🇧-24"
+      - "hamedp71::🇮🇹-22"
+      - "hamedp71::🇬🇧-25"
+      - "hamedp71::🇹🇷"
+      - "hamedp71::🇫🇷-14"
+      - "hamedp71::🇫🇮-56"
+      - "hamedp71::🇮🇹-23"
+      - "hamedp71::🇸🇪-2"
+      - "hamedp71::🇬🇧-26"
+      - "hamedp71::🇬🇧-27"
+      - "hamedp71::🇸🇰-7"
+      - "hamedp71::🇩🇪-33"
       - "hamedp71::🇳🇱-37"
       - "hamedp71::🇳🇱-38"
+      - "hamedp71::🇩🇪-34"
+      - "hamedp71::🇦🇺-2"
+      - "hamedp71::🇸🇬"
+      - "hamedp71::🇮🇹-24"
+      - "hamedp71::🇫🇷-15"
+      - "hamedp71::🇫🇮-57"
+      - "hamedp71::🇯🇵-6"
+      - "hamedp71::🇬🇧-28"
+      - "hamedp71::🇬🇧-29"
+      - "hamedp71::🇹🇼"
+      - "hamedp71::🇹🇼-1"
       - "hamedp71::🇳🇱-39"
+      - "hamedp71::🇹🇼-2"
+      - "hamedp71::🇷🇺"
+      - "hamedp71::🇺🇸-31"
+      - "hamedp71::🇩🇪-35"
+      - "hamedp71::🇵🇭"
+      - "hamedp71::🇮🇹-25"
       - "hamedp71::🇳🇱-40"
       - "hamedp71::🇳🇱-41"
       - "hamedp71::🇳🇱-42"
@@ -6468,81 +7390,115 @@ proxy-groups:
       - "hamedp71::🇳🇱-48"
       - "hamedp71::🇳🇱-49"
       - "hamedp71::🇳🇱-50"
-      - "hamedp71::🇩🇪-41"
-      - "hamedp71::🇩🇪-42"
-      - "hamedp71::🇬🇧-26"
       - "hamedp71::🇳🇱-51"
       - "hamedp71::🇳🇱-52"
       - "hamedp71::🇳🇱-53"
-      - "hamedp71::🇬🇧-27"
       - "hamedp71::🇳🇱-54"
-      - "hamedp71::🇵🇱-9"
-      - "hamedp71::🇬🇧-28"
-      - "hamedp71::🇬🇧-29"
+      - "hamedp71::🇩🇪-36"
+      - "hamedp71::🇩🇪-37"
+      - "hamedp71::🇬🇧-30"
       - "hamedp71::🇳🇱-55"
       - "hamedp71::🇳🇱-56"
       - "hamedp71::🇳🇱-57"
-      - "hamedp71::🇺🇸-33"
-      - "hamedp71::🇺🇸-34"
-      - "hamedp71::🇩🇪-43"
-      - "hamedp71::🇬🇧-30"
-      - "hamedp71::🇺🇸-35"
       - "hamedp71::🇬🇧-31"
-      - "hamedp71::🇬🇧-32"
-      - "hamedp71::🇿🇦"
       - "hamedp71::🇳🇱-58"
+      - "hamedp71::🇵🇱-7"
+      - "hamedp71::🇬🇧-32"
+      - "hamedp71::🇬🇧-33"
       - "hamedp71::🇳🇱-59"
       - "hamedp71::🇳🇱-60"
-      - "hamedp71::🇺🇸-36"
       - "hamedp71::🇳🇱-61"
+      - "hamedp71::🇺🇸-32"
+      - "hamedp71::🇺🇸-33"
+      - "hamedp71::🇩🇪-38"
       - "hamedp71::🇳🇱-62"
-      - "hamedp71::🇫🇮-51"
       - "hamedp71::🇳🇱-63"
+      - "hamedp71::🇬🇧-34"
+      - "hamedp71::🇺🇸-34"
+      - "hamedp71::🇬🇧-35"
       - "hamedp71::🇳🇱-64"
-      - "hamedp71::🇺🇸-37"
-      - "hamedp71::🇺🇸-38"
-      - "hamedp71::🇨🇴"
-      - "hamedp71::🇸🇦"
-      - "hamedp71::🇺🇸-39"
+      - "hamedp71::🇬🇧-36"
+      - "hamedp71::🇿🇦"
       - "hamedp71::🇳🇱-65"
       - "hamedp71::🇳🇱-66"
-      - "hamedp71::🇨🇳"
       - "hamedp71::🇳🇱-67"
-      - "hamedp71::🇺🇸-40"
+      - "hamedp71::🇺🇸-35"
       - "hamedp71::🇳🇱-68"
+      - "hamedp71::🇳🇱-69"
+      - "hamedp71::🇫🇮-58"
+      - "hamedp71::🇳🇱-70"
+      - "hamedp71::🇳🇱-71"
+      - "hamedp71::🇺🇸-36"
+      - "hamedp71::🇺🇸-37"
+      - "hamedp71::🇨🇴"
+      - "hamedp71::🇸🇦"
+      - "hamedp71::🇺🇸-38"
+      - "hamedp71::🇳🇱-72"
+      - "hamedp71::🇳🇱-73"
+      - "hamedp71::🇨🇳"
+      - "hamedp71::🇳🇱-74"
+      - "hamedp71::🇺🇸-39"
+      - "hamedp71::🇺🇸-40"
+      - "hamedp71::🇳🇱-75"
       - "hamedp71::🇺🇸-41"
       - "hamedp71::🇯🇵-7"
-      - "hamedp71::🇹🇷-3"
-      - "hamedp71::🇩🇪-44"
-      - "hamedp71::🇩🇪-45"
+      - "hamedp71::🇹🇷-1"
+      - "hamedp71::🇩🇪-39"
+      - "hamedp71::🇩🇪-40"
       - "hamedp71::🇺🇸-42"
       - "hamedp71::🇺🇸-43"
-      - "hamedp71::🇳🇱-69"
-      - "hamedp71::🇳🇱-70"
+      - "hamedp71::🇳🇱-76"
+      - "hamedp71::🇳🇱-77"
       - "hamedp71::🇺🇸-44"
-      - "hamedp71::🇳🇱-71"
+      - "hamedp71::🇳🇱-78"
       - "hamedp71::🇺🇸-45"
       - "hamedp71::🇺🇸-46"
       - "hamedp71::🇺🇸-47"
       - "hamedp71::🇺🇸-48"
       - "hamedp71::🇺🇸-49"
       - "hamedp71::🇺🇸-50"
-      - "hamedp71::🇩🇪-46"
+      - "hamedp71::🇩🇪-41"
       - "hamedp71::🇺🇸-51"
       - "hamedp71::🇺🇸-52"
-      - "hamedp71::🇳🇱-72"
+      - "hamedp71::🇳🇱-79"
       - "hamedp71::🇺🇸-53"
-      - "hamedp71::🇨🇦-2"
-      - "hamedp71::🇬🇧-33"
-      - "hamedp71::🇬🇧-34"
-      - "hamedp71::🇫🇷-14"
+      - "hamedp71::🇨🇦-3"
+      - "hamedp71::🇬🇧-37"
+      - "hamedp71::🇬🇧-38"
+      - "hamedp71::🇫🇷-16"
       - "hamedp71::🇯🇵-8"
       - "hamedp71::🇯🇵-9"
       - "hamedp71::🇳🇴-1"
-      - "hamedp71::🇬🇧-35"
+      - "hamedp71::🇬🇧-39"
       - "hamedp71::🇯🇵-10"
-      - "hamedp71::🇬🇧-36"
-      - "hamedp71::🇬🇧-37"
+      - "hamedp71::🇬🇧-40"
+      - "hamedp71::🇬🇧-41"
+      - "hamedp71::🇿🇦-1"
+      - "hamedp71::🇩🇪-42"
+      - "hamedp71::🇫🇮-59"
+      - "hamedp71::🇳🇱-80"
+      - "hamedp71::🇰🇷"
+      - "hamedp71::🇰🇷-1"
+      - "hamedp71::🇯🇵-11"
+      - "hamedp71::🇳🇱-81"
+      - "hamedp71::🇳🇱-82"
+      - "hamedp71::🇳🇱-83"
+      - "hamedp71::🇳🇱-84"
+      - "hamedp71::🇳🇱-85"
+      - "hamedp71::🇳🇱-86"
+      - "hamedp71::🇳🇱-87"
+      - "hamedp71::🇳🇱-88"
+      - "hamedp71::🇳🇱-89"
+      - "hamedp71::🇳🇱-90"
+      - "hamedp71::🇳🇱-91"
+      - "hamedp71::🇳🇱-92"
+      - "hamedp71::🇳🇱-93"
+      - "hamedp71::🇩🇪-43"
+      - "hamedp71::🇳🇱-94"
+      - "hamedp71::🇩🇪-44"
+      - "hamedp71::🇳🇱-95"
+      - "hamedp71::🇪🇪-1"
+      - "hamedp71::🇬🇧-42"
       - "hamedp71::🇺🇸-54"
       - "hamedp71::🇲🇾"
       - "hamedp71::🇺🇸-55"
@@ -6551,17 +7507,17 @@ proxy-groups:
       - "hamedp71::🇺🇸-57"
       - "hamedp71::🇹🇼-3"
       - "hamedp71::🇮🇳-1"
+      - "hamedp71::🇩🇪-45"
+      - "hamedp71::🇩🇪-46"
+      - "hamedp71::🏴‍☠️-12"
       - "hamedp71::🇩🇪-47"
-      - "hamedp71::🇩🇪-48"
-      - "hamedp71::🏴‍☠️-13"
-      - "hamedp71::🇩🇪-49"
       - "hamedp71::🇮🇳-2"
       - "hamedp71::🇲🇾-1"
       - "hamedp71::🇲🇾-2"
-      - "hamedp71::🇰🇷"
+      - "hamedp71::🇰🇷-2"
       - "hamedp71::🇸🇬-1"
-      - "hamedp71::🇰🇷-1"
-      - "hamedp71::🇫🇷-15"
+      - "hamedp71::🇰🇷-3"
+      - "hamedp71::🇫🇷-17"
       - "hamedp71::🇺🇸-58"
       - "hamedp71::🇺🇸-59"
       - "hamedp71::🇸🇬-2"
@@ -6569,31 +7525,30 @@ proxy-groups:
       - "hamedp71::🇰🇿"
       - "hamedp71::🇸🇬-3"
       - "hamedp71::🇪🇸-2"
-      - "hamedp71::🇩🇪-50"
+      - "hamedp71::🇩🇪-48"
+      - "hamedp71::🇮🇳-3"
       - "hamedp71::🇺🇸-61"
       - "hamedp71::🇺🇸-62"
-      - "hamedp71::🇨🇦-3"
-      - "hamedp71::🇯🇵-11"
+      - "hamedp71::🇨🇦-4"
       - "hamedp71::🇯🇵-12"
-      - "hamedp71::🇵🇭-1"
       - "hamedp71::🇯🇵-13"
-      - "hamedp71::🇮🇹-33"
+      - "hamedp71::🇵🇭-1"
+      - "hamedp71::🇯🇵-14"
+      - "hamedp71::🇮🇹-26"
       - "hamedp71::🇭🇰-5"
       - "hamedp71::🇰🇿-1"
       - "hamedp71::🇲🇽-1"
-      - "hamedp71::🇩🇪-51"
-      - "hamedp71::🇩🇪-52"
-      - "hamedp71::🇵🇱-10"
+      - "hamedp71::🇩🇪-49"
+      - "hamedp71::🇩🇪-50"
+      - "hamedp71::🇵🇱-8"
       - "hamedp71::🇺🇸-63"
-      - "hamedp71::🇫🇷-16"
-      - "hamedp71::🇩🇪-53"
-      - "hamedp71::🇮🇳-3"
-      - "hamedp71::🇵🇱-11"
+      - "hamedp71::🇫🇷-18"
+      - "hamedp71::🇩🇪-51"
+      - "hamedp71::🇮🇳-4"
+      - "hamedp71::🇵🇱-9"
       - "hamedp71::🇺🇸-64"
       - "hamedp71::🇵🇰"
-      - "hamedp71::🇳🇱-73"
-      - "hamedp71::🇫🇷-17"
-      - "hamedp71::🇫🇷-18"
+      - "hamedp71::🇳🇱-96"
       - "hamedp71::🇫🇷-19"
       - "hamedp71::🇫🇷-20"
       - "hamedp71::🇫🇷-21"
@@ -6614,12 +7569,12 @@ proxy-groups:
       - "hamedp71::🇫🇷-36"
       - "hamedp71::🇫🇷-37"
       - "hamedp71::🇫🇷-38"
-      - "hamedp71::🇳🇱-74"
-      - "hamedp71::🇵🇱-12"
       - "hamedp71::🇫🇷-39"
-      - "hamedp71::🇵🇱-13"
       - "hamedp71::🇫🇷-40"
+      - "hamedp71::🇳🇱-97"
+      - "hamedp71::🇵🇱-10"
       - "hamedp71::🇫🇷-41"
+      - "hamedp71::🇵🇱-11"
       - "hamedp71::🇫🇷-42"
       - "hamedp71::🇫🇷-43"
       - "hamedp71::🇫🇷-44"
@@ -6630,36 +7585,663 @@ proxy-groups:
       - "hamedp71::🇫🇷-49"
       - "hamedp71::🇫🇷-50"
       - "hamedp71::🇫🇷-51"
-      - "hamedp71::🇺🇸-65"
       - "hamedp71::🇫🇷-52"
-      - "hamedp71::🇵🇱-14"
-      - "hamedp71::🇳🇱-75"
-      - "hamedp71::🏴‍☠️-14"
-      - "hamedp71::🇨🇿"
       - "hamedp71::🇫🇷-53"
+      - "hamedp71::🇺🇸-65"
       - "hamedp71::🇫🇷-54"
+      - "hamedp71::🇵🇱-12"
+      - "hamedp71::🇳🇱-98"
+      - "hamedp71::🏴‍☠️-13"
+      - "hamedp71::🇺🇸-66"
+      - "hamedp71::🇨🇿"
       - "hamedp71::🇫🇷-55"
       - "hamedp71::🇫🇷-56"
-      - "hamedp71::🏴‍☠️-15"
       - "hamedp71::🇫🇷-57"
-      - "hamedp71::🇵🇱-15"
       - "hamedp71::🇫🇷-58"
+      - "hamedp71::🇳🇱-99"
       - "hamedp71::🇫🇷-59"
+      - "hamedp71::🏴‍☠️-14"
       - "hamedp71::🇫🇷-60"
       - "hamedp71::🇫🇷-61"
+      - "hamedp71::🇵🇱-13"
       - "hamedp71::🇫🇷-62"
       - "hamedp71::🇫🇷-63"
+      - "hamedp71::🇵🇱-14"
+      - "hamedp71::🇳🇱-100"
       - "hamedp71::🇫🇷-64"
       - "hamedp71::🇫🇷-65"
       - "hamedp71::🇫🇷-66"
-      - "hamedp71::🇰🇷-2"
-      - "hamedp71::🇬🇷"
       - "hamedp71::🇫🇷-67"
+      - "hamedp71::🇫🇷-68"
+      - "hamedp71::🇫🇷-69"
+      - "hamedp71::🇫🇷-70"
+      - "hamedp71::🇫🇷-71"
+      - "hamedp71::🇰🇷-4"
+      - "hamedp71::🇬🇷"
+      - "hamedp71::🇨🇿-1"
+      - "hamedp71::🇫🇷-72"
+      - "hamedp71::🇫🇷-73"
+      - "hamedp71::🇵🇱-15"
+      - "hamedp71::🇫🇷-74"
       - "hamedp71::🇵🇱-16"
-      - "hamedp71::🇺🇸-66"
+      - "hamedp71::🇵🇱-17"
+      - "hamedp71::🇳🇱-101"
+      - "hamedp71::🇵🇱-18"
+      - "hamedp71::🇫🇷-75"
+      - "hamedp71::🇳🇱-102"
+      - "hamedp71::🇫🇷-76"
+      - "hamedp71::🇵🇱-19"
+      - "hamedp71::🇫🇷-77"
       - "hamedp71::🇺🇸-67"
-  - name: "سایتای ایرانی 🇮🇷"
+      - "hamedp71::🇺🇸-68"
+      - "hamedp71::🇳🇱-103"
+      - "hamedp71::🇳🇱-104"
+  - name: "توزیع بار چرخشی ⚖️"
+    type: "load-balance"
+    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
+    strategy: "round-robin"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 30
+    timeout: 1500
+    lazy: false
+    proxies:
+      - "hamedp71::🏴‍☠️"
+      - "hamedp71::🇬🇧"
+      - "hamedp71::🇯🇵"
+      - "hamedp71::🇫🇮"
+      - "hamedp71::🇯🇵-1"
+      - "hamedp71::🇩🇪"
+      - "hamedp71::🇫🇮-1"
+      - "hamedp71::🇦🇹"
+      - "hamedp71::🇳🇱"
+      - "hamedp71::🇮🇹"
+      - "hamedp71::🇦🇹-1"
+      - "hamedp71::🇵🇱"
+      - "hamedp71::🇩🇪-1"
+      - "hamedp71::🇮🇹-1"
+      - "hamedp71::🇩🇪-2"
+      - "hamedp71::🇸🇰"
+      - "hamedp71::🇩🇪-3"
+      - "hamedp71::🇮🇹-2"
+      - "hamedp71::🇪🇸"
+      - "hamedp71::🇭🇰"
+      - "hamedp71::🇫🇮-2"
+      - "hamedp71::🇮🇹-3"
+      - "hamedp71::🇵🇱-1"
+      - "hamedp71::🇮🇳"
+      - "hamedp71::🇫🇮-3"
+      - "hamedp71::🇮🇹-4"
+      - "hamedp71::🇮🇹-5"
+      - "hamedp71::🇺🇸"
+      - "hamedp71::🇫🇮-4"
+      - "hamedp71::🇳🇴"
+      - "hamedp71::🇦🇺"
+      - "hamedp71::🇩🇪-4"
+      - "hamedp71::🇷🇸"
+      - "hamedp71::🇳🇱-1"
+      - "hamedp71::🇫🇷"
+      - "hamedp71::🇮🇹-6"
+      - "hamedp71::🇩🇪-5"
+      - "hamedp71::🇮🇹-7"
+      - "hamedp71::🇩🇪-6"
+      - "hamedp71::🇮🇹-8"
+      - "hamedp71::🇨🇦"
+      - "hamedp71::🇳🇱-2"
+      - "hamedp71::🇺🇸-1"
+      - "hamedp71::🇩🇪-7"
+      - "hamedp71::🇩🇪-8"
+      - "hamedp71::🇩🇪-9"
+      - "hamedp71::🇫🇷-1"
+      - "hamedp71::🇫🇷-2"
+      - "hamedp71::🇺🇸-2"
+      - "hamedp71::🇫🇮-5"
+      - "hamedp71::🇳🇱-3"
+      - "hamedp71::🇸🇪"
+      - "hamedp71::🇬🇧-1"
+      - "hamedp71::🇬🇧-2"
+      - "hamedp71::🇩🇪-10"
+      - "hamedp71::🇧🇪"
+      - "hamedp71::🇧🇪-1"
+      - "hamedp71::🇯🇵-2"
+      - "hamedp71::🇪🇸-1"
+      - "hamedp71::🇬🇧-3"
+      - "hamedp71::🇵🇱-2"
+      - "hamedp71::🇺🇸-3"
+      - "hamedp71::🇯🇵-3"
+      - "hamedp71::🏴‍☠️-1"
+      - "hamedp71::🇺🇸-4"
+      - "hamedp71::🇺🇸-5"
+      - "hamedp71::🇺🇸-6"
+      - "hamedp71::🇺🇸-7"
+      - "hamedp71::🇺🇸-8"
+      - "hamedp71::🇺🇸-9"
+      - "hamedp71::🇳🇱-4"
+      - "hamedp71::🇳🇱-5"
+      - "hamedp71::🇳🇱-6"
+      - "hamedp71::🇫🇷-3"
+      - "hamedp71::🇫🇷-4"
+      - "hamedp71::🇫🇷-5"
+      - "hamedp71::🇵🇱-3"
+      - "hamedp71::🇫🇮-6"
+      - "hamedp71::🇺🇸-10"
+      - "hamedp71::🇺🇸-11"
+      - "hamedp71::🇺🇸-12"
+      - "hamedp71::🏴‍☠️-2"
+      - "hamedp71::🏴‍☠️-3"
+      - "hamedp71::🇺🇸-13"
+      - "hamedp71::🇫🇮-7"
+      - "hamedp71::🇪🇪"
+      - "hamedp71::🇫🇮-8"
+      - "hamedp71::🇫🇮-9"
+      - "hamedp71::🇩🇪-11"
+      - "hamedp71::🏴‍☠️-4"
+      - "hamedp71::🇬🇧-4"
+      - "hamedp71::🇫🇷-6"
+      - "hamedp71::🇺🇸-14"
+      - "hamedp71::🇩🇪-12"
+      - "hamedp71::🇩🇪-13"
+      - "hamedp71::🇬🇧-5"
+      - "hamedp71::🇬🇧-6"
+      - "hamedp71::🇬🇧-7"
+      - "hamedp71::🇩🇪-14"
+      - "hamedp71::🇳🇱-7"
+      - "hamedp71::🇳🇱-8"
+      - "hamedp71::🇳🇱-9"
+      - "hamedp71::🇳🇱-10"
+      - "hamedp71::🇸🇰-1"
+      - "hamedp71::🇬🇧-8"
+      - "hamedp71::🇩🇪-15"
+      - "hamedp71::🇬🇧-9"
+      - "hamedp71::🇬🇧-10"
+      - "hamedp71::🇬🇧-11"
+      - "hamedp71::🇳🇱-11"
+      - "hamedp71::🇬🇧-12"
+      - "hamedp71::🇬🇧-13"
+      - "hamedp71::🇸🇰-2"
+      - "hamedp71::🇬🇧-14"
+      - "hamedp71::🇬🇧-15"
+      - "hamedp71::🇬🇧-16"
+      - "hamedp71::🇸🇰-3"
+      - "hamedp71::🇬🇧-17"
+      - "hamedp71::🇸🇰-4"
+      - "hamedp71::🇳🇱-12"
+      - "hamedp71::🇸🇰-5"
+      - "hamedp71::🇳🇱-13"
+      - "hamedp71::🇳🇱-14"
+      - "hamedp71::🇳🇱-15"
+      - "hamedp71::🇳🇱-16"
+      - "hamedp71::🇸🇰-6"
+      - "hamedp71::🇭🇰-1"
+      - "hamedp71::🇮🇹-9"
+      - "hamedp71::🇳🇱-17"
+      - "hamedp71::🇳🇱-18"
+      - "hamedp71::🇳🇱-19"
+      - "hamedp71::🇳🇱-20"
+      - "hamedp71::🇳🇱-21"
+      - "hamedp71::🇫🇷-7"
+      - "hamedp71::🇫🇷-8"
+      - "hamedp71::🇫🇮-10"
+      - "hamedp71::🇫🇮-11"
+      - "hamedp71::🇺🇸-15"
+      - "hamedp71::🇩🇪-16"
+      - "hamedp71::🇺🇸-16"
+      - "hamedp71::🇺🇸-17"
+      - "hamedp71::🇩🇪-17"
+      - "hamedp71::🇺🇸-18"
+      - "hamedp71::🇺🇸-19"
+      - "hamedp71::🇫🇮-12"
+      - "hamedp71::🏴‍☠️-5"
+      - "hamedp71::🇨🇦-1"
+      - "hamedp71::🇮🇹-10"
+      - "hamedp71::🇳🇱-22"
+      - "hamedp71::🇺🇸-20"
+      - "hamedp71::🇺🇸-21"
+      - "hamedp71::🇫🇮-13"
+      - "hamedp71::🇺🇸-22"
+      - "hamedp71::🇫🇮-14"
+      - "hamedp71::🇫🇮-15"
+      - "hamedp71::🇫🇷-9"
+      - "hamedp71::🇩🇪-18"
+      - "hamedp71::🇫🇮-16"
+      - "hamedp71::🇫🇮-17"
+      - "hamedp71::🇫🇮-18"
+      - "hamedp71::🇫🇮-19"
+      - "hamedp71::🇫🇮-20"
+      - "hamedp71::🇫🇮-21"
+      - "hamedp71::🇫🇮-22"
+      - "hamedp71::🇫🇮-23"
+      - "hamedp71::🇫🇮-24"
+      - "hamedp71::🇫🇮-25"
+      - "hamedp71::🇫🇮-26"
+      - "hamedp71::🇫🇮-27"
+      - "hamedp71::🇫🇮-28"
+      - "hamedp71::🇫🇮-29"
+      - "hamedp71::🇫🇮-30"
+      - "hamedp71::🇫🇮-31"
+      - "hamedp71::🇫🇮-32"
+      - "hamedp71::🇫🇮-33"
+      - "hamedp71::🇫🇮-34"
+      - "hamedp71::🇫🇮-35"
+      - "hamedp71::🇫🇮-36"
+      - "hamedp71::🇫🇮-37"
+      - "hamedp71::🇫🇮-38"
+      - "hamedp71::🇫🇮-39"
+      - "hamedp71::🇫🇮-40"
+      - "hamedp71::🇫🇮-41"
+      - "hamedp71::🇫🇮-42"
+      - "hamedp71::🇫🇮-43"
+      - "hamedp71::🇫🇮-44"
+      - "hamedp71::🏴‍☠️-6"
+      - "hamedp71::🏴‍☠️-7"
+      - "hamedp71::🇮🇹-11"
+      - "hamedp71::🇺🇸-23"
+      - "hamedp71::🏴‍☠️-8"
+      - "hamedp71::🇮🇹-12"
+      - "hamedp71::🇳🇱-23"
+      - "hamedp71::🇳🇱-24"
+      - "hamedp71::🇳🇱-25"
+      - "hamedp71::🇳🇱-26"
+      - "hamedp71::🇳🇱-27"
+      - "hamedp71::🇬🇧-18"
+      - "hamedp71::🇳🇱-28"
+      - "hamedp71::🇩🇪-19"
+      - "hamedp71::🇳🇱-29"
+      - "hamedp71::🏴‍☠️-9"
+      - "hamedp71::🇫🇮-45"
+      - "hamedp71::🇲🇩"
+      - "hamedp71::🇬🇧-19"
+      - "hamedp71::🇱🇻"
+      - "hamedp71::🇸🇪-1"
+      - "hamedp71::🇷🇴"
+      - "hamedp71::🇳🇱-30"
+      - "hamedp71::🇵🇱-4"
+      - "hamedp71::🇳🇱-31"
+      - "hamedp71::🇳🇱-32"
+      - "hamedp71::🇧🇪-2"
+      - "hamedp71::🇮🇹-13"
+      - "hamedp71::🇫🇮-46"
+      - "hamedp71::🇩🇪-20"
+      - "hamedp71::🇫🇮-47"
+      - "hamedp71::🇬🇧-20"
+      - "hamedp71::🇳🇱-33"
+      - "hamedp71::🇺🇸-24"
+      - "hamedp71::🇮🇹-14"
+      - "hamedp71::🇲🇽"
+      - "hamedp71::🇫🇮-48"
+      - "hamedp71::🇵🇱-5"
+      - "hamedp71::🇫🇮-49"
+      - "hamedp71::🇯🇵-4"
+      - "hamedp71::🇩🇪-21"
+      - "hamedp71::🇭🇰-2"
+      - "hamedp71::🇩🇪-22"
+      - "hamedp71::🇮🇹-15"
+      - "hamedp71::🇳🇱-34"
+      - "hamedp71::🇮🇹-16"
+      - "hamedp71::🇺🇸-25"
+      - "hamedp71::🏴‍☠️-10"
+      - "hamedp71::🏴‍☠️-11"
+      - "hamedp71::🇩🇪-23"
+      - "hamedp71::🇮🇹-17"
+      - "hamedp71::🇫🇷-10"
+      - "hamedp71::🇬🇧-21"
+      - "hamedp71::🇺🇸-26"
+      - "hamedp71::🇬🇧-22"
+      - "hamedp71::🇫🇷-11"
+      - "hamedp71::🇩🇪-24"
+      - "hamedp71::🇩🇪-25"
+      - "hamedp71::🇫🇮-50"
+      - "hamedp71::🇺🇸-27"
+      - "hamedp71::🇫🇮-51"
+      - "hamedp71::🇨🇦-2"
+      - "hamedp71::🇫🇮-52"
+      - "hamedp71::🇮🇹-18"
+      - "hamedp71::🇫🇮-53"
+      - "hamedp71::🇦🇺-1"
+      - "hamedp71::🇫🇮-54"
+      - "hamedp71::🇯🇵-5"
+      - "hamedp71::🇮🇹-19"
+      - "hamedp71::🇬🇧-23"
+      - "hamedp71::🇦🇹-2"
+      - "hamedp71::🇩🇪-26"
+      - "hamedp71::🇺🇸-28"
+      - "hamedp71::🇩🇪-27"
+      - "hamedp71::🇩🇪-28"
+      - "hamedp71::🇨🇭"
+      - "hamedp71::🇫🇷-12"
+      - "hamedp71::🇫🇮-55"
+      - "hamedp71::🇩🇪-29"
+      - "hamedp71::🇭🇰-3"
+      - "hamedp71::🇺🇸-29"
+      - "hamedp71::🇮🇹-20"
+      - "hamedp71::🇫🇷-13"
+      - "hamedp71::🇳🇱-35"
+      - "hamedp71::🇭🇰-4"
+      - "hamedp71::🇺🇸-30"
+      - "hamedp71::🇩🇪-30"
+      - "hamedp71::🇳🇱-36"
+      - "hamedp71::🇩🇪-31"
+      - "hamedp71::🇩🇪-32"
+      - "hamedp71::🇵🇱-6"
+      - "hamedp71::🇮🇹-21"
+      - "hamedp71::🇬🇧-24"
+      - "hamedp71::🇮🇹-22"
+      - "hamedp71::🇬🇧-25"
+      - "hamedp71::🇹🇷"
+      - "hamedp71::🇫🇷-14"
+      - "hamedp71::🇫🇮-56"
+      - "hamedp71::🇮🇹-23"
+      - "hamedp71::🇸🇪-2"
+      - "hamedp71::🇬🇧-26"
+      - "hamedp71::🇬🇧-27"
+      - "hamedp71::🇸🇰-7"
+      - "hamedp71::🇩🇪-33"
+      - "hamedp71::🇳🇱-37"
+      - "hamedp71::🇳🇱-38"
+      - "hamedp71::🇩🇪-34"
+      - "hamedp71::🇦🇺-2"
+      - "hamedp71::🇸🇬"
+      - "hamedp71::🇮🇹-24"
+      - "hamedp71::🇫🇷-15"
+      - "hamedp71::🇫🇮-57"
+      - "hamedp71::🇯🇵-6"
+      - "hamedp71::🇬🇧-28"
+      - "hamedp71::🇬🇧-29"
+      - "hamedp71::🇹🇼"
+      - "hamedp71::🇹🇼-1"
+      - "hamedp71::🇳🇱-39"
+      - "hamedp71::🇹🇼-2"
+      - "hamedp71::🇷🇺"
+      - "hamedp71::🇺🇸-31"
+      - "hamedp71::🇩🇪-35"
+      - "hamedp71::🇵🇭"
+      - "hamedp71::🇮🇹-25"
+      - "hamedp71::🇳🇱-40"
+      - "hamedp71::🇳🇱-41"
+      - "hamedp71::🇳🇱-42"
+      - "hamedp71::🇳🇱-43"
+      - "hamedp71::🇳🇱-44"
+      - "hamedp71::🇳🇱-45"
+      - "hamedp71::🇳🇱-46"
+      - "hamedp71::🇳🇱-47"
+      - "hamedp71::🇳🇱-48"
+      - "hamedp71::🇳🇱-49"
+      - "hamedp71::🇳🇱-50"
+      - "hamedp71::🇳🇱-51"
+      - "hamedp71::🇳🇱-52"
+      - "hamedp71::🇳🇱-53"
+      - "hamedp71::🇳🇱-54"
+      - "hamedp71::🇩🇪-36"
+      - "hamedp71::🇩🇪-37"
+      - "hamedp71::🇬🇧-30"
+      - "hamedp71::🇳🇱-55"
+      - "hamedp71::🇳🇱-56"
+      - "hamedp71::🇳🇱-57"
+      - "hamedp71::🇬🇧-31"
+      - "hamedp71::🇳🇱-58"
+      - "hamedp71::🇵🇱-7"
+      - "hamedp71::🇬🇧-32"
+      - "hamedp71::🇬🇧-33"
+      - "hamedp71::🇳🇱-59"
+      - "hamedp71::🇳🇱-60"
+      - "hamedp71::🇳🇱-61"
+      - "hamedp71::🇺🇸-32"
+      - "hamedp71::🇺🇸-33"
+      - "hamedp71::🇩🇪-38"
+      - "hamedp71::🇳🇱-62"
+      - "hamedp71::🇳🇱-63"
+      - "hamedp71::🇬🇧-34"
+      - "hamedp71::🇺🇸-34"
+      - "hamedp71::🇬🇧-35"
+      - "hamedp71::🇳🇱-64"
+      - "hamedp71::🇬🇧-36"
+      - "hamedp71::🇿🇦"
+      - "hamedp71::🇳🇱-65"
+      - "hamedp71::🇳🇱-66"
+      - "hamedp71::🇳🇱-67"
+      - "hamedp71::🇺🇸-35"
+      - "hamedp71::🇳🇱-68"
+      - "hamedp71::🇳🇱-69"
+      - "hamedp71::🇫🇮-58"
+      - "hamedp71::🇳🇱-70"
+      - "hamedp71::🇳🇱-71"
+      - "hamedp71::🇺🇸-36"
+      - "hamedp71::🇺🇸-37"
+      - "hamedp71::🇨🇴"
+      - "hamedp71::🇸🇦"
+      - "hamedp71::🇺🇸-38"
+      - "hamedp71::🇳🇱-72"
+      - "hamedp71::🇳🇱-73"
+      - "hamedp71::🇨🇳"
+      - "hamedp71::🇳🇱-74"
+      - "hamedp71::🇺🇸-39"
+      - "hamedp71::🇺🇸-40"
+      - "hamedp71::🇳🇱-75"
+      - "hamedp71::🇺🇸-41"
+      - "hamedp71::🇯🇵-7"
+      - "hamedp71::🇹🇷-1"
+      - "hamedp71::🇩🇪-39"
+      - "hamedp71::🇩🇪-40"
+      - "hamedp71::🇺🇸-42"
+      - "hamedp71::🇺🇸-43"
+      - "hamedp71::🇳🇱-76"
+      - "hamedp71::🇳🇱-77"
+      - "hamedp71::🇺🇸-44"
+      - "hamedp71::🇳🇱-78"
+      - "hamedp71::🇺🇸-45"
+      - "hamedp71::🇺🇸-46"
+      - "hamedp71::🇺🇸-47"
+      - "hamedp71::🇺🇸-48"
+      - "hamedp71::🇺🇸-49"
+      - "hamedp71::🇺🇸-50"
+      - "hamedp71::🇩🇪-41"
+      - "hamedp71::🇺🇸-51"
+      - "hamedp71::🇺🇸-52"
+      - "hamedp71::🇳🇱-79"
+      - "hamedp71::🇺🇸-53"
+      - "hamedp71::🇨🇦-3"
+      - "hamedp71::🇬🇧-37"
+      - "hamedp71::🇬🇧-38"
+      - "hamedp71::🇫🇷-16"
+      - "hamedp71::🇯🇵-8"
+      - "hamedp71::🇯🇵-9"
+      - "hamedp71::🇳🇴-1"
+      - "hamedp71::🇬🇧-39"
+      - "hamedp71::🇯🇵-10"
+      - "hamedp71::🇬🇧-40"
+      - "hamedp71::🇬🇧-41"
+      - "hamedp71::🇿🇦-1"
+      - "hamedp71::🇩🇪-42"
+      - "hamedp71::🇫🇮-59"
+      - "hamedp71::🇳🇱-80"
+      - "hamedp71::🇰🇷"
+      - "hamedp71::🇰🇷-1"
+      - "hamedp71::🇯🇵-11"
+      - "hamedp71::🇳🇱-81"
+      - "hamedp71::🇳🇱-82"
+      - "hamedp71::🇳🇱-83"
+      - "hamedp71::🇳🇱-84"
+      - "hamedp71::🇳🇱-85"
+      - "hamedp71::🇳🇱-86"
+      - "hamedp71::🇳🇱-87"
+      - "hamedp71::🇳🇱-88"
+      - "hamedp71::🇳🇱-89"
+      - "hamedp71::🇳🇱-90"
+      - "hamedp71::🇳🇱-91"
+      - "hamedp71::🇳🇱-92"
+      - "hamedp71::🇳🇱-93"
+      - "hamedp71::🇩🇪-43"
+      - "hamedp71::🇳🇱-94"
+      - "hamedp71::🇩🇪-44"
+      - "hamedp71::🇳🇱-95"
+      - "hamedp71::🇪🇪-1"
+      - "hamedp71::🇬🇧-42"
+      - "hamedp71::🇺🇸-54"
+      - "hamedp71::🇲🇾"
+      - "hamedp71::🇺🇸-55"
+      - "hamedp71::🇧🇷"
+      - "hamedp71::🇺🇸-56"
+      - "hamedp71::🇺🇸-57"
+      - "hamedp71::🇹🇼-3"
+      - "hamedp71::🇮🇳-1"
+      - "hamedp71::🇩🇪-45"
+      - "hamedp71::🇩🇪-46"
+      - "hamedp71::🏴‍☠️-12"
+      - "hamedp71::🇩🇪-47"
+      - "hamedp71::🇮🇳-2"
+      - "hamedp71::🇲🇾-1"
+      - "hamedp71::🇲🇾-2"
+      - "hamedp71::🇰🇷-2"
+      - "hamedp71::🇸🇬-1"
+      - "hamedp71::🇰🇷-3"
+      - "hamedp71::🇫🇷-17"
+      - "hamedp71::🇺🇸-58"
+      - "hamedp71::🇺🇸-59"
+      - "hamedp71::🇸🇬-2"
+      - "hamedp71::🇺🇸-60"
+      - "hamedp71::🇰🇿"
+      - "hamedp71::🇸🇬-3"
+      - "hamedp71::🇪🇸-2"
+      - "hamedp71::🇩🇪-48"
+      - "hamedp71::🇮🇳-3"
+      - "hamedp71::🇺🇸-61"
+      - "hamedp71::🇺🇸-62"
+      - "hamedp71::🇨🇦-4"
+      - "hamedp71::🇯🇵-12"
+      - "hamedp71::🇯🇵-13"
+      - "hamedp71::🇵🇭-1"
+      - "hamedp71::🇯🇵-14"
+      - "hamedp71::🇮🇹-26"
+      - "hamedp71::🇭🇰-5"
+      - "hamedp71::🇰🇿-1"
+      - "hamedp71::🇲🇽-1"
+      - "hamedp71::🇩🇪-49"
+      - "hamedp71::🇩🇪-50"
+      - "hamedp71::🇵🇱-8"
+      - "hamedp71::🇺🇸-63"
+      - "hamedp71::🇫🇷-18"
+      - "hamedp71::🇩🇪-51"
+      - "hamedp71::🇮🇳-4"
+      - "hamedp71::🇵🇱-9"
+      - "hamedp71::🇺🇸-64"
+      - "hamedp71::🇵🇰"
+      - "hamedp71::🇳🇱-96"
+      - "hamedp71::🇫🇷-19"
+      - "hamedp71::🇫🇷-20"
+      - "hamedp71::🇫🇷-21"
+      - "hamedp71::🇫🇷-22"
+      - "hamedp71::🇫🇷-23"
+      - "hamedp71::🇫🇷-24"
+      - "hamedp71::🇫🇷-25"
+      - "hamedp71::🇫🇷-26"
+      - "hamedp71::🇫🇷-27"
+      - "hamedp71::🇫🇷-28"
+      - "hamedp71::🇫🇷-29"
+      - "hamedp71::🇫🇷-30"
+      - "hamedp71::🇫🇷-31"
+      - "hamedp71::🇫🇷-32"
+      - "hamedp71::🇫🇷-33"
+      - "hamedp71::🇫🇷-34"
+      - "hamedp71::🇫🇷-35"
+      - "hamedp71::🇫🇷-36"
+      - "hamedp71::🇫🇷-37"
+      - "hamedp71::🇫🇷-38"
+      - "hamedp71::🇫🇷-39"
+      - "hamedp71::🇫🇷-40"
+      - "hamedp71::🇳🇱-97"
+      - "hamedp71::🇵🇱-10"
+      - "hamedp71::🇫🇷-41"
+      - "hamedp71::🇵🇱-11"
+      - "hamedp71::🇫🇷-42"
+      - "hamedp71::🇫🇷-43"
+      - "hamedp71::🇫🇷-44"
+      - "hamedp71::🇫🇷-45"
+      - "hamedp71::🇫🇷-46"
+      - "hamedp71::🇫🇷-47"
+      - "hamedp71::🇫🇷-48"
+      - "hamedp71::🇫🇷-49"
+      - "hamedp71::🇫🇷-50"
+      - "hamedp71::🇫🇷-51"
+      - "hamedp71::🇫🇷-52"
+      - "hamedp71::🇫🇷-53"
+      - "hamedp71::🇺🇸-65"
+      - "hamedp71::🇫🇷-54"
+      - "hamedp71::🇵🇱-12"
+      - "hamedp71::🇳🇱-98"
+      - "hamedp71::🏴‍☠️-13"
+      - "hamedp71::🇺🇸-66"
+      - "hamedp71::🇨🇿"
+      - "hamedp71::🇫🇷-55"
+      - "hamedp71::🇫🇷-56"
+      - "hamedp71::🇫🇷-57"
+      - "hamedp71::🇫🇷-58"
+      - "hamedp71::🇳🇱-99"
+      - "hamedp71::🇫🇷-59"
+      - "hamedp71::🏴‍☠️-14"
+      - "hamedp71::🇫🇷-60"
+      - "hamedp71::🇫🇷-61"
+      - "hamedp71::🇵🇱-13"
+      - "hamedp71::🇫🇷-62"
+      - "hamedp71::🇫🇷-63"
+      - "hamedp71::🇵🇱-14"
+      - "hamedp71::🇳🇱-100"
+      - "hamedp71::🇫🇷-64"
+      - "hamedp71::🇫🇷-65"
+      - "hamedp71::🇫🇷-66"
+      - "hamedp71::🇫🇷-67"
+      - "hamedp71::🇫🇷-68"
+      - "hamedp71::🇫🇷-69"
+      - "hamedp71::🇫🇷-70"
+      - "hamedp71::🇫🇷-71"
+      - "hamedp71::🇰🇷-4"
+      - "hamedp71::🇬🇷"
+      - "hamedp71::🇨🇿-1"
+      - "hamedp71::🇫🇷-72"
+      - "hamedp71::🇫🇷-73"
+      - "hamedp71::🇵🇱-15"
+      - "hamedp71::🇫🇷-74"
+      - "hamedp71::🇵🇱-16"
+      - "hamedp71::🇵🇱-17"
+      - "hamedp71::🇳🇱-101"
+      - "hamedp71::🇵🇱-18"
+      - "hamedp71::🇫🇷-75"
+      - "hamedp71::🇳🇱-102"
+      - "hamedp71::🇫🇷-76"
+      - "hamedp71::🇵🇱-19"
+      - "hamedp71::🇫🇷-77"
+      - "hamedp71::🇺🇸-67"
+      - "hamedp71::🇺🇸-68"
+      - "hamedp71::🇳🇱-103"
+      - "hamedp71::🇳🇱-104"
+  - name: "المنت 💬"
     type: "select"
+    icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تیم‌اسپیک 🎧"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/331567/teamspeak.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دلتاچت ✉️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/373771/mail.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دانلود منیجر 📥"
+    type: "select"
+    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
     proxies:
       - "بدون فیلترشکن 🛡️"
       - "نوع انتخاب پروکسی 🔀"
@@ -6668,32 +8250,323 @@ proxy-groups:
       - "اجازه ندادن 🚫"
   - name: "تلگرام 💬"
     type: "select"
+    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+  - name: "یوتیوب ▶️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "گوگل 🌍"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475656/google-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "واتس آپ 🟢"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "هوش مصنوعی 🤖"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/306500/openai.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "توییتر 🐦"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475689/twitter-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "اسپاتیفای 🎵"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "اینستاگرام 📸"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/452229/instagram-1.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "تبلیغات 🆎"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/336358/ad.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "تبلیغات اپ ها 🍃"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "رهگیری جهانی 🛑"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "سایتای مخرب ⚠️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "استیم 🖥️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/452107/steam.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "گیم 🎮"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "توییچ 📡"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/343527/twitch-network-communication-interaction-connection.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "ویندوز 🧊"
+    type: "select"
+    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "اجازه ندادن 🚫"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+  - name: "کلودفلر ☁️"
+    type: "select"
+    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "گیتهاب 🐙"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/355033/github.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دیسکورد 🗣️"
+    type: "select"
+    icon: "https://automatorplugin.com/wp-content/uploads/2024/10/discord-icon.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "استریمیو 🎬"
+    type: "select"
+    icon: "https://stremio.github.io/stremio-addon-guide/img/stremio.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "انی‌دسک 🔴"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "سایتای سانسوری 🤬"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Censorship.svg/300px-Censorship.svg.png"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
   - name: "بدون فیلترشکن 🛡️"
     type: "select"
+    icon: "https://www.svgrepo.com/show/6318/connection.svg"
     proxies:
       - "DIRECT"
     hidden: true
   - name: "قطع اینترنت ⛔"
     type: "select"
+    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
     proxies:
       - "REJECT"
     hidden: true
   - name: "اجازه ندادن 🚫"
     type: "select"
+    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
     proxies:
       - "REJECT"
     hidden: true
 rules:
-  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,DownloadManagers,دانلود منیجر 📥"
+  - "RULE-SET,Download,دانلود منیجر 📥"
+  - "RULE-SET,stremio,استریمیو 🎬"
+  - "PROCESS-NAME,im.vector.app,المنت 💬"
+  - "PROCESS-NAME,io.element.android.x,المنت 💬"
+  - "PROCESS-NAME,Element.exe,المنت 💬"
+  - "DOMAIN-SUFFIX,aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,chat.aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,site.aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,electonet.xyz,المنت 💬"
+  - "DOMAIN-SUFFIX,chat.electonet.xyz,المنت 💬"
+  - "DOMAIN-SUFFIX,rainbuwu.ir,المنت 💬"
+  - "DOMAIN-SUFFIX,cinny.rainbuwu.ir,المنت 💬"
+  - "PROCESS-NAME,chat.delta,دلتاچت ✉️"
+  - "PROCESS-NAME,DeltaChat.exe,دلتاچت ✉️"
+  - "DOMAIN-SUFFIX,arsalandalvand.ir,دلتاچت ✉️"
+  - "DST-PORT,993,دلتاچت ✉️"
+  - "DST-PORT,465,دلتاچت ✉️"
+  - "DST-PORT,587,دلتاچت ✉️"
+  - "PROCESS-NAME,com.teamspeak.ts3client,تیم‌اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win64.exe,تیم‌اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win32.exe,تیم‌اسپیک 🎧"
+  - "DOMAIN-SUFFIX,ag.tssq.ir,تیم‌اسپیک 🎧"
+  - "DST-PORT,9987,تیم‌اسپیک 🎧"
+  - "RULE-SET,BanProgramAD,تبلیغات اپ ها 🍃"
+  - "RULE-SET,BanAD,رهگیری جهانی 🛑"
+  - "RULE-SET,PrivateTracker,رهگیری جهانی 🛑"
+  - "RULE-SET,category_public_tracker,رهگیری جهانی 🛑"
+  - "RULE-SET,malware,سایتای مخرب ⚠️"
+  - "RULE-SET,phishing,سایتای مخرب ⚠️"
+  - "RULE-SET,cryptominers,سایتای مخرب ⚠️"
+  - "RULE-SET,warninglist,سایتای مخرب ⚠️"
+  - "RULE-SET,Ponzi,سایتای مخرب ⚠️"
+  - "RULE-SET,LiteAds,تبلیغات 🆎"
+  - "RULE-SET,iran_ads,تبلیغات 🆎"
+  - "RULE-SET,PersianBlocker,تبلیغات 🆎"
+  - "RULE-SET,ads,تبلیغات 🆎"
+  - "RULE-SET,BanEasyList,تبلیغات 🆎"
+  - "RULE-SET,twitch,توییچ 📡"
   - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
   - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger.web,تلگرام 💬"
+  - "RULE-SET,telegram,تلگرام 💬"
+  - "RULE-SET,YouTube,یوتیوب ▶️"
+  - "RULE-SET,youtube,یوتیوب ▶️"
+  - "RULE-SET,YouTubeMusic,یوتیوب ▶️"
+  - "PROCESS-NAME,com.anydesk.anydeskandroid,انی‌دسک 🔴"
+  - "PROCESS-NAME,AnyDesk.exe,انی‌دسک 🔴"
+  - "DOMAIN-SUFFIX,anydesk.com,انی‌دسک 🔴"
+  - "PROCESS-NAME,Twitter.exe,توییتر 🐦"
+  - "PROCESS-NAME,com.twitter.android,توییتر 🐦"
+  - "RULE-SET,Chotwitter,توییتر 🐦"
+  - "RULE-SET,mihTwitter,توییتر 🐦"
+  - "RULE-SET,Domtwitter,توییتر 🐦"
+  - "PROCESS-NAME,com.spotify.music,اسپاتیفای 🎵"
+  - "PROCESS-NAME,Spotify.exe,اسپاتیفای 🎵"
+  - "RULE-SET,DomainSpotify,اسپاتیفای 🎵"
+  - "RULE-SET,mihspotify,اسپاتیفای 🎵"
+  - "PROCESS-NAME,com.instagram.android,اینستاگرام 📸"
+  - "RULE-SET,instagram,اینستاگرام 📸"
+  - "DOMAIN-SUFFIX,deepseek.com,هوش مصنوعی 🤖"
+  - "DOMAIN-SUFFIX,qwen.ai,هوش مصنوعی 🤖"
+  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
+  - "RULE-SET,censor,سایتای سانسوری 🤬"
+  - "RULE-SET,apps,سایتای ایرانی 🇮🇷"
   - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,arvancloud,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,derakcloud,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,iranserver,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,parspack,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,irasn,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,ircidr,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,ir,سایتای ایرانی 🇮🇷"
   - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
-  - "GEOIP,ir,سایتای ایرانی 🇮🇷"
+  - "DOMAIN-SUFFIX,unimics.com,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,whatsapp,واتس آپ 🟢"
+  - "RULE-SET,steam,استیم 🖥️"
+  - "RULE-SET,SteamRegionCheck,استیم 🖥️"
+  - "RULE-SET,game,گیم 🎮"
+  - "RULE-SET,GameDownload,گیم 🎮"
+  - "RULE-SET,category-games,گیم 🎮"
+  - "RULE-SET,Xbox,گیم 🎮"
+  - "RULE-SET,discord,دیسکورد 🗣️"
+  - "RULE-SET,xiaomi_white_list,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,xiaomi_block_list,تبلیغات اپ ها 🍃"
+  - "RULE-SET,windows,ویندوز 🧊"
+  - "RULE-SET,cloudflare,کلودفلر ☁️"
+  - "RULE-SET,github,گیتهاب 🐙"
+  - "PROCESS-NAME,com.android.vending,نوع انتخاب پروکسی 🔀"
+  - "PROCESS-NAME,com.google.android.gms,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google,گوگل 🌍"
+  - "IP-CIDR,10.10.34.0/24,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,private,بدون فیلترشکن 🛡️"
   - "MATCH,نوع انتخاب پروکسی 🔀"

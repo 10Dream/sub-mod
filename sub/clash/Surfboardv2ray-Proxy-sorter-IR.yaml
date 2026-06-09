@@ -1,4 +1,7 @@
 global-client-fingerprint: "chrome"
+keep-alive-interval: 5
+keep-alive-idle: 10
+disable-keep-alive: false
 port: 7890
 socks-port: 7891
 redir-port: 7892
@@ -8,21 +11,17 @@ allow-lan: true
 tcp-concurrent: true
 enable-process: true
 find-process-mode: "always"
-ipv6: true
+ipv6: false
 log-level: "info"
 geo-auto-update: true
 geo-update-interval: 168
 secret: ""
 bind-address: "*"
 unified-delay: false
-disable-keep-alive: false
-keep-alive-idle: 30
-keep-alive-interval: 30
 dns:
   enable: true
-  ipv6: true
-  respect-rules: false
-  prefer-h3: true
+  ipv6: false
+  prefer-h3: false
   cache-algorithm: "arc"
   use-system-hosts: true
   use-host: true
@@ -42,19 +41,74 @@ dns:
     - "ntp.*.com"
     - "*.ir"
   default-nameserver:
-    - "8.8.8.8"
-    - "8.8.4.4"
     - "1.1.1.1"
+    - "8.8.8.8"
     - "9.9.9.9"
   nameserver:
-    - "https://dns.google/dns-query"
-    - "https://cloudflare-dns.com/dns-query"
+    - "tcp://1.1.1.1"
+    - "tcp://1.0.0.1"
+    - "tcp://8.8.8.8"
+    - "tcp://8.8.4.4"
+    - "tcp://9.9.9.9"
+    - "tcp://149.112.112.112"
+    - "tcp://208.67.222.222"
+    - "tcp://208.67.220.222"
+  fallback:
+    - "tcp://76.76.19.19"
+    - "tcp://76.223.122.150"
+    - "tcp://185.228.168.9"
+    - "tcp://185.228.169.9"
+    - "tcp://8.26.56.26"
+    - "tcp://8.20.247.20"
+    - "tcp://76.76.2.11"
+    - "tcp://76.76.10.11"
+    - "tcp://84.200.69.80"
+    - "tcp://84.200.70.40"
+    - "tcp://45.33.97.5"
+    - "tcp://37.235.1.177"
+    - "tcp://209.244.0.3"
+    - "tcp://209.244.0.4"
+    - "tcp://156.154.70.5"
+    - "tcp://156.154.71.5"
+    - "tcp://103.86.96.100"
+    - "tcp://103.86.99.100"
+    - "tcp://199.85.126.10"
+    - "tcp://199.85.127.10"
+    - "tcp://129.250.35.250"
+    - "tcp://129.250.35.251"
+    - "tcp://94.16.114.254"
+    - "tcp://94.247.43.254"
+    - "tcp://208.67.222.20"
+    - "tcp://195.46.39.39"
+    - "tcp://195.46.39.40"
+    - "tcp://204.117.214.10"
+    - "tcp://199.2.252.10"
+    - "tcp://194.169.169.169"
+    - "tcp://156.154.70.1"
+    - "tcp://156.154.71.1"
+    - "tcp://91.239.100.100"
+    - "tcp://89.233.43.71"
+    - "tcp://64.6.64.6"
+    - "tcp://64.6.65.6"
+    - "tcp://77.88.8.8"
+    - "tcp://77.88.8.1"
+  fallback-filter:
+    geoip: true
+    geoip-code: "IR"
+    geosite:
+      - "gfw"
+    ipcidr:
+      - "240.0.0.0/4"
+    domain:
+      - "+.google.com"
+      - "+.facebook.com"
+      - "+.youtube.com"
+  proxy-server-nameserver:
+    - "tcp://1.1.1.1"
+    - "tcp://8.8.8.8"
   direct-nameserver:
     - "78.157.42.100"
     - "78.157.42.101"
-  proxy-server-nameserver:
-    - "1.1.1.1"
-    - "8.8.8.8"
 sniffer:
   enable: true
   force-dns-mapping: true
@@ -88,12 +142,60 @@ tun:
     - "any:53"
     - "tcp://any:53"
 rule-providers:
+  category_public_tracker:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-public-tracker.yaml"
+    interval: 86400
+    path: "./ruleset/category_public_tracker.yaml"
+  iran_ads:
+    type: "http"
+    behavior: "domain"
+    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    interval: 86400
+    path: "./ruleset/iran_ads.yaml"
+  PersianBlocker:
+    type: "http"
+    behavior: "domain"
+    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    interval: 86400
+    path: "./ruleset/PersianBlocker.yaml"
+  youtube:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
+    interval: 86400
+    path: "./ruleset/youtube.yaml"
+  telegram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
+    interval: 86400
+    path: "./ruleset/telegram.yaml"
+  twitch:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
+    interval: 86400
+    path: "./ruleset/twitch.yaml"
+  censor:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
+    interval: 86400
+    path: "./ruleset/censor.yaml"
   local_ips:
     type: "http"
     behavior: "ipcidr"
     url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
     interval: 86400
     path: "./ruleset/local_ips.yaml"
+  private:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
+    interval: 86400
+    path: "./ruleset/private.yaml"
   category_ir:
     type: "http"
     behavior: "domain"
@@ -106,6 +208,296 @@ rule-providers:
     url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
     interval: 86400
     path: "./ruleset/iran.yaml"
+  steam:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
+    interval: 86400
+    path: "./ruleset/steam.yaml"
+  game:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
+    interval: 86400
+    path: "./ruleset/game.yaml"
+  category-games:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
+    interval: 86400
+    path: "./ruleset/category-games.yaml"
+  ir:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
+    interval: 86400
+    path: "./ruleset/ir.yaml"
+  apps:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
+    interval: 86400
+    path: "./ruleset/apps.yaml"
+  ircidr:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
+    interval: 86400
+    path: "./ruleset/ircidr.yaml"
+  irasn:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
+    interval: 86400
+    path: "./ruleset/irasn.yaml"
+  arvancloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
+    interval: 86400
+    path: "./ruleset/arvancloud.yaml"
+  derakcloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
+    interval: 86400
+    path: "./ruleset/derakcloud.yaml"
+  iranserver:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
+    interval: 86400
+    path: "./ruleset/iranserver.yaml"
+  parspack:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
+    interval: 86400
+    path: "./ruleset/parspack.yaml"
+  malware:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/malware.yaml"
+    interval: 86400
+    path: "./ruleset/malware.yaml"
+  phishing:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/phishing.yaml"
+    interval: 86400
+    path: "./ruleset/phishing.yaml"
+  cryptominers:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/cryptominers.yaml"
+    interval: 86400
+    path: "./ruleset/cryptominers.yaml"
+  ads:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/Chocolate4U/Iran-clash-rules/releases/download/202606060815/category-ads-all.yaml"
+    interval: 86400
+    path: "./ruleset/ads.yaml"
+  DownloadManagers:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
+    interval: 86400
+    path: "./ruleset/DownloadManagers.yaml"
+  BanProgramAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanProgramAD.yaml"
+  BanAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanAD.yaml"
+  PrivateTracker:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
+    interval: 86400
+    path: "./ruleset/PrivateTracker.yaml"
+  BanEasyList:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
+    interval: 86400
+    path: "./ruleset/BanEasyList.yaml"
+  Download:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
+    interval: 86400
+    path: "./ruleset/Download.yaml"
+  GameDownload:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
+    interval: 86400
+    path: "./ruleset/GameDownload.yaml"
+  SteamRegionCheck:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
+    interval: 86400
+    path: "./ruleset/SteamRegionCheck.yaml"
+  Xbox:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
+    interval: 86400
+    path: "./ruleset/Xbox.yaml"
+  YouTubeMusic:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
+    interval: 86400
+    path: "./ruleset/YouTubeMusic.yaml"
+  YouTube:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
+    interval: 86400
+    path: "./ruleset/YouTube.yaml"
+  Ponzi:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
+    interval: 86400
+    path: "./ruleset/Ponzi.yaml"
+  warninglist:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/warning-list.yaml"
+    interval: 86400
+    path: "./ruleset/warninglist.yaml"
+  google:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
+    interval: 86400
+    path: "./ruleset/google.yaml"
+  google-play:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
+    interval: 86400
+    path: "./ruleset/google-play.yaml"
+  xiaomi_block_list:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_block_list.yaml"
+  xiaomi_white_list:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_white_list.yaml"
+  cloudflare:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
+    interval: 86400
+    path: "./ruleset/cloudflare.yaml"
+  github:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
+    interval: 86400
+    path: "./ruleset/xgithub.yaml"
+  whatsapp:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
+    interval: 86400
+    path: "./ruleset/whatsapp.yaml"
+  LiteAds:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/LiteAds.yaml"
+    interval: 86400
+    path: "./ruleset/LiteAds.yaml"
+  discord:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
+    interval: 86400
+    path: "./ruleset/discord.yaml"
+  instagram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    interval: 86400
+    path: "./ruleset/instagram.yaml"
+  category-ai:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    interval: 86400
+    path: "./ruleset/category-ai.yaml"
+  stremio:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    interval: 86400
+    path: "./ruleset/stremio.yaml"
+  windows:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    interval: 86400
+    path: "./ruleset/windows.yaml"
+  Chotwitter:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/twitter.yaml"
+    interval: 86400
+    path: "./ruleset/Chotwitter.yaml"
+  mihTwitter:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Twitter.yaml"
+    interval: 86400
+    path: "./ruleset/mihTwitter.yaml"
+  Domtwitter:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/twitter.yaml"
+    interval: 86400
+    path: "./ruleset/Domtwitter.yaml"
+  DomainSpotify:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/spotify.yaml"
+    interval: 86400
+    path: "./ruleset/DomainSpotify.yaml"
+  mihspotify:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Spotify.yaml"
+    interval: 86400
+    path: "./ruleset/mihSpotify.yaml"
 proxies:
   - name: "🇮🇷IR_183_@Surfboardv2ray"
     type: "vless"
@@ -140,6 +532,14 @@ proxies:
     server: "185.141.107.42"
     port: 777
     uuid: "03f929bb-7a94-4400-a882-d846d18b614e"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇮🇷IR_241_@Surfboardv2ray"
+    type: "vless"
+    server: "edge.aiteamplus.ir"
+    port: 10007
+    uuid: "04c9681a-277f-4d97-8922-1bc64bc1cc07"
     udp: true
     tls: false
     network: "tcp"
@@ -282,6 +682,30 @@ proxies:
       path: "/ws"
       headers:
         Host: "nobody.fasterspeed.ir"
+  - name: "🇮🇷IR_427_@Surfboardv2ray"
+    type: "vless"
+    server: "snapp.ir"
+    port: 2052
+    uuid: "1662f026-bca9-4db7-8f85-e2c76d7073ff"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/ICVPNN"
+      headers:
+        Host: "vpn.ksmrx.ir"
+  - name: "🇮🇷IR_428_@Surfboardv2ray"
+    type: "vless"
+    server: "snapp.ir"
+    port: 80
+    uuid: "16d59f55-2cf7-49f0-81af-c6df88bb2976"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "do.pupload.ir"
   - name: "🇮🇷IR_458_@Surfboardv2ray"
     type: "vless"
     server: "92.42.205.227"
@@ -290,6 +714,18 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "🇮🇷IR_518_@Surfboardv2ray"
+    type: "vless"
+    server: "snapp.ir"
+    port: 80
+    uuid: "1ecfc07d-5ab5-46cd-8438-02ff221b1881"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "kabotar.garfar.ir"
   - name: "🇮🇷IR_536_@Surfboardv2ray"
     type: "vless"
     server: "194.36.174.160"
@@ -330,6 +766,18 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "🇮🇷IR_661_@Surfboardv2ray"
+    type: "vless"
+    server: "varzesh3.com"
+    port: 80
+    uuid: "2d461e79-7a79-4891-83c8-b34d5ad48251"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "kabotar.garfar.ir"
   - name: "🇮🇷IR_677_@Surfboardv2ray"
     type: "vless"
     server: "3.glitchshop.ir"
@@ -370,6 +818,18 @@ proxies:
       path: "/?---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---"
       headers:
         Host: "po.masterdadeh.ir"
+  - name: "🇮🇷IR_711_@Surfboardv2ray"
+    type: "vless"
+    server: "varzesh3.com"
+    port: 80
+    uuid: "32d5d34b-5184-4b2b-859c-f0e37cc5def9"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "kabotar.garfar.ir"
   - name: "🇮🇷IR_725_@Surfboardv2ray"
     type: "vless"
     server: "185.143.235.212"
@@ -382,6 +842,18 @@ proxies:
       path: "/wskhan"
       headers:
         Host: "dwn.budgetnet.ir"
+  - name: "🇮🇷IR_757_@Surfboardv2ray"
+    type: "vless"
+    server: "varzesh3.com"
+    port: 80
+    uuid: "358e8d08-65f0-4ef3-9686-7dfb16211439"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/ws"
+      headers:
+        Host: "nobody.fasterspeed.ir"
   - name: "🇮🇷IR_761_@Surfboardv2ray"
     type: "vless"
     server: "95.38.165.210"
@@ -390,6 +862,30 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "🇮🇷IR_769_@Surfboardv2ray"
+    type: "vless"
+    server: "varzesh3.com"
+    port: 80
+    uuid: "36d51eae-04be-473f-9a34-096e2f466826"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/ws"
+      headers:
+        Host: "nobody.fasterspeed.ir"
+  - name: "🇮🇷IR_789_@Surfboardv2ray"
+    type: "vless"
+    server: "185.143.235.212"
+    port: 2095
+    uuid: "38bd90b7-60e6-4a31-8bc6-811836df965d"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/wskhan"
+      headers:
+        Host: "dwn.budgetnet.ir"
   - name: "🇮🇷IR_859_@Surfboardv2ray"
     type: "vless"
     server: "185.143.233.68"
@@ -439,6 +935,18 @@ proxies:
       path: "/admin"
       headers:
         Host: "opir.artativa.ir"
+  - name: "🇮🇷IR_934_@Surfboardv2ray"
+    type: "vless"
+    server: "185.143.235.200"
+    port: 8880
+    uuid: "4408eafa-2c4d-4b48-aa1f-5ebee616c34e"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/admin"
+      headers:
+        Host: "opir2.artativa.ir"
   - name: "🇮🇷IR_935_@Surfboardv2ray"
     type: "vless"
     server: "185.143.235.201"
@@ -451,6 +959,78 @@ proxies:
       path: "/download"
       headers:
         Host: "opir.artativa.ir"
+  - name: "🇮🇷IR_936_@Surfboardv2ray"
+    type: "vless"
+    server: "185.143.235.201"
+    port: 8880
+    uuid: "4408eafa-2c4d-4b48-aa1f-5ebee616c34e"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/home"
+      headers:
+        Host: "opir.artativa.ir"
+  - name: "🇮🇷IR_937_@Surfboardv2ray"
+    type: "vless"
+    server: "185.143.235.201"
+    port: 8880
+    uuid: "4408eafa-2c4d-4b48-aa1f-5ebee616c34e"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/user"
+      headers:
+        Host: "opir.artativa.ir"
+  - name: "🇮🇷IR_938_@Surfboardv2ray"
+    type: "vless"
+    server: "185.143.235.201"
+    port: 8880
+    uuid: "4408eafa-2c4d-4b48-aa1f-5ebee616c34e"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/download2"
+      headers:
+        Host: "opir2.artativa.ir"
+  - name: "🇮🇷IR_939_@Surfboardv2ray"
+    type: "vless"
+    server: "185.143.235.201"
+    port: 8880
+    uuid: "4408eafa-2c4d-4b48-aa1f-5ebee616c34e"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/home2"
+      headers:
+        Host: "opir2.artativa.ir"
+  - name: "🇮🇷IR_940_@Surfboardv2ray"
+    type: "vless"
+    server: "185.143.235.201"
+    port: 8880
+    uuid: "4408eafa-2c4d-4b48-aa1f-5ebee616c34e"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/user2"
+      headers:
+        Host: "opir2.artativa.ir"
+  - name: "🇮🇷IR_948_@Surfboardv2ray"
+    type: "vless"
+    server: "snapp.ir"
+    port: 80
+    uuid: "4485d586-d858-4935-aa43-490f1917714c"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "vip.subrexo.ir"
   - name: "🇮🇷IR_950_@Surfboardv2ray"
     type: "vless"
     server: "naggout.oblivionspark.com"
@@ -523,6 +1103,18 @@ proxies:
       path: "/"
       headers:
         Host: "iran.shopdn.ir"
+  - name: "🇮🇷IR_1072_@Surfboardv2ray"
+    type: "vless"
+    server: "snapp.ir"
+    port: 80
+    uuid: "54150f09-182f-41c5-8716-46fac53b065e"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "simorgh.garfar.ir"
   - name: "🇮🇷IR_1136_@Surfboardv2ray"
     type: "vless"
     server: "188.121.111.156"
@@ -531,6 +1123,18 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "🇮🇷IR_1137_@Surfboardv2ray"
+    type: "vless"
+    server: "snapp.ir"
+    port: 80
+    uuid: "5bd671c5-e4a4-42fc-b685-8db5ee2bca9b"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "kabotar.garfar.ir"
   - name: "🇮🇷IR_1219_@Surfboardv2ray"
     type: "vless"
     server: "tunnle.izumii.ir"
@@ -563,6 +1167,18 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "🇮🇷IR_1299_@Surfboardv2ray"
+    type: "vless"
+    server: "snapp.ir"
+    port: 80
+    uuid: "6a2405d9-61e2-4c74-a638-b2e2899e1995"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "pa1.ghostantaniehh.ir"
   - name: "🇮🇷IR_1319_@Surfboardv2ray"
     type: "vless"
     server: "94.183.171.3"
@@ -571,6 +1187,18 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "🇮🇷IR_1346_@Surfboardv2ray"
+    type: "vless"
+    server: "varzesh3.com"
+    port: 80
+    uuid: "71eba8ce-2ea8-48c4-9371-76c73a3d2632"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "kabotar.garfar.ir"
   - name: "🇮🇷IR_1347_@Surfboardv2ray"
     type: "vless"
     server: "62.60.214.161"
@@ -579,6 +1207,18 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "🇮🇷IR_1375_@Surfboardv2ray"
+    type: "vless"
+    server: "varzesh3.com"
+    port: 80
+    uuid: "76289801-6fa4-4bf5-a9f6-23450b8a1daa"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "kabotar.garfar.ir"
   - name: "🇮🇷IR_1380_@Surfboardv2ray"
     type: "vless"
     server: "snapp.ir"
@@ -591,6 +1231,14 @@ proxies:
       path: "/moz"
       headers:
         Host: "moz.tecnotech.ir"
+  - name: "🇮🇷IR_1447_@Surfboardv2ray"
+    type: "vless"
+    server: "snapp.ir"
+    port: 2052
+    uuid: "7b81a350-89c3-47da-a3a9-5f2b65313d03"
+    udp: true
+    tls: false
+    network: "httpupgrade"
   - name: "🇮🇷IR_1474_@Surfboardv2ray"
     type: "vless"
     server: "my.kiomars.shop"
@@ -616,6 +1264,18 @@ proxies:
       path: "/"
       headers:
         Host: "api.s3g1.paxevps.ir"
+  - name: "🇮🇷IR_1537_@Surfboardv2ray"
+    type: "vless"
+    server: "varzesh3.com"
+    port: 80
+    uuid: "8621d630-f584-4239-b77a-897bca2e20e9"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "kabotar.garfar.ir"
   - name: "🇮🇷IR_1538_@Surfboardv2ray"
     type: "vless"
     server: "87.107.83.105"
@@ -657,6 +1317,18 @@ proxies:
     client-fingerprint: "chrome"
     ws-opts:
       path: "/vr1003"
+  - name: "🇮🇷IR_1799_@Surfboardv2ray"
+    type: "vless"
+    server: "snapp.ir"
+    port: 80
+    uuid: "91c66bab-b911-45f9-bc6b-d9bf7aecca91"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "kabotar.garfar.ir"
   - name: "🇮🇷IR_2021_@Surfboardv2ray"
     type: "vless"
     server: "varzesh3.com"
@@ -669,6 +1341,14 @@ proxies:
       path: "/"
       headers:
         Host: "sajjad.panivo.ir"
+  - name: "🇮🇷IR_2086_@Surfboardv2ray"
+    type: "vless"
+    server: "snapp.ir"
+    port: 80
+    uuid: "97aaeab2-f8a7-4ec7-b9e2-c5cac9559083"
+    udp: true
+    tls: false
+    network: "tcp"
   - name: "🇮🇷IR_2087_@Surfboardv2ray"
     type: "vless"
     server: "193.58.119.134"
@@ -712,6 +1392,14 @@ proxies:
   - name: "🇮🇷IR_2129_@Surfboardv2ray"
     type: "vless"
     server: "tamin.ir"
+    port: 80
+    uuid: "9bfd89a3-a25f-4427-9ed8-fae2eb017b7f"
+    udp: true
+    tls: false
+    network: "httpupgrade"
+  - name: "🇮🇷IR_2130_@Surfboardv2ray"
+    type: "vless"
+    server: "varzesh3.com"
     port: 80
     uuid: "9bfd89a3-a25f-4427-9ed8-fae2eb017b7f"
     udp: true
@@ -794,6 +1482,26 @@ proxies:
       short-id: "0f"
     grpc-opts:
       grpc-service-name: "client"
+  - name: "🇮🇷IR_2271_@Surfboardv2ray"
+    type: "vless"
+    server: "95.38.164.158"
+    port: 2026
+    uuid: "a218d810-736c-4941-af36-36ab482c2144"
+    udp: true
+    tls: false
+    network: "httpupgrade"
+  - name: "🇮🇷IR_2284_@Surfboardv2ray"
+    type: "vless"
+    server: "varzesh3.com"
+    port: 80
+    uuid: "a393c4e7-5406-42e6-86d3-6489840fa4ea"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "kabotar.garfar.ir"
   - name: "🇮🇷IR_2296_@Surfboardv2ray"
     type: "vless"
     server: "dalton.makanyab.app"
@@ -805,6 +1513,32 @@ proxies:
     client-fingerprint: "chrome"
     ws-opts:
       path: "/dalton/"
+  - name: "🇮🇷IR_2297_@Surfboardv2ray"
+    type: "vless"
+    server: "dalton.makanyab.app"
+    port: 443
+    uuid: "a4cb769e-78ee-483f-8a9f-42e768ea1f1d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "dalton.makanyab.app"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/dalton/"
+      headers:
+        Host: "dalton.makanyab.app"
+  - name: "🇮🇷IR_2326_@Surfboardv2ray"
+    type: "vless"
+    server: "snapp.ir"
+    port: 80
+    uuid: "a828d3b4-5592-48f1-88ec-b8edf70d3fb1"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "simorgh.garfar.ir"
   - name: "🇮🇷IR_2327_@Surfboardv2ray"
     type: "vless"
     server: "185.143.232.24"
@@ -817,6 +1551,14 @@ proxies:
       path: "/"
       headers:
         Host: "rahamegalodon44.personal-kyra.ir"
+  - name: "🇮🇷IR_2333_@Surfboardv2ray"
+    type: "vless"
+    server: "tamin.ir"
+    port: 80
+    uuid: "aa5e25fc-c7d7-4e6e-b7f7-105a35c0175a"
+    udp: true
+    tls: false
+    network: "httpupgrade"
   - name: "🇮🇷IR_2338_@Surfboardv2ray"
     type: "vless"
     server: "37.202.238.213"
@@ -865,6 +1607,32 @@ proxies:
       path: "/"
       headers:
         Host: "p1.sesrsa.com"
+  - name: "🇮🇷IR_2361_@Surfboardv2ray"
+    type: "vless"
+    server: "anten.ir"
+    port: 8880
+    uuid: "ae18c4e2-4348-428d-8fed-1eb6096891c3"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "iran.shopdn.ir"
+  - name: "🇮🇷IR_2362_@Surfboardv2ray"
+    type: "vless"
+    server: "185.143.233.5"
+    port: 2083
+    uuid: "ae36571f-f66d-4f0a-b92e-eaeb6e94ae5c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sub.sesrsa.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "p1.sesrsa.com"
   - name: "🇮🇷IR_2371_@Surfboardv2ray"
     type: "vless"
     server: "94.183.149.98"
@@ -873,6 +1641,42 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "🇮🇷IR_2382_@Surfboardv2ray"
+    type: "vless"
+    server: "blubank.ir"
+    port: 80
+    uuid: "afb3eb91-6ab7-4c70-874e-716e2481cb7d"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "vip.masterdadeh.ir"
+  - name: "🇮🇷IR_2387_@Surfboardv2ray"
+    type: "vless"
+    server: "blubank.ir"
+    port: 80
+    uuid: "afb3eb91-6ab7-4c70-874e-716e2481cb7d"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/?TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=512"
+      headers:
+        Host: "vip.masterdadeh.ir"
+  - name: "🇮🇷IR_2402_@Surfboardv2ray"
+    type: "vless"
+    server: "varzesh3.com"
+    port: 80
+    uuid: "b0155773-f2b3-4d65-911f-de76f4e44ed1"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/ws"
+      headers:
+        Host: "nobody.fasterspeed.ir"
   - name: "🇮🇷IR_2460_@Surfboardv2ray"
     type: "vless"
     server: "94.182.134.36"
@@ -881,6 +1685,30 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "🇮🇷IR_2475_@Surfboardv2ray"
+    type: "vless"
+    server: "snapp.ir"
+    port: 80
+    uuid: "b8c4080d-c2b9-44eb-8540-0e9a8fab61fc"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "kabotar.garfar.ir"
+  - name: "🇮🇷IR_2493_@Surfboardv2ray"
+    type: "vless"
+    server: "varzesh3.com"
+    port: 80
+    uuid: "ba642e98-3de2-409d-b129-e15767c175ee"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/ws"
+      headers:
+        Host: "nobody.fasterspeed.ir"
   - name: "🇮🇷IR_2534_@Surfboardv2ray"
     type: "vless"
     server: "snapp.ir"
@@ -910,6 +1738,22 @@ proxies:
       path: "/"
       headers:
         Host: "Sha.artarona.ir"
+  - name: "🇮🇷IR_2536_@Surfboardv2ray"
+    type: "vless"
+    server: "varzesh3.com"
+    port: 2096
+    uuid: "c09795c8-ee61-4c2a-980b-5946d66c80ec"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "lol6.artarona.ir"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "lol6.artarona.ir"
   - name: "🇮🇷IR_2595_@Surfboardv2ray"
     type: "vless"
     server: "94.101.178.125"
@@ -918,6 +1762,18 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "🇮🇷IR_2608_@Surfboardv2ray"
+    type: "vless"
+    server: "snapp.ir"
+    port: 80
+    uuid: "c9c7a2b1-caf7-4adb-a184-1f55573ecba0"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "cactos.cactuscloud.ir"
   - name: "🇮🇷IR_2637_@Surfboardv2ray"
     type: "vless"
     server: "185.143.235.253"
@@ -955,6 +1811,18 @@ proxies:
     flow: "xtls-rprx-vision"
     grpc-opts:
       grpc-service-name: "@V2RAYNGRAISI,@V2RAYNGRAISI,@V2RAYNGRAISI,@V2RAYNGRAISI,@V2RAYNGRAISI,@V2RAYNGRAISI,"
+  - name: "🇮🇷IR_2704_@Surfboardv2ray"
+    type: "vless"
+    server: "sv3.azparadox.ir"
+    port: 8880
+    uuid: "d5468e62-dfc1-4e6e-bdb5-76206ade51fc"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "azsv3.ir5ive.ir"
   - name: "🇮🇷IR_2714_@Surfboardv2ray"
     type: "vless"
     server: "dl.google.ssl-0.aiteamplus.ir"
@@ -993,6 +1861,30 @@ proxies:
       path: "/ws"
       headers:
         Host: "wsb.kalak.ca"
+  - name: "🇮🇷IR_2761_@Surfboardv2ray"
+    type: "vless"
+    server: "bmi.ir"
+    port: 80
+    uuid: "da864e12-9b35-47ce-b8e4-623bdf13a3a6"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/ws"
+      headers:
+        Host: "wsb.kalak.ca"
+  - name: "🇮🇷IR_2762_@Surfboardv2ray"
+    type: "vless"
+    server: "varzesh3.com"
+    port: 80
+    uuid: "da864e12-9b35-47ce-b8e4-623bdf13a3a6"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/ws"
+      headers:
+        Host: "wsb.kalak.ca"
   - name: "🇮🇷IR_2765_@Surfboardv2ray"
     type: "vless"
     server: "81.12.91.190"
@@ -1018,6 +1910,30 @@ proxies:
       path: "/flutter"
       headers:
         Host: "dl4.paycollection.lol"
+  - name: "🇮🇷IR_2818_@Surfboardv2ray"
+    type: "vless"
+    server: "snapp.ir"
+    port: 8080
+    uuid: "dd7de766-3399-479e-8167-536cd74260b5"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/voip"
+      headers:
+        Host: "x.dject.ir"
+  - name: "🇮🇷IR_2880_@Surfboardv2ray"
+    type: "vless"
+    server: "snapp.ir"
+    port: 80
+    uuid: "e2123c77-6833-4d02-906d-8715422eef5a"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "kabotar.garfar.ir"
   - name: "🇮🇷IR_2905_@Surfboardv2ray"
     type: "vless"
     server: "185.206.95.202"
@@ -1101,6 +2017,19 @@ proxies:
       path: "/"
       headers:
         Host: "best.movidownloadh.ir"
+  - name: "🇮🇷IR_3083_@Surfboardv2ray"
+    type: "vless"
+    server: "snapp.ir"
+    port: 2095
+    uuid: "fa73ba47-c012-41e4-99b4-f30eaeaebf60"
+    udp: true
+    tls: false
+    network: "ws"
+    servername: "snapp.ir"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "s10.totgloucon.ir"
   - name: "🇮🇷IR_3095_@Surfboardv2ray"
     type: "vless"
     server: "nrs.free4all.com.de"
@@ -1117,21 +2046,37 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "🇮🇷IR_3160_@Surfboardv2ray"
+    type: "vless"
+    server: "varzesh3.com"
+    port: 80
+    uuid: "ff246f65-8ecf-4e08-901e-3a15e09c68d0"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "kabotar.garfar.ir"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
+    icon: "https://www.svgrepo.com/show/412721/choose.svg"
     proxies:
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
+      - "توزیع بار چرخشی ⚖️"
       - "قطع اینترنت ⛔"
+      - "بدون فیلترشکن 🛡️"
   - name: "دستی 🤏🏻"
     type: "select"
+    icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
       - "🇮🇷IR_183_@Surfboardv2ray"
       - "🇮🇷IR_184_@Surfboardv2ray"
       - "🇮🇷IR_185_@Surfboardv2ray"
       - "🇮🇷IR_224_@Surfboardv2ray"
+      - "🇮🇷IR_241_@Surfboardv2ray"
       - "🇮🇷IR_273_@Surfboardv2ray"
       - "🇮🇷IR_284_@Surfboardv2ray"
       - "🇮🇷IR_285_@Surfboardv2ray"
@@ -1146,22 +2091,37 @@ proxy-groups:
       - "🇮🇷IR_407_@Surfboardv2ray"
       - "🇮🇷IR_419_@Surfboardv2ray"
       - "🇮🇷IR_421_@Surfboardv2ray"
+      - "🇮🇷IR_427_@Surfboardv2ray"
+      - "🇮🇷IR_428_@Surfboardv2ray"
       - "🇮🇷IR_458_@Surfboardv2ray"
+      - "🇮🇷IR_518_@Surfboardv2ray"
       - "🇮🇷IR_536_@Surfboardv2ray"
       - "🇮🇷IR_537_@Surfboardv2ray"
       - "🇮🇷IR_553_@Surfboardv2ray"
       - "🇮🇷IR_586_@Surfboardv2ray"
+      - "🇮🇷IR_661_@Surfboardv2ray"
       - "🇮🇷IR_677_@Surfboardv2ray"
       - "🇮🇷IR_678_@Surfboardv2ray"
       - "🇮🇷IR_690_@Surfboardv2ray"
       - "🇮🇷IR_708_@Surfboardv2ray"
+      - "🇮🇷IR_711_@Surfboardv2ray"
       - "🇮🇷IR_725_@Surfboardv2ray"
+      - "🇮🇷IR_757_@Surfboardv2ray"
       - "🇮🇷IR_761_@Surfboardv2ray"
+      - "🇮🇷IR_769_@Surfboardv2ray"
+      - "🇮🇷IR_789_@Surfboardv2ray"
       - "🇮🇷IR_859_@Surfboardv2ray"
       - "🇮🇷IR_900_@Surfboardv2ray"
       - "🇮🇷IR_906_@Surfboardv2ray"
       - "🇮🇷IR_932_@Surfboardv2ray"
+      - "🇮🇷IR_934_@Surfboardv2ray"
       - "🇮🇷IR_935_@Surfboardv2ray"
+      - "🇮🇷IR_936_@Surfboardv2ray"
+      - "🇮🇷IR_937_@Surfboardv2ray"
+      - "🇮🇷IR_938_@Surfboardv2ray"
+      - "🇮🇷IR_939_@Surfboardv2ray"
+      - "🇮🇷IR_940_@Surfboardv2ray"
+      - "🇮🇷IR_948_@Surfboardv2ray"
       - "🇮🇷IR_950_@Surfboardv2ray"
       - "🇮🇷IR_963_@Surfboardv2ray"
       - "🇮🇷IR_973_@Surfboardv2ray"
@@ -1170,26 +2130,36 @@ proxy-groups:
       - "🇮🇷IR_1030_@Surfboardv2ray"
       - "🇮🇷IR_1067_@Surfboardv2ray"
       - "🇮🇷IR_1068_@Surfboardv2ray"
+      - "🇮🇷IR_1072_@Surfboardv2ray"
       - "🇮🇷IR_1136_@Surfboardv2ray"
+      - "🇮🇷IR_1137_@Surfboardv2ray"
       - "🇮🇷IR_1219_@Surfboardv2ray"
       - "🇮🇷IR_1268_@Surfboardv2ray"
       - "🇮🇷IR_1283_@Surfboardv2ray"
       - "🇮🇷IR_1284_@Surfboardv2ray"
+      - "🇮🇷IR_1299_@Surfboardv2ray"
       - "🇮🇷IR_1319_@Surfboardv2ray"
+      - "🇮🇷IR_1346_@Surfboardv2ray"
       - "🇮🇷IR_1347_@Surfboardv2ray"
+      - "🇮🇷IR_1375_@Surfboardv2ray"
       - "🇮🇷IR_1380_@Surfboardv2ray"
+      - "🇮🇷IR_1447_@Surfboardv2ray"
       - "🇮🇷IR_1474_@Surfboardv2ray"
       - "🇮🇷IR_1509_@Surfboardv2ray"
+      - "🇮🇷IR_1537_@Surfboardv2ray"
       - "🇮🇷IR_1538_@Surfboardv2ray"
       - "🇮🇷IR_1542_@Surfboardv2ray"
       - "🇮🇷IR_1563_@Surfboardv2ray"
       - "🇮🇷IR_1781_@Surfboardv2ray"
+      - "🇮🇷IR_1799_@Surfboardv2ray"
       - "🇮🇷IR_2021_@Surfboardv2ray"
+      - "🇮🇷IR_2086_@Surfboardv2ray"
       - "🇮🇷IR_2087_@Surfboardv2ray"
       - "🇮🇷IR_2126_@Surfboardv2ray"
       - "🇮🇷IR_2127_@Surfboardv2ray"
       - "🇮🇷IR_2128_@Surfboardv2ray"
       - "🇮🇷IR_2129_@Surfboardv2ray"
+      - "🇮🇷IR_2130_@Surfboardv2ray"
       - "🇮🇷IR_2131_@Surfboardv2ray"
       - "🇮🇷IR_2132_@Surfboardv2ray"
       - "🇮🇷IR_2196_@Surfboardv2ray"
@@ -1197,26 +2167,45 @@ proxy-groups:
       - "🇮🇷IR_2199_@Surfboardv2ray"
       - "🇮🇷IR_2225_@Surfboardv2ray"
       - "🇮🇷IR_2252_@Surfboardv2ray"
+      - "🇮🇷IR_2271_@Surfboardv2ray"
+      - "🇮🇷IR_2284_@Surfboardv2ray"
       - "🇮🇷IR_2296_@Surfboardv2ray"
+      - "🇮🇷IR_2297_@Surfboardv2ray"
+      - "🇮🇷IR_2326_@Surfboardv2ray"
       - "🇮🇷IR_2327_@Surfboardv2ray"
+      - "🇮🇷IR_2333_@Surfboardv2ray"
       - "🇮🇷IR_2338_@Surfboardv2ray"
       - "🇮🇷IR_2339_@Surfboardv2ray"
       - "🇮🇷IR_2341_@Surfboardv2ray"
       - "🇮🇷IR_2352_@Surfboardv2ray"
       - "🇮🇷IR_2353_@Surfboardv2ray"
+      - "🇮🇷IR_2361_@Surfboardv2ray"
+      - "🇮🇷IR_2362_@Surfboardv2ray"
       - "🇮🇷IR_2371_@Surfboardv2ray"
+      - "🇮🇷IR_2382_@Surfboardv2ray"
+      - "🇮🇷IR_2387_@Surfboardv2ray"
+      - "🇮🇷IR_2402_@Surfboardv2ray"
       - "🇮🇷IR_2460_@Surfboardv2ray"
+      - "🇮🇷IR_2475_@Surfboardv2ray"
+      - "🇮🇷IR_2493_@Surfboardv2ray"
       - "🇮🇷IR_2534_@Surfboardv2ray"
       - "🇮🇷IR_2535_@Surfboardv2ray"
+      - "🇮🇷IR_2536_@Surfboardv2ray"
       - "🇮🇷IR_2595_@Surfboardv2ray"
+      - "🇮🇷IR_2608_@Surfboardv2ray"
       - "🇮🇷IR_2637_@Surfboardv2ray"
       - "🇮🇷IR_2656_@Surfboardv2ray"
       - "🇮🇷IR_2670_@Surfboardv2ray"
+      - "🇮🇷IR_2704_@Surfboardv2ray"
       - "🇮🇷IR_2714_@Surfboardv2ray"
       - "🇮🇷IR_2738_@Surfboardv2ray"
       - "🇮🇷IR_2760_@Surfboardv2ray"
+      - "🇮🇷IR_2761_@Surfboardv2ray"
+      - "🇮🇷IR_2762_@Surfboardv2ray"
       - "🇮🇷IR_2765_@Surfboardv2ray"
       - "🇮🇷IR_2798_@Surfboardv2ray"
+      - "🇮🇷IR_2818_@Surfboardv2ray"
+      - "🇮🇷IR_2880_@Surfboardv2ray"
       - "🇮🇷IR_2905_@Surfboardv2ray"
       - "🇮🇷IR_3011_@Surfboardv2ray"
       - "🇮🇷IR_3014_@Surfboardv2ray"
@@ -1224,19 +2213,25 @@ proxy-groups:
       - "🇮🇷IR_3046_@Surfboardv2ray"
       - "🇮🇷IR_3077_@Surfboardv2ray"
       - "🇮🇷IR_3079_@Surfboardv2ray"
+      - "🇮🇷IR_3083_@Surfboardv2ray"
       - "🇮🇷IR_3095_@Surfboardv2ray"
       - "🇮🇷IR_3154_@Surfboardv2ray"
+      - "🇮🇷IR_3160_@Surfboardv2ray"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
+    icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
     url: "https://www.gstatic.com/generate_204"
-    interval: 300
+    interval: 600
     tolerance: 50
-    lazy: true
+    timeout: 3200
+    lazy: false
+    max-failed-times: 2
     proxies:
       - "🇮🇷IR_183_@Surfboardv2ray"
       - "🇮🇷IR_184_@Surfboardv2ray"
       - "🇮🇷IR_185_@Surfboardv2ray"
       - "🇮🇷IR_224_@Surfboardv2ray"
+      - "🇮🇷IR_241_@Surfboardv2ray"
       - "🇮🇷IR_273_@Surfboardv2ray"
       - "🇮🇷IR_284_@Surfboardv2ray"
       - "🇮🇷IR_285_@Surfboardv2ray"
@@ -1251,22 +2246,37 @@ proxy-groups:
       - "🇮🇷IR_407_@Surfboardv2ray"
       - "🇮🇷IR_419_@Surfboardv2ray"
       - "🇮🇷IR_421_@Surfboardv2ray"
+      - "🇮🇷IR_427_@Surfboardv2ray"
+      - "🇮🇷IR_428_@Surfboardv2ray"
       - "🇮🇷IR_458_@Surfboardv2ray"
+      - "🇮🇷IR_518_@Surfboardv2ray"
       - "🇮🇷IR_536_@Surfboardv2ray"
       - "🇮🇷IR_537_@Surfboardv2ray"
       - "🇮🇷IR_553_@Surfboardv2ray"
       - "🇮🇷IR_586_@Surfboardv2ray"
+      - "🇮🇷IR_661_@Surfboardv2ray"
       - "🇮🇷IR_677_@Surfboardv2ray"
       - "🇮🇷IR_678_@Surfboardv2ray"
       - "🇮🇷IR_690_@Surfboardv2ray"
       - "🇮🇷IR_708_@Surfboardv2ray"
+      - "🇮🇷IR_711_@Surfboardv2ray"
       - "🇮🇷IR_725_@Surfboardv2ray"
+      - "🇮🇷IR_757_@Surfboardv2ray"
       - "🇮🇷IR_761_@Surfboardv2ray"
+      - "🇮🇷IR_769_@Surfboardv2ray"
+      - "🇮🇷IR_789_@Surfboardv2ray"
       - "🇮🇷IR_859_@Surfboardv2ray"
       - "🇮🇷IR_900_@Surfboardv2ray"
       - "🇮🇷IR_906_@Surfboardv2ray"
       - "🇮🇷IR_932_@Surfboardv2ray"
+      - "🇮🇷IR_934_@Surfboardv2ray"
       - "🇮🇷IR_935_@Surfboardv2ray"
+      - "🇮🇷IR_936_@Surfboardv2ray"
+      - "🇮🇷IR_937_@Surfboardv2ray"
+      - "🇮🇷IR_938_@Surfboardv2ray"
+      - "🇮🇷IR_939_@Surfboardv2ray"
+      - "🇮🇷IR_940_@Surfboardv2ray"
+      - "🇮🇷IR_948_@Surfboardv2ray"
       - "🇮🇷IR_950_@Surfboardv2ray"
       - "🇮🇷IR_963_@Surfboardv2ray"
       - "🇮🇷IR_973_@Surfboardv2ray"
@@ -1275,26 +2285,36 @@ proxy-groups:
       - "🇮🇷IR_1030_@Surfboardv2ray"
       - "🇮🇷IR_1067_@Surfboardv2ray"
       - "🇮🇷IR_1068_@Surfboardv2ray"
+      - "🇮🇷IR_1072_@Surfboardv2ray"
       - "🇮🇷IR_1136_@Surfboardv2ray"
+      - "🇮🇷IR_1137_@Surfboardv2ray"
       - "🇮🇷IR_1219_@Surfboardv2ray"
       - "🇮🇷IR_1268_@Surfboardv2ray"
       - "🇮🇷IR_1283_@Surfboardv2ray"
       - "🇮🇷IR_1284_@Surfboardv2ray"
+      - "🇮🇷IR_1299_@Surfboardv2ray"
       - "🇮🇷IR_1319_@Surfboardv2ray"
+      - "🇮🇷IR_1346_@Surfboardv2ray"
       - "🇮🇷IR_1347_@Surfboardv2ray"
+      - "🇮🇷IR_1375_@Surfboardv2ray"
       - "🇮🇷IR_1380_@Surfboardv2ray"
+      - "🇮🇷IR_1447_@Surfboardv2ray"
       - "🇮🇷IR_1474_@Surfboardv2ray"
       - "🇮🇷IR_1509_@Surfboardv2ray"
+      - "🇮🇷IR_1537_@Surfboardv2ray"
       - "🇮🇷IR_1538_@Surfboardv2ray"
       - "🇮🇷IR_1542_@Surfboardv2ray"
       - "🇮🇷IR_1563_@Surfboardv2ray"
       - "🇮🇷IR_1781_@Surfboardv2ray"
+      - "🇮🇷IR_1799_@Surfboardv2ray"
       - "🇮🇷IR_2021_@Surfboardv2ray"
+      - "🇮🇷IR_2086_@Surfboardv2ray"
       - "🇮🇷IR_2087_@Surfboardv2ray"
       - "🇮🇷IR_2126_@Surfboardv2ray"
       - "🇮🇷IR_2127_@Surfboardv2ray"
       - "🇮🇷IR_2128_@Surfboardv2ray"
       - "🇮🇷IR_2129_@Surfboardv2ray"
+      - "🇮🇷IR_2130_@Surfboardv2ray"
       - "🇮🇷IR_2131_@Surfboardv2ray"
       - "🇮🇷IR_2132_@Surfboardv2ray"
       - "🇮🇷IR_2196_@Surfboardv2ray"
@@ -1302,26 +2322,45 @@ proxy-groups:
       - "🇮🇷IR_2199_@Surfboardv2ray"
       - "🇮🇷IR_2225_@Surfboardv2ray"
       - "🇮🇷IR_2252_@Surfboardv2ray"
+      - "🇮🇷IR_2271_@Surfboardv2ray"
+      - "🇮🇷IR_2284_@Surfboardv2ray"
       - "🇮🇷IR_2296_@Surfboardv2ray"
+      - "🇮🇷IR_2297_@Surfboardv2ray"
+      - "🇮🇷IR_2326_@Surfboardv2ray"
       - "🇮🇷IR_2327_@Surfboardv2ray"
+      - "🇮🇷IR_2333_@Surfboardv2ray"
       - "🇮🇷IR_2338_@Surfboardv2ray"
       - "🇮🇷IR_2339_@Surfboardv2ray"
       - "🇮🇷IR_2341_@Surfboardv2ray"
       - "🇮🇷IR_2352_@Surfboardv2ray"
       - "🇮🇷IR_2353_@Surfboardv2ray"
+      - "🇮🇷IR_2361_@Surfboardv2ray"
+      - "🇮🇷IR_2362_@Surfboardv2ray"
       - "🇮🇷IR_2371_@Surfboardv2ray"
+      - "🇮🇷IR_2382_@Surfboardv2ray"
+      - "🇮🇷IR_2387_@Surfboardv2ray"
+      - "🇮🇷IR_2402_@Surfboardv2ray"
       - "🇮🇷IR_2460_@Surfboardv2ray"
+      - "🇮🇷IR_2475_@Surfboardv2ray"
+      - "🇮🇷IR_2493_@Surfboardv2ray"
       - "🇮🇷IR_2534_@Surfboardv2ray"
       - "🇮🇷IR_2535_@Surfboardv2ray"
+      - "🇮🇷IR_2536_@Surfboardv2ray"
       - "🇮🇷IR_2595_@Surfboardv2ray"
+      - "🇮🇷IR_2608_@Surfboardv2ray"
       - "🇮🇷IR_2637_@Surfboardv2ray"
       - "🇮🇷IR_2656_@Surfboardv2ray"
       - "🇮🇷IR_2670_@Surfboardv2ray"
+      - "🇮🇷IR_2704_@Surfboardv2ray"
       - "🇮🇷IR_2714_@Surfboardv2ray"
       - "🇮🇷IR_2738_@Surfboardv2ray"
       - "🇮🇷IR_2760_@Surfboardv2ray"
+      - "🇮🇷IR_2761_@Surfboardv2ray"
+      - "🇮🇷IR_2762_@Surfboardv2ray"
       - "🇮🇷IR_2765_@Surfboardv2ray"
       - "🇮🇷IR_2798_@Surfboardv2ray"
+      - "🇮🇷IR_2818_@Surfboardv2ray"
+      - "🇮🇷IR_2880_@Surfboardv2ray"
       - "🇮🇷IR_2905_@Surfboardv2ray"
       - "🇮🇷IR_3011_@Surfboardv2ray"
       - "🇮🇷IR_3014_@Surfboardv2ray"
@@ -1329,10 +2368,194 @@ proxy-groups:
       - "🇮🇷IR_3046_@Surfboardv2ray"
       - "🇮🇷IR_3077_@Surfboardv2ray"
       - "🇮🇷IR_3079_@Surfboardv2ray"
+      - "🇮🇷IR_3083_@Surfboardv2ray"
       - "🇮🇷IR_3095_@Surfboardv2ray"
       - "🇮🇷IR_3154_@Surfboardv2ray"
-  - name: "سایتای ایرانی 🇮🇷"
+      - "🇮🇷IR_3160_@Surfboardv2ray"
+  - name: "توزیع بار چرخشی ⚖️"
+    type: "load-balance"
+    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
+    strategy: "round-robin"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 30
+    timeout: 1500
+    lazy: false
+    proxies:
+      - "🇮🇷IR_183_@Surfboardv2ray"
+      - "🇮🇷IR_184_@Surfboardv2ray"
+      - "🇮🇷IR_185_@Surfboardv2ray"
+      - "🇮🇷IR_224_@Surfboardv2ray"
+      - "🇮🇷IR_241_@Surfboardv2ray"
+      - "🇮🇷IR_273_@Surfboardv2ray"
+      - "🇮🇷IR_284_@Surfboardv2ray"
+      - "🇮🇷IR_285_@Surfboardv2ray"
+      - "🇮🇷IR_286_@Surfboardv2ray"
+      - "🇮🇷IR_287_@Surfboardv2ray"
+      - "🇮🇷IR_288_@Surfboardv2ray"
+      - "🇮🇷IR_313_@Surfboardv2ray"
+      - "🇮🇷IR_351_@Surfboardv2ray"
+      - "🇮🇷IR_356_@Surfboardv2ray"
+      - "🇮🇷IR_370_@Surfboardv2ray"
+      - "🇮🇷IR_371_@Surfboardv2ray"
+      - "🇮🇷IR_407_@Surfboardv2ray"
+      - "🇮🇷IR_419_@Surfboardv2ray"
+      - "🇮🇷IR_421_@Surfboardv2ray"
+      - "🇮🇷IR_427_@Surfboardv2ray"
+      - "🇮🇷IR_428_@Surfboardv2ray"
+      - "🇮🇷IR_458_@Surfboardv2ray"
+      - "🇮🇷IR_518_@Surfboardv2ray"
+      - "🇮🇷IR_536_@Surfboardv2ray"
+      - "🇮🇷IR_537_@Surfboardv2ray"
+      - "🇮🇷IR_553_@Surfboardv2ray"
+      - "🇮🇷IR_586_@Surfboardv2ray"
+      - "🇮🇷IR_661_@Surfboardv2ray"
+      - "🇮🇷IR_677_@Surfboardv2ray"
+      - "🇮🇷IR_678_@Surfboardv2ray"
+      - "🇮🇷IR_690_@Surfboardv2ray"
+      - "🇮🇷IR_708_@Surfboardv2ray"
+      - "🇮🇷IR_711_@Surfboardv2ray"
+      - "🇮🇷IR_725_@Surfboardv2ray"
+      - "🇮🇷IR_757_@Surfboardv2ray"
+      - "🇮🇷IR_761_@Surfboardv2ray"
+      - "🇮🇷IR_769_@Surfboardv2ray"
+      - "🇮🇷IR_789_@Surfboardv2ray"
+      - "🇮🇷IR_859_@Surfboardv2ray"
+      - "🇮🇷IR_900_@Surfboardv2ray"
+      - "🇮🇷IR_906_@Surfboardv2ray"
+      - "🇮🇷IR_932_@Surfboardv2ray"
+      - "🇮🇷IR_934_@Surfboardv2ray"
+      - "🇮🇷IR_935_@Surfboardv2ray"
+      - "🇮🇷IR_936_@Surfboardv2ray"
+      - "🇮🇷IR_937_@Surfboardv2ray"
+      - "🇮🇷IR_938_@Surfboardv2ray"
+      - "🇮🇷IR_939_@Surfboardv2ray"
+      - "🇮🇷IR_940_@Surfboardv2ray"
+      - "🇮🇷IR_948_@Surfboardv2ray"
+      - "🇮🇷IR_950_@Surfboardv2ray"
+      - "🇮🇷IR_963_@Surfboardv2ray"
+      - "🇮🇷IR_973_@Surfboardv2ray"
+      - "🇮🇷IR_977_@Surfboardv2ray"
+      - "🇮🇷IR_1000_@Surfboardv2ray"
+      - "🇮🇷IR_1030_@Surfboardv2ray"
+      - "🇮🇷IR_1067_@Surfboardv2ray"
+      - "🇮🇷IR_1068_@Surfboardv2ray"
+      - "🇮🇷IR_1072_@Surfboardv2ray"
+      - "🇮🇷IR_1136_@Surfboardv2ray"
+      - "🇮🇷IR_1137_@Surfboardv2ray"
+      - "🇮🇷IR_1219_@Surfboardv2ray"
+      - "🇮🇷IR_1268_@Surfboardv2ray"
+      - "🇮🇷IR_1283_@Surfboardv2ray"
+      - "🇮🇷IR_1284_@Surfboardv2ray"
+      - "🇮🇷IR_1299_@Surfboardv2ray"
+      - "🇮🇷IR_1319_@Surfboardv2ray"
+      - "🇮🇷IR_1346_@Surfboardv2ray"
+      - "🇮🇷IR_1347_@Surfboardv2ray"
+      - "🇮🇷IR_1375_@Surfboardv2ray"
+      - "🇮🇷IR_1380_@Surfboardv2ray"
+      - "🇮🇷IR_1447_@Surfboardv2ray"
+      - "🇮🇷IR_1474_@Surfboardv2ray"
+      - "🇮🇷IR_1509_@Surfboardv2ray"
+      - "🇮🇷IR_1537_@Surfboardv2ray"
+      - "🇮🇷IR_1538_@Surfboardv2ray"
+      - "🇮🇷IR_1542_@Surfboardv2ray"
+      - "🇮🇷IR_1563_@Surfboardv2ray"
+      - "🇮🇷IR_1781_@Surfboardv2ray"
+      - "🇮🇷IR_1799_@Surfboardv2ray"
+      - "🇮🇷IR_2021_@Surfboardv2ray"
+      - "🇮🇷IR_2086_@Surfboardv2ray"
+      - "🇮🇷IR_2087_@Surfboardv2ray"
+      - "🇮🇷IR_2126_@Surfboardv2ray"
+      - "🇮🇷IR_2127_@Surfboardv2ray"
+      - "🇮🇷IR_2128_@Surfboardv2ray"
+      - "🇮🇷IR_2129_@Surfboardv2ray"
+      - "🇮🇷IR_2130_@Surfboardv2ray"
+      - "🇮🇷IR_2131_@Surfboardv2ray"
+      - "🇮🇷IR_2132_@Surfboardv2ray"
+      - "🇮🇷IR_2196_@Surfboardv2ray"
+      - "🇮🇷IR_2197_@Surfboardv2ray"
+      - "🇮🇷IR_2199_@Surfboardv2ray"
+      - "🇮🇷IR_2225_@Surfboardv2ray"
+      - "🇮🇷IR_2252_@Surfboardv2ray"
+      - "🇮🇷IR_2271_@Surfboardv2ray"
+      - "🇮🇷IR_2284_@Surfboardv2ray"
+      - "🇮🇷IR_2296_@Surfboardv2ray"
+      - "🇮🇷IR_2297_@Surfboardv2ray"
+      - "🇮🇷IR_2326_@Surfboardv2ray"
+      - "🇮🇷IR_2327_@Surfboardv2ray"
+      - "🇮🇷IR_2333_@Surfboardv2ray"
+      - "🇮🇷IR_2338_@Surfboardv2ray"
+      - "🇮🇷IR_2339_@Surfboardv2ray"
+      - "🇮🇷IR_2341_@Surfboardv2ray"
+      - "🇮🇷IR_2352_@Surfboardv2ray"
+      - "🇮🇷IR_2353_@Surfboardv2ray"
+      - "🇮🇷IR_2361_@Surfboardv2ray"
+      - "🇮🇷IR_2362_@Surfboardv2ray"
+      - "🇮🇷IR_2371_@Surfboardv2ray"
+      - "🇮🇷IR_2382_@Surfboardv2ray"
+      - "🇮🇷IR_2387_@Surfboardv2ray"
+      - "🇮🇷IR_2402_@Surfboardv2ray"
+      - "🇮🇷IR_2460_@Surfboardv2ray"
+      - "🇮🇷IR_2475_@Surfboardv2ray"
+      - "🇮🇷IR_2493_@Surfboardv2ray"
+      - "🇮🇷IR_2534_@Surfboardv2ray"
+      - "🇮🇷IR_2535_@Surfboardv2ray"
+      - "🇮🇷IR_2536_@Surfboardv2ray"
+      - "🇮🇷IR_2595_@Surfboardv2ray"
+      - "🇮🇷IR_2608_@Surfboardv2ray"
+      - "🇮🇷IR_2637_@Surfboardv2ray"
+      - "🇮🇷IR_2656_@Surfboardv2ray"
+      - "🇮🇷IR_2670_@Surfboardv2ray"
+      - "🇮🇷IR_2704_@Surfboardv2ray"
+      - "🇮🇷IR_2714_@Surfboardv2ray"
+      - "🇮🇷IR_2738_@Surfboardv2ray"
+      - "🇮🇷IR_2760_@Surfboardv2ray"
+      - "🇮🇷IR_2761_@Surfboardv2ray"
+      - "🇮🇷IR_2762_@Surfboardv2ray"
+      - "🇮🇷IR_2765_@Surfboardv2ray"
+      - "🇮🇷IR_2798_@Surfboardv2ray"
+      - "🇮🇷IR_2818_@Surfboardv2ray"
+      - "🇮🇷IR_2880_@Surfboardv2ray"
+      - "🇮🇷IR_2905_@Surfboardv2ray"
+      - "🇮🇷IR_3011_@Surfboardv2ray"
+      - "🇮🇷IR_3014_@Surfboardv2ray"
+      - "🇮🇷IR_3043_@Surfboardv2ray"
+      - "🇮🇷IR_3046_@Surfboardv2ray"
+      - "🇮🇷IR_3077_@Surfboardv2ray"
+      - "🇮🇷IR_3079_@Surfboardv2ray"
+      - "🇮🇷IR_3083_@Surfboardv2ray"
+      - "🇮🇷IR_3095_@Surfboardv2ray"
+      - "🇮🇷IR_3154_@Surfboardv2ray"
+      - "🇮🇷IR_3160_@Surfboardv2ray"
+  - name: "المنت 💬"
     type: "select"
+    icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تیم‌اسپیک 🎧"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/331567/teamspeak.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دلتاچت ✉️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/373771/mail.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دانلود منیجر 📥"
+    type: "select"
+    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
     proxies:
       - "بدون فیلترشکن 🛡️"
       - "نوع انتخاب پروکسی 🔀"
@@ -1341,32 +2564,323 @@ proxy-groups:
       - "اجازه ندادن 🚫"
   - name: "تلگرام 💬"
     type: "select"
+    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+  - name: "یوتیوب ▶️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "گوگل 🌍"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475656/google-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "واتس آپ 🟢"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "هوش مصنوعی 🤖"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/306500/openai.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "توییتر 🐦"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475689/twitter-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "اسپاتیفای 🎵"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "اینستاگرام 📸"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/452229/instagram-1.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "تبلیغات 🆎"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/336358/ad.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "تبلیغات اپ ها 🍃"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "رهگیری جهانی 🛑"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "سایتای مخرب ⚠️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "استیم 🖥️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/452107/steam.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "گیم 🎮"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "توییچ 📡"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/343527/twitch-network-communication-interaction-connection.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "ویندوز 🧊"
+    type: "select"
+    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "اجازه ندادن 🚫"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+  - name: "کلودفلر ☁️"
+    type: "select"
+    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "گیتهاب 🐙"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/355033/github.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دیسکورد 🗣️"
+    type: "select"
+    icon: "https://automatorplugin.com/wp-content/uploads/2024/10/discord-icon.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "استریمیو 🎬"
+    type: "select"
+    icon: "https://stremio.github.io/stremio-addon-guide/img/stremio.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "انی‌دسک 🔴"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "سایتای سانسوری 🤬"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Censorship.svg/300px-Censorship.svg.png"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
   - name: "بدون فیلترشکن 🛡️"
     type: "select"
+    icon: "https://www.svgrepo.com/show/6318/connection.svg"
     proxies:
       - "DIRECT"
     hidden: true
   - name: "قطع اینترنت ⛔"
     type: "select"
+    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
     proxies:
       - "REJECT"
     hidden: true
   - name: "اجازه ندادن 🚫"
     type: "select"
+    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
     proxies:
       - "REJECT"
     hidden: true
 rules:
-  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,DownloadManagers,دانلود منیجر 📥"
+  - "RULE-SET,Download,دانلود منیجر 📥"
+  - "RULE-SET,stremio,استریمیو 🎬"
+  - "PROCESS-NAME,im.vector.app,المنت 💬"
+  - "PROCESS-NAME,io.element.android.x,المنت 💬"
+  - "PROCESS-NAME,Element.exe,المنت 💬"
+  - "DOMAIN-SUFFIX,aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,chat.aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,site.aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,electonet.xyz,المنت 💬"
+  - "DOMAIN-SUFFIX,chat.electonet.xyz,المنت 💬"
+  - "DOMAIN-SUFFIX,rainbuwu.ir,المنت 💬"
+  - "DOMAIN-SUFFIX,cinny.rainbuwu.ir,المنت 💬"
+  - "PROCESS-NAME,chat.delta,دلتاچت ✉️"
+  - "PROCESS-NAME,DeltaChat.exe,دلتاچت ✉️"
+  - "DOMAIN-SUFFIX,arsalandalvand.ir,دلتاچت ✉️"
+  - "DST-PORT,993,دلتاچت ✉️"
+  - "DST-PORT,465,دلتاچت ✉️"
+  - "DST-PORT,587,دلتاچت ✉️"
+  - "PROCESS-NAME,com.teamspeak.ts3client,تیم‌اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win64.exe,تیم‌اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win32.exe,تیم‌اسپیک 🎧"
+  - "DOMAIN-SUFFIX,ag.tssq.ir,تیم‌اسپیک 🎧"
+  - "DST-PORT,9987,تیم‌اسپیک 🎧"
+  - "RULE-SET,BanProgramAD,تبلیغات اپ ها 🍃"
+  - "RULE-SET,BanAD,رهگیری جهانی 🛑"
+  - "RULE-SET,PrivateTracker,رهگیری جهانی 🛑"
+  - "RULE-SET,category_public_tracker,رهگیری جهانی 🛑"
+  - "RULE-SET,malware,سایتای مخرب ⚠️"
+  - "RULE-SET,phishing,سایتای مخرب ⚠️"
+  - "RULE-SET,cryptominers,سایتای مخرب ⚠️"
+  - "RULE-SET,warninglist,سایتای مخرب ⚠️"
+  - "RULE-SET,Ponzi,سایتای مخرب ⚠️"
+  - "RULE-SET,LiteAds,تبلیغات 🆎"
+  - "RULE-SET,iran_ads,تبلیغات 🆎"
+  - "RULE-SET,PersianBlocker,تبلیغات 🆎"
+  - "RULE-SET,ads,تبلیغات 🆎"
+  - "RULE-SET,BanEasyList,تبلیغات 🆎"
+  - "RULE-SET,twitch,توییچ 📡"
   - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
   - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger.web,تلگرام 💬"
+  - "RULE-SET,telegram,تلگرام 💬"
+  - "RULE-SET,YouTube,یوتیوب ▶️"
+  - "RULE-SET,youtube,یوتیوب ▶️"
+  - "RULE-SET,YouTubeMusic,یوتیوب ▶️"
+  - "PROCESS-NAME,com.anydesk.anydeskandroid,انی‌دسک 🔴"
+  - "PROCESS-NAME,AnyDesk.exe,انی‌دسک 🔴"
+  - "DOMAIN-SUFFIX,anydesk.com,انی‌دسک 🔴"
+  - "PROCESS-NAME,Twitter.exe,توییتر 🐦"
+  - "PROCESS-NAME,com.twitter.android,توییتر 🐦"
+  - "RULE-SET,Chotwitter,توییتر 🐦"
+  - "RULE-SET,mihTwitter,توییتر 🐦"
+  - "RULE-SET,Domtwitter,توییتر 🐦"
+  - "PROCESS-NAME,com.spotify.music,اسپاتیفای 🎵"
+  - "PROCESS-NAME,Spotify.exe,اسپاتیفای 🎵"
+  - "RULE-SET,DomainSpotify,اسپاتیفای 🎵"
+  - "RULE-SET,mihspotify,اسپاتیفای 🎵"
+  - "PROCESS-NAME,com.instagram.android,اینستاگرام 📸"
+  - "RULE-SET,instagram,اینستاگرام 📸"
+  - "DOMAIN-SUFFIX,deepseek.com,هوش مصنوعی 🤖"
+  - "DOMAIN-SUFFIX,qwen.ai,هوش مصنوعی 🤖"
+  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
+  - "RULE-SET,censor,سایتای سانسوری 🤬"
+  - "RULE-SET,apps,سایتای ایرانی 🇮🇷"
   - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,arvancloud,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,derakcloud,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,iranserver,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,parspack,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,irasn,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,ircidr,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,ir,سایتای ایرانی 🇮🇷"
   - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
-  - "GEOIP,ir,سایتای ایرانی 🇮🇷"
+  - "DOMAIN-SUFFIX,unimics.com,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,whatsapp,واتس آپ 🟢"
+  - "RULE-SET,steam,استیم 🖥️"
+  - "RULE-SET,SteamRegionCheck,استیم 🖥️"
+  - "RULE-SET,game,گیم 🎮"
+  - "RULE-SET,GameDownload,گیم 🎮"
+  - "RULE-SET,category-games,گیم 🎮"
+  - "RULE-SET,Xbox,گیم 🎮"
+  - "RULE-SET,discord,دیسکورد 🗣️"
+  - "RULE-SET,xiaomi_white_list,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,xiaomi_block_list,تبلیغات اپ ها 🍃"
+  - "RULE-SET,windows,ویندوز 🧊"
+  - "RULE-SET,cloudflare,کلودفلر ☁️"
+  - "RULE-SET,github,گیتهاب 🐙"
+  - "PROCESS-NAME,com.android.vending,نوع انتخاب پروکسی 🔀"
+  - "PROCESS-NAME,com.google.android.gms,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google,گوگل 🌍"
+  - "IP-CIDR,10.10.34.0/24,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,private,بدون فیلترشکن 🛡️"
   - "MATCH,نوع انتخاب پروکسی 🔀"

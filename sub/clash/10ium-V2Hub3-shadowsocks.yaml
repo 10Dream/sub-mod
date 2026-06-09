@@ -1,4 +1,7 @@
 global-client-fingerprint: "chrome"
+keep-alive-interval: 5
+keep-alive-idle: 10
+disable-keep-alive: false
 port: 7890
 socks-port: 7891
 redir-port: 7892
@@ -8,21 +11,17 @@ allow-lan: true
 tcp-concurrent: true
 enable-process: true
 find-process-mode: "always"
-ipv6: true
+ipv6: false
 log-level: "info"
 geo-auto-update: true
 geo-update-interval: 168
 secret: ""
 bind-address: "*"
 unified-delay: false
-disable-keep-alive: false
-keep-alive-idle: 30
-keep-alive-interval: 30
 dns:
   enable: true
-  ipv6: true
-  respect-rules: false
-  prefer-h3: true
+  ipv6: false
+  prefer-h3: false
   cache-algorithm: "arc"
   use-system-hosts: true
   use-host: true
@@ -42,19 +41,74 @@ dns:
     - "ntp.*.com"
     - "*.ir"
   default-nameserver:
-    - "8.8.8.8"
-    - "8.8.4.4"
     - "1.1.1.1"
+    - "8.8.8.8"
     - "9.9.9.9"
   nameserver:
-    - "https://dns.google/dns-query"
-    - "https://cloudflare-dns.com/dns-query"
+    - "tcp://1.1.1.1"
+    - "tcp://1.0.0.1"
+    - "tcp://8.8.8.8"
+    - "tcp://8.8.4.4"
+    - "tcp://9.9.9.9"
+    - "tcp://149.112.112.112"
+    - "tcp://208.67.222.222"
+    - "tcp://208.67.220.222"
+  fallback:
+    - "tcp://76.76.19.19"
+    - "tcp://76.223.122.150"
+    - "tcp://185.228.168.9"
+    - "tcp://185.228.169.9"
+    - "tcp://8.26.56.26"
+    - "tcp://8.20.247.20"
+    - "tcp://76.76.2.11"
+    - "tcp://76.76.10.11"
+    - "tcp://84.200.69.80"
+    - "tcp://84.200.70.40"
+    - "tcp://45.33.97.5"
+    - "tcp://37.235.1.177"
+    - "tcp://209.244.0.3"
+    - "tcp://209.244.0.4"
+    - "tcp://156.154.70.5"
+    - "tcp://156.154.71.5"
+    - "tcp://103.86.96.100"
+    - "tcp://103.86.99.100"
+    - "tcp://199.85.126.10"
+    - "tcp://199.85.127.10"
+    - "tcp://129.250.35.250"
+    - "tcp://129.250.35.251"
+    - "tcp://94.16.114.254"
+    - "tcp://94.247.43.254"
+    - "tcp://208.67.222.20"
+    - "tcp://195.46.39.39"
+    - "tcp://195.46.39.40"
+    - "tcp://204.117.214.10"
+    - "tcp://199.2.252.10"
+    - "tcp://194.169.169.169"
+    - "tcp://156.154.70.1"
+    - "tcp://156.154.71.1"
+    - "tcp://91.239.100.100"
+    - "tcp://89.233.43.71"
+    - "tcp://64.6.64.6"
+    - "tcp://64.6.65.6"
+    - "tcp://77.88.8.8"
+    - "tcp://77.88.8.1"
+  fallback-filter:
+    geoip: true
+    geoip-code: "IR"
+    geosite:
+      - "gfw"
+    ipcidr:
+      - "240.0.0.0/4"
+    domain:
+      - "+.google.com"
+      - "+.facebook.com"
+      - "+.youtube.com"
+  proxy-server-nameserver:
+    - "tcp://1.1.1.1"
+    - "tcp://8.8.8.8"
   direct-nameserver:
     - "78.157.42.100"
     - "78.157.42.101"
-  proxy-server-nameserver:
-    - "1.1.1.1"
-    - "8.8.8.8"
 sniffer:
   enable: true
   force-dns-mapping: true
@@ -88,12 +142,60 @@ tun:
     - "any:53"
     - "tcp://any:53"
 rule-providers:
+  category_public_tracker:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-public-tracker.yaml"
+    interval: 86400
+    path: "./ruleset/category_public_tracker.yaml"
+  iran_ads:
+    type: "http"
+    behavior: "domain"
+    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    interval: 86400
+    path: "./ruleset/iran_ads.yaml"
+  PersianBlocker:
+    type: "http"
+    behavior: "domain"
+    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    interval: 86400
+    path: "./ruleset/PersianBlocker.yaml"
+  youtube:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
+    interval: 86400
+    path: "./ruleset/youtube.yaml"
+  telegram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
+    interval: 86400
+    path: "./ruleset/telegram.yaml"
+  twitch:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
+    interval: 86400
+    path: "./ruleset/twitch.yaml"
+  censor:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
+    interval: 86400
+    path: "./ruleset/censor.yaml"
   local_ips:
     type: "http"
     behavior: "ipcidr"
     url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
     interval: 86400
     path: "./ruleset/local_ips.yaml"
+  private:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
+    interval: 86400
+    path: "./ruleset/private.yaml"
   category_ir:
     type: "http"
     behavior: "domain"
@@ -106,6 +208,296 @@ rule-providers:
     url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
     interval: 86400
     path: "./ruleset/iran.yaml"
+  steam:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
+    interval: 86400
+    path: "./ruleset/steam.yaml"
+  game:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
+    interval: 86400
+    path: "./ruleset/game.yaml"
+  category-games:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
+    interval: 86400
+    path: "./ruleset/category-games.yaml"
+  ir:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
+    interval: 86400
+    path: "./ruleset/ir.yaml"
+  apps:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
+    interval: 86400
+    path: "./ruleset/apps.yaml"
+  ircidr:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
+    interval: 86400
+    path: "./ruleset/ircidr.yaml"
+  irasn:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
+    interval: 86400
+    path: "./ruleset/irasn.yaml"
+  arvancloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
+    interval: 86400
+    path: "./ruleset/arvancloud.yaml"
+  derakcloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
+    interval: 86400
+    path: "./ruleset/derakcloud.yaml"
+  iranserver:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
+    interval: 86400
+    path: "./ruleset/iranserver.yaml"
+  parspack:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
+    interval: 86400
+    path: "./ruleset/parspack.yaml"
+  malware:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/malware.yaml"
+    interval: 86400
+    path: "./ruleset/malware.yaml"
+  phishing:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/phishing.yaml"
+    interval: 86400
+    path: "./ruleset/phishing.yaml"
+  cryptominers:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/cryptominers.yaml"
+    interval: 86400
+    path: "./ruleset/cryptominers.yaml"
+  ads:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/Chocolate4U/Iran-clash-rules/releases/download/202606060815/category-ads-all.yaml"
+    interval: 86400
+    path: "./ruleset/ads.yaml"
+  DownloadManagers:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
+    interval: 86400
+    path: "./ruleset/DownloadManagers.yaml"
+  BanProgramAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanProgramAD.yaml"
+  BanAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanAD.yaml"
+  PrivateTracker:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
+    interval: 86400
+    path: "./ruleset/PrivateTracker.yaml"
+  BanEasyList:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
+    interval: 86400
+    path: "./ruleset/BanEasyList.yaml"
+  Download:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
+    interval: 86400
+    path: "./ruleset/Download.yaml"
+  GameDownload:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
+    interval: 86400
+    path: "./ruleset/GameDownload.yaml"
+  SteamRegionCheck:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
+    interval: 86400
+    path: "./ruleset/SteamRegionCheck.yaml"
+  Xbox:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
+    interval: 86400
+    path: "./ruleset/Xbox.yaml"
+  YouTubeMusic:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
+    interval: 86400
+    path: "./ruleset/YouTubeMusic.yaml"
+  YouTube:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
+    interval: 86400
+    path: "./ruleset/YouTube.yaml"
+  Ponzi:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
+    interval: 86400
+    path: "./ruleset/Ponzi.yaml"
+  warninglist:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/warning-list.yaml"
+    interval: 86400
+    path: "./ruleset/warninglist.yaml"
+  google:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
+    interval: 86400
+    path: "./ruleset/google.yaml"
+  google-play:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
+    interval: 86400
+    path: "./ruleset/google-play.yaml"
+  xiaomi_block_list:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_block_list.yaml"
+  xiaomi_white_list:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_white_list.yaml"
+  cloudflare:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
+    interval: 86400
+    path: "./ruleset/cloudflare.yaml"
+  github:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
+    interval: 86400
+    path: "./ruleset/xgithub.yaml"
+  whatsapp:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
+    interval: 86400
+    path: "./ruleset/whatsapp.yaml"
+  LiteAds:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/LiteAds.yaml"
+    interval: 86400
+    path: "./ruleset/LiteAds.yaml"
+  discord:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
+    interval: 86400
+    path: "./ruleset/discord.yaml"
+  instagram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    interval: 86400
+    path: "./ruleset/instagram.yaml"
+  category-ai:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    interval: 86400
+    path: "./ruleset/category-ai.yaml"
+  stremio:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    interval: 86400
+    path: "./ruleset/stremio.yaml"
+  windows:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    interval: 86400
+    path: "./ruleset/windows.yaml"
+  Chotwitter:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/twitter.yaml"
+    interval: 86400
+    path: "./ruleset/Chotwitter.yaml"
+  mihTwitter:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Twitter.yaml"
+    interval: 86400
+    path: "./ruleset/mihTwitter.yaml"
+  Domtwitter:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/twitter.yaml"
+    interval: 86400
+    path: "./ruleset/Domtwitter.yaml"
+  DomainSpotify:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/spotify.yaml"
+    interval: 86400
+    path: "./ruleset/DomainSpotify.yaml"
+  mihspotify:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Spotify.yaml"
+    interval: 86400
+    path: "./ruleset/mihSpotify.yaml"
 proxies:
   - name: "RELAY🚩+|+172.66.177.129-80+|+2.3ms"
     type: "ss"
@@ -359,6 +751,13 @@ proxies:
     cipher: "aes-256-gcm"
     password: "7NuB0Y5m3aNzkKMKlFoMwkiajsu6F36c9ok4VKEZnB4="
     udp: true
+  - name: "FR🇫🇷+|+de5.taskflowhub.org-2083+|+282.04ms"
+    type: "ss"
+    server: "de5.taskflowhub.org"
+    port: 2083
+    cipher: "aes-256-gcm"
+    password: "7NuB0Y5m3aNzkKMKlFoMwkiajsu6F36c9ok4VKEZnB4=7"
+    udp: true
   - name: "IT🇮🇹+|+it5.taskflowhub.org-2083+|+274.4ms"
     type: "ss"
     server: "it5.taskflowhub.org"
@@ -456,6 +855,13 @@ proxies:
     port: 443
     cipher: "aes-128-gcm"
     password: "shadowsocks"
+    udp: true
+  - name: "GB🇬🇧+|+141.98.101.182-443+|+81.28ms"
+    type: "ss"
+    server: "141.98.101.182"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks7"
     udp: true
   - name: "RELAY🚩+|+yx.cloudflare.182682.xyz-443+|+482.14ms"
     type: "ss"
@@ -807,16 +1213,964 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "oZIoA69Q8yhcQV8ka3Pa3A"
     udp: true
+  - name: "NL🇳🇱+|+193.29.139.204-8080+|+109.36ms"
+    type: "ss"
+    server: "193.29.139.204"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "NL🇳🇱+|+193.29.139.151-8080+|+108.65ms"
+    type: "ss"
+    server: "193.29.139.151"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "TR🇹🇷+|+62.133.63.169-37096+|+126.61ms"
+    type: "ss"
+    server: "62.133.63.169"
+    port: 37096
+    cipher: "chacha20-ietf-poly1305"
+    password: "oGmgmQoKE3xqSQFhU4Isuw"
+    udp: true
+  - name: "RU🇷🇺+|+178.130.46.148-47345+|+93.92ms"
+    type: "ss"
+    server: "178.130.46.148"
+    port: 47345
+    cipher: "chacha20-ietf-poly1305"
+    password: "nGSRvZ5IsYcRNDpDtNVrkV"
+    udp: true
+  - name: "TW🇹🇼+|+download.riferoser.icu-56594+|+261.9ms"
+    type: "ss"
+    server: "download.riferoser.icu"
+    port: 56594
+    cipher: "chacha20-ietf-poly1305"
+    password: "mzeMYBJYp4Bo7nA1qYLvv7QG73igtAA85nt4pr8A9ntx2qhDfYgRtiJ7iH7VrcneQKNmtvpbsvvFKPaUATYELi18iH56Ttr4"
+    udp: true
+  - name: "GB🇬🇧+|+series-a2.varzesh360.co-443+|+120.34ms"
+    type: "ss"
+    server: "series-a2.varzesh360.co"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "mps3FwmDjLrWaOVg"
+    udp: true
+  - name: "GB🇬🇧+|+series-a2.samanehha.co-443+|+153.43ms"
+    type: "ss"
+    server: "series-a2.samanehha.co"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "mps3FwmDjLrWaOVg"
+    udp: true
+  - name: "GB🇬🇧+|+185.5.38.111-55988+|+137.27ms"
+    type: "ss"
+    server: "185.5.38.111"
+    port: 55988
+    cipher: "chacha20-ietf-poly1305"
+    password: "k7xW6N5SAVpgeqi1wd7s7yxD7S8PxaehUM5W8apHrQi3pSoDRXScoAPk8SVa4mKbvRjrgENU3dUgzTgp9T3rrXinaDe4CXYk"
+    udp: true
+  - name: "GB🇬🇧+|+57.129.140.88-8388+|+76.11ms"
+    type: "ss"
+    server: "57.129.140.88"
+    port: 8388
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1v5g9FefdoO"
+    udp: true
+  - name: "GB🇬🇧+|+82.38.31.218-8080+|+108.68ms"
+    type: "ss"
+    server: "82.38.31.218"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "GB🇬🇧+|+82.38.31.217-8080+|+110.03ms"
+    type: "ss"
+    server: "82.38.31.217"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "GB🇬🇧+|+82.38.31.214-8080+|+108.51ms"
+    type: "ss"
+    server: "82.38.31.214"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "GB🇬🇧+|+82.38.31.210-8080+|+102.39ms"
+    type: "ss"
+    server: "82.38.31.210"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "GB🇬🇧+|+82.38.31.208-8080+|+102.31ms"
+    type: "ss"
+    server: "82.38.31.208"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "GB🇬🇧+|+82.38.31.205-8080+|+100.7ms"
+    type: "ss"
+    server: "82.38.31.205"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "GB🇬🇧+|+82.38.31.202-8080+|+108.97ms"
+    type: "ss"
+    server: "82.38.31.202"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "GB🇬🇧+|+82.38.31.199-8080+|+109.01ms"
+    type: "ss"
+    server: "82.38.31.199"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "GB🇬🇧+|+82.38.31.194-8080+|+109.04ms"
+    type: "ss"
+    server: "82.38.31.194"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "GB🇬🇧+|+82.38.31.191-8080+|+108.88ms"
+    type: "ss"
+    server: "82.38.31.191"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "GB🇬🇧+|+82.38.31.190-8080+|+100.22ms"
+    type: "ss"
+    server: "82.38.31.190"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "GB🇬🇧+|+82.38.31.189-8080+|+99.65ms"
+    type: "ss"
+    server: "82.38.31.189"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "GB🇬🇧+|+82.38.31.187-8080+|+100.1ms"
+    type: "ss"
+    server: "82.38.31.187"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "GB🇬🇧+|+82.38.31.184-8080+|+100.38ms"
+    type: "ss"
+    server: "82.38.31.184"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "GB🇬🇧+|+82.38.31.179-8080+|+108.83ms"
+    type: "ss"
+    server: "82.38.31.179"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "GB🇬🇧+|+82.38.31.176-8080+|+108.79ms"
+    type: "ss"
+    server: "82.38.31.176"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "TR🇹🇷+|+62.60.233.220-18685+|+128.16ms"
+    type: "ss"
+    server: "62.60.233.220"
+    port: 18685
+    cipher: "chacha20-ietf-poly1305"
+    password: "ixfXBq6dfMQQFiEz6PBcTy"
+    udp: true
+  - name: "FR🇫🇷+|+91.239.208.204-17477+|+85.64ms"
+    type: "ss"
+    server: "91.239.208.204"
+    port: 17477
+    cipher: "chacha20-ietf-poly1305"
+    password: "hzxQofNAcTk2xo2drzxpIE"
+    udp: true
+  - name: "SE🇸🇪+|+46.246.96.30-31561+|+115.95ms"
+    type: "ss"
+    server: "46.246.96.30"
+    port: 31561
+    cipher: "chacha20-ietf-poly1305"
+    password: "hc8LMJew3Fl9MbcFCoFgT0"
+    udp: true
+  - name: "US🇺🇸+|+38.135.24.131-443+|+7.8ms"
+    type: "ss"
+    server: "38.135.24.131"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "hbGrpfvNrJsUmKmPbR3iY2"
+    udp: true
+  - name: "NL🇳🇱+|+195.66.27.148-28709+|+88.85ms"
+    type: "ss"
+    server: "195.66.27.148"
+    port: 28709
+    cipher: "chacha20-ietf-poly1305"
+    password: "hShp1Km0NcFSmSigc8ozky"
+    udp: true
+  - name: "RU🇷🇺+|+145.249.109.148-16548+|+90.83ms"
+    type: "ss"
+    server: "145.249.109.148"
+    port: 16548
+    cipher: "chacha20-ietf-poly1305"
+    password: "ge0S0k9UQZuJS4N5pEH80E"
+    udp: true
+  - name: "SE🇸🇪+|+46.246.96.191-15721+|+111.56ms"
+    type: "ss"
+    server: "46.246.96.191"
+    port: 15721
+    cipher: "chacha20-ietf-poly1305"
+    password: "fkZZaQfxglQEbFpiDyKEdN"
+    udp: true
+  - name: "DE🇩🇪+|+95.164.123.39-32821+|+94.25ms"
+    type: "ss"
+    server: "95.164.123.39"
+    port: 32821
+    cipher: "chacha20-ietf-poly1305"
+    password: "fBTl409Xqg3DwqKili0NQF"
+    udp: true
+  - name: "DE🇩🇪+|+95.164.123.196-57493+|+94.33ms"
+    type: "ss"
+    server: "95.164.123.196"
+    port: 57493
+    cipher: "chacha20-ietf-poly1305"
+    password: "evFIqXOc55xLHMluu5zX31"
+    udp: true
+  - name: "FR🇫🇷+|+162.19.214.191-59724+|+94.82ms"
+    type: "ss"
+    server: "162.19.214.191"
+    port: 59724
+    cipher: "chacha20-ietf-poly1305"
+    password: "e7yQKOelKM4UIJCZYLrzQX"
+    udp: true
+  - name: "FI🇫🇮+|+62.60.255.11-8388+|+114.1ms"
+    type: "ss"
+    server: "62.60.255.11"
+    port: 8388
+    cipher: "chacha20-ietf-poly1305"
+    password: "do1DZ-_QvkFWXzsjc_w8eT5-TeYP6U3Q"
+    udp: true
+  - name: "TR🇹🇷+|+185.39.204.189-34085+|+126.83ms"
+    type: "ss"
+    server: "185.39.204.189"
+    port: 34085
+    cipher: "chacha20-ietf-poly1305"
+    password: "depjSbjv2Uql6W4Vge7sDf"
+    udp: true
+  - name: "FI🇫🇮+|+85.192.49.149-51523+|+105.62ms"
+    type: "ss"
+    server: "85.192.49.149"
+    port: 51523
+    cipher: "chacha20-ietf-poly1305"
+    password: "dM-uYbTS84AzBKfoSStX0U5_q6YJXqH3"
+    udp: true
+  - name: "TH🇹🇭+|+102.129.229.85-31700+|+285.07ms"
+    type: "ss"
+    server: "102.129.229.85"
+    port: 31700
+    cipher: "chacha20-ietf-poly1305"
+    password: "d7zh2lMrXNH5+8+8pKzlxiCU9NN022ih+uAyxj5d4qo="
+    udp: true
+  - name: "NL🇳🇱+|+193.29.139.217-8080+|+109.13ms"
+    type: "ss"
+    server: "193.29.139.217"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "cvII85TrW6n0OGyfpHVS1u"
+    udp: true
+  - name: "NL🇳🇱+|+193.29.139.189-8080+|+102.91ms"
+    type: "ss"
+    server: "193.29.139.189"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "cvII85TrW6n0OGyfpHVS1u"
+    udp: true
+  - name: "NL🇳🇱+|+193.29.139.164-8080+|+102.68ms"
+    type: "ss"
+    server: "193.29.139.164"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "cvII85TrW6n0OGyfpHVS1u"
+    udp: true
+  - name: "NL🇳🇱+|+193.29.139.157-8080+|+100.18ms"
+    type: "ss"
+    server: "193.29.139.157"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "cvII85TrW6n0OGyfpHVS1u"
+    udp: true
+  - name: "BG🇧🇬+|+95.164.113.153-5669+|+112.82ms"
+    type: "ss"
+    server: "95.164.113.153"
+    port: 5669
+    cipher: "chacha20-ietf-poly1305"
+    password: "cJvGkXLQg1TCouv8BmE0Xu"
+    udp: true
+  - name: "TR🇹🇷+|+83.217.9.17-25232+|+130ms"
+    type: "ss"
+    server: "83.217.9.17"
+    port: 25232
+    cipher: "chacha20-ietf-poly1305"
+    password: "bgvLZUfs8sivoB9A7wkYdm"
+    udp: true
+  - name: "GB🇬🇧+|+185.5.38.111-55988+|+141.5ms"
+    type: "ss"
+    server: "185.5.38.111"
+    port: 55988
+    cipher: "chacha20-ietf-poly1305"
+    password: "bZ87amPpdG7KuWM62bKtm1KHoowuVjnV8CKtq653ymHcg2dPYcPJfnaQ61stuAjr2ZiLDaqH56XpkxEYuwDzzRrMWieebWGt"
+    udp: true
+  - name: "TR🇹🇷+|+185.39.204.161-33563+|+128.57ms"
+    type: "ss"
+    server: "185.39.204.161"
+    port: 33563
+    cipher: "chacha20-ietf-poly1305"
+    password: "bSlgCoGhApOb55tIMD0zxY"
+    udp: true
+  - name: "GB🇬🇧+|+azjnac1.uksouth.cloudapp.azure.com-443+|+80.66ms"
+    type: "ss"
+    server: "azjnac1.uksouth.cloudapp.azure.com"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "b2EJuconC460KllN"
+    udp: true
+  - name: "IR🇮🇷+|+vip4.zarins.ir-80+|+530.56ms"
+    type: "ss"
+    server: "vip4.zarins.ir"
+    port: 80
+    cipher: "chacha20-ietf-poly1305"
+    password: "andkqerdMV1JC-i3JBJrcXZox6h7vd7X"
+    udp: true
+  - name: "UA🇺🇦+|+130.0.233.100-33610+|+127.15ms"
+    type: "ss"
+    server: "130.0.233.100"
+    port: 33610
+    cipher: "chacha20-ietf-poly1305"
+    password: "aRNFYKtLOnaPE5FCHI9ylr"
+    udp: true
+  - name: "SE🇸🇪+|+46.246.97.140-53908+|+102.01ms"
+    type: "ss"
+    server: "46.246.97.140"
+    port: 53908
+    cipher: "chacha20-ietf-poly1305"
+    password: "ZweuXavjovuhzt1AF0d6qx"
+    udp: true
+  - name: "DE🇩🇪+|+62.133.60.6-443+|+92.92ms"
+    type: "ss"
+    server: "62.133.60.6"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "ZSzCXxMc0U8gRNctj6NbfD"
+    udp: true
+  - name: "FI🇫🇮+|+93.152.207.248-34242+|+104.16ms"
+    type: "ss"
+    server: "93.152.207.248"
+    port: 34242
+    cipher: "chacha20-ietf-poly1305"
+    password: "ZMCV3ECpby85V6wP9NMfkm"
+    udp: true
+  - name: "TR🇹🇷+|+83.217.9.17-25232+|+122.64ms"
+    type: "ss"
+    server: "83.217.9.17"
+    port: 25232
+    cipher: "chacha20-ietf-poly1305"
+    password: "YHtXD4pojvormVWRiHgIfv"
+    udp: true
+  - name: "RU🇷🇺+|+145.249.109.108-18740+|+89.99ms"
+    type: "ss"
+    server: "145.249.109.108"
+    port: 18740
+    cipher: "chacha20-ietf-poly1305"
+    password: "YHalDvP1z5RriU6l4LngKi"
+    udp: true
+  - name: "US🇺🇸+|+hackney-latest-strike.freesocks.work-443+|+87.8ms"
+    type: "ss"
+    server: "hackney-latest-strike.freesocks.work"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "XUMTygEM1jVYIvysXKqA5T"
+    udp: true
+  - name: "TR🇹🇷+|+62.60.233.226-62763+|+128.16ms"
+    type: "ss"
+    server: "62.60.233.226"
+    port: 62763
+    cipher: "chacha20-ietf-poly1305"
+    password: "XG7MMevfyz7jA3IteAA8Qn"
+    udp: true
+  - name: "DE🇩🇪+|+147.45.178.24-56259+|+92.98ms"
+    type: "ss"
+    server: "147.45.178.24"
+    port: 56259
+    cipher: "chacha20-ietf-poly1305"
+    password: "XEgifzBjI9TWGZzzOU6XOg"
+    udp: true
+  - name: "GB🇬🇧+|+series-a2.samanehha.co-443+|+79.83ms"
+    type: "ss"
+    server: "series-a2.samanehha.co"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "W74XFALLLuw6m5IA"
+    udp: true
+  - name: "GB🇬🇧+|+series-a1.samanehha.co-443+|+148.75ms"
+    type: "ss"
+    server: "series-a1.samanehha.co"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "W74XFALLLuw6m5IA"
+    udp: true
+  - name: "FR🇫🇷+|+162.19.175.40-7425+|+92.75ms"
+    type: "ss"
+    server: "162.19.175.40"
+    port: 7425
+    cipher: "chacha20-ietf-poly1305"
+    password: "VeUJj6HWCyDZeSaqpmf8AM"
+    udp: true
+  - name: "RO🇷🇴+|+103.244.145.247-28893+|+96.79ms"
+    type: "ss"
+    server: "103.244.145.247"
+    port: 28893
+    cipher: "chacha20-ietf-poly1305"
+    password: "V6_RXT2UlL5ONSD3Fmvd9XqBGNmespBu"
+    udp: true
+  - name: "TR🇹🇷+|+62.133.63.169-37096+|+125.41ms"
+    type: "ss"
+    server: "62.133.63.169"
+    port: 37096
+    cipher: "chacha20-ietf-poly1305"
+    password: "Ul0rGyAAed5HRDpvFqr2C0"
+    udp: true
+  - name: "US🇺🇸+|+107.172.250.161-59556+|+17.86ms"
+    type: "ss"
+    server: "107.172.250.161"
+    port: 59556
+    cipher: "chacha20-ietf-poly1305"
+    password: "QTmLViU4VEmuwbOxUw4IXd"
+    udp: true
+  - name: "NL🇳🇱+|+193.29.139.227-8080+|+109.83ms"
+    type: "ss"
+    server: "193.29.139.227"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "QCXDxuDlTTMD7jtgHUjIoj"
+    udp: true
+  - name: "NL🇳🇱+|+193.29.139.217-8080+|+108.92ms"
+    type: "ss"
+    server: "193.29.139.217"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "QCXDxuDlTTMD7jtgHUjIoj"
+    udp: true
+  - name: "NL🇳🇱+|+193.29.139.189-8080+|+99.93ms"
+    type: "ss"
+    server: "193.29.139.189"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "QCXDxuDlTTMD7jtgHUjIoj"
+    udp: true
+  - name: "DE🇩🇪+|+8.209.74.72-20001+|+91.77ms"
+    type: "ss"
+    server: "8.209.74.72"
+    port: 20001
+    cipher: "chacha20-ietf-poly1305"
+    password: "PWpjPo3tqhPN4yRZ"
+    udp: true
+  - name: "RU🇷🇺+|+212.192.14.234-24441+|+123.78ms"
+    type: "ss"
+    server: "212.192.14.234"
+    port: 24441
+    cipher: "chacha20-ietf-poly1305"
+    password: "Ow8iSExQNaobZPY9bJ4EPI"
+    udp: true
+  - name: "NL🇳🇱+|+185.18.54.70-31348+|+95.32ms"
+    type: "ss"
+    server: "185.18.54.70"
+    port: 31348
+    cipher: "chacha20-ietf-poly1305"
+    password: "MPS4QxIySO20yGnFTGEbyYTOwd2HlEmcC0ksqogxZtLyLYRl"
+    udp: true
+  - name: "US🇺🇸+|+149.104.109.74-21273+|+261.44ms"
+    type: "ss"
+    server: "149.104.109.74"
+    port: 21273
+    cipher: "chacha20-ietf-poly1305"
+    password: "Ll6cYfXM5DzQbdtMMb72A_jqVnNljU3yqe"
+    udp: true
+  - name: "TR🇹🇷+|+185.39.204.189-34085+|+130.36ms"
+    type: "ss"
+    server: "185.39.204.189"
+    port: 34085
+    cipher: "chacha20-ietf-poly1305"
+    password: "LFBZQIJCZGOfwhHFlOzK7r"
+    udp: true
+  - name: "BG🇧🇬+|+95.164.113.198-53829+|+116.03ms"
+    type: "ss"
+    server: "95.164.113.198"
+    port: 53829
+    cipher: "chacha20-ietf-poly1305"
+    password: "Kbm3xoK04p4OhoqVpEzdlj"
+    udp: true
+  - name: "TR🇹🇷+|+83.217.9.140-1381+|+128.24ms"
+    type: "ss"
+    server: "83.217.9.140"
+    port: 1381
+    cipher: "chacha20-ietf-poly1305"
+    password: "JHqptZxDVsnQf0wL2EgNuo"
+    udp: true
+  - name: "US🇺🇸+|+149.28.255.6-816+|+34.61ms"
+    type: "ss"
+    server: "149.28.255.6"
+    port: 816
+    cipher: "chacha20-ietf-poly1305"
+    password: "GyZ5Xo0ht41vYmW3H4"
+    udp: true
+  - name: "RU🇷🇺+|+212.192.14.224-57995+|+125.14ms"
+    type: "ss"
+    server: "212.192.14.224"
+    port: 57995
+    cipher: "chacha20-ietf-poly1305"
+    password: "GEKphmflEN6zsCX2tVVJhq"
+    udp: true
+  - name: "NL🇳🇱+|+195.93.253.245-49137+|+92.15ms"
+    type: "ss"
+    server: "195.93.253.245"
+    port: 49137
+    cipher: "chacha20-ietf-poly1305"
+    password: "FDeCHSu4lt8qflCS5zDOy8"
+    udp: true
+  - name: "RU🇷🇺+|+84.54.44.54-11270+|+124.52ms"
+    type: "ss"
+    server: "84.54.44.54"
+    port: 11270
+    cipher: "chacha20-ietf-poly1305"
+    password: "EHF59cqRIPUWCdCVVesVv3"
+    udp: true
+  - name: "IN🇮🇳+|+103.120.178.193-31348+|+198.47ms"
+    type: "ss"
+    server: "103.120.178.193"
+    port: 31348
+    cipher: "chacha20-ietf-poly1305"
+    password: "EBDRo9THx4CqiFU7h5gfov76oNwzZURAh0ZwbWjBKddtUhvz"
+    udp: true
+  - name: "FI🇫🇮+|+38.244.137.202-45380+|+101.98ms"
+    type: "ss"
+    server: "38.244.137.202"
+    port: 45380
+    cipher: "chacha20-ietf-poly1305"
+    password: "E6GbjW3IZ4Wokvz4VYLj4o"
+    udp: true
+  - name: "TR🇹🇷+|+62.133.63.167-61377+|+128.01ms"
+    type: "ss"
+    server: "62.133.63.167"
+    port: 61377
+    cipher: "chacha20-ietf-poly1305"
+    password: "E12yZBPC7y8SnmkSYjf0Wl"
+    udp: true
+  - name: "FR🇫🇷+|+uqxcydrm871b.zozodogg.com-443+|+124.73ms"
+    type: "ss"
+    server: "uqxcydrm871b.zozodogg.com"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "Dku5zfU380xmcorI8bjKDm"
+    udp: true
+  - name: "NL🇳🇱+|+195.66.27.81-11746+|+88.71ms"
+    type: "ss"
+    server: "195.66.27.81"
+    port: 11746
+    cipher: "chacha20-ietf-poly1305"
+    password: "DaiJfYM6WoCXmBbF69QFR0"
+    udp: true
+  - name: "RU🇷🇺+|+93.183.94.163-32609+|+120.44ms"
+    type: "ss"
+    server: "93.183.94.163"
+    port: 32609
+    cipher: "chacha20-ietf-poly1305"
+    password: "Cztwy34B07eqN6H4YoPGXZ"
+    udp: true
+  - name: "FI🇫🇮+|+109.107.182.229-51544+|+104.39ms"
+    type: "ss"
+    server: "109.107.182.229"
+    port: 51544
+    cipher: "chacha20-ietf-poly1305"
+    password: "Ca4cxMttEzzRFSLpz3IcBF"
+    udp: true
+  - name: "NL🇳🇱+|+108.181.58.239-8388+|+86.33ms"
+    type: "ss"
+    server: "108.181.58.239"
+    port: 8388
+    cipher: "chacha20-ietf-poly1305"
+    password: "CJmTCCx7Ltud"
+    udp: true
+  - name: "NL🇳🇱+|+108.181.126.122-8388+|+84.14ms"
+    type: "ss"
+    server: "108.181.126.122"
+    port: 8388
+    cipher: "chacha20-ietf-poly1305"
+    password: "CJmTCCx7Ltud"
+    udp: true
+  - name: "RU🇷🇺+|+62.113.114.116-42320+|+128.77ms"
+    type: "ss"
+    server: "62.113.114.116"
+    port: 42320
+    cipher: "chacha20-ietf-poly1305"
+    password: "BShcek5ydIWbXEnhI2vIym"
+    udp: true
+  - name: "NO🇳🇴+|+185.213.23.63-990+|+100.85ms"
+    type: "ss"
+    server: "185.213.23.63"
+    port: 990
+    cipher: "chacha20-ietf-poly1305"
+    password: "ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44="
+    udp: true
+  - name: "IQ🇮🇶+|+81.90.29.126-53672+|+97.09ms"
+    type: "ss"
+    server: "81.90.29.126"
+    port: 53672
+    cipher: "chacha20-ietf-poly1305"
+    password: "yprgZbB7xDL4PSvE4wJU4m"
+    udp: true
+  - name: "TR🇹🇷+|+62.60.233.226-62763+|+130.71ms"
+    type: "ss"
+    server: "62.60.233.226"
+    port: 62763
+    cipher: "chacha20-ietf-poly1305"
+    password: "yRdxvK32gcKq8xxNguwU99"
+    udp: true
+  - name: "FI🇫🇮+|+193.47.60.186-28687+|+113.89ms"
+    type: "ss"
+    server: "193.47.60.186"
+    port: 28687
+    cipher: "chacha20-ietf-poly1305"
+    password: "yKVMoB3AwiTEznpnoq2FYR"
+    udp: true
+  - name: "RU🇷🇺+|+145.249.109.144-15544+|+89.58ms"
+    type: "ss"
+    server: "145.249.109.144"
+    port: 15544
+    cipher: "chacha20-ietf-poly1305"
+    password: "wk6lA4XRnEWfEnDrdm0NY6"
+    udp: true
+  - name: "DE🇩🇪+|+57.129.121.230-10443+|+97.06ms"
+    type: "ss"
+    server: "57.129.121.230"
+    port: 10443
+    cipher: "chacha20-ietf-poly1305"
+    password: "uROuEqsL8IUMMVb4wDwnGU"
+    udp: true
+  - name: "RELAY🚩+|+api.namasha.co-443+|+51.55ms"
+    type: "ss"
+    server: "api.namasha.co"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "u17T3BvpYaaiuW2c"
+    udp: true
+  - name: "GB🇬🇧+|+74.177.207.175-443+|+76.06ms"
+    type: "ss"
+    server: "74.177.207.175"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "u17T3BvpYaaiuW2c"
+    udp: true
+  - name: "TR🇹🇷+|+38.180.105.12-443+|+130.76ms"
+    type: "ss"
+    server: "38.180.105.12"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "tJlEWh2PzDMew8qo9YkPEA"
+    udp: true
+  - name: "TR🇹🇷+|+185.39.204.161-33563+|+129.82ms"
+    type: "ss"
+    server: "185.39.204.161"
+    port: 33563
+    cipher: "chacha20-ietf-poly1305"
+    password: "3Q7U16yGY0Jx1yGQe9Xtzp"
+    udp: true
+  - name: "GB🇬🇧+|+185.5.38.111-55988+|+142.39ms"
+    type: "ss"
+    server: "185.5.38.111"
+    port: 55988
+    cipher: "chacha20-ietf-poly1305"
+    password: "2EmWRS1TkS3TkxKApnrihb3aHjDSXRvT1T1K9U2Bruxrnp5A8zmpTxwwTNje6BkVqmn9BgRF6pq8qoRHCfZdcah7BLbjrpT1"
+    udp: true
+  - name: "GB🇬🇧+|+admin.c1.webramz.co-443+|+78.34ms"
+    type: "ss"
+    server: "admin.c1.webramz.co"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "1xO2cqPazqjGfCfd"
+    udp: true
+  - name: "DE🇩🇪+|+194.59.183.1-21318+|+97.86ms"
+    type: "ss"
+    server: "194.59.183.1"
+    port: 21318
+    cipher: "chacha20-ietf-poly1305"
+    password: "1wCx73jegQqB0vxKdWONJH"
+    udp: true
+  - name: "US🇺🇸+|+185.33.84.181-21484+|+20.54ms"
+    type: "ss"
+    server: "185.33.84.181"
+    port: 21484
+    cipher: "chacha20-ietf-poly1305"
+    password: "1jCMNPLyZb7it1IQJpqbXT"
+    udp: true
+  - name: "NL🇳🇱+|+193.29.139.143-8080+|+109.11ms"
+    type: "ss"
+    server: "193.29.139.143"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "1RWwXhwfAB5gAEozU4G2Pg"
+    udp: true
+  - name: "FI🇫🇮+|+195.133.2.2-34898+|+117.47ms"
+    type: "ss"
+    server: "195.133.2.2"
+    port: 34898
+    cipher: "chacha20-ietf-poly1305"
+    password: "9a4yLRNtCcvjBRdGxg9PYj"
+    udp: true
+  - name: "DE🇩🇪+|+syncguard.yatamoa.me-443+|+100.7ms"
+    type: "ss"
+    server: "syncguard.yatamoa.me"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "97b8ade96f8a0fffb9a94a14aab6a7f1baf6353bd280cbed"
+    udp: true
+  - name: "FR🇫🇷+|+54.36.174.134-443+|+103.58ms"
+    type: "ss"
+    server: "54.36.174.134"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "8zw5j9h"
+    udp: true
+  - name: "PL🇵🇱+|+pl.moktana.app-51523+|+170.35ms"
+    type: "ss"
+    server: "pl.moktana.app"
+    port: 51523
+    cipher: "chacha20-ietf-poly1305"
+    password: "8NsJfjFnM3MwC_ZD2MdzpBRX10Rmbuja"
+    udp: true
+  - name: "NL🇳🇱+|+213.176.16.77-7022+|+88.87ms"
+    type: "ss"
+    server: "213.176.16.77"
+    port: 7022
+    cipher: "chacha20-ietf-poly1305"
+    password: "8HtC7rj6NfZncXYvAjDV5t"
+    udp: true
+  - name: "FR🇫🇷+|+193.17.57.155-443+|+85.57ms"
+    type: "ss"
+    server: "193.17.57.155"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "89NQRFg7Pcybkl9FrDxqj5"
+    udp: true
+  - name: "SE🇸🇪+|+46.246.98.39-55818+|+102.62ms"
+    type: "ss"
+    server: "46.246.98.39"
+    port: 55818
+    cipher: "chacha20-ietf-poly1305"
+    password: "85qJ4wjHhPbVNxWKT1mJnE"
+    udp: true
+  - name: "TW🇹🇼+|+r3mrcg001269pz2.cybervena.com-50099+|+199.71ms"
+    type: "ss"
+    server: "r3mrcg001269pz2.cybervena.com"
+    port: 50099
+    cipher: "chacha20-ietf-poly1305"
+    password: "7e731ec3-f8e1-43f6-92cf-3978d14705c4"
+    udp: true
+  - name: "TW🇹🇼+|+r3mrcg001269pz2.cybervena.com-50099+|+275.64ms"
+    type: "ss"
+    server: "r3mrcg001269pz2.cybervena.com"
+    port: 50099
+    cipher: "chacha20-ietf-poly1305"
+    password: "7e731ec3-f8e1-43f6-92cf-3978d14705c47"
+    udp: true
+  - name: "GB🇬🇧+|+149.102.144.110-18337+|+110.98ms"
+    type: "ss"
+    server: "149.102.144.110"
+    port: 18337
+    cipher: "chacha20-ietf-poly1305"
+    password: "7a5af500cb295935"
+    udp: true
+  - name: "US🇺🇸+|+ru.moktana.app-51523+|+156.4ms"
+    type: "ss"
+    server: "ru.moktana.app"
+    port: 51523
+    cipher: "chacha20-ietf-poly1305"
+    password: "7SEstdmLhf-aFK_G9eaYHKT_YpSov58B"
+    udp: true
+  - name: "DE🇩🇪+|+185.191.118.33-51523+|+97.41ms"
+    type: "ss"
+    server: "185.191.118.33"
+    port: 51523
+    cipher: "chacha20-ietf-poly1305"
+    password: "7SEstdmLhf-aFK_G9eaYHKT_YpSov58B"
+    udp: true
+  - name: "TR🇹🇷+|+185.39.204.189-34085+|+125.57ms"
+    type: "ss"
+    server: "185.39.204.189"
+    port: 34085
+    cipher: "chacha20-ietf-poly1305"
+    password: "7IopnX0wzEkrc3ZcVQ978z"
+    udp: true
+  - name: "RU🇷🇺+|+45.144.31.24-443+|+124.84ms"
+    type: "ss"
+    server: "45.144.31.24"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "7HQ8w1YWMdNjq68bZt1tNfpDHLFA1BPA"
+    udp: true
+  - name: "FR🇫🇷+|+51.75.168.50-26179+|+76.58ms"
+    type: "ss"
+    server: "51.75.168.50"
+    port: 26179
+    cipher: "chacha20-ietf-poly1305"
+    password: "78b6e93e54225803"
+    udp: true
+  - name: "NL🇳🇱+|+62.84.102.28-26923+|+93.75ms"
+    type: "ss"
+    server: "62.84.102.28"
+    port: 26923
+    cipher: "chacha20-ietf-poly1305"
+    password: "5yOoUqBpwEevaGQ7gMxC0F"
+    udp: true
+  - name: "RU🇷🇺+|+95.142.47.40-62238+|+134.02ms"
+    type: "ss"
+    server: "95.142.47.40"
+    port: 62238
+    cipher: "chacha20-ietf-poly1305"
+    password: "5y5cwrCR8Iun5nlMSFS8uJ"
+    udp: true
+  - name: "FR🇫🇷+|+162.19.208.118-50285+|+91.7ms"
+    type: "ss"
+    server: "162.19.208.118"
+    port: 50285
+    cipher: "chacha20-ietf-poly1305"
+    password: "4anGtou86vGB7r1lOm5n8g"
+    udp: true
+  - name: "NL🇳🇱+|+193.29.139.206-8080+|+108.61ms"
+    type: "ss"
+    server: "193.29.139.206"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "4a2rfixophdjffa8KVA4Aa"
+    udp: true
+  - name: "NL🇳🇱+|+193.29.139.157-8080+|+100.09ms"
+    type: "ss"
+    server: "193.29.139.157"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "4a2rfixophdjffa8KVA4Aa"
+    udp: true
+  - name: "NL🇳🇱+|+193.29.139.157-443+|+108.68ms"
+    type: "ss"
+    server: "193.29.139.157"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "4a2rfixophdjffa8KVA4Aa"
+    udp: true
+  - name: "GB🇬🇧+|+57.129.129.247-19308+|+75.73ms"
+    type: "ss"
+    server: "57.129.129.247"
+    port: 19308
+    cipher: "chacha20-ietf-poly1305"
+    password: "4a055e9e903128a1"
+    udp: true
+  - name: "DE🇩🇪+|+135.125.219.2-12911+|+91.19ms"
+    type: "ss"
+    server: "135.125.219.2"
+    port: 12911
+    cipher: "chacha20-ietf-poly1305"
+    password: "4368f055243e225f"
+    udp: true
+  - name: "FI🇫🇮+|+38.244.137.202-45380+|+103.35ms"
+    type: "ss"
+    server: "38.244.137.202"
+    port: 45380
+    cipher: "chacha20-ietf-poly1305"
+    password: "43fXf1uMKbIKkxoNYGQMtt"
+    udp: true
+  - name: "DE🇩🇪+|+46.225.30.16-49534+|+99.21ms"
+    type: "ss"
+    server: "46.225.30.16"
+    port: 49534
+    cipher: "2022-blake3-aes-256-gcm"
+    password: "tEY1W9tCYB6R5Y22378dJ9yh4H4PAZlAM/m31aG1PYM="
+    udp: true
+  - name: "DE🇩🇪+|+49.13.3.249-23997+|+97.45ms"
+    type: "ss"
+    server: "49.13.3.249"
+    port: 23997
+    cipher: "2022-blake3-aes-256-gcm"
+    password: "dyL+KqX8hIMn+UyADwSJOPm72A0A83TsDOFXBn6I2mA="
+    udp: true
+  - name: "DE🇩🇪+|+49.13.3.249-23997+|+96.94ms"
+    type: "ss"
+    server: "49.13.3.249"
+    port: 23997
+    cipher: "2022-blake3-aes-256-gcm"
+    password: "dyL+KqX8hIMn+UyADwSJOPm72A0A83TsDOFXBn6I2mA=7"
+    udp: true
+  - name: "IR🇮🇷+|+37.32.8.201-443+|+166.85ms"
+    type: "ss"
+    server: "37.32.8.201"
+    port: 443
+    cipher: "2022-blake3-aes-256-gcm"
+    password: "UZQaN/1XknVwagTUF6C+tW8CxgZ4xdpRB9u32bCW+Xg="
+    udp: true
+  - name: "IR🇮🇷+|+dl3.p31download.info-2095+|+421.52ms"
+    type: "ss"
+    server: "dl3.p31download.info"
+    port: 2095
+    cipher: "2022-blake3-aes-128-gcm"
+    password: "bM7oNtOWU6N4CgenbB+W7g=="
+    udp: true
+  - name: "US🇺🇸+|+159.112.235.174-2082+|+2.7ms"
+    type: "ss"
+    server: "159.112.235.174"
+    port: 2082
+    cipher: "㷽kG[G"
+    password: "㝶}M^"
+    udp: true
+  - name: "RELAY🚩+|+104.16.52.146-80+|+2.59ms"
+    type: "ss"
+    server: "104.16.52.146"
+    port: 80
+    cipher: "^m"
+    password: "==\\ٮ7ZZ"
+    udp: true
+  - name: "RELAY🚩+|+188.114.97.171-443+|+2.79ms"
+    type: "ss"
+    server: "188.114.97.171"
+    port: 443
+    cipher: "ߝߟx"
+    password: "ix^<oyӭ"
+    udp: true
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
+    icon: "https://www.svgrepo.com/show/412721/choose.svg"
     proxies:
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
+      - "توزیع بار چرخشی ⚖️"
       - "قطع اینترنت ⛔"
+      - "بدون فیلترشکن 🛡️"
   - name: "دستی 🤏🏻"
     type: "select"
+    icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
       - "RELAY🚩+|+172.66.177.129-80+|+2.3ms"
       - "CY🇨🇾+|+195.85.59.161-2095+|+2.84ms"
@@ -854,6 +2208,7 @@ proxy-groups:
       - "HK🇭🇰+|+ss.002.node-for-bigairport.win-16888+|+217.84ms"
       - "FR🇫🇷+|+de5.taskflowhub.org-2083+|+277.61ms"
       - "FR🇫🇷+|+162.19.254.232-2083+|+99.41ms"
+      - "FR🇫🇷+|+de5.taskflowhub.org-2083+|+282.04ms"
       - "IT🇮🇹+|+it5.taskflowhub.org-2083+|+274.4ms"
       - "IT🇮🇹+|+57.131.28.246-2083+|+100.4ms"
       - "US🇺🇸+|+156.146.38.168-443+|+35.95ms"
@@ -868,6 +2223,7 @@ proxy-groups:
       - "GB🇬🇧+|+141.98.101.182-443+|+86.33ms"
       - "GB🇬🇧+|+141.98.101.179-443+|+81.29ms"
       - "GB🇬🇧+|+141.98.101.178-443+|+80.6ms"
+      - "GB🇬🇧+|+141.98.101.182-443+|+81.28ms"
       - "RELAY🚩+|+yx.cloudflare.182682.xyz-443+|+482.14ms"
       - "RELAY🚩+|+sub.danfeng.eu.org-443+|+1087.17ms"
       - "RELAY🚩+|+store.ubi.com-443+|+81.22ms"
@@ -918,12 +2274,150 @@ proxy-groups:
       - "GB🇬🇧+|+82.38.31.155-8080+|+100.11ms"
       - "GB🇬🇧+|+82.38.31.149-8080+|+102.24ms"
       - "NL🇳🇱+|+193.29.139.235-8080+|+108.99ms"
+      - "NL🇳🇱+|+193.29.139.204-8080+|+109.36ms"
+      - "NL🇳🇱+|+193.29.139.151-8080+|+108.65ms"
+      - "TR🇹🇷+|+62.133.63.169-37096+|+126.61ms"
+      - "RU🇷🇺+|+178.130.46.148-47345+|+93.92ms"
+      - "TW🇹🇼+|+download.riferoser.icu-56594+|+261.9ms"
+      - "GB🇬🇧+|+series-a2.varzesh360.co-443+|+120.34ms"
+      - "GB🇬🇧+|+series-a2.samanehha.co-443+|+153.43ms"
+      - "GB🇬🇧+|+185.5.38.111-55988+|+137.27ms"
+      - "GB🇬🇧+|+57.129.140.88-8388+|+76.11ms"
+      - "GB🇬🇧+|+82.38.31.218-8080+|+108.68ms"
+      - "GB🇬🇧+|+82.38.31.217-8080+|+110.03ms"
+      - "GB🇬🇧+|+82.38.31.214-8080+|+108.51ms"
+      - "GB🇬🇧+|+82.38.31.210-8080+|+102.39ms"
+      - "GB🇬🇧+|+82.38.31.208-8080+|+102.31ms"
+      - "GB🇬🇧+|+82.38.31.205-8080+|+100.7ms"
+      - "GB🇬🇧+|+82.38.31.202-8080+|+108.97ms"
+      - "GB🇬🇧+|+82.38.31.199-8080+|+109.01ms"
+      - "GB🇬🇧+|+82.38.31.194-8080+|+109.04ms"
+      - "GB🇬🇧+|+82.38.31.191-8080+|+108.88ms"
+      - "GB🇬🇧+|+82.38.31.190-8080+|+100.22ms"
+      - "GB🇬🇧+|+82.38.31.189-8080+|+99.65ms"
+      - "GB🇬🇧+|+82.38.31.187-8080+|+100.1ms"
+      - "GB🇬🇧+|+82.38.31.184-8080+|+100.38ms"
+      - "GB🇬🇧+|+82.38.31.179-8080+|+108.83ms"
+      - "GB🇬🇧+|+82.38.31.176-8080+|+108.79ms"
+      - "TR🇹🇷+|+62.60.233.220-18685+|+128.16ms"
+      - "FR🇫🇷+|+91.239.208.204-17477+|+85.64ms"
+      - "SE🇸🇪+|+46.246.96.30-31561+|+115.95ms"
+      - "US🇺🇸+|+38.135.24.131-443+|+7.8ms"
+      - "NL🇳🇱+|+195.66.27.148-28709+|+88.85ms"
+      - "RU🇷🇺+|+145.249.109.148-16548+|+90.83ms"
+      - "SE🇸🇪+|+46.246.96.191-15721+|+111.56ms"
+      - "DE🇩🇪+|+95.164.123.39-32821+|+94.25ms"
+      - "DE🇩🇪+|+95.164.123.196-57493+|+94.33ms"
+      - "FR🇫🇷+|+162.19.214.191-59724+|+94.82ms"
+      - "FI🇫🇮+|+62.60.255.11-8388+|+114.1ms"
+      - "TR🇹🇷+|+185.39.204.189-34085+|+126.83ms"
+      - "FI🇫🇮+|+85.192.49.149-51523+|+105.62ms"
+      - "TH🇹🇭+|+102.129.229.85-31700+|+285.07ms"
+      - "NL🇳🇱+|+193.29.139.217-8080+|+109.13ms"
+      - "NL🇳🇱+|+193.29.139.189-8080+|+102.91ms"
+      - "NL🇳🇱+|+193.29.139.164-8080+|+102.68ms"
+      - "NL🇳🇱+|+193.29.139.157-8080+|+100.18ms"
+      - "BG🇧🇬+|+95.164.113.153-5669+|+112.82ms"
+      - "TR🇹🇷+|+83.217.9.17-25232+|+130ms"
+      - "GB🇬🇧+|+185.5.38.111-55988+|+141.5ms"
+      - "TR🇹🇷+|+185.39.204.161-33563+|+128.57ms"
+      - "GB🇬🇧+|+azjnac1.uksouth.cloudapp.azure.com-443+|+80.66ms"
+      - "IR🇮🇷+|+vip4.zarins.ir-80+|+530.56ms"
+      - "UA🇺🇦+|+130.0.233.100-33610+|+127.15ms"
+      - "SE🇸🇪+|+46.246.97.140-53908+|+102.01ms"
+      - "DE🇩🇪+|+62.133.60.6-443+|+92.92ms"
+      - "FI🇫🇮+|+93.152.207.248-34242+|+104.16ms"
+      - "TR🇹🇷+|+83.217.9.17-25232+|+122.64ms"
+      - "RU🇷🇺+|+145.249.109.108-18740+|+89.99ms"
+      - "US🇺🇸+|+hackney-latest-strike.freesocks.work-443+|+87.8ms"
+      - "TR🇹🇷+|+62.60.233.226-62763+|+128.16ms"
+      - "DE🇩🇪+|+147.45.178.24-56259+|+92.98ms"
+      - "GB🇬🇧+|+series-a2.samanehha.co-443+|+79.83ms"
+      - "GB🇬🇧+|+series-a1.samanehha.co-443+|+148.75ms"
+      - "FR🇫🇷+|+162.19.175.40-7425+|+92.75ms"
+      - "RO🇷🇴+|+103.244.145.247-28893+|+96.79ms"
+      - "TR🇹🇷+|+62.133.63.169-37096+|+125.41ms"
+      - "US🇺🇸+|+107.172.250.161-59556+|+17.86ms"
+      - "NL🇳🇱+|+193.29.139.227-8080+|+109.83ms"
+      - "NL🇳🇱+|+193.29.139.217-8080+|+108.92ms"
+      - "NL🇳🇱+|+193.29.139.189-8080+|+99.93ms"
+      - "DE🇩🇪+|+8.209.74.72-20001+|+91.77ms"
+      - "RU🇷🇺+|+212.192.14.234-24441+|+123.78ms"
+      - "NL🇳🇱+|+185.18.54.70-31348+|+95.32ms"
+      - "US🇺🇸+|+149.104.109.74-21273+|+261.44ms"
+      - "TR🇹🇷+|+185.39.204.189-34085+|+130.36ms"
+      - "BG🇧🇬+|+95.164.113.198-53829+|+116.03ms"
+      - "TR🇹🇷+|+83.217.9.140-1381+|+128.24ms"
+      - "US🇺🇸+|+149.28.255.6-816+|+34.61ms"
+      - "RU🇷🇺+|+212.192.14.224-57995+|+125.14ms"
+      - "NL🇳🇱+|+195.93.253.245-49137+|+92.15ms"
+      - "RU🇷🇺+|+84.54.44.54-11270+|+124.52ms"
+      - "IN🇮🇳+|+103.120.178.193-31348+|+198.47ms"
+      - "FI🇫🇮+|+38.244.137.202-45380+|+101.98ms"
+      - "TR🇹🇷+|+62.133.63.167-61377+|+128.01ms"
+      - "FR🇫🇷+|+uqxcydrm871b.zozodogg.com-443+|+124.73ms"
+      - "NL🇳🇱+|+195.66.27.81-11746+|+88.71ms"
+      - "RU🇷🇺+|+93.183.94.163-32609+|+120.44ms"
+      - "FI🇫🇮+|+109.107.182.229-51544+|+104.39ms"
+      - "NL🇳🇱+|+108.181.58.239-8388+|+86.33ms"
+      - "NL🇳🇱+|+108.181.126.122-8388+|+84.14ms"
+      - "RU🇷🇺+|+62.113.114.116-42320+|+128.77ms"
+      - "NO🇳🇴+|+185.213.23.63-990+|+100.85ms"
+      - "IQ🇮🇶+|+81.90.29.126-53672+|+97.09ms"
+      - "TR🇹🇷+|+62.60.233.226-62763+|+130.71ms"
+      - "FI🇫🇮+|+193.47.60.186-28687+|+113.89ms"
+      - "RU🇷🇺+|+145.249.109.144-15544+|+89.58ms"
+      - "DE🇩🇪+|+57.129.121.230-10443+|+97.06ms"
+      - "RELAY🚩+|+api.namasha.co-443+|+51.55ms"
+      - "GB🇬🇧+|+74.177.207.175-443+|+76.06ms"
+      - "TR🇹🇷+|+38.180.105.12-443+|+130.76ms"
+      - "TR🇹🇷+|+185.39.204.161-33563+|+129.82ms"
+      - "GB🇬🇧+|+185.5.38.111-55988+|+142.39ms"
+      - "GB🇬🇧+|+admin.c1.webramz.co-443+|+78.34ms"
+      - "DE🇩🇪+|+194.59.183.1-21318+|+97.86ms"
+      - "US🇺🇸+|+185.33.84.181-21484+|+20.54ms"
+      - "NL🇳🇱+|+193.29.139.143-8080+|+109.11ms"
+      - "FI🇫🇮+|+195.133.2.2-34898+|+117.47ms"
+      - "DE🇩🇪+|+syncguard.yatamoa.me-443+|+100.7ms"
+      - "FR🇫🇷+|+54.36.174.134-443+|+103.58ms"
+      - "PL🇵🇱+|+pl.moktana.app-51523+|+170.35ms"
+      - "NL🇳🇱+|+213.176.16.77-7022+|+88.87ms"
+      - "FR🇫🇷+|+193.17.57.155-443+|+85.57ms"
+      - "SE🇸🇪+|+46.246.98.39-55818+|+102.62ms"
+      - "TW🇹🇼+|+r3mrcg001269pz2.cybervena.com-50099+|+199.71ms"
+      - "TW🇹🇼+|+r3mrcg001269pz2.cybervena.com-50099+|+275.64ms"
+      - "GB🇬🇧+|+149.102.144.110-18337+|+110.98ms"
+      - "US🇺🇸+|+ru.moktana.app-51523+|+156.4ms"
+      - "DE🇩🇪+|+185.191.118.33-51523+|+97.41ms"
+      - "TR🇹🇷+|+185.39.204.189-34085+|+125.57ms"
+      - "RU🇷🇺+|+45.144.31.24-443+|+124.84ms"
+      - "FR🇫🇷+|+51.75.168.50-26179+|+76.58ms"
+      - "NL🇳🇱+|+62.84.102.28-26923+|+93.75ms"
+      - "RU🇷🇺+|+95.142.47.40-62238+|+134.02ms"
+      - "FR🇫🇷+|+162.19.208.118-50285+|+91.7ms"
+      - "NL🇳🇱+|+193.29.139.206-8080+|+108.61ms"
+      - "NL🇳🇱+|+193.29.139.157-8080+|+100.09ms"
+      - "NL🇳🇱+|+193.29.139.157-443+|+108.68ms"
+      - "GB🇬🇧+|+57.129.129.247-19308+|+75.73ms"
+      - "DE🇩🇪+|+135.125.219.2-12911+|+91.19ms"
+      - "FI🇫🇮+|+38.244.137.202-45380+|+103.35ms"
+      - "DE🇩🇪+|+46.225.30.16-49534+|+99.21ms"
+      - "DE🇩🇪+|+49.13.3.249-23997+|+97.45ms"
+      - "DE🇩🇪+|+49.13.3.249-23997+|+96.94ms"
+      - "IR🇮🇷+|+37.32.8.201-443+|+166.85ms"
+      - "IR🇮🇷+|+dl3.p31download.info-2095+|+421.52ms"
+      - "US🇺🇸+|+159.112.235.174-2082+|+2.7ms"
+      - "RELAY🚩+|+104.16.52.146-80+|+2.59ms"
+      - "RELAY🚩+|+188.114.97.171-443+|+2.79ms"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
+    icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
     url: "https://www.gstatic.com/generate_204"
-    interval: 300
+    interval: 600
     tolerance: 50
-    lazy: true
+    timeout: 3200
+    lazy: false
+    max-failed-times: 2
     proxies:
       - "RELAY🚩+|+172.66.177.129-80+|+2.3ms"
       - "CY🇨🇾+|+195.85.59.161-2095+|+2.84ms"
@@ -961,6 +2455,7 @@ proxy-groups:
       - "HK🇭🇰+|+ss.002.node-for-bigairport.win-16888+|+217.84ms"
       - "FR🇫🇷+|+de5.taskflowhub.org-2083+|+277.61ms"
       - "FR🇫🇷+|+162.19.254.232-2083+|+99.41ms"
+      - "FR🇫🇷+|+de5.taskflowhub.org-2083+|+282.04ms"
       - "IT🇮🇹+|+it5.taskflowhub.org-2083+|+274.4ms"
       - "IT🇮🇹+|+57.131.28.246-2083+|+100.4ms"
       - "US🇺🇸+|+156.146.38.168-443+|+35.95ms"
@@ -975,6 +2470,7 @@ proxy-groups:
       - "GB🇬🇧+|+141.98.101.182-443+|+86.33ms"
       - "GB🇬🇧+|+141.98.101.179-443+|+81.29ms"
       - "GB🇬🇧+|+141.98.101.178-443+|+80.6ms"
+      - "GB🇬🇧+|+141.98.101.182-443+|+81.28ms"
       - "RELAY🚩+|+yx.cloudflare.182682.xyz-443+|+482.14ms"
       - "RELAY🚩+|+sub.danfeng.eu.org-443+|+1087.17ms"
       - "RELAY🚩+|+store.ubi.com-443+|+81.22ms"
@@ -1025,8 +2521,417 @@ proxy-groups:
       - "GB🇬🇧+|+82.38.31.155-8080+|+100.11ms"
       - "GB🇬🇧+|+82.38.31.149-8080+|+102.24ms"
       - "NL🇳🇱+|+193.29.139.235-8080+|+108.99ms"
-  - name: "سایتای ایرانی 🇮🇷"
+      - "NL🇳🇱+|+193.29.139.204-8080+|+109.36ms"
+      - "NL🇳🇱+|+193.29.139.151-8080+|+108.65ms"
+      - "TR🇹🇷+|+62.133.63.169-37096+|+126.61ms"
+      - "RU🇷🇺+|+178.130.46.148-47345+|+93.92ms"
+      - "TW🇹🇼+|+download.riferoser.icu-56594+|+261.9ms"
+      - "GB🇬🇧+|+series-a2.varzesh360.co-443+|+120.34ms"
+      - "GB🇬🇧+|+series-a2.samanehha.co-443+|+153.43ms"
+      - "GB🇬🇧+|+185.5.38.111-55988+|+137.27ms"
+      - "GB🇬🇧+|+57.129.140.88-8388+|+76.11ms"
+      - "GB🇬🇧+|+82.38.31.218-8080+|+108.68ms"
+      - "GB🇬🇧+|+82.38.31.217-8080+|+110.03ms"
+      - "GB🇬🇧+|+82.38.31.214-8080+|+108.51ms"
+      - "GB🇬🇧+|+82.38.31.210-8080+|+102.39ms"
+      - "GB🇬🇧+|+82.38.31.208-8080+|+102.31ms"
+      - "GB🇬🇧+|+82.38.31.205-8080+|+100.7ms"
+      - "GB🇬🇧+|+82.38.31.202-8080+|+108.97ms"
+      - "GB🇬🇧+|+82.38.31.199-8080+|+109.01ms"
+      - "GB🇬🇧+|+82.38.31.194-8080+|+109.04ms"
+      - "GB🇬🇧+|+82.38.31.191-8080+|+108.88ms"
+      - "GB🇬🇧+|+82.38.31.190-8080+|+100.22ms"
+      - "GB🇬🇧+|+82.38.31.189-8080+|+99.65ms"
+      - "GB🇬🇧+|+82.38.31.187-8080+|+100.1ms"
+      - "GB🇬🇧+|+82.38.31.184-8080+|+100.38ms"
+      - "GB🇬🇧+|+82.38.31.179-8080+|+108.83ms"
+      - "GB🇬🇧+|+82.38.31.176-8080+|+108.79ms"
+      - "TR🇹🇷+|+62.60.233.220-18685+|+128.16ms"
+      - "FR🇫🇷+|+91.239.208.204-17477+|+85.64ms"
+      - "SE🇸🇪+|+46.246.96.30-31561+|+115.95ms"
+      - "US🇺🇸+|+38.135.24.131-443+|+7.8ms"
+      - "NL🇳🇱+|+195.66.27.148-28709+|+88.85ms"
+      - "RU🇷🇺+|+145.249.109.148-16548+|+90.83ms"
+      - "SE🇸🇪+|+46.246.96.191-15721+|+111.56ms"
+      - "DE🇩🇪+|+95.164.123.39-32821+|+94.25ms"
+      - "DE🇩🇪+|+95.164.123.196-57493+|+94.33ms"
+      - "FR🇫🇷+|+162.19.214.191-59724+|+94.82ms"
+      - "FI🇫🇮+|+62.60.255.11-8388+|+114.1ms"
+      - "TR🇹🇷+|+185.39.204.189-34085+|+126.83ms"
+      - "FI🇫🇮+|+85.192.49.149-51523+|+105.62ms"
+      - "TH🇹🇭+|+102.129.229.85-31700+|+285.07ms"
+      - "NL🇳🇱+|+193.29.139.217-8080+|+109.13ms"
+      - "NL🇳🇱+|+193.29.139.189-8080+|+102.91ms"
+      - "NL🇳🇱+|+193.29.139.164-8080+|+102.68ms"
+      - "NL🇳🇱+|+193.29.139.157-8080+|+100.18ms"
+      - "BG🇧🇬+|+95.164.113.153-5669+|+112.82ms"
+      - "TR🇹🇷+|+83.217.9.17-25232+|+130ms"
+      - "GB🇬🇧+|+185.5.38.111-55988+|+141.5ms"
+      - "TR🇹🇷+|+185.39.204.161-33563+|+128.57ms"
+      - "GB🇬🇧+|+azjnac1.uksouth.cloudapp.azure.com-443+|+80.66ms"
+      - "IR🇮🇷+|+vip4.zarins.ir-80+|+530.56ms"
+      - "UA🇺🇦+|+130.0.233.100-33610+|+127.15ms"
+      - "SE🇸🇪+|+46.246.97.140-53908+|+102.01ms"
+      - "DE🇩🇪+|+62.133.60.6-443+|+92.92ms"
+      - "FI🇫🇮+|+93.152.207.248-34242+|+104.16ms"
+      - "TR🇹🇷+|+83.217.9.17-25232+|+122.64ms"
+      - "RU🇷🇺+|+145.249.109.108-18740+|+89.99ms"
+      - "US🇺🇸+|+hackney-latest-strike.freesocks.work-443+|+87.8ms"
+      - "TR🇹🇷+|+62.60.233.226-62763+|+128.16ms"
+      - "DE🇩🇪+|+147.45.178.24-56259+|+92.98ms"
+      - "GB🇬🇧+|+series-a2.samanehha.co-443+|+79.83ms"
+      - "GB🇬🇧+|+series-a1.samanehha.co-443+|+148.75ms"
+      - "FR🇫🇷+|+162.19.175.40-7425+|+92.75ms"
+      - "RO🇷🇴+|+103.244.145.247-28893+|+96.79ms"
+      - "TR🇹🇷+|+62.133.63.169-37096+|+125.41ms"
+      - "US🇺🇸+|+107.172.250.161-59556+|+17.86ms"
+      - "NL🇳🇱+|+193.29.139.227-8080+|+109.83ms"
+      - "NL🇳🇱+|+193.29.139.217-8080+|+108.92ms"
+      - "NL🇳🇱+|+193.29.139.189-8080+|+99.93ms"
+      - "DE🇩🇪+|+8.209.74.72-20001+|+91.77ms"
+      - "RU🇷🇺+|+212.192.14.234-24441+|+123.78ms"
+      - "NL🇳🇱+|+185.18.54.70-31348+|+95.32ms"
+      - "US🇺🇸+|+149.104.109.74-21273+|+261.44ms"
+      - "TR🇹🇷+|+185.39.204.189-34085+|+130.36ms"
+      - "BG🇧🇬+|+95.164.113.198-53829+|+116.03ms"
+      - "TR🇹🇷+|+83.217.9.140-1381+|+128.24ms"
+      - "US🇺🇸+|+149.28.255.6-816+|+34.61ms"
+      - "RU🇷🇺+|+212.192.14.224-57995+|+125.14ms"
+      - "NL🇳🇱+|+195.93.253.245-49137+|+92.15ms"
+      - "RU🇷🇺+|+84.54.44.54-11270+|+124.52ms"
+      - "IN🇮🇳+|+103.120.178.193-31348+|+198.47ms"
+      - "FI🇫🇮+|+38.244.137.202-45380+|+101.98ms"
+      - "TR🇹🇷+|+62.133.63.167-61377+|+128.01ms"
+      - "FR🇫🇷+|+uqxcydrm871b.zozodogg.com-443+|+124.73ms"
+      - "NL🇳🇱+|+195.66.27.81-11746+|+88.71ms"
+      - "RU🇷🇺+|+93.183.94.163-32609+|+120.44ms"
+      - "FI🇫🇮+|+109.107.182.229-51544+|+104.39ms"
+      - "NL🇳🇱+|+108.181.58.239-8388+|+86.33ms"
+      - "NL🇳🇱+|+108.181.126.122-8388+|+84.14ms"
+      - "RU🇷🇺+|+62.113.114.116-42320+|+128.77ms"
+      - "NO🇳🇴+|+185.213.23.63-990+|+100.85ms"
+      - "IQ🇮🇶+|+81.90.29.126-53672+|+97.09ms"
+      - "TR🇹🇷+|+62.60.233.226-62763+|+130.71ms"
+      - "FI🇫🇮+|+193.47.60.186-28687+|+113.89ms"
+      - "RU🇷🇺+|+145.249.109.144-15544+|+89.58ms"
+      - "DE🇩🇪+|+57.129.121.230-10443+|+97.06ms"
+      - "RELAY🚩+|+api.namasha.co-443+|+51.55ms"
+      - "GB🇬🇧+|+74.177.207.175-443+|+76.06ms"
+      - "TR🇹🇷+|+38.180.105.12-443+|+130.76ms"
+      - "TR🇹🇷+|+185.39.204.161-33563+|+129.82ms"
+      - "GB🇬🇧+|+185.5.38.111-55988+|+142.39ms"
+      - "GB🇬🇧+|+admin.c1.webramz.co-443+|+78.34ms"
+      - "DE🇩🇪+|+194.59.183.1-21318+|+97.86ms"
+      - "US🇺🇸+|+185.33.84.181-21484+|+20.54ms"
+      - "NL🇳🇱+|+193.29.139.143-8080+|+109.11ms"
+      - "FI🇫🇮+|+195.133.2.2-34898+|+117.47ms"
+      - "DE🇩🇪+|+syncguard.yatamoa.me-443+|+100.7ms"
+      - "FR🇫🇷+|+54.36.174.134-443+|+103.58ms"
+      - "PL🇵🇱+|+pl.moktana.app-51523+|+170.35ms"
+      - "NL🇳🇱+|+213.176.16.77-7022+|+88.87ms"
+      - "FR🇫🇷+|+193.17.57.155-443+|+85.57ms"
+      - "SE🇸🇪+|+46.246.98.39-55818+|+102.62ms"
+      - "TW🇹🇼+|+r3mrcg001269pz2.cybervena.com-50099+|+199.71ms"
+      - "TW🇹🇼+|+r3mrcg001269pz2.cybervena.com-50099+|+275.64ms"
+      - "GB🇬🇧+|+149.102.144.110-18337+|+110.98ms"
+      - "US🇺🇸+|+ru.moktana.app-51523+|+156.4ms"
+      - "DE🇩🇪+|+185.191.118.33-51523+|+97.41ms"
+      - "TR🇹🇷+|+185.39.204.189-34085+|+125.57ms"
+      - "RU🇷🇺+|+45.144.31.24-443+|+124.84ms"
+      - "FR🇫🇷+|+51.75.168.50-26179+|+76.58ms"
+      - "NL🇳🇱+|+62.84.102.28-26923+|+93.75ms"
+      - "RU🇷🇺+|+95.142.47.40-62238+|+134.02ms"
+      - "FR🇫🇷+|+162.19.208.118-50285+|+91.7ms"
+      - "NL🇳🇱+|+193.29.139.206-8080+|+108.61ms"
+      - "NL🇳🇱+|+193.29.139.157-8080+|+100.09ms"
+      - "NL🇳🇱+|+193.29.139.157-443+|+108.68ms"
+      - "GB🇬🇧+|+57.129.129.247-19308+|+75.73ms"
+      - "DE🇩🇪+|+135.125.219.2-12911+|+91.19ms"
+      - "FI🇫🇮+|+38.244.137.202-45380+|+103.35ms"
+      - "DE🇩🇪+|+46.225.30.16-49534+|+99.21ms"
+      - "DE🇩🇪+|+49.13.3.249-23997+|+97.45ms"
+      - "DE🇩🇪+|+49.13.3.249-23997+|+96.94ms"
+      - "IR🇮🇷+|+37.32.8.201-443+|+166.85ms"
+      - "IR🇮🇷+|+dl3.p31download.info-2095+|+421.52ms"
+      - "US🇺🇸+|+159.112.235.174-2082+|+2.7ms"
+      - "RELAY🚩+|+104.16.52.146-80+|+2.59ms"
+      - "RELAY🚩+|+188.114.97.171-443+|+2.79ms"
+  - name: "توزیع بار چرخشی ⚖️"
+    type: "load-balance"
+    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
+    strategy: "round-robin"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 30
+    timeout: 1500
+    lazy: false
+    proxies:
+      - "RELAY🚩+|+172.66.177.129-80+|+2.3ms"
+      - "CY🇨🇾+|+195.85.59.161-2095+|+2.84ms"
+      - "RELAY🚩+|+188.114.97.202-8443+|+3.15ms"
+      - "RELAY🚩+|+104.16.98.3-2053+|+3.78ms"
+      - "CO🇨🇴+|+154.223.16.41-4444+|+69.41ms"
+      - "GB🇬🇧+|+149.102.132.184-80+|+82.98ms"
+      - "US🇺🇸+|+94.72.127.58-443+|+71.07ms"
+      - "ZA🇿🇦+|+192.142.18.127-443+|+87.06ms"
+      - "DE🇩🇪+|+84.200.91.158-443+|+92.64ms"
+      - "UA🇺🇦+|+kyiv02.npvnot.com-443+|+212.3ms"
+      - "JP🇯🇵+|+103.106.228.175-8009+|+161.23ms"
+      - "KR🇰🇷+|+141.164.45.187-6679+|+277.19ms"
+      - "GB🇬🇧+|+94.156.250.148-7001+|+76.49ms"
+      - "IT🇮🇹+|+185.213.20.110-7001+|+95.94ms"
+      - "KR🇰🇷+|+141.164.45.187-7001+|+230.17ms"
+      - "IR🇮🇷+|+188.121.119.246-10086+|+166.26ms"
+      - "AT🇦🇹+|+38.180.197.41-8080+|+101.45ms"
+      - "FR🇫🇷+|+51.254.128.106-2083+|+86.5ms"
+      - "SG🇸🇬+|+ss.039.node-for-bigairport.win-29004+|+229.79ms"
+      - "SG🇸🇬+|+ss.036.node-for-bigairport.win-19887+|+231.14ms"
+      - "JP🇯🇵+|+ss.035.node-for-bigairport.win-29004+|+170.27ms"
+      - "JP🇯🇵+|+ss.031.node-for-bigairport.win-12885+|+172.15ms"
+      - "JP🇯🇵+|+ss.027.node-for-bigairport.win-18287+|+281.65ms"
+      - "JP🇯🇵+|+ss.024.node-for-bigairport.win-12099+|+370.41ms"
+      - "HK🇭🇰+|+ss.017.node-for-bigairport.win-13005+|+218.42ms"
+      - "HK🇭🇰+|+ss.016.node-for-bigairport.win-13004+|+213.18ms"
+      - "HK🇭🇰+|+ss.012.node-for-bigairport.win-22189+|+213.04ms"
+      - "HK🇭🇰+|+ss.011.node-for-bigairport.win-13002+|+215.31ms"
+      - "HK🇭🇰+|+ss.010.node-for-bigairport.win-11689+|+210.87ms"
+      - "HK🇭🇰+|+ss.009.node-for-bigairport.win-11688+|+394.91ms"
+      - "HK🇭🇰+|+ss.008.node-for-bigairport.win-23888+|+219.7ms"
+      - "HK🇭🇰+|+ss.007.node-for-bigairport.win-36888+|+213.59ms"
+      - "HK🇭🇰+|+ss.005.node-for-bigairport.win-11688+|+216.99ms"
+      - "HK🇭🇰+|+ss.002.node-for-bigairport.win-16888+|+217.84ms"
+      - "FR🇫🇷+|+de5.taskflowhub.org-2083+|+277.61ms"
+      - "FR🇫🇷+|+162.19.254.232-2083+|+99.41ms"
+      - "FR🇫🇷+|+de5.taskflowhub.org-2083+|+282.04ms"
+      - "IT🇮🇹+|+it5.taskflowhub.org-2083+|+274.4ms"
+      - "IT🇮🇹+|+57.131.28.246-2083+|+100.4ms"
+      - "US🇺🇸+|+156.146.38.168-443+|+35.95ms"
+      - "JP🇯🇵+|+149.22.87.241-443+|+160.6ms"
+      - "GB🇬🇧+|+141.98.101.181-443+|+81.87ms"
+      - "US🇺🇸+|+173.244.56.6-443+|+60.11ms"
+      - "US🇺🇸+|+156.146.38.169-443+|+36.36ms"
+      - "US🇺🇸+|+156.146.38.167-443+|+34.81ms"
+      - "CA🇨🇦+|+149.22.95.183-443+|+69.11ms"
+      - "JP🇯🇵+|+149.22.87.240-443+|+156.83ms"
+      - "JP🇯🇵+|+149.22.87.204-443+|+157.41ms"
+      - "GB🇬🇧+|+141.98.101.182-443+|+86.33ms"
+      - "GB🇬🇧+|+141.98.101.179-443+|+81.29ms"
+      - "GB🇬🇧+|+141.98.101.178-443+|+80.6ms"
+      - "GB🇬🇧+|+141.98.101.182-443+|+81.28ms"
+      - "RELAY🚩+|+yx.cloudflare.182682.xyz-443+|+482.14ms"
+      - "RELAY🚩+|+sub.danfeng.eu.org-443+|+1087.17ms"
+      - "RELAY🚩+|+store.ubi.com-443+|+81.22ms"
+      - "RELAY🚩+|+cf.877774.xyz-443+|+605.93ms"
+      - "SG🇸🇬+|+8.222.185.236-443+|+225.68ms"
+      - "US🇺🇸+|+69.63.216.10-443+|+59.87ms"
+      - "US🇺🇸+|+69.63.212.251-443+|+58.8ms"
+      - "US🇺🇸+|+64.186.229.245-443+|+62.02ms"
+      - "US🇺🇸+|+64.186.229.220-443+|+63.67ms"
+      - "US🇺🇸+|+64.186.227.44-8443+|+58.82ms"
+      - "JP🇯🇵+|+54.65.58.58-443+|+158.05ms"
+      - "JP🇯🇵+|+54.248.143.139-443+|+157.84ms"
+      - "JP🇯🇵+|+54.199.97.220-443+|+222.73ms"
+      - "SG🇸🇬+|+52.77.224.71-443+|+228.5ms"
+      - "HK🇭🇰+|+47.83.14.42-8443+|+209.63ms"
+      - "SG🇸🇬+|+47.82.162.142-443+|+221.88ms"
+      - "JP🇯🇵+|+47.79.87.167-443+|+157.73ms"
+      - "JP🇯🇵+|+47.79.85.185-443+|+158.34ms"
+      - "JP🇯🇵+|+47.79.84.167-8443+|+165.27ms"
+      - "JP🇯🇵+|+47.79.37.210-443+|+162.14ms"
+      - "JP🇯🇵+|+47.245.62.4-8443+|+159.6ms"
+      - "JP🇯🇵+|+35.72.81.216-443+|+158.07ms"
+      - "JP🇯🇵+|+3.115.100.16-443+|+161.96ms"
+      - "JP🇯🇵+|+3.112.132.156-443+|+157.64ms"
+      - "JP🇯🇵+|+18.178.41.33-443+|+158.34ms"
+      - "JP🇯🇵+|+18.176.37.44-443+|+158.58ms"
+      - "SG🇸🇬+|+18.138.34.221-443+|+227.64ms"
+      - "US🇺🇸+|+174.136.206.5-443+|+58.55ms"
+      - "US🇺🇸+|+154.21.87.223-443+|+62.71ms"
+      - "US🇺🇸+|+154.17.29.221-443+|+58.59ms"
+      - "US🇺🇸+|+154.17.28.152-443+|+59.06ms"
+      - "US🇺🇸+|+154.17.225.73-443+|+62.89ms"
+      - "US🇺🇸+|+154.17.16.176-443+|+58.7ms"
+      - "US🇺🇸+|+154.17.13.158-443+|+62.96ms"
+      - "JP🇯🇵+|+13.192.18.59-443+|+158.15ms"
+      - "IR🇮🇷+|+server.iranvatanam.com-813+|+255.36ms"
+      - "NL🇳🇱+|+109.201.152.181-443+|+88.75ms"
+      - "FR🇫🇷+|+54.36.174.140-443+|+104.24ms"
+      - "GB🇬🇧+|+82.38.31.189-8080+|+99.81ms"
+      - "RU🇷🇺+|+145.249.109.121-25512+|+90.24ms"
+      - "DE🇩🇪+|+193.43.104.64-32941+|+92.29ms"
+      - "TR🇹🇷+|+62.133.63.167-61377+|+128.12ms"
+      - "TR🇹🇷+|+62.60.233.220-18685+|+131.21ms"
+      - "IR🇮🇷+|+cdn.luumixo.ir-2052+|+542.47ms"
+      - "US🇺🇸+|+71.19.148.143-443+|+74.8ms"
+      - "GB🇬🇧+|+82.38.31.35-8080+|+100.4ms"
+      - "GB🇬🇧+|+82.38.31.15-443+|+108.74ms"
+      - "GB🇬🇧+|+82.38.31.155-8080+|+100.11ms"
+      - "GB🇬🇧+|+82.38.31.149-8080+|+102.24ms"
+      - "NL🇳🇱+|+193.29.139.235-8080+|+108.99ms"
+      - "NL🇳🇱+|+193.29.139.204-8080+|+109.36ms"
+      - "NL🇳🇱+|+193.29.139.151-8080+|+108.65ms"
+      - "TR🇹🇷+|+62.133.63.169-37096+|+126.61ms"
+      - "RU🇷🇺+|+178.130.46.148-47345+|+93.92ms"
+      - "TW🇹🇼+|+download.riferoser.icu-56594+|+261.9ms"
+      - "GB🇬🇧+|+series-a2.varzesh360.co-443+|+120.34ms"
+      - "GB🇬🇧+|+series-a2.samanehha.co-443+|+153.43ms"
+      - "GB🇬🇧+|+185.5.38.111-55988+|+137.27ms"
+      - "GB🇬🇧+|+57.129.140.88-8388+|+76.11ms"
+      - "GB🇬🇧+|+82.38.31.218-8080+|+108.68ms"
+      - "GB🇬🇧+|+82.38.31.217-8080+|+110.03ms"
+      - "GB🇬🇧+|+82.38.31.214-8080+|+108.51ms"
+      - "GB🇬🇧+|+82.38.31.210-8080+|+102.39ms"
+      - "GB🇬🇧+|+82.38.31.208-8080+|+102.31ms"
+      - "GB🇬🇧+|+82.38.31.205-8080+|+100.7ms"
+      - "GB🇬🇧+|+82.38.31.202-8080+|+108.97ms"
+      - "GB🇬🇧+|+82.38.31.199-8080+|+109.01ms"
+      - "GB🇬🇧+|+82.38.31.194-8080+|+109.04ms"
+      - "GB🇬🇧+|+82.38.31.191-8080+|+108.88ms"
+      - "GB🇬🇧+|+82.38.31.190-8080+|+100.22ms"
+      - "GB🇬🇧+|+82.38.31.189-8080+|+99.65ms"
+      - "GB🇬🇧+|+82.38.31.187-8080+|+100.1ms"
+      - "GB🇬🇧+|+82.38.31.184-8080+|+100.38ms"
+      - "GB🇬🇧+|+82.38.31.179-8080+|+108.83ms"
+      - "GB🇬🇧+|+82.38.31.176-8080+|+108.79ms"
+      - "TR🇹🇷+|+62.60.233.220-18685+|+128.16ms"
+      - "FR🇫🇷+|+91.239.208.204-17477+|+85.64ms"
+      - "SE🇸🇪+|+46.246.96.30-31561+|+115.95ms"
+      - "US🇺🇸+|+38.135.24.131-443+|+7.8ms"
+      - "NL🇳🇱+|+195.66.27.148-28709+|+88.85ms"
+      - "RU🇷🇺+|+145.249.109.148-16548+|+90.83ms"
+      - "SE🇸🇪+|+46.246.96.191-15721+|+111.56ms"
+      - "DE🇩🇪+|+95.164.123.39-32821+|+94.25ms"
+      - "DE🇩🇪+|+95.164.123.196-57493+|+94.33ms"
+      - "FR🇫🇷+|+162.19.214.191-59724+|+94.82ms"
+      - "FI🇫🇮+|+62.60.255.11-8388+|+114.1ms"
+      - "TR🇹🇷+|+185.39.204.189-34085+|+126.83ms"
+      - "FI🇫🇮+|+85.192.49.149-51523+|+105.62ms"
+      - "TH🇹🇭+|+102.129.229.85-31700+|+285.07ms"
+      - "NL🇳🇱+|+193.29.139.217-8080+|+109.13ms"
+      - "NL🇳🇱+|+193.29.139.189-8080+|+102.91ms"
+      - "NL🇳🇱+|+193.29.139.164-8080+|+102.68ms"
+      - "NL🇳🇱+|+193.29.139.157-8080+|+100.18ms"
+      - "BG🇧🇬+|+95.164.113.153-5669+|+112.82ms"
+      - "TR🇹🇷+|+83.217.9.17-25232+|+130ms"
+      - "GB🇬🇧+|+185.5.38.111-55988+|+141.5ms"
+      - "TR🇹🇷+|+185.39.204.161-33563+|+128.57ms"
+      - "GB🇬🇧+|+azjnac1.uksouth.cloudapp.azure.com-443+|+80.66ms"
+      - "IR🇮🇷+|+vip4.zarins.ir-80+|+530.56ms"
+      - "UA🇺🇦+|+130.0.233.100-33610+|+127.15ms"
+      - "SE🇸🇪+|+46.246.97.140-53908+|+102.01ms"
+      - "DE🇩🇪+|+62.133.60.6-443+|+92.92ms"
+      - "FI🇫🇮+|+93.152.207.248-34242+|+104.16ms"
+      - "TR🇹🇷+|+83.217.9.17-25232+|+122.64ms"
+      - "RU🇷🇺+|+145.249.109.108-18740+|+89.99ms"
+      - "US🇺🇸+|+hackney-latest-strike.freesocks.work-443+|+87.8ms"
+      - "TR🇹🇷+|+62.60.233.226-62763+|+128.16ms"
+      - "DE🇩🇪+|+147.45.178.24-56259+|+92.98ms"
+      - "GB🇬🇧+|+series-a2.samanehha.co-443+|+79.83ms"
+      - "GB🇬🇧+|+series-a1.samanehha.co-443+|+148.75ms"
+      - "FR🇫🇷+|+162.19.175.40-7425+|+92.75ms"
+      - "RO🇷🇴+|+103.244.145.247-28893+|+96.79ms"
+      - "TR🇹🇷+|+62.133.63.169-37096+|+125.41ms"
+      - "US🇺🇸+|+107.172.250.161-59556+|+17.86ms"
+      - "NL🇳🇱+|+193.29.139.227-8080+|+109.83ms"
+      - "NL🇳🇱+|+193.29.139.217-8080+|+108.92ms"
+      - "NL🇳🇱+|+193.29.139.189-8080+|+99.93ms"
+      - "DE🇩🇪+|+8.209.74.72-20001+|+91.77ms"
+      - "RU🇷🇺+|+212.192.14.234-24441+|+123.78ms"
+      - "NL🇳🇱+|+185.18.54.70-31348+|+95.32ms"
+      - "US🇺🇸+|+149.104.109.74-21273+|+261.44ms"
+      - "TR🇹🇷+|+185.39.204.189-34085+|+130.36ms"
+      - "BG🇧🇬+|+95.164.113.198-53829+|+116.03ms"
+      - "TR🇹🇷+|+83.217.9.140-1381+|+128.24ms"
+      - "US🇺🇸+|+149.28.255.6-816+|+34.61ms"
+      - "RU🇷🇺+|+212.192.14.224-57995+|+125.14ms"
+      - "NL🇳🇱+|+195.93.253.245-49137+|+92.15ms"
+      - "RU🇷🇺+|+84.54.44.54-11270+|+124.52ms"
+      - "IN🇮🇳+|+103.120.178.193-31348+|+198.47ms"
+      - "FI🇫🇮+|+38.244.137.202-45380+|+101.98ms"
+      - "TR🇹🇷+|+62.133.63.167-61377+|+128.01ms"
+      - "FR🇫🇷+|+uqxcydrm871b.zozodogg.com-443+|+124.73ms"
+      - "NL🇳🇱+|+195.66.27.81-11746+|+88.71ms"
+      - "RU🇷🇺+|+93.183.94.163-32609+|+120.44ms"
+      - "FI🇫🇮+|+109.107.182.229-51544+|+104.39ms"
+      - "NL🇳🇱+|+108.181.58.239-8388+|+86.33ms"
+      - "NL🇳🇱+|+108.181.126.122-8388+|+84.14ms"
+      - "RU🇷🇺+|+62.113.114.116-42320+|+128.77ms"
+      - "NO🇳🇴+|+185.213.23.63-990+|+100.85ms"
+      - "IQ🇮🇶+|+81.90.29.126-53672+|+97.09ms"
+      - "TR🇹🇷+|+62.60.233.226-62763+|+130.71ms"
+      - "FI🇫🇮+|+193.47.60.186-28687+|+113.89ms"
+      - "RU🇷🇺+|+145.249.109.144-15544+|+89.58ms"
+      - "DE🇩🇪+|+57.129.121.230-10443+|+97.06ms"
+      - "RELAY🚩+|+api.namasha.co-443+|+51.55ms"
+      - "GB🇬🇧+|+74.177.207.175-443+|+76.06ms"
+      - "TR🇹🇷+|+38.180.105.12-443+|+130.76ms"
+      - "TR🇹🇷+|+185.39.204.161-33563+|+129.82ms"
+      - "GB🇬🇧+|+185.5.38.111-55988+|+142.39ms"
+      - "GB🇬🇧+|+admin.c1.webramz.co-443+|+78.34ms"
+      - "DE🇩🇪+|+194.59.183.1-21318+|+97.86ms"
+      - "US🇺🇸+|+185.33.84.181-21484+|+20.54ms"
+      - "NL🇳🇱+|+193.29.139.143-8080+|+109.11ms"
+      - "FI🇫🇮+|+195.133.2.2-34898+|+117.47ms"
+      - "DE🇩🇪+|+syncguard.yatamoa.me-443+|+100.7ms"
+      - "FR🇫🇷+|+54.36.174.134-443+|+103.58ms"
+      - "PL🇵🇱+|+pl.moktana.app-51523+|+170.35ms"
+      - "NL🇳🇱+|+213.176.16.77-7022+|+88.87ms"
+      - "FR🇫🇷+|+193.17.57.155-443+|+85.57ms"
+      - "SE🇸🇪+|+46.246.98.39-55818+|+102.62ms"
+      - "TW🇹🇼+|+r3mrcg001269pz2.cybervena.com-50099+|+199.71ms"
+      - "TW🇹🇼+|+r3mrcg001269pz2.cybervena.com-50099+|+275.64ms"
+      - "GB🇬🇧+|+149.102.144.110-18337+|+110.98ms"
+      - "US🇺🇸+|+ru.moktana.app-51523+|+156.4ms"
+      - "DE🇩🇪+|+185.191.118.33-51523+|+97.41ms"
+      - "TR🇹🇷+|+185.39.204.189-34085+|+125.57ms"
+      - "RU🇷🇺+|+45.144.31.24-443+|+124.84ms"
+      - "FR🇫🇷+|+51.75.168.50-26179+|+76.58ms"
+      - "NL🇳🇱+|+62.84.102.28-26923+|+93.75ms"
+      - "RU🇷🇺+|+95.142.47.40-62238+|+134.02ms"
+      - "FR🇫🇷+|+162.19.208.118-50285+|+91.7ms"
+      - "NL🇳🇱+|+193.29.139.206-8080+|+108.61ms"
+      - "NL🇳🇱+|+193.29.139.157-8080+|+100.09ms"
+      - "NL🇳🇱+|+193.29.139.157-443+|+108.68ms"
+      - "GB🇬🇧+|+57.129.129.247-19308+|+75.73ms"
+      - "DE🇩🇪+|+135.125.219.2-12911+|+91.19ms"
+      - "FI🇫🇮+|+38.244.137.202-45380+|+103.35ms"
+      - "DE🇩🇪+|+46.225.30.16-49534+|+99.21ms"
+      - "DE🇩🇪+|+49.13.3.249-23997+|+97.45ms"
+      - "DE🇩🇪+|+49.13.3.249-23997+|+96.94ms"
+      - "IR🇮🇷+|+37.32.8.201-443+|+166.85ms"
+      - "IR🇮🇷+|+dl3.p31download.info-2095+|+421.52ms"
+      - "US🇺🇸+|+159.112.235.174-2082+|+2.7ms"
+      - "RELAY🚩+|+104.16.52.146-80+|+2.59ms"
+      - "RELAY🚩+|+188.114.97.171-443+|+2.79ms"
+  - name: "المنت 💬"
     type: "select"
+    icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تیم‌اسپیک 🎧"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/331567/teamspeak.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دلتاچت ✉️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/373771/mail.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دانلود منیجر 📥"
+    type: "select"
+    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
     proxies:
       - "بدون فیلترشکن 🛡️"
       - "نوع انتخاب پروکسی 🔀"
@@ -1035,32 +2940,323 @@ proxy-groups:
       - "اجازه ندادن 🚫"
   - name: "تلگرام 💬"
     type: "select"
+    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+  - name: "یوتیوب ▶️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "گوگل 🌍"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475656/google-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "واتس آپ 🟢"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "هوش مصنوعی 🤖"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/306500/openai.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "توییتر 🐦"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475689/twitter-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "اسپاتیفای 🎵"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "اینستاگرام 📸"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/452229/instagram-1.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "تبلیغات 🆎"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/336358/ad.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "تبلیغات اپ ها 🍃"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "رهگیری جهانی 🛑"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "سایتای مخرب ⚠️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "استیم 🖥️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/452107/steam.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "گیم 🎮"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "توییچ 📡"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/343527/twitch-network-communication-interaction-connection.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "ویندوز 🧊"
+    type: "select"
+    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "اجازه ندادن 🚫"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+  - name: "کلودفلر ☁️"
+    type: "select"
+    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "گیتهاب 🐙"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/355033/github.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دیسکورد 🗣️"
+    type: "select"
+    icon: "https://automatorplugin.com/wp-content/uploads/2024/10/discord-icon.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "استریمیو 🎬"
+    type: "select"
+    icon: "https://stremio.github.io/stremio-addon-guide/img/stremio.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "انی‌دسک 🔴"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "سایتای سانسوری 🤬"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Censorship.svg/300px-Censorship.svg.png"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
   - name: "بدون فیلترشکن 🛡️"
     type: "select"
+    icon: "https://www.svgrepo.com/show/6318/connection.svg"
     proxies:
       - "DIRECT"
     hidden: true
   - name: "قطع اینترنت ⛔"
     type: "select"
+    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
     proxies:
       - "REJECT"
     hidden: true
   - name: "اجازه ندادن 🚫"
     type: "select"
+    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
     proxies:
       - "REJECT"
     hidden: true
 rules:
-  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,DownloadManagers,دانلود منیجر 📥"
+  - "RULE-SET,Download,دانلود منیجر 📥"
+  - "RULE-SET,stremio,استریمیو 🎬"
+  - "PROCESS-NAME,im.vector.app,المنت 💬"
+  - "PROCESS-NAME,io.element.android.x,المنت 💬"
+  - "PROCESS-NAME,Element.exe,المنت 💬"
+  - "DOMAIN-SUFFIX,aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,chat.aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,site.aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,electonet.xyz,المنت 💬"
+  - "DOMAIN-SUFFIX,chat.electonet.xyz,المنت 💬"
+  - "DOMAIN-SUFFIX,rainbuwu.ir,المنت 💬"
+  - "DOMAIN-SUFFIX,cinny.rainbuwu.ir,المنت 💬"
+  - "PROCESS-NAME,chat.delta,دلتاچت ✉️"
+  - "PROCESS-NAME,DeltaChat.exe,دلتاچت ✉️"
+  - "DOMAIN-SUFFIX,arsalandalvand.ir,دلتاچت ✉️"
+  - "DST-PORT,993,دلتاچت ✉️"
+  - "DST-PORT,465,دلتاچت ✉️"
+  - "DST-PORT,587,دلتاچت ✉️"
+  - "PROCESS-NAME,com.teamspeak.ts3client,تیم‌اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win64.exe,تیم‌اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win32.exe,تیم‌اسپیک 🎧"
+  - "DOMAIN-SUFFIX,ag.tssq.ir,تیم‌اسپیک 🎧"
+  - "DST-PORT,9987,تیم‌اسپیک 🎧"
+  - "RULE-SET,BanProgramAD,تبلیغات اپ ها 🍃"
+  - "RULE-SET,BanAD,رهگیری جهانی 🛑"
+  - "RULE-SET,PrivateTracker,رهگیری جهانی 🛑"
+  - "RULE-SET,category_public_tracker,رهگیری جهانی 🛑"
+  - "RULE-SET,malware,سایتای مخرب ⚠️"
+  - "RULE-SET,phishing,سایتای مخرب ⚠️"
+  - "RULE-SET,cryptominers,سایتای مخرب ⚠️"
+  - "RULE-SET,warninglist,سایتای مخرب ⚠️"
+  - "RULE-SET,Ponzi,سایتای مخرب ⚠️"
+  - "RULE-SET,LiteAds,تبلیغات 🆎"
+  - "RULE-SET,iran_ads,تبلیغات 🆎"
+  - "RULE-SET,PersianBlocker,تبلیغات 🆎"
+  - "RULE-SET,ads,تبلیغات 🆎"
+  - "RULE-SET,BanEasyList,تبلیغات 🆎"
+  - "RULE-SET,twitch,توییچ 📡"
   - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
   - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger.web,تلگرام 💬"
+  - "RULE-SET,telegram,تلگرام 💬"
+  - "RULE-SET,YouTube,یوتیوب ▶️"
+  - "RULE-SET,youtube,یوتیوب ▶️"
+  - "RULE-SET,YouTubeMusic,یوتیوب ▶️"
+  - "PROCESS-NAME,com.anydesk.anydeskandroid,انی‌دسک 🔴"
+  - "PROCESS-NAME,AnyDesk.exe,انی‌دسک 🔴"
+  - "DOMAIN-SUFFIX,anydesk.com,انی‌دسک 🔴"
+  - "PROCESS-NAME,Twitter.exe,توییتر 🐦"
+  - "PROCESS-NAME,com.twitter.android,توییتر 🐦"
+  - "RULE-SET,Chotwitter,توییتر 🐦"
+  - "RULE-SET,mihTwitter,توییتر 🐦"
+  - "RULE-SET,Domtwitter,توییتر 🐦"
+  - "PROCESS-NAME,com.spotify.music,اسپاتیفای 🎵"
+  - "PROCESS-NAME,Spotify.exe,اسپاتیفای 🎵"
+  - "RULE-SET,DomainSpotify,اسپاتیفای 🎵"
+  - "RULE-SET,mihspotify,اسپاتیفای 🎵"
+  - "PROCESS-NAME,com.instagram.android,اینستاگرام 📸"
+  - "RULE-SET,instagram,اینستاگرام 📸"
+  - "DOMAIN-SUFFIX,deepseek.com,هوش مصنوعی 🤖"
+  - "DOMAIN-SUFFIX,qwen.ai,هوش مصنوعی 🤖"
+  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
+  - "RULE-SET,censor,سایتای سانسوری 🤬"
+  - "RULE-SET,apps,سایتای ایرانی 🇮🇷"
   - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,arvancloud,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,derakcloud,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,iranserver,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,parspack,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,irasn,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,ircidr,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,ir,سایتای ایرانی 🇮🇷"
   - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
-  - "GEOIP,ir,سایتای ایرانی 🇮🇷"
+  - "DOMAIN-SUFFIX,unimics.com,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,whatsapp,واتس آپ 🟢"
+  - "RULE-SET,steam,استیم 🖥️"
+  - "RULE-SET,SteamRegionCheck,استیم 🖥️"
+  - "RULE-SET,game,گیم 🎮"
+  - "RULE-SET,GameDownload,گیم 🎮"
+  - "RULE-SET,category-games,گیم 🎮"
+  - "RULE-SET,Xbox,گیم 🎮"
+  - "RULE-SET,discord,دیسکورد 🗣️"
+  - "RULE-SET,xiaomi_white_list,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,xiaomi_block_list,تبلیغات اپ ها 🍃"
+  - "RULE-SET,windows,ویندوز 🧊"
+  - "RULE-SET,cloudflare,کلودفلر ☁️"
+  - "RULE-SET,github,گیتهاب 🐙"
+  - "PROCESS-NAME,com.android.vending,نوع انتخاب پروکسی 🔀"
+  - "PROCESS-NAME,com.google.android.gms,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google,گوگل 🌍"
+  - "IP-CIDR,10.10.34.0/24,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,private,بدون فیلترشکن 🛡️"
   - "MATCH,نوع انتخاب پروکسی 🔀"

@@ -1,4 +1,7 @@
 global-client-fingerprint: "chrome"
+keep-alive-interval: 5
+keep-alive-idle: 10
+disable-keep-alive: false
 port: 7890
 socks-port: 7891
 redir-port: 7892
@@ -8,21 +11,17 @@ allow-lan: true
 tcp-concurrent: true
 enable-process: true
 find-process-mode: "always"
-ipv6: true
+ipv6: false
 log-level: "info"
 geo-auto-update: true
 geo-update-interval: 168
 secret: ""
 bind-address: "*"
 unified-delay: false
-disable-keep-alive: false
-keep-alive-idle: 30
-keep-alive-interval: 30
 dns:
   enable: true
-  ipv6: true
-  respect-rules: false
-  prefer-h3: true
+  ipv6: false
+  prefer-h3: false
   cache-algorithm: "arc"
   use-system-hosts: true
   use-host: true
@@ -42,19 +41,74 @@ dns:
     - "ntp.*.com"
     - "*.ir"
   default-nameserver:
-    - "8.8.8.8"
-    - "8.8.4.4"
     - "1.1.1.1"
+    - "8.8.8.8"
     - "9.9.9.9"
   nameserver:
-    - "https://dns.google/dns-query"
-    - "https://cloudflare-dns.com/dns-query"
+    - "tcp://1.1.1.1"
+    - "tcp://1.0.0.1"
+    - "tcp://8.8.8.8"
+    - "tcp://8.8.4.4"
+    - "tcp://9.9.9.9"
+    - "tcp://149.112.112.112"
+    - "tcp://208.67.222.222"
+    - "tcp://208.67.220.222"
+  fallback:
+    - "tcp://76.76.19.19"
+    - "tcp://76.223.122.150"
+    - "tcp://185.228.168.9"
+    - "tcp://185.228.169.9"
+    - "tcp://8.26.56.26"
+    - "tcp://8.20.247.20"
+    - "tcp://76.76.2.11"
+    - "tcp://76.76.10.11"
+    - "tcp://84.200.69.80"
+    - "tcp://84.200.70.40"
+    - "tcp://45.33.97.5"
+    - "tcp://37.235.1.177"
+    - "tcp://209.244.0.3"
+    - "tcp://209.244.0.4"
+    - "tcp://156.154.70.5"
+    - "tcp://156.154.71.5"
+    - "tcp://103.86.96.100"
+    - "tcp://103.86.99.100"
+    - "tcp://199.85.126.10"
+    - "tcp://199.85.127.10"
+    - "tcp://129.250.35.250"
+    - "tcp://129.250.35.251"
+    - "tcp://94.16.114.254"
+    - "tcp://94.247.43.254"
+    - "tcp://208.67.222.20"
+    - "tcp://195.46.39.39"
+    - "tcp://195.46.39.40"
+    - "tcp://204.117.214.10"
+    - "tcp://199.2.252.10"
+    - "tcp://194.169.169.169"
+    - "tcp://156.154.70.1"
+    - "tcp://156.154.71.1"
+    - "tcp://91.239.100.100"
+    - "tcp://89.233.43.71"
+    - "tcp://64.6.64.6"
+    - "tcp://64.6.65.6"
+    - "tcp://77.88.8.8"
+    - "tcp://77.88.8.1"
+  fallback-filter:
+    geoip: true
+    geoip-code: "IR"
+    geosite:
+      - "gfw"
+    ipcidr:
+      - "240.0.0.0/4"
+    domain:
+      - "+.google.com"
+      - "+.facebook.com"
+      - "+.youtube.com"
+  proxy-server-nameserver:
+    - "tcp://1.1.1.1"
+    - "tcp://8.8.8.8"
   direct-nameserver:
     - "78.157.42.100"
     - "78.157.42.101"
-  proxy-server-nameserver:
-    - "1.1.1.1"
-    - "8.8.8.8"
 sniffer:
   enable: true
   force-dns-mapping: true
@@ -88,12 +142,60 @@ tun:
     - "any:53"
     - "tcp://any:53"
 rule-providers:
+  category_public_tracker:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-public-tracker.yaml"
+    interval: 86400
+    path: "./ruleset/category_public_tracker.yaml"
+  iran_ads:
+    type: "http"
+    behavior: "domain"
+    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    interval: 86400
+    path: "./ruleset/iran_ads.yaml"
+  PersianBlocker:
+    type: "http"
+    behavior: "domain"
+    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    interval: 86400
+    path: "./ruleset/PersianBlocker.yaml"
+  youtube:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
+    interval: 86400
+    path: "./ruleset/youtube.yaml"
+  telegram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
+    interval: 86400
+    path: "./ruleset/telegram.yaml"
+  twitch:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
+    interval: 86400
+    path: "./ruleset/twitch.yaml"
+  censor:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
+    interval: 86400
+    path: "./ruleset/censor.yaml"
   local_ips:
     type: "http"
     behavior: "ipcidr"
     url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
     interval: 86400
     path: "./ruleset/local_ips.yaml"
+  private:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
+    interval: 86400
+    path: "./ruleset/private.yaml"
   category_ir:
     type: "http"
     behavior: "domain"
@@ -106,321 +208,406 @@ rule-providers:
     url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
     interval: 86400
     path: "./ruleset/iran.yaml"
+  steam:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
+    interval: 86400
+    path: "./ruleset/steam.yaml"
+  game:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
+    interval: 86400
+    path: "./ruleset/game.yaml"
+  category-games:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
+    interval: 86400
+    path: "./ruleset/category-games.yaml"
+  ir:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
+    interval: 86400
+    path: "./ruleset/ir.yaml"
+  apps:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
+    interval: 86400
+    path: "./ruleset/apps.yaml"
+  ircidr:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
+    interval: 86400
+    path: "./ruleset/ircidr.yaml"
+  irasn:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
+    interval: 86400
+    path: "./ruleset/irasn.yaml"
+  arvancloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
+    interval: 86400
+    path: "./ruleset/arvancloud.yaml"
+  derakcloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
+    interval: 86400
+    path: "./ruleset/derakcloud.yaml"
+  iranserver:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
+    interval: 86400
+    path: "./ruleset/iranserver.yaml"
+  parspack:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
+    interval: 86400
+    path: "./ruleset/parspack.yaml"
+  malware:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/malware.yaml"
+    interval: 86400
+    path: "./ruleset/malware.yaml"
+  phishing:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/phishing.yaml"
+    interval: 86400
+    path: "./ruleset/phishing.yaml"
+  cryptominers:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/cryptominers.yaml"
+    interval: 86400
+    path: "./ruleset/cryptominers.yaml"
+  ads:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/Chocolate4U/Iran-clash-rules/releases/download/202606060815/category-ads-all.yaml"
+    interval: 86400
+    path: "./ruleset/ads.yaml"
+  DownloadManagers:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
+    interval: 86400
+    path: "./ruleset/DownloadManagers.yaml"
+  BanProgramAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanProgramAD.yaml"
+  BanAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanAD.yaml"
+  PrivateTracker:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
+    interval: 86400
+    path: "./ruleset/PrivateTracker.yaml"
+  BanEasyList:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
+    interval: 86400
+    path: "./ruleset/BanEasyList.yaml"
+  Download:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
+    interval: 86400
+    path: "./ruleset/Download.yaml"
+  GameDownload:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
+    interval: 86400
+    path: "./ruleset/GameDownload.yaml"
+  SteamRegionCheck:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
+    interval: 86400
+    path: "./ruleset/SteamRegionCheck.yaml"
+  Xbox:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
+    interval: 86400
+    path: "./ruleset/Xbox.yaml"
+  YouTubeMusic:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
+    interval: 86400
+    path: "./ruleset/YouTubeMusic.yaml"
+  YouTube:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
+    interval: 86400
+    path: "./ruleset/YouTube.yaml"
+  Ponzi:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
+    interval: 86400
+    path: "./ruleset/Ponzi.yaml"
+  warninglist:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/warning-list.yaml"
+    interval: 86400
+    path: "./ruleset/warninglist.yaml"
+  google:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
+    interval: 86400
+    path: "./ruleset/google.yaml"
+  google-play:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
+    interval: 86400
+    path: "./ruleset/google-play.yaml"
+  xiaomi_block_list:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_block_list.yaml"
+  xiaomi_white_list:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_white_list.yaml"
+  cloudflare:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
+    interval: 86400
+    path: "./ruleset/cloudflare.yaml"
+  github:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
+    interval: 86400
+    path: "./ruleset/xgithub.yaml"
+  whatsapp:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
+    interval: 86400
+    path: "./ruleset/whatsapp.yaml"
+  LiteAds:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/LiteAds.yaml"
+    interval: 86400
+    path: "./ruleset/LiteAds.yaml"
+  discord:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
+    interval: 86400
+    path: "./ruleset/discord.yaml"
+  instagram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    interval: 86400
+    path: "./ruleset/instagram.yaml"
+  category-ai:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    interval: 86400
+    path: "./ruleset/category-ai.yaml"
+  stremio:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    interval: 86400
+    path: "./ruleset/stremio.yaml"
+  windows:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    interval: 86400
+    path: "./ruleset/windows.yaml"
+  Chotwitter:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/twitter.yaml"
+    interval: 86400
+    path: "./ruleset/Chotwitter.yaml"
+  mihTwitter:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Twitter.yaml"
+    interval: 86400
+    path: "./ruleset/mihTwitter.yaml"
+  Domtwitter:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/twitter.yaml"
+    interval: 86400
+    path: "./ruleset/Domtwitter.yaml"
+  DomainSpotify:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/spotify.yaml"
+    interval: 86400
+    path: "./ruleset/DomainSpotify.yaml"
+  mihspotify:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Spotify.yaml"
+    interval: 86400
+    path: "./ruleset/mihSpotify.yaml"
 proxies:
-  - name: "1. 🇮🇹 Italy"
+  - name: "2. 🇩🇪 Germany"
     type: "vless"
-    server: "tralalero.site"
+    server: "178.154.227.129"
+    port: 443
+    uuid: "e08f0d52-5d83-40a8-b1ef-ddeeba1a5457"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "wl-4-2.nodes.ac"
+    client-fingerprint: "qq"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "Yoh3T5ra4qSt7RebGXUM1xB1HUdIQPSzoxJkfxk-eTk"
+      short-id: "6cafe8ea554e106b"
+  - name: "3. 🇲🇩 Moldova"
+    type: "vless"
+    server: "185.242.19.250"
+    port: 443
+    uuid: "882e17c8-b013-4e99-9774-36e26e5001ff"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "top3739667002.mwscdn.ru"
+  - name: "4. 🇩🇪 Germany"
+    type: "vless"
+    server: "de-dp-01.com"
     port: 8443
-    uuid: "85c42ce4-7789-49cb-9012-9d6d6ba16581"
+    uuid: "f552a78e-400c-4332-8265-8e5da1c21eeb"
     udp: true
     tls: true
     network: "tcp"
     servername: "storage.yandex.net"
-    client-fingerprint: "firefox"
+    client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "_CjW0Khlrr5z5oc9Oy6-w2ZEanz-zMBktVn5EOX9oTM"
-      short-id: "6419bed7fd0a2cff"
-  - name: "2. 🇮🇹 Italy"
+      public-key: "ISa-DZOI4LRRb9DHMFYm5oFqBXDjYzz0hVWUfWvzLmo"
+      short-id: "5be97fb85093a3a9"
+  - name: "5. 🇬🇧 United Kingdom"
     type: "vless"
-    server: "bypass.tralalero.site"
-    port: 8443
-    uuid: "85c42ce4-7789-49cb-9012-9d6d6ba16581"
+    server: "89.169.90.9"
+    port: 443
+    uuid: "bfd464fc-6b2c-43fd-8d4b-6171edccdd02"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "top1174643266.mwscdn.ru"
+    client-fingerprint: "chrome"
+  - name: "6. 🇩🇪 Germany"
+    type: "vless"
+    server: "158.160.17.171"
+    port: 443
+    uuid: "95ddf703-748c-4ede-965b-8843792764a0"
     udp: true
     tls: true
     network: "tcp"
-    servername: "storage.yandex.net"
-    client-fingerprint: "firefox"
+    servername: "api-maps.yandex.ru"
+    client-fingerprint: "random"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "_CjW0Khlrr5z5oc9Oy6-w2ZEanz-zMBktVn5EOX9oTM"
-      short-id: "6419bed7fd0a2cff"
-  - name: "3. 🇫🇷 France"
+      public-key: "xwusQ4IEWdYyuPLCc4LOA89P6HyQDNT7xo_75v2YW2I"
+      short-id: "27e53bbcab7593d7"
+  - name: "7. 🇩🇪 Germany"
     type: "vless"
-    server: "104.155.124.198"
+    server: "51.250.47.193"
     port: 443
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/account"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "4. 🇷🇺 Russia"
-    type: "vless"
-    server: "46.229.215.189"
-    port: 8443
-    uuid: "9e5201b2-5061-413b-b310-36cc6ec590c6"
+    uuid: "95ddf703-748c-4ede-965b-8843792764a0"
     udp: true
     tls: true
     network: "tcp"
-    servername: "smartcaptcha.yandexcloud.net"
-    client-fingerprint: "firefox"
+    servername: "api-maps.yandex.ru"
+    client-fingerprint: "random"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "92bt1gYq9EAz3SSOtKDrmqnbetNcaStEDicwrFg0_Rc"
-  - name: "5. 🇸🇪 Sweden"
+      public-key: "xwusQ4IEWdYyuPLCc4LOA89P6HyQDNT7xo_75v2YW2I"
+      short-id: "27e53bbcab7593d7"
+  - name: "8. 🇳🇱 The Netherlands"
     type: "vless"
-    server: "104.17.148.22"
+    server: "20.103.221.187"
     port: 443
-    uuid: "fe23b0d9-ab91-4f7b-a5a4-89e4ae9b094e"
+    uuid: "4b616b6f-6f6c-4e65-7773-b8e2c9f3d541"
     udp: true
     tls: true
     network: "ws"
-    servername: "broken-mud-0a9a.rigacihir69.workers.dev"
-    client-fingerprint: "chrome"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/eyJqdW5rIjoiZEFtaFJ6RlAiLCJwcm90b2NvbCI6InZsIiwibW9kZSI6InByb3h5aXAiLCJwYW5lbElQcyI6W119?ed=2560"
-      headers:
-        Host: "broken-mud-0a9a.rigacihir69.workers.dev"
-  - name: "6. 🇺🇸 United States"
-    type: "vless"
-    server: "167.104.223.44"
-    port: 7443
-    uuid: "6ca8ea5b-e47f-4c19-adee-365456e1e87c"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.microsoft.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "5QAO98ot2U7TcGs_f6EEaQjCzNOJLNHqPf6smYsdFVI"
-      short-id: "d82fb387"
-  - name: "8. 🇩🇰 Denmark"
-    type: "vless"
-    server: "92.113.146.87"
-    port: 443
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/trade"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "9. 🇱🇹 Lithuania"
-    type: "vless"
-    server: "195.238.126.150"
-    port: 443
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    ws-opts:
-      path: "/messages"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "11. 🇧🇬 Bulgaria"
-    type: "vless"
-    server: "46.183.185.142"
-    port: 443
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/page"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "16. 🇫🇷 France"
-    type: "vless"
-    server: "104.16.7.70"
-    port: 443
-    uuid: "bbd67e54-1b4b-488b-a5df-708ef896ecaa"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "wf1.cerosmakom.com"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/api/v2/sync/data-stream"
-  - name: "17. 🇦🇲 Armenia"
-    type: "vless"
-    server: "91.198.108.191"
-    port: 443
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/member/clips"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "18. 🇵🇱 Poland"
-    type: "vless"
-    server: "195.210.47.233"
-    port: 8443
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    ws-opts:
-      path: "/games/go.php"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "19. 🇪🇸 Spain"
-    type: "vless"
-    server: "208.85.19.254"
-    port: 8443
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    ws-opts:
-      path: "/version/directory/list"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "22. 🇷🇺 Russia"
-    type: "vless"
-    server: "ru-selectel-01.com"
-    port: 8443
-    uuid: "8cd00214-09da-48d9-8004-8281ff918d36"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "sni.ru-selectel-01.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "rZgu2lJcC2yrYnx66znee-Z75mW6m4TRfWt7_neoEVI"
-      short-id: "1c74cf626ef50bb3"
-  - name: "25. 🇮🇸 Iceland"
-    type: "vless"
-    server: "89.147.111.223"
-    port: 2053
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    ws-opts:
-      path: "/pictures"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "29. 🇩🇪 Germany"
-    type: "vless"
-    server: "speedtest.net"
-    port: 80
-    uuid: "0058c215-ab1e-400c-a403-b5b2fda7e846"
-    udp: true
-    tls: false
-    network: "ws"
+    servername: "organic-halibut-qv5j44vjgpgc9jpv-443.app.github.dev"
     ws-opts:
       path: "/"
-      headers:
-        Host: "max-de1.global.ssl.fastly.net"
-  - name: "30. 🇸🇪 Sweden"
+  - name: "9. 🇺🇸 United States"
     type: "vless"
-    server: "147.45.245.15"
+    server: "91.223.236.155"
+    port: 13149
+    uuid: "236b557f-90db-4a63-87bf-ae3c944c4764"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "10. 🇩🇪 Germany"
+    type: "vless"
+    server: "51.250.4.238"
     port: 443
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    uuid: "95ddf703-748c-4ede-965b-8843792764a0"
     udp: true
     tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    ws-opts:
-      path: "/task"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "31. 🇦🇹 Austria"
-    type: "vless"
-    server: "132.243.203.210"
-    port: 8443
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/app/city"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "34. 🇭🇺 Hungary"
-    type: "vless"
-    server: "91.219.236.202"
-    port: 2053
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/download/study"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "36. 🇮🇱 Israel"
-    type: "vless"
-    server: "80.178.58.56"
-    port: 443
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/reg/torrent/products"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "39. 🇧🇬 Bulgaria"
-    type: "vless"
-    server: "185.82.218.224"
-    port: 443
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    ws-opts:
-      path: "/temp/jump.html"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "45. 🇭🇺 Hungary"
-    type: "vless"
-    server: "91.219.237.49"
-    port: 443
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/html/teacher"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "46. 🇷🇴 Romania"
-    type: "vless"
-    server: "217.156.67.40"
-    port: 443
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    ws-opts:
-      path: "/magnet/cn"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "48. 🇲🇩 Moldova"
+    network: "tcp"
+    servername: "max.ru"
+    client-fingerprint: "random"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "BjG7XoEMR2uxHbBk_rtkR7P_S_luG2VcvQlvZ4YHzH8"
+      short-id: "27e53bbcab7593d7"
+  - name: "11. 🇲🇩 Moldova"
     type: "vless"
     server: "185.242.19.249"
     port: 443
@@ -429,23 +616,37 @@ proxies:
     tls: true
     network: "xhttp"
     servername: "top3739667002.mwscdn.ru"
-    client-fingerprint: "chrome"
-  - name: "49. 🇷🇴 Romania"
+  - name: "12. 🇩🇪 Germany"
     type: "vless"
-    server: "38.79.154.92"
+    server: "51.250.4.238"
     port: 443
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    uuid: "95ddf703-748c-4ede-965b-8843792764a0"
     udp: true
     tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    ws-opts:
-      path: "/downloads"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "53. 🇸🇬 Singapore"
+    network: "tcp"
+    servername: "yandex.ru"
+    client-fingerprint: "random"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "Ec54Eop0jZft7rcJsPN4RHc4xG9smXhtenM52pJFUQI"
+      short-id: "27e53bbcab7593d7"
+  - name: "13. 🇩🇪 Germany"
     type: "vless"
-    server: "193.123.74.174"
+    server: "51.250.97.18"
+    port: 443
+    uuid: "c735df36-db16-4571-8b4b-e20756e3ff28"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdp.x5.ru"
+    client-fingerprint: "safari"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "wgXD4k3A16WR0aL63N9Mx8xoqFigJLyQWJXi-l3MPXI"
+      short-id: "8ec792bfd725be8a"
+  - name: "14. 🇦🇹 Austria"
+    type: "vless"
+    server: "132.243.203.244"
     port: 8443
     uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
     udp: true
@@ -454,104 +655,10 @@ proxies:
     servername: "linek.perry.us.kg"
     client-fingerprint: "chrome"
     ws-opts:
-      path: "/help/f"
+      path: "/zh-cn"
       headers:
         Host: "linek.perry.us.kg"
-  - name: "54. 🇧🇬 Bulgaria"
-    type: "vless"
-    server: "185.177.59.153"
-    port: 2053
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/pics/downloads"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "55. 🇮🇸 Iceland"
-    type: "vless"
-    server: "89.147.109.212"
-    port: 443
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/trade"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "57. 🇵🇱 Poland"
-    type: "vless"
-    server: "195.49.215.254"
-    port: 8443
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    ws-opts:
-      path: "/thread/apps"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "58. 🇮🇪 Ireland"
-    type: "vless"
-    server: "185.247.226.138"
-    port: 443
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    ws-opts:
-      path: "/jp"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "59. 🇳🇴 Norway"
-    type: "vless"
-    server: "194.5.98.105"
-    port: 2053
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    ws-opts:
-      path: "/intro/chat"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "60. 🇧🇷 Brazil"
-    type: "vless"
-    server: "94.131.19.19"
-    port: 2053
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/ajax/cp"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "63. 🇺🇸 United States"
-    type: "vless"
-    server: "181.36.229.212"
-    port: 2096
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    ws-opts:
-      path: "/m/articles"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "66. 🇬🇧 United Kingdom"
+  - name: "15. 🇬🇧 United Kingdom"
     type: "vless"
     server: "uk-gthost-01.com"
     port: 8443
@@ -565,175 +672,756 @@ proxies:
     reality-opts:
       public-key: "dY9SNEllJMW63xo-JdXufhmjAxB_4uFw_QMjgufjiD8"
       short-id: "ea10cd5686751ec5"
-  - name: "67. 🇿🇦 South Africa"
+  - name: "16. 🇲🇩 Moldova"
     type: "vless"
-    server: "156.38.157.171"
-    port: 2053
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/out"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "68. 🇧🇷 Brazil"
-    type: "vless"
-    server: "94.141.97.10"
+    server: "185.242.19.249"
     port: 443
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    uuid: "882e17c8-b013-4e99-9774-36e26e5001ff"
     udp: true
     tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
+    network: "xhttp"
+    servername: "top3739667002.mwscdn.ru"
     client-fingerprint: "chrome"
-    ws-opts:
-      path: "/help/tag"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "72. 🇧🇬 Bulgaria"
+  - name: "17. 🇬🇧 United Kingdom"
     type: "vless"
-    server: "94.156.35.128"
-    port: 2053
-    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "linek.perry.us.kg"
-    ws-opts:
-      path: "/clip/library/favorite"
-      headers:
-        Host: "linek.perry.us.kg"
-  - name: "14. 🇷🇺 Russia"
-    type: "ss"
-    server: "195.133.2.2"
-    port: 34898
-    cipher: "chacha20-ietf-poly1305"
-    password: "A9awLBKgvsHU6GsxVUK6PY"
-    udp: true
-  - name: "21. 🇵🇱 Poland"
-    type: "trojan"
-    server: "64.176.65.85"
+    server: "147.45.99.249"
     port: 443
-    password: "iGccGWTMHtoXtBhGYK4mogg7iIUhGbcvCf"
+    uuid: "e438ed18-0208-4620-b7f4-56ba7045f397"
     udp: true
     tls: true
     network: "tcp"
-  - name: "47. 🇫🇷 France"
-    type: "trojan"
-    server: "www.calmloud.com"
+    servername: "gb.sellflow.org"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
+  - name: "18. 🇳🇱 The Netherlands"
+    type: "vless"
+    server: "162.217.249.133"
+    port: 7443
+    uuid: "10484bee-8516-400a-9b1e-efb5144ad324"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "stackoverflow.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "5QAO98ot2U7TcGs_f6EEaQjCzNOJLNHqPf6smYsdFVI"
+      short-id: "be0ce047"
+  - name: "19. 🇲🇩 Moldova"
+    type: "vless"
+    server: "89.169.90.8"
     port: 443
-    password: "humanity"
+    uuid: "882e17c8-b013-4e99-9774-36e26e5001ff"
     udp: true
     tls: true
     network: "ws"
-    servername: "www.calmloud.com"
+    servername: "top707762634.mwscdn.ru"
     ws-opts:
-      path: "/%2Fassignment"
+      path: "/livestreamcontent/"
+  - name: "20. 🇮🇹 Italy"
+    type: "vless"
+    server: "tralalero.site"
+    port: 8443
+    uuid: "85c42ce4-7789-49cb-9012-9d6d6ba16581"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "storage.yandex.net"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "_CjW0Khlrr5z5oc9Oy6-w2ZEanz-zMBktVn5EOX9oTM"
+      short-id: "6419bed7fd0a2cff"
+  - name: "21. 🇮🇹 Italy"
+    type: "vless"
+    server: "185.47.172.172"
+    port: 8443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    ws-opts:
+      path: "/outbound/categories/doc"
       headers:
-        Host: "www.calmloud.com"
+        Host: "linek.perry.us.kg"
+  - name: "22. 🇷🇴 Romania"
+    type: "vless"
+    server: "5.252.178.146"
+    port: 8443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/clip/shop"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "23. 🇸🇬 Singapore"
+    type: "vless"
+    server: "3.0.48.125"
+    port: 8686
+    uuid: "1a17b19d-4896-4531-af79-6e91d8ef8228"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.apple.com"
+    reality-opts:
+      public-key: "A3NXnUIT-W0m1Y_leRnv5so2IeCvk9FCFgL31PulfTw"
+      short-id: "628b3c90c98ead4f"
+  - name: "24. 🇩🇪 Germany"
+    type: "vless"
+    server: "51.250.97.18"
+    port: 443
+    uuid: "bfd464fc-6b2c-43fd-8d4b-6171edccdd02"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdp.x5.ru"
+    client-fingerprint: "safari"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "wgXD4k3A16WR0aL63N9Mx8xoqFigJLyQWJXi-l3MPXI"
+      short-id: "8ec792bfd725be8a"
+  - name: "26. 🇮🇹 Italy"
+    type: "vless"
+    server: "bypass.tralalero.site"
+    port: 8443
+    uuid: "85c42ce4-7789-49cb-9012-9d6d6ba16581"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "storage.yandex.net"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "_CjW0Khlrr5z5oc9Oy6-w2ZEanz-zMBktVn5EOX9oTM"
+      short-id: "6419bed7fd0a2cff"
+  - name: "27. 🇲🇩 Moldova"
+    type: "vless"
+    server: "185.242.19.250"
+    port: 443
+    uuid: "cfb70000-ed61-4a7e-89a3-2b9c2caa6001"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "top3739667002.mwscdn.ru"
+    client-fingerprint: "chrome"
+  - name: "28. 🇬🇧 United Kingdom"
+    type: "vless"
+    server: "51.250.104.246"
+    port: 443
+    uuid: "bfd464fc-6b2c-43fd-8d4b-6171edccdd02"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdp.x5.ru"
+    client-fingerprint: "safari"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "wgXD4k3A16WR0aL63N9Mx8xoqFigJLyQWJXi-l3MPXI"
+      short-id: "8ec792bfd725be8a"
+  - name: "29. 🇩🇪 Germany"
+    type: "vless"
+    server: "158.160.17.171"
+    port: 443
+    uuid: "95ddf703-748c-4ede-965b-8843792764a0"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ads.x5.ru"
+    client-fingerprint: "random"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "v6rib0-2FxBd1MnBxdylbIRIhvXywSj56QEtCkaEuBo"
+      short-id: "27e53bbcab7593d7"
+  - name: "30. 🇦🇹 Austria"
+    type: "vless"
+    server: "132.243.203.221"
+    port: 8443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/uploads/events"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "31. 🇧🇬 Bulgaria"
+    type: "vless"
+    server: "193.37.212.56"
+    port: 2053
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    ws-opts:
+      path: "/data"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "33. 🇸🇨 Seychelles"
+    type: "vless"
+    server: "72.56.11.76"
+    port: 443
+    uuid: "959fde23-35b9-4266-95fb-d267e62e38e4"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "sellflow.org"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
+  - name: "34. 🇷🇴 Romania"
+    type: "vless"
+    server: "5.252.178.146"
+    port: 8443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    ws-opts:
+      path: "/clip/shop"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "35. 🇦🇹 Austria"
+    type: "vless"
+    server: "132.243.203.218"
+    port: 8443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    ws-opts:
+      path: "/seller/novel"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "37. 🇸🇪 Sweden"
+    type: "vless"
+    server: "147.45.245.15"
+    port: 443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    ws-opts:
+      path: "/task"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "38. 🇩🇪 Germany"
+    type: "vless"
+    server: "84.201.168.201"
+    port: 443
+    uuid: "95ddf703-748c-4ede-965b-8843792764a0"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yandex.ru"
+    client-fingerprint: "random"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "Ec54Eop0jZft7rcJsPN4RHc4xG9smXhtenM52pJFUQI"
+      short-id: "27e53bbcab7593d7"
+  - name: "39. 🇬🇧 United Kingdom"
+    type: "vless"
+    server: "93.93.88.78"
+    port: 443
+    uuid: "be8dde28-4998-49cf-9d52-9a200b28a9ab"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "s46724.cdn.ngenix.net"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/api/user"
+  - name: "40. 🇮🇹 Italy"
+    type: "vless"
+    server: "bypass.tralalero.site"
+    port: 8443
+    uuid: "85c42ce4-7789-49cb-9012-9d6d6ba16581"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "storage.yandex.net"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "_CjW0Khlrr5z5oc9Oy6-w2ZEanz-zMBktVn5EOX9oTM"
+      short-id: "6419bed7fd0a2cff"
+  - name: "41. 🇦🇹 Austria"
+    type: "vless"
+    server: "132.243.203.193"
+    port: 8443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    ws-opts:
+      path: "/show"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "42. 🇬🇧 United Kingdom"
+    type: "vless"
+    server: "45.91.55.233"
+    port: 7443
+    uuid: "8bbf020e-653f-4a82-9900-1214e4e37dab"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "rutube.ru"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "5QAO98ot2U7TcGs_f6EEaQjCzNOJLNHqPf6smYsdFVI"
+      short-id: "be0ce047"
+  - name: "43. 🇨🇭 Switzerland"
+    type: "vless"
+    server: "83.228.217.38"
+    port: 8443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/star/ads/files"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "44. 🇩🇪 Germany"
+    type: "vless"
+    server: "84.201.129.65"
+    port: 443
+    uuid: "13812042-0ef6-445d-b4c1-feb8eca83768"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ads.x5.ru"
+    client-fingerprint: "random"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "I_mMGeQ8r529dq2LjFUzv0nb74zuux2zGWT2RfKuE14"
+      short-id: "27e53bbcab7593d7"
+  - name: "47. 🇭🇺 Hungary"
+    type: "vless"
+    server: "46.183.184.60"
+    port: 443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    ws-opts:
+      path: "/read"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "48. 🇮🇹 Italy"
+    type: "vless"
+    server: "185.47.172.172"
+    port: 8443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/outbound/categories/doc"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "49. 🇩🇪 Germany"
+    type: "vless"
+    server: "178.154.204.55"
+    port: 443
+    uuid: "e08f0d52-5d83-40a8-b1ef-ddeeba1a5457"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "wl-4-3.nodes.ac"
+    client-fingerprint: "qq"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "ljUVISw0FlRCXDz6xRTVnmms_IfVrIFLJ5bg81MDNQY"
+      short-id: "7171871f66279d10"
+  - name: "51. 🇵🇱 Poland"
+    type: "vless"
+    server: "195.210.47.233"
+    port: 8443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    ws-opts:
+      path: "/games/go.php"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "52. 🇨🇭 Switzerland"
+    type: "vless"
+    server: "45.90.57.139"
+    port: 8443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    ws-opts:
+      path: "/mall/collect"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "56. 🇩🇪 Germany"
+    type: "vless"
+    server: "130.193.56.208"
+    port: 443
+    uuid: "e08f0d52-5d83-40a8-b1ef-ddeeba1a5457"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "wl-11-2.nodes.ac"
+    client-fingerprint: "qq"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "UfrA4c5fjRVKJTtAiDOd9lEdmkgfZBSTm9bSMzC4zCg"
+      short-id: "c792be29a38dbefe"
+  - name: "57. 🇸🇬 Singapore"
+    type: "vless"
+    server: "sahanwickramasinghevip.shop"
+    port: 443
+    uuid: "55d61055-1a7f-4bc5-aca2-4ee78c738b60"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "58. 🇦🇹 Austria"
+    type: "vless"
+    server: "132.243.203.120"
+    port: 8443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    ws-opts:
+      path: "/home"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "59. 🇸🇬 Singapore"
+    type: "vless"
+    server: "45.76.185.254"
+    port: 8443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    ws-opts:
+      path: "/item/code/dh"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "61. 🇩🇪 Germany"
+    type: "vless"
+    server: "130.193.56.148"
+    port: 443
+    uuid: "e08f0d52-5d83-40a8-b1ef-ddeeba1a5457"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "wl-11-1.nodes.ac"
+    client-fingerprint: "qq"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "aslw-Ex_i_q59e0eu126qM7UnEHhlpKuz8vMN-ibjkw"
+      short-id: "3130197867c23edb"
+  - name: "1. 🇫🇮 Finland"
+    type: "ss"
+    server: "109.107.182.229"
+    port: 51544
+    cipher: "chacha20-ietf-poly1305"
+    password: "Ca4cxMttEzzRFSLpz3IcBF"
+    udp: true
+  - name: "25. 🇩🇪 Germany"
+    type: "ss"
+    server: "46.225.30.16"
+    port: 49534
+    cipher: "2022-blake3-aes-256-gcm"
+    password: "tEY1W9tCYB6R5Y22378dJ9yh4H4PAZlAM/m31aG1PYM="
+    udp: true
+  - name: "36. 🇳🇱 The Netherlands"
+    type: "ss"
+    server: "82.38.31.182"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "46. 🇳🇱 The Netherlands"
+    type: "ss"
+    server: "82.38.31.155"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "55. 🇫🇮 Finland"
+    type: "ss"
+    server: "85.192.49.149"
+    port: 51523
+    cipher: "chacha20-ietf-poly1305"
+    password: "dM-uYbTS84AzBKfoSStX0U5_q6YJXqH3"
+    udp: true
+  - name: "53. 🇬🇧 United Kingdom"
+    type: "trojan"
+    server: "193.163.85.39"
+    port: 443
+    password: "2bde1095-b5d2-4749-b57b-04876d3acd10"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "platyscelis.duckdns.org"
+    ws-opts:
+      path: "/vpn"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
+    icon: "https://www.svgrepo.com/show/412721/choose.svg"
     proxies:
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
+      - "توزیع بار چرخشی ⚖️"
       - "قطع اینترنت ⛔"
+      - "بدون فیلترشکن 🛡️"
   - name: "دستی 🤏🏻"
     type: "select"
+    icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
-      - "1. 🇮🇹 Italy"
-      - "2. 🇮🇹 Italy"
-      - "3. 🇫🇷 France"
-      - "4. 🇷🇺 Russia"
-      - "5. 🇸🇪 Sweden"
-      - "6. 🇺🇸 United States"
-      - "8. 🇩🇰 Denmark"
-      - "9. 🇱🇹 Lithuania"
-      - "11. 🇧🇬 Bulgaria"
-      - "16. 🇫🇷 France"
-      - "17. 🇦🇲 Armenia"
-      - "18. 🇵🇱 Poland"
-      - "19. 🇪🇸 Spain"
-      - "22. 🇷🇺 Russia"
-      - "25. 🇮🇸 Iceland"
+      - "2. 🇩🇪 Germany"
+      - "3. 🇲🇩 Moldova"
+      - "4. 🇩🇪 Germany"
+      - "5. 🇬🇧 United Kingdom"
+      - "6. 🇩🇪 Germany"
+      - "7. 🇩🇪 Germany"
+      - "8. 🇳🇱 The Netherlands"
+      - "9. 🇺🇸 United States"
+      - "10. 🇩🇪 Germany"
+      - "11. 🇲🇩 Moldova"
+      - "12. 🇩🇪 Germany"
+      - "13. 🇩🇪 Germany"
+      - "14. 🇦🇹 Austria"
+      - "15. 🇬🇧 United Kingdom"
+      - "16. 🇲🇩 Moldova"
+      - "17. 🇬🇧 United Kingdom"
+      - "18. 🇳🇱 The Netherlands"
+      - "19. 🇲🇩 Moldova"
+      - "20. 🇮🇹 Italy"
+      - "21. 🇮🇹 Italy"
+      - "22. 🇷🇴 Romania"
+      - "23. 🇸🇬 Singapore"
+      - "24. 🇩🇪 Germany"
+      - "26. 🇮🇹 Italy"
+      - "27. 🇲🇩 Moldova"
+      - "28. 🇬🇧 United Kingdom"
       - "29. 🇩🇪 Germany"
-      - "30. 🇸🇪 Sweden"
-      - "31. 🇦🇹 Austria"
-      - "34. 🇭🇺 Hungary"
-      - "36. 🇮🇱 Israel"
-      - "39. 🇧🇬 Bulgaria"
-      - "45. 🇭🇺 Hungary"
-      - "46. 🇷🇴 Romania"
-      - "48. 🇲🇩 Moldova"
-      - "49. 🇷🇴 Romania"
-      - "53. 🇸🇬 Singapore"
-      - "54. 🇧🇬 Bulgaria"
-      - "55. 🇮🇸 Iceland"
-      - "57. 🇵🇱 Poland"
-      - "58. 🇮🇪 Ireland"
-      - "59. 🇳🇴 Norway"
-      - "60. 🇧🇷 Brazil"
-      - "63. 🇺🇸 United States"
-      - "66. 🇬🇧 United Kingdom"
-      - "67. 🇿🇦 South Africa"
-      - "68. 🇧🇷 Brazil"
-      - "72. 🇧🇬 Bulgaria"
-      - "14. 🇷🇺 Russia"
-      - "21. 🇵🇱 Poland"
-      - "47. 🇫🇷 France"
+      - "30. 🇦🇹 Austria"
+      - "31. 🇧🇬 Bulgaria"
+      - "33. 🇸🇨 Seychelles"
+      - "34. 🇷🇴 Romania"
+      - "35. 🇦🇹 Austria"
+      - "37. 🇸🇪 Sweden"
+      - "38. 🇩🇪 Germany"
+      - "39. 🇬🇧 United Kingdom"
+      - "40. 🇮🇹 Italy"
+      - "41. 🇦🇹 Austria"
+      - "42. 🇬🇧 United Kingdom"
+      - "43. 🇨🇭 Switzerland"
+      - "44. 🇩🇪 Germany"
+      - "47. 🇭🇺 Hungary"
+      - "48. 🇮🇹 Italy"
+      - "49. 🇩🇪 Germany"
+      - "51. 🇵🇱 Poland"
+      - "52. 🇨🇭 Switzerland"
+      - "56. 🇩🇪 Germany"
+      - "57. 🇸🇬 Singapore"
+      - "58. 🇦🇹 Austria"
+      - "59. 🇸🇬 Singapore"
+      - "61. 🇩🇪 Germany"
+      - "1. 🇫🇮 Finland"
+      - "25. 🇩🇪 Germany"
+      - "36. 🇳🇱 The Netherlands"
+      - "46. 🇳🇱 The Netherlands"
+      - "55. 🇫🇮 Finland"
+      - "53. 🇬🇧 United Kingdom"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
+    icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
     url: "https://www.gstatic.com/generate_204"
-    interval: 300
+    interval: 600
     tolerance: 50
-    lazy: true
+    timeout: 3200
+    lazy: false
+    max-failed-times: 2
     proxies:
-      - "1. 🇮🇹 Italy"
-      - "2. 🇮🇹 Italy"
-      - "3. 🇫🇷 France"
-      - "4. 🇷🇺 Russia"
-      - "5. 🇸🇪 Sweden"
-      - "6. 🇺🇸 United States"
-      - "8. 🇩🇰 Denmark"
-      - "9. 🇱🇹 Lithuania"
-      - "11. 🇧🇬 Bulgaria"
-      - "16. 🇫🇷 France"
-      - "17. 🇦🇲 Armenia"
-      - "18. 🇵🇱 Poland"
-      - "19. 🇪🇸 Spain"
-      - "22. 🇷🇺 Russia"
-      - "25. 🇮🇸 Iceland"
+      - "2. 🇩🇪 Germany"
+      - "3. 🇲🇩 Moldova"
+      - "4. 🇩🇪 Germany"
+      - "5. 🇬🇧 United Kingdom"
+      - "6. 🇩🇪 Germany"
+      - "7. 🇩🇪 Germany"
+      - "8. 🇳🇱 The Netherlands"
+      - "9. 🇺🇸 United States"
+      - "10. 🇩🇪 Germany"
+      - "11. 🇲🇩 Moldova"
+      - "12. 🇩🇪 Germany"
+      - "13. 🇩🇪 Germany"
+      - "14. 🇦🇹 Austria"
+      - "15. 🇬🇧 United Kingdom"
+      - "16. 🇲🇩 Moldova"
+      - "17. 🇬🇧 United Kingdom"
+      - "18. 🇳🇱 The Netherlands"
+      - "19. 🇲🇩 Moldova"
+      - "20. 🇮🇹 Italy"
+      - "21. 🇮🇹 Italy"
+      - "22. 🇷🇴 Romania"
+      - "23. 🇸🇬 Singapore"
+      - "24. 🇩🇪 Germany"
+      - "26. 🇮🇹 Italy"
+      - "27. 🇲🇩 Moldova"
+      - "28. 🇬🇧 United Kingdom"
       - "29. 🇩🇪 Germany"
-      - "30. 🇸🇪 Sweden"
-      - "31. 🇦🇹 Austria"
-      - "34. 🇭🇺 Hungary"
-      - "36. 🇮🇱 Israel"
-      - "39. 🇧🇬 Bulgaria"
-      - "45. 🇭🇺 Hungary"
-      - "46. 🇷🇴 Romania"
-      - "48. 🇲🇩 Moldova"
-      - "49. 🇷🇴 Romania"
-      - "53. 🇸🇬 Singapore"
-      - "54. 🇧🇬 Bulgaria"
-      - "55. 🇮🇸 Iceland"
-      - "57. 🇵🇱 Poland"
-      - "58. 🇮🇪 Ireland"
-      - "59. 🇳🇴 Norway"
-      - "60. 🇧🇷 Brazil"
-      - "63. 🇺🇸 United States"
-      - "66. 🇬🇧 United Kingdom"
-      - "67. 🇿🇦 South Africa"
-      - "68. 🇧🇷 Brazil"
-      - "72. 🇧🇬 Bulgaria"
-      - "14. 🇷🇺 Russia"
-      - "21. 🇵🇱 Poland"
-      - "47. 🇫🇷 France"
-  - name: "سایتای ایرانی 🇮🇷"
+      - "30. 🇦🇹 Austria"
+      - "31. 🇧🇬 Bulgaria"
+      - "33. 🇸🇨 Seychelles"
+      - "34. 🇷🇴 Romania"
+      - "35. 🇦🇹 Austria"
+      - "37. 🇸🇪 Sweden"
+      - "38. 🇩🇪 Germany"
+      - "39. 🇬🇧 United Kingdom"
+      - "40. 🇮🇹 Italy"
+      - "41. 🇦🇹 Austria"
+      - "42. 🇬🇧 United Kingdom"
+      - "43. 🇨🇭 Switzerland"
+      - "44. 🇩🇪 Germany"
+      - "47. 🇭🇺 Hungary"
+      - "48. 🇮🇹 Italy"
+      - "49. 🇩🇪 Germany"
+      - "51. 🇵🇱 Poland"
+      - "52. 🇨🇭 Switzerland"
+      - "56. 🇩🇪 Germany"
+      - "57. 🇸🇬 Singapore"
+      - "58. 🇦🇹 Austria"
+      - "59. 🇸🇬 Singapore"
+      - "61. 🇩🇪 Germany"
+      - "1. 🇫🇮 Finland"
+      - "25. 🇩🇪 Germany"
+      - "36. 🇳🇱 The Netherlands"
+      - "46. 🇳🇱 The Netherlands"
+      - "55. 🇫🇮 Finland"
+      - "53. 🇬🇧 United Kingdom"
+  - name: "توزیع بار چرخشی ⚖️"
+    type: "load-balance"
+    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
+    strategy: "round-robin"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 30
+    timeout: 1500
+    lazy: false
+    proxies:
+      - "2. 🇩🇪 Germany"
+      - "3. 🇲🇩 Moldova"
+      - "4. 🇩🇪 Germany"
+      - "5. 🇬🇧 United Kingdom"
+      - "6. 🇩🇪 Germany"
+      - "7. 🇩🇪 Germany"
+      - "8. 🇳🇱 The Netherlands"
+      - "9. 🇺🇸 United States"
+      - "10. 🇩🇪 Germany"
+      - "11. 🇲🇩 Moldova"
+      - "12. 🇩🇪 Germany"
+      - "13. 🇩🇪 Germany"
+      - "14. 🇦🇹 Austria"
+      - "15. 🇬🇧 United Kingdom"
+      - "16. 🇲🇩 Moldova"
+      - "17. 🇬🇧 United Kingdom"
+      - "18. 🇳🇱 The Netherlands"
+      - "19. 🇲🇩 Moldova"
+      - "20. 🇮🇹 Italy"
+      - "21. 🇮🇹 Italy"
+      - "22. 🇷🇴 Romania"
+      - "23. 🇸🇬 Singapore"
+      - "24. 🇩🇪 Germany"
+      - "26. 🇮🇹 Italy"
+      - "27. 🇲🇩 Moldova"
+      - "28. 🇬🇧 United Kingdom"
+      - "29. 🇩🇪 Germany"
+      - "30. 🇦🇹 Austria"
+      - "31. 🇧🇬 Bulgaria"
+      - "33. 🇸🇨 Seychelles"
+      - "34. 🇷🇴 Romania"
+      - "35. 🇦🇹 Austria"
+      - "37. 🇸🇪 Sweden"
+      - "38. 🇩🇪 Germany"
+      - "39. 🇬🇧 United Kingdom"
+      - "40. 🇮🇹 Italy"
+      - "41. 🇦🇹 Austria"
+      - "42. 🇬🇧 United Kingdom"
+      - "43. 🇨🇭 Switzerland"
+      - "44. 🇩🇪 Germany"
+      - "47. 🇭🇺 Hungary"
+      - "48. 🇮🇹 Italy"
+      - "49. 🇩🇪 Germany"
+      - "51. 🇵🇱 Poland"
+      - "52. 🇨🇭 Switzerland"
+      - "56. 🇩🇪 Germany"
+      - "57. 🇸🇬 Singapore"
+      - "58. 🇦🇹 Austria"
+      - "59. 🇸🇬 Singapore"
+      - "61. 🇩🇪 Germany"
+      - "1. 🇫🇮 Finland"
+      - "25. 🇩🇪 Germany"
+      - "36. 🇳🇱 The Netherlands"
+      - "46. 🇳🇱 The Netherlands"
+      - "55. 🇫🇮 Finland"
+      - "53. 🇬🇧 United Kingdom"
+  - name: "المنت 💬"
     type: "select"
+    icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تیم‌اسپیک 🎧"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/331567/teamspeak.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دلتاچت ✉️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/373771/mail.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دانلود منیجر 📥"
+    type: "select"
+    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
     proxies:
       - "بدون فیلترشکن 🛡️"
       - "نوع انتخاب پروکسی 🔀"
@@ -742,32 +1430,323 @@ proxy-groups:
       - "اجازه ندادن 🚫"
   - name: "تلگرام 💬"
     type: "select"
+    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+  - name: "یوتیوب ▶️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "گوگل 🌍"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475656/google-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "واتس آپ 🟢"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "هوش مصنوعی 🤖"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/306500/openai.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "توییتر 🐦"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475689/twitter-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "اسپاتیفای 🎵"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "اینستاگرام 📸"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/452229/instagram-1.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "تبلیغات 🆎"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/336358/ad.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "تبلیغات اپ ها 🍃"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "رهگیری جهانی 🛑"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "سایتای مخرب ⚠️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "استیم 🖥️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/452107/steam.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "گیم 🎮"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "توییچ 📡"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/343527/twitch-network-communication-interaction-connection.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "ویندوز 🧊"
+    type: "select"
+    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "اجازه ندادن 🚫"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+  - name: "کلودفلر ☁️"
+    type: "select"
+    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "گیتهاب 🐙"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/355033/github.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دیسکورد 🗣️"
+    type: "select"
+    icon: "https://automatorplugin.com/wp-content/uploads/2024/10/discord-icon.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "استریمیو 🎬"
+    type: "select"
+    icon: "https://stremio.github.io/stremio-addon-guide/img/stremio.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "انی‌دسک 🔴"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "سایتای سانسوری 🤬"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Censorship.svg/300px-Censorship.svg.png"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
   - name: "بدون فیلترشکن 🛡️"
     type: "select"
+    icon: "https://www.svgrepo.com/show/6318/connection.svg"
     proxies:
       - "DIRECT"
     hidden: true
   - name: "قطع اینترنت ⛔"
     type: "select"
+    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
     proxies:
       - "REJECT"
     hidden: true
   - name: "اجازه ندادن 🚫"
     type: "select"
+    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
     proxies:
       - "REJECT"
     hidden: true
 rules:
-  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,DownloadManagers,دانلود منیجر 📥"
+  - "RULE-SET,Download,دانلود منیجر 📥"
+  - "RULE-SET,stremio,استریمیو 🎬"
+  - "PROCESS-NAME,im.vector.app,المنت 💬"
+  - "PROCESS-NAME,io.element.android.x,المنت 💬"
+  - "PROCESS-NAME,Element.exe,المنت 💬"
+  - "DOMAIN-SUFFIX,aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,chat.aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,site.aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,electonet.xyz,المنت 💬"
+  - "DOMAIN-SUFFIX,chat.electonet.xyz,المنت 💬"
+  - "DOMAIN-SUFFIX,rainbuwu.ir,المنت 💬"
+  - "DOMAIN-SUFFIX,cinny.rainbuwu.ir,المنت 💬"
+  - "PROCESS-NAME,chat.delta,دلتاچت ✉️"
+  - "PROCESS-NAME,DeltaChat.exe,دلتاچت ✉️"
+  - "DOMAIN-SUFFIX,arsalandalvand.ir,دلتاچت ✉️"
+  - "DST-PORT,993,دلتاچت ✉️"
+  - "DST-PORT,465,دلتاچت ✉️"
+  - "DST-PORT,587,دلتاچت ✉️"
+  - "PROCESS-NAME,com.teamspeak.ts3client,تیم‌اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win64.exe,تیم‌اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win32.exe,تیم‌اسپیک 🎧"
+  - "DOMAIN-SUFFIX,ag.tssq.ir,تیم‌اسپیک 🎧"
+  - "DST-PORT,9987,تیم‌اسپیک 🎧"
+  - "RULE-SET,BanProgramAD,تبلیغات اپ ها 🍃"
+  - "RULE-SET,BanAD,رهگیری جهانی 🛑"
+  - "RULE-SET,PrivateTracker,رهگیری جهانی 🛑"
+  - "RULE-SET,category_public_tracker,رهگیری جهانی 🛑"
+  - "RULE-SET,malware,سایتای مخرب ⚠️"
+  - "RULE-SET,phishing,سایتای مخرب ⚠️"
+  - "RULE-SET,cryptominers,سایتای مخرب ⚠️"
+  - "RULE-SET,warninglist,سایتای مخرب ⚠️"
+  - "RULE-SET,Ponzi,سایتای مخرب ⚠️"
+  - "RULE-SET,LiteAds,تبلیغات 🆎"
+  - "RULE-SET,iran_ads,تبلیغات 🆎"
+  - "RULE-SET,PersianBlocker,تبلیغات 🆎"
+  - "RULE-SET,ads,تبلیغات 🆎"
+  - "RULE-SET,BanEasyList,تبلیغات 🆎"
+  - "RULE-SET,twitch,توییچ 📡"
   - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
   - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger.web,تلگرام 💬"
+  - "RULE-SET,telegram,تلگرام 💬"
+  - "RULE-SET,YouTube,یوتیوب ▶️"
+  - "RULE-SET,youtube,یوتیوب ▶️"
+  - "RULE-SET,YouTubeMusic,یوتیوب ▶️"
+  - "PROCESS-NAME,com.anydesk.anydeskandroid,انی‌دسک 🔴"
+  - "PROCESS-NAME,AnyDesk.exe,انی‌دسک 🔴"
+  - "DOMAIN-SUFFIX,anydesk.com,انی‌دسک 🔴"
+  - "PROCESS-NAME,Twitter.exe,توییتر 🐦"
+  - "PROCESS-NAME,com.twitter.android,توییتر 🐦"
+  - "RULE-SET,Chotwitter,توییتر 🐦"
+  - "RULE-SET,mihTwitter,توییتر 🐦"
+  - "RULE-SET,Domtwitter,توییتر 🐦"
+  - "PROCESS-NAME,com.spotify.music,اسپاتیفای 🎵"
+  - "PROCESS-NAME,Spotify.exe,اسپاتیفای 🎵"
+  - "RULE-SET,DomainSpotify,اسپاتیفای 🎵"
+  - "RULE-SET,mihspotify,اسپاتیفای 🎵"
+  - "PROCESS-NAME,com.instagram.android,اینستاگرام 📸"
+  - "RULE-SET,instagram,اینستاگرام 📸"
+  - "DOMAIN-SUFFIX,deepseek.com,هوش مصنوعی 🤖"
+  - "DOMAIN-SUFFIX,qwen.ai,هوش مصنوعی 🤖"
+  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
+  - "RULE-SET,censor,سایتای سانسوری 🤬"
+  - "RULE-SET,apps,سایتای ایرانی 🇮🇷"
   - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,arvancloud,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,derakcloud,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,iranserver,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,parspack,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,irasn,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,ircidr,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,ir,سایتای ایرانی 🇮🇷"
   - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
-  - "GEOIP,ir,سایتای ایرانی 🇮🇷"
+  - "DOMAIN-SUFFIX,unimics.com,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,whatsapp,واتس آپ 🟢"
+  - "RULE-SET,steam,استیم 🖥️"
+  - "RULE-SET,SteamRegionCheck,استیم 🖥️"
+  - "RULE-SET,game,گیم 🎮"
+  - "RULE-SET,GameDownload,گیم 🎮"
+  - "RULE-SET,category-games,گیم 🎮"
+  - "RULE-SET,Xbox,گیم 🎮"
+  - "RULE-SET,discord,دیسکورد 🗣️"
+  - "RULE-SET,xiaomi_white_list,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,xiaomi_block_list,تبلیغات اپ ها 🍃"
+  - "RULE-SET,windows,ویندوز 🧊"
+  - "RULE-SET,cloudflare,کلودفلر ☁️"
+  - "RULE-SET,github,گیتهاب 🐙"
+  - "PROCESS-NAME,com.android.vending,نوع انتخاب پروکسی 🔀"
+  - "PROCESS-NAME,com.google.android.gms,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google,گوگل 🌍"
+  - "IP-CIDR,10.10.34.0/24,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,private,بدون فیلترشکن 🛡️"
   - "MATCH,نوع انتخاب پروکسی 🔀"

@@ -1,4 +1,7 @@
 global-client-fingerprint: "chrome"
+keep-alive-interval: 5
+keep-alive-idle: 10
+disable-keep-alive: false
 port: 7890
 socks-port: 7891
 redir-port: 7892
@@ -8,21 +11,17 @@ allow-lan: true
 tcp-concurrent: true
 enable-process: true
 find-process-mode: "always"
-ipv6: true
+ipv6: false
 log-level: "info"
 geo-auto-update: true
 geo-update-interval: 168
 secret: ""
 bind-address: "*"
 unified-delay: false
-disable-keep-alive: false
-keep-alive-idle: 30
-keep-alive-interval: 30
 dns:
   enable: true
-  ipv6: true
-  respect-rules: false
-  prefer-h3: true
+  ipv6: false
+  prefer-h3: false
   cache-algorithm: "arc"
   use-system-hosts: true
   use-host: true
@@ -42,19 +41,74 @@ dns:
     - "ntp.*.com"
     - "*.ir"
   default-nameserver:
-    - "8.8.8.8"
-    - "8.8.4.4"
     - "1.1.1.1"
+    - "8.8.8.8"
     - "9.9.9.9"
   nameserver:
-    - "https://dns.google/dns-query"
-    - "https://cloudflare-dns.com/dns-query"
+    - "tcp://1.1.1.1"
+    - "tcp://1.0.0.1"
+    - "tcp://8.8.8.8"
+    - "tcp://8.8.4.4"
+    - "tcp://9.9.9.9"
+    - "tcp://149.112.112.112"
+    - "tcp://208.67.222.222"
+    - "tcp://208.67.220.222"
+  fallback:
+    - "tcp://76.76.19.19"
+    - "tcp://76.223.122.150"
+    - "tcp://185.228.168.9"
+    - "tcp://185.228.169.9"
+    - "tcp://8.26.56.26"
+    - "tcp://8.20.247.20"
+    - "tcp://76.76.2.11"
+    - "tcp://76.76.10.11"
+    - "tcp://84.200.69.80"
+    - "tcp://84.200.70.40"
+    - "tcp://45.33.97.5"
+    - "tcp://37.235.1.177"
+    - "tcp://209.244.0.3"
+    - "tcp://209.244.0.4"
+    - "tcp://156.154.70.5"
+    - "tcp://156.154.71.5"
+    - "tcp://103.86.96.100"
+    - "tcp://103.86.99.100"
+    - "tcp://199.85.126.10"
+    - "tcp://199.85.127.10"
+    - "tcp://129.250.35.250"
+    - "tcp://129.250.35.251"
+    - "tcp://94.16.114.254"
+    - "tcp://94.247.43.254"
+    - "tcp://208.67.222.20"
+    - "tcp://195.46.39.39"
+    - "tcp://195.46.39.40"
+    - "tcp://204.117.214.10"
+    - "tcp://199.2.252.10"
+    - "tcp://194.169.169.169"
+    - "tcp://156.154.70.1"
+    - "tcp://156.154.71.1"
+    - "tcp://91.239.100.100"
+    - "tcp://89.233.43.71"
+    - "tcp://64.6.64.6"
+    - "tcp://64.6.65.6"
+    - "tcp://77.88.8.8"
+    - "tcp://77.88.8.1"
+  fallback-filter:
+    geoip: true
+    geoip-code: "IR"
+    geosite:
+      - "gfw"
+    ipcidr:
+      - "240.0.0.0/4"
+    domain:
+      - "+.google.com"
+      - "+.facebook.com"
+      - "+.youtube.com"
+  proxy-server-nameserver:
+    - "tcp://1.1.1.1"
+    - "tcp://8.8.8.8"
   direct-nameserver:
     - "78.157.42.100"
     - "78.157.42.101"
-  proxy-server-nameserver:
-    - "1.1.1.1"
-    - "8.8.8.8"
 sniffer:
   enable: true
   force-dns-mapping: true
@@ -88,12 +142,60 @@ tun:
     - "any:53"
     - "tcp://any:53"
 rule-providers:
+  category_public_tracker:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-public-tracker.yaml"
+    interval: 86400
+    path: "./ruleset/category_public_tracker.yaml"
+  iran_ads:
+    type: "http"
+    behavior: "domain"
+    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    interval: 86400
+    path: "./ruleset/iran_ads.yaml"
+  PersianBlocker:
+    type: "http"
+    behavior: "domain"
+    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    interval: 86400
+    path: "./ruleset/PersianBlocker.yaml"
+  youtube:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
+    interval: 86400
+    path: "./ruleset/youtube.yaml"
+  telegram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
+    interval: 86400
+    path: "./ruleset/telegram.yaml"
+  twitch:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
+    interval: 86400
+    path: "./ruleset/twitch.yaml"
+  censor:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
+    interval: 86400
+    path: "./ruleset/censor.yaml"
   local_ips:
     type: "http"
     behavior: "ipcidr"
     url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
     interval: 86400
     path: "./ruleset/local_ips.yaml"
+  private:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
+    interval: 86400
+    path: "./ruleset/private.yaml"
   category_ir:
     type: "http"
     behavior: "domain"
@@ -106,6 +208,296 @@ rule-providers:
     url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
     interval: 86400
     path: "./ruleset/iran.yaml"
+  steam:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
+    interval: 86400
+    path: "./ruleset/steam.yaml"
+  game:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
+    interval: 86400
+    path: "./ruleset/game.yaml"
+  category-games:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
+    interval: 86400
+    path: "./ruleset/category-games.yaml"
+  ir:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
+    interval: 86400
+    path: "./ruleset/ir.yaml"
+  apps:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
+    interval: 86400
+    path: "./ruleset/apps.yaml"
+  ircidr:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
+    interval: 86400
+    path: "./ruleset/ircidr.yaml"
+  irasn:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
+    interval: 86400
+    path: "./ruleset/irasn.yaml"
+  arvancloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
+    interval: 86400
+    path: "./ruleset/arvancloud.yaml"
+  derakcloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
+    interval: 86400
+    path: "./ruleset/derakcloud.yaml"
+  iranserver:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
+    interval: 86400
+    path: "./ruleset/iranserver.yaml"
+  parspack:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
+    interval: 86400
+    path: "./ruleset/parspack.yaml"
+  malware:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/malware.yaml"
+    interval: 86400
+    path: "./ruleset/malware.yaml"
+  phishing:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/phishing.yaml"
+    interval: 86400
+    path: "./ruleset/phishing.yaml"
+  cryptominers:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/cryptominers.yaml"
+    interval: 86400
+    path: "./ruleset/cryptominers.yaml"
+  ads:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/Chocolate4U/Iran-clash-rules/releases/download/202606060815/category-ads-all.yaml"
+    interval: 86400
+    path: "./ruleset/ads.yaml"
+  DownloadManagers:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
+    interval: 86400
+    path: "./ruleset/DownloadManagers.yaml"
+  BanProgramAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanProgramAD.yaml"
+  BanAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanAD.yaml"
+  PrivateTracker:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
+    interval: 86400
+    path: "./ruleset/PrivateTracker.yaml"
+  BanEasyList:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
+    interval: 86400
+    path: "./ruleset/BanEasyList.yaml"
+  Download:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
+    interval: 86400
+    path: "./ruleset/Download.yaml"
+  GameDownload:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
+    interval: 86400
+    path: "./ruleset/GameDownload.yaml"
+  SteamRegionCheck:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
+    interval: 86400
+    path: "./ruleset/SteamRegionCheck.yaml"
+  Xbox:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
+    interval: 86400
+    path: "./ruleset/Xbox.yaml"
+  YouTubeMusic:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
+    interval: 86400
+    path: "./ruleset/YouTubeMusic.yaml"
+  YouTube:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
+    interval: 86400
+    path: "./ruleset/YouTube.yaml"
+  Ponzi:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
+    interval: 86400
+    path: "./ruleset/Ponzi.yaml"
+  warninglist:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/warning-list.yaml"
+    interval: 86400
+    path: "./ruleset/warninglist.yaml"
+  google:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
+    interval: 86400
+    path: "./ruleset/google.yaml"
+  google-play:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
+    interval: 86400
+    path: "./ruleset/google-play.yaml"
+  xiaomi_block_list:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_block_list.yaml"
+  xiaomi_white_list:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_white_list.yaml"
+  cloudflare:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
+    interval: 86400
+    path: "./ruleset/cloudflare.yaml"
+  github:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
+    interval: 86400
+    path: "./ruleset/xgithub.yaml"
+  whatsapp:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
+    interval: 86400
+    path: "./ruleset/whatsapp.yaml"
+  LiteAds:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/LiteAds.yaml"
+    interval: 86400
+    path: "./ruleset/LiteAds.yaml"
+  discord:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
+    interval: 86400
+    path: "./ruleset/discord.yaml"
+  instagram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    interval: 86400
+    path: "./ruleset/instagram.yaml"
+  category-ai:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    interval: 86400
+    path: "./ruleset/category-ai.yaml"
+  stremio:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    interval: 86400
+    path: "./ruleset/stremio.yaml"
+  windows:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    interval: 86400
+    path: "./ruleset/windows.yaml"
+  Chotwitter:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/twitter.yaml"
+    interval: 86400
+    path: "./ruleset/Chotwitter.yaml"
+  mihTwitter:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Twitter.yaml"
+    interval: 86400
+    path: "./ruleset/mihTwitter.yaml"
+  Domtwitter:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/twitter.yaml"
+    interval: 86400
+    path: "./ruleset/Domtwitter.yaml"
+  DomainSpotify:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/spotify.yaml"
+    interval: 86400
+    path: "./ruleset/DomainSpotify.yaml"
+  mihspotify:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Spotify.yaml"
+    interval: 86400
+    path: "./ruleset/mihSpotify.yaml"
 proxies:
   - name: "🇰🇷KR_142_@Surfboardv2ray"
     type: "vless"
@@ -175,6 +567,20 @@ proxies:
       path: "/@Marisa_kristi"
       headers:
         Host: "uq2ox3bplnlgtr.myto.ip-ddns.com"
+  - name: "🇺🇸US_148_@Surfboardv2ray"
+    type: "vless"
+    server: "157.238.236.3"
+    port: 10031
+    uuid: "00000000-0000-4000-8000-000000000000"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "uq2ox3bplnlgtr.myto.ip-ddns.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/@VPNine1"
+      headers:
+        Host: "uq2ox3bplnlgtr.myto.ip-ddns.com"
   - name: "🇺🇸US_149_@Surfboardv2ray"
     type: "vless"
     server: "173.249.210.53"
@@ -187,6 +593,20 @@ proxies:
     client-fingerprint: "chrome"
     ws-opts:
       path: "/@Marisa_kristi"
+      headers:
+        Host: "uq2ox3bplnlgtr.myto.ip-ddns.com"
+  - name: "🇺🇸US_150_@Surfboardv2ray"
+    type: "vless"
+    server: "173.249.210.53"
+    port: 56671
+    uuid: "00000000-0000-4000-8000-000000000000"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "uq2ox3bplnlgtr.myto.ip-ddns.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/@VPNine1"
       headers:
         Host: "uq2ox3bplnlgtr.myto.ip-ddns.com"
   - name: "🇯🇵JP_151_@Surfboardv2ray"
@@ -203,6 +623,20 @@ proxies:
       path: "/@Marisa_kristi"
       headers:
         Host: "uq2ox3bplnlgtr.myto.ip-ddns.com"
+  - name: "🇯🇵JP_153_@Surfboardv2ray"
+    type: "vless"
+    server: "212.135.210.133"
+    port: 56788
+    uuid: "00000000-0000-4000-8000-000000000000"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "uq2ox3bplnlgtr.myto.ip-ddns.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/@VPNine1"
+      headers:
+        Host: "uq2ox3bplnlgtr.myto.ip-ddns.com"
   - name: "🇩🇪DE_154_@Surfboardv2ray"
     type: "vless"
     server: "213.179.69.150"
@@ -217,6 +651,20 @@ proxies:
       path: "/@Marisa_kristi"
       headers:
         Host: "uq2ox3bplnlgtr.myto.ip-ddns.com"
+  - name: "🇩🇪DE_155_@Surfboardv2ray"
+    type: "vless"
+    server: "213.179.69.150"
+    port: 35130
+    uuid: "00000000-0000-4000-8000-000000000000"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "uq2ox3bplnlgtr.myto.ip-ddns.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/@VPNine1"
+      headers:
+        Host: "uq2ox3bplnlgtr.myto.ip-ddns.com"
   - name: "🇯🇵JP_156_@Surfboardv2ray"
     type: "vless"
     server: "45.143.234.26"
@@ -229,6 +677,20 @@ proxies:
     client-fingerprint: "chrome"
     ws-opts:
       path: "/@Marisa_kristi"
+      headers:
+        Host: "uq2ox3bplnlgtr.myto.ip-ddns.com"
+  - name: "🇯🇵JP_157_@Surfboardv2ray"
+    type: "vless"
+    server: "45.143.234.26"
+    port: 13236
+    uuid: "00000000-0000-4000-8000-000000000000"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "uq2ox3bplnlgtr.myto.ip-ddns.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/@VPNine1"
       headers:
         Host: "uq2ox3bplnlgtr.myto.ip-ddns.com"
   - name: "🇸🇬SG_158_@Surfboardv2ray"
@@ -257,6 +719,20 @@ proxies:
     client-fingerprint: "chrome"
     ws-opts:
       path: "/@Marisa_kristi"
+      headers:
+        Host: "uq2ox3bplnlgtr.myto.ip-ddns.com"
+  - name: "🇸🇬SG_161_@Surfboardv2ray"
+    type: "vless"
+    server: "8.219.2.255"
+    port: 33284
+    uuid: "00000000-0000-4000-8000-000000000000"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "uq2ox3bplnlgtr.myto.ip-ddns.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/@VPNine1"
       headers:
         Host: "uq2ox3bplnlgtr.myto.ip-ddns.com"
   - name: "🇬🇧GB_162_@Surfboardv2ray"
@@ -301,6 +777,20 @@ proxies:
       path: "/@Marisa_kristi"
       headers:
         Host: "uq2ox3bplnlgtr.myto.ip-ddns.com"
+  - name: "🇨🇦CA_165_@Surfboardv2ray"
+    type: "vless"
+    server: "store.ubi.com"
+    port: 443
+    uuid: "00000000-0000-4000-8000-000000000000"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "uq2ox3bplnlgtr.myto.ip-ddns.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/@VPNine1"
+      headers:
+        Host: "uq2ox3bplnlgtr.myto.ip-ddns.com"
   - name: "🇨🇦CA_166_@Surfboardv2ray"
     type: "vless"
     server: "youxuan.cf.090227.xyz"
@@ -313,6 +803,20 @@ proxies:
     client-fingerprint: "chrome"
     ws-opts:
       path: "/@Marisa_kristi"
+      headers:
+        Host: "uq2ox3bplnlgtr.myto.ip-ddns.com"
+  - name: "🇨🇦CA_167_@Surfboardv2ray"
+    type: "vless"
+    server: "youxuan.cf.090227.xyz"
+    port: 443
+    uuid: "00000000-0000-4000-8000-000000000000"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "uq2ox3bplnlgtr.myto.ip-ddns.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/@VPNine1"
       headers:
         Host: "uq2ox3bplnlgtr.myto.ip-ddns.com"
   - name: "🇨🇦CA_168_@Surfboardv2ray"
@@ -609,6 +1113,18 @@ proxies:
       path: "/"
       headers:
         Host: "ln1.monopolitass.ir"
+  - name: "🇨🇦CA_226_@Surfboardv2ray"
+    type: "vless"
+    server: "104.18.26.90"
+    port: 2087
+    uuid: "045acec8-7d9e-4793-9917-c909a4a70887"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "djdj.mobomb.ir"
+    ws-opts:
+      headers:
+        Host: "djdj.mobomb.ir"
   - name: "🇹🇼TW_236_@Surfboardv2ray"
     type: "vless"
     server: "hinet2.gzcloud.shop"
@@ -635,6 +1151,18 @@ proxies:
       path: "/?ed=2048"
       headers:
         Host: "netherlands.vipserver14.workers.dev"
+  - name: "🇨🇦CA_238_@Surfboardv2ray"
+    type: "vless"
+    server: "104.16.63.239"
+    port: 80
+    uuid: "04969b01-ac6a-4056-b5cd-852ccf45f102"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/?ed=2048"
+      headers:
+        Host: "netherlands.vipserver14.workers.dev"
   - name: "🇩🇪DE_239_@Surfboardv2ray"
     type: "vless"
     server: "212.100.171.194"
@@ -648,6 +1176,14 @@ proxies:
     reality-opts:
       public-key: "4aKrDEJaWz_lNRA02ltvjqzh1GvI5wzB-ZPhANYYYU8"
       short-id: "9891d7"
+  - name: "🇮🇷IR_241_@Surfboardv2ray"
+    type: "vless"
+    server: "edge.aiteamplus.ir"
+    port: 10007
+    uuid: "04c9681a-277f-4d97-8922-1bc64bc1cc07"
+    udp: true
+    tls: false
+    network: "tcp"
   - name: "🇺🇸US_242_@Surfboardv2ray"
     type: "vless"
     server: "188.114.99.160"
@@ -702,6 +1238,18 @@ proxies:
     reality-opts:
       public-key: "Cd77a2MwzD46unl2zeLMK1Eq6UowXcl7lav_EophjG4"
       short-id: "fc9ebedf34"
+  - name: "🇨🇦CA_249_@Surfboardv2ray"
+    type: "vless"
+    server: "speedtest.net"
+    port: 80
+    uuid: "056d10f1-4ebd-40e1-9f78-c7e11fce5258"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/download"
+      headers:
+        Host: "sabzb2.global.ssl.fastly.net"
   - name: "🇨🇦CA_250_@Surfboardv2ray"
     type: "vless"
     server: "198.41.199.255"
@@ -855,6 +1403,14 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "🇵🇱PL_269_@Surfboardv2ray"
+    type: "vless"
+    server: "54.38.136.47"
+    port: 80
+    uuid: "07548ad1-b94e-44ee-90a1-3e6d879126db"
+    udp: true
+    tls: false
+    network: "tcp"
   - name: "🇨🇦CA_270_@Surfboardv2ray"
     type: "vless"
     server: "104.16.72.70"
@@ -941,6 +1497,14 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "🇨🇦CA_289_@Surfboardv2ray"
+    type: "vless"
+    server: "speedtest.net"
+    port: 80
+    uuid: "08633db1-df68-48c6-90d7-5cbf7e1465bc"
+    udp: true
+    tls: false
+    network: "xhttp"
   - name: "🇩🇪DE_290_@Surfboardv2ray"
     type: "vless"
     server: "del.hfgtek.ir"
@@ -993,6 +1557,22 @@ proxies:
     reality-opts:
       public-key: "nA87ol2_2BADZHfXhH00wy3fNe4R8TiGG_IQbzWbPnA"
       short-id: "56c96c1d14"
+  - name: "🇩🇪DE_295_@Surfboardv2ray"
+    type: "vless"
+    server: "a.r-o-o-t3.ir"
+    port: 443
+    uuid: "09548571-364e-4876-8e92-98f423e73913"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.linkedin.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "nA87ol2_2BADZHfXhH00wy3fNe4R8TiGG_IQbzWbPnA"
+      short-id: "56c96c1d14"
   - name: "🇫🇮FI_300_@Surfboardv2ray"
     type: "vless"
     server: "38.244.137.198"
@@ -1015,6 +1595,18 @@ proxies:
     tls: true
     network: "xhttp"
     servername: "vi.mojaz-persian-music.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+  - name: "🇸🇨SC_303_@Surfboardv2ray"
+    type: "vless"
+    server: "45.130.125.192"
+    port: 8443
+    uuid: "0a2f8145-290f-4848-a011-3d1e5fe62a14"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "vh.mojaz-persian-music.ir"
     client-fingerprint: "chrome"
     alpn:
       - "h2"
@@ -1328,6 +1920,20 @@ proxies:
     client-fingerprint: "chrome"
     ws-opts:
       path: "/ws"
+  - name: "🇨🇦CA_358_@Surfboardv2ray"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "0e9dd08d-e341-4c5d-b116-923842f5a9f9"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "web.whatsapp.com.cyylr.eu.cc"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/sg-melbi"
+      headers:
+        Host: "web.whatsapp.com.cyylr.eu.cc"
   - name: "🇨🇦CA_359_@Surfboardv2ray"
     type: "vless"
     server: "104.21.11.130"
@@ -1337,6 +1943,50 @@ proxies:
     tls: true
     network: "ws"
     servername: "miox99.pages.dev"
+    ws-opts:
+      path: "/index.html"
+  - name: "🇨🇦CA_362_@Surfboardv2ray"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "0f0b7f69-78e1-4e9e-8b35-0986444613e4"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "brev.pages.dev"
+    ws-opts:
+      path: "/index.html"
+  - name: "🇨🇦CA_363_@Surfboardv2ray"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "0f0b7f69-78e1-4e9e-8b35-0986444613e4"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ntrt.pages.dev"
+    ws-opts:
+      path: "/index.html"
+  - name: "🇨🇦CA_365_@Surfboardv2ray"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "0f0b7f69-78e1-4e9e-8b35-0986444613e4"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ve52.pages.dev"
+    ws-opts:
+      path: "/index.html"
+  - name: "🇨🇦CA_367_@Surfboardv2ray"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "0f0b7f69-78e1-4e9e-8b35-0986444613e4"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "vrnt4.pages.dev"
     ws-opts:
       path: "/index.html"
   - name: "🇩🇪DE_369_@Surfboardv2ray"
@@ -1404,6 +2054,19 @@ proxies:
     reality-opts:
       public-key: "23cb4W9THzBKsrECsLh-A_FcKZfkAtUONoDze8-GnQE"
       short-id: "e90360ec7cc61b20"
+  - name: "🇨🇦CA_377_@Surfboardv2ray"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "1043634e-8d9d-4736-83fa-f14ddc9d464c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "dfsuporte.garena.com.ex33r.eu.cc"
+    ws-opts:
+      path: "/id-amz"
+      headers:
+        Host: "dfsuporte.garena.com.ex33r.eu.cc"
   - name: "🇳🇱NL_385_@Surfboardv2ray"
     type: "vless"
     server: "162.217.249.133"
@@ -1578,6 +2241,19 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "🇨🇦CA_408_@Surfboardv2ray"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "1246e51a-97cd-4d5c-9842-76dd3420bbe2"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "investor.fb.com.r3xxe.eu.cc"
+    ws-opts:
+      path: "/id-tksi"
+      headers:
+        Host: "investor.fb.com.r3xxe.eu.cc"
   - name: "🇨🇦CA_409_@Surfboardv2ray"
     type: "vless"
     server: "104.16.72.162"
@@ -1592,6 +2268,19 @@ proxies:
       path: "/"
       headers:
         Host: "kakoolnews.dontsteal.workers.dev"
+  - name: "🇨🇦CA_410_@Surfboardv2ray"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "12d8b109-394d-4d0c-a208-2b9a41f09f36"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ads.ruangguru.com.cyylr.eu.cc"
+    ws-opts:
+      path: "/my-wbv"
+      headers:
+        Host: "ads.ruangguru.com.cyylr.eu.cc"
   - name: "🇩🇪DE_411_@Surfboardv2ray"
     type: "vless"
     server: "de2.niekotin.de"
@@ -1699,6 +2388,30 @@ proxies:
       path: "/"
       headers:
         Host: "craftedrpg.ir"
+  - name: "🇮🇷IR_427_@Surfboardv2ray"
+    type: "vless"
+    server: "snapp.ir"
+    port: 2052
+    uuid: "1662f026-bca9-4db7-8f85-e2c76d7073ff"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/ICVPNN"
+      headers:
+        Host: "vpn.ksmrx.ir"
+  - name: "🇮🇷IR_428_@Surfboardv2ray"
+    type: "vless"
+    server: "snapp.ir"
+    port: 80
+    uuid: "16d59f55-2cf7-49f0-81af-c6df88bb2976"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "do.pupload.ir"
   - name: "🇺🇸US_429_@Surfboardv2ray"
     type: "vless"
     server: "84.75.220.46"
@@ -1871,6 +2584,19 @@ proxies:
       path: "/@JavidnamanIran/Javid-SHAH-KingRezaPahlavi/"
       headers:
         Host: "crm.lotussec.com"
+  - name: "🇨🇦CA_442_@Surfboardv2ray"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "17540a16-a0dd-5694-7e1e-14e281ccc032"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "crm.lotussec.com"
+    ws-opts:
+      path: "/@JavidnamanIran/Javid-SHAH-KingRezaPahlavi/"
+      headers:
+        Host: "crm.lotussec.com"
   - name: "🇺🇸US_443_@Surfboardv2ray"
     type: "vless"
     server: "66.81.247.155"
@@ -1993,6 +2719,22 @@ proxies:
     tls: true
     network: "ws"
     servername: "fr.connfull.org"
+    ws-opts:
+      path: "/stream"
+      headers:
+        Host: "fr.connfull.org"
+  - name: "🇫🇷FR_457_@Surfboardv2ray"
+    type: "vless"
+    server: "fr.connfull.org"
+    port: 9443
+    uuid: "19f51967-ca91-4fab-a37b-51c424de801d"
+    udp: true
+    tls: true
+    network: "ws"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
     ws-opts:
       path: "/stream"
       headers:
@@ -2146,6 +2888,18 @@ proxies:
     reality-opts:
       public-key: "3LUIM_6cYceTgNt6LWnR8YSVrenpLsh-FIGDrmfjjwc"
       short-id: "5e841fab"
+  - name: "🇳🇱NL_481_@Surfboardv2ray"
+    type: "vless"
+    server: "62.238.32.25"
+    port: 443
+    uuid: "1b9e301d-cecd-4eb1-8b36-eef811c2696d"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yastatic.net"
+    reality-opts:
+      public-key: "3LUIM_6cYceTgNt6LWnR8YSVrenpLsh-FIGDrmfjjwc"
+      short-id: "5e841fab"
   - name: "🇩🇪DE_482_@Surfboardv2ray"
     type: "vless"
     server: "de1.vitok.cc"
@@ -2174,6 +2928,35 @@ proxies:
     reality-opts:
       public-key: "3LUIM_6cYceTgNt6LWnR8YSVrenpLsh-FIGDrmfjjwc"
       short-id: "5e841fab"
+  - name: "🇨🇦CA_485_@Surfboardv2ray"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "1c94a079-e41d-48d3-b5b6-d8f7f761a00d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "SILENt-kiNG-5030.AipRoINteR.WorkErS.DEv"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/eyJqdW5rIjoiZ3RXWk45UVhpRVB3R3VPIiwicHJvdG9jb2wiOiJ2bCIsIm1vZGUiOiJwcmVmaXgiLCJwYW5lbElQcyI6WyJbMjYwMjpmYzU5OjExOjY0OjpdIl19?ed=2560"
+      headers:
+        Host: "silent-king-5030.aiprointer.workers.dev"
+  - name: "🇨🇦CA_487_@Surfboardv2ray"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "1ce9392f-caf4-48f7-bbb9-475b101fbde0"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "graph.instagram.com.cyylr.eu.cc"
+    ws-opts:
+      path: "/id-tksi"
+      headers:
+        Host: "graph.instagram.com.cyylr.eu.cc"
   - name: "🇨🇦CA_488_@Surfboardv2ray"
     type: "vless"
     server: "162.159.152.177"
@@ -2236,6 +3019,21 @@ proxies:
       - "h3"
     ws-opts:
       path: "/Telegram@V2ray_Alpha/?ed=2560"
+      headers:
+        Host: "pages.teasalo.cloudns.org"
+  - name: "🇨🇦CA_495_@Surfboardv2ray"
+    type: "vless"
+    server: "162.159.153.67"
+    port: 443
+    uuid: "1d399c5a-1c32-4fff-a4d0-d78fd3328a4c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "pages.teasalo.cloudns.org"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+    ws-opts:
       headers:
         Host: "pages.teasalo.cloudns.org"
   - name: "🇨🇦CA_497_@Surfboardv2ray"
@@ -2389,6 +3187,18 @@ proxies:
       path: "/sg-amz"
       headers:
         Host: "support.zoom.us.cyylr.eu.cc"
+  - name: "🇮🇷IR_518_@Surfboardv2ray"
+    type: "vless"
+    server: "snapp.ir"
+    port: 80
+    uuid: "1ecfc07d-5ab5-46cd-8438-02ff221b1881"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "kabotar.garfar.ir"
   - name: "🇨🇦CA_519_@Surfboardv2ray"
     type: "vless"
     server: "cedan.royalv.shop"
@@ -2423,6 +3233,20 @@ proxies:
   - name: "🇨🇦CA_524_@Surfboardv2ray"
     type: "vless"
     server: "104.18.26.26"
+    port: 443
+    uuid: "1f1835c6-7401-4798-be18-50d6a7b0e1ba"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "www.walkerpubg.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+  - name: "🇨🇦CA_526_@Surfboardv2ray"
+    type: "vless"
+    server: "188.114.97.6"
     port: 443
     uuid: "1f1835c6-7401-4798-be18-50d6a7b0e1ba"
     udp: true
@@ -2546,6 +3370,19 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "🇨🇦CA_549_@Surfboardv2ray"
+    type: "vless"
+    server: "104.18.26.90"
+    port: 2087
+    uuid: "213426db-afb7-48d1-ae51-5093317212df"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "iopl90nn.bingnet.online"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "iopl90nn.bingnet.online"
   - name: "🇨🇦CA_550_@Surfboardv2ray"
     type: "vless"
     server: "104.21.55.47"
@@ -2603,6 +3440,18 @@ proxies:
     network: "tcp"
     servername: "speedtest.net"
     flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "RWE5ORdQ2SzuFWX8DlaRP415wbhee9ynJkqC7yFPgQw"
+      short-id: "d13ddfca12760d03"
+  - name: "🇩🇪DE_557_@Surfboardv2ray"
+    type: "vless"
+    server: "51.195.116.82"
+    port: 443
+    uuid: "21c25bef-eb3b-44a8-9b26-fa7f674e5bfc"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "speedtest.net"
     reality-opts:
       public-key: "RWE5ORdQ2SzuFWX8DlaRP415wbhee9ynJkqC7yFPgQw"
       short-id: "d13ddfca12760d03"
@@ -2714,6 +3563,30 @@ proxies:
     ws-opts:
       headers:
         Host: "sRv80.hAMiIbaR.CoM"
+  - name: "🇭🇺HU_570_@Surfboardv2ray"
+    type: "vless"
+    server: "love.ns.cloudflare.com"
+    port: 80
+    uuid: "22c15b3f-e205-48e2-9b30-1a2c3480e7b2"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "sRv16.hAMiIbaR.CoM"
+  - name: "🇭🇺HU_575_@Surfboardv2ray"
+    type: "vless"
+    server: "love.ns.cloudflare.com"
+    port: 80
+    uuid: "22c15b3f-e205-48e2-9b30-1a2c3480e7b2"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "sRv42.hAMiIbaR.CoM"
   - name: "🇬🇧GB_579_@Surfboardv2ray"
     type: "vless"
     server: "91.223.236.155"
@@ -2827,6 +3700,23 @@ proxies:
       - "http/1.1"
     ws-opts:
       path: "/"
+  - name: "🇨🇦CA_590_@Surfboardv2ray"
+    type: "vless"
+    server: "ip.shakhle.ir"
+    port: 2083
+    uuid: "260f19e2-41c2-4f0c-870f-ab7e28e72ef6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ipv4.yasharteam.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "ipv4.yasharteam.com"
   - name: "🇨🇦CA_591_@Surfboardv2ray"
     type: "vless"
     server: "199.232.196.193"
@@ -2889,6 +3779,19 @@ proxies:
     reality-opts:
       public-key: "5SgHD-gGUW9bV9RfdRln9IHgE0slOojBxvNpUMe2BDs"
       short-id: "7da381"
+  - name: "🇸🇨SC_601_@Surfboardv2ray"
+    type: "vless"
+    server: "45.130.125.194"
+    port: 8443
+    uuid: "26e2b8e8-45d6-43fa-aec9-10f9ce8f7e68"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "ssj.new-persian-song.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
   - name: "🇨🇳CN_602_@Surfboardv2ray"
     type: "vless"
     server: "122.8.44.3"
@@ -2901,6 +3804,60 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "UvQ2HZFkQXrBiaprbcmks-aFo1dvnfPlHXcUKcl-i04"
+  - name: "🇨🇦CA_603_@Surfboardv2ray"
+    type: "vless"
+    server: "104.21.11.130"
+    port: 443
+    uuid: "27302727-9dfa-4975-990e-88c7a63747cd"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "chatgpt.arpa.fz.wikipedia.org.xn--m39h.www.cdn.speedtest.net.h.google.ru.zula.ir.1.1.1.xn--6bi8548mabeaana921b9b830dbbb0nn92a.tls.xn--mn8haaaaa252bbabbbb.xn--mn8haaaaa252bbabbbb.fake.xn--j9h1028mqmaoytii00aha21hfjrd.aparat.com.zula.ir.wts.ip-dynamic.org"
+    ws-opts:
+      path: "/index.html?ed=2048"
+  - name: "🇨🇦CA_604_@Surfboardv2ray"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "27302727-9dfa-4975-990e-88c7a63747cd"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "d101.fa.wikipedia.org.xn--m39h.www.cdn.speedtest.net.h2.google.ru.zula.ir.1.1.1.xn--6bi8548mabeaana921b9b830dbbb0nn92a.tls.xn--mn8haaaaa252bbabbbb.xn--mn8haaaaa252bbabbbb.fake.xn--j9h1028mqmaoytii00aha21hfjrd.aparat.com.zula.ir.wts.ip-dynamic.org"
+    ws-opts:
+      path: "/index.html"
+  - name: "🇨🇦CA_606_@Surfboardv2ray"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "27302727-9dfa-4975-990e-88c7a63747cd"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "tc.amoovictor.cc.cd"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/?ed=2048"
+      headers:
+        Host: "tc.amoovictor.cc.cd"
+  - name: "🇨🇦CA_607_@Surfboardv2ray"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "27302727-9dfa-4975-990e-88c7a63747cd"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "xv2.irx.cc.cd"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/?ed=2048"
+      headers:
+        Host: "xv2.irx.cc.cd"
   - name: "🇨🇦CA_608_@Surfboardv2ray"
     type: "vless"
     server: "speedtest.net"
@@ -2944,6 +3901,43 @@ proxies:
       path: "/id-pusat"
       headers:
         Host: "dfsuporte.garena.com.ex33r.eu.cc"
+  - name: "🇺🇸US_624_@Surfboardv2ray"
+    type: "vless"
+    server: "140.248.187.74"
+    port: 80
+    uuid: "289591d4-bfab-4092-85db-b97772b109de"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "ws/?ed=2048/@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz/?2048"
+      headers:
+        Host: "rb24.ir"
+  - name: "🇩🇪DE_625_@Surfboardv2ray"
+    type: "vless"
+    server: "146.75.119.82"
+    port: 80
+    uuid: "289591d4-bfab-4092-85db-b97772b109de"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "ws/?ed=2048/@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz@AzadMarz/?2048"
+      headers:
+        Host: "rb24.ir"
+  - name: "🇸🇨SC_626_@Surfboardv2ray"
+    type: "vless"
+    server: "45.130.125.194"
+    port: 8443
+    uuid: "292a9789-075a-4969-8597-cacb6cc2f719"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "vip.mojaz-persian-music.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
   - name: "🇹🇷TR_627_@Surfboardv2ray"
     type: "vless"
     server: "helixgaming.ir"
@@ -3074,6 +4068,18 @@ proxies:
       path: "/hyperlink-hyperlink-join-to-hyperlink-hyperlink_ch-hyperlink-hlink_robot-hyperlink"
       headers:
         Host: "hyperlink-free.poweredproyuz.com"
+  - name: "🇨🇦CA_646_@Surfboardv2ray"
+    type: "vless"
+    server: "hyperlink-free.poweredproyuz.com"
+    port: 443
+    uuid: "2be7b933-c720-4838-a35a-740ae50987ee"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/hyperlink-hyperlink-join-to-hyperlink-hyperlink_ch-hyperlink-hlink_robot-hyperlink"
+      headers:
+        Host: "hyperlink-free.poweredproyuz.com"
   - name: "🇩🇪DE_648_@Surfboardv2ray"
     type: "vless"
     server: "43.175.169.174"
@@ -3102,599 +4108,33 @@ proxies:
       path: "/16838/c89d26b724fe/"
       headers:
         Host: "smtp.mmadcoffee.info"
-  - name: "🇩🇪DE_659_@Surfboardv2ray"
+  - name: "🇸🇨SC_650_@Surfboardv2ray"
     type: "vless"
-    server: "178.104.146.153"
-    port: 25990
-    uuid: "2d392cd2-1e79-4be2-bb0d-3c537d6560a1"
-    udp: true
-    tls: false
-    network: "tcp"
-  - name: "🇨🇦CA_662_@Surfboardv2ray"
-    type: "vless"
-    server: "151.101.66.219"
-    port: 443
-    uuid: "2d813293-d830-43af-b81e-1b257330cf5a"
+    server: "45.130.125.194"
+    port: 8443
+    uuid: "2d11f9a7-5cb9-4a76-acbe-0064305b570a"
     udp: true
     tls: true
-    network: "ws"
-    servername: "speedtest.net"
+    network: "xhttp"
+    servername: "vi.new-persian-song.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+  - name: "🇸🇨SC_658_@Surfboardv2ray"
+    type: "vless"
+    server: "45.130.125.194"
+    port: 8443
+    uuid: "2d11f9a7-5cb9-4a76-acbe-0064305b570a"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "vi.new-persian-song.ir"
     client-fingerprint: "chrome"
     alpn:
       - "h3"
       - "h2"
       - "http/1.1"
-    ws-opts:
-      path: "/pKkBrz3q4hs5kZOO/MTI5LjE1NC41MC4xNTk=?ed=2560"
-      headers:
-        Host: "hopework.ir"
-  - name: "🇯🇵JP_663_@Surfboardv2ray"
-    type: "vless"
-    server: "151.101.109.223"
-    port: 443
-    uuid: "2de9abb3-21f7-4d66-ab0f-d9309a951a28"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "biography.com"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h3"
-      - "h2"
-      - "http/1.1"
-  - name: "🇨🇦CA_665_@Surfboardv2ray"
-    type: "vless"
-    server: "172.67.71.217"
-    port: 443
-    uuid: "2df56fd0-d1b7-4793-b877-acd356d960f7"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "pages.dev"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/?ed=8080"
-      headers:
-        Host: "download-93w.pages.dev"
-  - name: "🇨🇴CO_666_@Surfboardv2ray"
-    type: "vless"
-    server: "1.call-me-seyed.ir"
-    port: 8080
-    uuid: "2e409cdc-d0c9-4fc0-b285-9371034b8002"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/"
-  - name: "🇫🇮FI_671_@Surfboardv2ray"
-    type: "vless"
-    server: "1.glitchout.ir"
-    port: 443
-    uuid: "2e409cdc-d0c9-4fc0-b285-9371034b8002"
-    udp: true
-    tls: false
-    network: "tcp"
-  - name: "🇮🇷IR_677_@Surfboardv2ray"
-    type: "vless"
-    server: "3.glitchshop.ir"
-    port: 8080
-    uuid: "2e409cdc-d0c9-4fc0-b285-9371034b8002"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/"
-  - name: "🇮🇷IR_678_@Surfboardv2ray"
-    type: "vless"
-    server: "5.call-me-seyed.ir"
-    port: 2053
-    uuid: "2e409cdc-d0c9-4fc0-b285-9371034b8002"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/"
-  - name: "🇹🇷TR_679_@Surfboardv2ray"
-    type: "vless"
-    server: "6.call-me-seyed.ir"
-    port: 2052
-    uuid: "2e409cdc-d0c9-4fc0-b285-9371034b8002"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/"
-  - name: "🇹🇷TR_681_@Surfboardv2ray"
-    type: "vless"
-    server: "five.paliss.ir"
-    port: 443
-    uuid: "2e409cdc-d0c9-4fc0-b285-9371034b8002"
-    udp: true
-    tls: false
-    network: "tcp"
-  - name: "🇨🇦CA_688_@Surfboardv2ray"
-    type: "vless"
-    server: "uwu.blueknightnet.qzz.io"
-    port: 8443
-    uuid: "2e4d63d2-7070-460e-95f5-dd009473440f"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "uwu.blueknightnet.qzz.io"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-  - name: "🇨🇦CA_689_@Surfboardv2ray"
-    type: "vless"
-    server: "173.245.58.9"
-    port: 2096
-    uuid: "2e7306af-9f3b-44bc-8632-a45fccb18bb2"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "v2ngfast.xswqaz11215.workers.dev"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/v2ngfast---v2ngfast---v2ngfast---v2ngfast---v2ngfast"
-      headers:
-        Host: "v2ngfast.xswqaz11215.workers.dev"
-  - name: "🇮🇷IR_690_@Surfboardv2ray"
-    type: "vless"
-    server: "fl.v2online3.site"
-    port: 24025
-    uuid: "2ec06433-4bde-4282-8199-bdd0327126fd"
-    udp: true
-    tls: false
-    network: "tcp"
-  - name: "🇬🇧GB_691_@Surfboardv2ray"
-    type: "vless"
-    server: "31.76.11.23"
-    port: 443
-    uuid: "2ef58e73-7a43-4ced-8684-be3d8f2053ef"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "yahoo.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "osEhagNBzNX0-sPke0KR0dNC5OBu5xjPT2XLr7A_gVc"
-      short-id: "33c3c2daaa6fa61a"
-  - name: "🇬🇧GB_693_@Surfboardv2ray"
-    type: "vless"
-    server: "25.129.199.122"
-    port: 2096
-    uuid: "2fb8808b-b94c-42ea-9dd2-cd77d2efcc8d"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "DiGIkALaA.dpdns.ORG"
-    client-fingerprint: "chrome"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/eyJqdW5rIjoidDZLaDRBMWhpIiwicHJvdG9jb2wiOiJ2bCIsIm1vZGUiOiJwcm94eWlwIiwicGFuZWxJUHMiOltdfQ"
-      headers:
-        Host: "digikalaa.dpdns.org"
-  - name: "🇫🇮FI_694_@Surfboardv2ray"
-    type: "vless"
-    server: "193.233.23.196"
-    port: 26048
-    uuid: "3007b043-acdf-43a4-900e-c7c015406f89"
-    udp: true
-    tls: false
-    network: "tcp"
-  - name: "🇵🇱PL_696_@Surfboardv2ray"
-    type: "vless"
-    server: "45.140.204.119"
-    port: 443
-    uuid: "30143e07-b734-4bd6-867c-7daf4782cccb"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "yahoo.com"
-    reality-opts:
-      public-key: "vl5WQd9UDA3DvLxPPS1yF9ivUipxkxoxhaBRHpnyLho"
-      short-id: "67fb"
-  - name: "🇹🇷TR_697_@Surfboardv2ray"
-    type: "vless"
-    server: "onnevpn.dibaux.ir"
-    port: 80
-    uuid: "3098d602-5103-4bc3-b3bd-7dda94c26af0"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/stream"
-      headers:
-        Host: "onnevpn.dibaux.ir"
-  - name: "🇸🇪SE_700_@Surfboardv2ray"
-    type: "vless"
-    server: "dd.openaccessnode.com"
-    port: 504
-    uuid: "31701b5d-ca95-92f9-d684-dae3706161ea"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "nobitex.ir"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "aNLPNNyjIC7QYLe7MpF4nxxHhO421dBSZaQgsDd1szs"
-      short-id: "1d64e9805b4f9ae3"
-    grpc-opts:
-      grpc-service-name: "JNIR"
-  - name: "🇨🇦CA_703_@Surfboardv2ray"
-    type: "vless"
-    server: "104.17.104.74"
-    port: 2096
-    uuid: "3193066d-6f38-4466-80b6-40ce3bcd4b54"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "late-leaf-f4d0.java00code.workers.dev"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "late-leaf-f4d0.java00code.workers.dev"
-  - name: "🇨🇦CA_704_@Surfboardv2ray"
-    type: "vless"
-    server: "198.41.192.42"
-    port: 2053
-    uuid: "3193066d-6f38-4466-80b6-40ce3bcd4b54"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "late-leaf-f4d0.java00code.workers.dev"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "late-leaf-f4d0.java00code.workers.dev"
-  - name: "🇷🇺RU_705_@Surfboardv2ray"
-    type: "vless"
-    server: "freetg.strettenvpn.com"
-    port: 443
-    uuid: "31fb98b7-e7a1-4b56-8c6a-3f060f06393c"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "eh.vk.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "yhUfTGgu5PYRlFqMnRZkxffH_aU05AFUToGI8_EKF28"
-      short-id: "8248954896"
-  - name: "🇮🇷IR_708_@Surfboardv2ray"
-    type: "vless"
-    server: "blubank.ir"
-    port: 80
-    uuid: "321be3ae-f91e-4714-b6b9-db3a40e1f962"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/?---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---@Fear_Config---"
-      headers:
-        Host: "po.masterdadeh.ir"
-  - name: "🇨🇦CA_712_@Surfboardv2ray"
-    type: "vless"
-    server: "151.101.194.133"
-    port: 443
-    uuid: "32dbe23a-852e-44a8-9dc2-80188643f550"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "mio.splashthat.com"
-    ws-opts:
-      path: "/telegram-@Sobi_Vpn,telegram-@Sobi_Vpn,telegram-@Sobi_Vpn,telegram-@Sobi_Vpn,telegram-@Sobi_Vpn,telegram-@Sobi_Vpn,telegram-@Sobi_Vpn,telegram-@Sobi_Vpn,telegram-@Sobi_Vpn,telegram-@Sobi_Vpn,telegram-@Sobi_Vpn,telegram-@Sobi_Vpn,telegram-@Sobi_Vpn,telegram-@Sobi_Vpn,telegram-@Sobi_Vpn,telegram-@Sobi_Vpn,telegram-@Sobi_Vpn,telegram-@Sobi_Vpn?ed=2048"
-      headers:
-        Host: "moeinzp.com"
-  - name: "🇨🇦CA_713_@Surfboardv2ray"
-    type: "vless"
-    server: "104.18.151.111"
-    port: 443
-    uuid: "330ecbcf-fe89-481e-ace8-de75c78b372f"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "netmelii.securebrowsing.top"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-      - "http/1.1"
-  - name: "🇳🇱NL_714_@Surfboardv2ray"
-    type: "vless"
-    server: "89.124.69.82"
-    port: 1310
-    uuid: "33bb6880-03c0-5ada-b3fe-4c5300cbd8b4"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/@v2raydia--@v2raydia--@v2raydia--@v2raydia--@v2raydia--@v2raydia--@v2raydia--@v2raydia--@v2raydia--@v2raydia--@v2raydia--@v2raydia--@v2raydia--@v2raydia--@v2raydia--@v2raydia--@v2raydia--@v2raydia--@v2raydia"
-      headers:
-        Host: "play.google.com"
-  - name: "🇨🇦CA_715_@Surfboardv2ray"
-    type: "vless"
-    server: "nodejs.org"
-    port: 80
-    uuid: "33e1a095-1e25-4198-bfe7-ec312e4f98ee"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/?ed"
-      headers:
-        Host: "CREDibLe-pLaNt7ddV4jJ7et.OnEeaT.CO."
-  - name: "🇨🇦CA_716_@Surfboardv2ray"
-    type: "vless"
-    server: "188.114.97.6"
-    port: 80
-    uuid: "33ebe52d-cd35-4d0f-a3e9-14adb7ff1ff4"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/id-tksi"
-      headers:
-        Host: "www.genflix.co.id.r3xxe.eu.cc"
-  - name: "🇭🇰HK_717_@Surfboardv2ray"
-    type: "vless"
-    server: "103.119.19.201"
-    port: 2087
-    uuid: "347a56c2-a453-4b32-86cd-7522943df88c"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "api-maps.yandex.ru"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "vZuBWF0YzlKI0fJWxU6hmOLHHQ5Qb1kf35HbZDcFCH4"
-      short-id: "493c3d4e37c23c28"
-  - name: "🇵🇱PL_720_@Surfboardv2ray"
-    type: "vless"
-    server: "104.165.244.183"
-    port: 50095
-    uuid: "347a56c2-a453-4b32-86cd-7522943df88c"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn.jsdelivr.net"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "vZuBWF0YzlKI0fJWxU6hmOLHHQ5Qb1kf35HbZDcFCH4"
-      short-id: "f2e1861359398ff2"
-  - name: "🇩🇪DE_722_@Surfboardv2ray"
-    type: "vless"
-    server: "18.194.140.98"
-    port: 443
-    uuid: "348b9173-d353-48d7-82bc-8f15d4c7cd37"
-    udp: true
-    tls: false
-    network: "tcp"
-  - name: "🇮🇷IR_725_@Surfboardv2ray"
-    type: "vless"
-    server: "185.143.235.212"
-    port: 2095
-    uuid: "3546e90c-f80f-4a2d-adef-d0fc7788b5b8"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/wskhan"
-      headers:
-        Host: "dwn.budgetnet.ir"
-  - name: "🇫🇮FI_726_@Surfboardv2ray"
-    type: "vless"
-    server: "s2.dipvpn.ru"
-    port: 443
-    uuid: "3559f1f7-7d70-46c9-82db-d2b46269300b"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "dipvpn.ru"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "1BdgrQ_esOEya01sDCBYK4MGpJgaUhssHQG-aWJkyFQ"
-  - name: "🇵🇭PH_731_@Surfboardv2ray"
-    type: "vless"
-    server: "bypass.fr-gt-01.com"
-    port: 8443
-    uuid: "356ccb34-22cc-4446-a137-072bc60d65ca"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "storage.yandex.net"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "1oUeBtHH4DskTM_jCh-6enWRkFMDX9l1OU5kWYl4kxA"
-      short-id: "f34818a561dfd1fe"
-  - name: "🇸🇨SC_732_@Surfboardv2ray"
-    type: "vless"
-    server: "45.130.125.160"
-    port: 443
-    uuid: "358ca5cf-5406-493d-b872-a344988b2e11"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "ssj.new-persian-song.ir"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/?ed=80"
-      headers:
-        Host: "ssj.new-persian-song.ir"
-  - name: "🇸🇨SC_742_@Surfboardv2ray"
-    type: "vless"
-    server: "45.130.125.193"
-    port: 8443
-    uuid: "358ca5cf-5406-493d-b872-a344988b2e11"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "ssj.new-persian-song.ir"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-  - name: "🇨🇼CW_759_@Surfboardv2ray"
-    type: "vless"
-    server: "45.81.58.159"
-    port: 2096
-    uuid: "359b9ad3-0009-4655-8872-d0ab566751d3"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "e832b8629fff3263.hozheen.ir"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/ws?ed=2560"
-      headers:
-        Host: "newgen14.hozheen.ir"
-  - name: "🇮🇷IR_761_@Surfboardv2ray"
-    type: "vless"
-    server: "95.38.165.210"
-    port: 7171
-    uuid: "35d2f41b-0801-452c-8898-00f439ab1176"
-    udp: true
-    tls: false
-    network: "tcp"
-  - name: "🇨🇦CA_764_@Surfboardv2ray"
-    type: "vless"
-    server: "forallpanel.srtongston.ir"
-    port: 8880
-    uuid: "360eac19-0f97-4670-a313-1d22407d2c4e"
-    udp: true
-    tls: false
-    network: "httpupgrade"
-  - name: "🇳🇱NL_765_@Surfboardv2ray"
-    type: "vless"
-    server: "82.24.174.249"
-    port: 6443
-    uuid: "366c449d-5a75-4282-926c-9c7cc377cb9f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.intel.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "RFVI6MhvXwjK_NN4nLYMfXY9uNZGhdBvnDSrjhPf8xM"
-      short-id: "f927b6"
-  - name: "🇩🇪DE_766_@Surfboardv2ray"
-    type: "vless"
-    server: "blit2.hamrahcore.ir"
-    port: 719
-    uuid: "3686e17d-3b01-48e3-bbc2-3ec7d141b815"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/api/v2/xtrnwqjbkr?ed=2560"
-      headers:
-        Host: "play.google.com"
-  - name: "🇫🇷FR_767_@Surfboardv2ray"
-    type: "vless"
-    server: "162.19.181.42"
-    port: 443
-    uuid: "36ca3135-0164-417a-8eb5-038c74b8443c"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "dfloow.ir"
-  - name: "🇨🇦CA_770_@Surfboardv2ray"
-    type: "vless"
-    server: "104.17.147.22"
-    port: 2082
-    uuid: "370293a9-2757-4425-cfc0-d487035c26d6"
-    udp: true
-    tls: false
-    network: "httpupgrade"
-  - name: "🇨🇦CA_771_@Surfboardv2ray"
-    type: "vless"
-    server: "188.114.97.6"
-    port: 2095
-    uuid: "371dd7e4-c3ff-42de-aebc-0ab3bc62fb2d"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/?ed=2048"
-      headers:
-        Host: "daRk-CHOICEzJa8lf7vEO.SPORTLANd.cOmPany."
-  - name: "🇷🇺RU_772_@Surfboardv2ray"
-    type: "vless"
-    server: "185.221.199.37"
-    port: 443
-    uuid: "37253a6a-2a9b-42bb-992c-b5f1b1ef1791"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "vruaz.mostserv.xyz"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "3WzSgL8uXA3vE3IHrfdBpJmOO4MYrsWpczDSY_jJRjI"
-      short-id: "226509f017e4c36d"
-  - name: "🇫🇷FR_773_@Surfboardv2ray"
-    type: "vless"
-    server: "about.downloadnova.live"
-    port: 719
-    uuid: "373209d7-c464-4ad3-9027-07e94afad7d5"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/api/v2/xtrnwqjbkr?ed=2560"
-      headers:
-        Host: "play.google.com"
-  - name: "🇨🇦CA_774_@Surfboardv2ray"
-    type: "vless"
-    server: "downloadnova.center"
-    port: 80
-    uuid: "373209d7-c464-4ad3-9027-07e94afad7d5"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "🇩🇪DE_775_@Surfboardv2ray"
-    type: "vless"
-    server: "www.downloadnova.live"
-    port: 719
-    uuid: "373209d7-c464-4ad3-9027-07e94afad7d5"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/api/v2/xtrnwqjbkr?ed=2560"
-      headers:
-        Host: "play.google.com"
-  - name: "🇵🇱PL_777_@Surfboardv2ray"
-    type: "vless"
-    server: "128.204.223.94"
-    port: 9815
-    uuid: "37a0bd7c-8b9f-4693-8916-bd1e2da0a817"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "beichuan.serv00.net"
-  - name: "🇸🇬SG_782_@Surfboardv2ray"
-    type: "vless"
-    server: "cncdn.cc"
-    port: 80
-    uuid: "37c8b06a-25cf-42d7-b2ea-31d3c8561998"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/14708/31d3c8561998/"
-      headers:
-        Host: "imap.mmadcoffee.info"
   - name: "🇺🇸US_1_@Surfboardv2ray"
     type: "vmess"
     server: "156.239.47.83"
@@ -4398,6 +4838,14 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
+  - name: "🇮🇷IR_102_@Surfboardv2ray"
+    type: "vmess"
+    server: "185.42.212.222"
+    port: 26052
+    uuid: "3547b4d7-67d3-42b7-81ea-5d0c34a0bd97"
+    alterId: 0
+    cipher: "auto"
+    udp: true
   - name: "🇨🇦CA_103_@Surfboardv2ray"
     type: "vmess"
     server: "188.114.96.145"
@@ -4430,6 +4878,13 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
+  - name: "🇭🇰HK_108_@Surfboardv2ray"
+    type: "vmess"
+    server: "213.156.141.52"
+    port: 22324
+    uuid: "04621bae-ab36-11ec-b909-0242ac120002"
+    alterId: 0
+    udp: true
   - name: "🇺🇸US_109_@Surfboardv2ray"
     type: "vmess"
     server: "216.106.183.35"
@@ -4458,6 +4913,14 @@ proxies:
     server: "tr1-smart.adelping.com"
     port: 80
     uuid: "68c8f462-8468-4931-90a8-680c3d6cb3c1"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇹🇷TR_113_@Surfboardv2ray"
+    type: "vmess"
+    server: "tr1-smart.adelping.com"
+    port: 80
+    uuid: "43dcdce1-3cea-4193-bc8d-90b92071d779"
     alterId: 0
     cipher: "auto"
     udp: true
@@ -4493,32 +4956,170 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
+  - name: "🇨🇦CA_121_@Surfboardv2ray"
+    type: "vmess"
+    server: "www.speedtest.net"
+    port: 8080
+    uuid: "72f5bd85-6d92-4644-a1c4-542a92896a8b"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇨🇦CA_124_@Surfboardv2ray"
+    type: "vmess"
+    server: "TM_AZARBAYJAB1.SERV.9.pagES.DEV"
+    port: 80
+    uuid: "43dcdce1-3cea-4193-bc8d-90b92071d779"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇨🇦CA_125_@Surfboardv2ray"
+    type: "vmess"
+    server: "aris.arisping-ir.store"
+    port: 443
+    uuid: "67f79907-6163-475c-b5ba-2a3faa0c02c5"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇮🇷IR_126_@Surfboardv2ray"
+    type: "vmess"
+    server: "cdn.ip-static.com"
+    port: 80
+    uuid: "d43298d4-71d2-4c75-ba79-9a67c47acab3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇩🇪DE_127_@Surfboardv2ray"
+    type: "vmess"
+    server: "de.connfull.org"
+    port: 2053
+    uuid: "f2ff4ae6-cf2d-4d15-9f0d-b6d9980df9aa"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇩🇪DE_128_@Surfboardv2ray"
+    type: "vmess"
+    server: "de5.taskflowhub.org"
+    port: 2053
+    uuid: "ca58b165-0f7d-49aa-9fae-a017e8a0f884"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰HK_132_@Surfboardv2ray"
+    type: "vmess"
+    server: "e0349a52-sv8cg0-t7uinf-i8ie.hk3.p5pv.com"
+    port: 80
+    uuid: "990e8f34-bd4f-11ef-bdb9-f23c91cfbbc9"
+    alterId: 2
+    cipher: "auto"
+    udp: true
+  - name: "🇨🇦CA_133_@Surfboardv2ray"
+    type: "vmess"
+    server: "heu83ujieiwoeu83j2ewjehuwehu8.dentiscan.ca"
+    port: 80
+    uuid: "e2923bc6-8204-4768-98ea-379d48ea8a7a"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇺🇸US_134_@Surfboardv2ray"
+    type: "vmess"
+    server: "jp02.a0a.xyz"
+    port: 25686
+    uuid: "6733c357-ba11-4e9f-f00f-7d87f2776ff9"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇮🇷IR_135_@Surfboardv2ray"
+    type: "vmess"
+    server: "lite.myfootage.ir"
+    port: 50913
+    uuid: "0fc07318-1b81-4662-9f28-1c3e63c77c9c"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇫🇷FR_136_@Surfboardv2ray"
+    type: "vmess"
+    server: "node-fr.connectsuite.org"
+    port: 2053
+    uuid: "2f4234f9-8f33-4c7f-952f-565ffa5f5fb7"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇮🇷IR_137_@Surfboardv2ray"
+    type: "vmess"
+    server: "nya.nyav2.info"
+    port: 20277
+    uuid: "9ed5fbba-ec0f-4e14-8b59-489bfeaf790d"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇮🇷IR_138_@Surfboardv2ray"
+    type: "vmess"
+    server: "s2.abtinphone.com"
+    port: 57392
+    uuid: "47e09a9f-4909-4e2b-8c5c-a37e5b3d26e3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇨🇦CA_139_@Surfboardv2ray"
+    type: "vmess"
+    server: "speedtest.org"
+    port: 80
+    uuid: "58fe1542-5290-40ad-815a-77707a81afe5"
+    alterId: 0
+    cipher: "chacha20-poly1305"
+    udp: true
+  - name: "🇨🇦CA_140_@Surfboardv2ray"
+    type: "vmess"
+    server: "static.cloudflareinsights.com"
+    port: 443
+    uuid: "09548571-364e-4876-8e92-98f423e73913"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇨🇦CA_1443_@Surfboardv2ray"
+    type: "http"
+    server: "dns.alidns.com"
+    port: 443
+    tls: true
+    username: ""
+    password: ""
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
+    icon: "https://www.svgrepo.com/show/412721/choose.svg"
     proxies:
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
+      - "توزیع بار چرخشی ⚖️"
       - "قطع اینترنت ⛔"
+      - "بدون فیلترشکن 🛡️"
   - name: "دستی 🤏🏻"
     type: "select"
+    icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
       - "🇰🇷KR_142_@Surfboardv2ray"
       - "🇰🇷KR_143_@Surfboardv2ray"
       - "🇯🇵JP_144_@Surfboardv2ray"
       - "🇰🇷KR_146_@Surfboardv2ray"
       - "🇺🇸US_147_@Surfboardv2ray"
+      - "🇺🇸US_148_@Surfboardv2ray"
       - "🇺🇸US_149_@Surfboardv2ray"
+      - "🇺🇸US_150_@Surfboardv2ray"
       - "🇯🇵JP_151_@Surfboardv2ray"
+      - "🇯🇵JP_153_@Surfboardv2ray"
       - "🇩🇪DE_154_@Surfboardv2ray"
+      - "🇩🇪DE_155_@Surfboardv2ray"
       - "🇯🇵JP_156_@Surfboardv2ray"
+      - "🇯🇵JP_157_@Surfboardv2ray"
       - "🇸🇬SG_158_@Surfboardv2ray"
       - "🇸🇬SG_159_@Surfboardv2ray"
+      - "🇸🇬SG_161_@Surfboardv2ray"
       - "🇬🇧GB_162_@Surfboardv2ray"
       - "🇺🇸US_163_@Surfboardv2ray"
       - "🇨🇦CA_164_@Surfboardv2ray"
+      - "🇨🇦CA_165_@Surfboardv2ray"
       - "🇨🇦CA_166_@Surfboardv2ray"
+      - "🇨🇦CA_167_@Surfboardv2ray"
       - "🇨🇦CA_168_@Surfboardv2ray"
       - "🇺🇸US_172_@Surfboardv2ray"
       - "🇨🇦CA_174_@Surfboardv2ray"
@@ -4545,13 +5146,17 @@ proxy-groups:
       - "🇩🇪DE_206_@Surfboardv2ray"
       - "🇮🇷IR_224_@Surfboardv2ray"
       - "🇨🇦CA_225_@Surfboardv2ray"
+      - "🇨🇦CA_226_@Surfboardv2ray"
       - "🇹🇼TW_236_@Surfboardv2ray"
       - "🇨🇦CA_237_@Surfboardv2ray"
+      - "🇨🇦CA_238_@Surfboardv2ray"
       - "🇩🇪DE_239_@Surfboardv2ray"
+      - "🇮🇷IR_241_@Surfboardv2ray"
       - "🇺🇸US_242_@Surfboardv2ray"
       - "🇫🇷FR_244_@Surfboardv2ray"
       - "🇩🇪DE_245_@Surfboardv2ray"
       - "🇳🇱NL_247_@Surfboardv2ray"
+      - "🇨🇦CA_249_@Surfboardv2ray"
       - "🇨🇦CA_250_@Surfboardv2ray"
       - "🇩🇪DE_252_@Surfboardv2ray"
       - "🇨🇦CA_254_@Surfboardv2ray"
@@ -4564,6 +5169,7 @@ proxy-groups:
       - "🇨🇦CA_263_@Surfboardv2ray"
       - "🇨🇦CA_265_@Surfboardv2ray"
       - "🇵🇱PL_266_@Surfboardv2ray"
+      - "🇵🇱PL_269_@Surfboardv2ray"
       - "🇨🇦CA_270_@Surfboardv2ray"
       - "🇱🇻LV_272_@Surfboardv2ray"
       - "🇮🇷IR_273_@Surfboardv2ray"
@@ -4573,12 +5179,15 @@ proxy-groups:
       - "🇮🇷IR_286_@Surfboardv2ray"
       - "🇮🇷IR_287_@Surfboardv2ray"
       - "🇮🇷IR_288_@Surfboardv2ray"
+      - "🇨🇦CA_289_@Surfboardv2ray"
       - "🇩🇪DE_290_@Surfboardv2ray"
       - "🇨🇦CA_291_@Surfboardv2ray"
       - "🇨🇦CA_293_@Surfboardv2ray"
       - "🇩🇪DE_294_@Surfboardv2ray"
+      - "🇩🇪DE_295_@Surfboardv2ray"
       - "🇫🇮FI_300_@Surfboardv2ray"
       - "🇸🇨SC_301_@Surfboardv2ray"
+      - "🇸🇨SC_303_@Surfboardv2ray"
       - "🇸🇨SC_304_@Surfboardv2ray"
       - "🇨🇦CA_310_@Surfboardv2ray"
       - "🇨🇦CA_311_@Surfboardv2ray"
@@ -4608,12 +5217,18 @@ proxy-groups:
       - "🇫🇮FI_354_@Surfboardv2ray"
       - "🇮🇷IR_356_@Surfboardv2ray"
       - "🇳🇱NL_357_@Surfboardv2ray"
+      - "🇨🇦CA_358_@Surfboardv2ray"
       - "🇨🇦CA_359_@Surfboardv2ray"
+      - "🇨🇦CA_362_@Surfboardv2ray"
+      - "🇨🇦CA_363_@Surfboardv2ray"
+      - "🇨🇦CA_365_@Surfboardv2ray"
+      - "🇨🇦CA_367_@Surfboardv2ray"
       - "🇩🇪DE_369_@Surfboardv2ray"
       - "🇮🇷IR_370_@Surfboardv2ray"
       - "🇮🇷IR_371_@Surfboardv2ray"
       - "🇷🇺RU_373_@Surfboardv2ray"
       - "🇨🇿CZ_374_@Surfboardv2ray"
+      - "🇨🇦CA_377_@Surfboardv2ray"
       - "🇳🇱NL_385_@Surfboardv2ray"
       - "🇳🇱NL_386_@Surfboardv2ray"
       - "🇨🇦CA_388_@Surfboardv2ray"
@@ -4629,7 +5244,9 @@ proxy-groups:
       - "🇨🇦CA_405_@Surfboardv2ray"
       - "🇨🇦CA_406_@Surfboardv2ray"
       - "🇮🇷IR_407_@Surfboardv2ray"
+      - "🇨🇦CA_408_@Surfboardv2ray"
       - "🇨🇦CA_409_@Surfboardv2ray"
+      - "🇨🇦CA_410_@Surfboardv2ray"
       - "🇩🇪DE_411_@Surfboardv2ray"
       - "🇨🇦CA_414_@Surfboardv2ray"
       - "🇨🇦CA_415_@Surfboardv2ray"
@@ -4639,6 +5256,8 @@ proxy-groups:
       - "🇰🇿KZ_422_@Surfboardv2ray"
       - "🇨🇦CA_425_@Surfboardv2ray"
       - "🇨🇦CA_426_@Surfboardv2ray"
+      - "🇮🇷IR_427_@Surfboardv2ray"
+      - "🇮🇷IR_428_@Surfboardv2ray"
       - "🇺🇸US_429_@Surfboardv2ray"
       - "🇨🇦CA_430_@Surfboardv2ray"
       - "🇨🇦CA_431_@Surfboardv2ray"
@@ -4652,6 +5271,7 @@ proxy-groups:
       - "🇪🇸ES_439_@Surfboardv2ray"
       - "🇪🇸ES_440_@Surfboardv2ray"
       - "🇫🇷FR_441_@Surfboardv2ray"
+      - "🇨🇦CA_442_@Surfboardv2ray"
       - "🇺🇸US_443_@Surfboardv2ray"
       - "🇨🇦CA_444_@Surfboardv2ray"
       - "🇩🇪DE_445_@Surfboardv2ray"
@@ -4663,6 +5283,7 @@ proxy-groups:
       - "🇳🇱NL_454_@Surfboardv2ray"
       - "🇩🇪DE_455_@Surfboardv2ray"
       - "🇫🇷FR_456_@Surfboardv2ray"
+      - "🇫🇷FR_457_@Surfboardv2ray"
       - "🇮🇷IR_458_@Surfboardv2ray"
       - "🇩🇪DE_459_@Surfboardv2ray"
       - "🇰🇷KR_461_@Surfboardv2ray"
@@ -4675,12 +5296,16 @@ proxy-groups:
       - "🇱🇻LV_470_@Surfboardv2ray"
       - "🇩🇪DE_471_@Surfboardv2ray"
       - "🇳🇱NL_477_@Surfboardv2ray"
+      - "🇳🇱NL_481_@Surfboardv2ray"
       - "🇩🇪DE_482_@Surfboardv2ray"
       - "🇳🇱NL_483_@Surfboardv2ray"
+      - "🇨🇦CA_485_@Surfboardv2ray"
+      - "🇨🇦CA_487_@Surfboardv2ray"
       - "🇨🇦CA_488_@Surfboardv2ray"
       - "🇨🇦CA_491_@Surfboardv2ray"
       - "🇨🇦CA_492_@Surfboardv2ray"
       - "🇨🇦CA_493_@Surfboardv2ray"
+      - "🇨🇦CA_495_@Surfboardv2ray"
       - "🇨🇦CA_497_@Surfboardv2ray"
       - "🇬🇧GB_498_@Surfboardv2ray"
       - "🇬🇧GB_500_@Surfboardv2ray"
@@ -4696,9 +5321,11 @@ proxy-groups:
       - "🇮🇹IT_514_@Surfboardv2ray"
       - "🇨🇦CA_516_@Surfboardv2ray"
       - "🇸🇨SC_517_@Surfboardv2ray"
+      - "🇮🇷IR_518_@Surfboardv2ray"
       - "🇨🇦CA_519_@Surfboardv2ray"
       - "🇨🇦CA_521_@Surfboardv2ray"
       - "🇨🇦CA_524_@Surfboardv2ray"
+      - "🇨🇦CA_526_@Surfboardv2ray"
       - "🇺🇸US_528_@Surfboardv2ray"
       - "🇺🇸US_530_@Surfboardv2ray"
       - "🇰🇿KZ_532_@Surfboardv2ray"
@@ -4708,11 +5335,13 @@ proxy-groups:
       - "🇳🇱NL_538_@Surfboardv2ray"
       - "🇫🇷FR_540_@Surfboardv2ray"
       - "🇫🇮FI_548_@Surfboardv2ray"
+      - "🇨🇦CA_549_@Surfboardv2ray"
       - "🇨🇦CA_550_@Surfboardv2ray"
       - "🇨🇦CA_551_@Surfboardv2ray"
       - "🇨🇦CA_552_@Surfboardv2ray"
       - "🇮🇷IR_553_@Surfboardv2ray"
       - "🇩🇪DE_554_@Surfboardv2ray"
+      - "🇩🇪DE_557_@Surfboardv2ray"
       - "🇩🇪DE_558_@Surfboardv2ray"
       - "🇨🇦CA_559_@Surfboardv2ray"
       - "🇨🇦CA_560_@Surfboardv2ray"
@@ -4722,6 +5351,8 @@ proxy-groups:
       - "🇭🇰HK_564_@Surfboardv2ray"
       - "🇸🇨SC_565_@Surfboardv2ray"
       - "🇭🇺HU_569_@Surfboardv2ray"
+      - "🇭🇺HU_570_@Surfboardv2ray"
+      - "🇭🇺HU_575_@Surfboardv2ray"
       - "🇬🇧GB_579_@Surfboardv2ray"
       - "🇬🇧GB_581_@Surfboardv2ray"
       - "🇵🇱PL_583_@Surfboardv2ray"
@@ -4731,16 +5362,25 @@ proxy-groups:
       - "🇩🇪DE_587_@Surfboardv2ray"
       - "🇨🇦CA_588_@Surfboardv2ray"
       - "🇨🇦CA_589_@Surfboardv2ray"
+      - "🇨🇦CA_590_@Surfboardv2ray"
       - "🇨🇦CA_591_@Surfboardv2ray"
       - "🇨🇦CA_592_@Surfboardv2ray"
       - "🇩🇪DE_594_@Surfboardv2ray"
       - "🇷🇺RU_595_@Surfboardv2ray"
       - "🇷🇺RU_598_@Surfboardv2ray"
+      - "🇸🇨SC_601_@Surfboardv2ray"
       - "🇨🇳CN_602_@Surfboardv2ray"
+      - "🇨🇦CA_603_@Surfboardv2ray"
+      - "🇨🇦CA_604_@Surfboardv2ray"
+      - "🇨🇦CA_606_@Surfboardv2ray"
+      - "🇨🇦CA_607_@Surfboardv2ray"
       - "🇨🇦CA_608_@Surfboardv2ray"
       - "🇩🇪DE_609_@Surfboardv2ray"
       - "🇱🇻LV_611_@Surfboardv2ray"
       - "🇸🇨SC_614_@Surfboardv2ray"
+      - "🇺🇸US_624_@Surfboardv2ray"
+      - "🇩🇪DE_625_@Surfboardv2ray"
+      - "🇸🇨SC_626_@Surfboardv2ray"
       - "🇹🇷TR_627_@Surfboardv2ray"
       - "🇫🇷FR_630_@Surfboardv2ray"
       - "🇳🇱NL_631_@Surfboardv2ray"
@@ -4752,58 +5392,11 @@ proxy-groups:
       - "🇨🇦CA_643_@Surfboardv2ray"
       - "🇨🇦CA_644_@Surfboardv2ray"
       - "🇨🇦CA_645_@Surfboardv2ray"
+      - "🇨🇦CA_646_@Surfboardv2ray"
       - "🇩🇪DE_648_@Surfboardv2ray"
       - "🇸🇬SG_649_@Surfboardv2ray"
-      - "🇩🇪DE_659_@Surfboardv2ray"
-      - "🇨🇦CA_662_@Surfboardv2ray"
-      - "🇯🇵JP_663_@Surfboardv2ray"
-      - "🇨🇦CA_665_@Surfboardv2ray"
-      - "🇨🇴CO_666_@Surfboardv2ray"
-      - "🇫🇮FI_671_@Surfboardv2ray"
-      - "🇮🇷IR_677_@Surfboardv2ray"
-      - "🇮🇷IR_678_@Surfboardv2ray"
-      - "🇹🇷TR_679_@Surfboardv2ray"
-      - "🇹🇷TR_681_@Surfboardv2ray"
-      - "🇨🇦CA_688_@Surfboardv2ray"
-      - "🇨🇦CA_689_@Surfboardv2ray"
-      - "🇮🇷IR_690_@Surfboardv2ray"
-      - "🇬🇧GB_691_@Surfboardv2ray"
-      - "🇬🇧GB_693_@Surfboardv2ray"
-      - "🇫🇮FI_694_@Surfboardv2ray"
-      - "🇵🇱PL_696_@Surfboardv2ray"
-      - "🇹🇷TR_697_@Surfboardv2ray"
-      - "🇸🇪SE_700_@Surfboardv2ray"
-      - "🇨🇦CA_703_@Surfboardv2ray"
-      - "🇨🇦CA_704_@Surfboardv2ray"
-      - "🇷🇺RU_705_@Surfboardv2ray"
-      - "🇮🇷IR_708_@Surfboardv2ray"
-      - "🇨🇦CA_712_@Surfboardv2ray"
-      - "🇨🇦CA_713_@Surfboardv2ray"
-      - "🇳🇱NL_714_@Surfboardv2ray"
-      - "🇨🇦CA_715_@Surfboardv2ray"
-      - "🇨🇦CA_716_@Surfboardv2ray"
-      - "🇭🇰HK_717_@Surfboardv2ray"
-      - "🇵🇱PL_720_@Surfboardv2ray"
-      - "🇩🇪DE_722_@Surfboardv2ray"
-      - "🇮🇷IR_725_@Surfboardv2ray"
-      - "🇫🇮FI_726_@Surfboardv2ray"
-      - "🇵🇭PH_731_@Surfboardv2ray"
-      - "🇸🇨SC_732_@Surfboardv2ray"
-      - "🇸🇨SC_742_@Surfboardv2ray"
-      - "🇨🇼CW_759_@Surfboardv2ray"
-      - "🇮🇷IR_761_@Surfboardv2ray"
-      - "🇨🇦CA_764_@Surfboardv2ray"
-      - "🇳🇱NL_765_@Surfboardv2ray"
-      - "🇩🇪DE_766_@Surfboardv2ray"
-      - "🇫🇷FR_767_@Surfboardv2ray"
-      - "🇨🇦CA_770_@Surfboardv2ray"
-      - "🇨🇦CA_771_@Surfboardv2ray"
-      - "🇷🇺RU_772_@Surfboardv2ray"
-      - "🇫🇷FR_773_@Surfboardv2ray"
-      - "🇨🇦CA_774_@Surfboardv2ray"
-      - "🇩🇪DE_775_@Surfboardv2ray"
-      - "🇵🇱PL_777_@Surfboardv2ray"
-      - "🇸🇬SG_782_@Surfboardv2ray"
+      - "🇸🇨SC_650_@Surfboardv2ray"
+      - "🇸🇨SC_658_@Surfboardv2ray"
       - "🇺🇸US_1_@Surfboardv2ray"
       - "🇨🇦CA_2_@Surfboardv2ray"
       - "🇮🇷IR_3_@Surfboardv2ray"
@@ -4892,40 +5485,70 @@ proxy-groups:
       - "🇯🇵JP_96_@Surfboardv2ray"
       - "🇹🇷TR_98_@Surfboardv2ray"
       - "🇮🇷IR_101_@Surfboardv2ray"
+      - "🇮🇷IR_102_@Surfboardv2ray"
       - "🇨🇦CA_103_@Surfboardv2ray"
       - "🇨🇦CA_104_@Surfboardv2ray"
       - "🇨🇦CA_105_@Surfboardv2ray"
       - "🇮🇳IN_106_@Surfboardv2ray"
+      - "🇭🇰HK_108_@Surfboardv2ray"
       - "🇺🇸US_109_@Surfboardv2ray"
       - "🇺🇸US_110_@Surfboardv2ray"
       - "🇺🇸US_111_@Surfboardv2ray"
       - "🇹🇷TR_112_@Surfboardv2ray"
+      - "🇹🇷TR_113_@Surfboardv2ray"
       - "🇨🇦CA_115_@Surfboardv2ray"
       - "🇬🇧GB_116_@Surfboardv2ray"
       - "🇬🇧GB_117_@Surfboardv2ray"
       - "🇨🇦CA_118_@Surfboardv2ray"
+      - "🇨🇦CA_121_@Surfboardv2ray"
+      - "🇨🇦CA_124_@Surfboardv2ray"
+      - "🇨🇦CA_125_@Surfboardv2ray"
+      - "🇮🇷IR_126_@Surfboardv2ray"
+      - "🇩🇪DE_127_@Surfboardv2ray"
+      - "🇩🇪DE_128_@Surfboardv2ray"
+      - "🇭🇰HK_132_@Surfboardv2ray"
+      - "🇨🇦CA_133_@Surfboardv2ray"
+      - "🇺🇸US_134_@Surfboardv2ray"
+      - "🇮🇷IR_135_@Surfboardv2ray"
+      - "🇫🇷FR_136_@Surfboardv2ray"
+      - "🇮🇷IR_137_@Surfboardv2ray"
+      - "🇮🇷IR_138_@Surfboardv2ray"
+      - "🇨🇦CA_139_@Surfboardv2ray"
+      - "🇨🇦CA_140_@Surfboardv2ray"
+      - "🇨🇦CA_1443_@Surfboardv2ray"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
+    icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
     url: "https://www.gstatic.com/generate_204"
-    interval: 300
+    interval: 600
     tolerance: 50
-    lazy: true
+    timeout: 3200
+    lazy: false
+    max-failed-times: 2
     proxies:
       - "🇰🇷KR_142_@Surfboardv2ray"
       - "🇰🇷KR_143_@Surfboardv2ray"
       - "🇯🇵JP_144_@Surfboardv2ray"
       - "🇰🇷KR_146_@Surfboardv2ray"
       - "🇺🇸US_147_@Surfboardv2ray"
+      - "🇺🇸US_148_@Surfboardv2ray"
       - "🇺🇸US_149_@Surfboardv2ray"
+      - "🇺🇸US_150_@Surfboardv2ray"
       - "🇯🇵JP_151_@Surfboardv2ray"
+      - "🇯🇵JP_153_@Surfboardv2ray"
       - "🇩🇪DE_154_@Surfboardv2ray"
+      - "🇩🇪DE_155_@Surfboardv2ray"
       - "🇯🇵JP_156_@Surfboardv2ray"
+      - "🇯🇵JP_157_@Surfboardv2ray"
       - "🇸🇬SG_158_@Surfboardv2ray"
       - "🇸🇬SG_159_@Surfboardv2ray"
+      - "🇸🇬SG_161_@Surfboardv2ray"
       - "🇬🇧GB_162_@Surfboardv2ray"
       - "🇺🇸US_163_@Surfboardv2ray"
       - "🇨🇦CA_164_@Surfboardv2ray"
+      - "🇨🇦CA_165_@Surfboardv2ray"
       - "🇨🇦CA_166_@Surfboardv2ray"
+      - "🇨🇦CA_167_@Surfboardv2ray"
       - "🇨🇦CA_168_@Surfboardv2ray"
       - "🇺🇸US_172_@Surfboardv2ray"
       - "🇨🇦CA_174_@Surfboardv2ray"
@@ -4952,13 +5575,17 @@ proxy-groups:
       - "🇩🇪DE_206_@Surfboardv2ray"
       - "🇮🇷IR_224_@Surfboardv2ray"
       - "🇨🇦CA_225_@Surfboardv2ray"
+      - "🇨🇦CA_226_@Surfboardv2ray"
       - "🇹🇼TW_236_@Surfboardv2ray"
       - "🇨🇦CA_237_@Surfboardv2ray"
+      - "🇨🇦CA_238_@Surfboardv2ray"
       - "🇩🇪DE_239_@Surfboardv2ray"
+      - "🇮🇷IR_241_@Surfboardv2ray"
       - "🇺🇸US_242_@Surfboardv2ray"
       - "🇫🇷FR_244_@Surfboardv2ray"
       - "🇩🇪DE_245_@Surfboardv2ray"
       - "🇳🇱NL_247_@Surfboardv2ray"
+      - "🇨🇦CA_249_@Surfboardv2ray"
       - "🇨🇦CA_250_@Surfboardv2ray"
       - "🇩🇪DE_252_@Surfboardv2ray"
       - "🇨🇦CA_254_@Surfboardv2ray"
@@ -4971,6 +5598,7 @@ proxy-groups:
       - "🇨🇦CA_263_@Surfboardv2ray"
       - "🇨🇦CA_265_@Surfboardv2ray"
       - "🇵🇱PL_266_@Surfboardv2ray"
+      - "🇵🇱PL_269_@Surfboardv2ray"
       - "🇨🇦CA_270_@Surfboardv2ray"
       - "🇱🇻LV_272_@Surfboardv2ray"
       - "🇮🇷IR_273_@Surfboardv2ray"
@@ -4980,12 +5608,15 @@ proxy-groups:
       - "🇮🇷IR_286_@Surfboardv2ray"
       - "🇮🇷IR_287_@Surfboardv2ray"
       - "🇮🇷IR_288_@Surfboardv2ray"
+      - "🇨🇦CA_289_@Surfboardv2ray"
       - "🇩🇪DE_290_@Surfboardv2ray"
       - "🇨🇦CA_291_@Surfboardv2ray"
       - "🇨🇦CA_293_@Surfboardv2ray"
       - "🇩🇪DE_294_@Surfboardv2ray"
+      - "🇩🇪DE_295_@Surfboardv2ray"
       - "🇫🇮FI_300_@Surfboardv2ray"
       - "🇸🇨SC_301_@Surfboardv2ray"
+      - "🇸🇨SC_303_@Surfboardv2ray"
       - "🇸🇨SC_304_@Surfboardv2ray"
       - "🇨🇦CA_310_@Surfboardv2ray"
       - "🇨🇦CA_311_@Surfboardv2ray"
@@ -5015,12 +5646,18 @@ proxy-groups:
       - "🇫🇮FI_354_@Surfboardv2ray"
       - "🇮🇷IR_356_@Surfboardv2ray"
       - "🇳🇱NL_357_@Surfboardv2ray"
+      - "🇨🇦CA_358_@Surfboardv2ray"
       - "🇨🇦CA_359_@Surfboardv2ray"
+      - "🇨🇦CA_362_@Surfboardv2ray"
+      - "🇨🇦CA_363_@Surfboardv2ray"
+      - "🇨🇦CA_365_@Surfboardv2ray"
+      - "🇨🇦CA_367_@Surfboardv2ray"
       - "🇩🇪DE_369_@Surfboardv2ray"
       - "🇮🇷IR_370_@Surfboardv2ray"
       - "🇮🇷IR_371_@Surfboardv2ray"
       - "🇷🇺RU_373_@Surfboardv2ray"
       - "🇨🇿CZ_374_@Surfboardv2ray"
+      - "🇨🇦CA_377_@Surfboardv2ray"
       - "🇳🇱NL_385_@Surfboardv2ray"
       - "🇳🇱NL_386_@Surfboardv2ray"
       - "🇨🇦CA_388_@Surfboardv2ray"
@@ -5036,7 +5673,9 @@ proxy-groups:
       - "🇨🇦CA_405_@Surfboardv2ray"
       - "🇨🇦CA_406_@Surfboardv2ray"
       - "🇮🇷IR_407_@Surfboardv2ray"
+      - "🇨🇦CA_408_@Surfboardv2ray"
       - "🇨🇦CA_409_@Surfboardv2ray"
+      - "🇨🇦CA_410_@Surfboardv2ray"
       - "🇩🇪DE_411_@Surfboardv2ray"
       - "🇨🇦CA_414_@Surfboardv2ray"
       - "🇨🇦CA_415_@Surfboardv2ray"
@@ -5046,6 +5685,8 @@ proxy-groups:
       - "🇰🇿KZ_422_@Surfboardv2ray"
       - "🇨🇦CA_425_@Surfboardv2ray"
       - "🇨🇦CA_426_@Surfboardv2ray"
+      - "🇮🇷IR_427_@Surfboardv2ray"
+      - "🇮🇷IR_428_@Surfboardv2ray"
       - "🇺🇸US_429_@Surfboardv2ray"
       - "🇨🇦CA_430_@Surfboardv2ray"
       - "🇨🇦CA_431_@Surfboardv2ray"
@@ -5059,6 +5700,7 @@ proxy-groups:
       - "🇪🇸ES_439_@Surfboardv2ray"
       - "🇪🇸ES_440_@Surfboardv2ray"
       - "🇫🇷FR_441_@Surfboardv2ray"
+      - "🇨🇦CA_442_@Surfboardv2ray"
       - "🇺🇸US_443_@Surfboardv2ray"
       - "🇨🇦CA_444_@Surfboardv2ray"
       - "🇩🇪DE_445_@Surfboardv2ray"
@@ -5070,6 +5712,7 @@ proxy-groups:
       - "🇳🇱NL_454_@Surfboardv2ray"
       - "🇩🇪DE_455_@Surfboardv2ray"
       - "🇫🇷FR_456_@Surfboardv2ray"
+      - "🇫🇷FR_457_@Surfboardv2ray"
       - "🇮🇷IR_458_@Surfboardv2ray"
       - "🇩🇪DE_459_@Surfboardv2ray"
       - "🇰🇷KR_461_@Surfboardv2ray"
@@ -5082,12 +5725,16 @@ proxy-groups:
       - "🇱🇻LV_470_@Surfboardv2ray"
       - "🇩🇪DE_471_@Surfboardv2ray"
       - "🇳🇱NL_477_@Surfboardv2ray"
+      - "🇳🇱NL_481_@Surfboardv2ray"
       - "🇩🇪DE_482_@Surfboardv2ray"
       - "🇳🇱NL_483_@Surfboardv2ray"
+      - "🇨🇦CA_485_@Surfboardv2ray"
+      - "🇨🇦CA_487_@Surfboardv2ray"
       - "🇨🇦CA_488_@Surfboardv2ray"
       - "🇨🇦CA_491_@Surfboardv2ray"
       - "🇨🇦CA_492_@Surfboardv2ray"
       - "🇨🇦CA_493_@Surfboardv2ray"
+      - "🇨🇦CA_495_@Surfboardv2ray"
       - "🇨🇦CA_497_@Surfboardv2ray"
       - "🇬🇧GB_498_@Surfboardv2ray"
       - "🇬🇧GB_500_@Surfboardv2ray"
@@ -5103,9 +5750,11 @@ proxy-groups:
       - "🇮🇹IT_514_@Surfboardv2ray"
       - "🇨🇦CA_516_@Surfboardv2ray"
       - "🇸🇨SC_517_@Surfboardv2ray"
+      - "🇮🇷IR_518_@Surfboardv2ray"
       - "🇨🇦CA_519_@Surfboardv2ray"
       - "🇨🇦CA_521_@Surfboardv2ray"
       - "🇨🇦CA_524_@Surfboardv2ray"
+      - "🇨🇦CA_526_@Surfboardv2ray"
       - "🇺🇸US_528_@Surfboardv2ray"
       - "🇺🇸US_530_@Surfboardv2ray"
       - "🇰🇿KZ_532_@Surfboardv2ray"
@@ -5115,11 +5764,13 @@ proxy-groups:
       - "🇳🇱NL_538_@Surfboardv2ray"
       - "🇫🇷FR_540_@Surfboardv2ray"
       - "🇫🇮FI_548_@Surfboardv2ray"
+      - "🇨🇦CA_549_@Surfboardv2ray"
       - "🇨🇦CA_550_@Surfboardv2ray"
       - "🇨🇦CA_551_@Surfboardv2ray"
       - "🇨🇦CA_552_@Surfboardv2ray"
       - "🇮🇷IR_553_@Surfboardv2ray"
       - "🇩🇪DE_554_@Surfboardv2ray"
+      - "🇩🇪DE_557_@Surfboardv2ray"
       - "🇩🇪DE_558_@Surfboardv2ray"
       - "🇨🇦CA_559_@Surfboardv2ray"
       - "🇨🇦CA_560_@Surfboardv2ray"
@@ -5129,6 +5780,8 @@ proxy-groups:
       - "🇭🇰HK_564_@Surfboardv2ray"
       - "🇸🇨SC_565_@Surfboardv2ray"
       - "🇭🇺HU_569_@Surfboardv2ray"
+      - "🇭🇺HU_570_@Surfboardv2ray"
+      - "🇭🇺HU_575_@Surfboardv2ray"
       - "🇬🇧GB_579_@Surfboardv2ray"
       - "🇬🇧GB_581_@Surfboardv2ray"
       - "🇵🇱PL_583_@Surfboardv2ray"
@@ -5138,16 +5791,25 @@ proxy-groups:
       - "🇩🇪DE_587_@Surfboardv2ray"
       - "🇨🇦CA_588_@Surfboardv2ray"
       - "🇨🇦CA_589_@Surfboardv2ray"
+      - "🇨🇦CA_590_@Surfboardv2ray"
       - "🇨🇦CA_591_@Surfboardv2ray"
       - "🇨🇦CA_592_@Surfboardv2ray"
       - "🇩🇪DE_594_@Surfboardv2ray"
       - "🇷🇺RU_595_@Surfboardv2ray"
       - "🇷🇺RU_598_@Surfboardv2ray"
+      - "🇸🇨SC_601_@Surfboardv2ray"
       - "🇨🇳CN_602_@Surfboardv2ray"
+      - "🇨🇦CA_603_@Surfboardv2ray"
+      - "🇨🇦CA_604_@Surfboardv2ray"
+      - "🇨🇦CA_606_@Surfboardv2ray"
+      - "🇨🇦CA_607_@Surfboardv2ray"
       - "🇨🇦CA_608_@Surfboardv2ray"
       - "🇩🇪DE_609_@Surfboardv2ray"
       - "🇱🇻LV_611_@Surfboardv2ray"
       - "🇸🇨SC_614_@Surfboardv2ray"
+      - "🇺🇸US_624_@Surfboardv2ray"
+      - "🇩🇪DE_625_@Surfboardv2ray"
+      - "🇸🇨SC_626_@Surfboardv2ray"
       - "🇹🇷TR_627_@Surfboardv2ray"
       - "🇫🇷FR_630_@Surfboardv2ray"
       - "🇳🇱NL_631_@Surfboardv2ray"
@@ -5159,58 +5821,11 @@ proxy-groups:
       - "🇨🇦CA_643_@Surfboardv2ray"
       - "🇨🇦CA_644_@Surfboardv2ray"
       - "🇨🇦CA_645_@Surfboardv2ray"
+      - "🇨🇦CA_646_@Surfboardv2ray"
       - "🇩🇪DE_648_@Surfboardv2ray"
       - "🇸🇬SG_649_@Surfboardv2ray"
-      - "🇩🇪DE_659_@Surfboardv2ray"
-      - "🇨🇦CA_662_@Surfboardv2ray"
-      - "🇯🇵JP_663_@Surfboardv2ray"
-      - "🇨🇦CA_665_@Surfboardv2ray"
-      - "🇨🇴CO_666_@Surfboardv2ray"
-      - "🇫🇮FI_671_@Surfboardv2ray"
-      - "🇮🇷IR_677_@Surfboardv2ray"
-      - "🇮🇷IR_678_@Surfboardv2ray"
-      - "🇹🇷TR_679_@Surfboardv2ray"
-      - "🇹🇷TR_681_@Surfboardv2ray"
-      - "🇨🇦CA_688_@Surfboardv2ray"
-      - "🇨🇦CA_689_@Surfboardv2ray"
-      - "🇮🇷IR_690_@Surfboardv2ray"
-      - "🇬🇧GB_691_@Surfboardv2ray"
-      - "🇬🇧GB_693_@Surfboardv2ray"
-      - "🇫🇮FI_694_@Surfboardv2ray"
-      - "🇵🇱PL_696_@Surfboardv2ray"
-      - "🇹🇷TR_697_@Surfboardv2ray"
-      - "🇸🇪SE_700_@Surfboardv2ray"
-      - "🇨🇦CA_703_@Surfboardv2ray"
-      - "🇨🇦CA_704_@Surfboardv2ray"
-      - "🇷🇺RU_705_@Surfboardv2ray"
-      - "🇮🇷IR_708_@Surfboardv2ray"
-      - "🇨🇦CA_712_@Surfboardv2ray"
-      - "🇨🇦CA_713_@Surfboardv2ray"
-      - "🇳🇱NL_714_@Surfboardv2ray"
-      - "🇨🇦CA_715_@Surfboardv2ray"
-      - "🇨🇦CA_716_@Surfboardv2ray"
-      - "🇭🇰HK_717_@Surfboardv2ray"
-      - "🇵🇱PL_720_@Surfboardv2ray"
-      - "🇩🇪DE_722_@Surfboardv2ray"
-      - "🇮🇷IR_725_@Surfboardv2ray"
-      - "🇫🇮FI_726_@Surfboardv2ray"
-      - "🇵🇭PH_731_@Surfboardv2ray"
-      - "🇸🇨SC_732_@Surfboardv2ray"
-      - "🇸🇨SC_742_@Surfboardv2ray"
-      - "🇨🇼CW_759_@Surfboardv2ray"
-      - "🇮🇷IR_761_@Surfboardv2ray"
-      - "🇨🇦CA_764_@Surfboardv2ray"
-      - "🇳🇱NL_765_@Surfboardv2ray"
-      - "🇩🇪DE_766_@Surfboardv2ray"
-      - "🇫🇷FR_767_@Surfboardv2ray"
-      - "🇨🇦CA_770_@Surfboardv2ray"
-      - "🇨🇦CA_771_@Surfboardv2ray"
-      - "🇷🇺RU_772_@Surfboardv2ray"
-      - "🇫🇷FR_773_@Surfboardv2ray"
-      - "🇨🇦CA_774_@Surfboardv2ray"
-      - "🇩🇪DE_775_@Surfboardv2ray"
-      - "🇵🇱PL_777_@Surfboardv2ray"
-      - "🇸🇬SG_782_@Surfboardv2ray"
+      - "🇸🇨SC_650_@Surfboardv2ray"
+      - "🇸🇨SC_658_@Surfboardv2ray"
       - "🇺🇸US_1_@Surfboardv2ray"
       - "🇨🇦CA_2_@Surfboardv2ray"
       - "🇮🇷IR_3_@Surfboardv2ray"
@@ -5299,20 +5914,495 @@ proxy-groups:
       - "🇯🇵JP_96_@Surfboardv2ray"
       - "🇹🇷TR_98_@Surfboardv2ray"
       - "🇮🇷IR_101_@Surfboardv2ray"
+      - "🇮🇷IR_102_@Surfboardv2ray"
       - "🇨🇦CA_103_@Surfboardv2ray"
       - "🇨🇦CA_104_@Surfboardv2ray"
       - "🇨🇦CA_105_@Surfboardv2ray"
       - "🇮🇳IN_106_@Surfboardv2ray"
+      - "🇭🇰HK_108_@Surfboardv2ray"
       - "🇺🇸US_109_@Surfboardv2ray"
       - "🇺🇸US_110_@Surfboardv2ray"
       - "🇺🇸US_111_@Surfboardv2ray"
       - "🇹🇷TR_112_@Surfboardv2ray"
+      - "🇹🇷TR_113_@Surfboardv2ray"
       - "🇨🇦CA_115_@Surfboardv2ray"
       - "🇬🇧GB_116_@Surfboardv2ray"
       - "🇬🇧GB_117_@Surfboardv2ray"
       - "🇨🇦CA_118_@Surfboardv2ray"
-  - name: "سایتای ایرانی 🇮🇷"
+      - "🇨🇦CA_121_@Surfboardv2ray"
+      - "🇨🇦CA_124_@Surfboardv2ray"
+      - "🇨🇦CA_125_@Surfboardv2ray"
+      - "🇮🇷IR_126_@Surfboardv2ray"
+      - "🇩🇪DE_127_@Surfboardv2ray"
+      - "🇩🇪DE_128_@Surfboardv2ray"
+      - "🇭🇰HK_132_@Surfboardv2ray"
+      - "🇨🇦CA_133_@Surfboardv2ray"
+      - "🇺🇸US_134_@Surfboardv2ray"
+      - "🇮🇷IR_135_@Surfboardv2ray"
+      - "🇫🇷FR_136_@Surfboardv2ray"
+      - "🇮🇷IR_137_@Surfboardv2ray"
+      - "🇮🇷IR_138_@Surfboardv2ray"
+      - "🇨🇦CA_139_@Surfboardv2ray"
+      - "🇨🇦CA_140_@Surfboardv2ray"
+      - "🇨🇦CA_1443_@Surfboardv2ray"
+  - name: "توزیع بار چرخشی ⚖️"
+    type: "load-balance"
+    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
+    strategy: "round-robin"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 30
+    timeout: 1500
+    lazy: false
+    proxies:
+      - "🇰🇷KR_142_@Surfboardv2ray"
+      - "🇰🇷KR_143_@Surfboardv2ray"
+      - "🇯🇵JP_144_@Surfboardv2ray"
+      - "🇰🇷KR_146_@Surfboardv2ray"
+      - "🇺🇸US_147_@Surfboardv2ray"
+      - "🇺🇸US_148_@Surfboardv2ray"
+      - "🇺🇸US_149_@Surfboardv2ray"
+      - "🇺🇸US_150_@Surfboardv2ray"
+      - "🇯🇵JP_151_@Surfboardv2ray"
+      - "🇯🇵JP_153_@Surfboardv2ray"
+      - "🇩🇪DE_154_@Surfboardv2ray"
+      - "🇩🇪DE_155_@Surfboardv2ray"
+      - "🇯🇵JP_156_@Surfboardv2ray"
+      - "🇯🇵JP_157_@Surfboardv2ray"
+      - "🇸🇬SG_158_@Surfboardv2ray"
+      - "🇸🇬SG_159_@Surfboardv2ray"
+      - "🇸🇬SG_161_@Surfboardv2ray"
+      - "🇬🇧GB_162_@Surfboardv2ray"
+      - "🇺🇸US_163_@Surfboardv2ray"
+      - "🇨🇦CA_164_@Surfboardv2ray"
+      - "🇨🇦CA_165_@Surfboardv2ray"
+      - "🇨🇦CA_166_@Surfboardv2ray"
+      - "🇨🇦CA_167_@Surfboardv2ray"
+      - "🇨🇦CA_168_@Surfboardv2ray"
+      - "🇺🇸US_172_@Surfboardv2ray"
+      - "🇨🇦CA_174_@Surfboardv2ray"
+      - "🇨🇦CA_181_@Surfboardv2ray"
+      - "🇮🇷IR_183_@Surfboardv2ray"
+      - "🇮🇷IR_184_@Surfboardv2ray"
+      - "🇮🇷IR_185_@Surfboardv2ray"
+      - "🇮🇪IE_186_@Surfboardv2ray"
+      - "🇨🇦CA_187_@Surfboardv2ray"
+      - "🇨🇦CA_188_@Surfboardv2ray"
+      - "🇨🇦CA_189_@Surfboardv2ray"
+      - "🇫🇷FR_190_@Surfboardv2ray"
+      - "🇸🇨SC_191_@Surfboardv2ray"
+      - "🇹🇷TR_193_@Surfboardv2ray"
+      - "🇷🇺RU_194_@Surfboardv2ray"
+      - "🇷🇺RU_195_@Surfboardv2ray"
+      - "🇫🇮FI_196_@Surfboardv2ray"
+      - "🇩🇪DE_197_@Surfboardv2ray"
+      - "🇺🇸US_198_@Surfboardv2ray"
+      - "🇷🇺RU_199_@Surfboardv2ray"
+      - "🇸🇪SE_200_@Surfboardv2ray"
+      - "🇨🇦CA_201_@Surfboardv2ray"
+      - "🇨🇦CA_205_@Surfboardv2ray"
+      - "🇩🇪DE_206_@Surfboardv2ray"
+      - "🇮🇷IR_224_@Surfboardv2ray"
+      - "🇨🇦CA_225_@Surfboardv2ray"
+      - "🇨🇦CA_226_@Surfboardv2ray"
+      - "🇹🇼TW_236_@Surfboardv2ray"
+      - "🇨🇦CA_237_@Surfboardv2ray"
+      - "🇨🇦CA_238_@Surfboardv2ray"
+      - "🇩🇪DE_239_@Surfboardv2ray"
+      - "🇮🇷IR_241_@Surfboardv2ray"
+      - "🇺🇸US_242_@Surfboardv2ray"
+      - "🇫🇷FR_244_@Surfboardv2ray"
+      - "🇩🇪DE_245_@Surfboardv2ray"
+      - "🇳🇱NL_247_@Surfboardv2ray"
+      - "🇨🇦CA_249_@Surfboardv2ray"
+      - "🇨🇦CA_250_@Surfboardv2ray"
+      - "🇩🇪DE_252_@Surfboardv2ray"
+      - "🇨🇦CA_254_@Surfboardv2ray"
+      - "🇦🇪AE_255_@Surfboardv2ray"
+      - "🇨🇭CH_256_@Surfboardv2ray"
+      - "🇫🇷FR_257_@Surfboardv2ray"
+      - "🇺🇸US_258_@Surfboardv2ray"
+      - "🇷🇺RU_260_@Surfboardv2ray"
+      - "🇨🇳CN_262_@Surfboardv2ray"
+      - "🇨🇦CA_263_@Surfboardv2ray"
+      - "🇨🇦CA_265_@Surfboardv2ray"
+      - "🇵🇱PL_266_@Surfboardv2ray"
+      - "🇵🇱PL_269_@Surfboardv2ray"
+      - "🇨🇦CA_270_@Surfboardv2ray"
+      - "🇱🇻LV_272_@Surfboardv2ray"
+      - "🇮🇷IR_273_@Surfboardv2ray"
+      - "🇨🇦CA_283_@Surfboardv2ray"
+      - "🇮🇷IR_284_@Surfboardv2ray"
+      - "🇮🇷IR_285_@Surfboardv2ray"
+      - "🇮🇷IR_286_@Surfboardv2ray"
+      - "🇮🇷IR_287_@Surfboardv2ray"
+      - "🇮🇷IR_288_@Surfboardv2ray"
+      - "🇨🇦CA_289_@Surfboardv2ray"
+      - "🇩🇪DE_290_@Surfboardv2ray"
+      - "🇨🇦CA_291_@Surfboardv2ray"
+      - "🇨🇦CA_293_@Surfboardv2ray"
+      - "🇩🇪DE_294_@Surfboardv2ray"
+      - "🇩🇪DE_295_@Surfboardv2ray"
+      - "🇫🇮FI_300_@Surfboardv2ray"
+      - "🇸🇨SC_301_@Surfboardv2ray"
+      - "🇸🇨SC_303_@Surfboardv2ray"
+      - "🇸🇨SC_304_@Surfboardv2ray"
+      - "🇨🇦CA_310_@Surfboardv2ray"
+      - "🇨🇦CA_311_@Surfboardv2ray"
+      - "🇵🇱PL_312_@Surfboardv2ray"
+      - "🇮🇷IR_313_@Surfboardv2ray"
+      - "🇺🇸US_315_@Surfboardv2ray"
+      - "🇨🇾CY_316_@Surfboardv2ray"
+      - "🇹🇷TR_317_@Surfboardv2ray"
+      - "🇬🇧GB_320_@Surfboardv2ray"
+      - "🇭🇰HK_321_@Surfboardv2ray"
+      - "🇨🇿CZ_326_@Surfboardv2ray"
+      - "🇹🇷TR_327_@Surfboardv2ray"
+      - "🇷🇺RU_328_@Surfboardv2ray"
+      - "🇺🇸US_329_@Surfboardv2ray"
+      - "🇩🇪DE_336_@Surfboardv2ray"
+      - "🇩🇪DE_337_@Surfboardv2ray"
+      - "🇩🇪DE_339_@Surfboardv2ray"
+      - "🇩🇪DE_340_@Surfboardv2ray"
+      - "🇩🇪DE_343_@Surfboardv2ray"
+      - "🇩🇪DE_344_@Surfboardv2ray"
+      - "🇩🇪DE_345_@Surfboardv2ray"
+      - "🇩🇪DE_346_@Surfboardv2ray"
+      - "🇩🇪DE_348_@Surfboardv2ray"
+      - "🇩🇪DE_350_@Surfboardv2ray"
+      - "🇮🇷IR_351_@Surfboardv2ray"
+      - "🇨🇦CA_353_@Surfboardv2ray"
+      - "🇫🇮FI_354_@Surfboardv2ray"
+      - "🇮🇷IR_356_@Surfboardv2ray"
+      - "🇳🇱NL_357_@Surfboardv2ray"
+      - "🇨🇦CA_358_@Surfboardv2ray"
+      - "🇨🇦CA_359_@Surfboardv2ray"
+      - "🇨🇦CA_362_@Surfboardv2ray"
+      - "🇨🇦CA_363_@Surfboardv2ray"
+      - "🇨🇦CA_365_@Surfboardv2ray"
+      - "🇨🇦CA_367_@Surfboardv2ray"
+      - "🇩🇪DE_369_@Surfboardv2ray"
+      - "🇮🇷IR_370_@Surfboardv2ray"
+      - "🇮🇷IR_371_@Surfboardv2ray"
+      - "🇷🇺RU_373_@Surfboardv2ray"
+      - "🇨🇿CZ_374_@Surfboardv2ray"
+      - "🇨🇦CA_377_@Surfboardv2ray"
+      - "🇳🇱NL_385_@Surfboardv2ray"
+      - "🇳🇱NL_386_@Surfboardv2ray"
+      - "🇨🇦CA_388_@Surfboardv2ray"
+      - "🇨🇦CA_390_@Surfboardv2ray"
+      - "🇨🇦CA_392_@Surfboardv2ray"
+      - "🇨🇦CA_394_@Surfboardv2ray"
+      - "🇨🇦CA_396_@Surfboardv2ray"
+      - "🇨🇦CA_397_@Surfboardv2ray"
+      - "🇨🇦CA_399_@Surfboardv2ray"
+      - "🇨🇦CA_401_@Surfboardv2ray"
+      - "🇫🇷FR_403_@Surfboardv2ray"
+      - "🇷🇺RU_404_@Surfboardv2ray"
+      - "🇨🇦CA_405_@Surfboardv2ray"
+      - "🇨🇦CA_406_@Surfboardv2ray"
+      - "🇮🇷IR_407_@Surfboardv2ray"
+      - "🇨🇦CA_408_@Surfboardv2ray"
+      - "🇨🇦CA_409_@Surfboardv2ray"
+      - "🇨🇦CA_410_@Surfboardv2ray"
+      - "🇩🇪DE_411_@Surfboardv2ray"
+      - "🇨🇦CA_414_@Surfboardv2ray"
+      - "🇨🇦CA_415_@Surfboardv2ray"
+      - "🇺🇸US_416_@Surfboardv2ray"
+      - "🇮🇷IR_419_@Surfboardv2ray"
+      - "🇮🇷IR_421_@Surfboardv2ray"
+      - "🇰🇿KZ_422_@Surfboardv2ray"
+      - "🇨🇦CA_425_@Surfboardv2ray"
+      - "🇨🇦CA_426_@Surfboardv2ray"
+      - "🇮🇷IR_427_@Surfboardv2ray"
+      - "🇮🇷IR_428_@Surfboardv2ray"
+      - "🇺🇸US_429_@Surfboardv2ray"
+      - "🇨🇦CA_430_@Surfboardv2ray"
+      - "🇨🇦CA_431_@Surfboardv2ray"
+      - "🇨🇦CA_432_@Surfboardv2ray"
+      - "🇨🇦CA_433_@Surfboardv2ray"
+      - "🇨🇦CA_434_@Surfboardv2ray"
+      - "🇨🇦CA_435_@Surfboardv2ray"
+      - "🇬🇧GB_436_@Surfboardv2ray"
+      - "🇬🇧GB_437_@Surfboardv2ray"
+      - "🇬🇧GB_438_@Surfboardv2ray"
+      - "🇪🇸ES_439_@Surfboardv2ray"
+      - "🇪🇸ES_440_@Surfboardv2ray"
+      - "🇫🇷FR_441_@Surfboardv2ray"
+      - "🇨🇦CA_442_@Surfboardv2ray"
+      - "🇺🇸US_443_@Surfboardv2ray"
+      - "🇨🇦CA_444_@Surfboardv2ray"
+      - "🇩🇪DE_445_@Surfboardv2ray"
+      - "🇩🇪DE_446_@Surfboardv2ray"
+      - "🇦🇲AM_447_@Surfboardv2ray"
+      - "🇨🇦CA_450_@Surfboardv2ray"
+      - "🇫🇮FI_452_@Surfboardv2ray"
+      - "🇺🇸US_453_@Surfboardv2ray"
+      - "🇳🇱NL_454_@Surfboardv2ray"
+      - "🇩🇪DE_455_@Surfboardv2ray"
+      - "🇫🇷FR_456_@Surfboardv2ray"
+      - "🇫🇷FR_457_@Surfboardv2ray"
+      - "🇮🇷IR_458_@Surfboardv2ray"
+      - "🇩🇪DE_459_@Surfboardv2ray"
+      - "🇰🇷KR_461_@Surfboardv2ray"
+      - "🇰🇷KR_462_@Surfboardv2ray"
+      - "🇰🇷KR_463_@Surfboardv2ray"
+      - "🇨🇦CA_464_@Surfboardv2ray"
+      - "🇦🇺AU_466_@Surfboardv2ray"
+      - "🇺🇸US_468_@Surfboardv2ray"
+      - "🇩🇪DE_469_@Surfboardv2ray"
+      - "🇱🇻LV_470_@Surfboardv2ray"
+      - "🇩🇪DE_471_@Surfboardv2ray"
+      - "🇳🇱NL_477_@Surfboardv2ray"
+      - "🇳🇱NL_481_@Surfboardv2ray"
+      - "🇩🇪DE_482_@Surfboardv2ray"
+      - "🇳🇱NL_483_@Surfboardv2ray"
+      - "🇨🇦CA_485_@Surfboardv2ray"
+      - "🇨🇦CA_487_@Surfboardv2ray"
+      - "🇨🇦CA_488_@Surfboardv2ray"
+      - "🇨🇦CA_491_@Surfboardv2ray"
+      - "🇨🇦CA_492_@Surfboardv2ray"
+      - "🇨🇦CA_493_@Surfboardv2ray"
+      - "🇨🇦CA_495_@Surfboardv2ray"
+      - "🇨🇦CA_497_@Surfboardv2ray"
+      - "🇬🇧GB_498_@Surfboardv2ray"
+      - "🇬🇧GB_500_@Surfboardv2ray"
+      - "🇩🇪DE_501_@Surfboardv2ray"
+      - "🇩🇪DE_502_@Surfboardv2ray"
+      - "🇩🇪DE_503_@Surfboardv2ray"
+      - "🇩🇪DE_506_@Surfboardv2ray"
+      - "🇩🇪DE_507_@Surfboardv2ray"
+      - "🇩🇪DE_508_@Surfboardv2ray"
+      - "🇩🇪DE_511_@Surfboardv2ray"
+      - "🇩🇪DE_512_@Surfboardv2ray"
+      - "🇨🇦CA_513_@Surfboardv2ray"
+      - "🇮🇹IT_514_@Surfboardv2ray"
+      - "🇨🇦CA_516_@Surfboardv2ray"
+      - "🇸🇨SC_517_@Surfboardv2ray"
+      - "🇮🇷IR_518_@Surfboardv2ray"
+      - "🇨🇦CA_519_@Surfboardv2ray"
+      - "🇨🇦CA_521_@Surfboardv2ray"
+      - "🇨🇦CA_524_@Surfboardv2ray"
+      - "🇨🇦CA_526_@Surfboardv2ray"
+      - "🇺🇸US_528_@Surfboardv2ray"
+      - "🇺🇸US_530_@Surfboardv2ray"
+      - "🇰🇿KZ_532_@Surfboardv2ray"
+      - "🇦🇲AM_534_@Surfboardv2ray"
+      - "🇮🇷IR_536_@Surfboardv2ray"
+      - "🇮🇷IR_537_@Surfboardv2ray"
+      - "🇳🇱NL_538_@Surfboardv2ray"
+      - "🇫🇷FR_540_@Surfboardv2ray"
+      - "🇫🇮FI_548_@Surfboardv2ray"
+      - "🇨🇦CA_549_@Surfboardv2ray"
+      - "🇨🇦CA_550_@Surfboardv2ray"
+      - "🇨🇦CA_551_@Surfboardv2ray"
+      - "🇨🇦CA_552_@Surfboardv2ray"
+      - "🇮🇷IR_553_@Surfboardv2ray"
+      - "🇩🇪DE_554_@Surfboardv2ray"
+      - "🇩🇪DE_557_@Surfboardv2ray"
+      - "🇩🇪DE_558_@Surfboardv2ray"
+      - "🇨🇦CA_559_@Surfboardv2ray"
+      - "🇨🇦CA_560_@Surfboardv2ray"
+      - "🇨🇭CH_561_@Surfboardv2ray"
+      - "🇨🇭CH_562_@Surfboardv2ray"
+      - "🇨🇦CA_563_@Surfboardv2ray"
+      - "🇭🇰HK_564_@Surfboardv2ray"
+      - "🇸🇨SC_565_@Surfboardv2ray"
+      - "🇭🇺HU_569_@Surfboardv2ray"
+      - "🇭🇺HU_570_@Surfboardv2ray"
+      - "🇭🇺HU_575_@Surfboardv2ray"
+      - "🇬🇧GB_579_@Surfboardv2ray"
+      - "🇬🇧GB_581_@Surfboardv2ray"
+      - "🇵🇱PL_583_@Surfboardv2ray"
+      - "🇨🇦CA_584_@Surfboardv2ray"
+      - "🇨🇦CA_585_@Surfboardv2ray"
+      - "🇮🇷IR_586_@Surfboardv2ray"
+      - "🇩🇪DE_587_@Surfboardv2ray"
+      - "🇨🇦CA_588_@Surfboardv2ray"
+      - "🇨🇦CA_589_@Surfboardv2ray"
+      - "🇨🇦CA_590_@Surfboardv2ray"
+      - "🇨🇦CA_591_@Surfboardv2ray"
+      - "🇨🇦CA_592_@Surfboardv2ray"
+      - "🇩🇪DE_594_@Surfboardv2ray"
+      - "🇷🇺RU_595_@Surfboardv2ray"
+      - "🇷🇺RU_598_@Surfboardv2ray"
+      - "🇸🇨SC_601_@Surfboardv2ray"
+      - "🇨🇳CN_602_@Surfboardv2ray"
+      - "🇨🇦CA_603_@Surfboardv2ray"
+      - "🇨🇦CA_604_@Surfboardv2ray"
+      - "🇨🇦CA_606_@Surfboardv2ray"
+      - "🇨🇦CA_607_@Surfboardv2ray"
+      - "🇨🇦CA_608_@Surfboardv2ray"
+      - "🇩🇪DE_609_@Surfboardv2ray"
+      - "🇱🇻LV_611_@Surfboardv2ray"
+      - "🇸🇨SC_614_@Surfboardv2ray"
+      - "🇺🇸US_624_@Surfboardv2ray"
+      - "🇩🇪DE_625_@Surfboardv2ray"
+      - "🇸🇨SC_626_@Surfboardv2ray"
+      - "🇹🇷TR_627_@Surfboardv2ray"
+      - "🇫🇷FR_630_@Surfboardv2ray"
+      - "🇳🇱NL_631_@Surfboardv2ray"
+      - "🇨🇦CA_633_@Surfboardv2ray"
+      - "🇸🇨SC_634_@Surfboardv2ray"
+      - "🇨🇦CA_635_@Surfboardv2ray"
+      - "🇨🇦CA_638_@Surfboardv2ray"
+      - "🇫🇷FR_641_@Surfboardv2ray"
+      - "🇨🇦CA_643_@Surfboardv2ray"
+      - "🇨🇦CA_644_@Surfboardv2ray"
+      - "🇨🇦CA_645_@Surfboardv2ray"
+      - "🇨🇦CA_646_@Surfboardv2ray"
+      - "🇩🇪DE_648_@Surfboardv2ray"
+      - "🇸🇬SG_649_@Surfboardv2ray"
+      - "🇸🇨SC_650_@Surfboardv2ray"
+      - "🇸🇨SC_658_@Surfboardv2ray"
+      - "🇺🇸US_1_@Surfboardv2ray"
+      - "🇨🇦CA_2_@Surfboardv2ray"
+      - "🇮🇷IR_3_@Surfboardv2ray"
+      - "🇨🇳CN_4_@Surfboardv2ray"
+      - "🇺🇸US_7_@Surfboardv2ray"
+      - "🇺🇸US_8_@Surfboardv2ray"
+      - "🇺🇸US_9_@Surfboardv2ray"
+      - "🇬🇧GB_10_@Surfboardv2ray"
+      - "🇭🇰HK_11_@Surfboardv2ray"
+      - "🇨🇦CA_12_@Surfboardv2ray"
+      - "🇨🇦CA_14_@Surfboardv2ray"
+      - "🇨🇦CA_16_@Surfboardv2ray"
+      - "🇨🇦CA_17_@Surfboardv2ray"
+      - "🇨🇦CA_18_@Surfboardv2ray"
+      - "🇨🇦CA_20_@Surfboardv2ray"
+      - "🇨🇦CA_21_@Surfboardv2ray"
+      - "🇨🇦CA_22_@Surfboardv2ray"
+      - "🇸🇬SG_23_@Surfboardv2ray"
+      - "🇺🇸US_24_@Surfboardv2ray"
+      - "🇨🇦CA_25_@Surfboardv2ray"
+      - "🇺🇸US_26_@Surfboardv2ray"
+      - "🇫🇷FR_27_@Surfboardv2ray"
+      - "🇺🇸US_28_@Surfboardv2ray"
+      - "🇩🇪DE_29_@Surfboardv2ray"
+      - "🇩🇪DE_30_@Surfboardv2ray"
+      - "🇨🇦CA_31_@Surfboardv2ray"
+      - "🇮🇳IN_32_@Surfboardv2ray"
+      - "🇷🇺RU_33_@Surfboardv2ray"
+      - "🇧🇷BR_34_@Surfboardv2ray"
+      - "🇨🇱CL_35_@Surfboardv2ray"
+      - "🇨🇦CA_36_@Surfboardv2ray"
+      - "🇨🇦CA_37_@Surfboardv2ray"
+      - "🇨🇦CA_38_@Surfboardv2ray"
+      - "🇨🇦CA_39_@Surfboardv2ray"
+      - "🇨🇦CA_40_@Surfboardv2ray"
+      - "🇬🇧GB_41_@Surfboardv2ray"
+      - "🇹🇷TR_42_@Surfboardv2ray"
+      - "🇭🇰HK_43_@Surfboardv2ray"
+      - "🇺🇸US_44_@Surfboardv2ray"
+      - "🇧🇿BZ_45_@Surfboardv2ray"
+      - "🇧🇿BZ_46_@Surfboardv2ray"
+      - "🇧🇿BZ_47_@Surfboardv2ray"
+      - "🇹🇼TW_48_@Surfboardv2ray"
+      - "🇭🇰HK_49_@Surfboardv2ray"
+      - "🇺🇸US_50_@Surfboardv2ray"
+      - "🇺🇸US_51_@Surfboardv2ray"
+      - "🇧🇬BG_52_@Surfboardv2ray"
+      - "🇭🇰HK_53_@Surfboardv2ray"
+      - "🇺🇸US_54_@Surfboardv2ray"
+      - "🇺🇸US_55_@Surfboardv2ray"
+      - "🇹🇷TR_56_@Surfboardv2ray"
+      - "🇺🇸US_57_@Surfboardv2ray"
+      - "🇫🇷FR_58_@Surfboardv2ray"
+      - "🇺🇸US_59_@Surfboardv2ray"
+      - "🇵🇱PL_60_@Surfboardv2ray"
+      - "🇭🇰HK_61_@Surfboardv2ray"
+      - "🇨🇦CA_62_@Surfboardv2ray"
+      - "🇭🇰HK_63_@Surfboardv2ray"
+      - "🇺🇸US_64_@Surfboardv2ray"
+      - "🇭🇰HK_65_@Surfboardv2ray"
+      - "🇨🇦CA_66_@Surfboardv2ray"
+      - "🇹🇼TW_67_@Surfboardv2ray"
+      - "🇦🇱AL_68_@Surfboardv2ray"
+      - "🇭🇰HK_69_@Surfboardv2ray"
+      - "🇩🇪DE_70_@Surfboardv2ray"
+      - "🇩🇪DE_72_@Surfboardv2ray"
+      - "🇫🇷FR_73_@Surfboardv2ray"
+      - "🇬🇧GB_75_@Surfboardv2ray"
+      - "🇩🇪DE_77_@Surfboardv2ray"
+      - "🇺🇸US_78_@Surfboardv2ray"
+      - "🇵🇭PH_79_@Surfboardv2ray"
+      - "🇬🇧GB_80_@Surfboardv2ray"
+      - "🇬🇧GB_81_@Surfboardv2ray"
+      - "🇭🇰HK_82_@Surfboardv2ray"
+      - "🇺🇸US_83_@Surfboardv2ray"
+      - "🇺🇸US_84_@Surfboardv2ray"
+      - "🇮🇷IR_85_@Surfboardv2ray"
+      - "🇩🇪DE_86_@Surfboardv2ray"
+      - "🇨🇦CA_87_@Surfboardv2ray"
+      - "🇺🇸US_88_@Surfboardv2ray"
+      - "🇨🇦CA_89_@Surfboardv2ray"
+      - "🇨🇦CA_90_@Surfboardv2ray"
+      - "🇯🇵JP_91_@Surfboardv2ray"
+      - "🇩🇪DE_92_@Surfboardv2ray"
+      - "🇺🇸US_94_@Surfboardv2ray"
+      - "🇯🇵JP_96_@Surfboardv2ray"
+      - "🇹🇷TR_98_@Surfboardv2ray"
+      - "🇮🇷IR_101_@Surfboardv2ray"
+      - "🇮🇷IR_102_@Surfboardv2ray"
+      - "🇨🇦CA_103_@Surfboardv2ray"
+      - "🇨🇦CA_104_@Surfboardv2ray"
+      - "🇨🇦CA_105_@Surfboardv2ray"
+      - "🇮🇳IN_106_@Surfboardv2ray"
+      - "🇭🇰HK_108_@Surfboardv2ray"
+      - "🇺🇸US_109_@Surfboardv2ray"
+      - "🇺🇸US_110_@Surfboardv2ray"
+      - "🇺🇸US_111_@Surfboardv2ray"
+      - "🇹🇷TR_112_@Surfboardv2ray"
+      - "🇹🇷TR_113_@Surfboardv2ray"
+      - "🇨🇦CA_115_@Surfboardv2ray"
+      - "🇬🇧GB_116_@Surfboardv2ray"
+      - "🇬🇧GB_117_@Surfboardv2ray"
+      - "🇨🇦CA_118_@Surfboardv2ray"
+      - "🇨🇦CA_121_@Surfboardv2ray"
+      - "🇨🇦CA_124_@Surfboardv2ray"
+      - "🇨🇦CA_125_@Surfboardv2ray"
+      - "🇮🇷IR_126_@Surfboardv2ray"
+      - "🇩🇪DE_127_@Surfboardv2ray"
+      - "🇩🇪DE_128_@Surfboardv2ray"
+      - "🇭🇰HK_132_@Surfboardv2ray"
+      - "🇨🇦CA_133_@Surfboardv2ray"
+      - "🇺🇸US_134_@Surfboardv2ray"
+      - "🇮🇷IR_135_@Surfboardv2ray"
+      - "🇫🇷FR_136_@Surfboardv2ray"
+      - "🇮🇷IR_137_@Surfboardv2ray"
+      - "🇮🇷IR_138_@Surfboardv2ray"
+      - "🇨🇦CA_139_@Surfboardv2ray"
+      - "🇨🇦CA_140_@Surfboardv2ray"
+      - "🇨🇦CA_1443_@Surfboardv2ray"
+  - name: "المنت 💬"
     type: "select"
+    icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تیم‌اسپیک 🎧"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/331567/teamspeak.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دلتاچت ✉️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/373771/mail.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دانلود منیجر 📥"
+    type: "select"
+    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
     proxies:
       - "بدون فیلترشکن 🛡️"
       - "نوع انتخاب پروکسی 🔀"
@@ -5321,32 +6411,323 @@ proxy-groups:
       - "اجازه ندادن 🚫"
   - name: "تلگرام 💬"
     type: "select"
+    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+  - name: "یوتیوب ▶️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "گوگل 🌍"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475656/google-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "واتس آپ 🟢"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "هوش مصنوعی 🤖"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/306500/openai.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "توییتر 🐦"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475689/twitter-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "اسپاتیفای 🎵"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "اینستاگرام 📸"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/452229/instagram-1.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "تبلیغات 🆎"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/336358/ad.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "تبلیغات اپ ها 🍃"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "رهگیری جهانی 🛑"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "سایتای مخرب ⚠️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "استیم 🖥️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/452107/steam.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "گیم 🎮"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "توییچ 📡"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/343527/twitch-network-communication-interaction-connection.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "ویندوز 🧊"
+    type: "select"
+    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "اجازه ندادن 🚫"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+  - name: "کلودفلر ☁️"
+    type: "select"
+    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "گیتهاب 🐙"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/355033/github.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دیسکورد 🗣️"
+    type: "select"
+    icon: "https://automatorplugin.com/wp-content/uploads/2024/10/discord-icon.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "استریمیو 🎬"
+    type: "select"
+    icon: "https://stremio.github.io/stremio-addon-guide/img/stremio.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "انی‌دسک 🔴"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "سایتای سانسوری 🤬"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Censorship.svg/300px-Censorship.svg.png"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
   - name: "بدون فیلترشکن 🛡️"
     type: "select"
+    icon: "https://www.svgrepo.com/show/6318/connection.svg"
     proxies:
       - "DIRECT"
     hidden: true
   - name: "قطع اینترنت ⛔"
     type: "select"
+    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
     proxies:
       - "REJECT"
     hidden: true
   - name: "اجازه ندادن 🚫"
     type: "select"
+    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
     proxies:
       - "REJECT"
     hidden: true
 rules:
-  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,DownloadManagers,دانلود منیجر 📥"
+  - "RULE-SET,Download,دانلود منیجر 📥"
+  - "RULE-SET,stremio,استریمیو 🎬"
+  - "PROCESS-NAME,im.vector.app,المنت 💬"
+  - "PROCESS-NAME,io.element.android.x,المنت 💬"
+  - "PROCESS-NAME,Element.exe,المنت 💬"
+  - "DOMAIN-SUFFIX,aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,chat.aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,site.aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,electonet.xyz,المنت 💬"
+  - "DOMAIN-SUFFIX,chat.electonet.xyz,المنت 💬"
+  - "DOMAIN-SUFFIX,rainbuwu.ir,المنت 💬"
+  - "DOMAIN-SUFFIX,cinny.rainbuwu.ir,المنت 💬"
+  - "PROCESS-NAME,chat.delta,دلتاچت ✉️"
+  - "PROCESS-NAME,DeltaChat.exe,دلتاچت ✉️"
+  - "DOMAIN-SUFFIX,arsalandalvand.ir,دلتاچت ✉️"
+  - "DST-PORT,993,دلتاچت ✉️"
+  - "DST-PORT,465,دلتاچت ✉️"
+  - "DST-PORT,587,دلتاچت ✉️"
+  - "PROCESS-NAME,com.teamspeak.ts3client,تیم‌اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win64.exe,تیم‌اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win32.exe,تیم‌اسپیک 🎧"
+  - "DOMAIN-SUFFIX,ag.tssq.ir,تیم‌اسپیک 🎧"
+  - "DST-PORT,9987,تیم‌اسپیک 🎧"
+  - "RULE-SET,BanProgramAD,تبلیغات اپ ها 🍃"
+  - "RULE-SET,BanAD,رهگیری جهانی 🛑"
+  - "RULE-SET,PrivateTracker,رهگیری جهانی 🛑"
+  - "RULE-SET,category_public_tracker,رهگیری جهانی 🛑"
+  - "RULE-SET,malware,سایتای مخرب ⚠️"
+  - "RULE-SET,phishing,سایتای مخرب ⚠️"
+  - "RULE-SET,cryptominers,سایتای مخرب ⚠️"
+  - "RULE-SET,warninglist,سایتای مخرب ⚠️"
+  - "RULE-SET,Ponzi,سایتای مخرب ⚠️"
+  - "RULE-SET,LiteAds,تبلیغات 🆎"
+  - "RULE-SET,iran_ads,تبلیغات 🆎"
+  - "RULE-SET,PersianBlocker,تبلیغات 🆎"
+  - "RULE-SET,ads,تبلیغات 🆎"
+  - "RULE-SET,BanEasyList,تبلیغات 🆎"
+  - "RULE-SET,twitch,توییچ 📡"
   - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
   - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger.web,تلگرام 💬"
+  - "RULE-SET,telegram,تلگرام 💬"
+  - "RULE-SET,YouTube,یوتیوب ▶️"
+  - "RULE-SET,youtube,یوتیوب ▶️"
+  - "RULE-SET,YouTubeMusic,یوتیوب ▶️"
+  - "PROCESS-NAME,com.anydesk.anydeskandroid,انی‌دسک 🔴"
+  - "PROCESS-NAME,AnyDesk.exe,انی‌دسک 🔴"
+  - "DOMAIN-SUFFIX,anydesk.com,انی‌دسک 🔴"
+  - "PROCESS-NAME,Twitter.exe,توییتر 🐦"
+  - "PROCESS-NAME,com.twitter.android,توییتر 🐦"
+  - "RULE-SET,Chotwitter,توییتر 🐦"
+  - "RULE-SET,mihTwitter,توییتر 🐦"
+  - "RULE-SET,Domtwitter,توییتر 🐦"
+  - "PROCESS-NAME,com.spotify.music,اسپاتیفای 🎵"
+  - "PROCESS-NAME,Spotify.exe,اسپاتیفای 🎵"
+  - "RULE-SET,DomainSpotify,اسپاتیفای 🎵"
+  - "RULE-SET,mihspotify,اسپاتیفای 🎵"
+  - "PROCESS-NAME,com.instagram.android,اینستاگرام 📸"
+  - "RULE-SET,instagram,اینستاگرام 📸"
+  - "DOMAIN-SUFFIX,deepseek.com,هوش مصنوعی 🤖"
+  - "DOMAIN-SUFFIX,qwen.ai,هوش مصنوعی 🤖"
+  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
+  - "RULE-SET,censor,سایتای سانسوری 🤬"
+  - "RULE-SET,apps,سایتای ایرانی 🇮🇷"
   - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,arvancloud,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,derakcloud,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,iranserver,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,parspack,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,irasn,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,ircidr,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,ir,سایتای ایرانی 🇮🇷"
   - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
-  - "GEOIP,ir,سایتای ایرانی 🇮🇷"
+  - "DOMAIN-SUFFIX,unimics.com,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,whatsapp,واتس آپ 🟢"
+  - "RULE-SET,steam,استیم 🖥️"
+  - "RULE-SET,SteamRegionCheck,استیم 🖥️"
+  - "RULE-SET,game,گیم 🎮"
+  - "RULE-SET,GameDownload,گیم 🎮"
+  - "RULE-SET,category-games,گیم 🎮"
+  - "RULE-SET,Xbox,گیم 🎮"
+  - "RULE-SET,discord,دیسکورد 🗣️"
+  - "RULE-SET,xiaomi_white_list,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,xiaomi_block_list,تبلیغات اپ ها 🍃"
+  - "RULE-SET,windows,ویندوز 🧊"
+  - "RULE-SET,cloudflare,کلودفلر ☁️"
+  - "RULE-SET,github,گیتهاب 🐙"
+  - "PROCESS-NAME,com.android.vending,نوع انتخاب پروکسی 🔀"
+  - "PROCESS-NAME,com.google.android.gms,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google,گوگل 🌍"
+  - "IP-CIDR,10.10.34.0/24,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,private,بدون فیلترشکن 🛡️"
   - "MATCH,نوع انتخاب پروکسی 🔀"

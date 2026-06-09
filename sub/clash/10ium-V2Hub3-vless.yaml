@@ -1,4 +1,7 @@
 global-client-fingerprint: "chrome"
+keep-alive-interval: 5
+keep-alive-idle: 10
+disable-keep-alive: false
 port: 7890
 socks-port: 7891
 redir-port: 7892
@@ -8,21 +11,17 @@ allow-lan: true
 tcp-concurrent: true
 enable-process: true
 find-process-mode: "always"
-ipv6: true
+ipv6: false
 log-level: "info"
 geo-auto-update: true
 geo-update-interval: 168
 secret: ""
 bind-address: "*"
 unified-delay: false
-disable-keep-alive: false
-keep-alive-idle: 30
-keep-alive-interval: 30
 dns:
   enable: true
-  ipv6: true
-  respect-rules: false
-  prefer-h3: true
+  ipv6: false
+  prefer-h3: false
   cache-algorithm: "arc"
   use-system-hosts: true
   use-host: true
@@ -42,19 +41,74 @@ dns:
     - "ntp.*.com"
     - "*.ir"
   default-nameserver:
-    - "8.8.8.8"
-    - "8.8.4.4"
     - "1.1.1.1"
+    - "8.8.8.8"
     - "9.9.9.9"
   nameserver:
-    - "https://dns.google/dns-query"
-    - "https://cloudflare-dns.com/dns-query"
+    - "tcp://1.1.1.1"
+    - "tcp://1.0.0.1"
+    - "tcp://8.8.8.8"
+    - "tcp://8.8.4.4"
+    - "tcp://9.9.9.9"
+    - "tcp://149.112.112.112"
+    - "tcp://208.67.222.222"
+    - "tcp://208.67.220.222"
+  fallback:
+    - "tcp://76.76.19.19"
+    - "tcp://76.223.122.150"
+    - "tcp://185.228.168.9"
+    - "tcp://185.228.169.9"
+    - "tcp://8.26.56.26"
+    - "tcp://8.20.247.20"
+    - "tcp://76.76.2.11"
+    - "tcp://76.76.10.11"
+    - "tcp://84.200.69.80"
+    - "tcp://84.200.70.40"
+    - "tcp://45.33.97.5"
+    - "tcp://37.235.1.177"
+    - "tcp://209.244.0.3"
+    - "tcp://209.244.0.4"
+    - "tcp://156.154.70.5"
+    - "tcp://156.154.71.5"
+    - "tcp://103.86.96.100"
+    - "tcp://103.86.99.100"
+    - "tcp://199.85.126.10"
+    - "tcp://199.85.127.10"
+    - "tcp://129.250.35.250"
+    - "tcp://129.250.35.251"
+    - "tcp://94.16.114.254"
+    - "tcp://94.247.43.254"
+    - "tcp://208.67.222.20"
+    - "tcp://195.46.39.39"
+    - "tcp://195.46.39.40"
+    - "tcp://204.117.214.10"
+    - "tcp://199.2.252.10"
+    - "tcp://194.169.169.169"
+    - "tcp://156.154.70.1"
+    - "tcp://156.154.71.1"
+    - "tcp://91.239.100.100"
+    - "tcp://89.233.43.71"
+    - "tcp://64.6.64.6"
+    - "tcp://64.6.65.6"
+    - "tcp://77.88.8.8"
+    - "tcp://77.88.8.1"
+  fallback-filter:
+    geoip: true
+    geoip-code: "IR"
+    geosite:
+      - "gfw"
+    ipcidr:
+      - "240.0.0.0/4"
+    domain:
+      - "+.google.com"
+      - "+.facebook.com"
+      - "+.youtube.com"
+  proxy-server-nameserver:
+    - "tcp://1.1.1.1"
+    - "tcp://8.8.8.8"
   direct-nameserver:
     - "78.157.42.100"
     - "78.157.42.101"
-  proxy-server-nameserver:
-    - "1.1.1.1"
-    - "8.8.8.8"
 sniffer:
   enable: true
   force-dns-mapping: true
@@ -88,12 +142,60 @@ tun:
     - "any:53"
     - "tcp://any:53"
 rule-providers:
+  category_public_tracker:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-public-tracker.yaml"
+    interval: 86400
+    path: "./ruleset/category_public_tracker.yaml"
+  iran_ads:
+    type: "http"
+    behavior: "domain"
+    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    interval: 86400
+    path: "./ruleset/iran_ads.yaml"
+  PersianBlocker:
+    type: "http"
+    behavior: "domain"
+    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    interval: 86400
+    path: "./ruleset/PersianBlocker.yaml"
+  youtube:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
+    interval: 86400
+    path: "./ruleset/youtube.yaml"
+  telegram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
+    interval: 86400
+    path: "./ruleset/telegram.yaml"
+  twitch:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
+    interval: 86400
+    path: "./ruleset/twitch.yaml"
+  censor:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
+    interval: 86400
+    path: "./ruleset/censor.yaml"
   local_ips:
     type: "http"
     behavior: "ipcidr"
     url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
     interval: 86400
     path: "./ruleset/local_ips.yaml"
+  private:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
+    interval: 86400
+    path: "./ruleset/private.yaml"
   category_ir:
     type: "http"
     behavior: "domain"
@@ -106,6 +208,296 @@ rule-providers:
     url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
     interval: 86400
     path: "./ruleset/iran.yaml"
+  steam:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
+    interval: 86400
+    path: "./ruleset/steam.yaml"
+  game:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
+    interval: 86400
+    path: "./ruleset/game.yaml"
+  category-games:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
+    interval: 86400
+    path: "./ruleset/category-games.yaml"
+  ir:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
+    interval: 86400
+    path: "./ruleset/ir.yaml"
+  apps:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
+    interval: 86400
+    path: "./ruleset/apps.yaml"
+  ircidr:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
+    interval: 86400
+    path: "./ruleset/ircidr.yaml"
+  irasn:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
+    interval: 86400
+    path: "./ruleset/irasn.yaml"
+  arvancloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
+    interval: 86400
+    path: "./ruleset/arvancloud.yaml"
+  derakcloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
+    interval: 86400
+    path: "./ruleset/derakcloud.yaml"
+  iranserver:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
+    interval: 86400
+    path: "./ruleset/iranserver.yaml"
+  parspack:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
+    interval: 86400
+    path: "./ruleset/parspack.yaml"
+  malware:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/malware.yaml"
+    interval: 86400
+    path: "./ruleset/malware.yaml"
+  phishing:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/phishing.yaml"
+    interval: 86400
+    path: "./ruleset/phishing.yaml"
+  cryptominers:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/cryptominers.yaml"
+    interval: 86400
+    path: "./ruleset/cryptominers.yaml"
+  ads:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/Chocolate4U/Iran-clash-rules/releases/download/202606060815/category-ads-all.yaml"
+    interval: 86400
+    path: "./ruleset/ads.yaml"
+  DownloadManagers:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
+    interval: 86400
+    path: "./ruleset/DownloadManagers.yaml"
+  BanProgramAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanProgramAD.yaml"
+  BanAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanAD.yaml"
+  PrivateTracker:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
+    interval: 86400
+    path: "./ruleset/PrivateTracker.yaml"
+  BanEasyList:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
+    interval: 86400
+    path: "./ruleset/BanEasyList.yaml"
+  Download:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
+    interval: 86400
+    path: "./ruleset/Download.yaml"
+  GameDownload:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
+    interval: 86400
+    path: "./ruleset/GameDownload.yaml"
+  SteamRegionCheck:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
+    interval: 86400
+    path: "./ruleset/SteamRegionCheck.yaml"
+  Xbox:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
+    interval: 86400
+    path: "./ruleset/Xbox.yaml"
+  YouTubeMusic:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
+    interval: 86400
+    path: "./ruleset/YouTubeMusic.yaml"
+  YouTube:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
+    interval: 86400
+    path: "./ruleset/YouTube.yaml"
+  Ponzi:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
+    interval: 86400
+    path: "./ruleset/Ponzi.yaml"
+  warninglist:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/warning-list.yaml"
+    interval: 86400
+    path: "./ruleset/warninglist.yaml"
+  google:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
+    interval: 86400
+    path: "./ruleset/google.yaml"
+  google-play:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
+    interval: 86400
+    path: "./ruleset/google-play.yaml"
+  xiaomi_block_list:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_block_list.yaml"
+  xiaomi_white_list:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_white_list.yaml"
+  cloudflare:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
+    interval: 86400
+    path: "./ruleset/cloudflare.yaml"
+  github:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
+    interval: 86400
+    path: "./ruleset/xgithub.yaml"
+  whatsapp:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
+    interval: 86400
+    path: "./ruleset/whatsapp.yaml"
+  LiteAds:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/LiteAds.yaml"
+    interval: 86400
+    path: "./ruleset/LiteAds.yaml"
+  discord:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
+    interval: 86400
+    path: "./ruleset/discord.yaml"
+  instagram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    interval: 86400
+    path: "./ruleset/instagram.yaml"
+  category-ai:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    interval: 86400
+    path: "./ruleset/category-ai.yaml"
+  stremio:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    interval: 86400
+    path: "./ruleset/stremio.yaml"
+  windows:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    interval: 86400
+    path: "./ruleset/windows.yaml"
+  Chotwitter:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/twitter.yaml"
+    interval: 86400
+    path: "./ruleset/Chotwitter.yaml"
+  mihTwitter:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Twitter.yaml"
+    interval: 86400
+    path: "./ruleset/mihTwitter.yaml"
+  Domtwitter:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/twitter.yaml"
+    interval: 86400
+    path: "./ruleset/Domtwitter.yaml"
+  DomainSpotify:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/spotify.yaml"
+    interval: 86400
+    path: "./ruleset/DomainSpotify.yaml"
+  mihspotify:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Spotify.yaml"
+    interval: 86400
+    path: "./ruleset/mihSpotify.yaml"
 proxies:
   - name: "US🇺🇸 | Sudoos.global.ssl.fastly.net-80 | 16.27ms"
     type: "vless"
@@ -119,6 +511,18 @@ proxies:
       path: "/-Arfilter-TEL--@Arfilter-TEL--@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEl--@Arfilter?ed=80"
       headers:
         Host: "Sudoos.global.ssl.fastly.net"
+  - name: "US🇺🇸 | Sudo.global.ssl.fastly.net-80 | 19.81ms"
+    type: "vless"
+    server: "speedtest.net"
+    port: 80
+    uuid: "telegram-id-Arfilter"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/-Arfilter-TEL--@Arfilter-TEL--@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEl--@Arfilter?ed=80"
+      headers:
+        Host: "Sudo.global.ssl.fastly.net"
   - name: "REALITY|LT🇱🇹 | lt-cherry-01.com-8443 | 429.16ms"
     type: "vless"
     server: "lt-cherry-01.com"
@@ -166,6 +570,19 @@ proxies:
     servername: "dev.twistsparrow.xyz"
     ws-opts:
       path: "/"
+  - name: "RELAY🚩 | dev.twistsparrow.xyz-443 | 3.4ms"
+    type: "vless"
+    server: "188.114.98.0"
+    port: 443
+    uuid: "fef4a93d-eb4f-4657-b56b-32a0dc060045"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "dev.twistsparrow.xyz"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "dev.twistsparrow.xyz"
   - name: "RELAY🚩 | dev.twistsparrow.xyz-443 | 3.53ms"
     type: "vless"
     server: "104.21.40.34"
@@ -188,6 +605,18 @@ proxies:
     tls: true
     network: "ws"
     servername: "dev.twistsparrow.xyz"
+    ws-opts:
+      path: "/"
+  - name: "RELAY🚩 | dev.twistsparrow.xyz-443 | 3.41ms"
+    type: "vless"
+    server: "104.17.162.123"
+    port: 443
+    uuid: "fef4a93d-eb4f-4657-b56b-32a0dc060045"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "dev.twistsparrow.xyz"
+    client-fingerprint: "chrome"
     ws-opts:
       path: "/"
   - name: "RELAY🚩 | octopusss4.com-443 | 103.09ms"
@@ -285,6 +714,20 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
+  - name: "RELAY🚩 | octopusss4.com-443 | 3.59ms"
+    type: "vless"
+    server: "188.114.98.0"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
   - name: "RELAY🚩 | octopusss4.com-443 | 3.31ms"
     type: "vless"
     server: "188.114.97.6"
@@ -295,6 +738,24 @@ proxies:
     network: "ws"
     servername: "octopusss4.com"
     client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "RELAY🚩 | octopusss4.com-443 | 3.06ms"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
     ws-opts:
       path: "/tsghdws"
       headers:
@@ -335,6 +796,19 @@ proxies:
     network: "ws"
     servername: "octopusss4.com"
     client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "RELAY🚩 | octopusss4.com-443 | 3.13ms"
+    type: "vless"
+    server: "172.64.146.138"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
     ws-opts:
       path: "/tsghdws"
       headers:
@@ -389,6 +863,19 @@ proxies:
     network: "ws"
     servername: "octopusss4.com"
     client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "RELAY🚩 | octopusss4.com-443 | 3.31ms-1"
+    type: "vless"
+    server: "141.193.213.10"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
     ws-opts:
       path: "/tsghdws"
       headers:
@@ -493,6 +980,18 @@ proxies:
     reality-opts:
       public-key: "nWQ7b9l9X6N3PrXLgIzOvMM8iSYrqjVHEb9ikWxqYSg"
       short-id: "0e"
+  - name: "REALITY|AM🇦🇲 | 77.91.68.70-55983 | 153.94ms"
+    type: "vless"
+    server: "77.91.68.70"
+    port: 55983
+    uuid: "f667a096-5231-4cfb-8759-92bb32473139"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yahoo.com"
+    reality-opts:
+      public-key: "nWQ7b9l9X6N3PrXLgIzOvMM8iSYrqjVHEb9ikWxqYSg"
+      short-id: "0e"
   - name: "REALITY|AT🇦🇹 | 185.224.3.41-10443 | 100.12ms"
     type: "vless"
     server: "185.224.3.41"
@@ -511,6 +1010,14 @@ proxies:
     server: "151.101.3.8"
     port: 80
     uuid: "f633fabf-ee7e-4562-a2c2-459848818b29"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "RELAY🚩 | ai.heroitweb.ir-8080 | 187.49ms"
+    type: "vless"
+    server: "www.speedtest.net"
+    port: 8080
+    uuid: "f6314e1e-8c40-4972-b1e2-de25d37611a7"
     udp: true
     tls: false
     network: "xhttp"
@@ -577,6 +1084,21 @@ proxies:
       - "http/1.1"
     ws-opts:
       path: "/check"
+  - name: "RELAY🚩 | uk-02p.allhubb.info-443 | 178.42ms"
+    type: "vless"
+    server: "chatgpt.com"
+    port: 443
+    uuid: "ef8e608b-3edc-4235-8963-b6334f44b88e"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "uk-02p.allhubb.info"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/check"
   - name: "REALITY|DE🇩🇪 | de02.lumixvpn.org-443 | 272.65ms"
     type: "vless"
     server: "de02.lumixvpn.org"
@@ -590,6 +1112,20 @@ proxies:
     reality-opts:
       public-key: "DIHjDGgu5D5u6_MR58aXikctuSMiMsXM9TQO8AjnsFE"
       short-id: "f2036d26b59e10f9"
+  - name: "RELAY🚩 | wild-grass-1917.tmpduardoolfsonerluke15.workers.dev-443 | 21.94ms"
+    type: "vless"
+    server: "8.6.112.0"
+    port: 443
+    uuid: "ed0e05af-49ab-4ea8-a39c-634855811b03"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "wild-grass-1917.tmpduardoolfsonerluke15.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "wild-grass-1917.tmpduardoolfsonerluke15.workers.dev"
   - name: "US🇺🇸 | 128.105.145.226-2022 | 20.42ms"
     type: "vless"
     server: "128.105.145.226"
@@ -727,6 +1263,21 @@ proxies:
       path: "/@custom_config?ed=2048"
       headers:
         Host: "leader-of-www.com"
+  - name: "RELAY🚩 | e4xf3l6qfdu-shhc8axat6695v4t9e6p.pages.dev-443 | 20.9ms"
+    type: "vless"
+    server: "chatgpt.com"
+    port: 443
+    uuid: "ea3f180c-8141-4e03-b11c-4d542767a417"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "e4xf3l6qfdu-shhc8axat6695v4t9e6p.pages.dev"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/eyJqdW5rIjoidmo5SG5sY2oyMGNKYiIsInByb3RvY29sIjoidmwiLCJtb2RlIjoicHJveHlpcCIsInBhbmVsSVBzIjpbXX0="
+      headers:
+        Host: "e4xf3l6qfdu-shhc8axat6695v4t9e6p.pages.dev"
   - name: "REALITY|DE🇩🇪 | 5.75.196.174-443 | 96.74ms"
     type: "vless"
     server: "5.75.196.174"
@@ -788,6 +1339,21 @@ proxies:
     client-fingerprint: "firefox"
     reality-opts:
       public-key: "fPSR5GZpxhOV6Rh7VzMtS4AeRN7ipyNX4waG9JzJzxQ"
+    grpc-opts:
+      grpc-service-name: "QToNrKDvQT5AfnFM"
+  - name: "REALITY|NL🇳🇱 | leg.goodmaximum.com-443 | 157.52ms"
+    type: "vless"
+    server: "leg.goodmaximum.com"
+    port: 443
+    uuid: "e653f585-9924-000f-8d5d-c15c3ab95270"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "cloud.nimhogoa.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "fPSR5GZpxhOV6Rh7VzMtS4AeRN7ipyNX4waG9JzJzxQ"
+      short-id: "99181028b56c8702"
     grpc-opts:
       grpc-service-name: "QToNrKDvQT5AfnFM"
   - name: "RELAY🚩 | ftp.singoshop.ir-8443 | 183.54ms"
@@ -902,6 +1468,20 @@ proxies:
     tls: true
     network: "grpc"
     servername: "yahoo.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "lZhnPs3mM0yaBLd2jWaQoX3DVaXz4l-t9SdKr0vUy1U"
+      short-id: "fb8e0edb66000f28"
+    grpc-opts:
+      grpc-service-name: "xyz"
+  - name: "REALITY|AE🇦🇪 | 85.234.73.125-13278 | 174.26ms"
+    type: "vless"
+    server: "85.234.73.125"
+    port: 13278
+    uuid: "e3115c84-266b-4c46-b3f2-16cc3263d555"
+    udp: true
+    tls: true
+    network: "grpc"
     client-fingerprint: "chrome"
     reality-opts:
       public-key: "lZhnPs3mM0yaBLd2jWaQoX3DVaXz4l-t9SdKr0vUy1U"
@@ -1371,6 +1951,19 @@ proxies:
     reality-opts:
       public-key: "imrqcALk8xmqGKEdO_VZRNxu6eaH8sNC7VeXkqQft1A"
       short-id: "ea13"
+  - name: "RELAY🚩 | toshirpilafkani-torostamtahamtani.rezaezzati.top-443 | 81.51ms"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "d9225978-c590-4f01-9dd0-c705ff03d76b"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "toshirpilafkani-torostamtahamtani.rezaezzati.top"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
+      - "http/1.1"
   - name: "REALITY|NL🇳🇱 | 77.246.109.191-34045 | 93.7ms"
     type: "vless"
     server: "77.246.109.191"
@@ -1410,6 +2003,20 @@ proxies:
       path: "/assets"
       headers:
         Host: "diprox.pages.dev"
+  - name: "RELAY🚩 | DiprOX.pages.DEV-443 | 3.7ms"
+    type: "vless"
+    server: "creativecommons.org"
+    port: 443
+    uuid: "d89d6641-3b1a-4f51-a194-9c9109fd21b6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "DiprOX.pages.DEV"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "DiprOX.pages.DEV"
   - name: "RELAY🚩 | DiprOX.pages.DEV-443 | 4.35ms"
     type: "vless"
     server: "108.162.198.154"
@@ -1480,6 +2087,23 @@ proxies:
     reality-opts:
       public-key: "CM7AaS7XYEohx4ZNbecHqTqhyX9-Q4MQKlHji1xxI2I"
       short-id: "4b272f845593"
+  - name: "US🇺🇸 | Zmaoz.Faculty.Ucdavis.Edu-443 | 21.85ms"
+    type: "vless"
+    server: "zmaoz.faculty.ucdavis.edu"
+    port: 443
+    uuid: "d6ec4a5b-3e01-4688-a40b-e8c714f4b461"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Zmaoz.Faculty.Ucdavis.Edu"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/@custom_config?ed=2560"
+      headers:
+        Host: "downloadlynet.ir."
   - name: "US🇺🇸 | live.skornorth.com-443 | 10.06ms"
     type: "vless"
     server: "live.skornorth.com"
@@ -1497,6 +2121,23 @@ proxies:
       path: "/@custom_config?ed=2048"
       headers:
         Host: "soft-sun.com"
+  - name: "US🇺🇸 | live.skornorth.com-443 | 12.22ms"
+    type: "vless"
+    server: "live.skornorth.com"
+    port: 443
+    uuid: "d6252cc5-2f53-4966-ad3b-99285b891879"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "live.skornorth.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/@custom_config?ed=2048"
+      headers:
+        Host: "custom-config.ir"
   - name: "US🇺🇸 | 77.110.127.191-9443 | 15.46ms"
     type: "vless"
     server: "77.110.127.191"
@@ -1723,6 +2364,19 @@ proxies:
       path: "/"
       headers:
         Host: "de1.nagona.top"
+  - name: "RELAY🚩 | zaintest.vuclip.com.cyylr.eu.cc-443 | 3.85ms"
+    type: "vless"
+    server: "45.130.125.0"
+    port: 443
+    uuid: "cff04824-47a3-4a85-a9df-83af9181f84c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "zaintest.vuclip.com.cyylr.eu.cc"
+    ws-opts:
+      path: "/in-pdr"
+      headers:
+        Host: "zaintest.vuclip.com.cyylr.eu.cc"
   - name: "DE🇩🇪 | de1.accuratenetworkchecker.ir-443 | 267.55ms"
     type: "vless"
     server: "de1.accuratenetworkchecker.ir"
@@ -1869,6 +2523,34 @@ proxies:
       path: "/sg-melbi"
       headers:
         Host: "cyylr.eu.cc"
+  - name: "RELAY🚩 | cyylr.eu.cc-443 | 4.24ms"
+    type: "vless"
+    server: "104.19.229.21"
+    port: 443
+    uuid: "cc752a3e-1537-4e86-bb50-1b897bf7b33c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cyylr.eu.cc"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/sg-melbi"
+      headers:
+        Host: "cyylr.eu.cc"
+  - name: "RELAY🚩 | cyylr.eu.cc-443 | 4.37ms"
+    type: "vless"
+    server: "104.19.229.21"
+    port: 443
+    uuid: "cc752a3e-1537-4e86-bb50-1b897bf7b33c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cyylr.eu.cc"
+    ws-opts:
+      path: "/sg-melbi"
+      headers:
+        Host: "cyylr.eu.cc"
   - name: "RELAY🚩 | cyylr.eu.cc-443 | 3.97ms"
     type: "vless"
     server: "104.16.74.121"
@@ -1963,6 +2645,19 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "lJ9INPpO4rdnm2Tek_yg0PGFyUrBB6MoKyvqt_Mfqm0"
+  - name: "REALITY|US🇺🇸 | 137.184.218.169-36925 | 7.53ms"
+    type: "vless"
+    server: "137.184.218.169"
+    port: 36925
+    uuid: "c9fd0fb1-8251-4106-b09a-f4b426736f67"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "lJ9INPpO4rdnm2Tek_yg0PGFyUrBB6MoKyvqt_Mfqm0"
   - name: "REALITY|FI🇫🇮 | node-fi.dostup-est.info-8443 | 280.24ms"
     type: "vless"
     server: "node-fi.dostup-est.info"
@@ -1990,6 +2685,16 @@ proxies:
     reality-opts:
       public-key: "Hp6K5hsiPY4_zATgAtef9YTxNGpSkhAHTTo9MUO7fik"
       short-id: "77e934f68f02ab4c"
+  - name: "US🇺🇸 | 77.110.127.191-9443 | 15.66ms"
+    type: "vless"
+    server: "77.110.127.191"
+    port: 9443
+    uuid: "c71eacc8-f57f-4ac7-ab7e-135e2728e875"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/pourya"
   - name: "REALITY|RU🇷🇺 | b02.connectv.net-443 | 158.23ms"
     type: "vless"
     server: "b02.connectv.net"
@@ -2019,6 +2724,20 @@ proxies:
       path: "/eyJqdW5rIjoibDJRZVk2U2Z0IiwicHJvdG9jb2wiOiJ2bCIsIm1vZGUiOiJwcmVmaXgiLCJwYW5lbElQcyI6WyJbMmEwMjo4OTg6MTQ2OjY0OjpdIl19?ed=2560"
       headers:
         Host: "bold-frost-5566.akbari1355-kho.workers.dev"
+  - name: "RELAY🚩 | kakoolnews.kakoolnews0.workers.dev-443 | 16.02ms"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "c466ef48-fb57-40c6-808d-ee48d537844d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "kakoolnews.kakoolnews0.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "kakoolnews.kakoolnews0.workers.dev"
   - name: "RELAY🚩 | telegramkakoolnews.kakoolnewsa.workers.dev-443 | 14.25ms"
     type: "vless"
     server: "104.17.107.60"
@@ -2047,6 +2766,20 @@ proxies:
       path: "/"
       headers:
         Host: "kakoolnews.kakoolnews8.workers.dev"
+  - name: "RELAY🚩 | telegram.kakoolnews3.workers.dev-443 | 17.38ms"
+    type: "vless"
+    server: "104.16.72.251"
+    port: 443
+    uuid: "c466ef48-fb57-40c6-808d-ee48d537844d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "telegram.kakoolnews3.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "telegram.kakoolnews3.workers.dev"
   - name: "RELAY🚩 | unnes.ac.id.cyylr.eu.cc-443 | 10.07ms"
     type: "vless"
     server: "cyylr.eu.cc"
@@ -2256,6 +2989,20 @@ proxies:
       - "http/1.1"
     ws-opts:
       path: "/"
+  - name: "REALITY|MD🇲🇩 | md.riotvpn.eu-443 | 131.49ms"
+    type: "vless"
+    server: "md.riotvpn.eu"
+    port: 443
+    uuid: "bd78d4ee-c068-4125-94ba-50814578dc41"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ads.x5.ru"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "8h8t5eBWL9oERK7xWHQLFJE5j6sZdgNDQAs3EGnNbho"
+      short-id: "2f49bccf11150ef2"
   - name: "REALITY|DE🇩🇪 | moo2.gafe-lorbad.ir-449 | 270.1ms"
     type: "vless"
     server: "moo2.gafe-lorbad.ir"
@@ -2530,6 +3277,23 @@ proxies:
       path: "/?ed=2052"
       headers:
         Host: "norbertde1.global.ssl.fastly.net"
+  - name: "RELAY🚩 | pages.dev.-443 | 2.22ms"
+    type: "vless"
+    server: "www.speedtest.net"
+    port: 443
+    uuid: "b55ba5e3-f7c6-4f39-9b06-effdf4605b1c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "pages.dev."
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/@custom_config?ed=2048"
+      headers:
+        Host: "jobinja.pages.dev."
   - name: "DE🇩🇪 | du.mobileemdad.top-42542 | 115.6ms"
     type: "vless"
     server: "du.mobileemdad.top"
@@ -2548,6 +3312,20 @@ proxies:
     network: "ws"
     ws-opts:
       path: "/ws"
+  - name: "RELAY🚩 | sabrina.lezzatcore.ir-443 | 173.27ms"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "b51ecb4d-40f5-4a01-9d6b-d7c5e3878150"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "sabrina.lezzatcore.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
   - name: "REALITY|TR🇹🇷 | 62.133.63.232-8443 | 129.96ms"
     type: "vless"
     server: "62.133.63.232"
@@ -2598,6 +3376,29 @@ proxies:
     servername: "r1.mizulina.top"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
+  - name: "RU🇷🇺 | r1.mizulina.top-22231 | 233.98ms"
+    type: "vless"
+    server: "r1.mizulina.top"
+    port: 22231
+    uuid: "afcac633-0e1a-46c3-bef2-cc01cc0097c8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "r1.mizulina.top"
+    alpn:
+      - "http/1.1"
+    flow: "xtls-rprx-vision"
+  - name: "RU🇷🇺 | r1.mizulina.top-22231 | 262.64ms"
+    type: "vless"
+    server: "r1.mizulina.top"
+    port: 22231
+    uuid: "afcac633-0e1a-46c3-bef2-cc01cc0097c8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "r1.mizulina.top"
+    client-fingerprint: "edge"
+    flow: "xtls-rprx-vision-udp443"
   - name: "RU🇷🇺 | r1.mizulina.top-22231 | 223.08ms"
     type: "vless"
     server: "85.234.114.53"
@@ -2609,6 +3410,17 @@ proxies:
     servername: "r1.mizulina.top"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
+  - name: "RU🇷🇺 | r1.mizulina.top-22231 | 260.85ms"
+    type: "vless"
+    server: "85.234.114.53"
+    port: 22231
+    uuid: "afcac633-0e1a-46c3-bef2-cc01cc0097c8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "r1.mizulina.top"
+    client-fingerprint: "edge"
+    flow: "xtls-rprx-vision"
   - name: "RU🇷🇺 | r1.mizulina.top-22231 | 96.77ms"
     type: "vless"
     server: "72.56.59.223"
@@ -2618,6 +3430,20 @@ proxies:
     tls: true
     network: "tcp"
     servername: "r1.mizulina.top"
+    flow: "xtls-rprx-vision"
+  - name: "RU🇷🇺 | r1.mizulina.top-22231 | 236.21ms"
+    type: "vless"
+    server: "72.56.59.223"
+    port: 22231
+    uuid: "afcac633-0e1a-46c3-bef2-cc01cc0097c8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "r1.mizulina.top"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
     flow: "xtls-rprx-vision"
   - name: "RU🇷🇺 | r1.mizulina.top-22231 | 101.36ms"
     type: "vless"
@@ -2711,6 +3537,18 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "LGcG8Sqv5vPDypbaEgHV0ZGqQOBkgDepPWXyDohbVXQ"
+  - name: "REALITY|CZ🇨🇿 | 188.130.208.220-5443 | 99.23ms"
+    type: "vless"
+    server: "188.130.208.220"
+    port: 5443
+    uuid: "ae5ba4be-7262-4199-bd62-210ed8999b9f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "max.ru"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "LGcG8Sqv5vPDypbaEgHV0ZGqQOBkgDepPWXyDohbVXQ"
   - name: "RELAY🚩 | pagescm.freen7.de5.net-443 | 183.8ms"
     type: "vless"
     server: "172.64.144.183"
@@ -2735,6 +3573,19 @@ proxies:
     network: "tcp"
     servername: "www.microsoft.com"
     client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "5QAO98ot2U7TcGs_f6EEaQjCzNOJLNHqPf6smYsdFVI"
+      short-id: "d82fb387"
+  - name: "REALITY|US🇺🇸 | 167.104.223.57-7443 | 77.92ms"
+    type: "vless"
+    server: "167.104.223.57"
+    port: 7443
+    uuid: "adea61c0-0bb2-4ad3-8dba-7766eebd50f8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.microsoft.com"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "5QAO98ot2U7TcGs_f6EEaQjCzNOJLNHqPf6smYsdFVI"
@@ -2766,6 +3617,19 @@ proxies:
     reality-opts:
       public-key: "nPcUKydxoRI66O3tT9O4QCZpLjOBvkGsiXG7pDX1BBw"
       short-id: "6ba85179e30d4fc2"
+  - name: "RELAY🚩 | 638991166348691947.corolla-amsia.info-443 | 49.05ms"
+    type: "vless"
+    server: "betty.ns.cloudflare.com"
+    port: 443
+    uuid: "ad0a1c58-c267-405a-b7b6-f2c419f4010b"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "638991166348691947.corolla-amsia.info"
+    ws-opts:
+      path: "/uywlzkws"
+      headers:
+        Host: "638991166348691947.corolla-amsia.info"
   - name: "RELAY🚩 | collection.linefriends.com.cyylr.eu.cc-443 | 245.89ms"
     type: "vless"
     server: "198.62.62.18"
@@ -2794,6 +3658,19 @@ proxies:
       short-id: "e67fb918ed6b9ffb"
     grpc-opts:
       grpc-service-name: "grpc-yandex"
+  - name: "RELAY🚩 | afrcloud22.mmv.kr-443 | 3.55ms"
+    type: "vless"
+    server: "www.speedtest.net"
+    port: 443
+    uuid: "aaaaaabb-4ddd-4eee-9fff-ffffffffffff"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "afrcloud22.mmv.kr"
+    ws-opts:
+      path: "/209.97.173.243=443"
+      headers:
+        Host: "afrcloud22.mmv.kr"
   - name: "RELAY🚩 | afrcloud5.c01.kr-443 | 206.65ms"
     type: "vless"
     server: "63.141.128.46"
@@ -2884,6 +3761,16 @@ proxies:
     reality-opts:
       public-key: "TNsQJHoX2M2u07a6oEPb3tY9U08Aph4Qvdk76dAZdio"
       short-id: "82ed5803a8047a3e"
+  - name: "US🇺🇸 | 77.110.127.191-9443 | 14.91ms"
+    type: "vless"
+    server: "77.110.127.191"
+    port: 9443
+    uuid: "a7fba015-a571-4996-bead-acc8f10c9c5f"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/pourya"
   - name: "RELAY🚩 | juzi.qea.ccwu.cc-443 | 180.32ms"
     type: "vless"
     server: "162.159.18.105"
@@ -2895,6 +3782,19 @@ proxies:
     servername: "juzi.qea.ccwu.cc"
     ws-opts:
       path: "/"
+      headers:
+        Host: "juzi.qea.ccwu.cc"
+  - name: "RELAY🚩 | juzi.qea.ccwu.cc-443 | 4.37ms"
+    type: "vless"
+    server: "162.159.18.105"
+    port: 443
+    uuid: "a6f1755f-0140-4bea-8727-0db1bed7c4df"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "juzi.qea.ccwu.cc"
+    ws-opts:
+      path: "/?TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=2048"
       headers:
         Host: "juzi.qea.ccwu.cc"
   - name: "RELAY🚩 | juzi.qea.ccwu.cc-443 | 3.93ms"
@@ -3035,6 +3935,23 @@ proxies:
     reality-opts:
       public-key: "8h8t5eBWL9oERK7xWHQLFJE5j6sZdgNDQAs3EGnNbho"
       short-id: "2f49bccf11150ef2"
+  - name: "US🇺🇸 | aereq0q.ali2069.site-443 | 96.26ms"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "a14b268a-3f15-47ba-b49a-9a86802c2784"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "aereq0q.ali2069.site"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/tyt"
+      headers:
+        Host: "aereq0q.ali2069.site"
   - name: "US🇺🇸 | ks.ylks.xyz-443 | 79.45ms"
     type: "vless"
     server: "69.84.182.208"
@@ -3101,9 +4018,35 @@ proxies:
     servername: "kr.ylks.xyz"
     ws-opts:
       path: "/blue"
+  - name: "RELAY🚩 | y6-3cj.PAgES.DEV-443 | 17.63ms"
+    type: "vless"
+    server: "8.6.112.0"
+    port: 443
+    uuid: "a01daac7-1e65-4645-854d-b47d226f6b08"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "y6-3cj.PAgES.DEV"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "y6-3cj.PAgES.DEV"
   - name: "RELAY🚩 | Parsashonam.atlasq.ir-443 | 104.57ms"
     type: "vless"
     server: "27.50.48.49"
+    port: 443
+    uuid: "Telegram-Parsashonam"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "Parsashonam.atlasq.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+  - name: "RELAY🚩 | Parsashonam.atlasq.ir-443 | 3.25ms"
+    type: "vless"
+    server: "104.19.229.21"
     port: 443
     uuid: "Telegram-Parsashonam"
     udp: true
@@ -3180,6 +4123,15 @@ proxies:
     tls: true
     network: "xhttp"
     servername: "p4r34m.hendevaneh.sbs"
+  - name: "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.32ms"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "Telegram-Parsashonam-7"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "p4r34m.hendevaneh.sbs"
   - name: "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 2.95ms"
     type: "vless"
     server: "45.130.125.69"
@@ -3196,6 +4148,19 @@ proxies:
   - name: "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 2.82ms"
     type: "vless"
     server: "45.130.125.160"
+    port: 443
+    uuid: "Telegram-Parsashonam-2"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "p4r34m.hendevaneh.sbs"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+  - name: "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 4.05ms"
+    type: "vless"
+    server: "27.50.48.49"
     port: 443
     uuid: "Telegram-Parsashonam-2"
     udp: true
@@ -3258,6 +4223,44 @@ proxies:
     alpn:
       - "h2"
       - "http/1.1"
+  - name: "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.63ms"
+    type: "vless"
+    server: "45.130.125.76"
+    port: 443
+    uuid: "Telegram-Parsashonam-1"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "p4r34m.hendevaneh.sbs"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+  - name: "DE🇩🇪 | cdn.limoo.blog-443 | 138.93ms"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "Telegram-Parsashonam-12"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cdn.limoo.blog"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "cdn.limoo.blog"
+  - name: "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.82ms"
+    type: "vless"
+    server: "45.130.125.160"
+    port: 443
+    uuid: "Telegram-Parsashonam-10"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "p4r34m.hendevaneh.sbs"
   - name: "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.46ms"
     type: "vless"
     server: "188.121.118.16"
@@ -3289,6 +4292,14 @@ proxies:
     reality-opts:
       public-key: "YTOMJLdO3m1Mj_v7hHx7vMTjB3lPAwKMjfUQs8LUCT8"
       short-id: "07d905c3c6da34"
+  - name: "US🇺🇸 | tignaltofan.global.ssl.fastly.net-80 | 11.95ms"
+    type: "vless"
+    server: "fastly.com"
+    port: 80
+    uuid: "InternetAzadRobot"
+    udp: true
+    tls: false
+    network: "xhttp"
   - name: "US🇺🇸 | tignaltofansv4.global.ssl.fastly.net-80 | 8.1ms"
     type: "vless"
     server: "151.101.129.164"
@@ -3375,547 +4386,30 @@ proxies:
     udp: true
     tls: false
     network: "xhttp"
-  - name: "US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 18.55ms"
-    type: "vless"
-    server: "151.101.25.242"
-    port: 80
-    uuid: "9d468e0a-01ca-41a2-a89b-73b2756f91ec"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "REALITY|US🇺🇸 | us02.ssr.ee-443 | 190.62ms"
-    type: "vless"
-    server: "us02.ssr.ee"
-    port: 443
-    uuid: "9d0a75d2-f747-4afa-b43f-d208af9e8f9a"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "itunes.apple.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "AeJ40fWPYK3WSDtY_AGv3ewG_kwQvAoDtf3KIgk1DRU"
-      short-id: "6ba85179e30d4fc2"
-  - name: "REALITY|AE🇦🇪 | db02.ssr.ee-443 | 314.68ms"
-    type: "vless"
-    server: "db02.ssr.ee"
-    port: 443
-    uuid: "9d0a75d2-f747-4afa-b43f-d208af9e8f9a"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "itunes.apple.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "0Vvc6EFXPQHWWqyhG4wek-MEh_q6a9CDMY7U-TSHGV4"
-      short-id: "6ba85179e30d4fc2"
-  - name: "REALITY|AE🇦🇪 | db01.ssr.ee-443 | 200.28ms"
-    type: "vless"
-    server: "db01.ssr.ee"
-    port: 443
-    uuid: "9d0a75d2-f747-4afa-b43f-d208af9e8f9a"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "itunes.apple.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "3tyvN86mGzMnYhAMX06SJMYSWhG02rqzTr7GjS-OaWI"
-      short-id: "6ba85179e30d4fc2"
-  - name: "RELAY🚩 | v2ngfast.werdfg44.workers.dev-8443 | 17.53ms"
-    type: "vless"
-    server: "172.67.66.162"
-    port: 8443
-    uuid: "9ce7ac33-5004-40ea-8236-15bc2d25a37c"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "v2ngfast.werdfg44.workers.dev"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/mtmvpn---mtmvpn---mtmvpn---mtmvpn---mtmvpn"
-      headers:
-        Host: "v2ngfast.werdfg44.workers.dev"
-  - name: "REALITY|US🇺🇸 | 156.229.161.107-10001 | 59.83ms"
-    type: "vless"
-    server: "156.229.161.107"
-    port: 10001
-    uuid: "9c79aceb-4649-44ea-9698-b5e9ecf6d6da"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.icloud.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "4jNz4Bw-FZlaX-WtfAdwK0hegY28W_k8AttGd-7hZn4"
-      short-id: "fb2c6678"
-  - name: "RELAY🚩 | vip1.yomato7390.workers.Dev-443 | 16.45ms"
-    type: "vless"
-    server: "104.18.2.57"
-    port: 443
-    uuid: "9c682edf-7e17-41d6-83e1-d7f6996a9542"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "vip1.yomato7390.workers.Dev"
-    ws-opts:
-      path: "/?ed=2048"
-      headers:
-        Host: "vip1.yomato7390.workers.Dev"
-  - name: "REALITY|RU🇷🇺 | 144.31.190.130-8081 | 121.93ms"
-    type: "vless"
-    server: "144.31.190.130"
-    port: 8081
-    uuid: "99f1fc84-29a9-4715-bc60-e25fc4f56ff9"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "sun6-21.userapi.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "QHkXBS2ENHV0khgY9VBYi8_9bpfqnUYDcfQN4cW5Qg0"
-      short-id: "4326"
-  - name: "REALITY|DE🇩🇪 | 5.75.196.174-20141 | 98.57ms"
-    type: "vless"
-    server: "5.75.196.174"
-    port: 20141
-    uuid: "9965c9de-df82-454b-a936-a9014e9c9a55"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "arvancloud.ir"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "qr9I7Hv2oZ2F0BiWgy9DmYHp0vcFEXcNRVHkyFg3OUw"
-      short-id: "cc2b7917dec3"
-  - name: "RELAY🚩 | mci-google-bing3164.sdb5j.workers.dev-443 | 21.73ms"
-    type: "vless"
-    server: "66.235.200.1"
-    port: 443
-    uuid: "994c91dd-b282-4c25-a0c5-af76b480c080"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "mci-google-bing3164.sdb5j.workers.dev"
-    client-fingerprint: "randomized"
-    ws-opts:
-      path: "/?ed=2048"
-      headers:
-        Host: "mci-google-bing3164.sdb5j.workers.dev"
-  - name: "RELAY🚩 | divine-mode-ac41.amirss.workers.dev-80 | 21.29ms"
-    type: "vless"
-    server: "104.17.220.114"
-    port: 80
-    uuid: "98f7d01d-e770-471f-80ff-8f480ad84f7c"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "divine-mode-ac41.amirss.workers.dev"
-  - name: "RELAY🚩 | focalin.adaspolo2.store-443 | 63.77ms"
-    type: "vless"
-    server: "104.18.32.47"
-    port: 443
-    uuid: "9814fddd-c97d-4f62-8af2-0639d708b2d9"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "focalin.adaspolo2.store"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h3"
-      - "h2"
-      - "http/1.1"
-    ws-opts:
-      path: "/random"
-      headers:
-        Host: "focalin.adaspolo2.store"
-  - name: "REALITY|IR🇮🇷 | 62.60.245.10-443 | 94.96ms"
-    type: "vless"
-    server: "62.60.245.10"
-    port: 443
-    uuid: "97de1f85-5f2c-4446-8507-b437125623a2"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "mNPCrTF4rKb_SRmOH-9-IBs5ihK6Pn4SH29iZtKmiX0"
-      short-id: "abcd1234"
-  - name: "REALITY|FI🇫🇮 | 193.29.224.214-443 | 118.15ms"
-    type: "vless"
-    server: "193.29.224.214"
-    port: 443
-    uuid: "97de1f85-5f2c-4446-8507-b437125623a2"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "mNPCrTF4rKb_SRmOH-9-IBs5ihK6Pn4SH29iZtKmiX0"
-      short-id: "abcd1234"
-  - name: "RELAY🚩 | potifar.kravend4.workers.dev-80 | 37.69ms"
-    type: "vless"
-    server: "162.159.61.158"
-    port: 80
-    uuid: "97ddf9a6-de5b-4229-bc41-4627321eff43"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "potifar.kravend4.workers.dev"
-  - name: "US🇺🇸 | google.com-443 | 6.15ms"
-    type: "vless"
-    server: "193.58.119.134"
-    port: 443
-    uuid: "97d216c9-7561-45fa-fd67-e56fde36360b"
-    udp: true
-    tls: false
-    network: "tcp"
-  - name: "REALITY|GB🇬🇧 | 31.76.39.21-443 | 74.99ms"
-    type: "vless"
-    server: "31.76.39.21"
-    port: 443
-    uuid: "9778a597-c81f-4459-9754-140b2ba8f784"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "5post-gate.x5.ru"
-    client-fingerprint: "qq"
-    reality-opts:
-      public-key: "akcAXaW7GNwXT6bTrtD6oZIY9rdEzW4TfZvYqDRzsTc"
-      short-id: "a8f3c1d7e9b4c2f6"
-  - name: "US🇺🇸 | shangulin.global.ssl.fastly.net-80 | 12.73ms"
-    type: "vless"
-    server: "23.235.42.205"
-    port: 80
-    uuid: "96eec36e-2c44-5b09-898e-6f0f0526e57f"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "RELAY🚩 | vless-sub.n7p8ri7j.workers.dev-2087 | 13.53ms"
-    type: "vless"
-    server: "104.16.60.8"
-    port: 2087
-    uuid: "962a733d-2614-0b9b-7ffe-9ac92ffea8eb"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "vless-sub.n7p8ri7j.workers.dev"
-    client-fingerprint: "chrome"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/ahmedquran19.xyz/current_time"
-      headers:
-        Host: "vless-sub.n7p8ri7j.workers.dev"
-  - name: "REALITY|BY🇧🇾 | by.api-yandex.net-443 | 210.05ms"
-    type: "vless"
-    server: "by.api-yandex.net"
-    port: 443
-    uuid: "959b4df5-15bc-4eb8-8b93-95f6af50cd80"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "by.api-yandex.net"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "DjRqjdBkJgAG_le5Q14JXTki6m9XCsNKxgw74IB0kR4"
-      short-id: "0f4dacf62211e75f"
-  - name: "REALITY|RU🇷🇺 | 145.249.109.121-8443 | 89.25ms"
-    type: "vless"
-    server: "145.249.109.121"
-    port: 8443
-    uuid: "93961d050c164d01aa96cc07522338d9"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "m.vk.com"
-    client-fingerprint: "random"
-    reality-opts:
-      public-key: "7FAbz_eJ_ip4pK0GCGrx8chOMAbxHW8mieBRuv4CR0k"
-      short-id: "aabbccdd"
-  - name: "NL🇳🇱 | cdn9-33.vk-cdnvideo.com-8443 | 206.17ms"
-    type: "vless"
-    server: "cdn9-33.vk-cdnvideo.com"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-  - name: "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 131.93ms"
-    type: "vless"
-    server: "cdn7-39.vk-cdnvideo.com"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-  - name: "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 194.4ms"
-    type: "vless"
-    server: "cdn7-09.vk-cdnvideo.com"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn7-09.vk-cdnvideo.com"
-    client-fingerprint: "chrome"
-  - name: "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 112.96ms"
-    type: "vless"
-    server: "cdn3-87.vk-cdnvideo.com"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    client-fingerprint: "chrome"
-  - name: "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 177.94ms"
-    type: "vless"
-    server: "89.232.177.114"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn3-87.vk-cdnvideo.com"
-    client-fingerprint: "chrome"
-  - name: "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 96.3ms"
-    type: "vless"
-    server: "77.74.123.170"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn3-87.vk-cdnvideo.com"
-    client-fingerprint: "chrome"
-  - name: "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 170.06ms"
-    type: "vless"
-    server: "77.74.123.169"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn3-87.vk-cdnvideo.com"
-    client-fingerprint: "chrome"
-  - name: "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 93.98ms"
-    type: "vless"
-    server: "77.74.123.168"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn3-87.vk-cdnvideo.com"
-    client-fingerprint: "chrome"
-  - name: "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 103.12ms"
-    type: "vless"
-    server: "77.74.123.167"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn7-09.vk-cdnvideo.com"
-  - name: "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 179.54ms"
-    type: "vless"
-    server: "77.74.123.165"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn7-39.vk-cdnvideo.com"
-    client-fingerprint: "chrome"
-  - name: "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 119.82ms"
-    type: "vless"
-    server: "77.74.123.163"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn3-87.vk-cdnvideo.com"
-    client-fingerprint: "chrome"
-  - name: "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 102.19ms"
-    type: "vless"
-    server: "46.229.243.74"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn7-09.vk-cdnvideo.com"
-  - name: "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 129.06ms"
-    type: "vless"
-    server: "46.229.243.72"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn7-09.vk-cdnvideo.com"
-    client-fingerprint: "chrome"
-  - name: "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 103.62ms"
-    type: "vless"
-    server: "46.229.243.71"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn7-09.vk-cdnvideo.com"
-    client-fingerprint: "chrome"
-  - name: "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 122.02ms"
-    type: "vless"
-    server: "46.229.243.70"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn7-09.vk-cdnvideo.com"
-  - name: "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 98.61ms"
-    type: "vless"
-    server: "46.229.243.69"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn7-39.vk-cdnvideo.com"
-    client-fingerprint: "chrome"
-  - name: "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 136.14ms"
-    type: "vless"
-    server: "46.229.243.67"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn7-09.vk-cdnvideo.com"
-  - name: "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 124.56ms"
-    type: "vless"
-    server: "46.229.243.133"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn3-87.vk-cdnvideo.com"
-  - name: "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 99.51ms"
-    type: "vless"
-    server: "46.229.243.132"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn7-39.vk-cdnvideo.com"
-    client-fingerprint: "chrome"
-  - name: "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 99.86ms"
-    type: "vless"
-    server: "213.171.30.187"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn3-87.vk-cdnvideo.com"
-    client-fingerprint: "chrome"
-  - name: "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 92.94ms"
-    type: "vless"
-    server: "162.249.126.76"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn7-09.vk-cdnvideo.com"
-  - name: "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 201.05ms"
-    type: "vless"
-    server: "162.249.126.74"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn7-39.vk-cdnvideo.com"
-    client-fingerprint: "chrome"
-  - name: "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 98.22ms"
-    type: "vless"
-    server: "162.249.126.72"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn3-87.vk-cdnvideo.com"
-    client-fingerprint: "chrome"
-  - name: "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 102.06ms"
-    type: "vless"
-    server: "162.249.126.69"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn3-87.vk-cdnvideo.com"
-    client-fingerprint: "chrome"
-  - name: "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 200.16ms"
-    type: "vless"
-    server: "162.249.126.67"
-    port: 8443
-    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn7-09.vk-cdnvideo.com"
-  - name: "RELAY🚩 | grabacademyportal.grab.com.cyylr.eu.cc-443 | 274.68ms"
-    type: "vless"
-    server: "141.193.213.11"
-    port: 443
-    uuid: "9232a847-8f7d-4548-a23a-a8b3550e0f15"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "grabacademyportal.grab.com.cyylr.eu.cc"
-    ws-opts:
-      path: "/id-tksi"
-      headers:
-        Host: "grabacademyportal.grab.com.cyylr.eu.cc"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
+    icon: "https://www.svgrepo.com/show/412721/choose.svg"
     proxies:
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
+      - "توزیع بار چرخشی ⚖️"
       - "قطع اینترنت ⛔"
+      - "بدون فیلترشکن 🛡️"
   - name: "دستی 🤏🏻"
     type: "select"
+    icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
       - "US🇺🇸 | Sudoos.global.ssl.fastly.net-80 | 16.27ms"
+      - "US🇺🇸 | Sudo.global.ssl.fastly.net-80 | 19.81ms"
       - "REALITY|LT🇱🇹 | lt-cherry-01.com-8443 | 429.16ms"
       - "TR🇹🇷 | verst.salon13.beauty-8080 | 265.56ms"
       - "RELAY🚩 | dev.qsaas.dev-443 | 68.65ms"
       - "RELAY🚩 | dev.twistsparrow.xyz-443 | 25.12ms"
+      - "RELAY🚩 | dev.twistsparrow.xyz-443 | 3.4ms"
       - "RELAY🚩 | dev.twistsparrow.xyz-443 | 3.53ms"
       - "RELAY🚩 | dev.twistsparrow.xyz-443 | 2.31ms"
+      - "RELAY🚩 | dev.twistsparrow.xyz-443 | 3.41ms"
       - "RELAY🚩 | octopusss4.com-443 | 103.09ms"
       - "RELAY🚩 | octopusss4.com-443 | 5.35ms"
       - "RELAY🚩 | octopusss4.com-443 | 9.62ms"
@@ -3923,14 +4417,18 @@ proxy-groups:
       - "RELAY🚩 | octopusss4.com-443 | 2.69ms"
       - "RELAY🚩 | octopusss4.com-443 | 3.7ms"
       - "RELAY🚩 | octopusss4.com-443 | 3ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.59ms"
       - "RELAY🚩 | octopusss4.com-443 | 3.31ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.06ms"
       - "RELAY🚩 | octopusss4.com-443 | 3ms-1"
       - "RELAY🚩 | octopusss4.com-443 | 3.74ms"
       - "RELAY🚩 | octopusss4.com-443 | 3.04ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.13ms"
       - "RELAY🚩 | octopusss4.com-443 | 3.34ms"
       - "RELAY🚩 | octopusss4.com-443 | 3.28ms"
       - "RELAY🚩 | octopusss4.com-443 | 3.37ms"
       - "RELAY🚩 | octopusss4.com-443 | 3.27ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.31ms-1"
       - "RELAY🚩 | crimson-king-301d.nexoxnet.workers.dev-2083 | 15.03ms"
       - "RELAY🚩 | HovEyda-ARIAMEHR-KinG.PAgEs.Dev-443 | 17.42ms"
       - "RELAY🚩 | bpb-worker-panel-chf.pages.dev-443 | 21.6ms"
@@ -3938,14 +4436,18 @@ proxy-groups:
       - "REALITY|NL🇳🇱 | 144.31.30.69-443 | 94.29ms"
       - "REALITY|RU🇷🇺 | ser.moktana.app-443 | 147.92ms"
       - "REALITY|AM🇦🇲 | 77.91.68.70-55983 | 147.38ms"
+      - "REALITY|AM🇦🇲 | 77.91.68.70-55983 | 153.94ms"
       - "REALITY|AT🇦🇹 | 185.224.3.41-10443 | 100.12ms"
       - "US🇺🇸 | Namaid4.global.ssl.fastly.net-80 | 18.25ms"
+      - "RELAY🚩 | ai.heroitweb.ir-8080 | 187.49ms"
       - "FI🇫🇮 | 193.233.23.121-40611 | 115.25ms"
       - "RELAY🚩 | little-surf-1d9a.amirhost1.workers.dev-2087 | 14.37ms"
       - "DE🇩🇪 | ov-germany1.09vpn.com-80 | 103.58ms"
       - "RELAY🚩 | do-sfo3.862400.xyz-443 | 144.16ms"
       - "RELAY🚩 | uk-03p.allhubb.info-443 | 176.55ms"
+      - "RELAY🚩 | uk-02p.allhubb.info-443 | 178.42ms"
       - "REALITY|DE🇩🇪 | de02.lumixvpn.org-443 | 272.65ms"
+      - "RELAY🚩 | wild-grass-1917.tmpduardoolfsonerluke15.workers.dev-443 | 21.94ms"
       - "US🇺🇸 | 128.105.145.226-2022 | 20.42ms"
       - "RELAY🚩 | xvh.andishehparenting.com-2086 | 90.83ms"
       - "RELAY🚩 | xU.aSaCO.sTorE-80 | 19.01ms"
@@ -3957,11 +4459,13 @@ proxy-groups:
       - "RELAY🚩 | testconnection1.iranvatanam.com-2086 | 13.8ms"
       - "RELAY🚩 | kamalnet.pages.dev-2083 | 19.12ms"
       - "US🇺🇸 | live.skornorth.com-80 | 92.51ms"
+      - "RELAY🚩 | e4xf3l6qfdu-shhc8axat6695v4t9e6p.pages.dev-443 | 20.9ms"
       - "REALITY|DE🇩🇪 | 5.75.196.174-443 | 96.74ms"
       - "RELAY🚩 | main.boobie.eu.cc-80 | 243.97ms"
       - "RELAY🚩 | main.boobie.eu.cc-80 | 3.53ms"
       - "NL🇳🇱 | SC-TheNetherlands2.09vpn.com-80 | 122.36ms"
       - "REALITY|NL🇳🇱 | leg.goodmaximum.com-443 | 122.91ms"
+      - "REALITY|NL🇳🇱 | leg.goodmaximum.com-443 | 157.52ms"
       - "RELAY🚩 | ftp.singoshop.ir-8443 | 183.54ms"
       - "RELAY🚩 | ir1.airpanel.top-2053 | 55.57ms"
       - "RELAY🚩 | ir1.airpanel.top-2053 | 3.28ms"
@@ -3971,6 +4475,7 @@ proxy-groups:
       - "REALITY|DE🇩🇪 | 89.167.25.28-11005 | 117.2ms"
       - "RELAY🚩 | pqh30v5.carwashipdir.shop-443 | 16ms"
       - "REALITY|AE🇦🇪 | 85.234.73.125-13278 | 183.88ms"
+      - "REALITY|AE🇦🇪 | 85.234.73.125-13278 | 174.26ms"
       - "RELAY🚩 | bustancloudd.primenet3.shop-2082 | 21.5ms"
       - "US🇺🇸 | superip2.global.ssl.fastly.net-80 | 7.27ms"
       - "RELAY🚩 | 37cdnws.iamali.info-443 | 176.98ms"
@@ -4006,15 +4511,19 @@ proxy-groups:
       - "RELAY🚩 | server1.poludiro.workers.dev-8080 | 13.74ms"
       - "RELAY🚩 | v2.raycv05.workers.dev-80 | 21.92ms"
       - "REALITY|LT🇱🇹 | 130.12.171.120-20001 | 110.17ms"
+      - "RELAY🚩 | toshirpilafkani-torostamtahamtani.rezaezzati.top-443 | 81.51ms"
       - "REALITY|NL🇳🇱 | 77.246.109.191-34045 | 93.7ms"
       - "RELAY🚩 | DiprOX.pages.DEV-443 | 24.8ms"
       - "RELAY🚩 | DiprOX.pages.DEV-443 | 3.55ms"
+      - "RELAY🚩 | DiprOX.pages.DEV-443 | 3.7ms"
       - "RELAY🚩 | DiprOX.pages.DEV-443 | 4.35ms"
       - "REALITY|NL🇳🇱 | 213.176.16.74-443 | 88.73ms"
       - "REALITY|US🇺🇸 | nether2cxc.ignorelist.com-443 | 190.44ms"
       - "REALITY|US🇺🇸 | cxcczechia1.chickenkiller.com-443 | 167.62ms"
       - "REALITY|FI🇫🇮 | 65.109.211.154-443 | 116.28ms"
+      - "US🇺🇸 | Zmaoz.Faculty.Ucdavis.Edu-443 | 21.85ms"
       - "US🇺🇸 | live.skornorth.com-443 | 10.06ms"
+      - "US🇺🇸 | live.skornorth.com-443 | 12.22ms"
       - "US🇺🇸 | 77.110.127.191-9443 | 15.46ms"
       - "RELAY🚩 | xxx.donated003.workers.dev-443 | 40.45ms"
       - "RELAY🚩 | fuckingcloudflare.2-5e8.workers.dev-2095 | 20.21ms"
@@ -4032,6 +4541,7 @@ proxy-groups:
       - "RELAY🚩 | azadnet-bjv.pages.dev-443 | 20.95ms"
       - "RELAY🚩 | zh.hollowspot.ir-8443 | 176.46ms"
       - "RELAY🚩 | de1.nagona.top-443 | 73.58ms"
+      - "RELAY🚩 | zaintest.vuclip.com.cyylr.eu.cc-443 | 3.85ms"
       - "DE🇩🇪 | de1.accuratenetworkchecker.ir-443 | 267.55ms"
       - "US🇺🇸 | speedtest.net-443 | 2.07ms"
       - "REALITY|RU🇷🇺 | 193.233.251.62-443 | 118.96ms"
@@ -4043,6 +4553,8 @@ proxy-groups:
       - "RELAY🚩 | ircp-617.pages.dev.-443 | 12.91ms"
       - "RELAY🚩 | cyylr.eu.cc-443 | 278.61ms"
       - "RELAY🚩 | cyylr.eu.cc-443 | 3.28ms"
+      - "RELAY🚩 | cyylr.eu.cc-443 | 4.24ms"
+      - "RELAY🚩 | cyylr.eu.cc-443 | 4.37ms"
       - "RELAY🚩 | cyylr.eu.cc-443 | 3.97ms"
       - "RELAY🚩 | cyylr.eu.cc-443 | 2.68ms"
       - "RELAY🚩 | ssj.new-persian-song.ir-8443 | 95.37ms"
@@ -4050,12 +4562,16 @@ proxy-groups:
       - "RELAY🚩 | icyou.daftarakeman.ir-8443 | 175.68ms"
       - "REALITY|LT🇱🇹 | 93.115.25.42-8443 | 115.4ms"
       - "REALITY|US🇺🇸 | 137.184.218.169-36925 | 8.11ms"
+      - "REALITY|US🇺🇸 | 137.184.218.169-36925 | 7.53ms"
       - "REALITY|FI🇫🇮 | node-fi.dostup-est.info-8443 | 280.24ms"
       - "REALITY|DE🇩🇪 | 85.208.139.98-8444 | 93.26ms"
+      - "US🇺🇸 | 77.110.127.191-9443 | 15.66ms"
       - "REALITY|RU🇷🇺 | b02.connectv.net-443 | 158.23ms"
       - "RELAY🚩 | bOLd-fRoST-5566.AKBArI1355-KHO.WORkERS.DEV-8443 | 19.81ms"
+      - "RELAY🚩 | kakoolnews.kakoolnews0.workers.dev-443 | 16.02ms"
       - "RELAY🚩 | telegramkakoolnews.kakoolnewsa.workers.dev-443 | 14.25ms"
       - "RELAY🚩 | kakoolnews.kakoolnews8.workers.dev-443 | 16.12ms"
+      - "RELAY🚩 | telegram.kakoolnews3.workers.dev-443 | 17.38ms"
       - "RELAY🚩 | unnes.ac.id.cyylr.eu.cc-443 | 10.07ms"
       - "RELAY🚩 | uciranir-uciranir-uiranir-uciranir-uciranir-uciranir-uciranir2.kehib41931.workers.dev-443 | 18.05ms"
       - "RELAY🚩 | octopusss5.info-443 | 177.48ms"
@@ -4072,6 +4588,7 @@ proxy-groups:
       - "REALITY|NL🇳🇱 | nl1.rsvps.tech-443 | 554.31ms"
       - "REALITY|LT🇱🇹 | lt-modx.nodexphere.net-443 | 118.27ms"
       - "RELAY🚩 | cdn-no.lopzo.ir-443 | 185.55ms"
+      - "REALITY|MD🇲🇩 | md.riotvpn.eu-443 | 131.49ms"
       - "REALITY|DE🇩🇪 | moo2.gafe-lorbad.ir-449 | 270.1ms"
       - "REALITY|TW🇹🇼 | tw3.miyazono-kaori.com-443 | 223.75ms"
       - "RELAY🚩 | wallweb.hydradllvip.info-443 | 175.28ms"
@@ -4092,14 +4609,20 @@ proxy-groups:
       - "FR🇫🇷 | bab-6.site-443 | 150.74ms"
       - "FR🇫🇷 | bab-6.site-443 | 150.22ms"
       - "US🇺🇸 | norbertde1.global.ssl.fastly.net-80 | 7.03ms"
+      - "RELAY🚩 | pages.dev.-443 | 2.22ms"
       - "DE🇩🇪 | du.mobileemdad.top-42542 | 115.6ms"
       - "DE🇩🇪 | 46.249.98.109-8080 | 96.63ms"
+      - "RELAY🚩 | sabrina.lezzatcore.ir-443 | 173.27ms"
       - "REALITY|TR🇹🇷 | 62.133.63.232-8443 | 129.96ms"
       - "RELAY🚩 | unnes.ac.id.cyylr.eu.cc-443 | 4ms"
       - "RELAY🚩 | toshirpilafkani-torostamtahamtani.mgwarrior.ir-2087 | 191.34ms"
       - "RU🇷🇺 | r1.mizulina.top-22231 | 251.38ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 233.98ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 262.64ms"
       - "RU🇷🇺 | r1.mizulina.top-22231 | 223.08ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 260.85ms"
       - "RU🇷🇺 | r1.mizulina.top-22231 | 96.77ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 236.21ms"
       - "RU🇷🇺 | r1.mizulina.top-22231 | 101.36ms"
       - "RELAY🚩 | g1.nybaz.space-80 | 9.98ms"
       - "RELAY🚩 | www.game-dns.ir-2083 | 180.76ms"
@@ -4107,12 +4630,16 @@ proxy-groups:
       - "US🇺🇸 | speedtest.net-443 | 2.75ms"
       - "REALITY|AL🇦🇱 | 144.31.131.33-443 | 109.6ms"
       - "REALITY|CZ🇨🇿 | 188.130.208.220-5443 | 104.5ms"
+      - "REALITY|CZ🇨🇿 | 188.130.208.220-5443 | 99.23ms"
       - "RELAY🚩 | pagescm.freen7.de5.net-443 | 183.8ms"
       - "REALITY|US🇺🇸 | 167.104.223.57-7443 | 77.69ms"
+      - "REALITY|US🇺🇸 | 167.104.223.57-7443 | 77.92ms"
       - "REALITY|DE🇩🇪 | 150.241.90.13-443 | 109.37ms"
       - "REALITY|FI🇫🇮 | 62.60.255.11-443 | 111.78ms"
+      - "RELAY🚩 | 638991166348691947.corolla-amsia.info-443 | 49.05ms"
       - "RELAY🚩 | collection.linefriends.com.cyylr.eu.cc-443 | 245.89ms"
       - "REALITY|MD🇲🇩 | md.riotvpn.eu-8443 | 112.06ms"
+      - "RELAY🚩 | afrcloud22.mmv.kr-443 | 3.55ms"
       - "RELAY🚩 | afrcloud5.c01.kr-443 | 206.65ms"
       - "RELAY🚩 | worker-jolly-block-2e78.gamal32324.workers.Dev-443 | 15ms"
       - "RELAY🚩 | cdn-allxn--b6gaceuorg.l4o117en.workers.dev-8080 | 28.56ms"
@@ -4120,7 +4647,9 @@ proxy-groups:
       - "RELAY🚩 | chiRPy-opinioNGuuQL3f99i.wIndlER.cO.uk-2096 | 124.34ms"
       - "REALITY|RU🇷🇺 | 212.192.14.223-8443 | 122.71ms"
       - "REALITY|DE🇩🇪 | de.corsair-web.space-8443 | 274.9ms"
+      - "US🇺🇸 | 77.110.127.191-9443 | 14.91ms"
       - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 180.32ms"
+      - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 4.37ms"
       - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 3.93ms"
       - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 3.44ms"
       - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 3.57ms"
@@ -4132,28 +4661,37 @@ proxy-groups:
       - "REALITY|RELAY🚩 | france.cloudpath.live-443 | 27.81ms"
       - "IR🇮🇷 | uplod.ir-443 | 346.16ms"
       - "REALITY|PL🇵🇱 | tg.riotvpn.eu-443 | 463.92ms"
+      - "US🇺🇸 | aereq0q.ali2069.site-443 | 96.26ms"
       - "US🇺🇸 | ks.ylks.xyz-443 | 79.45ms"
       - "US🇺🇸 | ks.ylks.xyz-443 | 43.68ms"
       - "US🇺🇸 | ks.ylks.xyz-443 | 4404.49ms"
       - "US🇺🇸 | hp.ylks.xyz-443 | 54.15ms"
       - "US🇺🇸 | kq.ylks.xyz-443 | 72.89ms"
       - "US🇺🇸 | kr.ylks.xyz-443 | 40.74ms"
+      - "RELAY🚩 | y6-3cj.PAgES.DEV-443 | 17.63ms"
       - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 104.57ms"
+      - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 3.25ms"
       - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 2.85ms"
       - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 2.86ms"
       - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 3.17ms"
       - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 34.68ms"
       - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.35ms"
       - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.47ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.32ms"
       - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 2.95ms"
       - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 2.82ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 4.05ms"
       - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 4.53ms"
       - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.24ms"
       - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.74ms"
       - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.23ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.63ms"
+      - "DE🇩🇪 | cdn.limoo.blog-443 | 138.93ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.82ms"
       - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.46ms"
       - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.28ms"
       - "REALITY|FI🇫🇮 | 31.56.227.217-8443 | 228.02ms"
+      - "US🇺🇸 | tignaltofan.global.ssl.fastly.net-80 | 11.95ms"
       - "US🇺🇸 | tignaltofansv4.global.ssl.fastly.net-80 | 8.1ms"
       - "US🇺🇸 | tignaltofan.global.ssl.fastly.net-80 | 5.05ms"
       - "US🇺🇸 | tignaltofansv4.global.ssl.fastly.net-80 | 7.54ms"
@@ -4162,67 +4700,26 @@ proxy-groups:
       - "REALITY|DE🇩🇪 | 5.75.196.174-8080 | 95.63ms"
       - "RELAY🚩 | mainsub.m4network-f4c.workers.dev-443 | 22.65ms"
       - "US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 23.41ms"
-      - "US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 18.55ms"
-      - "REALITY|US🇺🇸 | us02.ssr.ee-443 | 190.62ms"
-      - "REALITY|AE🇦🇪 | db02.ssr.ee-443 | 314.68ms"
-      - "REALITY|AE🇦🇪 | db01.ssr.ee-443 | 200.28ms"
-      - "RELAY🚩 | v2ngfast.werdfg44.workers.dev-8443 | 17.53ms"
-      - "REALITY|US🇺🇸 | 156.229.161.107-10001 | 59.83ms"
-      - "RELAY🚩 | vip1.yomato7390.workers.Dev-443 | 16.45ms"
-      - "REALITY|RU🇷🇺 | 144.31.190.130-8081 | 121.93ms"
-      - "REALITY|DE🇩🇪 | 5.75.196.174-20141 | 98.57ms"
-      - "RELAY🚩 | mci-google-bing3164.sdb5j.workers.dev-443 | 21.73ms"
-      - "RELAY🚩 | divine-mode-ac41.amirss.workers.dev-80 | 21.29ms"
-      - "RELAY🚩 | focalin.adaspolo2.store-443 | 63.77ms"
-      - "REALITY|IR🇮🇷 | 62.60.245.10-443 | 94.96ms"
-      - "REALITY|FI🇫🇮 | 193.29.224.214-443 | 118.15ms"
-      - "RELAY🚩 | potifar.kravend4.workers.dev-80 | 37.69ms"
-      - "US🇺🇸 | google.com-443 | 6.15ms"
-      - "REALITY|GB🇬🇧 | 31.76.39.21-443 | 74.99ms"
-      - "US🇺🇸 | shangulin.global.ssl.fastly.net-80 | 12.73ms"
-      - "RELAY🚩 | vless-sub.n7p8ri7j.workers.dev-2087 | 13.53ms"
-      - "REALITY|BY🇧🇾 | by.api-yandex.net-443 | 210.05ms"
-      - "REALITY|RU🇷🇺 | 145.249.109.121-8443 | 89.25ms"
-      - "NL🇳🇱 | cdn9-33.vk-cdnvideo.com-8443 | 206.17ms"
-      - "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 131.93ms"
-      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 194.4ms"
-      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 112.96ms"
-      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 177.94ms"
-      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 96.3ms"
-      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 170.06ms"
-      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 93.98ms"
-      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 103.12ms"
-      - "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 179.54ms"
-      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 119.82ms"
-      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 102.19ms"
-      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 129.06ms"
-      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 103.62ms"
-      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 122.02ms"
-      - "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 98.61ms"
-      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 136.14ms"
-      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 124.56ms"
-      - "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 99.51ms"
-      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 99.86ms"
-      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 92.94ms"
-      - "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 201.05ms"
-      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 98.22ms"
-      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 102.06ms"
-      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 200.16ms"
-      - "RELAY🚩 | grabacademyportal.grab.com.cyylr.eu.cc-443 | 274.68ms"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
+    icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
     url: "https://www.gstatic.com/generate_204"
-    interval: 300
+    interval: 600
     tolerance: 50
-    lazy: true
+    timeout: 3200
+    lazy: false
+    max-failed-times: 2
     proxies:
       - "US🇺🇸 | Sudoos.global.ssl.fastly.net-80 | 16.27ms"
+      - "US🇺🇸 | Sudo.global.ssl.fastly.net-80 | 19.81ms"
       - "REALITY|LT🇱🇹 | lt-cherry-01.com-8443 | 429.16ms"
       - "TR🇹🇷 | verst.salon13.beauty-8080 | 265.56ms"
       - "RELAY🚩 | dev.qsaas.dev-443 | 68.65ms"
       - "RELAY🚩 | dev.twistsparrow.xyz-443 | 25.12ms"
+      - "RELAY🚩 | dev.twistsparrow.xyz-443 | 3.4ms"
       - "RELAY🚩 | dev.twistsparrow.xyz-443 | 3.53ms"
       - "RELAY🚩 | dev.twistsparrow.xyz-443 | 2.31ms"
+      - "RELAY🚩 | dev.twistsparrow.xyz-443 | 3.41ms"
       - "RELAY🚩 | octopusss4.com-443 | 103.09ms"
       - "RELAY🚩 | octopusss4.com-443 | 5.35ms"
       - "RELAY🚩 | octopusss4.com-443 | 9.62ms"
@@ -4230,14 +4727,18 @@ proxy-groups:
       - "RELAY🚩 | octopusss4.com-443 | 2.69ms"
       - "RELAY🚩 | octopusss4.com-443 | 3.7ms"
       - "RELAY🚩 | octopusss4.com-443 | 3ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.59ms"
       - "RELAY🚩 | octopusss4.com-443 | 3.31ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.06ms"
       - "RELAY🚩 | octopusss4.com-443 | 3ms-1"
       - "RELAY🚩 | octopusss4.com-443 | 3.74ms"
       - "RELAY🚩 | octopusss4.com-443 | 3.04ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.13ms"
       - "RELAY🚩 | octopusss4.com-443 | 3.34ms"
       - "RELAY🚩 | octopusss4.com-443 | 3.28ms"
       - "RELAY🚩 | octopusss4.com-443 | 3.37ms"
       - "RELAY🚩 | octopusss4.com-443 | 3.27ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.31ms-1"
       - "RELAY🚩 | crimson-king-301d.nexoxnet.workers.dev-2083 | 15.03ms"
       - "RELAY🚩 | HovEyda-ARIAMEHR-KinG.PAgEs.Dev-443 | 17.42ms"
       - "RELAY🚩 | bpb-worker-panel-chf.pages.dev-443 | 21.6ms"
@@ -4245,14 +4746,18 @@ proxy-groups:
       - "REALITY|NL🇳🇱 | 144.31.30.69-443 | 94.29ms"
       - "REALITY|RU🇷🇺 | ser.moktana.app-443 | 147.92ms"
       - "REALITY|AM🇦🇲 | 77.91.68.70-55983 | 147.38ms"
+      - "REALITY|AM🇦🇲 | 77.91.68.70-55983 | 153.94ms"
       - "REALITY|AT🇦🇹 | 185.224.3.41-10443 | 100.12ms"
       - "US🇺🇸 | Namaid4.global.ssl.fastly.net-80 | 18.25ms"
+      - "RELAY🚩 | ai.heroitweb.ir-8080 | 187.49ms"
       - "FI🇫🇮 | 193.233.23.121-40611 | 115.25ms"
       - "RELAY🚩 | little-surf-1d9a.amirhost1.workers.dev-2087 | 14.37ms"
       - "DE🇩🇪 | ov-germany1.09vpn.com-80 | 103.58ms"
       - "RELAY🚩 | do-sfo3.862400.xyz-443 | 144.16ms"
       - "RELAY🚩 | uk-03p.allhubb.info-443 | 176.55ms"
+      - "RELAY🚩 | uk-02p.allhubb.info-443 | 178.42ms"
       - "REALITY|DE🇩🇪 | de02.lumixvpn.org-443 | 272.65ms"
+      - "RELAY🚩 | wild-grass-1917.tmpduardoolfsonerluke15.workers.dev-443 | 21.94ms"
       - "US🇺🇸 | 128.105.145.226-2022 | 20.42ms"
       - "RELAY🚩 | xvh.andishehparenting.com-2086 | 90.83ms"
       - "RELAY🚩 | xU.aSaCO.sTorE-80 | 19.01ms"
@@ -4264,11 +4769,13 @@ proxy-groups:
       - "RELAY🚩 | testconnection1.iranvatanam.com-2086 | 13.8ms"
       - "RELAY🚩 | kamalnet.pages.dev-2083 | 19.12ms"
       - "US🇺🇸 | live.skornorth.com-80 | 92.51ms"
+      - "RELAY🚩 | e4xf3l6qfdu-shhc8axat6695v4t9e6p.pages.dev-443 | 20.9ms"
       - "REALITY|DE🇩🇪 | 5.75.196.174-443 | 96.74ms"
       - "RELAY🚩 | main.boobie.eu.cc-80 | 243.97ms"
       - "RELAY🚩 | main.boobie.eu.cc-80 | 3.53ms"
       - "NL🇳🇱 | SC-TheNetherlands2.09vpn.com-80 | 122.36ms"
       - "REALITY|NL🇳🇱 | leg.goodmaximum.com-443 | 122.91ms"
+      - "REALITY|NL🇳🇱 | leg.goodmaximum.com-443 | 157.52ms"
       - "RELAY🚩 | ftp.singoshop.ir-8443 | 183.54ms"
       - "RELAY🚩 | ir1.airpanel.top-2053 | 55.57ms"
       - "RELAY🚩 | ir1.airpanel.top-2053 | 3.28ms"
@@ -4278,6 +4785,7 @@ proxy-groups:
       - "REALITY|DE🇩🇪 | 89.167.25.28-11005 | 117.2ms"
       - "RELAY🚩 | pqh30v5.carwashipdir.shop-443 | 16ms"
       - "REALITY|AE🇦🇪 | 85.234.73.125-13278 | 183.88ms"
+      - "REALITY|AE🇦🇪 | 85.234.73.125-13278 | 174.26ms"
       - "RELAY🚩 | bustancloudd.primenet3.shop-2082 | 21.5ms"
       - "US🇺🇸 | superip2.global.ssl.fastly.net-80 | 7.27ms"
       - "RELAY🚩 | 37cdnws.iamali.info-443 | 176.98ms"
@@ -4313,15 +4821,19 @@ proxy-groups:
       - "RELAY🚩 | server1.poludiro.workers.dev-8080 | 13.74ms"
       - "RELAY🚩 | v2.raycv05.workers.dev-80 | 21.92ms"
       - "REALITY|LT🇱🇹 | 130.12.171.120-20001 | 110.17ms"
+      - "RELAY🚩 | toshirpilafkani-torostamtahamtani.rezaezzati.top-443 | 81.51ms"
       - "REALITY|NL🇳🇱 | 77.246.109.191-34045 | 93.7ms"
       - "RELAY🚩 | DiprOX.pages.DEV-443 | 24.8ms"
       - "RELAY🚩 | DiprOX.pages.DEV-443 | 3.55ms"
+      - "RELAY🚩 | DiprOX.pages.DEV-443 | 3.7ms"
       - "RELAY🚩 | DiprOX.pages.DEV-443 | 4.35ms"
       - "REALITY|NL🇳🇱 | 213.176.16.74-443 | 88.73ms"
       - "REALITY|US🇺🇸 | nether2cxc.ignorelist.com-443 | 190.44ms"
       - "REALITY|US🇺🇸 | cxcczechia1.chickenkiller.com-443 | 167.62ms"
       - "REALITY|FI🇫🇮 | 65.109.211.154-443 | 116.28ms"
+      - "US🇺🇸 | Zmaoz.Faculty.Ucdavis.Edu-443 | 21.85ms"
       - "US🇺🇸 | live.skornorth.com-443 | 10.06ms"
+      - "US🇺🇸 | live.skornorth.com-443 | 12.22ms"
       - "US🇺🇸 | 77.110.127.191-9443 | 15.46ms"
       - "RELAY🚩 | xxx.donated003.workers.dev-443 | 40.45ms"
       - "RELAY🚩 | fuckingcloudflare.2-5e8.workers.dev-2095 | 20.21ms"
@@ -4339,6 +4851,7 @@ proxy-groups:
       - "RELAY🚩 | azadnet-bjv.pages.dev-443 | 20.95ms"
       - "RELAY🚩 | zh.hollowspot.ir-8443 | 176.46ms"
       - "RELAY🚩 | de1.nagona.top-443 | 73.58ms"
+      - "RELAY🚩 | zaintest.vuclip.com.cyylr.eu.cc-443 | 3.85ms"
       - "DE🇩🇪 | de1.accuratenetworkchecker.ir-443 | 267.55ms"
       - "US🇺🇸 | speedtest.net-443 | 2.07ms"
       - "REALITY|RU🇷🇺 | 193.233.251.62-443 | 118.96ms"
@@ -4350,6 +4863,8 @@ proxy-groups:
       - "RELAY🚩 | ircp-617.pages.dev.-443 | 12.91ms"
       - "RELAY🚩 | cyylr.eu.cc-443 | 278.61ms"
       - "RELAY🚩 | cyylr.eu.cc-443 | 3.28ms"
+      - "RELAY🚩 | cyylr.eu.cc-443 | 4.24ms"
+      - "RELAY🚩 | cyylr.eu.cc-443 | 4.37ms"
       - "RELAY🚩 | cyylr.eu.cc-443 | 3.97ms"
       - "RELAY🚩 | cyylr.eu.cc-443 | 2.68ms"
       - "RELAY🚩 | ssj.new-persian-song.ir-8443 | 95.37ms"
@@ -4357,12 +4872,16 @@ proxy-groups:
       - "RELAY🚩 | icyou.daftarakeman.ir-8443 | 175.68ms"
       - "REALITY|LT🇱🇹 | 93.115.25.42-8443 | 115.4ms"
       - "REALITY|US🇺🇸 | 137.184.218.169-36925 | 8.11ms"
+      - "REALITY|US🇺🇸 | 137.184.218.169-36925 | 7.53ms"
       - "REALITY|FI🇫🇮 | node-fi.dostup-est.info-8443 | 280.24ms"
       - "REALITY|DE🇩🇪 | 85.208.139.98-8444 | 93.26ms"
+      - "US🇺🇸 | 77.110.127.191-9443 | 15.66ms"
       - "REALITY|RU🇷🇺 | b02.connectv.net-443 | 158.23ms"
       - "RELAY🚩 | bOLd-fRoST-5566.AKBArI1355-KHO.WORkERS.DEV-8443 | 19.81ms"
+      - "RELAY🚩 | kakoolnews.kakoolnews0.workers.dev-443 | 16.02ms"
       - "RELAY🚩 | telegramkakoolnews.kakoolnewsa.workers.dev-443 | 14.25ms"
       - "RELAY🚩 | kakoolnews.kakoolnews8.workers.dev-443 | 16.12ms"
+      - "RELAY🚩 | telegram.kakoolnews3.workers.dev-443 | 17.38ms"
       - "RELAY🚩 | unnes.ac.id.cyylr.eu.cc-443 | 10.07ms"
       - "RELAY🚩 | uciranir-uciranir-uiranir-uciranir-uciranir-uciranir-uciranir2.kehib41931.workers.dev-443 | 18.05ms"
       - "RELAY🚩 | octopusss5.info-443 | 177.48ms"
@@ -4379,6 +4898,7 @@ proxy-groups:
       - "REALITY|NL🇳🇱 | nl1.rsvps.tech-443 | 554.31ms"
       - "REALITY|LT🇱🇹 | lt-modx.nodexphere.net-443 | 118.27ms"
       - "RELAY🚩 | cdn-no.lopzo.ir-443 | 185.55ms"
+      - "REALITY|MD🇲🇩 | md.riotvpn.eu-443 | 131.49ms"
       - "REALITY|DE🇩🇪 | moo2.gafe-lorbad.ir-449 | 270.1ms"
       - "REALITY|TW🇹🇼 | tw3.miyazono-kaori.com-443 | 223.75ms"
       - "RELAY🚩 | wallweb.hydradllvip.info-443 | 175.28ms"
@@ -4399,14 +4919,20 @@ proxy-groups:
       - "FR🇫🇷 | bab-6.site-443 | 150.74ms"
       - "FR🇫🇷 | bab-6.site-443 | 150.22ms"
       - "US🇺🇸 | norbertde1.global.ssl.fastly.net-80 | 7.03ms"
+      - "RELAY🚩 | pages.dev.-443 | 2.22ms"
       - "DE🇩🇪 | du.mobileemdad.top-42542 | 115.6ms"
       - "DE🇩🇪 | 46.249.98.109-8080 | 96.63ms"
+      - "RELAY🚩 | sabrina.lezzatcore.ir-443 | 173.27ms"
       - "REALITY|TR🇹🇷 | 62.133.63.232-8443 | 129.96ms"
       - "RELAY🚩 | unnes.ac.id.cyylr.eu.cc-443 | 4ms"
       - "RELAY🚩 | toshirpilafkani-torostamtahamtani.mgwarrior.ir-2087 | 191.34ms"
       - "RU🇷🇺 | r1.mizulina.top-22231 | 251.38ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 233.98ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 262.64ms"
       - "RU🇷🇺 | r1.mizulina.top-22231 | 223.08ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 260.85ms"
       - "RU🇷🇺 | r1.mizulina.top-22231 | 96.77ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 236.21ms"
       - "RU🇷🇺 | r1.mizulina.top-22231 | 101.36ms"
       - "RELAY🚩 | g1.nybaz.space-80 | 9.98ms"
       - "RELAY🚩 | www.game-dns.ir-2083 | 180.76ms"
@@ -4414,12 +4940,16 @@ proxy-groups:
       - "US🇺🇸 | speedtest.net-443 | 2.75ms"
       - "REALITY|AL🇦🇱 | 144.31.131.33-443 | 109.6ms"
       - "REALITY|CZ🇨🇿 | 188.130.208.220-5443 | 104.5ms"
+      - "REALITY|CZ🇨🇿 | 188.130.208.220-5443 | 99.23ms"
       - "RELAY🚩 | pagescm.freen7.de5.net-443 | 183.8ms"
       - "REALITY|US🇺🇸 | 167.104.223.57-7443 | 77.69ms"
+      - "REALITY|US🇺🇸 | 167.104.223.57-7443 | 77.92ms"
       - "REALITY|DE🇩🇪 | 150.241.90.13-443 | 109.37ms"
       - "REALITY|FI🇫🇮 | 62.60.255.11-443 | 111.78ms"
+      - "RELAY🚩 | 638991166348691947.corolla-amsia.info-443 | 49.05ms"
       - "RELAY🚩 | collection.linefriends.com.cyylr.eu.cc-443 | 245.89ms"
       - "REALITY|MD🇲🇩 | md.riotvpn.eu-8443 | 112.06ms"
+      - "RELAY🚩 | afrcloud22.mmv.kr-443 | 3.55ms"
       - "RELAY🚩 | afrcloud5.c01.kr-443 | 206.65ms"
       - "RELAY🚩 | worker-jolly-block-2e78.gamal32324.workers.Dev-443 | 15ms"
       - "RELAY🚩 | cdn-allxn--b6gaceuorg.l4o117en.workers.dev-8080 | 28.56ms"
@@ -4427,7 +4957,9 @@ proxy-groups:
       - "RELAY🚩 | chiRPy-opinioNGuuQL3f99i.wIndlER.cO.uk-2096 | 124.34ms"
       - "REALITY|RU🇷🇺 | 212.192.14.223-8443 | 122.71ms"
       - "REALITY|DE🇩🇪 | de.corsair-web.space-8443 | 274.9ms"
+      - "US🇺🇸 | 77.110.127.191-9443 | 14.91ms"
       - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 180.32ms"
+      - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 4.37ms"
       - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 3.93ms"
       - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 3.44ms"
       - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 3.57ms"
@@ -4439,28 +4971,37 @@ proxy-groups:
       - "REALITY|RELAY🚩 | france.cloudpath.live-443 | 27.81ms"
       - "IR🇮🇷 | uplod.ir-443 | 346.16ms"
       - "REALITY|PL🇵🇱 | tg.riotvpn.eu-443 | 463.92ms"
+      - "US🇺🇸 | aereq0q.ali2069.site-443 | 96.26ms"
       - "US🇺🇸 | ks.ylks.xyz-443 | 79.45ms"
       - "US🇺🇸 | ks.ylks.xyz-443 | 43.68ms"
       - "US🇺🇸 | ks.ylks.xyz-443 | 4404.49ms"
       - "US🇺🇸 | hp.ylks.xyz-443 | 54.15ms"
       - "US🇺🇸 | kq.ylks.xyz-443 | 72.89ms"
       - "US🇺🇸 | kr.ylks.xyz-443 | 40.74ms"
+      - "RELAY🚩 | y6-3cj.PAgES.DEV-443 | 17.63ms"
       - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 104.57ms"
+      - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 3.25ms"
       - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 2.85ms"
       - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 2.86ms"
       - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 3.17ms"
       - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 34.68ms"
       - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.35ms"
       - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.47ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.32ms"
       - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 2.95ms"
       - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 2.82ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 4.05ms"
       - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 4.53ms"
       - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.24ms"
       - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.74ms"
       - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.23ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.63ms"
+      - "DE🇩🇪 | cdn.limoo.blog-443 | 138.93ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.82ms"
       - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.46ms"
       - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.28ms"
       - "REALITY|FI🇫🇮 | 31.56.227.217-8443 | 228.02ms"
+      - "US🇺🇸 | tignaltofan.global.ssl.fastly.net-80 | 11.95ms"
       - "US🇺🇸 | tignaltofansv4.global.ssl.fastly.net-80 | 8.1ms"
       - "US🇺🇸 | tignaltofan.global.ssl.fastly.net-80 | 5.05ms"
       - "US🇺🇸 | tignaltofansv4.global.ssl.fastly.net-80 | 7.54ms"
@@ -4469,55 +5010,345 @@ proxy-groups:
       - "REALITY|DE🇩🇪 | 5.75.196.174-8080 | 95.63ms"
       - "RELAY🚩 | mainsub.m4network-f4c.workers.dev-443 | 22.65ms"
       - "US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 23.41ms"
-      - "US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 18.55ms"
-      - "REALITY|US🇺🇸 | us02.ssr.ee-443 | 190.62ms"
-      - "REALITY|AE🇦🇪 | db02.ssr.ee-443 | 314.68ms"
-      - "REALITY|AE🇦🇪 | db01.ssr.ee-443 | 200.28ms"
-      - "RELAY🚩 | v2ngfast.werdfg44.workers.dev-8443 | 17.53ms"
-      - "REALITY|US🇺🇸 | 156.229.161.107-10001 | 59.83ms"
-      - "RELAY🚩 | vip1.yomato7390.workers.Dev-443 | 16.45ms"
-      - "REALITY|RU🇷🇺 | 144.31.190.130-8081 | 121.93ms"
-      - "REALITY|DE🇩🇪 | 5.75.196.174-20141 | 98.57ms"
-      - "RELAY🚩 | mci-google-bing3164.sdb5j.workers.dev-443 | 21.73ms"
-      - "RELAY🚩 | divine-mode-ac41.amirss.workers.dev-80 | 21.29ms"
-      - "RELAY🚩 | focalin.adaspolo2.store-443 | 63.77ms"
-      - "REALITY|IR🇮🇷 | 62.60.245.10-443 | 94.96ms"
-      - "REALITY|FI🇫🇮 | 193.29.224.214-443 | 118.15ms"
-      - "RELAY🚩 | potifar.kravend4.workers.dev-80 | 37.69ms"
-      - "US🇺🇸 | google.com-443 | 6.15ms"
-      - "REALITY|GB🇬🇧 | 31.76.39.21-443 | 74.99ms"
-      - "US🇺🇸 | shangulin.global.ssl.fastly.net-80 | 12.73ms"
-      - "RELAY🚩 | vless-sub.n7p8ri7j.workers.dev-2087 | 13.53ms"
-      - "REALITY|BY🇧🇾 | by.api-yandex.net-443 | 210.05ms"
-      - "REALITY|RU🇷🇺 | 145.249.109.121-8443 | 89.25ms"
-      - "NL🇳🇱 | cdn9-33.vk-cdnvideo.com-8443 | 206.17ms"
-      - "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 131.93ms"
-      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 194.4ms"
-      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 112.96ms"
-      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 177.94ms"
-      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 96.3ms"
-      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 170.06ms"
-      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 93.98ms"
-      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 103.12ms"
-      - "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 179.54ms"
-      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 119.82ms"
-      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 102.19ms"
-      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 129.06ms"
-      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 103.62ms"
-      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 122.02ms"
-      - "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 98.61ms"
-      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 136.14ms"
-      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 124.56ms"
-      - "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 99.51ms"
-      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 99.86ms"
-      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 92.94ms"
-      - "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 201.05ms"
-      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 98.22ms"
-      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 102.06ms"
-      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 200.16ms"
-      - "RELAY🚩 | grabacademyportal.grab.com.cyylr.eu.cc-443 | 274.68ms"
-  - name: "سایتای ایرانی 🇮🇷"
+  - name: "توزیع بار چرخشی ⚖️"
+    type: "load-balance"
+    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
+    strategy: "round-robin"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 30
+    timeout: 1500
+    lazy: false
+    proxies:
+      - "US🇺🇸 | Sudoos.global.ssl.fastly.net-80 | 16.27ms"
+      - "US🇺🇸 | Sudo.global.ssl.fastly.net-80 | 19.81ms"
+      - "REALITY|LT🇱🇹 | lt-cherry-01.com-8443 | 429.16ms"
+      - "TR🇹🇷 | verst.salon13.beauty-8080 | 265.56ms"
+      - "RELAY🚩 | dev.qsaas.dev-443 | 68.65ms"
+      - "RELAY🚩 | dev.twistsparrow.xyz-443 | 25.12ms"
+      - "RELAY🚩 | dev.twistsparrow.xyz-443 | 3.4ms"
+      - "RELAY🚩 | dev.twistsparrow.xyz-443 | 3.53ms"
+      - "RELAY🚩 | dev.twistsparrow.xyz-443 | 2.31ms"
+      - "RELAY🚩 | dev.twistsparrow.xyz-443 | 3.41ms"
+      - "RELAY🚩 | octopusss4.com-443 | 103.09ms"
+      - "RELAY🚩 | octopusss4.com-443 | 5.35ms"
+      - "RELAY🚩 | octopusss4.com-443 | 9.62ms"
+      - "RELAY🚩 | octopusss4.com-443 | 2.83ms"
+      - "RELAY🚩 | octopusss4.com-443 | 2.69ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.7ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.59ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.31ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.06ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3ms-1"
+      - "RELAY🚩 | octopusss4.com-443 | 3.74ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.04ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.13ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.34ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.28ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.37ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.27ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.31ms-1"
+      - "RELAY🚩 | crimson-king-301d.nexoxnet.workers.dev-2083 | 15.03ms"
+      - "RELAY🚩 | HovEyda-ARIAMEHR-KinG.PAgEs.Dev-443 | 17.42ms"
+      - "RELAY🚩 | bpb-worker-panel-chf.pages.dev-443 | 21.6ms"
+      - "RELAY🚩 | germany.xydcqd.workers.dev-80 | 13.83ms"
+      - "REALITY|NL🇳🇱 | 144.31.30.69-443 | 94.29ms"
+      - "REALITY|RU🇷🇺 | ser.moktana.app-443 | 147.92ms"
+      - "REALITY|AM🇦🇲 | 77.91.68.70-55983 | 147.38ms"
+      - "REALITY|AM🇦🇲 | 77.91.68.70-55983 | 153.94ms"
+      - "REALITY|AT🇦🇹 | 185.224.3.41-10443 | 100.12ms"
+      - "US🇺🇸 | Namaid4.global.ssl.fastly.net-80 | 18.25ms"
+      - "RELAY🚩 | ai.heroitweb.ir-8080 | 187.49ms"
+      - "FI🇫🇮 | 193.233.23.121-40611 | 115.25ms"
+      - "RELAY🚩 | little-surf-1d9a.amirhost1.workers.dev-2087 | 14.37ms"
+      - "DE🇩🇪 | ov-germany1.09vpn.com-80 | 103.58ms"
+      - "RELAY🚩 | do-sfo3.862400.xyz-443 | 144.16ms"
+      - "RELAY🚩 | uk-03p.allhubb.info-443 | 176.55ms"
+      - "RELAY🚩 | uk-02p.allhubb.info-443 | 178.42ms"
+      - "REALITY|DE🇩🇪 | de02.lumixvpn.org-443 | 272.65ms"
+      - "RELAY🚩 | wild-grass-1917.tmpduardoolfsonerluke15.workers.dev-443 | 21.94ms"
+      - "US🇺🇸 | 128.105.145.226-2022 | 20.42ms"
+      - "RELAY🚩 | xvh.andishehparenting.com-2086 | 90.83ms"
+      - "RELAY🚩 | xU.aSaCO.sTorE-80 | 19.01ms"
+      - "RELAY🚩 | xvh.andishehparenting.com-2086 | 3.11ms"
+      - "US🇺🇸 | Zmaoz.Faculty.Ucdavis.Edu-443 | 32.13ms"
+      - "REALITY|MD🇲🇩 | md.riotvpn.eu-443 | 529.1ms"
+      - "REALITY|SE🇸🇪 | auto.riotvpn.eu-443 | 616.12ms"
+      - "REALITY|FR🇫🇷 | ads04.vxmaxpro.online-443 | 201.78ms"
+      - "RELAY🚩 | testconnection1.iranvatanam.com-2086 | 13.8ms"
+      - "RELAY🚩 | kamalnet.pages.dev-2083 | 19.12ms"
+      - "US🇺🇸 | live.skornorth.com-80 | 92.51ms"
+      - "RELAY🚩 | e4xf3l6qfdu-shhc8axat6695v4t9e6p.pages.dev-443 | 20.9ms"
+      - "REALITY|DE🇩🇪 | 5.75.196.174-443 | 96.74ms"
+      - "RELAY🚩 | main.boobie.eu.cc-80 | 243.97ms"
+      - "RELAY🚩 | main.boobie.eu.cc-80 | 3.53ms"
+      - "NL🇳🇱 | SC-TheNetherlands2.09vpn.com-80 | 122.36ms"
+      - "REALITY|NL🇳🇱 | leg.goodmaximum.com-443 | 122.91ms"
+      - "REALITY|NL🇳🇱 | leg.goodmaximum.com-443 | 157.52ms"
+      - "RELAY🚩 | ftp.singoshop.ir-8443 | 183.54ms"
+      - "RELAY🚩 | ir1.airpanel.top-2053 | 55.57ms"
+      - "RELAY🚩 | ir1.airpanel.top-2053 | 3.28ms"
+      - "RELAY🚩 | ir1.airpanel.top-2053 | 3.27ms"
+      - "REALITY|TR🇹🇷 | 83.217.9.140-8443 | 129.87ms"
+      - "DK🇩🇰 | 45.148.31.0-15855 | 95.35ms"
+      - "REALITY|DE🇩🇪 | 89.167.25.28-11005 | 117.2ms"
+      - "RELAY🚩 | pqh30v5.carwashipdir.shop-443 | 16ms"
+      - "REALITY|AE🇦🇪 | 85.234.73.125-13278 | 183.88ms"
+      - "REALITY|AE🇦🇪 | 85.234.73.125-13278 | 174.26ms"
+      - "RELAY🚩 | bustancloudd.primenet3.shop-2082 | 21.5ms"
+      - "US🇺🇸 | superip2.global.ssl.fastly.net-80 | 7.27ms"
+      - "RELAY🚩 | 37cdnws.iamali.info-443 | 176.98ms"
+      - "RELAY🚩 | 35cdnws.frnstatic.info-443 | 173.45ms"
+      - "RELAY🚩 | 37cdnws.iamali.info-443 | 3.67ms"
+      - "RELAY🚩 | 37cdnws.iamali.info-443 | 3.02ms"
+      - "RELAY🚩 | jp.aniua.qzz.io-2096 | 89.25ms"
+      - "RELAY🚩 | cloudflare.vhub.pro-443 | 14.33ms"
+      - "RELAY🚩 | pages.dev-443 | 9.52ms"
+      - "FR🇫🇷 | ratatouille.adaspoloandco.com-8443 | 155.21ms"
+      - "REALITY|TR🇹🇷 | 46.31.76.3-80 | 132.03ms"
+      - "REALITY|JP🇯🇵 | 31.76.91.24-443 | 150.72ms"
+      - "REALITY|JP🇯🇵 | 31.76.91.21-443 | 150.84ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.8-443 | 101.33ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.69-443 | 94.74ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.60-443 | 100.98ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.51-443 | 94.77ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.34-443 | 94.65ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.26-443 | 95.3ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.24-443 | 94.74ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.16-443 | 92.26ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.128-443 | 95.79ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.111-443 | 92.33ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.107-443 | 95.1ms"
+      - "RELAY🚩 | defensive-alarm17rrmk7y7y.samsungovens.ir.-2053 | 180.47ms"
+      - "REALITY|DE🇩🇪 | de.ko.prod.n7.homes-8443 | 111.33ms"
+      - "REALITY|DE🇩🇪 | 23.26.37.119-8443 | 96.9ms"
+      - "RELAY🚩 | 0221.enedrehd.workers.dev-2095 | 23.21ms"
+      - "REALITY|RU🇷🇺 | ru3.sipipro.su-443 | 148.25ms"
+      - "US🇺🇸 | tignaltofansv8.global.ssl.fastly.net-80 | 7.45ms"
+      - "US🇺🇸 | tignaltofansv8.global.ssl.fastly.net-80 | 7.04ms"
+      - "RELAY🚩 | afrcloud22.mmv.kr-443 | 416.15ms"
+      - "RELAY🚩 | server1.poludiro.workers.dev-8080 | 13.74ms"
+      - "RELAY🚩 | v2.raycv05.workers.dev-80 | 21.92ms"
+      - "REALITY|LT🇱🇹 | 130.12.171.120-20001 | 110.17ms"
+      - "RELAY🚩 | toshirpilafkani-torostamtahamtani.rezaezzati.top-443 | 81.51ms"
+      - "REALITY|NL🇳🇱 | 77.246.109.191-34045 | 93.7ms"
+      - "RELAY🚩 | DiprOX.pages.DEV-443 | 24.8ms"
+      - "RELAY🚩 | DiprOX.pages.DEV-443 | 3.55ms"
+      - "RELAY🚩 | DiprOX.pages.DEV-443 | 3.7ms"
+      - "RELAY🚩 | DiprOX.pages.DEV-443 | 4.35ms"
+      - "REALITY|NL🇳🇱 | 213.176.16.74-443 | 88.73ms"
+      - "REALITY|US🇺🇸 | nether2cxc.ignorelist.com-443 | 190.44ms"
+      - "REALITY|US🇺🇸 | cxcczechia1.chickenkiller.com-443 | 167.62ms"
+      - "REALITY|FI🇫🇮 | 65.109.211.154-443 | 116.28ms"
+      - "US🇺🇸 | Zmaoz.Faculty.Ucdavis.Edu-443 | 21.85ms"
+      - "US🇺🇸 | live.skornorth.com-443 | 10.06ms"
+      - "US🇺🇸 | live.skornorth.com-443 | 12.22ms"
+      - "US🇺🇸 | 77.110.127.191-9443 | 15.46ms"
+      - "RELAY🚩 | xxx.donated003.workers.dev-443 | 40.45ms"
+      - "RELAY🚩 | fuckingcloudflare.2-5e8.workers.dev-2095 | 20.21ms"
+      - "RELAY🚩 | baipiao1.curly-train.pages.dev-2087 | 18.62ms"
+      - "RELAY🚩 | newwk1.f1w.de5.net-2083 | 169.37ms"
+      - "RELAY🚩 | 1750293123492.china.baidu.bilibili.china.aeko.cn-8080 | 29.25ms"
+      - "REALITY|RU🇷🇺 | youtube.happvpn.com-443 | 211.63ms"
+      - "REALITY|FI🇫🇮 | fi.srv.happvpn.com-443 | 123.82ms"
+      - "RELAY🚩 | rAyAn-007.fOtOn.dPdNs.oRg-443 | 85.48ms"
+      - "RELAY🚩 | rahgozar.italiantourism.net.-2087 | 39.66ms"
+      - "RELAY🚩 | ads.ruangguru.com.cyylr.eu.cc-443 | 3.08ms"
+      - "RELAY🚩 | azadnet-btq.pages.dev-443 | 17.79ms"
+      - "RELAY🚩 | azadnet-3zp.pages.dev-443 | 15.83ms"
+      - "RELAY🚩 | azadnet-3zp.pages.dev-443 | 4.05ms"
+      - "RELAY🚩 | azadnet-bjv.pages.dev-443 | 20.95ms"
+      - "RELAY🚩 | zh.hollowspot.ir-8443 | 176.46ms"
+      - "RELAY🚩 | de1.nagona.top-443 | 73.58ms"
+      - "RELAY🚩 | zaintest.vuclip.com.cyylr.eu.cc-443 | 3.85ms"
+      - "DE🇩🇪 | de1.accuratenetworkchecker.ir-443 | 267.55ms"
+      - "US🇺🇸 | speedtest.net-443 | 2.07ms"
+      - "REALITY|RU🇷🇺 | 193.233.251.62-443 | 118.96ms"
+      - "RELAY🚩 | 3-7ny.pages.dev-443 | 15.3ms"
+      - "RELAY🚩 | 1-brc.pages.dev-443 | 15.32ms"
+      - "RELAY🚩 | 3-2ll.pages.dev-443 | 17.2ms"
+      - "JP🇯🇵 | 134.122.194.186-443 | 310.16ms"
+      - "US🇺🇸 | play.google.com-80 | 5.36ms"
+      - "RELAY🚩 | ircp-617.pages.dev.-443 | 12.91ms"
+      - "RELAY🚩 | cyylr.eu.cc-443 | 278.61ms"
+      - "RELAY🚩 | cyylr.eu.cc-443 | 3.28ms"
+      - "RELAY🚩 | cyylr.eu.cc-443 | 4.24ms"
+      - "RELAY🚩 | cyylr.eu.cc-443 | 4.37ms"
+      - "RELAY🚩 | cyylr.eu.cc-443 | 3.97ms"
+      - "RELAY🚩 | cyylr.eu.cc-443 | 2.68ms"
+      - "RELAY🚩 | ssj.new-persian-song.ir-8443 | 95.37ms"
+      - "DE🇩🇪 | vh.mojaz-persian-music.ir-8443 | 280.23ms"
+      - "RELAY🚩 | icyou.daftarakeman.ir-8443 | 175.68ms"
+      - "REALITY|LT🇱🇹 | 93.115.25.42-8443 | 115.4ms"
+      - "REALITY|US🇺🇸 | 137.184.218.169-36925 | 8.11ms"
+      - "REALITY|US🇺🇸 | 137.184.218.169-36925 | 7.53ms"
+      - "REALITY|FI🇫🇮 | node-fi.dostup-est.info-8443 | 280.24ms"
+      - "REALITY|DE🇩🇪 | 85.208.139.98-8444 | 93.26ms"
+      - "US🇺🇸 | 77.110.127.191-9443 | 15.66ms"
+      - "REALITY|RU🇷🇺 | b02.connectv.net-443 | 158.23ms"
+      - "RELAY🚩 | bOLd-fRoST-5566.AKBArI1355-KHO.WORkERS.DEV-8443 | 19.81ms"
+      - "RELAY🚩 | kakoolnews.kakoolnews0.workers.dev-443 | 16.02ms"
+      - "RELAY🚩 | telegramkakoolnews.kakoolnewsa.workers.dev-443 | 14.25ms"
+      - "RELAY🚩 | kakoolnews.kakoolnews8.workers.dev-443 | 16.12ms"
+      - "RELAY🚩 | telegram.kakoolnews3.workers.dev-443 | 17.38ms"
+      - "RELAY🚩 | unnes.ac.id.cyylr.eu.cc-443 | 10.07ms"
+      - "RELAY🚩 | uciranir-uciranir-uiranir-uciranir-uciranir-uciranir-uciranir2.kehib41931.workers.dev-443 | 18.05ms"
+      - "RELAY🚩 | octopusss5.info-443 | 177.48ms"
+      - "RELAY🚩 | octopusss5.info-443 | 3.65ms"
+      - "RELAY🚩 | bpb-wORKer-paNeL-3JC.pAgeS.DeV-443 | 15.53ms"
+      - "DE🇩🇪 | nl.furkbalancer.net-8443 | 171.67ms"
+      - "RELAY🚩 | hello-world-royal-unit-def7.hamidimorteza680.workers.dev-80 | 18.19ms"
+      - "RELAY🚩 | mcix.ircf.space-443 | 79.34ms"
+      - "REALITY|UA🇺🇦 | 91.218.122.10-8443 | 116.6ms"
+      - "REALITY|NL🇳🇱 | 155.212.37.10-993 | 114.87ms"
+      - "REALITY|TR🇹🇷 | 155.212.110.2-993 | 107.21ms"
+      - "RELAY🚩 | xcc.dl5movis.ir-8080 | 182.73ms"
+      - "US🇺🇸 | cdn.vidboxco.ir-443 | 203.21ms"
+      - "REALITY|NL🇳🇱 | nl1.rsvps.tech-443 | 554.31ms"
+      - "REALITY|LT🇱🇹 | lt-modx.nodexphere.net-443 | 118.27ms"
+      - "RELAY🚩 | cdn-no.lopzo.ir-443 | 185.55ms"
+      - "REALITY|MD🇲🇩 | md.riotvpn.eu-443 | 131.49ms"
+      - "REALITY|DE🇩🇪 | moo2.gafe-lorbad.ir-449 | 270.1ms"
+      - "REALITY|TW🇹🇼 | tw3.miyazono-kaori.com-443 | 223.75ms"
+      - "RELAY🚩 | wallweb.hydradllvip.info-443 | 175.28ms"
+      - "REALITY|RU🇷🇺 | 51.250.106.87-443 | 135.05ms"
+      - "DE🇩🇪 | interim.adaspoloandco.com-8443 | 124.03ms"
+      - "RELAY🚩 | juzi8186.qea.ccwu.cc-8443 | 206.17ms"
+      - "REALITY|RU🇷🇺 | 178.130.46.56-8443 | 88.2ms"
+      - "REALITY|CH🇨🇭 | areal1.greewebservices.ir-2425 | 304.91ms"
+      - "RELAY🚩 | divine-surf-b984.princess310.workers.dev-443 | 32.46ms"
+      - "REALITY|RU🇷🇺 | 130.49.179.127-443 | 85.65ms"
+      - "REALITY|PL🇵🇱 | pl.fantoff.online-443 | 227.1ms"
+      - "REALITY|RU🇷🇺 | 94.103.89.223-8443 | 126.75ms"
+      - "RELAY🚩 | lOng-DisK-e57f.MEhRdaD00000.WorkErS.DEV-2087 | 16.25ms"
+      - "REALITY|AT🇦🇹 | at.synthori.space-8443 | 148.59ms"
+      - "RELAY🚩 | liz2.jooje.lat-2083 | 20.19ms"
+      - "REALITY|RU🇷🇺 | 85.239.34.16-7443 | 137.38ms"
+      - "REALITY|US🇺🇸 | 167.104.223.14-443 | 78.07ms"
+      - "FR🇫🇷 | bab-6.site-443 | 150.74ms"
+      - "FR🇫🇷 | bab-6.site-443 | 150.22ms"
+      - "US🇺🇸 | norbertde1.global.ssl.fastly.net-80 | 7.03ms"
+      - "RELAY🚩 | pages.dev.-443 | 2.22ms"
+      - "DE🇩🇪 | du.mobileemdad.top-42542 | 115.6ms"
+      - "DE🇩🇪 | 46.249.98.109-8080 | 96.63ms"
+      - "RELAY🚩 | sabrina.lezzatcore.ir-443 | 173.27ms"
+      - "REALITY|TR🇹🇷 | 62.133.63.232-8443 | 129.96ms"
+      - "RELAY🚩 | unnes.ac.id.cyylr.eu.cc-443 | 4ms"
+      - "RELAY🚩 | toshirpilafkani-torostamtahamtani.mgwarrior.ir-2087 | 191.34ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 251.38ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 233.98ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 262.64ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 223.08ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 260.85ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 96.77ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 236.21ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 101.36ms"
+      - "RELAY🚩 | g1.nybaz.space-80 | 9.98ms"
+      - "RELAY🚩 | www.game-dns.ir-2083 | 180.76ms"
+      - "US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 12.35ms"
+      - "US🇺🇸 | speedtest.net-443 | 2.75ms"
+      - "REALITY|AL🇦🇱 | 144.31.131.33-443 | 109.6ms"
+      - "REALITY|CZ🇨🇿 | 188.130.208.220-5443 | 104.5ms"
+      - "REALITY|CZ🇨🇿 | 188.130.208.220-5443 | 99.23ms"
+      - "RELAY🚩 | pagescm.freen7.de5.net-443 | 183.8ms"
+      - "REALITY|US🇺🇸 | 167.104.223.57-7443 | 77.69ms"
+      - "REALITY|US🇺🇸 | 167.104.223.57-7443 | 77.92ms"
+      - "REALITY|DE🇩🇪 | 150.241.90.13-443 | 109.37ms"
+      - "REALITY|FI🇫🇮 | 62.60.255.11-443 | 111.78ms"
+      - "RELAY🚩 | 638991166348691947.corolla-amsia.info-443 | 49.05ms"
+      - "RELAY🚩 | collection.linefriends.com.cyylr.eu.cc-443 | 245.89ms"
+      - "REALITY|MD🇲🇩 | md.riotvpn.eu-8443 | 112.06ms"
+      - "RELAY🚩 | afrcloud22.mmv.kr-443 | 3.55ms"
+      - "RELAY🚩 | afrcloud5.c01.kr-443 | 206.65ms"
+      - "RELAY🚩 | worker-jolly-block-2e78.gamal32324.workers.Dev-443 | 15ms"
+      - "RELAY🚩 | cdn-allxn--b6gaceuorg.l4o117en.workers.dev-8080 | 28.56ms"
+      - "RELAY🚩 | sourceforge.net-443 | 8.29ms"
+      - "RELAY🚩 | chiRPy-opinioNGuuQL3f99i.wIndlER.cO.uk-2096 | 124.34ms"
+      - "REALITY|RU🇷🇺 | 212.192.14.223-8443 | 122.71ms"
+      - "REALITY|DE🇩🇪 | de.corsair-web.space-8443 | 274.9ms"
+      - "US🇺🇸 | 77.110.127.191-9443 | 14.91ms"
+      - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 180.32ms"
+      - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 4.37ms"
+      - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 3.93ms"
+      - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 3.44ms"
+      - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 3.57ms"
+      - "RELAY🚩 | afrcloud22.mmv.kr-443 | 4.11ms"
+      - "REALITY|TR🇹🇷 | 185.39.204.189-443 | 127.69ms"
+      - "IR🇮🇷 | divarcdn.com-443 | 157.38ms"
+      - "RELAY🚩 | frosty-field-7475.hamedpop8.workers.dev-2095 | 15.34ms"
+      - "REALITY|RU🇷🇺 | 145.249.109.142-443 | 89.93ms"
+      - "REALITY|RELAY🚩 | france.cloudpath.live-443 | 27.81ms"
+      - "IR🇮🇷 | uplod.ir-443 | 346.16ms"
+      - "REALITY|PL🇵🇱 | tg.riotvpn.eu-443 | 463.92ms"
+      - "US🇺🇸 | aereq0q.ali2069.site-443 | 96.26ms"
+      - "US🇺🇸 | ks.ylks.xyz-443 | 79.45ms"
+      - "US🇺🇸 | ks.ylks.xyz-443 | 43.68ms"
+      - "US🇺🇸 | ks.ylks.xyz-443 | 4404.49ms"
+      - "US🇺🇸 | hp.ylks.xyz-443 | 54.15ms"
+      - "US🇺🇸 | kq.ylks.xyz-443 | 72.89ms"
+      - "US🇺🇸 | kr.ylks.xyz-443 | 40.74ms"
+      - "RELAY🚩 | y6-3cj.PAgES.DEV-443 | 17.63ms"
+      - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 104.57ms"
+      - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 3.25ms"
+      - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 2.85ms"
+      - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 2.86ms"
+      - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 3.17ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 34.68ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.35ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.47ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.32ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 2.95ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 2.82ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 4.05ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 4.53ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.24ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.74ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.23ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.63ms"
+      - "DE🇩🇪 | cdn.limoo.blog-443 | 138.93ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.82ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.46ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.28ms"
+      - "REALITY|FI🇫🇮 | 31.56.227.217-8443 | 228.02ms"
+      - "US🇺🇸 | tignaltofan.global.ssl.fastly.net-80 | 11.95ms"
+      - "US🇺🇸 | tignaltofansv4.global.ssl.fastly.net-80 | 8.1ms"
+      - "US🇺🇸 | tignaltofan.global.ssl.fastly.net-80 | 5.05ms"
+      - "US🇺🇸 | tignaltofansv4.global.ssl.fastly.net-80 | 7.54ms"
+      - "RELAY🚩 | 0314.hiyasta2.workers.dev-8880 | 30.6ms"
+      - "RELAY🚩 | www.middle.cc.cd-443 | 508.4ms"
+      - "REALITY|DE🇩🇪 | 5.75.196.174-8080 | 95.63ms"
+      - "RELAY🚩 | mainsub.m4network-f4c.workers.dev-443 | 22.65ms"
+      - "US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 23.41ms"
+  - name: "المنت 💬"
     type: "select"
+    icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تیم‌اسپیک 🎧"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/331567/teamspeak.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دلتاچت ✉️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/373771/mail.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دانلود منیجر 📥"
+    type: "select"
+    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
     proxies:
       - "بدون فیلترشکن 🛡️"
       - "نوع انتخاب پروکسی 🔀"
@@ -4526,32 +5357,323 @@ proxy-groups:
       - "اجازه ندادن 🚫"
   - name: "تلگرام 💬"
     type: "select"
+    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+  - name: "یوتیوب ▶️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "گوگل 🌍"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475656/google-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "واتس آپ 🟢"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "هوش مصنوعی 🤖"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/306500/openai.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "توییتر 🐦"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475689/twitter-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "اسپاتیفای 🎵"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "اینستاگرام 📸"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/452229/instagram-1.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "تبلیغات 🆎"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/336358/ad.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "تبلیغات اپ ها 🍃"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "رهگیری جهانی 🛑"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "سایتای مخرب ⚠️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "استیم 🖥️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/452107/steam.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "گیم 🎮"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "توییچ 📡"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/343527/twitch-network-communication-interaction-connection.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "ویندوز 🧊"
+    type: "select"
+    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "اجازه ندادن 🚫"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+  - name: "کلودفلر ☁️"
+    type: "select"
+    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "گیتهاب 🐙"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/355033/github.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دیسکورد 🗣️"
+    type: "select"
+    icon: "https://automatorplugin.com/wp-content/uploads/2024/10/discord-icon.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "استریمیو 🎬"
+    type: "select"
+    icon: "https://stremio.github.io/stremio-addon-guide/img/stremio.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "انی‌دسک 🔴"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "سایتای سانسوری 🤬"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Censorship.svg/300px-Censorship.svg.png"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
   - name: "بدون فیلترشکن 🛡️"
     type: "select"
+    icon: "https://www.svgrepo.com/show/6318/connection.svg"
     proxies:
       - "DIRECT"
     hidden: true
   - name: "قطع اینترنت ⛔"
     type: "select"
+    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
     proxies:
       - "REJECT"
     hidden: true
   - name: "اجازه ندادن 🚫"
     type: "select"
+    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
     proxies:
       - "REJECT"
     hidden: true
 rules:
-  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,DownloadManagers,دانلود منیجر 📥"
+  - "RULE-SET,Download,دانلود منیجر 📥"
+  - "RULE-SET,stremio,استریمیو 🎬"
+  - "PROCESS-NAME,im.vector.app,المنت 💬"
+  - "PROCESS-NAME,io.element.android.x,المنت 💬"
+  - "PROCESS-NAME,Element.exe,المنت 💬"
+  - "DOMAIN-SUFFIX,aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,chat.aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,site.aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,electonet.xyz,المنت 💬"
+  - "DOMAIN-SUFFIX,chat.electonet.xyz,المنت 💬"
+  - "DOMAIN-SUFFIX,rainbuwu.ir,المنت 💬"
+  - "DOMAIN-SUFFIX,cinny.rainbuwu.ir,المنت 💬"
+  - "PROCESS-NAME,chat.delta,دلتاچت ✉️"
+  - "PROCESS-NAME,DeltaChat.exe,دلتاچت ✉️"
+  - "DOMAIN-SUFFIX,arsalandalvand.ir,دلتاچت ✉️"
+  - "DST-PORT,993,دلتاچت ✉️"
+  - "DST-PORT,465,دلتاچت ✉️"
+  - "DST-PORT,587,دلتاچت ✉️"
+  - "PROCESS-NAME,com.teamspeak.ts3client,تیم‌اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win64.exe,تیم‌اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win32.exe,تیم‌اسپیک 🎧"
+  - "DOMAIN-SUFFIX,ag.tssq.ir,تیم‌اسپیک 🎧"
+  - "DST-PORT,9987,تیم‌اسپیک 🎧"
+  - "RULE-SET,BanProgramAD,تبلیغات اپ ها 🍃"
+  - "RULE-SET,BanAD,رهگیری جهانی 🛑"
+  - "RULE-SET,PrivateTracker,رهگیری جهانی 🛑"
+  - "RULE-SET,category_public_tracker,رهگیری جهانی 🛑"
+  - "RULE-SET,malware,سایتای مخرب ⚠️"
+  - "RULE-SET,phishing,سایتای مخرب ⚠️"
+  - "RULE-SET,cryptominers,سایتای مخرب ⚠️"
+  - "RULE-SET,warninglist,سایتای مخرب ⚠️"
+  - "RULE-SET,Ponzi,سایتای مخرب ⚠️"
+  - "RULE-SET,LiteAds,تبلیغات 🆎"
+  - "RULE-SET,iran_ads,تبلیغات 🆎"
+  - "RULE-SET,PersianBlocker,تبلیغات 🆎"
+  - "RULE-SET,ads,تبلیغات 🆎"
+  - "RULE-SET,BanEasyList,تبلیغات 🆎"
+  - "RULE-SET,twitch,توییچ 📡"
   - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
   - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger.web,تلگرام 💬"
+  - "RULE-SET,telegram,تلگرام 💬"
+  - "RULE-SET,YouTube,یوتیوب ▶️"
+  - "RULE-SET,youtube,یوتیوب ▶️"
+  - "RULE-SET,YouTubeMusic,یوتیوب ▶️"
+  - "PROCESS-NAME,com.anydesk.anydeskandroid,انی‌دسک 🔴"
+  - "PROCESS-NAME,AnyDesk.exe,انی‌دسک 🔴"
+  - "DOMAIN-SUFFIX,anydesk.com,انی‌دسک 🔴"
+  - "PROCESS-NAME,Twitter.exe,توییتر 🐦"
+  - "PROCESS-NAME,com.twitter.android,توییتر 🐦"
+  - "RULE-SET,Chotwitter,توییتر 🐦"
+  - "RULE-SET,mihTwitter,توییتر 🐦"
+  - "RULE-SET,Domtwitter,توییتر 🐦"
+  - "PROCESS-NAME,com.spotify.music,اسپاتیفای 🎵"
+  - "PROCESS-NAME,Spotify.exe,اسپاتیفای 🎵"
+  - "RULE-SET,DomainSpotify,اسپاتیفای 🎵"
+  - "RULE-SET,mihspotify,اسپاتیفای 🎵"
+  - "PROCESS-NAME,com.instagram.android,اینستاگرام 📸"
+  - "RULE-SET,instagram,اینستاگرام 📸"
+  - "DOMAIN-SUFFIX,deepseek.com,هوش مصنوعی 🤖"
+  - "DOMAIN-SUFFIX,qwen.ai,هوش مصنوعی 🤖"
+  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
+  - "RULE-SET,censor,سایتای سانسوری 🤬"
+  - "RULE-SET,apps,سایتای ایرانی 🇮🇷"
   - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,arvancloud,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,derakcloud,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,iranserver,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,parspack,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,irasn,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,ircidr,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,ir,سایتای ایرانی 🇮🇷"
   - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
-  - "GEOIP,ir,سایتای ایرانی 🇮🇷"
+  - "DOMAIN-SUFFIX,unimics.com,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,whatsapp,واتس آپ 🟢"
+  - "RULE-SET,steam,استیم 🖥️"
+  - "RULE-SET,SteamRegionCheck,استیم 🖥️"
+  - "RULE-SET,game,گیم 🎮"
+  - "RULE-SET,GameDownload,گیم 🎮"
+  - "RULE-SET,category-games,گیم 🎮"
+  - "RULE-SET,Xbox,گیم 🎮"
+  - "RULE-SET,discord,دیسکورد 🗣️"
+  - "RULE-SET,xiaomi_white_list,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,xiaomi_block_list,تبلیغات اپ ها 🍃"
+  - "RULE-SET,windows,ویندوز 🧊"
+  - "RULE-SET,cloudflare,کلودفلر ☁️"
+  - "RULE-SET,github,گیتهاب 🐙"
+  - "PROCESS-NAME,com.android.vending,نوع انتخاب پروکسی 🔀"
+  - "PROCESS-NAME,com.google.android.gms,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google,گوگل 🌍"
+  - "IP-CIDR,10.10.34.0/24,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,private,بدون فیلترشکن 🛡️"
   - "MATCH,نوع انتخاب پروکسی 🔀"

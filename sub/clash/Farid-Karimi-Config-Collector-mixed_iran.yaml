@@ -1,4 +1,7 @@
 global-client-fingerprint: "chrome"
+keep-alive-interval: 5
+keep-alive-idle: 10
+disable-keep-alive: false
 port: 7890
 socks-port: 7891
 redir-port: 7892
@@ -8,21 +11,17 @@ allow-lan: true
 tcp-concurrent: true
 enable-process: true
 find-process-mode: "always"
-ipv6: true
+ipv6: false
 log-level: "info"
 geo-auto-update: true
 geo-update-interval: 168
 secret: ""
 bind-address: "*"
 unified-delay: false
-disable-keep-alive: false
-keep-alive-idle: 30
-keep-alive-interval: 30
 dns:
   enable: true
-  ipv6: true
-  respect-rules: false
-  prefer-h3: true
+  ipv6: false
+  prefer-h3: false
   cache-algorithm: "arc"
   use-system-hosts: true
   use-host: true
@@ -42,19 +41,74 @@ dns:
     - "ntp.*.com"
     - "*.ir"
   default-nameserver:
-    - "8.8.8.8"
-    - "8.8.4.4"
     - "1.1.1.1"
+    - "8.8.8.8"
     - "9.9.9.9"
   nameserver:
-    - "https://dns.google/dns-query"
-    - "https://cloudflare-dns.com/dns-query"
+    - "tcp://1.1.1.1"
+    - "tcp://1.0.0.1"
+    - "tcp://8.8.8.8"
+    - "tcp://8.8.4.4"
+    - "tcp://9.9.9.9"
+    - "tcp://149.112.112.112"
+    - "tcp://208.67.222.222"
+    - "tcp://208.67.220.222"
+  fallback:
+    - "tcp://76.76.19.19"
+    - "tcp://76.223.122.150"
+    - "tcp://185.228.168.9"
+    - "tcp://185.228.169.9"
+    - "tcp://8.26.56.26"
+    - "tcp://8.20.247.20"
+    - "tcp://76.76.2.11"
+    - "tcp://76.76.10.11"
+    - "tcp://84.200.69.80"
+    - "tcp://84.200.70.40"
+    - "tcp://45.33.97.5"
+    - "tcp://37.235.1.177"
+    - "tcp://209.244.0.3"
+    - "tcp://209.244.0.4"
+    - "tcp://156.154.70.5"
+    - "tcp://156.154.71.5"
+    - "tcp://103.86.96.100"
+    - "tcp://103.86.99.100"
+    - "tcp://199.85.126.10"
+    - "tcp://199.85.127.10"
+    - "tcp://129.250.35.250"
+    - "tcp://129.250.35.251"
+    - "tcp://94.16.114.254"
+    - "tcp://94.247.43.254"
+    - "tcp://208.67.222.20"
+    - "tcp://195.46.39.39"
+    - "tcp://195.46.39.40"
+    - "tcp://204.117.214.10"
+    - "tcp://199.2.252.10"
+    - "tcp://194.169.169.169"
+    - "tcp://156.154.70.1"
+    - "tcp://156.154.71.1"
+    - "tcp://91.239.100.100"
+    - "tcp://89.233.43.71"
+    - "tcp://64.6.64.6"
+    - "tcp://64.6.65.6"
+    - "tcp://77.88.8.8"
+    - "tcp://77.88.8.1"
+  fallback-filter:
+    geoip: true
+    geoip-code: "IR"
+    geosite:
+      - "gfw"
+    ipcidr:
+      - "240.0.0.0/4"
+    domain:
+      - "+.google.com"
+      - "+.facebook.com"
+      - "+.youtube.com"
+  proxy-server-nameserver:
+    - "tcp://1.1.1.1"
+    - "tcp://8.8.8.8"
   direct-nameserver:
     - "78.157.42.100"
     - "78.157.42.101"
-  proxy-server-nameserver:
-    - "1.1.1.1"
-    - "8.8.8.8"
 sniffer:
   enable: true
   force-dns-mapping: true
@@ -88,12 +142,60 @@ tun:
     - "any:53"
     - "tcp://any:53"
 rule-providers:
+  category_public_tracker:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-public-tracker.yaml"
+    interval: 86400
+    path: "./ruleset/category_public_tracker.yaml"
+  iran_ads:
+    type: "http"
+    behavior: "domain"
+    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    interval: 86400
+    path: "./ruleset/iran_ads.yaml"
+  PersianBlocker:
+    type: "http"
+    behavior: "domain"
+    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    interval: 86400
+    path: "./ruleset/PersianBlocker.yaml"
+  youtube:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
+    interval: 86400
+    path: "./ruleset/youtube.yaml"
+  telegram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
+    interval: 86400
+    path: "./ruleset/telegram.yaml"
+  twitch:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
+    interval: 86400
+    path: "./ruleset/twitch.yaml"
+  censor:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
+    interval: 86400
+    path: "./ruleset/censor.yaml"
   local_ips:
     type: "http"
     behavior: "ipcidr"
     url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
     interval: 86400
     path: "./ruleset/local_ips.yaml"
+  private:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
+    interval: 86400
+    path: "./ruleset/private.yaml"
   category_ir:
     type: "http"
     behavior: "domain"
@@ -106,6 +208,296 @@ rule-providers:
     url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
     interval: 86400
     path: "./ruleset/iran.yaml"
+  steam:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
+    interval: 86400
+    path: "./ruleset/steam.yaml"
+  game:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
+    interval: 86400
+    path: "./ruleset/game.yaml"
+  category-games:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
+    interval: 86400
+    path: "./ruleset/category-games.yaml"
+  ir:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
+    interval: 86400
+    path: "./ruleset/ir.yaml"
+  apps:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
+    interval: 86400
+    path: "./ruleset/apps.yaml"
+  ircidr:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
+    interval: 86400
+    path: "./ruleset/ircidr.yaml"
+  irasn:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
+    interval: 86400
+    path: "./ruleset/irasn.yaml"
+  arvancloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
+    interval: 86400
+    path: "./ruleset/arvancloud.yaml"
+  derakcloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
+    interval: 86400
+    path: "./ruleset/derakcloud.yaml"
+  iranserver:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
+    interval: 86400
+    path: "./ruleset/iranserver.yaml"
+  parspack:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
+    interval: 86400
+    path: "./ruleset/parspack.yaml"
+  malware:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/malware.yaml"
+    interval: 86400
+    path: "./ruleset/malware.yaml"
+  phishing:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/phishing.yaml"
+    interval: 86400
+    path: "./ruleset/phishing.yaml"
+  cryptominers:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/cryptominers.yaml"
+    interval: 86400
+    path: "./ruleset/cryptominers.yaml"
+  ads:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/Chocolate4U/Iran-clash-rules/releases/download/202606060815/category-ads-all.yaml"
+    interval: 86400
+    path: "./ruleset/ads.yaml"
+  DownloadManagers:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
+    interval: 86400
+    path: "./ruleset/DownloadManagers.yaml"
+  BanProgramAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanProgramAD.yaml"
+  BanAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanAD.yaml"
+  PrivateTracker:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
+    interval: 86400
+    path: "./ruleset/PrivateTracker.yaml"
+  BanEasyList:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
+    interval: 86400
+    path: "./ruleset/BanEasyList.yaml"
+  Download:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
+    interval: 86400
+    path: "./ruleset/Download.yaml"
+  GameDownload:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
+    interval: 86400
+    path: "./ruleset/GameDownload.yaml"
+  SteamRegionCheck:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
+    interval: 86400
+    path: "./ruleset/SteamRegionCheck.yaml"
+  Xbox:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
+    interval: 86400
+    path: "./ruleset/Xbox.yaml"
+  YouTubeMusic:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
+    interval: 86400
+    path: "./ruleset/YouTubeMusic.yaml"
+  YouTube:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
+    interval: 86400
+    path: "./ruleset/YouTube.yaml"
+  Ponzi:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
+    interval: 86400
+    path: "./ruleset/Ponzi.yaml"
+  warninglist:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/warning-list.yaml"
+    interval: 86400
+    path: "./ruleset/warninglist.yaml"
+  google:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
+    interval: 86400
+    path: "./ruleset/google.yaml"
+  google-play:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
+    interval: 86400
+    path: "./ruleset/google-play.yaml"
+  xiaomi_block_list:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_block_list.yaml"
+  xiaomi_white_list:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_white_list.yaml"
+  cloudflare:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
+    interval: 86400
+    path: "./ruleset/cloudflare.yaml"
+  github:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
+    interval: 86400
+    path: "./ruleset/xgithub.yaml"
+  whatsapp:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
+    interval: 86400
+    path: "./ruleset/whatsapp.yaml"
+  LiteAds:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/LiteAds.yaml"
+    interval: 86400
+    path: "./ruleset/LiteAds.yaml"
+  discord:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
+    interval: 86400
+    path: "./ruleset/discord.yaml"
+  instagram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    interval: 86400
+    path: "./ruleset/instagram.yaml"
+  category-ai:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    interval: 86400
+    path: "./ruleset/category-ai.yaml"
+  stremio:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    interval: 86400
+    path: "./ruleset/stremio.yaml"
+  windows:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    interval: 86400
+    path: "./ruleset/windows.yaml"
+  Chotwitter:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/twitter.yaml"
+    interval: 86400
+    path: "./ruleset/Chotwitter.yaml"
+  mihTwitter:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Twitter.yaml"
+    interval: 86400
+    path: "./ruleset/mihTwitter.yaml"
+  Domtwitter:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/twitter.yaml"
+    interval: 86400
+    path: "./ruleset/Domtwitter.yaml"
+  DomainSpotify:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/spotify.yaml"
+    interval: 86400
+    path: "./ruleset/DomainSpotify.yaml"
+  mihspotify:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Spotify.yaml"
+    interval: 86400
+    path: "./ruleset/mihSpotify.yaml"
 proxies:
   - name: "configV2rayNG-658"
     type: "vless"
@@ -145,6 +537,20 @@ proxies:
     client-fingerprint: "chrome"
     ws-opts:
       path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "configV2rayNG-655"
+    type: "vless"
+    server: "66.81.247.155"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws#TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=512"
       headers:
         Host: "octopusss4.com"
   - name: "configV2rayNG-654"
@@ -244,6 +650,20 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
+  - name: "configV2rayNG-647"
+    type: "vless"
+    server: "141.193.213.11"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws#TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=2560"
+      headers:
+        Host: "octopusss4.com"
   - name: "configV2rayNG-646"
     type: "vless"
     server: "141.193.213.10"
@@ -255,6 +675,34 @@ proxies:
     servername: "octopusss4.com"
     ws-opts:
       path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "configV2rayNG-645"
+    type: "vless"
+    server: "141.193.213.10"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "configV2rayNG-644"
+    type: "vless"
+    server: "141.193.213.10"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws#TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=512"
       headers:
         Host: "octopusss4.com"
   - name: "configV2rayNG-643"
@@ -490,6 +938,19 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "configV2rayNG-623"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "d644824c-7f7c-4b48-87da-d988722082cb"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "sabkpo.tll-far.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
   - name: "configV2rayNG-622"
     type: "vless"
     server: "62.60.251.131"
@@ -498,6 +959,19 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "vpn_ioss-621"
+    type: "vless"
+    server: "141.193.213.30"
+    port: 443
+    uuid: "d2992c0d-53cb-489c-85af-5eb80e6d9e79"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "blog.webex.com.cyylr.eu.cc"
+    ws-opts:
+      path: "/in-do"
+      headers:
+        Host: "blog.webex.com.cyylr.eu.cc"
   - name: "vpn_ioss-620"
     type: "vless"
     server: "45.130.125.0"
@@ -520,6 +994,20 @@ proxies:
     tls: true
     network: "ws"
     servername: "cyylr.eu.cc"
+    ws-opts:
+      path: "/sg-melbi"
+      headers:
+        Host: "cyylr.eu.cc"
+  - name: "vpn_ioss-618"
+    type: "vless"
+    server: "104.19.229.21"
+    port: 443
+    uuid: "cc752a3e-1537-4e86-bb50-1b897bf7b33c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cyylr.eu.cc"
+    client-fingerprint: "chrome"
     ws-opts:
       path: "/sg-melbi"
       headers:
@@ -579,6 +1067,18 @@ proxies:
     tls: true
     network: "tcp"
     servername: "pl-modx.nodexphere.net"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "_S6MJ2-dROx_X7rUM_Gnh01MPAVVgnB0_x0t4_2XuVc"
+  - name: "configV2rayNG-612"
+    type: "vless"
+    server: "pl-modx.nodexphere.net"
+    port: 443
+    uuid: "be2e1543-d450-481b-a955-c691086e41b1"
+    udp: true
+    tls: true
+    network: "tcp"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
@@ -656,6 +1156,20 @@ proxies:
       path: "/vws/"
       headers:
         Host: "bab-6.site"
+  - name: "configV2rayNG-605"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "b51ecb4d-40f5-4a01-9d6b-d7c5e3878150"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "sabrina.lezzatcore.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
   - name: "configV2rayNG-604"
     type: "vless"
     server: "199.232.78.159"
@@ -748,6 +1262,19 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "configV2rayNG-594"
+    type: "vless"
+    server: "141.193.213.10"
+    port: 443
+    uuid: "a321980f-54ce-432a-862a-76035b9d78ad"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "m.udemy.com.r3xxe.eu.cc"
+    ws-opts:
+      path: "/nl-tw"
+      headers:
+        Host: "m.udemy.com.r3xxe.eu.cc"
   - name: "configV2rayNG-593"
     type: "vless"
     server: "104.253.43.47"
@@ -761,6 +1288,19 @@ proxies:
     reality-opts:
       public-key: "ny33x7ljQJAzFN1sDxaTb90zlGIPABs3SskxeuXE4kI"
       short-id: "6443cb87ea"
+  - name: "configV2rayNG-592"
+    type: "vless"
+    server: "151.101.108.223"
+    port: 443
+    uuid: "a204c376-2883-4231-9b50-5b11a36f8752"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "default.ssl.fastly.net"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "Fijji.global.ssl.fastly.net"
   - name: "configV2rayNG-591"
     type: "vless"
     server: "54.184.242.113"
@@ -790,6 +1330,15 @@ proxies:
   - name: "configV2rayNG-589"
     type: "vless"
     server: "27.50.48.49"
+    port: 443
+    uuid: "Telegram-Parsashonam-12"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "p4r34m.hendevaneh.sbs"
+  - name: "configV2rayNG-588"
+    type: "vless"
+    server: "188.114.97.6"
     port: 443
     uuid: "Telegram-Parsashonam-12"
     udp: true
@@ -849,6 +1398,19 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "W9BjX6YmCIVsjhKMlz233Yoe0xcf0SVHfvPKqbf3vCg"
+  - name: "vpn_ioss-582"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "9bab5218-ce9f-4991-9887-8b3605a27d5e"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "graph.instagram.com.cyylr.eu.cc"
+    ws-opts:
+      path: "/sg-amz"
+      headers:
+        Host: "graph.instagram.com.cyylr.eu.cc"
   - name: "configV2rayNG-581"
     type: "vless"
     server: "191.101.238.125"
@@ -877,9 +1439,57 @@ proxies:
       path: "/?host:localhoat:443/"
       headers:
         Host: "uk.dlaparat.ir"
+  - name: "configV2rayNG-579"
+    type: "vless"
+    server: "199.232.78.159"
+    port: 443
+    uuid: "984fac58-576e-42bd-ab99-83db7074a729"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "default.ssl.fastly.net"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "bazaryabab.global.ssl.fastly.net"
+  - name: "configV2rayNG-578"
+    type: "vless"
+    server: "199.232.78.159"
+    port: 443
+    uuid: "984fac58-576e-42bd-ab99-83db7074a729"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "default.ssl.fastly.net"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "bazaryabab.global.ssl.fastly.net"
+  - name: "configV2rayNG-577"
+    type: "vless"
+    server: "141.193.213.10"
+    port: 443
+    uuid: "977b814d-d9e0-4889-bb71-98d6bfb8f462"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "partner.catchplay.com.r3xxe.eu.cc"
+    ws-opts:
+      path: "/sg-amz"
+      headers:
+        Host: "partner.catchplay.com.r3xxe.eu.cc"
   - name: "configV2rayNG-576"
     type: "vless"
     server: "speedtest.net"
+    port: 80
+    uuid: "96eec36e-2c44-5b09-898e-6f0f0526e57f"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "configV2rayNG-575"
+    type: "vless"
+    server: "fastly.com"
     port: 80
     uuid: "96eec36e-2c44-5b09-898e-6f0f0526e57f"
     udp: true
@@ -968,6 +1578,16 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
+  - name: "configV2rayNG-564"
+    type: "vless"
+    server: "cdn9-33.vk-cdnvideo.com"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn9-33.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
   - name: "configV2rayNG-560"
     type: "vless"
     server: "cdn7-39.vk-cdnvideo.com"
@@ -976,6 +1596,15 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
+  - name: "configV2rayNG-558"
+    type: "vless"
+    server: "cdn7-39.vk-cdnvideo.com"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    client-fingerprint: "safari"
   - name: "configV2rayNG-556"
     type: "vless"
     server: "cdn7-09.vk-cdnvideo.com"
@@ -984,6 +1613,15 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
+  - name: "configV2rayNG-555"
+    type: "vless"
+    server: "cdn7-09.vk-cdnvideo.com"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    client-fingerprint: "chrome"
   - name: "configV2rayNG-554"
     type: "vless"
     server: "85.208.85.193"
@@ -1023,6 +1661,16 @@ proxies:
     network: "tcp"
     servername: "cdn7-09.vk-cdnvideo.com"
     client-fingerprint: "chrome"
+  - name: "configV2rayNG-550"
+    type: "vless"
+    server: "77.74.123.168"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn3-87.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
   - name: "configV2rayNG-549"
     type: "vless"
     server: "77.74.123.167"
@@ -1032,6 +1680,16 @@ proxies:
     tls: true
     network: "tcp"
     servername: "cdn7-09.vk-cdnvideo.com"
+  - name: "configV2rayNG-548"
+    type: "vless"
+    server: "77.74.123.167"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-09.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
   - name: "configV2rayNG-547"
     type: "vless"
     server: "77.74.123.166"
@@ -1051,6 +1709,16 @@ proxies:
     tls: true
     network: "tcp"
     servername: "cdn7-39.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
+  - name: "configV2rayNG-545"
+    type: "vless"
+    server: "77.74.123.165"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-09.vk-cdnvideo.com"
     client-fingerprint: "chrome"
   - name: "configV2rayNG-544"
     type: "vless"
@@ -1140,6 +1808,16 @@ proxies:
     tls: true
     network: "tcp"
     servername: "cdn7-09.vk-cdnvideo.com"
+  - name: "configV2rayNG-533"
+    type: "vless"
+    server: "46.229.243.137"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-09.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
   - name: "configV2rayNG-532"
     type: "vless"
     server: "46.229.243.134"
@@ -1189,6 +1867,19 @@ proxies:
     network: "tcp"
     servername: "cdn7-09.vk-cdnvideo.com"
     client-fingerprint: "chrome"
+  - name: "vpn_ioss-527"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "8df10d83-3963-446d-a4e3-8bc043bda561"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "space.byu.id.cyylr.eu.cc"
+    ws-opts:
+      path: "/in-pdr"
+      headers:
+        Host: "space.byu.id.cyylr.eu.cc"
   - name: "vpn_ioss-526"
     type: "vless"
     server: "yesok42v2.ip4exordir.shop"
@@ -1385,6 +2076,14 @@ proxies:
       path: "/fp=randomized"
       headers:
         Host: "cnmfangbinxing.cnmfangbinxing-k.workers.dev"
+  - name: "configV2rayNG-489"
+    type: "vless"
+    server: "bm.xq-vpn.com"
+    port: 80
+    uuid: "85b62084-d81e-52cd-a016-944f261d34a0"
+    udp: true
+    tls: false
+    network: "xhttp"
   - name: "configV2rayNG-486"
     type: "vless"
     server: "46.101.196.101"
@@ -1499,6 +2198,34 @@ proxies:
       short-id: "6ba85179e30d4fc3"
     grpc-opts:
       grpc-service-name: "shakhle"
+  - name: "configV2rayNG-475"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "63ec2a82-e47c-4782-a89e-9aca2baf17ef"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "quiz.int.vidio.com.ex33r.eu.cc"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/id-pusat"
+      headers:
+        Host: "quiz.int.vidio.com.ex33r.eu.cc"
+  - name: "configV2rayNG-474"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "63ec2a82-e47c-4782-a89e-9aca2baf17ef"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "quiz.int.vidio.com.ex33r.eu.cc"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/id-pusat#TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=2048"
+      headers:
+        Host: "quiz.int.vidio.com.ex33r.eu.cc"
   - name: "configV2rayNG-473"
     type: "vless"
     server: "91.107.154.255"
@@ -1537,6 +2264,34 @@ proxies:
     client-fingerprint: "chrome"
     ws-opts:
       path: "/api/v1"
+  - name: "configV2rayNG-470"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "5e0212f0-297f-4f68-a256-013466bab0d2"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "t5.tzteam.online"
+    client-fingerprint: "firefox"
+    ws-opts:
+      path: "/?ed=2048"
+      headers:
+        Host: "t5.tzteam.online"
+  - name: "configV2rayNG-469"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "5e0212f0-297f-4f68-a256-013466bab0d2"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "t3.tzteam.online"
+    client-fingerprint: "firefox"
+    ws-opts:
+      path: "/?ed=2048"
+      headers:
+        Host: "t3.tzteam.online"
   - name: "configV2rayNG-468"
     type: "vless"
     server: "nid.pink-perfect.ru"
@@ -1634,6 +2389,58 @@ proxies:
     tls: true
     network: "tcp"
     servername: "cdg-1.fromblancwithlove.com"
+  - name: "configV2rayNG-459"
+    type: "vless"
+    server: "79.127.196.11"
+    port: 8443
+    uuid: "55f7d143-a594-4a91-b030-f227039f85ef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdg-1.fromblancwithlove.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+  - name: "vpn_ioss-458"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "559ab675-567f-4d61-a742-877bfd51d87c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "zaintest.vuclip.com.cyylr.eu.cc"
+    ws-opts:
+      path: "/in-do"
+      headers:
+        Host: "zaintest.vuclip.com.cyylr.eu.cc"
+  - name: "vpn_ioss-457"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "559ab675-567f-4d61-a742-877bfd51d87c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "zaintest.vuclip.com.cyylr.eu.cc"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/in-do"
+      headers:
+        Host: "zaintest.vuclip.com.cyylr.eu.cc"
+  - name: "configV2rayNG-456"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "50cbc8f3-08e1-4a82-bfd5-bc2587a392c7"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "dfsuporte.garena.com.ex33r.eu.cc"
+    ws-opts:
+      path: "/random"
+      headers:
+        Host: "dfsuporte.garena.com.ex33r.eu.cc"
   - name: "configV2rayNG-455"
     type: "vless"
     server: "185.171.202.76"
@@ -1734,6 +2541,19 @@ proxies:
       path: "/"
       headers:
         Host: "tt.andishehparenting.com"
+  - name: "vpn_ioss-446"
+    type: "vless"
+    server: "45.130.125.160"
+    port: 443
+    uuid: "47422044-85e3-426b-b6c4-3588cb24a3e5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "s.blibli.com.cyylr.eu.cc"
+    ws-opts:
+      path: "/ae-bo"
+      headers:
+        Host: "s.blibli.com.cyylr.eu.cc"
   - name: "configV2rayNG-445"
     type: "vless"
     server: "tbxjthftff-1952313922-direct.irgame.co"
@@ -1743,6 +2563,19 @@ proxies:
     tls: true
     network: "tcp"
     servername: "tbxjthftff-1952313922-direct.irgame.co"
+    flow: "xtls-rprx-vision"
+  - name: "configV2rayNG-444"
+    type: "vless"
+    server: "tbxjthftff-1952313922-direct.irgame.co"
+    port: 443
+    uuid: "46078730-11d9-5412-a175-cd8c9cc22f7f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "tbxjthftff-1952313922-direct.irgame.co"
+    alpn:
+      - "h2"
+      - "http/1.1"
     flow: "xtls-rprx-vision"
   - name: "configV2rayNG-443"
     type: "vless"
@@ -1758,6 +2591,49 @@ proxies:
     reality-opts:
       public-key: "upTVUrc_t7xF1ULni8pHRDhRES1sT4BDm1r8rugTzyQ"
       short-id: "ff815f58c7e77aa9"
+  - name: "configV2rayNG-442"
+    type: "vless"
+    server: "54.36.162.217"
+    port: 443
+    uuid: "44b3ee72-cffb-4d66-ab7c-3138b9bdeeef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "speedtest.net"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "upTVUrc_t7xF1ULni8pHRDhRES1sT4BDm1r8rugTzyQ"
+      short-id: "ff815f58c7e77aa9"
+  - name: "configV2rayNG-441"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "4311bd3f-4f66-4538-a624-221b87690b2c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "mjtbknetmkhremge.ordak.qzz.io"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/fl?ed=2560"
+      headers:
+        Host: "mjtbknetmkhremge.ordak.qzz.io"
+  - name: "vpn_ioss-440"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "429f43ca-087a-4fbc-9d88-9d9007bf30bc"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "unnes.ac.id.cyylr.eu.cc"
+    ws-opts:
+      path: "/my-wbv"
+      headers:
+        Host: "unnes.ac.id.cyylr.eu.cc"
   - name: "configV2rayNG-439"
     type: "vless"
     server: "104.18.155.229"
@@ -1812,6 +2688,24 @@ proxies:
     client-fingerprint: "chrome"
     alpn:
       - "h2"
+  - name: "vpn_ioss-433"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "3b01a777-55e7-49f6-8637-d94ee69607c6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "m.udemy.com.cyylr.eu.cc"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/id-tksi"
+      headers:
+        Host: "m.udemy.com.cyylr.eu.cc"
   - name: "configV2rayNG-432"
     type: "vless"
     server: "45.38.60.52"
@@ -1845,6 +2739,16 @@ proxies:
     udp: true
     tls: false
     network: "ws"
+  - name: "configV2rayNG-429"
+    type: "vless"
+    server: "128.204.223.94"
+    port: 9815
+    uuid: "37a0bd7c-8b9f-4693-8916-bd1e2da0a817"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
   - name: "configV2rayNG-428"
     type: "vless"
     server: "s2.dipvpn.ru"
@@ -1872,6 +2776,19 @@ proxies:
     reality-opts:
       public-key: "vZuBWF0YzlKI0fJWxU6hmOLHHQ5Qb1kf35HbZDcFCH4"
       short-id: "f2e1861359398ff2"
+  - name: "vpn_ioss-426"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "334e484f-7f7c-4895-a6e4-8951de2626f8"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "unnes.ac.id.cyylr.eu.cc"
+    ws-opts:
+      path: "/ae-bo"
+      headers:
+        Host: "unnes.ac.id.cyylr.eu.cc"
   - name: "configV2rayNG-425"
     type: "vless"
     server: "193.233.23.196"
@@ -1880,6 +2797,45 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "configV2rayNG-424"
+    type: "vless"
+    server: "45.130.125.194"
+    port: 8443
+    uuid: "2d11f9a7-5cb9-4a76-acbe-0064305b570a"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "vi.new-persian-song.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+  - name: "configV2rayNG-423"
+    type: "vless"
+    server: "45.130.125.96"
+    port: 443
+    uuid: "28607fa7-db30-47d6-942a-f5744e4be9ad"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "dfsuporte.garena.com.ex33r.eu.cc"
+    ws-opts:
+      path: "/id-pusat"
+      headers:
+        Host: "dfsuporte.garena.com.ex33r.eu.cc"
+  - name: "configV2rayNG-422"
+    type: "vless"
+    server: "45.130.125.96"
+    port: 443
+    uuid: "28607fa7-db30-47d6-942a-f5744e4be9ad"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "dfsuporte.garena.com.ex33r.eu.cc"
+    ws-opts:
+      path: "/id-pusat#TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=512"
+      headers:
+        Host: "dfsuporte.garena.com.ex33r.eu.cc"
   - name: "configV2rayNG-421"
     type: "vless"
     server: "31.56.28.52"
@@ -1927,6 +2883,19 @@ proxies:
     reality-opts:
       public-key: "EUK_ePvEKUGcezQYHqgJ5P462XxLPXPm9CZWGLaL33k"
       short-id: "3620820fe66d6731"
+  - name: "configV2rayNG-416"
+    type: "vless"
+    server: "greb.loralden.com"
+    port: 443
+    uuid: "2065a8c9-8b3d-4dba-b0ce-90d649aa3da7"
+    udp: true
+    tls: true
+    network: "tcp"
+    client-fingerprint: "qq"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "EUK_ePvEKUGcezQYHqgJ5P462XxLPXPm9CZWGLaL33k"
+      short-id: "3620820fe66d6731"
   - name: "vpn_ioss-415"
     type: "vless"
     server: "kz01-vlr01.tcp-reset-club.net"
@@ -1966,6 +2935,19 @@ proxies:
     reality-opts:
       public-key: "23cb4W9THzBKsrECsLh-A_FcKZfkAtUONoDze8-GnQE"
       short-id: "e90360ec7cc61b20"
+  - name: "vpn_ioss-412"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "0a4eabad-a6b8-4f4a-b610-4540b9c8f49a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ava.game.naver.com.cyylr.eu.cc"
+    ws-opts:
+      path: "/sg-orcl"
+      headers:
+        Host: "ava.game.naver.com.cyylr.eu.cc"
   - name: "configV2rayNG-411"
     type: "vless"
     server: "13.230.213.47"
@@ -2016,6 +2998,19 @@ proxies:
       path: "/sg-melbi"
       headers:
         Host: "support.zoom.us.ex33r.eu.cc"
+  - name: "configV2rayNG-407"
+    type: "vless"
+    server: "104.18.152.233"
+    port: 443
+    uuid: "08b006dc-17e4-411d-9528-4369d72ad646"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "support.zoom.us.ex33r.eu.cc"
+    ws-opts:
+      path: "/sg-melbi#TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=2560"
+      headers:
+        Host: "support.zoom.us.ex33r.eu.cc"
   - name: "configV2rayNG-406"
     type: "vless"
     server: "104.16.72.70"
@@ -2037,6 +3032,83 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "shadow_socks1-402"
+    type: "ss"
+    server: "102.165.23.4"
+    port: 47121
+    cipher: "aes-256-gcm"
+    password: "CTK8GXFQgKYQErrghPJfZ6tk"
+    udp: true
+  - name: "shadow_socks1-401"
+    type: "ss"
+    server: "45.62.233.134"
+    port: 153
+    cipher: "aes-128-gcm"
+    password: "f5487ee3-aef5-436f-adf9-673b1afe2ff7"
+    udp: true
+  - name: "shadow_socks1-400"
+    type: "ss"
+    server: "45.62.231.180"
+    port: 153
+    cipher: "aes-128-gcm"
+    password: "f5487ee3-aef5-436f-adf9-673b1afe2ff7"
+    udp: true
+  - name: "shadow_socks1-399"
+    type: "ss"
+    server: "45.62.246.171"
+    port: 153
+    cipher: "aes-128-gcm"
+    password: "f5487ee3-aef5-436f-adf9-673b1afe2ff7"
+    udp: true
+  - name: "shadow_socks1-398"
+    type: "ss"
+    server: "2.59.214.204"
+    port: 153
+    cipher: "aes-128-gcm"
+    password: "f5487ee3-aef5-436f-adf9-673b1afe2ff7"
+    udp: true
+  - name: "shadow_socks1-397"
+    type: "ss"
+    server: "193.38.51.192"
+    port: 153
+    cipher: "aes-128-gcm"
+    password: "f5487ee3-aef5-436f-adf9-673b1afe2ff7"
+    udp: true
+  - name: "shadow_socks1-396"
+    type: "ss"
+    server: "45.62.233.134"
+    port: 153
+    cipher: "aes-128-gcm"
+    password: "52f31fcb-f948-4f71-bca8-795fdcf7b754"
+    udp: true
+  - name: "shadow_socks1-395"
+    type: "ss"
+    server: "45.62.231.180"
+    port: 153
+    cipher: "aes-128-gcm"
+    password: "52f31fcb-f948-4f71-bca8-795fdcf7b754"
+    udp: true
+  - name: "shadow_socks1-394"
+    type: "ss"
+    server: "45.62.246.171"
+    port: 153
+    cipher: "aes-128-gcm"
+    password: "52f31fcb-f948-4f71-bca8-795fdcf7b754"
+    udp: true
+  - name: "shadow_socks1-393"
+    type: "ss"
+    server: "2.59.214.204"
+    port: 153
+    cipher: "aes-128-gcm"
+    password: "52f31fcb-f948-4f71-bca8-795fdcf7b754"
+    udp: true
+  - name: "shadow_socks1-392"
+    type: "ss"
+    server: "193.38.51.192"
+    port: 153
+    cipher: "aes-128-gcm"
+    password: "52f31fcb-f948-4f71-bca8-795fdcf7b754"
+    udp: true
   - name: "shadow_socks1-358"
     type: "ss"
     server: "194.110.115.93"
@@ -2737,6 +3809,1329 @@ proxies:
     cipher: "aes-256-gcm"
     password: "Pvvaw486867D2w4yctL2ULTQ"
     udp: true
+  - name: "shadow_socks1-258"
+    type: "ss"
+    server: "87.239.255.109"
+    port: 40282
+    cipher: "aes-256-gcm"
+    password: "Pvvaw486867D2w4yctL2ULTQ"
+    udp: true
+  - name: "shadow_socks1-257"
+    type: "ss"
+    server: "193.29.107.179"
+    port: 40282
+    cipher: "aes-256-gcm"
+    password: "Pvvaw486867D2w4yctL2ULTQ"
+    udp: true
+  - name: "shadow_socks1-256"
+    type: "ss"
+    server: "ak1072.www.getoutline.net"
+    port: 8091
+    cipher: "aes-256-gcm"
+    password: "PCnnH6SQSnfoS27"
+    udp: true
+  - name: "shadow_socks1-255"
+    type: "ss"
+    server: "38.107.226.146"
+    port: 8091
+    cipher: "aes-256-gcm"
+    password: "PCnnH6SQSnfoS27"
+    udp: true
+  - name: "shadow_socks1-254"
+    type: "ss"
+    server: "172.99.190.90"
+    port: 8090
+    cipher: "aes-256-gcm"
+    password: "PCnnH6SQSnfoS27"
+    udp: true
+  - name: "shadow_socks1-253"
+    type: "ss"
+    server: "172.99.190.35"
+    port: 8090
+    cipher: "aes-256-gcm"
+    password: "PCnnH6SQSnfoS27"
+    udp: true
+  - name: "shadow_socks1-252"
+    type: "ss"
+    server: "172.105.251.193"
+    port: 8091
+    cipher: "aes-256-gcm"
+    password: "PCnnH6SQSnfoS27"
+    udp: true
+  - name: "shadow_socks1-251"
+    type: "ss"
+    server: "172.105.251.193"
+    port: 8090
+    cipher: "aes-256-gcm"
+    password: "PCnnH6SQSnfoS27"
+    udp: true
+  - name: "shadow_socks1-250"
+    type: "ss"
+    server: "172.105.244.165"
+    port: 8090
+    cipher: "aes-256-gcm"
+    password: "PCnnH6SQSnfoS27"
+    udp: true
+  - name: "shadow_socks1-249"
+    type: "ss"
+    server: "45.153.229.146"
+    port: 3030
+    cipher: "aes-256-gcm"
+    password: "NBVHoaNelWReLHyu"
+    udp: true
+  - name: "shadow_socks1-248"
+    type: "ss"
+    server: "62.212.239.51"
+    port: 35294
+    cipher: "aes-256-gcm"
+    password: "J9Y2ncrdPEC38gwydNFFGBna"
+    udp: true
+  - name: "shadow_socks1-247"
+    type: "ss"
+    server: "38.91.100.134"
+    port: 8080
+    cipher: "aes-256-gcm"
+    password: "KixLvKzwjekG00rm"
+    udp: true
+  - name: "shadow_socks1-246"
+    type: "ss"
+    server: "172.105.244.165"
+    port: 8080
+    cipher: "aes-256-gcm"
+    password: "KixLvKzwjekG00rm"
+    udp: true
+  - name: "shadow_socks1-245"
+    type: "ss"
+    server: "172.105.180.227"
+    port: 8080
+    cipher: "aes-256-gcm"
+    password: "KixLvKzwjekG00rm"
+    udp: true
+  - name: "shadow_socks1-244"
+    type: "ss"
+    server: "54.38.72.170"
+    port: 7306
+    cipher: "aes-256-gcm"
+    password: "FoOiGlkAA9yPEGP"
+    udp: true
+  - name: "shadow_socks1-243"
+    type: "ss"
+    server: "38.114.114.69"
+    port: 7307
+    cipher: "aes-256-gcm"
+    password: "FoOiGlkAA9yPEGP"
+    udp: true
+  - name: "shadow_socks1-242"
+    type: "ss"
+    server: "188.165.32.235"
+    port: 7306
+    cipher: "aes-256-gcm"
+    password: "FoOiGlkAA9yPEGP"
+    udp: true
+  - name: "shadow_socks1-241"
+    type: "ss"
+    server: "172.105.244.165"
+    port: 7307
+    cipher: "aes-256-gcm"
+    password: "FoOiGlkAA9yPEGP"
+    udp: true
+  - name: "shadow_socks1-240"
+    type: "ss"
+    server: "172.105.244.165"
+    port: 7306
+    cipher: "aes-256-gcm"
+    password: "FoOiGlkAA9yPEGP"
+    udp: true
+  - name: "shadow_socks1-239"
+    type: "ss"
+    server: "167.88.63.82"
+    port: 7306
+    cipher: "aes-256-gcm"
+    password: "FoOiGlkAA9yPEGP"
+    udp: true
+  - name: "shadow_socks1-238"
+    type: "ss"
+    server: "139.162.139.42"
+    port: 7307
+    cipher: "aes-256-gcm"
+    password: "FoOiGlkAA9yPEGP"
+    udp: true
+  - name: "shadow_socks1-237"
+    type: "ss"
+    server: "79.110.53.205"
+    port: 44236
+    cipher: "aes-256-gcm"
+    password: "FWrXcxPZjJxAN89xLgqY3Acp"
+    udp: true
+  - name: "shadow_socks1-236"
+    type: "ss"
+    server: "138.199.16.135"
+    port: 44236
+    cipher: "aes-256-gcm"
+    password: "FWrXcxPZjJxAN89xLgqY3Acp"
+    udp: true
+  - name: "shadow_socks1-235"
+    type: "ss"
+    server: "193.29.107.197"
+    port: 38742
+    cipher: "aes-256-gcm"
+    password: "DKXfWwc4ebscpXTKpbt85rSH"
+    udp: true
+  - name: "shadow_socks1-234"
+    type: "ss"
+    server: "45.43.14.75"
+    port: 39772
+    cipher: "aes-256-gcm"
+    password: "CUndSZnYsPKcu6Kj8THVMBHD"
+    udp: true
+  - name: "shadow_socks1-233"
+    type: "ss"
+    server: "198.147.22.87"
+    port: 39772
+    cipher: "aes-256-gcm"
+    password: "CUndSZnYsPKcu6Kj8THVMBHD"
+    udp: true
+  - name: "shadow_socks1-232"
+    type: "ss"
+    server: "27.131.164.85"
+    port: 47121
+    cipher: "aes-256-gcm"
+    password: "CTK8GXFQgKYQErrghPJfZ6tk"
+    udp: true
+  - name: "shadow_socks1-231"
+    type: "ss"
+    server: "194.150.167.52"
+    port: 47121
+    cipher: "aes-256-gcm"
+    password: "CTK8GXFQgKYQErrghPJfZ6tk"
+    udp: true
+  - name: "shadow_socks1-230"
+    type: "ss"
+    server: "185.225.28.85"
+    port: 47121
+    cipher: "aes-256-gcm"
+    password: "CTK8GXFQgKYQErrghPJfZ6tk"
+    udp: true
+  - name: "shadow_socks1-229"
+    type: "ss"
+    server: "176.125.231.5"
+    port: 47121
+    cipher: "aes-256-gcm"
+    password: "CTK8GXFQgKYQErrghPJfZ6tk"
+    udp: true
+  - name: "shadow_socks1-228"
+    type: "ss"
+    server: "154.16.171.215"
+    port: 47121
+    cipher: "aes-256-gcm"
+    password: "CTK8GXFQgKYQErrghPJfZ6tk"
+    udp: true
+  - name: "shadow_socks1-227"
+    type: "ss"
+    server: "102.165.47.134"
+    port: 47121
+    cipher: "aes-256-gcm"
+    password: "CTK8GXFQgKYQErrghPJfZ6tk"
+    udp: true
+  - name: "shadow_socks1-226"
+    type: "ss"
+    server: "45.43.19.82"
+    port: 33148
+    cipher: "aes-256-gcm"
+    password: "CMduaFXddcQbwNAAs7xFDnc8"
+    udp: true
+  - name: "shadow_socks1-225"
+    type: "ss"
+    server: "199.58.187.67"
+    port: 33148
+    cipher: "aes-256-gcm"
+    password: "CMduaFXddcQbwNAAs7xFDnc8"
+    udp: true
+  - name: "shadow_socks1-224"
+    type: "ss"
+    server: "84.17.55.133"
+    port: 33992
+    cipher: "aes-256-gcm"
+    password: "8n6pwAcrrv2pj6tFY2p3TbQ6"
+    udp: true
+  - name: "shadow_socks1-223"
+    type: "ss"
+    server: "82.102.26.92"
+    port: 33992
+    cipher: "aes-256-gcm"
+    password: "8n6pwAcrrv2pj6tFY2p3TbQ6"
+    udp: true
+  - name: "shadow_socks1-222"
+    type: "ss"
+    server: "62.212.239.44"
+    port: 33992
+    cipher: "aes-256-gcm"
+    password: "8n6pwAcrrv2pj6tFY2p3TbQ6"
+    udp: true
+  - name: "shadow_socks1-221"
+    type: "ss"
+    server: "2.58.242.43"
+    port: 33992
+    cipher: "aes-256-gcm"
+    password: "8n6pwAcrrv2pj6tFY2p3TbQ6"
+    udp: true
+  - name: "shadow_socks1-220"
+    type: "ss"
+    server: "2.58.242.157"
+    port: 33992
+    cipher: "aes-256-gcm"
+    password: "8n6pwAcrrv2pj6tFY2p3TbQ6"
+    udp: true
+  - name: "shadow_socks1-219"
+    type: "ss"
+    server: "194.33.40.114"
+    port: 33992
+    cipher: "aes-256-gcm"
+    password: "8n6pwAcrrv2pj6tFY2p3TbQ6"
+    udp: true
+  - name: "shadow_socks1-218"
+    type: "ss"
+    server: "156.146.33.65"
+    port: 33992
+    cipher: "aes-256-gcm"
+    password: "8n6pwAcrrv2pj6tFY2p3TbQ6"
+    udp: true
+  - name: "shadow_socks1-217"
+    type: "ss"
+    server: "152.89.160.115"
+    port: 33992
+    cipher: "aes-256-gcm"
+    password: "8n6pwAcrrv2pj6tFY2p3TbQ6"
+    udp: true
+  - name: "shadow_socks1-216"
+    type: "ss"
+    server: "185.134.22.115"
+    port: 48938
+    cipher: "aes-256-gcm"
+    password: "4ejJ8n5ddLuYDUHGXJre2ufJ"
+    udp: true
+  - name: "shadow_socks1-215"
+    type: "ss"
+    server: "156.146.33.83"
+    port: 48938
+    cipher: "aes-256-gcm"
+    password: "4ejJ8n5ddLuYDUHGXJre2ufJ"
+    udp: true
+  - name: "shadow_socks1-214"
+    type: "ss"
+    server: "138.199.19.167"
+    port: 48938
+    cipher: "aes-256-gcm"
+    password: "4ejJ8n5ddLuYDUHGXJre2ufJ"
+    udp: true
+  - name: "configV2rayNG-213"
+    type: "ss"
+    server: "de5.taskflowhub.org"
+    port: 2083
+    cipher: "aes-256-gcm"
+    password: "7NuB0Y5m3aNzkKMKlFoMwkiajsu6F36c9ok4VKEZnB4="
+    udp: true
+  - name: "configV2rayNG-212"
+    type: "ss"
+    server: "162.19.254.232"
+    port: 2083
+    cipher: "aes-256-gcm"
+    password: "7NuB0Y5m3aNzkKMKlFoMwkiajsu6F36c9ok4VKEZnB4="
+    udp: true
+  - name: "shadow_socks1-211"
+    type: "ss"
+    server: "185.4.65.6"
+    port: 21247
+    cipher: "aes-256-cfb"
+    password: "vDS9G2p"
+    udp: true
+  - name: "shadow_socks1-210"
+    type: "ss"
+    server: "45.144.176.135"
+    port: 3001
+    cipher: "aes-256-cfb"
+    password: "qazplmn1236547dr42q"
+    udp: true
+  - name: "shadow_socks1-209"
+    type: "ss"
+    server: "95.174.23.218"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-208"
+    type: "ss"
+    server: "94.20.154.26"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-207"
+    type: "ss"
+    server: "92.38.163.53"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-206"
+    type: "ss"
+    server: "83.217.9.76"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-205"
+    type: "ss"
+    server: "54.37.139.110"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-204"
+    type: "ss"
+    server: "54.37.136.249"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-203"
+    type: "ss"
+    server: "46.183.185.15"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-202"
+    type: "ss"
+    server: "43.254.132.220"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-201"
+    type: "ss"
+    server: "37.252.5.234"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-200"
+    type: "ss"
+    server: "37.235.52.112"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-199"
+    type: "ss"
+    server: "213.174.159.247"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-198"
+    type: "ss"
+    server: "213.174.158.181"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-197"
+    type: "ss"
+    server: "213.169.137.221"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-196"
+    type: "ss"
+    server: "213.169.137.214"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-195"
+    type: "ss"
+    server: "213.136.80.36"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-194"
+    type: "ss"
+    server: "212.237.210.158"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-193"
+    type: "ss"
+    server: "202.59.10.102"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-192"
+    type: "ss"
+    server: "194.71.227.178"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-191"
+    type: "ss"
+    server: "194.71.130.160"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-190"
+    type: "ss"
+    server: "194.68.32.29"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-189"
+    type: "ss"
+    server: "194.68.225.104"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-188"
+    type: "ss"
+    server: "194.233.65.67"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-187"
+    type: "ss"
+    server: "193.235.207.28"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-186"
+    type: "ss"
+    server: "192.71.244.49"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-185"
+    type: "ss"
+    server: "192.71.227.17"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-184"
+    type: "ss"
+    server: "192.36.27.79"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-183"
+    type: "ss"
+    server: "192.121.87.89"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-182"
+    type: "ss"
+    server: "188.123.123.133"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-181"
+    type: "ss"
+    server: "176.10.80.6"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-180"
+    type: "ss"
+    server: "151.236.30.184"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-179"
+    type: "ss"
+    server: "131.255.4.219"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-178"
+    type: "ss"
+    server: "103.238.213.96"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-177"
+    type: "ss"
+    server: "37.235.55.84"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-175"
+    type: "ss"
+    server: "195.211.41.10"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-174"
+    type: "ss"
+    server: "194.68.44.206"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-173"
+    type: "ss"
+    server: "185.89.238.36"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-172"
+    type: "ss"
+    server: "151.236.23.105"
+    port: 989
+    cipher: "aes-256-cfb"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "shadow_socks1-169"
+    type: "ss"
+    server: "217.30.10.64"
+    port: 9015
+    cipher: "aes-256-cfb"
+    password: "ZpNDDKRu9MagNvaf"
+    udp: true
+  - name: "shadow_socks1-168"
+    type: "ss"
+    server: "5.183.179.146"
+    port: 9025
+    cipher: "aes-256-cfb"
+    password: "XPtzA9sCug3SPR4c"
+    udp: true
+  - name: "shadow_socks1-167"
+    type: "ss"
+    server: "213.183.41.38"
+    port: 9027
+    cipher: "aes-256-cfb"
+    password: "EXN3S3eQpjE7EJu8"
+    udp: true
+  - name: "shadow_socks1-166"
+    type: "ss"
+    server: "94.20.154.38"
+    port: 50006
+    cipher: "aes-256-cfb"
+    password: "9344665077"
+    udp: true
+  - name: "shadow_socks1-165"
+    type: "ss"
+    server: "92.223.105.40"
+    port: 50006
+    cipher: "aes-256-cfb"
+    password: "9344665077"
+    udp: true
+  - name: "shadow_socks1-164"
+    type: "ss"
+    server: "3.249.52.148"
+    port: 50003
+    cipher: "aes-256-cfb"
+    password: "8460400130"
+    udp: true
+  - name: "shadow_socks1-163"
+    type: "ss"
+    server: "185.219.134.182"
+    port: 50003
+    cipher: "aes-256-cfb"
+    password: "8460400130"
+    udp: true
+  - name: "shadow_socks1-162"
+    type: "ss"
+    server: "185.219.134.52"
+    port: 50003
+    cipher: "aes-256-cfb"
+    password: "8460400130"
+    udp: true
+  - name: "shadow_socks1-161"
+    type: "ss"
+    server: "141.98.119.180"
+    port: 50003
+    cipher: "aes-256-cfb"
+    password: "8460400130"
+    udp: true
+  - name: "shadow_socks1-160"
+    type: "ss"
+    server: "141.98.119.156"
+    port: 50003
+    cipher: "aes-256-cfb"
+    password: "8460400130"
+    udp: true
+  - name: "shadow_socks1-159"
+    type: "ss"
+    server: "92.38.171.101"
+    port: 50003
+    cipher: "aes-256-cfb"
+    password: "8460400130"
+    udp: true
+  - name: "shadow_socks1-158"
+    type: "ss"
+    server: "92.38.139.95"
+    port: 50003
+    cipher: "aes-256-cfb"
+    password: "8460400130"
+    udp: true
+  - name: "shadow_socks1-157"
+    type: "ss"
+    server: "51.195.217.21"
+    port: 50003
+    cipher: "aes-256-cfb"
+    password: "8460400130"
+    udp: true
+  - name: "shadow_socks1-156"
+    type: "ss"
+    server: "5.183.100.87"
+    port: 50003
+    cipher: "aes-256-cfb"
+    password: "8460400130"
+    udp: true
+  - name: "shadow_socks1-155"
+    type: "ss"
+    server: "83.229.73.120"
+    port: 50003
+    cipher: "aes-256-cfb"
+    password: "8460400130"
+    udp: true
+  - name: "shadow_socks1-151"
+    type: "ss"
+    server: "92.38.139.95"
+    port: 50005
+    cipher: "aes-256-cfb"
+    password: "7620447880"
+    udp: true
+  - name: "shadow_socks1-150"
+    type: "ss"
+    server: "95.216.5.254"
+    port: 50007
+    cipher: "aes-256-cfb"
+    password: "7122910143"
+    udp: true
+  - name: "shadow_socks1-149"
+    type: "ss"
+    server: "92.223.93.140"
+    port: 50007
+    cipher: "aes-256-cfb"
+    password: "7122910143"
+    udp: true
+  - name: "shadow_socks1-148"
+    type: "ss"
+    server: "92.223.79.76"
+    port: 50007
+    cipher: "aes-256-cfb"
+    password: "7122910143"
+    udp: true
+  - name: "shadow_socks1-147"
+    type: "ss"
+    server: "92.119.179.62"
+    port: 50007
+    cipher: "aes-256-cfb"
+    password: "7122910143"
+    udp: true
+  - name: "shadow_socks1-146"
+    type: "ss"
+    server: "46.165.254.155"
+    port: 50007
+    cipher: "aes-256-cfb"
+    password: "7122910143"
+    udp: true
+  - name: "shadow_socks1-145"
+    type: "ss"
+    server: "3.249.52.148"
+    port: 50007
+    cipher: "aes-256-cfb"
+    password: "7122910143"
+    udp: true
+  - name: "shadow_socks1-144"
+    type: "ss"
+    server: "193.108.118.154"
+    port: 50007
+    cipher: "aes-256-cfb"
+    password: "7122910143"
+    udp: true
+  - name: "shadow_socks1-143"
+    type: "ss"
+    server: "185.219.134.52"
+    port: 50007
+    cipher: "aes-256-cfb"
+    password: "7122910143"
+    udp: true
+  - name: "shadow_socks1-142"
+    type: "ss"
+    server: "135.125.236.229"
+    port: 50007
+    cipher: "aes-256-cfb"
+    password: "7122910143"
+    udp: true
+  - name: "shadow_socks1-141"
+    type: "ss"
+    server: "92.38.171.103"
+    port: 50004
+    cipher: "aes-256-cfb"
+    password: "4415934295"
+    udp: true
+  - name: "shadow_socks1-140"
+    type: "ss"
+    server: "82.118.21.21"
+    port: 50004
+    cipher: "aes-256-cfb"
+    password: "4415934295"
+    udp: true
+  - name: "shadow_socks1-139"
+    type: "ss"
+    server: "62.210.213.6"
+    port: 50004
+    cipher: "aes-256-cfb"
+    password: "4415934295"
+    udp: true
+  - name: "shadow_socks1-138"
+    type: "ss"
+    server: "51.79.166.171"
+    port: 50004
+    cipher: "aes-256-cfb"
+    password: "4415934295"
+    udp: true
+  - name: "shadow_socks1-137"
+    type: "ss"
+    server: "51.79.157.58"
+    port: 50004
+    cipher: "aes-256-cfb"
+    password: "4415934295"
+    udp: true
+  - name: "shadow_socks1-136"
+    type: "ss"
+    server: "37.120.213.230"
+    port: 50004
+    cipher: "aes-256-cfb"
+    password: "4415934295"
+    udp: true
+  - name: "shadow_socks1-135"
+    type: "ss"
+    server: "31.133.100.49"
+    port: 50004
+    cipher: "aes-256-cfb"
+    password: "4415934295"
+    udp: true
+  - name: "shadow_socks1-134"
+    type: "ss"
+    server: "94.20.154.38"
+    port: 50000
+    cipher: "aes-256-cfb"
+    password: "3135771619"
+    udp: true
+  - name: "shadow_socks1-133"
+    type: "ss"
+    server: "45.89.229.223"
+    port: 153
+    cipher: "aes-128-gcm"
+    password: "f5487ee3-aef5-436f-adf9-673b1afe2ff7"
+    udp: true
+  - name: "shadow_socks1-132"
+    type: "ss"
+    server: "20.211.112.115"
+    port: 2986
+    cipher: "chacha20-ietf"
+    password: "@open_vpns"
+    udp: true
+  - name: "shadow_socks1-131"
+    type: "ss"
+    server: "vpnkodlary1.3utilities.com"
+    port: 2080
+    cipher: "chacha20-ietf"
+    password: "vpnlaw"
+    udp: true
+  - name: "shadow_socks1-130"
+    type: "ss"
+    server: "20.113.70.231"
+    port: 3030
+    cipher: "chacha20-ietf"
+    password: "3030"
+    udp: true
+  - name: "shadow_socks1-129"
+    type: "ss"
+    server: "20.120.24.20"
+    port: 9806
+    cipher: "chacha20-ietf"
+    password: "9806"
+    udp: true
+  - name: "shadow_socks1-128"
+    type: "ss"
+    server: "20.106.241.226"
+    port: 9806
+    cipher: "chacha20-ietf"
+    password: "9806"
+    udp: true
+  - name: "shadow_socks1-127"
+    type: "ss"
+    server: "20.113.28.20"
+    port: 5337
+    cipher: "chacha20-ietf"
+    password: "5268781266f48189"
+    udp: true
+  - name: "shadow_socks1-126"
+    type: "ss"
+    server: "20.120.24.20"
+    port: 5008
+    cipher: "chacha20-ietf"
+    password: "5008"
+    udp: true
+  - name: "shadow_socks1-125"
+    type: "ss"
+    server: "20.106.241.226"
+    port: 5008
+    cipher: "chacha20-ietf"
+    password: "5008"
+    udp: true
+  - name: "shadow_socks1-124"
+    type: "ss"
+    server: "212.199.61.55"
+    port: 8389
+    cipher: "chacha20-ietf-poly1305"
+    password: "scDj68fv6xkMg2np9RgW"
+    udp: true
+  - name: "shadow_socks1-123"
+    type: "ss"
+    server: "170.130.15.34"
+    port: 8389
+    cipher: "chacha20-ietf-poly1305"
+    password: "q8gsJVLZ5eYXU3uhmnbH"
+    udp: true
+  - name: "shadow_socks1-122"
+    type: "ss"
+    server: "37.48.81.6"
+    port: 22
+    cipher: "chacha20-ietf-poly1305"
+    password: "privatevpndotcom"
+    udp: true
+  - name: "configV2rayNG-121"
+    type: "ss"
+    server: "82.38.31.35"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "configV2rayNG-120"
+    type: "ss"
+    server: "82.38.31.155"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "configV2rayNG-119"
+    type: "ss"
+    server: "82.38.31.214"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "vpn_ioss-118"
+    type: "ss"
+    server: "82.38.31.210"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "vpn_ioss-116"
+    type: "ss"
+    server: "82.38.31.205"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "vpn_ioss-114"
+    type: "ss"
+    server: "82.38.31.199"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "configV2rayNG-113"
+    type: "ss"
+    server: "82.38.31.190"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "vpn_ioss-112"
+    type: "ss"
+    server: "82.38.31.189"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "configV2rayNG-110"
+    type: "ss"
+    server: "82.38.31.184"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "shadow_socks1-109"
+    type: "ss"
+    server: "178.239.173.23"
+    port: 18760
+    cipher: "chacha20-ietf-poly1305"
+    password: "hg49$WH8943g3"
+    udp: true
+  - name: "shadow_socks1-108"
+    type: "ss"
+    server: "84.17.38.144"
+    port: 8389
+    cipher: "chacha20-ietf-poly1305"
+    password: "gTYdduTTEBBdVZ4LcBnT"
+    udp: true
+  - name: "shadow_socks1-107"
+    type: "ss"
+    server: "46.102.153.106"
+    port: 8389
+    cipher: "chacha20-ietf-poly1305"
+    password: "dsHq7JmRFhSkvxzCuMFy"
+    udp: true
+  - name: "shadow_socks1-106"
+    type: "ss"
+    server: "TR.PedaretVPN.XyZ"
+    port: 26146
+    cipher: "chacha20-ietf-poly1305"
+    password: "bu4ECLvSfyei"
+    udp: true
+  - name: "configV2rayNG-104"
+    type: "ss"
+    server: "62.133.63.169"
+    port: 37096
+    cipher: "chacha20-ietf-poly1305"
+    password: "Y5EJZojVMENvkDVFYliEqE"
+    udp: true
+  - name: "shadow_socks1-103"
+    type: "ss"
+    server: "70.39.71.2"
+    port: 8389
+    cipher: "chacha20-ietf-poly1305"
+    password: "XkH8z99cQguQ8ywK5jhV"
+    udp: true
+  - name: "shadow_socks1-102"
+    type: "ss"
+    server: "102.165.20.38"
+    port: 8389
+    cipher: "chacha20-ietf-poly1305"
+    password: "VLGVpK9npKaFqBLHcnu9"
+    udp: true
+  - name: "shadow_socks1-101"
+    type: "ss"
+    server: "138.197.166.205"
+    port: 811
+    cipher: "chacha20-ietf-poly1305"
+    password: "Ultr@r00t_2017"
+    udp: true
+  - name: "shadow_socks1-100"
+    type: "ss"
+    server: "194.62.42.21"
+    port: 4040
+    cipher: "chacha20-ietf-poly1305"
+    password: "S6DIaXMG29pkVain"
+    udp: true
+  - name: "shadow_socks1-99"
+    type: "ss"
+    server: "104.223.91.146"
+    port: 8389
+    cipher: "chacha20-ietf-poly1305"
+    password: "QKyLzp5JUG6XEGy2wbEE"
+    udp: true
+  - name: "shadow_socks1-98"
+    type: "ss"
+    server: "45.152.182.82"
+    port: 8389
+    cipher: "chacha20-ietf-poly1305"
+    password: "NK4wZejCzDfPdWXTK4FW"
+    udp: true
+  - name: "shadow_socks1-97"
+    type: "ss"
+    server: "37.19.218.197"
+    port: 8389
+    cipher: "chacha20-ietf-poly1305"
+    password: "Mx6DztQqZb7j34FdWjER"
+    udp: true
+  - name: "shadow_socks1-96"
+    type: "ss"
+    server: "167.86.95.192"
+    port: 8560
+    cipher: "chacha20-ietf-poly1305"
+    password: "IaU5uvaRZhfz"
+    udp: true
+  - name: "shadow_socks1-95"
+    type: "ss"
+    server: "TR2.PedaretVPN.XyZ"
+    port: 15303
+    cipher: "chacha20-ietf-poly1305"
+    password: "HZb52eFfHGeb"
+    udp: true
+  - name: "shadow_socks1-94"
+    type: "ss"
+    server: "95.85.90.181"
+    port: 804
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-93"
+    type: "ss"
+    server: "93.186.201.158"
+    port: 800
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-92"
+    type: "ss"
+    server: "93.186.201.158"
+    port: 809
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-91"
+    type: "ss"
+    server: "92.38.139.136"
+    port: 812
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-90"
+    type: "ss"
+    server: "92.223.59.188"
+    port: 812
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-89"
+    type: "ss"
+    server: "51.159.30.61"
+    port: 812
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-88"
+    type: "ss"
+    server: "35.180.88.172"
+    port: 812
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-87"
+    type: "ss"
+    server: "195.12.49.82"
+    port: 801
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-86"
+    type: "ss"
+    server: "185.104.184.78"
+    port: 812
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-85"
+    type: "ss"
+    server: "185.17.113.234"
+    port: 812
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-84"
+    type: "ss"
+    server: "163.172.110.54"
+    port: 812
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-83"
+    type: "ss"
+    server: "95.85.90.181"
+    port: 810
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-81"
+    type: "ss"
+    server: "95.85.90.181"
+    port: 803
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-80"
+    type: "ss"
+    server: "95.141.37.111"
+    port: 812
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-79"
+    type: "ss"
+    server: "93.186.201.124"
+    port: 811
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-78"
+    type: "ss"
+    server: "93.186.201.124"
+    port: 810
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-77"
+    type: "ss"
+    server: "89.31.125.101"
+    port: 812
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-76"
+    type: "ss"
+    server: "81.90.189.57"
+    port: 810
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-75"
+    type: "ss"
+    server: "78.129.253.9"
+    port: 812
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-74"
+    type: "ss"
+    server: "78.129.253.9"
+    port: 809
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-73"
+    type: "ss"
+    server: "78.129.253.9"
+    port: 808
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-72"
+    type: "ss"
+    server: "72.140.224.197"
+    port: 812
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-71"
+    type: "ss"
+    server: "72.140.224.197"
+    port: 808
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-70"
+    type: "ss"
+    server: "72.140.224.197"
+    port: 802
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-69"
+    type: "ss"
+    server: "72.140.224.197"
+    port: 801
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-68"
+    type: "ss"
+    server: "51.161.118.38"
+    port: 808
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-67"
+    type: "ss"
+    server: "51.161.118.38"
+    port: 807
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-66"
+    type: "ss"
+    server: "51.161.118.38"
+    port: 805
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-65"
+    type: "ss"
+    server: "45.144.112.162"
+    port: 812
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-64"
+    type: "ss"
+    server: "217.138.193.6"
+    port: 812
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-63"
+    type: "ss"
+    server: "217.138.193.6"
+    port: 808
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-62"
+    type: "ss"
+    server: "196.247.59.156"
+    port: 804
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-61"
+    type: "ss"
+    server: "196.247.59.154"
+    port: 805
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-60"
+    type: "ss"
+    server: "196.247.59.154"
+    port: 803
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
+  - name: "shadow_socks1-58"
+    type: "ss"
+    server: "193.9.114.34"
+    port: 809
+    cipher: "chacha20-ietf-poly1305"
+    password: "G!yBwPWH3Vao"
+    udp: true
   - name: "configV2rayNG-663"
     type: "vmess"
     server: "de5.taskflowhub.org"
@@ -2852,6 +5247,56 @@ proxies:
     servername: "www.calmloud.com"
     ws-opts:
       path: "/assignment"
+  - name: "vpn_ioss-384"
+    type: "trojan"
+    server: "188.114.98.0"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.creationlong.org"
+  - name: "configV2rayNG-383"
+    type: "trojan"
+    server: "188.114.97.6"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+  - name: "configV2rayNG-382"
+    type: "trojan"
+    server: "188.114.97.6"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "configV2rayNG-380"
+    type: "trojan"
+    server: "188.114.97.6"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.creationlong.org"
   - name: "configV2rayNG-379"
     type: "trojan"
     server: "185.18.250.252"
@@ -2865,6 +5310,30 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmlunch.com"
+  - name: "configV2rayNG-378"
+    type: "trojan"
+    server: "185.18.250.252"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.multiplydose.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.multiplydose.com"
+  - name: "configV2rayNG-377"
+    type: "trojan"
+    server: "185.18.250.252"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.multiplydose.com"
+    ws-opts:
+      path: "/assignment"
   - name: "vpn_ioss-375"
     type: "trojan"
     server: "172.67.180.92"
@@ -2891,6 +5360,19 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.gossipglove.com"
+  - name: "vpn_ioss-373"
+    type: "trojan"
+    server: "172.64.152.23"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
   - name: "vpn_ioss-372"
     type: "trojan"
     server: "104.21.40.34"
@@ -2941,6 +5423,17 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.ignitelimit.com"
+  - name: "configV2rayNG-368"
+    type: "trojan"
+    server: "188.114.97.6"
+    port: 443
+    password: "YZSfMMqKIC"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "dd.aananas.ir."
+    ws-opts:
+      path: "/?ed=2048"
   - name: "configV2rayNG-367"
     type: "trojan"
     server: "p1.zerolost.shop"
@@ -2981,6 +5474,19 @@ proxies:
     tls: true
     network: "tcp"
     servername: "store.steampowered.com"
+  - name: "configV2rayNG-363"
+    type: "trojan"
+    server: "185.18.250.252"
+    port: 443
+    password: "74480619-b6a8-4ab8-94e1-1132fc18b2fa"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "unnes.ac.id.r3xxe.eu.cc"
+    ws-opts:
+      path: "/au-mt"
+      headers:
+        Host: "unnes.ac.id.r3xxe.eu.cc"
   - name: "configV2rayNG-362"
     type: "trojan"
     server: "104.16.72.70"
@@ -3007,6 +5513,19 @@ proxies:
       path: "/us-gllc"
       headers:
         Host: "unnes.ac.id.r3xxe.eu.cc"
+  - name: "configV2rayNG-360"
+    type: "trojan"
+    server: "104.16.72.70"
+    port: 443
+    password: "45c47cfa-67da-47e0-b20b-5efa674e6a9b"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "unnes.ac.id.r3xxe.eu.cc"
+    ws-opts:
+      path: "/us-gllc"
+      headers:
+        Host: "unnes.ac.id.r3xxe.eu.cc"
   - name: "vpn_ioss-359"
     type: "trojan"
     server: "208.103.161.170"
@@ -3023,17 +5542,21 @@ proxies:
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
+    icon: "https://www.svgrepo.com/show/412721/choose.svg"
     proxies:
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
+      - "توزیع بار چرخشی ⚖️"
       - "قطع اینترنت ⛔"
+      - "بدون فیلترشکن 🛡️"
   - name: "دستی 🤏🏻"
     type: "select"
+    icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
       - "configV2rayNG-658"
       - "configV2rayNG-657"
       - "configV2rayNG-656"
+      - "configV2rayNG-655"
       - "configV2rayNG-654"
       - "configV2rayNG-653"
       - "configV2rayNG-652"
@@ -3041,7 +5564,10 @@ proxy-groups:
       - "configV2rayNG-650"
       - "configV2rayNG-649"
       - "configV2rayNG-648"
+      - "configV2rayNG-647"
       - "configV2rayNG-646"
+      - "configV2rayNG-645"
+      - "configV2rayNG-644"
       - "configV2rayNG-643"
       - "configV2rayNG-642"
       - "configV2rayNG-641"
@@ -3061,20 +5587,25 @@ proxy-groups:
       - "configV2rayNG-626"
       - "configV2rayNG-625"
       - "configV2rayNG-624"
+      - "configV2rayNG-623"
       - "configV2rayNG-622"
+      - "vpn_ioss-621"
       - "vpn_ioss-620"
       - "vpn_ioss-619"
+      - "vpn_ioss-618"
       - "Freedomnetir-617"
       - "configV2rayNG-616"
       - "configV2rayNG-615"
       - "configV2rayNG-614"
       - "configV2rayNG-613"
+      - "configV2rayNG-612"
       - "configV2rayNG-611"
       - "configV2rayNG-610"
       - "vpn_ioss-609"
       - "configV2rayNG-608"
       - "Freedomnetir-607"
       - "configV2rayNG-606"
+      - "configV2rayNG-605"
       - "configV2rayNG-604"
       - "vpn_ioss-603"
       - "configV2rayNG-602"
@@ -3083,18 +5614,26 @@ proxy-groups:
       - "vpn_ioss-599"
       - "configV2rayNG-598"
       - "configV2rayNG-597"
+      - "configV2rayNG-594"
       - "configV2rayNG-593"
+      - "configV2rayNG-592"
       - "configV2rayNG-591"
       - "configV2rayNG-590"
       - "configV2rayNG-589"
+      - "configV2rayNG-588"
       - "configV2rayNG-587"
       - "configV2rayNG-586"
       - "configV2rayNG-585"
       - "configV2rayNG-584"
       - "configV2rayNG-583"
+      - "vpn_ioss-582"
       - "configV2rayNG-581"
       - "vpn_ioss-580"
+      - "configV2rayNG-579"
+      - "configV2rayNG-578"
+      - "configV2rayNG-577"
       - "configV2rayNG-576"
+      - "configV2rayNG-575"
       - "configV2rayNG-574"
       - "configV2rayNG-573"
       - "configV2rayNG-572"
@@ -3104,15 +5643,21 @@ proxy-groups:
       - "configV2rayNG-567"
       - "configV2rayNG-566"
       - "configV2rayNG-565"
+      - "configV2rayNG-564"
       - "configV2rayNG-560"
+      - "configV2rayNG-558"
       - "configV2rayNG-556"
+      - "configV2rayNG-555"
       - "configV2rayNG-554"
       - "configV2rayNG-553"
       - "configV2rayNG-552"
       - "configV2rayNG-551"
+      - "configV2rayNG-550"
       - "configV2rayNG-549"
+      - "configV2rayNG-548"
       - "configV2rayNG-547"
       - "configV2rayNG-546"
+      - "configV2rayNG-545"
       - "configV2rayNG-544"
       - "configV2rayNG-543"
       - "configV2rayNG-542"
@@ -3122,11 +5667,13 @@ proxy-groups:
       - "configV2rayNG-537"
       - "configV2rayNG-536"
       - "configV2rayNG-534"
+      - "configV2rayNG-533"
       - "configV2rayNG-532"
       - "configV2rayNG-531"
       - "configV2rayNG-530"
       - "configV2rayNG-529"
       - "configV2rayNG-528"
+      - "vpn_ioss-527"
       - "vpn_ioss-526"
       - "configV2rayNG-525"
       - "configV2rayNG-524"
@@ -3151,6 +5698,7 @@ proxy-groups:
       - "configV2rayNG-492"
       - "configV2rayNG-491"
       - "configV2rayNG-490"
+      - "configV2rayNG-489"
       - "configV2rayNG-486"
       - "configV2rayNG-485"
       - "configV2rayNG-484"
@@ -3160,9 +5708,13 @@ proxy-groups:
       - "configV2rayNG-479"
       - "configV2rayNG-478"
       - "configV2rayNG-477"
+      - "configV2rayNG-475"
+      - "configV2rayNG-474"
       - "configV2rayNG-473"
       - "configV2rayNG-472"
       - "configV2rayNG-471"
+      - "configV2rayNG-470"
+      - "configV2rayNG-469"
       - "configV2rayNG-468"
       - "configV2rayNG-467"
       - "configV2rayNG-466"
@@ -3172,6 +5724,10 @@ proxy-groups:
       - "configV2rayNG-462"
       - "configV2rayNG-461"
       - "configV2rayNG-460"
+      - "configV2rayNG-459"
+      - "vpn_ioss-458"
+      - "vpn_ioss-457"
+      - "configV2rayNG-456"
       - "configV2rayNG-455"
       - "vpn_ioss-454"
       - "vpn_ioss-453"
@@ -3180,32 +5736,57 @@ proxy-groups:
       - "configV2rayNG-450"
       - "vpn_ioss-449"
       - "vpn_ioss-447"
+      - "vpn_ioss-446"
       - "configV2rayNG-445"
+      - "configV2rayNG-444"
       - "configV2rayNG-443"
+      - "configV2rayNG-442"
+      - "configV2rayNG-441"
+      - "vpn_ioss-440"
       - "configV2rayNG-439"
       - "configV2rayNG-438"
       - "configV2rayNG-436"
       - "configV2rayNG-435"
       - "configV2rayNG-434"
+      - "vpn_ioss-433"
       - "configV2rayNG-432"
       - "vpn_ioss-431"
       - "configV2rayNG-430"
+      - "configV2rayNG-429"
       - "configV2rayNG-428"
       - "configV2rayNG-427"
+      - "vpn_ioss-426"
       - "configV2rayNG-425"
+      - "configV2rayNG-424"
+      - "configV2rayNG-423"
+      - "configV2rayNG-422"
       - "configV2rayNG-421"
       - "configV2rayNG-419"
       - "configV2rayNG-418"
       - "configV2rayNG-417"
+      - "configV2rayNG-416"
       - "vpn_ioss-415"
       - "configV2rayNG-414"
       - "configV2rayNG-413"
+      - "vpn_ioss-412"
       - "configV2rayNG-411"
       - "configV2rayNG-410"
       - "configV2rayNG-409"
       - "configV2rayNG-408"
+      - "configV2rayNG-407"
       - "configV2rayNG-406"
       - "configV2rayNG-405"
+      - "shadow_socks1-402"
+      - "shadow_socks1-401"
+      - "shadow_socks1-400"
+      - "shadow_socks1-399"
+      - "shadow_socks1-398"
+      - "shadow_socks1-397"
+      - "shadow_socks1-396"
+      - "shadow_socks1-395"
+      - "shadow_socks1-394"
+      - "shadow_socks1-393"
+      - "shadow_socks1-392"
       - "shadow_socks1-358"
       - "shadow_socks1-357"
       - "shadow_socks1-356"
@@ -3306,6 +5887,195 @@ proxy-groups:
       - "shadow_socks1-261"
       - "shadow_socks1-260"
       - "shadow_socks1-259"
+      - "shadow_socks1-258"
+      - "shadow_socks1-257"
+      - "shadow_socks1-256"
+      - "shadow_socks1-255"
+      - "shadow_socks1-254"
+      - "shadow_socks1-253"
+      - "shadow_socks1-252"
+      - "shadow_socks1-251"
+      - "shadow_socks1-250"
+      - "shadow_socks1-249"
+      - "shadow_socks1-248"
+      - "shadow_socks1-247"
+      - "shadow_socks1-246"
+      - "shadow_socks1-245"
+      - "shadow_socks1-244"
+      - "shadow_socks1-243"
+      - "shadow_socks1-242"
+      - "shadow_socks1-241"
+      - "shadow_socks1-240"
+      - "shadow_socks1-239"
+      - "shadow_socks1-238"
+      - "shadow_socks1-237"
+      - "shadow_socks1-236"
+      - "shadow_socks1-235"
+      - "shadow_socks1-234"
+      - "shadow_socks1-233"
+      - "shadow_socks1-232"
+      - "shadow_socks1-231"
+      - "shadow_socks1-230"
+      - "shadow_socks1-229"
+      - "shadow_socks1-228"
+      - "shadow_socks1-227"
+      - "shadow_socks1-226"
+      - "shadow_socks1-225"
+      - "shadow_socks1-224"
+      - "shadow_socks1-223"
+      - "shadow_socks1-222"
+      - "shadow_socks1-221"
+      - "shadow_socks1-220"
+      - "shadow_socks1-219"
+      - "shadow_socks1-218"
+      - "shadow_socks1-217"
+      - "shadow_socks1-216"
+      - "shadow_socks1-215"
+      - "shadow_socks1-214"
+      - "configV2rayNG-213"
+      - "configV2rayNG-212"
+      - "shadow_socks1-211"
+      - "shadow_socks1-210"
+      - "shadow_socks1-209"
+      - "shadow_socks1-208"
+      - "shadow_socks1-207"
+      - "shadow_socks1-206"
+      - "shadow_socks1-205"
+      - "shadow_socks1-204"
+      - "shadow_socks1-203"
+      - "shadow_socks1-202"
+      - "shadow_socks1-201"
+      - "shadow_socks1-200"
+      - "shadow_socks1-199"
+      - "shadow_socks1-198"
+      - "shadow_socks1-197"
+      - "shadow_socks1-196"
+      - "shadow_socks1-195"
+      - "shadow_socks1-194"
+      - "shadow_socks1-193"
+      - "shadow_socks1-192"
+      - "shadow_socks1-191"
+      - "shadow_socks1-190"
+      - "shadow_socks1-189"
+      - "shadow_socks1-188"
+      - "shadow_socks1-187"
+      - "shadow_socks1-186"
+      - "shadow_socks1-185"
+      - "shadow_socks1-184"
+      - "shadow_socks1-183"
+      - "shadow_socks1-182"
+      - "shadow_socks1-181"
+      - "shadow_socks1-180"
+      - "shadow_socks1-179"
+      - "shadow_socks1-178"
+      - "shadow_socks1-177"
+      - "shadow_socks1-175"
+      - "shadow_socks1-174"
+      - "shadow_socks1-173"
+      - "shadow_socks1-172"
+      - "shadow_socks1-169"
+      - "shadow_socks1-168"
+      - "shadow_socks1-167"
+      - "shadow_socks1-166"
+      - "shadow_socks1-165"
+      - "shadow_socks1-164"
+      - "shadow_socks1-163"
+      - "shadow_socks1-162"
+      - "shadow_socks1-161"
+      - "shadow_socks1-160"
+      - "shadow_socks1-159"
+      - "shadow_socks1-158"
+      - "shadow_socks1-157"
+      - "shadow_socks1-156"
+      - "shadow_socks1-155"
+      - "shadow_socks1-151"
+      - "shadow_socks1-150"
+      - "shadow_socks1-149"
+      - "shadow_socks1-148"
+      - "shadow_socks1-147"
+      - "shadow_socks1-146"
+      - "shadow_socks1-145"
+      - "shadow_socks1-144"
+      - "shadow_socks1-143"
+      - "shadow_socks1-142"
+      - "shadow_socks1-141"
+      - "shadow_socks1-140"
+      - "shadow_socks1-139"
+      - "shadow_socks1-138"
+      - "shadow_socks1-137"
+      - "shadow_socks1-136"
+      - "shadow_socks1-135"
+      - "shadow_socks1-134"
+      - "shadow_socks1-133"
+      - "shadow_socks1-132"
+      - "shadow_socks1-131"
+      - "shadow_socks1-130"
+      - "shadow_socks1-129"
+      - "shadow_socks1-128"
+      - "shadow_socks1-127"
+      - "shadow_socks1-126"
+      - "shadow_socks1-125"
+      - "shadow_socks1-124"
+      - "shadow_socks1-123"
+      - "shadow_socks1-122"
+      - "configV2rayNG-121"
+      - "configV2rayNG-120"
+      - "configV2rayNG-119"
+      - "vpn_ioss-118"
+      - "vpn_ioss-116"
+      - "vpn_ioss-114"
+      - "configV2rayNG-113"
+      - "vpn_ioss-112"
+      - "configV2rayNG-110"
+      - "shadow_socks1-109"
+      - "shadow_socks1-108"
+      - "shadow_socks1-107"
+      - "shadow_socks1-106"
+      - "configV2rayNG-104"
+      - "shadow_socks1-103"
+      - "shadow_socks1-102"
+      - "shadow_socks1-101"
+      - "shadow_socks1-100"
+      - "shadow_socks1-99"
+      - "shadow_socks1-98"
+      - "shadow_socks1-97"
+      - "shadow_socks1-96"
+      - "shadow_socks1-95"
+      - "shadow_socks1-94"
+      - "shadow_socks1-93"
+      - "shadow_socks1-92"
+      - "shadow_socks1-91"
+      - "shadow_socks1-90"
+      - "shadow_socks1-89"
+      - "shadow_socks1-88"
+      - "shadow_socks1-87"
+      - "shadow_socks1-86"
+      - "shadow_socks1-85"
+      - "shadow_socks1-84"
+      - "shadow_socks1-83"
+      - "shadow_socks1-81"
+      - "shadow_socks1-80"
+      - "shadow_socks1-79"
+      - "shadow_socks1-78"
+      - "shadow_socks1-77"
+      - "shadow_socks1-76"
+      - "shadow_socks1-75"
+      - "shadow_socks1-74"
+      - "shadow_socks1-73"
+      - "shadow_socks1-72"
+      - "shadow_socks1-71"
+      - "shadow_socks1-70"
+      - "shadow_socks1-69"
+      - "shadow_socks1-68"
+      - "shadow_socks1-67"
+      - "shadow_socks1-66"
+      - "shadow_socks1-65"
+      - "shadow_socks1-64"
+      - "shadow_socks1-63"
+      - "shadow_socks1-62"
+      - "shadow_socks1-61"
+      - "shadow_socks1-60"
+      - "shadow_socks1-58"
       - "configV2rayNG-663"
       - "configV2rayNG-662"
       - "configV2rayNG-661"
@@ -3317,30 +6087,44 @@ proxy-groups:
       - "configV2rayNG-387"
       - "configV2rayNG-386"
       - "configV2rayNG-385"
+      - "vpn_ioss-384"
+      - "configV2rayNG-383"
+      - "configV2rayNG-382"
+      - "configV2rayNG-380"
       - "configV2rayNG-379"
+      - "configV2rayNG-378"
+      - "configV2rayNG-377"
       - "vpn_ioss-375"
       - "vpn_ioss-374"
+      - "vpn_ioss-373"
       - "vpn_ioss-372"
       - "vpn_ioss-371"
       - "vpn_ioss-370"
       - "configV2rayNG-369"
+      - "configV2rayNG-368"
       - "configV2rayNG-367"
       - "configV2rayNG-366"
       - "configV2rayNG-365"
       - "configV2rayNG-364"
+      - "configV2rayNG-363"
       - "configV2rayNG-362"
       - "configV2rayNG-361"
+      - "configV2rayNG-360"
       - "vpn_ioss-359"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
+    icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
     url: "https://www.gstatic.com/generate_204"
-    interval: 300
+    interval: 600
     tolerance: 50
-    lazy: true
+    timeout: 3200
+    lazy: false
+    max-failed-times: 2
     proxies:
       - "configV2rayNG-658"
       - "configV2rayNG-657"
       - "configV2rayNG-656"
+      - "configV2rayNG-655"
       - "configV2rayNG-654"
       - "configV2rayNG-653"
       - "configV2rayNG-652"
@@ -3348,7 +6132,10 @@ proxy-groups:
       - "configV2rayNG-650"
       - "configV2rayNG-649"
       - "configV2rayNG-648"
+      - "configV2rayNG-647"
       - "configV2rayNG-646"
+      - "configV2rayNG-645"
+      - "configV2rayNG-644"
       - "configV2rayNG-643"
       - "configV2rayNG-642"
       - "configV2rayNG-641"
@@ -3368,20 +6155,25 @@ proxy-groups:
       - "configV2rayNG-626"
       - "configV2rayNG-625"
       - "configV2rayNG-624"
+      - "configV2rayNG-623"
       - "configV2rayNG-622"
+      - "vpn_ioss-621"
       - "vpn_ioss-620"
       - "vpn_ioss-619"
+      - "vpn_ioss-618"
       - "Freedomnetir-617"
       - "configV2rayNG-616"
       - "configV2rayNG-615"
       - "configV2rayNG-614"
       - "configV2rayNG-613"
+      - "configV2rayNG-612"
       - "configV2rayNG-611"
       - "configV2rayNG-610"
       - "vpn_ioss-609"
       - "configV2rayNG-608"
       - "Freedomnetir-607"
       - "configV2rayNG-606"
+      - "configV2rayNG-605"
       - "configV2rayNG-604"
       - "vpn_ioss-603"
       - "configV2rayNG-602"
@@ -3390,18 +6182,26 @@ proxy-groups:
       - "vpn_ioss-599"
       - "configV2rayNG-598"
       - "configV2rayNG-597"
+      - "configV2rayNG-594"
       - "configV2rayNG-593"
+      - "configV2rayNG-592"
       - "configV2rayNG-591"
       - "configV2rayNG-590"
       - "configV2rayNG-589"
+      - "configV2rayNG-588"
       - "configV2rayNG-587"
       - "configV2rayNG-586"
       - "configV2rayNG-585"
       - "configV2rayNG-584"
       - "configV2rayNG-583"
+      - "vpn_ioss-582"
       - "configV2rayNG-581"
       - "vpn_ioss-580"
+      - "configV2rayNG-579"
+      - "configV2rayNG-578"
+      - "configV2rayNG-577"
       - "configV2rayNG-576"
+      - "configV2rayNG-575"
       - "configV2rayNG-574"
       - "configV2rayNG-573"
       - "configV2rayNG-572"
@@ -3411,15 +6211,21 @@ proxy-groups:
       - "configV2rayNG-567"
       - "configV2rayNG-566"
       - "configV2rayNG-565"
+      - "configV2rayNG-564"
       - "configV2rayNG-560"
+      - "configV2rayNG-558"
       - "configV2rayNG-556"
+      - "configV2rayNG-555"
       - "configV2rayNG-554"
       - "configV2rayNG-553"
       - "configV2rayNG-552"
       - "configV2rayNG-551"
+      - "configV2rayNG-550"
       - "configV2rayNG-549"
+      - "configV2rayNG-548"
       - "configV2rayNG-547"
       - "configV2rayNG-546"
+      - "configV2rayNG-545"
       - "configV2rayNG-544"
       - "configV2rayNG-543"
       - "configV2rayNG-542"
@@ -3429,11 +6235,13 @@ proxy-groups:
       - "configV2rayNG-537"
       - "configV2rayNG-536"
       - "configV2rayNG-534"
+      - "configV2rayNG-533"
       - "configV2rayNG-532"
       - "configV2rayNG-531"
       - "configV2rayNG-530"
       - "configV2rayNG-529"
       - "configV2rayNG-528"
+      - "vpn_ioss-527"
       - "vpn_ioss-526"
       - "configV2rayNG-525"
       - "configV2rayNG-524"
@@ -3458,6 +6266,7 @@ proxy-groups:
       - "configV2rayNG-492"
       - "configV2rayNG-491"
       - "configV2rayNG-490"
+      - "configV2rayNG-489"
       - "configV2rayNG-486"
       - "configV2rayNG-485"
       - "configV2rayNG-484"
@@ -3467,9 +6276,13 @@ proxy-groups:
       - "configV2rayNG-479"
       - "configV2rayNG-478"
       - "configV2rayNG-477"
+      - "configV2rayNG-475"
+      - "configV2rayNG-474"
       - "configV2rayNG-473"
       - "configV2rayNG-472"
       - "configV2rayNG-471"
+      - "configV2rayNG-470"
+      - "configV2rayNG-469"
       - "configV2rayNG-468"
       - "configV2rayNG-467"
       - "configV2rayNG-466"
@@ -3479,6 +6292,10 @@ proxy-groups:
       - "configV2rayNG-462"
       - "configV2rayNG-461"
       - "configV2rayNG-460"
+      - "configV2rayNG-459"
+      - "vpn_ioss-458"
+      - "vpn_ioss-457"
+      - "configV2rayNG-456"
       - "configV2rayNG-455"
       - "vpn_ioss-454"
       - "vpn_ioss-453"
@@ -3487,32 +6304,57 @@ proxy-groups:
       - "configV2rayNG-450"
       - "vpn_ioss-449"
       - "vpn_ioss-447"
+      - "vpn_ioss-446"
       - "configV2rayNG-445"
+      - "configV2rayNG-444"
       - "configV2rayNG-443"
+      - "configV2rayNG-442"
+      - "configV2rayNG-441"
+      - "vpn_ioss-440"
       - "configV2rayNG-439"
       - "configV2rayNG-438"
       - "configV2rayNG-436"
       - "configV2rayNG-435"
       - "configV2rayNG-434"
+      - "vpn_ioss-433"
       - "configV2rayNG-432"
       - "vpn_ioss-431"
       - "configV2rayNG-430"
+      - "configV2rayNG-429"
       - "configV2rayNG-428"
       - "configV2rayNG-427"
+      - "vpn_ioss-426"
       - "configV2rayNG-425"
+      - "configV2rayNG-424"
+      - "configV2rayNG-423"
+      - "configV2rayNG-422"
       - "configV2rayNG-421"
       - "configV2rayNG-419"
       - "configV2rayNG-418"
       - "configV2rayNG-417"
+      - "configV2rayNG-416"
       - "vpn_ioss-415"
       - "configV2rayNG-414"
       - "configV2rayNG-413"
+      - "vpn_ioss-412"
       - "configV2rayNG-411"
       - "configV2rayNG-410"
       - "configV2rayNG-409"
       - "configV2rayNG-408"
+      - "configV2rayNG-407"
       - "configV2rayNG-406"
       - "configV2rayNG-405"
+      - "shadow_socks1-402"
+      - "shadow_socks1-401"
+      - "shadow_socks1-400"
+      - "shadow_socks1-399"
+      - "shadow_socks1-398"
+      - "shadow_socks1-397"
+      - "shadow_socks1-396"
+      - "shadow_socks1-395"
+      - "shadow_socks1-394"
+      - "shadow_socks1-393"
+      - "shadow_socks1-392"
       - "shadow_socks1-358"
       - "shadow_socks1-357"
       - "shadow_socks1-356"
@@ -3613,6 +6455,195 @@ proxy-groups:
       - "shadow_socks1-261"
       - "shadow_socks1-260"
       - "shadow_socks1-259"
+      - "shadow_socks1-258"
+      - "shadow_socks1-257"
+      - "shadow_socks1-256"
+      - "shadow_socks1-255"
+      - "shadow_socks1-254"
+      - "shadow_socks1-253"
+      - "shadow_socks1-252"
+      - "shadow_socks1-251"
+      - "shadow_socks1-250"
+      - "shadow_socks1-249"
+      - "shadow_socks1-248"
+      - "shadow_socks1-247"
+      - "shadow_socks1-246"
+      - "shadow_socks1-245"
+      - "shadow_socks1-244"
+      - "shadow_socks1-243"
+      - "shadow_socks1-242"
+      - "shadow_socks1-241"
+      - "shadow_socks1-240"
+      - "shadow_socks1-239"
+      - "shadow_socks1-238"
+      - "shadow_socks1-237"
+      - "shadow_socks1-236"
+      - "shadow_socks1-235"
+      - "shadow_socks1-234"
+      - "shadow_socks1-233"
+      - "shadow_socks1-232"
+      - "shadow_socks1-231"
+      - "shadow_socks1-230"
+      - "shadow_socks1-229"
+      - "shadow_socks1-228"
+      - "shadow_socks1-227"
+      - "shadow_socks1-226"
+      - "shadow_socks1-225"
+      - "shadow_socks1-224"
+      - "shadow_socks1-223"
+      - "shadow_socks1-222"
+      - "shadow_socks1-221"
+      - "shadow_socks1-220"
+      - "shadow_socks1-219"
+      - "shadow_socks1-218"
+      - "shadow_socks1-217"
+      - "shadow_socks1-216"
+      - "shadow_socks1-215"
+      - "shadow_socks1-214"
+      - "configV2rayNG-213"
+      - "configV2rayNG-212"
+      - "shadow_socks1-211"
+      - "shadow_socks1-210"
+      - "shadow_socks1-209"
+      - "shadow_socks1-208"
+      - "shadow_socks1-207"
+      - "shadow_socks1-206"
+      - "shadow_socks1-205"
+      - "shadow_socks1-204"
+      - "shadow_socks1-203"
+      - "shadow_socks1-202"
+      - "shadow_socks1-201"
+      - "shadow_socks1-200"
+      - "shadow_socks1-199"
+      - "shadow_socks1-198"
+      - "shadow_socks1-197"
+      - "shadow_socks1-196"
+      - "shadow_socks1-195"
+      - "shadow_socks1-194"
+      - "shadow_socks1-193"
+      - "shadow_socks1-192"
+      - "shadow_socks1-191"
+      - "shadow_socks1-190"
+      - "shadow_socks1-189"
+      - "shadow_socks1-188"
+      - "shadow_socks1-187"
+      - "shadow_socks1-186"
+      - "shadow_socks1-185"
+      - "shadow_socks1-184"
+      - "shadow_socks1-183"
+      - "shadow_socks1-182"
+      - "shadow_socks1-181"
+      - "shadow_socks1-180"
+      - "shadow_socks1-179"
+      - "shadow_socks1-178"
+      - "shadow_socks1-177"
+      - "shadow_socks1-175"
+      - "shadow_socks1-174"
+      - "shadow_socks1-173"
+      - "shadow_socks1-172"
+      - "shadow_socks1-169"
+      - "shadow_socks1-168"
+      - "shadow_socks1-167"
+      - "shadow_socks1-166"
+      - "shadow_socks1-165"
+      - "shadow_socks1-164"
+      - "shadow_socks1-163"
+      - "shadow_socks1-162"
+      - "shadow_socks1-161"
+      - "shadow_socks1-160"
+      - "shadow_socks1-159"
+      - "shadow_socks1-158"
+      - "shadow_socks1-157"
+      - "shadow_socks1-156"
+      - "shadow_socks1-155"
+      - "shadow_socks1-151"
+      - "shadow_socks1-150"
+      - "shadow_socks1-149"
+      - "shadow_socks1-148"
+      - "shadow_socks1-147"
+      - "shadow_socks1-146"
+      - "shadow_socks1-145"
+      - "shadow_socks1-144"
+      - "shadow_socks1-143"
+      - "shadow_socks1-142"
+      - "shadow_socks1-141"
+      - "shadow_socks1-140"
+      - "shadow_socks1-139"
+      - "shadow_socks1-138"
+      - "shadow_socks1-137"
+      - "shadow_socks1-136"
+      - "shadow_socks1-135"
+      - "shadow_socks1-134"
+      - "shadow_socks1-133"
+      - "shadow_socks1-132"
+      - "shadow_socks1-131"
+      - "shadow_socks1-130"
+      - "shadow_socks1-129"
+      - "shadow_socks1-128"
+      - "shadow_socks1-127"
+      - "shadow_socks1-126"
+      - "shadow_socks1-125"
+      - "shadow_socks1-124"
+      - "shadow_socks1-123"
+      - "shadow_socks1-122"
+      - "configV2rayNG-121"
+      - "configV2rayNG-120"
+      - "configV2rayNG-119"
+      - "vpn_ioss-118"
+      - "vpn_ioss-116"
+      - "vpn_ioss-114"
+      - "configV2rayNG-113"
+      - "vpn_ioss-112"
+      - "configV2rayNG-110"
+      - "shadow_socks1-109"
+      - "shadow_socks1-108"
+      - "shadow_socks1-107"
+      - "shadow_socks1-106"
+      - "configV2rayNG-104"
+      - "shadow_socks1-103"
+      - "shadow_socks1-102"
+      - "shadow_socks1-101"
+      - "shadow_socks1-100"
+      - "shadow_socks1-99"
+      - "shadow_socks1-98"
+      - "shadow_socks1-97"
+      - "shadow_socks1-96"
+      - "shadow_socks1-95"
+      - "shadow_socks1-94"
+      - "shadow_socks1-93"
+      - "shadow_socks1-92"
+      - "shadow_socks1-91"
+      - "shadow_socks1-90"
+      - "shadow_socks1-89"
+      - "shadow_socks1-88"
+      - "shadow_socks1-87"
+      - "shadow_socks1-86"
+      - "shadow_socks1-85"
+      - "shadow_socks1-84"
+      - "shadow_socks1-83"
+      - "shadow_socks1-81"
+      - "shadow_socks1-80"
+      - "shadow_socks1-79"
+      - "shadow_socks1-78"
+      - "shadow_socks1-77"
+      - "shadow_socks1-76"
+      - "shadow_socks1-75"
+      - "shadow_socks1-74"
+      - "shadow_socks1-73"
+      - "shadow_socks1-72"
+      - "shadow_socks1-71"
+      - "shadow_socks1-70"
+      - "shadow_socks1-69"
+      - "shadow_socks1-68"
+      - "shadow_socks1-67"
+      - "shadow_socks1-66"
+      - "shadow_socks1-65"
+      - "shadow_socks1-64"
+      - "shadow_socks1-63"
+      - "shadow_socks1-62"
+      - "shadow_socks1-61"
+      - "shadow_socks1-60"
+      - "shadow_socks1-58"
       - "configV2rayNG-663"
       - "configV2rayNG-662"
       - "configV2rayNG-661"
@@ -3624,22 +6655,627 @@ proxy-groups:
       - "configV2rayNG-387"
       - "configV2rayNG-386"
       - "configV2rayNG-385"
+      - "vpn_ioss-384"
+      - "configV2rayNG-383"
+      - "configV2rayNG-382"
+      - "configV2rayNG-380"
       - "configV2rayNG-379"
+      - "configV2rayNG-378"
+      - "configV2rayNG-377"
       - "vpn_ioss-375"
       - "vpn_ioss-374"
+      - "vpn_ioss-373"
       - "vpn_ioss-372"
       - "vpn_ioss-371"
       - "vpn_ioss-370"
       - "configV2rayNG-369"
+      - "configV2rayNG-368"
       - "configV2rayNG-367"
       - "configV2rayNG-366"
       - "configV2rayNG-365"
       - "configV2rayNG-364"
+      - "configV2rayNG-363"
       - "configV2rayNG-362"
       - "configV2rayNG-361"
+      - "configV2rayNG-360"
       - "vpn_ioss-359"
-  - name: "سایتای ایرانی 🇮🇷"
+  - name: "توزیع بار چرخشی ⚖️"
+    type: "load-balance"
+    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
+    strategy: "round-robin"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 30
+    timeout: 1500
+    lazy: false
+    proxies:
+      - "configV2rayNG-658"
+      - "configV2rayNG-657"
+      - "configV2rayNG-656"
+      - "configV2rayNG-655"
+      - "configV2rayNG-654"
+      - "configV2rayNG-653"
+      - "configV2rayNG-652"
+      - "vpn_ioss-651"
+      - "configV2rayNG-650"
+      - "configV2rayNG-649"
+      - "configV2rayNG-648"
+      - "configV2rayNG-647"
+      - "configV2rayNG-646"
+      - "configV2rayNG-645"
+      - "configV2rayNG-644"
+      - "configV2rayNG-643"
+      - "configV2rayNG-642"
+      - "configV2rayNG-641"
+      - "configV2rayNG-639"
+      - "vpn_ioss-638"
+      - "configV2rayNG-637"
+      - "configV2rayNG-636"
+      - "vpn_ioss-635"
+      - "configV2rayNG-634"
+      - "configV2rayNG-633"
+      - "configV2rayNG-632"
+      - "configV2rayNG-631"
+      - "configV2rayNG-630"
+      - "configV2rayNG-629"
+      - "configV2rayNG-628"
+      - "configV2rayNG-627"
+      - "configV2rayNG-626"
+      - "configV2rayNG-625"
+      - "configV2rayNG-624"
+      - "configV2rayNG-623"
+      - "configV2rayNG-622"
+      - "vpn_ioss-621"
+      - "vpn_ioss-620"
+      - "vpn_ioss-619"
+      - "vpn_ioss-618"
+      - "Freedomnetir-617"
+      - "configV2rayNG-616"
+      - "configV2rayNG-615"
+      - "configV2rayNG-614"
+      - "configV2rayNG-613"
+      - "configV2rayNG-612"
+      - "configV2rayNG-611"
+      - "configV2rayNG-610"
+      - "vpn_ioss-609"
+      - "configV2rayNG-608"
+      - "Freedomnetir-607"
+      - "configV2rayNG-606"
+      - "configV2rayNG-605"
+      - "configV2rayNG-604"
+      - "vpn_ioss-603"
+      - "configV2rayNG-602"
+      - "configV2rayNG-601"
+      - "vpn_ioss-600"
+      - "vpn_ioss-599"
+      - "configV2rayNG-598"
+      - "configV2rayNG-597"
+      - "configV2rayNG-594"
+      - "configV2rayNG-593"
+      - "configV2rayNG-592"
+      - "configV2rayNG-591"
+      - "configV2rayNG-590"
+      - "configV2rayNG-589"
+      - "configV2rayNG-588"
+      - "configV2rayNG-587"
+      - "configV2rayNG-586"
+      - "configV2rayNG-585"
+      - "configV2rayNG-584"
+      - "configV2rayNG-583"
+      - "vpn_ioss-582"
+      - "configV2rayNG-581"
+      - "vpn_ioss-580"
+      - "configV2rayNG-579"
+      - "configV2rayNG-578"
+      - "configV2rayNG-577"
+      - "configV2rayNG-576"
+      - "configV2rayNG-575"
+      - "configV2rayNG-574"
+      - "configV2rayNG-573"
+      - "configV2rayNG-572"
+      - "configV2rayNG-570"
+      - "configV2rayNG-569"
+      - "configV2rayNG-568"
+      - "configV2rayNG-567"
+      - "configV2rayNG-566"
+      - "configV2rayNG-565"
+      - "configV2rayNG-564"
+      - "configV2rayNG-560"
+      - "configV2rayNG-558"
+      - "configV2rayNG-556"
+      - "configV2rayNG-555"
+      - "configV2rayNG-554"
+      - "configV2rayNG-553"
+      - "configV2rayNG-552"
+      - "configV2rayNG-551"
+      - "configV2rayNG-550"
+      - "configV2rayNG-549"
+      - "configV2rayNG-548"
+      - "configV2rayNG-547"
+      - "configV2rayNG-546"
+      - "configV2rayNG-545"
+      - "configV2rayNG-544"
+      - "configV2rayNG-543"
+      - "configV2rayNG-542"
+      - "configV2rayNG-541"
+      - "configV2rayNG-540"
+      - "configV2rayNG-539"
+      - "configV2rayNG-537"
+      - "configV2rayNG-536"
+      - "configV2rayNG-534"
+      - "configV2rayNG-533"
+      - "configV2rayNG-532"
+      - "configV2rayNG-531"
+      - "configV2rayNG-530"
+      - "configV2rayNG-529"
+      - "configV2rayNG-528"
+      - "vpn_ioss-527"
+      - "vpn_ioss-526"
+      - "configV2rayNG-525"
+      - "configV2rayNG-524"
+      - "configV2rayNG-523"
+      - "configV2rayNG-521"
+      - "configV2rayNG-520"
+      - "configV2rayNG-518"
+      - "configV2rayNG-516"
+      - "configV2rayNG-514"
+      - "configV2rayNG-513"
+      - "configV2rayNG-510"
+      - "vpn_ioss-508"
+      - "configV2rayNG-506"
+      - "configV2rayNG-503"
+      - "configV2rayNG-502"
+      - "configV2rayNG-501"
+      - "configV2rayNG-500"
+      - "configV2rayNG-499"
+      - "configV2rayNG-498"
+      - "configV2rayNG-497"
+      - "configV2rayNG-494"
+      - "configV2rayNG-492"
+      - "configV2rayNG-491"
+      - "configV2rayNG-490"
+      - "configV2rayNG-489"
+      - "configV2rayNG-486"
+      - "configV2rayNG-485"
+      - "configV2rayNG-484"
+      - "configV2rayNG-483"
+      - "vpn_ioss-482"
+      - "configV2rayNG-481"
+      - "configV2rayNG-479"
+      - "configV2rayNG-478"
+      - "configV2rayNG-477"
+      - "configV2rayNG-475"
+      - "configV2rayNG-474"
+      - "configV2rayNG-473"
+      - "configV2rayNG-472"
+      - "configV2rayNG-471"
+      - "configV2rayNG-470"
+      - "configV2rayNG-469"
+      - "configV2rayNG-468"
+      - "configV2rayNG-467"
+      - "configV2rayNG-466"
+      - "configV2rayNG-465"
+      - "vpn_ioss-464"
+      - "configV2rayNG-463"
+      - "configV2rayNG-462"
+      - "configV2rayNG-461"
+      - "configV2rayNG-460"
+      - "configV2rayNG-459"
+      - "vpn_ioss-458"
+      - "vpn_ioss-457"
+      - "configV2rayNG-456"
+      - "configV2rayNG-455"
+      - "vpn_ioss-454"
+      - "vpn_ioss-453"
+      - "configV2rayNG-452"
+      - "configV2rayNG-451"
+      - "configV2rayNG-450"
+      - "vpn_ioss-449"
+      - "vpn_ioss-447"
+      - "vpn_ioss-446"
+      - "configV2rayNG-445"
+      - "configV2rayNG-444"
+      - "configV2rayNG-443"
+      - "configV2rayNG-442"
+      - "configV2rayNG-441"
+      - "vpn_ioss-440"
+      - "configV2rayNG-439"
+      - "configV2rayNG-438"
+      - "configV2rayNG-436"
+      - "configV2rayNG-435"
+      - "configV2rayNG-434"
+      - "vpn_ioss-433"
+      - "configV2rayNG-432"
+      - "vpn_ioss-431"
+      - "configV2rayNG-430"
+      - "configV2rayNG-429"
+      - "configV2rayNG-428"
+      - "configV2rayNG-427"
+      - "vpn_ioss-426"
+      - "configV2rayNG-425"
+      - "configV2rayNG-424"
+      - "configV2rayNG-423"
+      - "configV2rayNG-422"
+      - "configV2rayNG-421"
+      - "configV2rayNG-419"
+      - "configV2rayNG-418"
+      - "configV2rayNG-417"
+      - "configV2rayNG-416"
+      - "vpn_ioss-415"
+      - "configV2rayNG-414"
+      - "configV2rayNG-413"
+      - "vpn_ioss-412"
+      - "configV2rayNG-411"
+      - "configV2rayNG-410"
+      - "configV2rayNG-409"
+      - "configV2rayNG-408"
+      - "configV2rayNG-407"
+      - "configV2rayNG-406"
+      - "configV2rayNG-405"
+      - "shadow_socks1-402"
+      - "shadow_socks1-401"
+      - "shadow_socks1-400"
+      - "shadow_socks1-399"
+      - "shadow_socks1-398"
+      - "shadow_socks1-397"
+      - "shadow_socks1-396"
+      - "shadow_socks1-395"
+      - "shadow_socks1-394"
+      - "shadow_socks1-393"
+      - "shadow_socks1-392"
+      - "shadow_socks1-358"
+      - "shadow_socks1-357"
+      - "shadow_socks1-356"
+      - "shadow_socks1-355"
+      - "shadow_socks1-354"
+      - "shadow_socks1-353"
+      - "shadow_socks1-352"
+      - "shadow_socks1-351"
+      - "shadow_socks1-350"
+      - "shadow_socks1-349"
+      - "shadow_socks1-348"
+      - "shadow_socks1-347"
+      - "shadow_socks1-346"
+      - "shadow_socks1-345"
+      - "shadow_socks1-344"
+      - "shadow_socks1-343"
+      - "shadow_socks1-342"
+      - "shadow_socks1-341"
+      - "shadow_socks1-340"
+      - "shadow_socks1-339"
+      - "shadow_socks1-338"
+      - "shadow_socks1-337"
+      - "shadow_socks1-336"
+      - "shadow_socks1-335"
+      - "vpn_ioss-334"
+      - "shadow_socks1-333"
+      - "shadow_socks1-332"
+      - "shadow_socks1-331"
+      - "shadow_socks1-330"
+      - "shadow_socks1-329"
+      - "shadow_socks1-328"
+      - "shadow_socks1-327"
+      - "shadow_socks1-326"
+      - "shadow_socks1-325"
+      - "shadow_socks1-324"
+      - "shadow_socks1-323"
+      - "shadow_socks1-322"
+      - "shadow_socks1-321"
+      - "shadow_socks1-320"
+      - "shadow_socks1-319"
+      - "shadow_socks1-318"
+      - "shadow_socks1-317"
+      - "shadow_socks1-316"
+      - "shadow_socks1-315"
+      - "shadow_socks1-314"
+      - "shadow_socks1-313"
+      - "shadow_socks1-312"
+      - "shadow_socks1-311"
+      - "shadow_socks1-310"
+      - "shadow_socks1-309"
+      - "shadow_socks1-308"
+      - "shadow_socks1-307"
+      - "shadow_socks1-306"
+      - "shadow_socks1-305"
+      - "shadow_socks1-304"
+      - "shadow_socks1-303"
+      - "shadow_socks1-302"
+      - "shadow_socks1-301"
+      - "shadow_socks1-300"
+      - "shadow_socks1-299"
+      - "shadow_socks1-298"
+      - "shadow_socks1-297"
+      - "shadow_socks1-296"
+      - "shadow_socks1-295"
+      - "shadow_socks1-294"
+      - "shadow_socks1-293"
+      - "shadow_socks1-292"
+      - "shadow_socks1-291"
+      - "shadow_socks1-290"
+      - "shadow_socks1-289"
+      - "shadow_socks1-288"
+      - "shadow_socks1-287"
+      - "shadow_socks1-286"
+      - "shadow_socks1-285"
+      - "shadow_socks1-284"
+      - "shadow_socks1-283"
+      - "shadow_socks1-282"
+      - "shadow_socks1-281"
+      - "shadow_socks1-280"
+      - "shadow_socks1-279"
+      - "shadow_socks1-278"
+      - "shadow_socks1-277"
+      - "shadow_socks1-276"
+      - "shadow_socks1-275"
+      - "shadow_socks1-274"
+      - "shadow_socks1-273"
+      - "shadow_socks1-272"
+      - "shadow_socks1-271"
+      - "shadow_socks1-270"
+      - "shadow_socks1-269"
+      - "shadow_socks1-268"
+      - "shadow_socks1-267"
+      - "shadow_socks1-266"
+      - "shadow_socks1-265"
+      - "shadow_socks1-264"
+      - "shadow_socks1-263"
+      - "shadow_socks1-262"
+      - "shadow_socks1-261"
+      - "shadow_socks1-260"
+      - "shadow_socks1-259"
+      - "shadow_socks1-258"
+      - "shadow_socks1-257"
+      - "shadow_socks1-256"
+      - "shadow_socks1-255"
+      - "shadow_socks1-254"
+      - "shadow_socks1-253"
+      - "shadow_socks1-252"
+      - "shadow_socks1-251"
+      - "shadow_socks1-250"
+      - "shadow_socks1-249"
+      - "shadow_socks1-248"
+      - "shadow_socks1-247"
+      - "shadow_socks1-246"
+      - "shadow_socks1-245"
+      - "shadow_socks1-244"
+      - "shadow_socks1-243"
+      - "shadow_socks1-242"
+      - "shadow_socks1-241"
+      - "shadow_socks1-240"
+      - "shadow_socks1-239"
+      - "shadow_socks1-238"
+      - "shadow_socks1-237"
+      - "shadow_socks1-236"
+      - "shadow_socks1-235"
+      - "shadow_socks1-234"
+      - "shadow_socks1-233"
+      - "shadow_socks1-232"
+      - "shadow_socks1-231"
+      - "shadow_socks1-230"
+      - "shadow_socks1-229"
+      - "shadow_socks1-228"
+      - "shadow_socks1-227"
+      - "shadow_socks1-226"
+      - "shadow_socks1-225"
+      - "shadow_socks1-224"
+      - "shadow_socks1-223"
+      - "shadow_socks1-222"
+      - "shadow_socks1-221"
+      - "shadow_socks1-220"
+      - "shadow_socks1-219"
+      - "shadow_socks1-218"
+      - "shadow_socks1-217"
+      - "shadow_socks1-216"
+      - "shadow_socks1-215"
+      - "shadow_socks1-214"
+      - "configV2rayNG-213"
+      - "configV2rayNG-212"
+      - "shadow_socks1-211"
+      - "shadow_socks1-210"
+      - "shadow_socks1-209"
+      - "shadow_socks1-208"
+      - "shadow_socks1-207"
+      - "shadow_socks1-206"
+      - "shadow_socks1-205"
+      - "shadow_socks1-204"
+      - "shadow_socks1-203"
+      - "shadow_socks1-202"
+      - "shadow_socks1-201"
+      - "shadow_socks1-200"
+      - "shadow_socks1-199"
+      - "shadow_socks1-198"
+      - "shadow_socks1-197"
+      - "shadow_socks1-196"
+      - "shadow_socks1-195"
+      - "shadow_socks1-194"
+      - "shadow_socks1-193"
+      - "shadow_socks1-192"
+      - "shadow_socks1-191"
+      - "shadow_socks1-190"
+      - "shadow_socks1-189"
+      - "shadow_socks1-188"
+      - "shadow_socks1-187"
+      - "shadow_socks1-186"
+      - "shadow_socks1-185"
+      - "shadow_socks1-184"
+      - "shadow_socks1-183"
+      - "shadow_socks1-182"
+      - "shadow_socks1-181"
+      - "shadow_socks1-180"
+      - "shadow_socks1-179"
+      - "shadow_socks1-178"
+      - "shadow_socks1-177"
+      - "shadow_socks1-175"
+      - "shadow_socks1-174"
+      - "shadow_socks1-173"
+      - "shadow_socks1-172"
+      - "shadow_socks1-169"
+      - "shadow_socks1-168"
+      - "shadow_socks1-167"
+      - "shadow_socks1-166"
+      - "shadow_socks1-165"
+      - "shadow_socks1-164"
+      - "shadow_socks1-163"
+      - "shadow_socks1-162"
+      - "shadow_socks1-161"
+      - "shadow_socks1-160"
+      - "shadow_socks1-159"
+      - "shadow_socks1-158"
+      - "shadow_socks1-157"
+      - "shadow_socks1-156"
+      - "shadow_socks1-155"
+      - "shadow_socks1-151"
+      - "shadow_socks1-150"
+      - "shadow_socks1-149"
+      - "shadow_socks1-148"
+      - "shadow_socks1-147"
+      - "shadow_socks1-146"
+      - "shadow_socks1-145"
+      - "shadow_socks1-144"
+      - "shadow_socks1-143"
+      - "shadow_socks1-142"
+      - "shadow_socks1-141"
+      - "shadow_socks1-140"
+      - "shadow_socks1-139"
+      - "shadow_socks1-138"
+      - "shadow_socks1-137"
+      - "shadow_socks1-136"
+      - "shadow_socks1-135"
+      - "shadow_socks1-134"
+      - "shadow_socks1-133"
+      - "shadow_socks1-132"
+      - "shadow_socks1-131"
+      - "shadow_socks1-130"
+      - "shadow_socks1-129"
+      - "shadow_socks1-128"
+      - "shadow_socks1-127"
+      - "shadow_socks1-126"
+      - "shadow_socks1-125"
+      - "shadow_socks1-124"
+      - "shadow_socks1-123"
+      - "shadow_socks1-122"
+      - "configV2rayNG-121"
+      - "configV2rayNG-120"
+      - "configV2rayNG-119"
+      - "vpn_ioss-118"
+      - "vpn_ioss-116"
+      - "vpn_ioss-114"
+      - "configV2rayNG-113"
+      - "vpn_ioss-112"
+      - "configV2rayNG-110"
+      - "shadow_socks1-109"
+      - "shadow_socks1-108"
+      - "shadow_socks1-107"
+      - "shadow_socks1-106"
+      - "configV2rayNG-104"
+      - "shadow_socks1-103"
+      - "shadow_socks1-102"
+      - "shadow_socks1-101"
+      - "shadow_socks1-100"
+      - "shadow_socks1-99"
+      - "shadow_socks1-98"
+      - "shadow_socks1-97"
+      - "shadow_socks1-96"
+      - "shadow_socks1-95"
+      - "shadow_socks1-94"
+      - "shadow_socks1-93"
+      - "shadow_socks1-92"
+      - "shadow_socks1-91"
+      - "shadow_socks1-90"
+      - "shadow_socks1-89"
+      - "shadow_socks1-88"
+      - "shadow_socks1-87"
+      - "shadow_socks1-86"
+      - "shadow_socks1-85"
+      - "shadow_socks1-84"
+      - "shadow_socks1-83"
+      - "shadow_socks1-81"
+      - "shadow_socks1-80"
+      - "shadow_socks1-79"
+      - "shadow_socks1-78"
+      - "shadow_socks1-77"
+      - "shadow_socks1-76"
+      - "shadow_socks1-75"
+      - "shadow_socks1-74"
+      - "shadow_socks1-73"
+      - "shadow_socks1-72"
+      - "shadow_socks1-71"
+      - "shadow_socks1-70"
+      - "shadow_socks1-69"
+      - "shadow_socks1-68"
+      - "shadow_socks1-67"
+      - "shadow_socks1-66"
+      - "shadow_socks1-65"
+      - "shadow_socks1-64"
+      - "shadow_socks1-63"
+      - "shadow_socks1-62"
+      - "shadow_socks1-61"
+      - "shadow_socks1-60"
+      - "shadow_socks1-58"
+      - "configV2rayNG-663"
+      - "configV2rayNG-662"
+      - "configV2rayNG-661"
+      - "configV2rayNG-660"
+      - "configV2rayNG-391"
+      - "vpn_ioss-390"
+      - "configV2rayNG-389"
+      - "configV2rayNG-388"
+      - "configV2rayNG-387"
+      - "configV2rayNG-386"
+      - "configV2rayNG-385"
+      - "vpn_ioss-384"
+      - "configV2rayNG-383"
+      - "configV2rayNG-382"
+      - "configV2rayNG-380"
+      - "configV2rayNG-379"
+      - "configV2rayNG-378"
+      - "configV2rayNG-377"
+      - "vpn_ioss-375"
+      - "vpn_ioss-374"
+      - "vpn_ioss-373"
+      - "vpn_ioss-372"
+      - "vpn_ioss-371"
+      - "vpn_ioss-370"
+      - "configV2rayNG-369"
+      - "configV2rayNG-368"
+      - "configV2rayNG-367"
+      - "configV2rayNG-366"
+      - "configV2rayNG-365"
+      - "configV2rayNG-364"
+      - "configV2rayNG-363"
+      - "configV2rayNG-362"
+      - "configV2rayNG-361"
+      - "configV2rayNG-360"
+      - "vpn_ioss-359"
+  - name: "المنت 💬"
     type: "select"
+    icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تیم‌اسپیک 🎧"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/331567/teamspeak.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دلتاچت ✉️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/373771/mail.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دانلود منیجر 📥"
+    type: "select"
+    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
     proxies:
       - "بدون فیلترشکن 🛡️"
       - "نوع انتخاب پروکسی 🔀"
@@ -3648,32 +7284,323 @@ proxy-groups:
       - "اجازه ندادن 🚫"
   - name: "تلگرام 💬"
     type: "select"
+    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+  - name: "یوتیوب ▶️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "گوگل 🌍"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475656/google-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "واتس آپ 🟢"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "هوش مصنوعی 🤖"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/306500/openai.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "توییتر 🐦"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475689/twitter-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "اسپاتیفای 🎵"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "اینستاگرام 📸"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/452229/instagram-1.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "تبلیغات 🆎"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/336358/ad.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "تبلیغات اپ ها 🍃"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "رهگیری جهانی 🛑"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "سایتای مخرب ⚠️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "استیم 🖥️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/452107/steam.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "گیم 🎮"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "توییچ 📡"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/343527/twitch-network-communication-interaction-connection.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "ویندوز 🧊"
+    type: "select"
+    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "اجازه ندادن 🚫"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+  - name: "کلودفلر ☁️"
+    type: "select"
+    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "گیتهاب 🐙"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/355033/github.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دیسکورد 🗣️"
+    type: "select"
+    icon: "https://automatorplugin.com/wp-content/uploads/2024/10/discord-icon.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "استریمیو 🎬"
+    type: "select"
+    icon: "https://stremio.github.io/stremio-addon-guide/img/stremio.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "انی‌دسک 🔴"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "سایتای سانسوری 🤬"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Censorship.svg/300px-Censorship.svg.png"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
   - name: "بدون فیلترشکن 🛡️"
     type: "select"
+    icon: "https://www.svgrepo.com/show/6318/connection.svg"
     proxies:
       - "DIRECT"
     hidden: true
   - name: "قطع اینترنت ⛔"
     type: "select"
+    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
     proxies:
       - "REJECT"
     hidden: true
   - name: "اجازه ندادن 🚫"
     type: "select"
+    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
     proxies:
       - "REJECT"
     hidden: true
 rules:
-  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,DownloadManagers,دانلود منیجر 📥"
+  - "RULE-SET,Download,دانلود منیجر 📥"
+  - "RULE-SET,stremio,استریمیو 🎬"
+  - "PROCESS-NAME,im.vector.app,المنت 💬"
+  - "PROCESS-NAME,io.element.android.x,المنت 💬"
+  - "PROCESS-NAME,Element.exe,المنت 💬"
+  - "DOMAIN-SUFFIX,aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,chat.aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,site.aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,electonet.xyz,المنت 💬"
+  - "DOMAIN-SUFFIX,chat.electonet.xyz,المنت 💬"
+  - "DOMAIN-SUFFIX,rainbuwu.ir,المنت 💬"
+  - "DOMAIN-SUFFIX,cinny.rainbuwu.ir,المنت 💬"
+  - "PROCESS-NAME,chat.delta,دلتاچت ✉️"
+  - "PROCESS-NAME,DeltaChat.exe,دلتاچت ✉️"
+  - "DOMAIN-SUFFIX,arsalandalvand.ir,دلتاچت ✉️"
+  - "DST-PORT,993,دلتاچت ✉️"
+  - "DST-PORT,465,دلتاچت ✉️"
+  - "DST-PORT,587,دلتاچت ✉️"
+  - "PROCESS-NAME,com.teamspeak.ts3client,تیم‌اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win64.exe,تیم‌اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win32.exe,تیم‌اسپیک 🎧"
+  - "DOMAIN-SUFFIX,ag.tssq.ir,تیم‌اسپیک 🎧"
+  - "DST-PORT,9987,تیم‌اسپیک 🎧"
+  - "RULE-SET,BanProgramAD,تبلیغات اپ ها 🍃"
+  - "RULE-SET,BanAD,رهگیری جهانی 🛑"
+  - "RULE-SET,PrivateTracker,رهگیری جهانی 🛑"
+  - "RULE-SET,category_public_tracker,رهگیری جهانی 🛑"
+  - "RULE-SET,malware,سایتای مخرب ⚠️"
+  - "RULE-SET,phishing,سایتای مخرب ⚠️"
+  - "RULE-SET,cryptominers,سایتای مخرب ⚠️"
+  - "RULE-SET,warninglist,سایتای مخرب ⚠️"
+  - "RULE-SET,Ponzi,سایتای مخرب ⚠️"
+  - "RULE-SET,LiteAds,تبلیغات 🆎"
+  - "RULE-SET,iran_ads,تبلیغات 🆎"
+  - "RULE-SET,PersianBlocker,تبلیغات 🆎"
+  - "RULE-SET,ads,تبلیغات 🆎"
+  - "RULE-SET,BanEasyList,تبلیغات 🆎"
+  - "RULE-SET,twitch,توییچ 📡"
   - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
   - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger.web,تلگرام 💬"
+  - "RULE-SET,telegram,تلگرام 💬"
+  - "RULE-SET,YouTube,یوتیوب ▶️"
+  - "RULE-SET,youtube,یوتیوب ▶️"
+  - "RULE-SET,YouTubeMusic,یوتیوب ▶️"
+  - "PROCESS-NAME,com.anydesk.anydeskandroid,انی‌دسک 🔴"
+  - "PROCESS-NAME,AnyDesk.exe,انی‌دسک 🔴"
+  - "DOMAIN-SUFFIX,anydesk.com,انی‌دسک 🔴"
+  - "PROCESS-NAME,Twitter.exe,توییتر 🐦"
+  - "PROCESS-NAME,com.twitter.android,توییتر 🐦"
+  - "RULE-SET,Chotwitter,توییتر 🐦"
+  - "RULE-SET,mihTwitter,توییتر 🐦"
+  - "RULE-SET,Domtwitter,توییتر 🐦"
+  - "PROCESS-NAME,com.spotify.music,اسپاتیفای 🎵"
+  - "PROCESS-NAME,Spotify.exe,اسپاتیفای 🎵"
+  - "RULE-SET,DomainSpotify,اسپاتیفای 🎵"
+  - "RULE-SET,mihspotify,اسپاتیفای 🎵"
+  - "PROCESS-NAME,com.instagram.android,اینستاگرام 📸"
+  - "RULE-SET,instagram,اینستاگرام 📸"
+  - "DOMAIN-SUFFIX,deepseek.com,هوش مصنوعی 🤖"
+  - "DOMAIN-SUFFIX,qwen.ai,هوش مصنوعی 🤖"
+  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
+  - "RULE-SET,censor,سایتای سانسوری 🤬"
+  - "RULE-SET,apps,سایتای ایرانی 🇮🇷"
   - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,arvancloud,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,derakcloud,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,iranserver,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,parspack,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,irasn,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,ircidr,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,ir,سایتای ایرانی 🇮🇷"
   - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
-  - "GEOIP,ir,سایتای ایرانی 🇮🇷"
+  - "DOMAIN-SUFFIX,unimics.com,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,whatsapp,واتس آپ 🟢"
+  - "RULE-SET,steam,استیم 🖥️"
+  - "RULE-SET,SteamRegionCheck,استیم 🖥️"
+  - "RULE-SET,game,گیم 🎮"
+  - "RULE-SET,GameDownload,گیم 🎮"
+  - "RULE-SET,category-games,گیم 🎮"
+  - "RULE-SET,Xbox,گیم 🎮"
+  - "RULE-SET,discord,دیسکورد 🗣️"
+  - "RULE-SET,xiaomi_white_list,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,xiaomi_block_list,تبلیغات اپ ها 🍃"
+  - "RULE-SET,windows,ویندوز 🧊"
+  - "RULE-SET,cloudflare,کلودفلر ☁️"
+  - "RULE-SET,github,گیتهاب 🐙"
+  - "PROCESS-NAME,com.android.vending,نوع انتخاب پروکسی 🔀"
+  - "PROCESS-NAME,com.google.android.gms,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google,گوگل 🌍"
+  - "IP-CIDR,10.10.34.0/24,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,private,بدون فیلترشکن 🛡️"
   - "MATCH,نوع انتخاب پروکسی 🔀"
