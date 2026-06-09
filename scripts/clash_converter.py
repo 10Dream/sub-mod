@@ -9,29 +9,36 @@ import clash_template
 # شما می‌توانید با تغییر چیدمان (ترتیب خطوط) در priorities، اولویت هر پروتکل را جابه‌جا کنید.
 # اگر مقدار limit را برابر با -1 یا None یا "unlimited" قرار دهید، آن پروتکل بدون هیچ محدودیتی (نامحدود) ایمپورت می‌شود.
 CLASH_CONFIG = {
-    "limit_total": 600,             # حداکثر تعداد کل کانفیگ‌های خروجی
+    "limit_total": 800,             # حداکثر تعداد کل کانفیگ‌های خروجی
     "priorities": [                 # اولویت‌بندی از بالا به پایین به همراه محدودیت برای هر پروتکل
-        {"type": "anytls", "limit": 200},
+        {"type": "anytls", "limit": 300},
+        {"type": "hy2", "limit": 300},
+        {"type": "wireguard", "limit": 50},
         {"type": "vless", "limit": 300},
-        {"type": "ss", "limit": 100},
-        {"type": "ssh", "limit": 100},
-        {"type": "socks5", "limit": 100},
-        {"type": "sudoku", "limit": 100},
-        {"type": "masque", "limit": 100},
-        {"type": "trusttunnel", "limit": 50},
-        {"type": "snell", "limit": 100},
-        {"type": "openvpn", "limit": 30},
-        {"type": "tailscale", "limit": 20}, 
-        {"type": "vmess", "limit": 100},
-        {"type": "trojan", "limit": 100},
-        {"type": "hy2", "limit": 100},
-        {"type": "wireguard", "limit": 100},
-        {"type": "tuic", "limit": 100},
-        {"type": "hysteria", "limit": 100},
-        {"type": "http", "limit": 100},
+        {"type": "ss", "limit": 300},
+        {"type": "ssr", "limit": 300},
+        {"type": "ssh", "limit": 300},
+        {"type": "vmess", "limit": 300},
+        {"type": "trojan", "limit": 300},
+        {"type": "sudoku", "limit": -1},
+        {"type": "masque", "limit": -1},
+        {"type": "trusttunnel", "limit": -1},
+        {"type": "openvpn", "limit": -1},
+        {"type": "tailscale", "limit": -1},
+        {"type": "snell", "limit": -1},
+        {"type": "tuic", "limit": 50},
+        {"type": "hysteria", "limit": 50},
+        {"type": "socks5", "limit": 50},
+        {"type": "http", "limit": 20},
     ],
     "default_limit_for_others": 0  # محدودیت پیش‌فرض برای پروتکل‌هایی که در لیست بالا نیستند (0 یعنی حذف)
 }
+
+# الگوی شناسایی پروتکل‌ها جهت تفکیک خطوط به هم چسبیده
+PROTOCOL_PATTERN = re.compile(
+    r'(vless://|vmess://|trojan://|ss://|ssr://|hy2://|hysteria2://|hysteria://|wg://|wireguard://|tuic://|snell://|socks5://|socks://|http://|https://|ssh://|sudoku://|tailscale://|masque://|trusttunnel://|openvpn://)',
+    re.IGNORECASE
+)
 
 def safe_b64decode(s: str) -> str:
     """رمزگشایی ایمن رشته‌های Base64 با تنظیم پدینگ"""
@@ -57,6 +64,39 @@ def get_display_type(t: str) -> str:
     if t in ["wireguard", "wg"]: return "wg"
     if t in ["socks5", "socks"]: return "socks"
     return t
+
+def split_concatenated_links(line: str) -> list:
+    """
+    سیستم تفکیک فوق هوشمند لینک‌های متوالی و به‌هم‌چسبیده [9].
+    هرگاه در حین خواندن رشته به الگوی یکی از پروتکل‌های اشتراک برسد،
+    درک می‌کند کانفیگ قبلی خاتمه یافته و اتصال جدید آغاز شده است.
+    """
+    matches = list(PROTOCOL_PATTERN.finditer(line))
+    if not matches:
+        return [line]
+        
+    links = []
+    for i in range(len(matches)):
+        start = matches[i].start()
+        end = matches[i+1].start() if i + 1 < len(matches) else len(line)
+        link = line[start:end].strip()
+        if link:
+            links.append(link)
+    return links
+
+def get_connection_fingerprint(p: dict) -> str:
+    """
+    سیستم تولید اثر انگشت اتصالی فوق هوشمند (Smart Connection Fingerprint).
+    این سیستم فیلدهای ظاهری نظیر 'name' یا 'icon' را به طور کامل نادیده می‌گیرد و
+    پروکسی‌ها را بر اساس متغیرهای فنی و حیاتی متصل‌کننده (نظیر آی‌پی، پورت، کلیدها، مسیرها و الگوریتم‌ها)
+    یکتا می‌سازد تا از تکرار کانفیگ‌های مشابه با نام‌های متفاوت پیشگیری کند.
+    """
+    exclude_keys = {"name", "icon"}
+    core_properties = {k: v for k, v in p.items() if k not in exclude_keys}
+    try:
+        return json.dumps(core_properties, sort_keys=True)
+    except Exception:
+        return f"{p.get('type')}|{p.get('server')}|{p.get('port')}"
 
 # --- بخش پارسرهای پروتکل‌های کلاسیک و نوین کلش میهومو ---
 
@@ -625,10 +665,6 @@ def parse_proxy(line: str):
 # --- اعتبارسنجی اختصاصی کلیدهای شادوساکس ۲۰۲۲ ---
 
 def validate_ss_2022_key(cipher: str, key_b64: str) -> bool:
-    """
-    اعتبارسنجی Base64 بودن کلید Shadowsocks 2022 و همخوانی دقیق طول بایت آن با الگوریتم رمزنگاری [11].
-    هرگونه کلید معیوب یا نامنطبق با استاندارد بلافاصله رد می‌شود تا از کرش کردن کلاینت کلش جلوگیری شود.
-    """
     cipher = cipher.lower()
     parts = key_b64.split(":")
     for part in parts:
@@ -653,9 +689,9 @@ def validate_ss_2022_key(cipher: str, key_b64: str) -> bool:
         return False
         
     if "128" in cipher:
-        expected_len = 16  # ۱۶ بایت برای ۱۲۸ بیت [11]
+        expected_len = 16
     elif "256" in cipher or "chacha" in cipher:
-        expected_len = 32  # ۳۲ بایت برای ۲۵۶ بیت [11]
+        expected_len = 32
     else:
         expected_len = 32
         
@@ -702,6 +738,13 @@ def validate_proxy(p) -> bool:
         if cipher.lower().startswith("2022-"):
             if not validate_ss_2022_key(cipher, password):
                 return False
+    elif p_type == "ssr":
+        # صحت‌سنجی فیلدهای حیاتی شادوساکس‌آر
+        if not p.get("cipher") or not isinstance(p["cipher"], str) or \
+           not p.get("password") or not isinstance(p["password"], str) or \
+           not p.get("protocol") or not isinstance(p["protocol"], str) or \
+           not p.get("obfs") or not isinstance(p["obfs"], str):
+            return False
     elif p_type == "sudoku":
         if not p.get("key") or not isinstance(p["key"], str): return False
     elif p_type == "masque":
@@ -712,7 +755,7 @@ def validate_proxy(p) -> bool:
         if not p.get("ca") or not isinstance(p["ca"], str): return False
     return True
 
-# --- بخش فیلتر، مرتب‌سازی و حفظ نام اصلی به همراه رفع تکراری‌ها ---
+# --- بخش فیلتر، مرتب‌سازی و حفظ نام اصلی به همراه رفع تکراری‌ها بر اساس اثر انگشت فنی ---
 
 def process_and_filter_proxies(proxies_list):
     valid_proxies = []
@@ -721,10 +764,12 @@ def process_and_filter_proxies(proxies_list):
     for p in proxies_list:
         if not validate_proxy(p):
             continue
-        ukey = f"{p['type']}|{p['server']}|{p.get('port', 0)}"
-        if ukey in unique_keys:
+            
+        # شبیه‌سازی و تولید اثر انگشت اتصالی فنی بدون در نظر گرفتن فیلد نام
+        fingerprint = get_connection_fingerprint(p)
+        if fingerprint in unique_keys:
             continue
-        unique_keys.add(ukey)
+        unique_keys.add(fingerprint)
         valid_proxies.append(p)
         
     grouped_proxies = {}
@@ -740,15 +785,13 @@ def process_and_filter_proxies(proxies_list):
         plimit = prio.get("limit")
         
         if ptype in grouped_proxies:
-            # اعمال پشتیبانی از محدودیت بی نهایت (unlimited)
             if plimit is None or plimit == -1 or plimit in ["unlimited", "∞"]:
-                selected = grouped_proxies[ptype] # دریافت کل پروکسی‌های پروتکل بدون هیچ برشی
+                selected = grouped_proxies[ptype]
             else:
                 selected = grouped_proxies[ptype][:int(plimit)]
             final_proxies.extend(selected)
             del grouped_proxies[ptype]
             
-    # پردازش سایرین در صورت تعریف محدودیت پیش‌فرض
     default_limit = CLASH_CONFIG.get("default_limit_for_others", 0)
     if default_limit is None or default_limit == -1 or default_limit in ["unlimited", "∞"]:
         for ptype, items in grouped_proxies.items():
@@ -832,9 +875,12 @@ def convert_single_file(src_txt_path, dest_yaml_path):
             line = line.strip()
             if not line or line.startswith("#"):
                 continue
-            p = parse_proxy(line)
-            if p:
-                raw_proxies.append(p)
+                
+            split_links = split_concatenated_links(line)
+            for single_link in split_links:
+                p = parse_proxy(single_link)
+                if p:
+                    raw_proxies.append(p)
                 
     if not raw_proxies:
         return False
@@ -875,7 +921,7 @@ def run_converter_for_all(sources, normal_dir, clash_dir):
         if os.path.exists(src_path):
             success = convert_single_file(src_path, dest_path)
             if success:
-                print(f"[موفقیت] کانفیگ کلش اختصاصی منبع {name} در مسیر '{dest_path}' ایجاد شد.")
+                print(f"[موفقیت] کانفیگ کلش اختصاصی منبع {name} in مسیر '{dest_path}' ایجاد شد.")
             else:
                 print(f"[اسکیپ] تبدیل منبع {name} به دلیل عدم وجود کانفیگ‌های معتبر اسکیپ شد.")
                 
