@@ -38,7 +38,7 @@ def get_file_list(directory):
 
 def get_relative_time(filepath):
     """
-    محاسبه و تبدیل زمان آخرین تغییر فایل به صورت مدت زمان سپری شده فارسی (نامحسوس و بهینه).
+    محاسبه و تبدیل زمان آخرین تغییر فایل به صورت مدت زمان سپری شده فارسی.
     """
     if not os.path.exists(filepath):
         return "نامشخص"
@@ -68,16 +68,14 @@ def generate_markdown():
     
     now_utc = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')
     
-    # لیست کردن فایل‌های خروجی موفق در هر پوشه
+    # واکشی فایل‌های مرجع از پوشه ساب معمولی
     normal_files = get_file_list("sub/normal")
-    base64_files = get_file_list("sub/base64")
-    clash_files = get_file_list("sub/clash")
     
     markdown = f"""# ⚡️ سیستم تجمیع هوشمند و خودکار کانفیگ (V2ray & Clash)
 
 یک پروژه کاملاً پویا و ماژولار مبتنی بر گیت‌هاب اکشنز جهت دانلود، پارس، فیلترینگ دیتای تکراری (بر اساس الگوریتم اثر انگشت اتصالی فنی) و جداسازی هوشمند کانفیگ‌های متوالی به‌هم‌چسبیده. 
 
-> 🔄 **بروزرسانی خودکار:** هر ۳ ساعت یک‌بار دیتای تمام منابع واکشی شده و کانفیگ‌های معیوب فیلتر می‌شوند.
+> 🔄 **بروزرسانی خودکار:** هر ۱ ساعت یک‌بار دیتای تمام منابع واکشی شده و کانفیگ‌های معیوب فیلتر می‌شوند.
 
 ---
 
@@ -86,90 +84,55 @@ def generate_markdown():
 
 [![GitHub license](https://img.shields.io/github/license/{owner}/{repo}?style=flat-square)](https://github.com/{owner}/{repo}/blob/main/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/{owner}/{repo}?style=flat-square)](https://github.com/{owner}/{repo}/stargazers)
-[![GitHub issues](https://img.shields.io/github/issues/{owner}/{repo}?style=flat-square)](https://github.com/{owner}/{repo}/issues)
 
 ---
 
-## 🔗 لینک‌های اشتراک مستقیم (Raw Subscriptions)
+## 🔗 لینک‌های اشتراک مستقیم یکپارچه (Unified Raw Subscriptions)
 
-تمامی لینک‌های زیر به صورت مستقیم (Raw) از سرورهای گیت‌هاب تحویل داده می‌شوند و فاقد کش هستند.
+*برای استفاده، روی لینک فرمت مورد نظر خود راست‌کلیک کرده و گزینه Copy Link را انتخاب کنید.*
 
----
-
-### ۱. 📝 کانفیگ‌های متنی خام (Plain-Text Subscriptions)
-مناسب برای استفاده در کلاینت‌های اندروید، ویندوز و آیفون.
-
-| نام منبع | آدرس فایل | آخرین بروزرسانی | لینک خام (Raw) |
-| :--- | :---: | :---: | :---: |
-| **🌀 ترکیب تمام منابع (میکس)** | `mix.txt` | **{get_relative_time('sub/normal/mix.txt')}** | [🔗 دریافت لینک]({base_raw_url}/normal/mix.txt) |
+| نام منبع | 📝 اشتراک متنی خام (Normal) | 🔒 رمزگذاری‌شده (Base64) | 🧊 کلش میهومو (Clash YAML) | آخرین بروزرسانی |
+| :--- | :---: | :---: | :---: | :---: |
+| 🌀 **ترکیب تمام منابع (میکس)** | [📝 دریافت لینک]({base_raw_url}/normal/mix.txt) | [🔒 دریافت لینک]({base_raw_url}/base64/mix.txt) | [🧊 دریافت لینک]({base_raw_url}/clash/mix.yaml) | **{get_relative_time('sub/normal/mix.txt')}** |
 """
     
-    # اضافه کردن تک‌فایل‌های معمولی
+    # اضافه کردن تک‌فایل‌ها به صورت سطر به سطر در قالب جدول یکپارچه
     for f in normal_files:
         if f == "mix.txt":
             continue
-        filepath = f"sub/normal/{f}"
-        markdown += f"| 📄 {f} | `{f}` | {get_relative_time(filepath)} | [🔗 دریافت لینک]({base_raw_url}/normal/{f}) |\n"
+            
+        filepath_normal = f"sub/normal/{f}"
+        clash_filename = os.path.splitext(f)[0] + ".yaml"
         
-    markdown += f"""
----
-
-### ۲. 🔒 کانفیگ‌های انکود شده (Base64 Subscriptions)
-مناسب برای کلاینت‌های کلاسیک که فقط فرمت Base64 می‌پذیرند.
-
-| نام منبع | آدرس فایل | آخرین بروزرسانی | لینک خام (Raw) |
-| :--- | :---: | :---: | :---: |
-| **🌀 ترکیب تمام منابع (میکس)** | `mix.txt` | **{get_relative_time('sub/base64/mix.txt')}** | [🔗 دریافت لینک]({base_raw_url}/base64/mix.txt) |
-"""
-    
-    # اضافه کردن تک‌فایل‌های بیس۶۴
-    for f in base64_files:
-        if f == "mix.txt":
-            continue
-        filepath = f"sub/base64/{f}"
-        markdown += f"| 🔐 {f} | `{f}` | {get_relative_time(filepath)} | [🔗 دریافت لینک]({base_raw_url}/base64/{f}) |\n"
-
-    markdown += f"""
----
-
-### ۳. 🧊 کانفیگ‌های کلش میهومو (Clash/Mihomo YAML Subscriptions)
-مخصوص بارگذاری در کلاینت‌های کلش و نرم‌افزارهای سازگار با ساختار قوانین روتینگ هوشمند YAML [9].
-
-| نام منبع | آدرس فایل | آخرین بروزرسانی | لینک خام (Raw) |
-| :--- | :---: | :---: | :---: |
-| **🌀 ترکیب تمام منابع (میکس)** | `mix.yaml` | **{get_relative_time('sub/clash/mix.yaml')}** | [🔗 دریافت لینک]({base_raw_url}/clash/mix.yaml) |
-"""
-    
-    # اضافه کردن تک‌فایل‌های کلش
-    for f in clash_files:
-        if f == "mix.yaml":
-            continue
-        filepath = f"sub/clash/{f}"
-        markdown += f"| 🧊 {f} | `{f}` | {get_relative_time(filepath)} | [🔗 دریافت لینک]({base_raw_url}/clash/{f}) |\n"
-
+        # صحت‌سنجی فیزیکی وجود فایل‌ها در سایر فرمت‌ها برای آن سورس خاص جهت پیشگیری از خطای لینک شکسته
+        has_b64 = os.path.exists(f"sub/base64/{f}")
+        has_clash = os.path.exists(f"sub/clash/{clash_filename}")
+        
+        normal_link = f"[📝 دریافت لینک]({base_raw_url}/normal/{f})"
+        b64_link = f"[🔒 دریافت لینک]({base_raw_url}/base64/{f})" if has_b64 else "❌ ندارد"
+        clash_link = f"[🧊 دریافت لینک]({base_raw_url}/clash/{clash_filename})" if has_clash else "❌ ندارد"
+        
+        markdown += f"| 📄 **{f}** | {normal_link} | {b64_link} | {clash_link} | {get_relative_time(filepath_normal)} |\n"
+        
     markdown += """
 ---
 
-## 📱 کلاینت‌های پیشنهادی بر اساس سیستم‌عامل
-شما می‌توانید از برنامه‌های معتبر و هایپرلینک شده زیر جهت اتصال استفاده کنید:
+## 📱 کلاینت‌های پیشنهادی و مورد تأیید
+شما می‌توانید از برنامه‌های معتبر، بومی و هایپرلینک شده زیر جهت اتصال استفاده کنید:
 
-### 🤖 اندروید (Android)
-* [v2rayNG](https://github.com/2dust/v2rayNG) (مناسب برای سابسکریپشن‌های معمولی و Base64)
-* [NekoBox for Android](https://github.com/MatsuriDayo/NekoBoxForAndroid) (پشتیبانی عالی از تمام پروتکل‌ها و سابسکریپشن‌های معمولی و Base64)
-* [FlClash](https://github.com/chen08209/FlClash) (کلاینت مدرن و پایدار مخصوص سابسکریپشن‌های کلش YAML)
-* [Clash Meta for Android](https://github.com/MetaCubeX/ClashMetaForAndroid) (کلاینت رسمی و قدرتمند مخصوص سابسکریپشن‌های کلش YAML)
+### 💻 مولتی‌پلتفرم (ویندوز، اندروید، مک، لینوکس)
+* **Hiddify:** [دریافت نسخه گیت‌هاب](https://github.com/hiddify/hiddify-app) / [دریافت نسخه اپ‌استور آیفون](https://apps.apple.com/us/app/hiddify-proxy-vpn/id6596777532)
+* **Karing:** [دریافت نسخه گیت‌هاب](https://github.com/KaringX/karing) / [دریافت نسخه اپ‌استور آیفون](https://apps.apple.com/us/app/karing/id6472431552)
+* **FlClash:** [دریافت نسخه گیت‌هاب](https://github.com/chen08209/FlClash)
+* **Clash Verge Rev:** [دریافت نسخه گیت‌هاب](https://github.com/clash-verge-rev/clash-verge-rev)
+* **Throne:** [دریافت نسخه گیت‌هاب](https://github.com/throneproj/Throne)
 
-### 💻 ویندوز (Windows)
-* [v2rayN](https://github.com/2dust/v2rayN) (برنامه سبک و پرسرعت برای سابسکریپشن‌های معمولی و Base64)
-* [NekoRay](https://github.com/MatsuriDayo/nekoray) (هسته فوق‌العاده قوی برای سابسکریپشن‌های معمولی و Base64)
-* [Clash Verge Rev](https://github.com/clash-verge-rev/clash-verge-rev) (زیباترین و بهترین کلاینت دسکتاپ مخصوص سابسکریپشن‌های کلش YAML)
-* [Mihomo Party](https://github.com/mihomo-party-org/mihomo-party) (کلاینت نوین و پایدار مخصوص سابسکریپشن‌های کلش YAML)
-
-### 🍎 آیفون و مک (iOS / macOS)
-* [Shadowrocket](https://apps.apple.com/us/app/shadowrocket/id932747118) (بهترین کلاینت غیر رایگان با پشتیبانی ۱۰۰ درصدی از تمامی فرمت‌ها و ساب‌ها)
-* [V2Box](https://apps.apple.com/us/app/v2box-v2ray-client/id1639768607) (کلاینت رایگان و باکیفیت برای سابسکریپشن‌های معمولی و Base64)
-* [Streisand](https://apps.apple.com/us/app/streisand/id6450534078) (کلاینت پرسرعت و رایگان برای سابسکریپشن‌های معمولی و Base64)
-* [FoXray](https://apps.apple.com/us/app/foxray/id6444825379) (کلاینت کاربرپسند برای سابسکریپشن‌های معمولی و Base64)
+### 🍎 مخصوص سیستم‌عامل آیفون (iOS App Store)
+* [Clash Mi](https://apps.apple.com/us/app/clash-mi/id6744321968)
+* [Clash Lite](https://apps.apple.com/us/app/clash-lite/id6761357475)
+* [Nextin](https://apps.apple.com/us/app/nextin/id6754002454)
+* [ShadowClash](https://apps.apple.com/us/app/shadowclash/id6760091330)
+* [Neko Dash](https://apps.apple.com/us/app/neko-dash/id6758199321)
 
 ---
 
