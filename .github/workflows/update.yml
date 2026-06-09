@@ -2,7 +2,7 @@ name: Modular Sub Subscription Updater
 
 on:
   schedule:
-    - cron: '0 */3 * * *' # اجرا به صورت خودکار هر ۳ ساعت یک‌بار
+    - cron: '0 * * * *' # اجرا به صورت خودکار سر هر ساعت (هر ۱ ساعت یک‌بار)
   workflow_dispatch:
     inputs:
       run_mode:
@@ -42,10 +42,11 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add sub/
+          # اضافه کردن پوشه ساب و فایل ریدمی تولید شده به بخش استیج گیت
+          git add sub/ README.md
           if git diff --staged --quiet; then
             echo "هیچ تغییری برای ثبت وجود ندارد."
           else
-            git commit -m "بروزرسانی خودکار منابع اشتراک - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+            git commit -m "بروزرسانی خودکار منابع و مستندات - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
             git push
           fi
