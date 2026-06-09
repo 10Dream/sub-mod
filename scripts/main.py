@@ -11,6 +11,7 @@ import parser as src_parser
 import downloader
 import encoder
 import clash_converter
+import readme_generator
 
 def main():
     # تعریف آرگومان‌های ورودی برای کنترل ماژولار بودن عملکردها
@@ -41,6 +42,8 @@ def main():
         print("[خطا] هیچ منبع معتبری برای پردازش یافت نشد. عملیات متوقف می‌شود.")
         sys.exit(0)
         
+    mix_txt_path = os.path.join(normal_dir, "mix.txt")
+        
     # ۲. مدیریت سناریوهای مختلف بر اساس آرگومان mode
     if mode == "all":
         # دانلود منابع فعال و معتبر
@@ -51,6 +54,8 @@ def main():
         encoder.create_mixed_files(successful_sources, normal_dir, base64_dir)
         # اجرای خودکار فاز تبدیل به کلش میهومو (Clash YAML) برای تک‌تک فایلهای منابع و فایل میکس تجمیعی
         clash_converter.run_converter_for_all(successful_sources, normal_dir, clash_dir)
+        # تولید و بروزرسانی هوشمند داکیومنت خوانای README.md
+        readme_generator.generate_markdown()
         
     elif mode == "download_only":
         print("اجرای فاز دانلود منابع...")
@@ -61,6 +66,8 @@ def main():
         encoder.create_mixed_files(sources, normal_dir, base64_dir)
         # بازسازی مجدد تمام کانفیگ‌های کلش به ازای تک‌تک منابع به همراه فایل میکس
         clash_converter.run_converter_for_all(sources, normal_dir, clash_dir)
+        # بروزرسانی مستندات مخزن
+        readme_generator.generate_markdown()
         
     elif mode == "base64_only":
         print("اجرای فاز تولید کدهای بیس۶۴ اختصاصی برای فایل‌های موجود...")
@@ -70,6 +77,8 @@ def main():
         print("اجرای اختصاصی فاز ساخت کانفیگ کلش میهومو برای هر منبع...")
         # بازسازی فایل‌های مستقل کلش بدون دانلود مجدد، با خواندن از دایرکتوری sub/normal
         clash_converter.run_converter_for_all(sources, normal_dir, clash_dir)
+        # بروزرسانی مستندات مخزن
+        readme_generator.generate_markdown()
 
     print("=== فرآیند بروزرسانی با موفقیت خاتمه یافت ===")
 
