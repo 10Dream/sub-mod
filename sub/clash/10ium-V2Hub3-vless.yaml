@@ -1,0 +1,4557 @@
+global-client-fingerprint: "chrome"
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7894
+allow-lan: true
+tcp-concurrent: true
+enable-process: true
+find-process-mode: "always"
+ipv6: true
+log-level: "info"
+geo-auto-update: true
+geo-update-interval: 168
+secret: ""
+bind-address: "*"
+unified-delay: false
+disable-keep-alive: false
+keep-alive-idle: 30
+keep-alive-interval: 30
+dns:
+  enable: true
+  ipv6: true
+  respect-rules: false
+  prefer-h3: true
+  cache-algorithm: "arc"
+  use-system-hosts: true
+  use-host: true
+  listen: "0.0.0.0:53"
+  enhanced-mode: "fake-ip"
+  fake-ip-filter-mode: "blacklist"
+  fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter:
+    - "*.lan"
+    - "*.localdomain"
+    - "*.invalid"
+    - "*.localhost"
+    - "*.test"
+    - "*.local"
+    - "*.home.arpa"
+    - "time.*.com"
+    - "ntp.*.com"
+    - "*.ir"
+  default-nameserver:
+    - "8.8.8.8"
+    - "8.8.4.4"
+    - "1.1.1.1"
+    - "9.9.9.9"
+  nameserver:
+    - "https://dns.google/dns-query"
+    - "https://cloudflare-dns.com/dns-query"
+  direct-nameserver:
+    - "78.157.42.100"
+    - "78.157.42.101"
+  proxy-server-nameserver:
+    - "1.1.1.1"
+    - "8.8.8.8"
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - 8080
+        - 8880
+        - 2052
+        - 2082
+        - 2086
+        - 2095
+    TLS:
+      ports:
+        - 443
+        - 8443
+        - 2053
+        - 2083
+        - 2087
+        - 2096
+tun:
+  enable: true
+  stack: "mixed"
+  auto-route: true
+  auto-detect-interface: true
+  auto-redir: true
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+rule-providers:
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+proxies:
+  - name: "US🇺🇸 | Sudoos.global.ssl.fastly.net-80 | 16.27ms"
+    type: "vless"
+    server: "speedtest.net"
+    port: 80
+    uuid: "telegram-id-Arfilter"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/-Arfilter-TEL--@Arfilter-TEL--@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEl--@Arfilter?ed=80"
+      headers:
+        Host: "Sudoos.global.ssl.fastly.net"
+  - name: "REALITY|LT🇱🇹 | lt-cherry-01.com-8443 | 429.16ms"
+    type: "vless"
+    server: "lt-cherry-01.com"
+    port: 8443
+    uuid: "ff6fb512-147d-419a-9672-e131133f7189"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "tradingview.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "L3X1eh1Jq_6PKJ6LlwjgiWq0XNaDOqCVKgIElJ5nkVA"
+      short-id: "e0ef3d5c0aacb615"
+  - name: "TR🇹🇷 | verst.salon13.beauty-8080 | 265.56ms"
+    type: "vless"
+    server: "www.speedtest.net"
+    port: 8080
+    uuid: "ff66c846-a6ee-443a-85d5-a30439734057"
+    udp: true
+    tls: false
+    network: "httpupgrade"
+  - name: "RELAY🚩 | dev.qsaas.dev-443 | 68.65ms"
+    type: "vless"
+    server: "8.6.112.0"
+    port: 443
+    uuid: "fef4a93d-eb4f-4657-b56b-32a0dc060045"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "dev.qsaas.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "dev.qsaas.dev"
+  - name: "RELAY🚩 | dev.twistsparrow.xyz-443 | 25.12ms"
+    type: "vless"
+    server: "188.114.98.0"
+    port: 443
+    uuid: "fef4a93d-eb4f-4657-b56b-32a0dc060045"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "dev.twistsparrow.xyz"
+    ws-opts:
+      path: "/"
+  - name: "RELAY🚩 | dev.twistsparrow.xyz-443 | 3.53ms"
+    type: "vless"
+    server: "104.21.40.34"
+    port: 443
+    uuid: "fef4a93d-eb4f-4657-b56b-32a0dc060045"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "dev.twistsparrow.xyz"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "dev.twistsparrow.xyz"
+  - name: "RELAY🚩 | dev.twistsparrow.xyz-443 | 2.31ms"
+    type: "vless"
+    server: "104.17.162.123"
+    port: 443
+    uuid: "fef4a93d-eb4f-4657-b56b-32a0dc060045"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "dev.twistsparrow.xyz"
+    ws-opts:
+      path: "/"
+  - name: "RELAY🚩 | octopusss4.com-443 | 103.09ms"
+    type: "vless"
+    server: "betty.ns.cloudflare.com"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "RELAY🚩 | octopusss4.com-443 | 5.35ms"
+    type: "vless"
+    server: "89.116.46.8"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "RELAY🚩 | octopusss4.com-443 | 9.62ms"
+    type: "vless"
+    server: "89.116.46.68"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "RELAY🚩 | octopusss4.com-443 | 2.83ms"
+    type: "vless"
+    server: "89.116.46.210"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "RELAY🚩 | octopusss4.com-443 | 2.69ms"
+    type: "vless"
+    server: "66.81.247.155"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "RELAY🚩 | octopusss4.com-443 | 3.7ms"
+    type: "vless"
+    server: "45.130.125.0"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "RELAY🚩 | octopusss4.com-443 | 3ms"
+    type: "vless"
+    server: "216.24.57.7"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "RELAY🚩 | octopusss4.com-443 | 3.31ms"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "RELAY🚩 | octopusss4.com-443 | 3ms-1"
+    type: "vless"
+    server: "185.18.250.252"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "RELAY🚩 | octopusss4.com-443 | 3.74ms"
+    type: "vless"
+    server: "172.64.32.75"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "RELAY🚩 | octopusss4.com-443 | 3.04ms"
+    type: "vless"
+    server: "172.64.146.138"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "RELAY🚩 | octopusss4.com-443 | 3.34ms"
+    type: "vless"
+    server: "162.159.36.5"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "RELAY🚩 | octopusss4.com-443 | 3.28ms"
+    type: "vless"
+    server: "162.159.193.138"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "RELAY🚩 | octopusss4.com-443 | 3.37ms"
+    type: "vless"
+    server: "141.193.213.30"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "RELAY🚩 | octopusss4.com-443 | 3.27ms"
+    type: "vless"
+    server: "141.193.213.10"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "RELAY🚩 | crimson-king-301d.nexoxnet.workers.dev-2083 | 15.03ms"
+    type: "vless"
+    server: "172.67.78.254"
+    port: 2083
+    uuid: "fc8a0708-951a-4027-860f-2a154ebc4dd7"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "crimson-king-301d.nexoxnet.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "crimson-king-301d.nexoxnet.workers.dev"
+  - name: "RELAY🚩 | HovEyda-ARIAMEHR-KinG.PAgEs.Dev-443 | 17.42ms"
+    type: "vless"
+    server: "188.114.97.3"
+    port: 443
+    uuid: "fb853741-88ef-4aa0-ba2f-999f04535960"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "HovEyda-ARIAMEHR-KinG.PAgEs.Dev"
+    client-fingerprint: "randomized"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/telegram-@v2ray_alpha/?ed=2560"
+      headers:
+        Host: "HovEYda-arIamehr-KINg.pAgES.dev"
+  - name: "RELAY🚩 | bpb-worker-panel-chf.pages.dev-443 | 21.6ms"
+    type: "vless"
+    server: "108.162.192.79"
+    port: 443
+    uuid: "fb710ee0-f2d3-421c-8556-d23e5075f57e"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "bpb-worker-panel-chf.pages.dev"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/?ed=2048"
+      headers:
+        Host: "bpb-worker-panel-chf.pages.dev"
+  - name: "RELAY🚩 | germany.xydcqd.workers.dev-80 | 13.83ms"
+    type: "vless"
+    server: "104.17.15.87"
+    port: 80
+    uuid: "f929cc78-e2a1-4ce3-8051-3e9538405144"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/@WireXnet"
+      headers:
+        Host: "germany.xydcqd.workers.dev"
+  - name: "REALITY|NL🇳🇱 | 144.31.30.69-443 | 94.29ms"
+    type: "vless"
+    server: "144.31.30.69"
+    port: 443
+    uuid: "f90cc83a-97ce-446d-8f80-30d3eef3351c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "eh.vk.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
+      short-id: "6ba85179e30d4fc2"
+  - name: "REALITY|RU🇷🇺 | ser.moktana.app-443 | 147.92ms"
+    type: "vless"
+    server: "ser.moktana.app"
+    port: 443
+    uuid: "f7627a16-47bd-4900-a763-2802884064d0"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "se.moktana.app"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "C6nh6hqFTbtizgSH8vGmw2XUxsQAbAW3jPylpgGvfl4"
+      short-id: "6f3c1b8e5d2a4f7c"
+    grpc-opts:
+      grpc-service-name: "moktana.net.v1.StreamService"
+  - name: "REALITY|AM🇦🇲 | 77.91.68.70-55983 | 147.38ms"
+    type: "vless"
+    server: "77.91.68.70"
+    port: 55983
+    uuid: "f667a096-5231-4cfb-8759-92bb32473139"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yahoo.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "nWQ7b9l9X6N3PrXLgIzOvMM8iSYrqjVHEb9ikWxqYSg"
+      short-id: "0e"
+  - name: "REALITY|AT🇦🇹 | 185.224.3.41-10443 | 100.12ms"
+    type: "vless"
+    server: "185.224.3.41"
+    port: 10443
+    uuid: "f6431ff1-dec0-4a6c-be4a-ce917913b589"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "WeShDM0MdunM6N8btrY8tXlL0GT1Ah-0jcplNQf9FEo"
+  - name: "US🇺🇸 | Namaid4.global.ssl.fastly.net-80 | 18.25ms"
+    type: "vless"
+    server: "151.101.3.8"
+    port: 80
+    uuid: "f633fabf-ee7e-4562-a2c2-459848818b29"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "FI🇫🇮 | 193.233.23.121-40611 | 115.25ms"
+    type: "vless"
+    server: "193.233.23.121"
+    port: 40611
+    uuid: "f5a25ee5-ff24-41b0-80e8-ccafdc866614"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "RELAY🚩 | little-surf-1d9a.amirhost1.workers.dev-2087 | 14.37ms"
+    type: "vless"
+    server: "173.245.58.222"
+    port: 2087
+    uuid: "f4acdab7-7487-4bb0-bce0-d8a9906d44aa"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "little-surf-1d9a.amirhost1.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "little-surf-1d9a.amirhost1.workers.dev"
+  - name: "DE🇩🇪 | ov-germany1.09vpn.com-80 | 103.58ms"
+    type: "vless"
+    server: "194.76.18.60"
+    port: 80
+    uuid: "f2a72ad0-d23f-4eed-96cb-7d970b1e784d"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/vless/"
+      headers:
+        Host: "ov-germany1.09vpn.com"
+  - name: "RELAY🚩 | do-sfo3.862400.xyz-443 | 144.16ms"
+    type: "vless"
+    server: "freeyx.cloudflare88.eu.org"
+    port: 443
+    uuid: "efdbf609-cee9-4031-bca8-9327de267a2d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "do-sfo3.862400.xyz"
+    client-fingerprint: "random"
+    ws-opts:
+      path: "/announcement?ed=2048"
+      headers:
+        Host: "do-sfo3.862400.xyz"
+  - name: "RELAY🚩 | uk-03p.allhubb.info-443 | 176.55ms"
+    type: "vless"
+    server: "chatgpt.com"
+    port: 443
+    uuid: "ef8e608b-3edc-4235-8963-b6334f44b88e"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "uk-03p.allhubb.info"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/check"
+  - name: "REALITY|DE🇩🇪 | de02.lumixvpn.org-443 | 272.65ms"
+    type: "vless"
+    server: "de02.lumixvpn.org"
+    port: 443
+    uuid: "ed98e66d-5dbe-4b6d-9032-250e61eaf53f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "de02.lumixvpn.org"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "DIHjDGgu5D5u6_MR58aXikctuSMiMsXM9TQO8AjnsFE"
+      short-id: "f2036d26b59e10f9"
+  - name: "US🇺🇸 | 128.105.145.226-2022 | 20.42ms"
+    type: "vless"
+    server: "128.105.145.226"
+    port: 2022
+    uuid: "ecd67f52-5d06-4d5a-b759-ed64c197ded6"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/u/u641508409gold1780764237"
+      headers:
+        Host: "128.105.145.226"
+  - name: "RELAY🚩 | xvh.andishehparenting.com-2086 | 90.83ms"
+    type: "vless"
+    server: "217.163.76.118"
+    port: 2086
+    uuid: "ecd35e0a-941f-46a5-b76a-73551ba10925"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "RELAY🚩 | xU.aSaCO.sTorE-80 | 19.01ms"
+    type: "vless"
+    server: "208.103.161.101"
+    port: 80
+    uuid: "ecd35e0a-941f-46a5-b76a-73551ba10925"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "xU.aSaCO.sTorE"
+  - name: "RELAY🚩 | xvh.andishehparenting.com-2086 | 3.11ms"
+    type: "vless"
+    server: "208.103.161.101"
+    port: 2086
+    uuid: "ecd35e0a-941f-46a5-b76a-73551ba10925"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "US🇺🇸 | Zmaoz.Faculty.Ucdavis.Edu-443 | 32.13ms"
+    type: "vless"
+    server: "zmaoz.faculty.ucdavis.edu"
+    port: 443
+    uuid: "ec9406f9-3fc6-442d-b9f6-90c59b64eff2"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Zmaoz.Faculty.Ucdavis.Edu"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/@custom_config?ed=2560"
+      headers:
+        Host: "downloadlynet.ir."
+  - name: "REALITY|MD🇲🇩 | md.riotvpn.eu-443 | 529.1ms"
+    type: "vless"
+    server: "md.riotvpn.eu"
+    port: 443
+    uuid: "ec5e0aed-c265-4f02-9142-8ec76ee50ceb"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ads.x5.ru"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "8h8t5eBWL9oERK7xWHQLFJE5j6sZdgNDQAs3EGnNbho"
+      short-id: "b76dcf9e1183fe1b"
+  - name: "REALITY|SE🇸🇪 | auto.riotvpn.eu-443 | 616.12ms"
+    type: "vless"
+    server: "auto.riotvpn.eu"
+    port: 443
+    uuid: "ec5e0aed-c265-4f02-9142-8ec76ee50ceb"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ads.x5.ru"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "8h8t5eBWL9oERK7xWHQLFJE5j6sZdgNDQAs3EGnNbho"
+      short-id: "b76dcf9e1183fe1b"
+  - name: "REALITY|FR🇫🇷 | ads04.vxmaxpro.online-443 | 201.78ms"
+    type: "vless"
+    server: "ads04.vxmaxpro.online"
+    port: 443
+    uuid: "ec51a6c1-2e80-47ed-9d78-34a0c4333865"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "play.google.com"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "D8uvi--0Aq7Hjc7cYnfcJGY0h4SSBCrPh7wEp1mvFlw"
+      short-id: "b7b70c104ad267b8"
+  - name: "RELAY🚩 | testconnection1.iranvatanam.com-2086 | 13.8ms"
+    type: "vless"
+    server: "www.speedtest.net"
+    port: 2086
+    uuid: "eb3f5b49-2711-4ae5-a3a3-71645cdf1c67"
+    udp: true
+    tls: false
+    network: "httpupgrade"
+  - name: "RELAY🚩 | kamalnet.pages.dev-2083 | 19.12ms"
+    type: "vless"
+    server: "8.6.112.6"
+    port: 2083
+    uuid: "eb211fb7-40c8-4314-8b67-7b5f025e0f62"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "kamalnet.pages.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "kamalnet.pages.dev"
+  - name: "US🇺🇸 | live.skornorth.com-80 | 92.51ms"
+    type: "vless"
+    server: "de.fastly80-3.hosting-ip.com"
+    port: 80
+    uuid: "ea4019ed-aa5f-43eb-a967-f8aaf6ded375"
+    udp: true
+    tls: false
+    network: "ws"
+    servername: "live.skornorth.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/@custom_config?ed=2048"
+      headers:
+        Host: "leader-of-www.com"
+  - name: "REALITY|DE🇩🇪 | 5.75.196.174-443 | 96.74ms"
+    type: "vless"
+    server: "5.75.196.174"
+    port: 443
+    uuid: "e8abda90-3eeb-4662-9a07-0c2e8bca57fa"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "qr9I7Hv2oZ2F0BiWgy9DmYHp0vcFEXcNRVHkyFg3OUw"
+      short-id: "5e11ecc7d4"
+  - name: "RELAY🚩 | main.boobie.eu.cc-80 | 243.97ms"
+    type: "vless"
+    server: "172.67.211.74"
+    port: 80
+    uuid: "e84064cc-617f-4ba8-aa6f-13e920fd2610"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "main.boobie.eu.cc"
+  - name: "RELAY🚩 | main.boobie.eu.cc-80 | 3.53ms"
+    type: "vless"
+    server: "104.21.23.131"
+    port: 80
+    uuid: "e84064cc-617f-4ba8-aa6f-13e920fd2610"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "main.boobie.eu.cc"
+  - name: "NL🇳🇱 | SC-TheNetherlands2.09vpn.com-80 | 122.36ms"
+    type: "vless"
+    server: "sc-thenetherlands2.09vpn.com"
+    port: 80
+    uuid: "e73df646-1f62-41bf-8c50-653497d603d0"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/vless/"
+      headers:
+        Host: "SC-TheNetherlands2.09vpn.com"
+  - name: "REALITY|NL🇳🇱 | leg.goodmaximum.com-443 | 122.91ms"
+    type: "vless"
+    server: "leg.goodmaximum.com"
+    port: 443
+    uuid: "e653f585-9924-002d-8d5d-c15c3ab95270"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "workspace.sablefrost.com"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "fPSR5GZpxhOV6Rh7VzMtS4AeRN7ipyNX4waG9JzJzxQ"
+    grpc-opts:
+      grpc-service-name: "QToNrKDvQT5AfnFM"
+  - name: "RELAY🚩 | ftp.singoshop.ir-8443 | 183.54ms"
+    type: "vless"
+    server: "chatgpt.com"
+    port: 8443
+    uuid: "e60ca793-8af3-49c9-9bc4-4e0a8de1859d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ftp.singoshop.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "ftp.singoshop.ir"
+  - name: "RELAY🚩 | ir1.airpanel.top-2053 | 55.57ms"
+    type: "vless"
+    server: "162.159.36.5"
+    port: 2053
+    uuid: "e5f8a9f6-f164-479b-b3b5-b90f213c7145"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ir1.airpanel.top"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "ir1.airpanel.top"
+  - name: "RELAY🚩 | ir1.airpanel.top-2053 | 3.28ms"
+    type: "vless"
+    server: "162.159.36.20"
+    port: 2053
+    uuid: "e5f8a9f6-f164-479b-b3b5-b90f213c7145"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ir1.airpanel.top"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "ir1.airpanel.top"
+  - name: "RELAY🚩 | ir1.airpanel.top-2053 | 3.27ms"
+    type: "vless"
+    server: "104.16.250.22"
+    port: 2053
+    uuid: "e5f8a9f6-f164-479b-b3b5-b90f213c7145"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ir1.airpanel.top"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "ir1.airpanel.top"
+  - name: "REALITY|TR🇹🇷 | 83.217.9.140-8443 | 129.87ms"
+    type: "vless"
+    server: "83.217.9.140"
+    port: 8443
+    uuid: "e58fab770ea343218b0fe8a84c176c64"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "apple.com"
+    client-fingerprint: "random"
+    reality-opts:
+      public-key: "H5Gvl2XvCOOCRokfx_P9AwLGioo15QWaqvJptvlkhDg"
+      short-id: "aabbccdd"
+  - name: "DK🇩🇰 | 45.148.31.0-15855 | 95.35ms"
+    type: "vless"
+    server: "45.148.31.0"
+    port: 15855
+    uuid: "e4fc4761-154f-490e-bbaa-b4fa193f1073"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+  - name: "REALITY|DE🇩🇪 | 89.167.25.28-11005 | 117.2ms"
+    type: "vless"
+    server: "89.167.25.28"
+    port: 11005
+    uuid: "e4e7866d-920b-4a53-a8e2-6ae9b2a42fc2"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "tPxRwVtrFklP9kJ8kWgHIcR-XSBBkZiYbwGCAaBrtgE"
+      short-id: "f98c"
+  - name: "RELAY🚩 | pqh30v5.carwashipdir.shop-443 | 16ms"
+    type: "vless"
+    server: "172.67.249.36"
+    port: 443
+    uuid: "e4824193-4f54-453b-d037-88368e85ef0e"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "pqh30v5.carwashipdir.shop"
+    alpn:
+      - "h2"
+  - name: "REALITY|AE🇦🇪 | 85.234.73.125-13278 | 183.88ms"
+    type: "vless"
+    server: "85.234.73.125"
+    port: 13278
+    uuid: "e3115c84-266b-4c46-b3f2-16cc3263d555"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "yahoo.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "lZhnPs3mM0yaBLd2jWaQoX3DVaXz4l-t9SdKr0vUy1U"
+      short-id: "fb8e0edb66000f28"
+    grpc-opts:
+      grpc-service-name: "xyz"
+  - name: "RELAY🚩 | bustancloudd.primenet3.shop-2082 | 21.5ms"
+    type: "vless"
+    server: "45.130.125.160"
+    port: 2082
+    uuid: "e3115c84-266b-4c46-b3f2-16cc3263d555"
+    udp: true
+    tls: false
+    network: "httpupgrade"
+  - name: "US🇺🇸 | superip2.global.ssl.fastly.net-80 | 7.27ms"
+    type: "vless"
+    server: "151.101.193.57"
+    port: 80
+    uuid: "e3115c84-266b-4c46-b3f2-16cc3263d555"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "superip2.global.ssl.fastly.net"
+  - name: "RELAY🚩 | 37cdnws.iamali.info-443 | 176.98ms"
+    type: "vless"
+    server: "nelly.ns.cloudflare.com"
+    port: 443
+    uuid: "e277ac9b-3225-4381-a9fb-3585419f7142"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "37cdnws.iamali.info"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http%2F1.1"
+    ws-opts:
+      path: "/37cdnws"
+      headers:
+        Host: "37cdnws.iamali.info"
+  - name: "RELAY🚩 | 35cdnws.frnstatic.info-443 | 173.45ms"
+    type: "vless"
+    server: "172.64.35.193"
+    port: 443
+    uuid: "e277ac9b-3225-4381-a9fb-3585419f7142"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "35cdnws.frnstatic.info"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/35cdnws"
+      headers:
+        Host: "35cdnws.frnstatic.info"
+  - name: "RELAY🚩 | 37cdnws.iamali.info-443 | 3.67ms"
+    type: "vless"
+    server: "172.64.32.209"
+    port: 443
+    uuid: "e277ac9b-3225-4381-a9fb-3585419f7142"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "37cdnws.iamali.info"
+    client-fingerprint: "firefox"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/37cdnws"
+      headers:
+        Host: "37cdnws.iamali.info"
+  - name: "RELAY🚩 | 37cdnws.iamali.info-443 | 3.02ms"
+    type: "vless"
+    server: "108.162.192.209"
+    port: 443
+    uuid: "e277ac9b-3225-4381-a9fb-3585419f7142"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "37cdnws.iamali.info"
+    client-fingerprint: "firefox"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/37cdnws"
+      headers:
+        Host: "37cdnws.iamali.info"
+  - name: "RELAY🚩 | jp.aniua.qzz.io-2096 | 89.25ms"
+    type: "vless"
+    server: "172.64.47.168"
+    port: 2096
+    uuid: "e258977b-e413-4718-a3af-02d75492c349"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "jp.aniua.qzz.io"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "jp.aniua.qzz.io"
+  - name: "RELAY🚩 | cloudflare.vhub.pro-443 | 14.33ms"
+    type: "vless"
+    server: "158.160.252.176"
+    port: 443
+    uuid: "e2350ba4-16aa-455e-ae8b-f65102227cf4"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cloudflare.vhub.pro"
+    ws-opts:
+      path: "/sequre/ws"
+      headers:
+        Host: "cloudflare.vhub.pro"
+  - name: "RELAY🚩 | pages.dev-443 | 9.52ms"
+    type: "vless"
+    server: "www.speedtest.net"
+    port: 443
+    uuid: "e21b205e-fd61-4140-9112-e7570f62de63"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "pages.dev"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/@custom_config?ed=2560"
+      headers:
+        Host: "jobinja.pages.dev"
+  - name: "FR🇫🇷 | ratatouille.adaspoloandco.com-8443 | 155.21ms"
+    type: "vless"
+    server: "104.27.66.214"
+    port: 8443
+    uuid: "e122cfd0-0197-46c7-b4a9-ba9891c9eff7"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ratatouille.adaspoloandco.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/admin.php"
+      headers:
+        Host: "ratatouille.adaspoloandco.com"
+  - name: "REALITY|TR🇹🇷 | 46.31.76.3-80 | 132.03ms"
+    type: "vless"
+    server: "46.31.76.3"
+    port: 80
+    uuid: "e05482d4-ba12-41ac-af45-2bf2afc56b4a"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "journalofbigdata.springeropen.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "oTX6mQJYxkmmdF7Rq_stAKX_hYoOMXGaWmoblFl2zgo"
+      short-id: "5942e2"
+  - name: "REALITY|JP🇯🇵 | 31.76.91.24-443 | 150.72ms"
+    type: "vless"
+    server: "31.76.91.24"
+    port: 443
+    uuid: "dfc0cb9d-f005-41b0-848c-7703bd39d0de"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "jp.s3-cloud.org"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "QVkd5uoSbUA7rHVLtIoJB4iRp4l0zuw0H9qzQBh3lHs"
+      short-id: "7a3f9e2b1c8d4f6a"
+  - name: "REALITY|JP🇯🇵 | 31.76.91.21-443 | 150.84ms"
+    type: "vless"
+    server: "31.76.91.21"
+    port: 443
+    uuid: "dfc0cb9d-f005-41b0-848c-7703bd39d0de"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "jp.s3-cloud.org"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "QVkd5uoSbUA7rHVLtIoJB4iRp4l0zuw0H9qzQBh3lHs"
+      short-id: "7a3f9e2b1c8d4f6a"
+  - name: "REALITY|IT🇮🇹 | 31.76.113.8-443 | 101.33ms"
+    type: "vless"
+    server: "31.76.113.8"
+    port: 443
+    uuid: "dfc0cb9d-f005-41b0-848c-7703bd39d0de"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "it.s3-cloud.xyz"
+    client-fingerprint: "edge"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "zPi2L9vrl2hkaCTT3lZTzBna-qz6JrteRjDz1i-DsxY"
+      short-id: "7a3f9e2b1c8d4f6a"
+  - name: "REALITY|IT🇮🇹 | 31.76.113.69-443 | 94.74ms"
+    type: "vless"
+    server: "31.76.113.69"
+    port: 443
+    uuid: "dfc0cb9d-f005-41b0-848c-7703bd39d0de"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "it.s3-cloud.xyz"
+    client-fingerprint: "edge"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "zPi2L9vrl2hkaCTT3lZTzBna-qz6JrteRjDz1i-DsxY"
+      short-id: "7a3f9e2b1c8d4f6a"
+  - name: "REALITY|IT🇮🇹 | 31.76.113.60-443 | 100.98ms"
+    type: "vless"
+    server: "31.76.113.60"
+    port: 443
+    uuid: "dfc0cb9d-f005-41b0-848c-7703bd39d0de"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "it.s3-cloud.xyz"
+    client-fingerprint: "edge"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "zPi2L9vrl2hkaCTT3lZTzBna-qz6JrteRjDz1i-DsxY"
+      short-id: "7a3f9e2b1c8d4f6a"
+  - name: "REALITY|IT🇮🇹 | 31.76.113.51-443 | 94.77ms"
+    type: "vless"
+    server: "31.76.113.51"
+    port: 443
+    uuid: "dfc0cb9d-f005-41b0-848c-7703bd39d0de"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "it.s3-cloud.xyz"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "zPi2L9vrl2hkaCTT3lZTzBna-qz6JrteRjDz1i-DsxY"
+      short-id: "7a3f9e2b1c8d4f6a"
+  - name: "REALITY|IT🇮🇹 | 31.76.113.34-443 | 94.65ms"
+    type: "vless"
+    server: "31.76.113.34"
+    port: 443
+    uuid: "dfc0cb9d-f005-41b0-848c-7703bd39d0de"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "it.s3-cloud.xyz"
+    client-fingerprint: "edge"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "zPi2L9vrl2hkaCTT3lZTzBna-qz6JrteRjDz1i-DsxY"
+      short-id: "7a3f9e2b1c8d4f6a"
+  - name: "REALITY|IT🇮🇹 | 31.76.113.26-443 | 95.3ms"
+    type: "vless"
+    server: "31.76.113.26"
+    port: 443
+    uuid: "dfc0cb9d-f005-41b0-848c-7703bd39d0de"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "it.s3-cloud.xyz"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "zPi2L9vrl2hkaCTT3lZTzBna-qz6JrteRjDz1i-DsxY"
+      short-id: "7a3f9e2b1c8d4f6a"
+  - name: "REALITY|IT🇮🇹 | 31.76.113.24-443 | 94.74ms"
+    type: "vless"
+    server: "31.76.113.24"
+    port: 443
+    uuid: "dfc0cb9d-f005-41b0-848c-7703bd39d0de"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "it.s3-cloud.xyz"
+    client-fingerprint: "edge"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "zPi2L9vrl2hkaCTT3lZTzBna-qz6JrteRjDz1i-DsxY"
+      short-id: "7a3f9e2b1c8d4f6a"
+  - name: "REALITY|IT🇮🇹 | 31.76.113.16-443 | 92.26ms"
+    type: "vless"
+    server: "31.76.113.16"
+    port: 443
+    uuid: "dfc0cb9d-f005-41b0-848c-7703bd39d0de"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "it.s3-cloud.xyz"
+    client-fingerprint: "edge"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "zPi2L9vrl2hkaCTT3lZTzBna-qz6JrteRjDz1i-DsxY"
+      short-id: "7a3f9e2b1c8d4f6a"
+  - name: "REALITY|IT🇮🇹 | 31.76.113.128-443 | 95.79ms"
+    type: "vless"
+    server: "31.76.113.128"
+    port: 443
+    uuid: "dfc0cb9d-f005-41b0-848c-7703bd39d0de"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "it.s3-cloud.xyz"
+    client-fingerprint: "edge"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "zPi2L9vrl2hkaCTT3lZTzBna-qz6JrteRjDz1i-DsxY"
+      short-id: "7a3f9e2b1c8d4f6a"
+  - name: "REALITY|IT🇮🇹 | 31.76.113.111-443 | 92.33ms"
+    type: "vless"
+    server: "31.76.113.111"
+    port: 443
+    uuid: "dfc0cb9d-f005-41b0-848c-7703bd39d0de"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "it.s3-cloud.xyz"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "zPi2L9vrl2hkaCTT3lZTzBna-qz6JrteRjDz1i-DsxY"
+      short-id: "7a3f9e2b1c8d4f6a"
+  - name: "REALITY|IT🇮🇹 | 31.76.113.107-443 | 95.1ms"
+    type: "vless"
+    server: "31.76.113.107"
+    port: 443
+    uuid: "dfc0cb9d-f005-41b0-848c-7703bd39d0de"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "it.s3-cloud.xyz"
+    client-fingerprint: "edge"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "zPi2L9vrl2hkaCTT3lZTzBna-qz6JrteRjDz1i-DsxY"
+      short-id: "7a3f9e2b1c8d4f6a"
+  - name: "RELAY🚩 | defensive-alarm17rrmk7y7y.samsungovens.ir.-2053 | 180.47ms"
+    type: "vless"
+    server: "104.19.229.21"
+    port: 2053
+    uuid: "dccfaf5b-634c-4b04-b5cc-fe78cc201dcf"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "defensive-alarm17rrmk7y7y.samsungovens.ir."
+    ws-opts:
+      path: "/?ed=2048"
+      headers:
+        Host: "defensive-alarm17rrmk7y7y.samsungovens.ir."
+  - name: "REALITY|DE🇩🇪 | de.ko.prod.n7.homes-8443 | 111.33ms"
+    type: "vless"
+    server: "de.ko.prod.n7.homes"
+    port: 8443
+    uuid: "dcba77d7-bb59-4802-b32c-37fd7011fca4"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "google.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "upDCW94g-pSYQrmXvOrTVYlwBUrSKhYFF9QwrqObdVo"
+      short-id: "3ca620a7ed5f3196"
+  - name: "REALITY|DE🇩🇪 | 23.26.37.119-8443 | 96.9ms"
+    type: "vless"
+    server: "23.26.37.119"
+    port: 8443
+    uuid: "dcba77d7-bb59-4802-b32c-37fd7011fca4"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "google.com"
+    reality-opts:
+      public-key: "upDCW94g-pSYQrmXvOrTVYlwBUrSKhYFF9QwrqObdVo"
+      short-id: "3ca620a7ed5f3196"
+  - name: "RELAY🚩 | 0221.enedrehd.workers.dev-2095 | 23.21ms"
+    type: "vless"
+    server: "195.85.59.161"
+    port: 2095
+    uuid: "dbf403f4-b871-4446-8712-675562dbbb7b"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/?ed=2560"
+      headers:
+        Host: "0221.enedrehd.workers.dev"
+  - name: "REALITY|RU🇷🇺 | ru3.sipipro.su-443 | 148.25ms"
+    type: "vless"
+    server: "ru3.sipipro.su"
+    port: 443
+    uuid: "db62e9f2-49a3-4e9d-a59b-0bf77f102420"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ya.ru"
+    client-fingerprint: "qq"
+    reality-opts:
+      public-key: "NsPdlzraIawCLwtIUGk5demmtYJcBedeR_3qA2kvMF0"
+      short-id: "eacc9f154bc36612"
+  - name: "US🇺🇸 | tignaltofansv8.global.ssl.fastly.net-80 | 7.45ms"
+    type: "vless"
+    server: "nytimes.com"
+    port: 80
+    uuid: "da48859d-edf9-4a8c-a026-80910591f284"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "US🇺🇸 | tignaltofansv8.global.ssl.fastly.net-80 | 7.04ms"
+    type: "vless"
+    server: "fastly.com"
+    port: 80
+    uuid: "da48859d-edf9-4a8c-a026-80910591f284"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "RELAY🚩 | afrcloud22.mmv.kr-443 | 416.15ms"
+    type: "vless"
+    server: "104.26.15.21"
+    port: 443
+    uuid: "d9a83363-40a6-4a21-9dbe-cb2b7d287048"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "afrcloud22.mmv.kr"
+    ws-opts:
+      path: "/107.174.121.122=443"
+      headers:
+        Host: "afrcloud22.mmv.kr"
+  - name: "RELAY🚩 | server1.poludiro.workers.dev-8080 | 13.74ms"
+    type: "vless"
+    server: "server1.poludiro.workers.dev"
+    port: 8080
+    uuid: "d98c1be3-7837-4d8a-a9fc-05e7a807ccb0"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/eyJqdW5rIjoiSWZqSHF3Q2RLIiwicHJvdG9jb2wiOiJ2bCIsIm1vZGUiOiJwcmVmaXgiLCJwYW5lbElQcyI6WyJbMmEwMjo4OTg6MTQ2OjY0OjpdIl19?ed=2560"
+      headers:
+        Host: "server1.poludiro.workers.dev"
+  - name: "RELAY🚩 | v2.raycv05.workers.dev-80 | 21.92ms"
+    type: "vless"
+    server: "172.67.176.195"
+    port: 80
+    uuid: "d94a5437-c4a6-469f-8d8f-af25a717f1a8"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "v2.raycv05.workers.dev"
+  - name: "REALITY|LT🇱🇹 | 130.12.171.120-20001 | 110.17ms"
+    type: "vless"
+    server: "130.12.171.120"
+    port: 20001
+    uuid: "d93df48c-df73-452e-b380-422b9c2b434e"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.vu.lt"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "imrqcALk8xmqGKEdO_VZRNxu6eaH8sNC7VeXkqQft1A"
+      short-id: "ea13"
+  - name: "REALITY|NL🇳🇱 | 77.246.109.191-34045 | 93.7ms"
+    type: "vless"
+    server: "77.246.109.191"
+    port: 34045
+    uuid: "d8dd94fd-540e-461d-b5d4-acebef02c22a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "visit-this-invitation-link-to-join-tg-enkelte-notif.ekt.me"
+    reality-opts:
+      public-key: "cDaDzPr3PlS3NM8lreHZbdo-Mhqz8vMBzMSkHXhGIUA"
+      short-id: "e8ab71d0"
+  - name: "RELAY🚩 | DiprOX.pages.DEV-443 | 24.8ms"
+    type: "vless"
+    server: "v1.dabache.top"
+    port: 443
+    uuid: "d89d6641-3b1a-4f51-a194-9c9109fd21b6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "DiprOX.pages.DEV"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/Tel-@V2rayAlpha"
+      headers:
+        Host: "DiprOX.pages.DEV"
+  - name: "RELAY🚩 | DiprOX.pages.DEV-443 | 3.55ms"
+    type: "vless"
+    server: "creativecommons.org"
+    port: 443
+    uuid: "d89d6641-3b1a-4f51-a194-9c9109fd21b6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "DiprOX.pages.DEV"
+    ws-opts:
+      path: "/assets"
+      headers:
+        Host: "diprox.pages.dev"
+  - name: "RELAY🚩 | DiprOX.pages.DEV-443 | 4.35ms"
+    type: "vless"
+    server: "108.162.198.154"
+    port: 443
+    uuid: "d89d6641-3b1a-4f51-a194-9c9109fd21b6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "DiprOX.pages.DEV"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/Tel-@V2rayAlpha"
+      headers:
+        Host: "diprox.pages.dev"
+  - name: "REALITY|NL🇳🇱 | 213.176.16.74-443 | 88.73ms"
+    type: "vless"
+    server: "213.176.16.74"
+    port: 443
+    uuid: "d7fbe279896e40118c23d15fe537dddd"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "apple.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "XNL_xB1Spd09CQQQGnjeMPPK6_tPnFuYI_nLKk3EiWc"
+      short-id: "aabbccdd"
+  - name: "REALITY|US🇺🇸 | nether2cxc.ignorelist.com-443 | 190.44ms"
+    type: "vless"
+    server: "nether2cxc.ignorelist.com"
+    port: 443
+    uuid: "d78c12c4-6927-40b8-8550-ed9be00334da"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "nether2cxc.ignorelist.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "MNfRDUdBmptd-zKqgIljosss5-oNO44Lt68hgVwa_Qo"
+      short-id: "22f2d3f943dfcb40"
+  - name: "REALITY|US🇺🇸 | cxcczechia1.chickenkiller.com-443 | 167.62ms"
+    type: "vless"
+    server: "cxcczechia1.chickenkiller.com"
+    port: 443
+    uuid: "d78c12c4-6927-40b8-8550-ed9be00334da"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cxcczechia1.chickenkiller.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "K7no4vVZPV-eW6uFsq2xP3m5bwuau4bSvRU1bnFs80k"
+      short-id: "fcfb56dcc1d63834"
+  - name: "REALITY|FI🇫🇮 | 65.109.211.154-443 | 116.28ms"
+    type: "vless"
+    server: "65.109.211.154"
+    port: 443
+    uuid: "d76542c9-916e-41bb-ad0d-fa37971a8b2e"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "yahoo.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "CM7AaS7XYEohx4ZNbecHqTqhyX9-Q4MQKlHji1xxI2I"
+      short-id: "4b272f845593"
+  - name: "US🇺🇸 | live.skornorth.com-443 | 10.06ms"
+    type: "vless"
+    server: "live.skornorth.com"
+    port: 443
+    uuid: "d6252cc5-2f53-4966-ad3b-99285b891879"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "live.skornorth.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/@custom_config?ed=2048"
+      headers:
+        Host: "soft-sun.com"
+  - name: "US🇺🇸 | 77.110.127.191-9443 | 15.46ms"
+    type: "vless"
+    server: "77.110.127.191"
+    port: 9443
+    uuid: "d3f7ef37-faab-4679-9c22-681c9167f7a9"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/pourya"
+  - name: "RELAY🚩 | xxx.donated003.workers.dev-443 | 40.45ms"
+    type: "vless"
+    server: "::ffff:104.17.110.12"
+    port: 443
+    uuid: "d342d11e-d424-4583-b36e-524ab1f0afa4"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "xxx.donated003.workers.dev"
+    ws-opts:
+      path: "/@V2VIPCHANNEL/?ed=2048"
+      headers:
+        Host: "xxx.donated003.workers.dev"
+  - name: "RELAY🚩 | fuckingcloudflare.2-5e8.workers.dev-2095 | 20.21ms"
+    type: "vless"
+    server: "45.85.118.93"
+    port: 2095
+    uuid: "d342d11e-d424-4583-b36e-524ab1f0afa4"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/TM-AZARBAYJAB1TM-AZARBAYJAB1?ed=2560"
+      headers:
+        Host: "fuckingcloudflare.2-5e8.workers.dev"
+  - name: "RELAY🚩 | baipiao1.curly-train.pages.dev-2087 | 18.62ms"
+    type: "vless"
+    server: "3254.outline-vpn.cloud"
+    port: 2087
+    uuid: "d342d11e-d424-4583-b36e-524ab1f0afa4"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "baipiao1.curly-train.pages.dev"
+    ws-opts:
+      path: "/?ed=2048"
+      headers:
+        Host: "baipiao1.curly-train.pages.dev"
+  - name: "RELAY🚩 | newwk1.f1w.de5.net-2083 | 169.37ms"
+    type: "vless"
+    server: "162.159.36.20"
+    port: 2083
+    uuid: "d342d11e-d424-4583-b36e-524ab1f0afa4"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "newwk1.f1w.de5.net"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "newwk1.f1w.de5.net"
+  - name: "RELAY🚩 | 1750293123492.china.baidu.bilibili.china.aeko.cn-8080 | 29.25ms"
+    type: "vless"
+    server: "141.101.121.108"
+    port: 8080
+    uuid: "d342d11e-d424-4583-b36e-524ab1f0afa4"
+    udp: true
+    tls: false
+    network: "ws"
+    client-fingerprint: "randomized"
+    ws-opts:
+      path: "/?ed=2048"
+      headers:
+        Host: "1750293123492.china.baidu.bilibili.china.aeko.cn"
+  - name: "REALITY|RU🇷🇺 | youtube.happvpn.com-443 | 211.63ms"
+    type: "vless"
+    server: "youtube.happvpn.com"
+    port: 443
+    uuid: "d2de6d6d-4735-4fe3-b4b6-00a81ced69f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdnjs.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "MNTWCLyV7EquFn-J0a6KRlQZ0dt6QY5mmu7Dq8uDkxw"
+      short-id: "4c02bbbfa833b3b6"
+  - name: "REALITY|FI🇫🇮 | fi.srv.happvpn.com-443 | 123.82ms"
+    type: "vless"
+    server: "fi.srv.happvpn.com"
+    port: 443
+    uuid: "d2de6d6d-4735-4fe3-b4b6-00a81ced69f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdnjs.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "MNTWCLyV7EquFn-J0a6KRlQZ0dt6QY5mmu7Dq8uDkxw"
+      short-id: "4c02bbbfa833b3b6"
+  - name: "RELAY🚩 | rAyAn-007.fOtOn.dPdNs.oRg-443 | 85.48ms"
+    type: "vless"
+    server: "162.159.141.147"
+    port: 443
+    uuid: "d2d0f796-edb0-427a-af32-ae360679f9e7"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "rAyAn-007.fOtOn.dPdNs.oRg"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "rayan-007.foton.dpdns.org"
+  - name: "RELAY🚩 | rahgozar.italiantourism.net.-2087 | 39.66ms"
+    type: "vless"
+    server: "www.tgju.org"
+    port: 2087
+    uuid: "d1b421cc-ebaf-48cf-bf12-e7947af11c53"
+    udp: true
+    tls: true
+    network: "httpupgrade"
+    servername: "rahgozar.italiantourism.net."
+    alpn:
+      - "http/1.1"
+  - name: "RELAY🚩 | ads.ruangguru.com.cyylr.eu.cc-443 | 3.08ms"
+    type: "vless"
+    server: "104.18.153.188"
+    port: 443
+    uuid: "d08d180d-cb07-4d82-b1bd-1e42fa523cd7"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ads.ruangguru.com.cyylr.eu.cc"
+    ws-opts:
+      path: "/sg-orcl"
+      headers:
+        Host: "ads.ruangguru.com.cyylr.eu.cc"
+  - name: "RELAY🚩 | azadnet-btq.pages.dev-443 | 17.79ms"
+    type: "vless"
+    server: "198.62.62.4"
+    port: 443
+    uuid: "d0298536-d670-4045-bbb1-ddd5ea68683e"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "azadnet-btq.pages.dev"
+    client-fingerprint: "randomized"
+    ws-opts:
+      path: "/azadnet-btq.pages.dev/?ed=2560&PROT_TYPE=vless"
+      headers:
+        Host: "azadnet-btq.pages.dev"
+  - name: "RELAY🚩 | azadnet-3zp.pages.dev-443 | 15.83ms"
+    type: "vless"
+    server: "172.64.35.205"
+    port: 443
+    uuid: "d0298536-d670-4045-bbb1-ddd5ea68683e"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "azadnet-3zp.pages.dev"
+    client-fingerprint: "randomized"
+    ws-opts:
+      path: "/azadnet-3zp.pages.dev/?ed=2560&PROT_TYPE=vless"
+      headers:
+        Host: "azadnet-3zp.pages.dev"
+  - name: "RELAY🚩 | azadnet-3zp.pages.dev-443 | 4.05ms"
+    type: "vless"
+    server: "162.159.44.205"
+    port: 443
+    uuid: "d0298536-d670-4045-bbb1-ddd5ea68683e"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "azadnet-3zp.pages.dev"
+    client-fingerprint: "randomized"
+    ws-opts:
+      path: "/azadnet-3zp.pages.dev/?ed=2560&PROT_TYPE=vless"
+      headers:
+        Host: "azadnet-3zp.pages.dev"
+  - name: "RELAY🚩 | azadnet-bjv.pages.dev-443 | 20.95ms"
+    type: "vless"
+    server: "108.162.195.209"
+    port: 443
+    uuid: "d0298536-d670-4045-bbb1-ddd5ea68683e"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "azadnet-bjv.pages.dev"
+    client-fingerprint: "randomized"
+    ws-opts:
+      path: "/azadnet-bjv.pages.dev/?ed=2560&PROT_TYPE=vless"
+      headers:
+        Host: "azadnet-bjv.pages.dev"
+  - name: "RELAY🚩 | zh.hollowspot.ir-8443 | 176.46ms"
+    type: "vless"
+    server: "45.130.125.69"
+    port: 8443
+    uuid: "cff6f361-828a-43c8-a8b5-8d10b32e57fb"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "zh.hollowspot.ir"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "zh.hollowspot.ir"
+  - name: "RELAY🚩 | de1.nagona.top-443 | 73.58ms"
+    type: "vless"
+    server: "104.19.229.2"
+    port: 443
+    uuid: "cff2c9e5-8403-436e-a60a-48e558453ab8"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "de1.nagona.top"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "de1.nagona.top"
+  - name: "DE🇩🇪 | de1.accuratenetworkchecker.ir-443 | 267.55ms"
+    type: "vless"
+    server: "de1.accuratenetworkchecker.ir"
+    port: 443
+    uuid: "cfb5c226-e3ba-41e9-9ff4-24dea7925774"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "US🇺🇸 | speedtest.net-443 | 2.07ms"
+    type: "vless"
+    server: "151.101.66.133"
+    port: 443
+    uuid: "cefffd1d-cc58-4560-b4d1-44f1af528f30"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "speedtest.net"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "fraud.chase"
+  - name: "REALITY|RU🇷🇺 | 193.233.251.62-443 | 118.96ms"
+    type: "vless"
+    server: "193.233.251.62"
+    port: 443
+    uuid: "ce86669b-9ae8-453a-a15c-4e4aeda80aac"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "eh.vk.com"
+    client-fingerprint: "edge"
+    reality-opts:
+      public-key: "lggRqXlpIE3Pirqc1G_CZUn3oITFtmzvYNvGsEdEcDA"
+      short-id: "999999"
+  - name: "RELAY🚩 | 3-7ny.pages.dev-443 | 15.3ms"
+    type: "vless"
+    server: "ip.sb"
+    port: 443
+    uuid: "ce069292-c8bf-40dd-a6b1-87818a1e64e9"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "3-7ny.pages.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "3-7ny.pages.dev"
+  - name: "RELAY🚩 | 1-brc.pages.dev-443 | 15.32ms"
+    type: "vless"
+    server: "dnew.cc"
+    port: 443
+    uuid: "ce069292-c8bf-40dd-a6b1-87818a1e64e9"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "1-brc.pages.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "1-brc.pages.dev"
+  - name: "RELAY🚩 | 3-2ll.pages.dev-443 | 17.2ms"
+    type: "vless"
+    server: "31.130.129.33"
+    port: 443
+    uuid: "ce069292-c8bf-40dd-a6b1-87818a1e64e9"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "3-2ll.pages.dev"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "3-2ll.pages.dev"
+  - name: "JP🇯🇵 | 134.122.194.186-443 | 310.16ms"
+    type: "vless"
+    server: "134.122.194.186"
+    port: 443
+    uuid: "ce069292-c8bf-40dd-a6b1-87818a1e64e9"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "US🇺🇸 | play.google.com-80 | 5.36ms"
+    type: "vless"
+    server: "tala.shompolexy.shop"
+    port: 80
+    uuid: "cd8f94cd-6ba4-4b17-bffc-35cafcbf01e6"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/Shomp"
+      headers:
+        Host: "play.google.com"
+  - name: "RELAY🚩 | ircp-617.pages.dev.-443 | 12.91ms"
+    type: "vless"
+    server: "172.66.47.54"
+    port: 443
+    uuid: "cc771b27-27ad-4bf3-bc42-f42cd673edbe"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ircp-617.pages.dev."
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/?ed"
+      headers:
+        Host: "ircp-617.pages.dev."
+  - name: "RELAY🚩 | cyylr.eu.cc-443 | 278.61ms"
+    type: "vless"
+    server: "202.37.33.80"
+    port: 443
+    uuid: "cc752a3e-1537-4e86-bb50-1b897bf7b33c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cyylr.eu.cc"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/sg-melbi"
+      headers:
+        Host: "cyylr.eu.cc"
+  - name: "RELAY🚩 | cyylr.eu.cc-443 | 3.28ms"
+    type: "vless"
+    server: "104.19.229.21"
+    port: 443
+    uuid: "cc752a3e-1537-4e86-bb50-1b897bf7b33c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cyylr.eu.cc"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/sg-melbi"
+      headers:
+        Host: "cyylr.eu.cc"
+  - name: "RELAY🚩 | cyylr.eu.cc-443 | 3.97ms"
+    type: "vless"
+    server: "104.16.74.121"
+    port: 443
+    uuid: "cc752a3e-1537-4e86-bb50-1b897bf7b33c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cyylr.eu.cc"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/sg-melbi"
+      headers:
+        Host: "cyylr.eu.cc"
+  - name: "RELAY🚩 | cyylr.eu.cc-443 | 2.68ms"
+    type: "vless"
+    server: "104.16.72.139"
+    port: 443
+    uuid: "cc752a3e-1537-4e86-bb50-1b897bf7b33c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cyylr.eu.cc"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/sg-melbi"
+      headers:
+        Host: "cyylr.eu.cc"
+  - name: "RELAY🚩 | ssj.new-persian-song.ir-8443 | 95.37ms"
+    type: "vless"
+    server: "45.130.125.193"
+    port: 8443
+    uuid: "cb245457-b65d-42f2-b136-826e47867062"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "ssj.new-persian-song.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+  - name: "DE🇩🇪 | vh.mojaz-persian-music.ir-8443 | 280.23ms"
+    type: "vless"
+    server: "45.130.125.192"
+    port: 8443
+    uuid: "cb245457-b65d-42f2-b136-826e47867062"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "vh.mojaz-persian-music.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+  - name: "RELAY🚩 | icyou.daftarakeman.ir-8443 | 175.68ms"
+    type: "vless"
+    server: "104.18.32.47"
+    port: 8443
+    uuid: "ca699157-fd33-4de5-8767-6dc481398765"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "icyou.daftarakeman.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "icyou.daftarakeman.ir"
+  - name: "REALITY|LT🇱🇹 | 93.115.25.42-8443 | 115.4ms"
+    type: "vless"
+    server: "93.115.25.42"
+    port: 8443
+    uuid: "ca5ab635-fbaa-4ff2-8283-3954b92ae477"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "tradingview.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "L3X1eh1Jq_6PKJ6LlwjgiWq0XNaDOqCVKgIElJ5nkVA"
+      short-id: "2cfb5a0ae8ab0cb0"
+  - name: "REALITY|US🇺🇸 | 137.184.218.169-36925 | 8.11ms"
+    type: "vless"
+    server: "137.184.218.169"
+    port: 36925
+    uuid: "c9fd0fb1-8251-4106-b09a-f4b426736f67"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "lJ9INPpO4rdnm2Tek_yg0PGFyUrBB6MoKyvqt_Mfqm0"
+  - name: "REALITY|FI🇫🇮 | node-fi.dostup-est.info-8443 | 280.24ms"
+    type: "vless"
+    server: "node-fi.dostup-est.info"
+    port: 8443
+    uuid: "c931f737-cafe-4e4f-998a-a65517941256"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdnjs.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "Ubibgn_MlW_zHo9LwjNH_b6SLNWwTJFwq7wW2ggLtUs"
+      short-id: "88ce6b586fcaf681"
+  - name: "REALITY|DE🇩🇪 | 85.208.139.98-8444 | 93.26ms"
+    type: "vless"
+    server: "85.208.139.98"
+    port: 8444
+    uuid: "c931f737-cafe-4e4f-998a-a65517941256"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdnjs.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "Hp6K5hsiPY4_zATgAtef9YTxNGpSkhAHTTo9MUO7fik"
+      short-id: "77e934f68f02ab4c"
+  - name: "REALITY|RU🇷🇺 | b02.connectv.net-443 | 158.23ms"
+    type: "vless"
+    server: "b02.connectv.net"
+    port: 443
+    uuid: "c65ca957-329a-0001-8e62-eaaa48468833"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "b02.connectv.net"
+    client-fingerprint: "edge"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "0RegtdcQHk9Fg95kgn5jmRglN6N3sdk3ZhrFXvmbrgk"
+  - name: "RELAY🚩 | bOLd-fRoST-5566.AKBArI1355-KHO.WORkERS.DEV-8443 | 19.81ms"
+    type: "vless"
+    server: "104.19.38.179"
+    port: 8443
+    uuid: "c5b4152e-d540-4067-a3ac-d6492a0b366a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "bOLd-fRoST-5566.AKBArI1355-KHO.WORkERS.DEV"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/eyJqdW5rIjoibDJRZVk2U2Z0IiwicHJvdG9jb2wiOiJ2bCIsIm1vZGUiOiJwcmVmaXgiLCJwYW5lbElQcyI6WyJbMmEwMjo4OTg6MTQ2OjY0OjpdIl19?ed=2560"
+      headers:
+        Host: "bold-frost-5566.akbari1355-kho.workers.dev"
+  - name: "RELAY🚩 | telegramkakoolnews.kakoolnewsa.workers.dev-443 | 14.25ms"
+    type: "vless"
+    server: "104.17.107.60"
+    port: 443
+    uuid: "c466ef48-fb57-40c6-808d-ee48d537844d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "telegramkakoolnews.kakoolnewsa.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "telegramkakoolnews.kakoolnewsa.workers.dev"
+  - name: "RELAY🚩 | kakoolnews.kakoolnews8.workers.dev-443 | 16.12ms"
+    type: "vless"
+    server: "104.16.72.251"
+    port: 443
+    uuid: "c466ef48-fb57-40c6-808d-ee48d537844d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "kakoolnews.kakoolnews8.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "kakoolnews.kakoolnews8.workers.dev"
+  - name: "RELAY🚩 | unnes.ac.id.cyylr.eu.cc-443 | 10.07ms"
+    type: "vless"
+    server: "cyylr.eu.cc"
+    port: 443
+    uuid: "c3ec1913-fdd3-4dea-b551-f82d6c2c21ef"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "unnes.ac.id.cyylr.eu.cc"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/sg-orcl"
+      headers:
+        Host: "unnes.ac.id.cyylr.eu.cc"
+  - name: "RELAY🚩 | uciranir-uciranir-uiranir-uciranir-uciranir-uciranir-uciranir2.kehib41931.workers.dev-443 | 18.05ms"
+    type: "vless"
+    server: "104.21.41.131"
+    port: 443
+    uuid: "c3c20db7-d32b-454a-9843-ec22d064a842"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "uciranir-uciranir-uiranir-uciranir-uciranir-uciranir-uciranir2.kehib41931.workers.dev"
+    ws-opts:
+      path: "/-@UCIRANIR-@UCIRANIR-@UCIRANIR-@UCIRANIR-@UCIRANIR-@UCIRANIR-@UCIRANIR/?ed=2047"
+      headers:
+        Host: "uciranir-uciranir-uiranir-uciranir-uciranir-uciranir-uciranir2.kehib41931.workers.dev"
+  - name: "RELAY🚩 | octopusss5.info-443 | 177.48ms"
+    type: "vless"
+    server: "elliot.ns.cloudflare.com"
+    port: 443
+    uuid: "c35050ce-01ab-45a9-91b8-54cec637d0a8"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss5.info"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/udfyfws"
+      headers:
+        Host: "octopusss5.info"
+  - name: "RELAY🚩 | octopusss5.info-443 | 3.65ms"
+    type: "vless"
+    server: "172.64.33.162"
+    port: 443
+    uuid: "c35050ce-01ab-45a9-91b8-54cec637d0a8"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss5.info"
+    ws-opts:
+      path: "/udfyfws"
+      headers:
+        Host: "octopusss5.info"
+  - name: "RELAY🚩 | bpb-wORKer-paNeL-3JC.pAgeS.DeV-443 | 15.53ms"
+    type: "vless"
+    server: "172.66.44.75"
+    port: 443
+    uuid: "c2c8a201-09b9-47a7-b336-fcf1657f54a8"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "bpb-wORKer-paNeL-3JC.pAgeS.DeV"
+    client-fingerprint: "randomized"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/Telegram@Azarakhsh_Proxy/?ed=2560"
+      headers:
+        Host: "bpb-worker-panel-3jc.pages.dev"
+  - name: "DE🇩🇪 | nl.furkbalancer.net-8443 | 171.67ms"
+    type: "vless"
+    server: "nl.furkbalancer.net"
+    port: 8443
+    uuid: "c286e7ff-3a16-459f-8e17-59de2764cf2e"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "nl.furkbalancer.net"
+    ws-opts:
+      path: "/vless"
+  - name: "RELAY🚩 | hello-world-royal-unit-def7.hamidimorteza680.workers.dev-80 | 18.19ms"
+    type: "vless"
+    server: "173.245.49.127"
+    port: 80
+    uuid: "c23e8441-1f66-4e7a-ab9e-31aac7c3c80e"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "hello-world-royal-unit-def7.hamidimorteza680.workers.dev"
+  - name: "RELAY🚩 | mcix.ircf.space-443 | 79.34ms"
+    type: "vless"
+    server: "mcix.ircf.space"
+    port: 443
+    uuid: "c16da53d-386c-4bc8-a1cb-d98d56b6c2e5"
+    udp: true
+    tls: true
+    network: "grpc"
+  - name: "REALITY|UA🇺🇦 | 91.218.122.10-8443 | 116.6ms"
+    type: "vless"
+    server: "91.218.122.10"
+    port: 8443
+    uuid: "c10999b4-7f93-5a50-3908-1467b1e52ae2"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "www.microsoft.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "VxlbLM9ypmP8KyH65M6nPgArl19XOyREm9oNUlCN2yA"
+    grpc-opts:
+      grpc-service-name: "TunService"
+  - name: "REALITY|NL🇳🇱 | 155.212.37.10-993 | 114.87ms"
+    type: "vless"
+    server: "155.212.37.10"
+    port: 993
+    uuid: "c10999b4-7f93-5a50-3908-1467b1e52ae2"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "speed.cloudflare.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "0xVsi6JYS-gJFUILwuePsB32jvWtxRT_okJSmcWEQEc"
+  - name: "REALITY|TR🇹🇷 | 155.212.110.2-993 | 107.21ms"
+    type: "vless"
+    server: "155.212.110.2"
+    port: 993
+    uuid: "c10999b4-7f93-5a50-3908-1467b1e52ae2"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "speed.cloudflare.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "GfTzhy59k9CXlAdF819OUVeBdrqIILaDIWa1bddjGnA"
+  - name: "RELAY🚩 | xcc.dl5movis.ir-8080 | 182.73ms"
+    type: "vless"
+    server: "104.24.38.200"
+    port: 8080
+    uuid: "c0aea3af-75bd-4dd1-8b67-60db1525db7a"
+    udp: true
+    tls: false
+    network: "httpupgrade"
+  - name: "US🇺🇸 | cdn.vidboxco.ir-443 | 203.21ms"
+    type: "vless"
+    server: "cdn.vidboxco.ir"
+    port: 443
+    uuid: "c0746d05-ecdf-44d0-a10f-9925cf9fcd0f"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cdn.vidboxco.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/api"
+      headers:
+        Host: "cdn.vidboxco.ir"
+  - name: "REALITY|NL🇳🇱 | nl1.rsvps.tech-443 | 554.31ms"
+    type: "vless"
+    server: "nl1.rsvps.tech"
+    port: 443
+    uuid: "beab408c-6aa3-43b9-a1ca-e6fabba5d8e7"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yahoo.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "rTp9PEn36FtQFu32jWAPO3r-e1W2px3RGSuhR-L1DVM"
+  - name: "REALITY|LT🇱🇹 | lt-modx.nodexphere.net-443 | 118.27ms"
+    type: "vless"
+    server: "lt-modx.nodexphere.net"
+    port: 443
+    uuid: "be2e1543-d450-481b-a955-c691086e41b1"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "lt-modx.nodexphere.net"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "cc2mDH9C31IlAwrn1eEhbuzZ3l4Ijw3mKl7rF75GUDo"
+  - name: "RELAY🚩 | cdn-no.lopzo.ir-443 | 185.55ms"
+    type: "vless"
+    server: "45.130.125.107"
+    port: 443
+    uuid: "bdf97c06-ae1f-47e9-b47a-9d9ff47b5820"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cdn-no.lopzo.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/"
+  - name: "REALITY|DE🇩🇪 | moo2.gafe-lorbad.ir-449 | 270.1ms"
+    type: "vless"
+    server: "moo2.gafe-lorbad.ir"
+    port: 449
+    uuid: "bd46fbc4-be41-41f5-b5ea-f2fdea6cb476"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "tgju.org"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "FdMFSpgEwT0nhczf37d-Z8gFgJtwyV4C_pJlnOTScUA"
+      short-id: "a1"
+  - name: "REALITY|TW🇹🇼 | tw3.miyazono-kaori.com-443 | 223.75ms"
+    type: "vless"
+    server: "tw3.miyazono-kaori.com"
+    port: 443
+    uuid: "bce38beb-a6d0-41d7-9c0a-26eed9a6634d"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "dlcdnets.asus.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "JE82iOR_U_H7ffxJ5yfoxXeRkMlE-aVu1wxR7n6jrVM"
+      short-id: "473277e2"
+  - name: "RELAY🚩 | wallweb.hydradllvip.info-443 | 175.28ms"
+    type: "vless"
+    server: "45.67.215.165"
+    port: 443
+    uuid: "bb7b4908-a24a-44ae-b9c7-6691b2576269"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "wallweb.hydradllvip.info"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/?ed"
+      headers:
+        Host: "wallweb.hydradllvip.info"
+  - name: "REALITY|RU🇷🇺 | 51.250.106.87-443 | 135.05ms"
+    type: "vless"
+    server: "51.250.106.87"
+    port: 443
+    uuid: "bb55e055-8e76-485c-9e2a-9978deeeeb52"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdp.x5.ru"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "wgXD4k3A16WR0aL63N9Mx8xoqFigJLyQWJXi-l3MPXI"
+      short-id: "8ec792bfd725be8a"
+  - name: "DE🇩🇪 | interim.adaspoloandco.com-8443 | 124.03ms"
+    type: "vless"
+    server: "172.64.155.209"
+    port: 8443
+    uuid: "bb3f7d41-a044-4937-bf6f-4a3d1a70db06"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "interim.adaspoloandco.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/RoBeRt"
+      headers:
+        Host: "interim.adaspoloandco.com"
+  - name: "RELAY🚩 | juzi8186.qea.ccwu.cc-8443 | 206.17ms"
+    type: "vless"
+    server: "cf3.danfeng.eu.org"
+    port: 8443
+    uuid: "bafacd98-136a-4530-838d-4e5c51838dac"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "juzi8186.qea.ccwu.cc"
+    client-fingerprint: "firefox"
+    ws-opts:
+      path: "/shop/juzibaipiao?ed=2560"
+      headers:
+        Host: "juzi8186.qea.ccwu.cc"
+  - name: "REALITY|RU🇷🇺 | 178.130.46.56-8443 | 88.2ms"
+    type: "vless"
+    server: "178.130.46.56"
+    port: 8443
+    uuid: "ba194ade935f46eaae27baf55714244a"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "apple.com"
+    client-fingerprint: "random"
+    reality-opts:
+      public-key: "tBpGeaXxD85IdKACd3gRPWSBwRvyoPP12bFLMmW-lxs"
+      short-id: "aabbccdd"
+  - name: "REALITY|CH🇨🇭 | areal1.greewebservices.ir-2425 | 304.91ms"
+    type: "vless"
+    server: "areal1.greewebservices.ir"
+    port: 2425
+    uuid: "b9dccdab-0f77-4fb7-8949-4d378e92df5c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yahoo.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "xQnXh5EfPDhcEBB7rRiLca33GYrMEeUa35domLL_yA8"
+      short-id: "9b60d3"
+  - name: "RELAY🚩 | divine-surf-b984.princess310.workers.dev-443 | 32.46ms"
+    type: "vless"
+    server: "172.67.86.123"
+    port: 443
+    uuid: "b97b8288-82fb-4a90-b4a1-1e36ab9988c7"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "divine-surf-b984.princess310.workers.dev"
+    client-fingerprint: "random"
+    ws-opts:
+      path: "/?ed=2560"
+      headers:
+        Host: "divine-surf-b984.princess310.workers.dev"
+  - name: "REALITY|RU🇷🇺 | 130.49.179.127-443 | 85.65ms"
+    type: "vless"
+    server: "130.49.179.127"
+    port: 443
+    uuid: "b95e6017-d54e-4016-b651-91c86aeaa463"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fra03.helpbot.click"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "R7KE9NDxjwHNchukd0ZleVeHHtvKAPx4ATJouyKTFVU"
+      short-id: "75c1756f3fbc4ff9"
+  - name: "REALITY|PL🇵🇱 | pl.fantoff.online-443 | 227.1ms"
+    type: "vless"
+    server: "pl.fantoff.online"
+    port: 443
+    uuid: "b95dd8e5-2758-408f-be99-9362eecee609"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yahoo.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "BoWKSM1aSfcTRgKX_kZYPlauG0jLIqku3zPBAiHpUgs"
+      short-id: "5ea7e22e889dabc5"
+  - name: "REALITY|RU🇷🇺 | 94.103.89.223-8443 | 126.75ms"
+    type: "vless"
+    server: "94.103.89.223"
+    port: 8443
+    uuid: "b9571cb5fcc541e99a36a4ad8bdf70f6"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "ya.ru"
+    client-fingerprint: "random"
+    reality-opts:
+      public-key: "9XS6MeMlQBh4qCT1dhavAwGPKsWQGSyrSH_xHwotw0k"
+      short-id: "aabbccdd"
+  - name: "RELAY🚩 | lOng-DisK-e57f.MEhRdaD00000.WorkErS.DEV-2087 | 16.25ms"
+    type: "vless"
+    server: "172.67.206.209"
+    port: 2087
+    uuid: "b91d0c29-f192-4d4c-8f49-d55581228a43"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "lOng-DisK-e57f.MEhRdaD00000.WorkErS.DEV"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/eyJqdW5rIjoidHA5YUpyNmQiLCJwcm90b2NvbCI6InZsIiwibW9kZSI6InByZWZpeCIsInBhbmVsSVBzIjpbIlsyNjAyOmZjNTk6YjA6NjQ6Ol0iXX0=?ed=2560"
+      headers:
+        Host: "long-disk-e57f.mehrdad00000.workers.dev"
+  - name: "REALITY|AT🇦🇹 | at.synthori.space-8443 | 148.59ms"
+    type: "vless"
+    server: "at.synthori.space"
+    port: 8443
+    uuid: "b880e510-8196-44bb-b715-781a9461b4a0"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "max.ru"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "5MiRrRpYPJy9FPN1CsUfDz4q3CccSYoCASWDexrcAFY"
+      short-id: "74db54ed1da8a3d3"
+  - name: "RELAY🚩 | liz2.jooje.lat-2083 | 20.19ms"
+    type: "vless"
+    server: "tir1.tradeacademyiranian.org"
+    port: 2083
+    uuid: "b68fcee1-24c3-4213-b4bf-e70674c38e4e"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "liz2.jooje.lat"
+    client-fingerprint: "360"
+    ws-opts:
+      path: "/?ed=2560"
+      headers:
+        Host: "liz2.jooje.lat"
+  - name: "REALITY|RU🇷🇺 | 85.239.34.16-7443 | 137.38ms"
+    type: "vless"
+    server: "85.239.34.16"
+    port: 7443
+    uuid: "b67ed271-5a34-4d07-9970-f8ba27ca2c8a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "rutube.ru"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "5QAO98ot2U7TcGs_f6EEaQjCzNOJLNHqPf6smYsdFVI"
+      short-id: "d82fb387"
+  - name: "REALITY|US🇺🇸 | 167.104.223.14-443 | 78.07ms"
+    type: "vless"
+    server: "167.104.223.14"
+    port: 443
+    uuid: "b67ed271-5a34-4d07-9970-f8ba27ca2c8a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.microsoft.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "gXc2c9NIWxhUTb7HoBCjvo-uB1L4iQj4TH38g4YhxHE"
+      short-id: "fcd9787f"
+  - name: "FR🇫🇷 | bab-6.site-443 | 150.74ms"
+    type: "vless"
+    server: "bab-6.site"
+    port: 443
+    uuid: "b585dc5e-55bf-4a8b-913a-27c9ccac05c3"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "bab-6.site"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/vws/"
+      headers:
+        Host: "bab-6.site"
+  - name: "FR🇫🇷 | bab-6.site-443 | 150.22ms"
+    type: "vless"
+    server: "149.202.58.99"
+    port: 443
+    uuid: "b585dc5e-55bf-4a8b-913a-27c9ccac05c3"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "bab-6.site"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/vws/"
+      headers:
+        Host: "bab-6.site"
+  - name: "US🇺🇸 | norbertde1.global.ssl.fastly.net-80 | 7.03ms"
+    type: "vless"
+    server: "ip3-fast.tyryqyserver.ir"
+    port: 80
+    uuid: "b5723cdf-f34c-4675-b12d-db43db7283d0"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/?ed=2052"
+      headers:
+        Host: "norbertde1.global.ssl.fastly.net"
+  - name: "DE🇩🇪 | du.mobileemdad.top-42542 | 115.6ms"
+    type: "vless"
+    server: "du.mobileemdad.top"
+    port: 42542
+    uuid: "b557b764-fa6b-49a8-bcf0-e62179a07ab7"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "DE🇩🇪 | 46.249.98.109-8080 | 96.63ms"
+    type: "vless"
+    server: "46.249.98.109"
+    port: 8080
+    uuid: "b53d533d-0647-4b86-8cdd-43638e81dfe3"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/ws"
+  - name: "REALITY|TR🇹🇷 | 62.133.63.232-8443 | 129.96ms"
+    type: "vless"
+    server: "62.133.63.232"
+    port: 8443
+    uuid: "b439942e1c8949ce924fd0adbbaead2e"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "apple.com"
+    client-fingerprint: "random"
+    reality-opts:
+      public-key: "Gn5B-kDUFfIM5jvQ17Braem7nlJyG4QaPA1OVUCwyx0"
+      short-id: "aabbccdd"
+  - name: "RELAY🚩 | unnes.ac.id.cyylr.eu.cc-443 | 4ms"
+    type: "vless"
+    server: "43.169.18.179"
+    port: 443
+    uuid: "b3ddc03c-0be7-4b46-8a4e-9f79de03d4f5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "unnes.ac.id.cyylr.eu.cc"
+    ws-opts:
+      path: "/id-tksi"
+      headers:
+        Host: "unnes.ac.id.cyylr.eu.cc"
+  - name: "RELAY🚩 | toshirpilafkani-torostamtahamtani.mgwarrior.ir-2087 | 191.34ms"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 2087
+    uuid: "b38d6372-5e65-427c-b7e0-414c0ccc9973"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "toshirpilafkani-torostamtahamtani.mgwarrior.ir"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
+      - "http/1.1"
+  - name: "RU🇷🇺 | r1.mizulina.top-22231 | 251.38ms"
+    type: "vless"
+    server: "r1.mizulina.top"
+    port: 22231
+    uuid: "afcac633-0e1a-46c3-bef2-cc01cc0097c8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "r1.mizulina.top"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+  - name: "RU🇷🇺 | r1.mizulina.top-22231 | 223.08ms"
+    type: "vless"
+    server: "85.234.114.53"
+    port: 22231
+    uuid: "afcac633-0e1a-46c3-bef2-cc01cc0097c8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "r1.mizulina.top"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+  - name: "RU🇷🇺 | r1.mizulina.top-22231 | 96.77ms"
+    type: "vless"
+    server: "72.56.59.223"
+    port: 22231
+    uuid: "afcac633-0e1a-46c3-bef2-cc01cc0097c8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "r1.mizulina.top"
+    flow: "xtls-rprx-vision"
+  - name: "RU🇷🇺 | r1.mizulina.top-22231 | 101.36ms"
+    type: "vless"
+    server: "72.56.59.177"
+    port: 22231
+    uuid: "afcac633-0e1a-46c3-bef2-cc01cc0097c8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "r1.mizulina.top"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+    flow: "xtls-rprx-vision"
+  - name: "RELAY🚩 | g1.nybaz.space-80 | 9.98ms"
+    type: "vless"
+    server: "accountdb.ir"
+    port: 80
+    uuid: "af77d53f-a0e4-456e-b977-696bf081dcc8"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "g1.nybaz.space"
+  - name: "RELAY🚩 | www.game-dns.ir-2083 | 180.76ms"
+    type: "vless"
+    server: "webmail.cloudstyle.ir"
+    port: 2083
+    uuid: "af338e79-8259-4662-a0ff-db6df2414501"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "www.game-dns.ir"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+  - name: "US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 12.35ms"
+    type: "vless"
+    server: "199.232.131.173"
+    port: 80
+    uuid: "af338e79-8259-4662-a0ff-db6df2414501"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "US🇺🇸 | speedtest.net-443 | 2.75ms"
+    type: "vless"
+    server: "speedtest.net"
+    port: 443
+    uuid: "af0d204d-18f8-434d-bea2-2bcc0df86d9f"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "speedtest.net"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/@custom_config?ed=2560"
+      headers:
+        Host: "downloadlynet.ir."
+  - name: "REALITY|AL🇦🇱 | 144.31.131.33-443 | 109.6ms"
+    type: "vless"
+    server: "144.31.131.33"
+    port: 443
+    uuid: "ae852d97-85f5-45cf-82a4-254eba345480"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn.cdnjst.org"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "djH9iD2QV748ocK-wPH7HvDd03lu88zHhS4G-61w6Dc"
+      short-id: "a120"
+  - name: "REALITY|CZ🇨🇿 | 188.130.208.220-5443 | 104.5ms"
+    type: "vless"
+    server: "188.130.208.220"
+    port: 5443
+    uuid: "ae5ba4be-7262-4199-bd62-210ed8999b9f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "max.ru"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "LGcG8Sqv5vPDypbaEgHV0ZGqQOBkgDepPWXyDohbVXQ"
+  - name: "RELAY🚩 | pagescm.freen7.de5.net-443 | 183.8ms"
+    type: "vless"
+    server: "172.64.144.183"
+    port: 443
+    uuid: "ae0dd58e-e222-40bf-84ae-365a97532737"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "pagescm.freen7.de5.net"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/urls/images/detail"
+      headers:
+        Host: "pagescm.freen7.de5.net"
+  - name: "REALITY|US🇺🇸 | 167.104.223.57-7443 | 77.69ms"
+    type: "vless"
+    server: "167.104.223.57"
+    port: 7443
+    uuid: "adea61c0-0bb2-4ad3-8dba-7766eebd50f8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.microsoft.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "5QAO98ot2U7TcGs_f6EEaQjCzNOJLNHqPf6smYsdFVI"
+      short-id: "d82fb387"
+  - name: "REALITY|DE🇩🇪 | 150.241.90.13-443 | 109.37ms"
+    type: "vless"
+    server: "150.241.90.13"
+    port: 443
+    uuid: "ad961404-6249-4a11-9577-d1e81f6b198f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "monolithgate.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "0d6fEYI5nZ_puQdJ5J9Sn7ExAs53DZzbpfxghHt_u2E"
+      short-id: "7c81a04a4b20"
+  - name: "REALITY|FI🇫🇮 | 62.60.255.11-443 | 111.78ms"
+    type: "vless"
+    server: "62.60.255.11"
+    port: 443
+    uuid: "ad8a53f2-b109-4873-9156-fc3bcb0d7fe4"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ya.ru"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "nPcUKydxoRI66O3tT9O4QCZpLjOBvkGsiXG7pDX1BBw"
+      short-id: "6ba85179e30d4fc2"
+  - name: "RELAY🚩 | collection.linefriends.com.cyylr.eu.cc-443 | 245.89ms"
+    type: "vless"
+    server: "198.62.62.18"
+    port: 443
+    uuid: "ace095c0-debd-46fd-903f-d29b9c8b4101"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "collection.linefriends.com.cyylr.eu.cc"
+    ws-opts:
+      path: "/ae-bo"
+      headers:
+        Host: "collection.linefriends.com.cyylr.eu.cc"
+  - name: "REALITY|MD🇲🇩 | md.riotvpn.eu-8443 | 112.06ms"
+    type: "vless"
+    server: "md.riotvpn.eu"
+    port: 8443
+    uuid: "ac0321ed-0ecf-4200-9d5a-a8321252fb28"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "ads.x5.ru"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "sgFFdQvfeujBKh6g7N7klU_u0mKYlr800MFbko5FzUg"
+      short-id: "e67fb918ed6b9ffb"
+    grpc-opts:
+      grpc-service-name: "grpc-yandex"
+  - name: "RELAY🚩 | afrcloud5.c01.kr-443 | 206.65ms"
+    type: "vless"
+    server: "63.141.128.46"
+    port: 443
+    uuid: "aaaaaabb-4ddd-4eee-9fff-ffffffffffff"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "afrcloud5.c01.kr"
+    ws-opts:
+      path: "/206.53.48.171:443"
+      headers:
+        Host: "afrcloud5.c01.kr"
+  - name: "RELAY🚩 | worker-jolly-block-2e78.gamal32324.workers.Dev-443 | 15ms"
+    type: "vless"
+    server: "104.18.1.84"
+    port: 443
+    uuid: "aa9e4f20-f7f3-46cc-96f3-897116755cf3"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "worker-jolly-block-2e78.gamal32324.workers.Dev"
+    ws-opts:
+      path: "/TELEGRAM-MARAMBASHI-MARAMBASHI/?ed=2048"
+      headers:
+        Host: "worker-jolly-block-2e78.gamal32324.workers.Dev"
+  - name: "RELAY🚩 | cdn-allxn--b6gaceuorg.l4o117en.workers.dev-8080 | 28.56ms"
+    type: "vless"
+    server: "172.67.162.88"
+    port: 8080
+    uuid: "aa2dc840-be38-4b4d-a002-ba234999fd55"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "cdn-allxn--b6gaceuorg.l4o117en.workers.dev"
+  - name: "RELAY🚩 | sourceforge.net-443 | 8.29ms"
+    type: "vless"
+    server: "188.119.113.68"
+    port: 443
+    uuid: "a91b85c5-de1a-4ff2-a447-933202708386"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "sourceforge.net"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+  - name: "RELAY🚩 | chiRPy-opinioNGuuQL3f99i.wIndlER.cO.uk-2096 | 124.34ms"
+    type: "vless"
+    server: "45.130.125.76"
+    port: 2096
+    uuid: "a88a6d9d-0fde-43f7-839d-49752e99f44d"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "chiRPy-opinioNGuuQL3f99i.wIndlER.cO.uk"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    grpc-opts:
+      grpc-service-name: "irandaily.ir.ilna.news.entekhab.ir.snn.ir.irdiplomacy.ir.en.mehrnews.com.fararu.com"
+  - name: "REALITY|RU🇷🇺 | 212.192.14.223-8443 | 122.71ms"
+    type: "vless"
+    server: "212.192.14.223"
+    port: 8443
+    uuid: "a8517b36fe6e4ff990711a8b0e4b35a6"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "ya.ru"
+    client-fingerprint: "random"
+    reality-opts:
+      public-key: "NvRs6-EIik2ar7bpG0P6XvMbm3uiEb28HCqMFpqwQBA"
+      short-id: "aabbccdd"
+  - name: "REALITY|DE🇩🇪 | de.corsair-web.space-8443 | 274.9ms"
+    type: "vless"
+    server: "de.corsair-web.space"
+    port: 8443
+    uuid: "a845ce7c-ea10-47b0-8de4-92810260eeab"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "mozilla.org"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "TNsQJHoX2M2u07a6oEPb3tY9U08Aph4Qvdk76dAZdio"
+      short-id: "82ed5803a8047a3e"
+  - name: "RELAY🚩 | juzi.qea.ccwu.cc-443 | 180.32ms"
+    type: "vless"
+    server: "162.159.18.105"
+    port: 443
+    uuid: "a6f1755f-0140-4bea-8727-0db1bed7c4df"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "juzi.qea.ccwu.cc"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "juzi.qea.ccwu.cc"
+  - name: "RELAY🚩 | juzi.qea.ccwu.cc-443 | 3.93ms"
+    type: "vless"
+    server: "162.159.13.20"
+    port: 443
+    uuid: "a6f1755f-0140-4bea-8727-0db1bed7c4df"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "juzi.qea.ccwu.cc"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "juzi.qea.ccwu.cc"
+  - name: "RELAY🚩 | juzi.qea.ccwu.cc-443 | 3.44ms"
+    type: "vless"
+    server: "162.159.13.206"
+    port: 443
+    uuid: "a6f1755f-0140-4bea-8727-0db1bed7c4df"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "juzi.qea.ccwu.cc"
+    ws-opts:
+      path: "/?TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=512"
+      headers:
+        Host: "juzi.qea.ccwu.cc"
+  - name: "RELAY🚩 | juzi.qea.ccwu.cc-443 | 3.57ms"
+    type: "vless"
+    server: "104.25.242.55"
+    port: 443
+    uuid: "a6f1755f-0140-4bea-8727-0db1bed7c4df"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "juzi.qea.ccwu.cc"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "juzi.qea.ccwu.cc"
+  - name: "RELAY🚩 | afrcloud22.mmv.kr-443 | 4.11ms"
+    type: "vless"
+    server: "nodejs.org"
+    port: 443
+    uuid: "a6430e91-38ad-4254-b7db-d1fba6efd9e3"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "afrcloud22.mmv.kr"
+    ws-opts:
+      path: "/129.146.254.25:443"
+      headers:
+        Host: "afrcloud22.mmv.kr"
+  - name: "REALITY|TR🇹🇷 | 185.39.204.189-443 | 127.69ms"
+    type: "vless"
+    server: "185.39.204.189"
+    port: 443
+    uuid: "a40b0a127d65404a9e15b31e1c0c352b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "m.vk.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "8xKzWSx8JZFIJPRBaxbznHriYpsb5HWqIz9sdDmWgks"
+      short-id: "aabbccdd"
+  - name: "IR🇮🇷 | divarcdn.com-443 | 157.38ms"
+    type: "vless"
+    server: "l1.magicnetwork.info"
+    port: 443
+    uuid: "a34746de-b790-747d-3b82-7745fc08f38d"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "RELAY🚩 | frosty-field-7475.hamedpop8.workers.dev-2095 | 15.34ms"
+    type: "vless"
+    server: "www.speedtest.net"
+    port: 2095
+    uuid: "a33841fd-e693-42e3-b7d4-9c6e802093fb"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/eyJqdW5rIjoiNmlaTUYxTnB5IiwicHJvdG9jb2wiOiJ2bCIsIm1vZGUiOiJwcmVmaXgiLCJwYW5lbElQcyI6WyJbMmEwMjo4OTg6MTQ2OjY0OjpdIl19?ed=2560"
+      headers:
+        Host: "frosty-field-7475.hamedpop8.workers.dev"
+  - name: "REALITY|RU🇷🇺 | 145.249.109.142-443 | 89.93ms"
+    type: "vless"
+    server: "145.249.109.142"
+    port: 443
+    uuid: "a263e098726245368e0af9d3037df5e9"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "m.vk.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "C04UWSU_IwncDHUkw6n03xgjNOBYl109I7tRxsgSz1s"
+      short-id: "aabbccdd"
+  - name: "REALITY|RELAY🚩 | france.cloudpath.live-443 | 27.81ms"
+    type: "vless"
+    server: "france.cloudpath.live"
+    port: 443
+    uuid: "a1fbffe9-8e5a-5a0e-9333-045d32eccd59"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "microsoft.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "dp4zdTaX89_Ls34gM_x8BSBTx50p4X7asR3H1q_jIn4"
+      short-id: "b00e098b"
+  - name: "IR🇮🇷 | uplod.ir-443 | 346.16ms"
+    type: "vless"
+    server: "83.228.226.72"
+    port: 443
+    uuid: "a1ee1f7f-deb9-48e4-9a97-6f565949817d"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "REALITY|PL🇵🇱 | tg.riotvpn.eu-443 | 463.92ms"
+    type: "vless"
+    server: "tg.riotvpn.eu"
+    port: 443
+    uuid: "a18f7c2d-9e45-4b8a-af3c-1d5e7f9c8b2a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ads.x5.ru"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "8h8t5eBWL9oERK7xWHQLFJE5j6sZdgNDQAs3EGnNbho"
+      short-id: "2f49bccf11150ef2"
+  - name: "US🇺🇸 | ks.ylks.xyz-443 | 79.45ms"
+    type: "vless"
+    server: "69.84.182.208"
+    port: 443
+    uuid: "a13df940-020c-465f-bc89-ee5279b5cd6a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ks.ylks.xyz"
+    ws-opts:
+      path: "/blue"
+  - name: "US🇺🇸 | ks.ylks.xyz-443 | 43.68ms"
+    type: "vless"
+    server: "69.84.182.143"
+    port: 443
+    uuid: "a13df940-020c-465f-bc89-ee5279b5cd6a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ks.ylks.xyz"
+    ws-opts:
+      path: "/blue"
+  - name: "US🇺🇸 | ks.ylks.xyz-443 | 4404.49ms"
+    type: "vless"
+    server: "212.183.88.102"
+    port: 443
+    uuid: "a13df940-020c-465f-bc89-ee5279b5cd6a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ks.ylks.xyz"
+    ws-opts:
+      path: "/blue"
+  - name: "US🇺🇸 | hp.ylks.xyz-443 | 54.15ms"
+    type: "vless"
+    server: "198.62.62.231"
+    port: 443
+    uuid: "a13df940-020c-465f-bc89-ee5279b5cd6a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "hp.ylks.xyz"
+    ws-opts:
+      path: "/blue"
+  - name: "US🇺🇸 | kq.ylks.xyz-443 | 72.89ms"
+    type: "vless"
+    server: "198.62.62.198"
+    port: 443
+    uuid: "a13df940-020c-465f-bc89-ee5279b5cd6a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "kq.ylks.xyz"
+    ws-opts:
+      path: "/blue"
+  - name: "US🇺🇸 | kr.ylks.xyz-443 | 40.74ms"
+    type: "vless"
+    server: "152.70.249.67"
+    port: 443
+    uuid: "a13df940-020c-465f-bc89-ee5279b5cd6a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "kr.ylks.xyz"
+    ws-opts:
+      path: "/blue"
+  - name: "RELAY🚩 | Parsashonam.atlasq.ir-443 | 104.57ms"
+    type: "vless"
+    server: "27.50.48.49"
+    port: 443
+    uuid: "Telegram-Parsashonam"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "Parsashonam.atlasq.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+  - name: "RELAY🚩 | Parsashonam.atlasq.ir-443 | 2.85ms"
+    type: "vless"
+    server: "104.18.139.67"
+    port: 443
+    uuid: "Telegram-Parsashonam"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "Parsashonam.atlasq.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+  - name: "RELAY🚩 | Parsashonam.atlasq.ir-443 | 2.86ms"
+    type: "vless"
+    server: "104.16.80.73"
+    port: 443
+    uuid: "Telegram-Parsashonam"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "Parsashonam.atlasq.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+  - name: "RELAY🚩 | Parsashonam.atlasq.ir-443 | 3.17ms"
+    type: "vless"
+    server: "104.16.7.70"
+    port: 443
+    uuid: "Telegram-Parsashonam"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "Parsashonam.atlasq.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+  - name: "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 34.68ms"
+    type: "vless"
+    server: "37.32.126.240"
+    port: 443
+    uuid: "Telegram-Parsashonam-9"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "p4r34m.hendevaneh.sbs"
+  - name: "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.35ms"
+    type: "vless"
+    server: "45.130.125.76"
+    port: 443
+    uuid: "Telegram-Parsashonam-8"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "p4r34m.hendevaneh.sbs"
+  - name: "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.47ms"
+    type: "vless"
+    server: "104.16.75.127"
+    port: 443
+    uuid: "Telegram-Parsashonam-8"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "p4r34m.hendevaneh.sbs"
+  - name: "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 2.95ms"
+    type: "vless"
+    server: "45.130.125.69"
+    port: 443
+    uuid: "Telegram-Parsashonam-2"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "p4r34m.hendevaneh.sbs"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+  - name: "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 2.82ms"
+    type: "vless"
+    server: "45.130.125.160"
+    port: 443
+    uuid: "Telegram-Parsashonam-2"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "p4r34m.hendevaneh.sbs"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+  - name: "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 4.53ms"
+    type: "vless"
+    server: "208.103.161.101"
+    port: 443
+    uuid: "Telegram-Parsashonam-2"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "p4r34m.hendevaneh.sbs"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+  - name: "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.24ms"
+    type: "vless"
+    server: "192.200.160.253"
+    port: 443
+    uuid: "Telegram-Parsashonam-2"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "p4r34m.hendevaneh.sbs"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+  - name: "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.74ms"
+    type: "vless"
+    server: "165.215.250.12"
+    port: 443
+    uuid: "Telegram-Parsashonam-2"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "p4r34m.hendevaneh.sbs"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+  - name: "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.23ms"
+    type: "vless"
+    server: "45.131.6.203"
+    port: 443
+    uuid: "Telegram-Parsashonam-1"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "p4r34m.hendevaneh.sbs"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+  - name: "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.46ms"
+    type: "vless"
+    server: "188.121.118.16"
+    port: 443
+    uuid: "Telegram-Parsashonam-10"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "p4r34m.hendevaneh.sbs"
+  - name: "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.28ms"
+    type: "vless"
+    server: "103.130.147.66"
+    port: 443
+    uuid: "Telegram-Parsashonam-10"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "p4r34m.hendevaneh.sbs"
+  - name: "REALITY|FI🇫🇮 | 31.56.227.217-8443 | 228.02ms"
+    type: "vless"
+    server: "31.56.227.217"
+    port: 8443
+    uuid: "Telegram-CNT-Cafe"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "aws.amazon.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "YTOMJLdO3m1Mj_v7hHx7vMTjB3lPAwKMjfUQs8LUCT8"
+      short-id: "07d905c3c6da34"
+  - name: "US🇺🇸 | tignaltofansv4.global.ssl.fastly.net-80 | 8.1ms"
+    type: "vless"
+    server: "151.101.129.164"
+    port: 80
+    uuid: "InternetAzadRobot"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "US🇺🇸 | tignaltofan.global.ssl.fastly.net-80 | 5.05ms"
+    type: "vless"
+    server: "151.101.1.57"
+    port: 80
+    uuid: "InternetAzadRobot"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "US🇺🇸 | tignaltofansv4.global.ssl.fastly.net-80 | 7.54ms"
+    type: "vless"
+    server: "146.75.117.91"
+    port: 80
+    uuid: "InternetAzadRobot"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "RELAY🚩 | 0314.hiyasta2.workers.dev-8880 | 30.6ms"
+    type: "vless"
+    server: "104.18.14.19"
+    port: 8880
+    uuid: "9ffa6da8-26dc-435c-884b-32662e7ffe7e"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/?ed=2560"
+      headers:
+        Host: "0314.hiyasta2.workers.dev"
+  - name: "RELAY🚩 | www.middle.cc.cd-443 | 508.4ms"
+    type: "vless"
+    server: "104.18.152.233"
+    port: 443
+    uuid: "9f135709-60a1-4a9b-b31c-78d326d8752a"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "www.middle.cc.cd"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+  - name: "REALITY|DE🇩🇪 | 5.75.196.174-8080 | 95.63ms"
+    type: "vless"
+    server: "5.75.196.174"
+    port: 8080
+    uuid: "9ef88ccf-1933-4f41-8ea5-2d97cd152f13"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "qr9I7Hv2oZ2F0BiWgy9DmYHp0vcFEXcNRVHkyFg3OUw"
+      short-id: "5e11ecc7d4"
+  - name: "RELAY🚩 | mainsub.m4network-f4c.workers.dev-443 | 22.65ms"
+    type: "vless"
+    server: "104.239.72.141"
+    port: 443
+    uuid: "9e586f14-ae99-4ad6-8b20-ca8965614173"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "mainsub.m4network-f4c.workers.dev"
+    client-fingerprint: "random"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "mainsub.m4network-f4c.workers.dev"
+  - name: "US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 23.41ms"
+    type: "vless"
+    server: "151.101.3.147"
+    port: 80
+    uuid: "9d468e0a-01ca-41a2-a89b-73b2756f91ec"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 18.55ms"
+    type: "vless"
+    server: "151.101.25.242"
+    port: 80
+    uuid: "9d468e0a-01ca-41a2-a89b-73b2756f91ec"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "REALITY|US🇺🇸 | us02.ssr.ee-443 | 190.62ms"
+    type: "vless"
+    server: "us02.ssr.ee"
+    port: 443
+    uuid: "9d0a75d2-f747-4afa-b43f-d208af9e8f9a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "itunes.apple.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "AeJ40fWPYK3WSDtY_AGv3ewG_kwQvAoDtf3KIgk1DRU"
+      short-id: "6ba85179e30d4fc2"
+  - name: "REALITY|AE🇦🇪 | db02.ssr.ee-443 | 314.68ms"
+    type: "vless"
+    server: "db02.ssr.ee"
+    port: 443
+    uuid: "9d0a75d2-f747-4afa-b43f-d208af9e8f9a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "itunes.apple.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "0Vvc6EFXPQHWWqyhG4wek-MEh_q6a9CDMY7U-TSHGV4"
+      short-id: "6ba85179e30d4fc2"
+  - name: "REALITY|AE🇦🇪 | db01.ssr.ee-443 | 200.28ms"
+    type: "vless"
+    server: "db01.ssr.ee"
+    port: 443
+    uuid: "9d0a75d2-f747-4afa-b43f-d208af9e8f9a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "itunes.apple.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "3tyvN86mGzMnYhAMX06SJMYSWhG02rqzTr7GjS-OaWI"
+      short-id: "6ba85179e30d4fc2"
+  - name: "RELAY🚩 | v2ngfast.werdfg44.workers.dev-8443 | 17.53ms"
+    type: "vless"
+    server: "172.67.66.162"
+    port: 8443
+    uuid: "9ce7ac33-5004-40ea-8236-15bc2d25a37c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "v2ngfast.werdfg44.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/mtmvpn---mtmvpn---mtmvpn---mtmvpn---mtmvpn"
+      headers:
+        Host: "v2ngfast.werdfg44.workers.dev"
+  - name: "REALITY|US🇺🇸 | 156.229.161.107-10001 | 59.83ms"
+    type: "vless"
+    server: "156.229.161.107"
+    port: 10001
+    uuid: "9c79aceb-4649-44ea-9698-b5e9ecf6d6da"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.icloud.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "4jNz4Bw-FZlaX-WtfAdwK0hegY28W_k8AttGd-7hZn4"
+      short-id: "fb2c6678"
+  - name: "RELAY🚩 | vip1.yomato7390.workers.Dev-443 | 16.45ms"
+    type: "vless"
+    server: "104.18.2.57"
+    port: 443
+    uuid: "9c682edf-7e17-41d6-83e1-d7f6996a9542"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "vip1.yomato7390.workers.Dev"
+    ws-opts:
+      path: "/?ed=2048"
+      headers:
+        Host: "vip1.yomato7390.workers.Dev"
+  - name: "REALITY|RU🇷🇺 | 144.31.190.130-8081 | 121.93ms"
+    type: "vless"
+    server: "144.31.190.130"
+    port: 8081
+    uuid: "99f1fc84-29a9-4715-bc60-e25fc4f56ff9"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "sun6-21.userapi.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "QHkXBS2ENHV0khgY9VBYi8_9bpfqnUYDcfQN4cW5Qg0"
+      short-id: "4326"
+  - name: "REALITY|DE🇩🇪 | 5.75.196.174-20141 | 98.57ms"
+    type: "vless"
+    server: "5.75.196.174"
+    port: 20141
+    uuid: "9965c9de-df82-454b-a936-a9014e9c9a55"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "arvancloud.ir"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "qr9I7Hv2oZ2F0BiWgy9DmYHp0vcFEXcNRVHkyFg3OUw"
+      short-id: "cc2b7917dec3"
+  - name: "RELAY🚩 | mci-google-bing3164.sdb5j.workers.dev-443 | 21.73ms"
+    type: "vless"
+    server: "66.235.200.1"
+    port: 443
+    uuid: "994c91dd-b282-4c25-a0c5-af76b480c080"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "mci-google-bing3164.sdb5j.workers.dev"
+    client-fingerprint: "randomized"
+    ws-opts:
+      path: "/?ed=2048"
+      headers:
+        Host: "mci-google-bing3164.sdb5j.workers.dev"
+  - name: "RELAY🚩 | divine-mode-ac41.amirss.workers.dev-80 | 21.29ms"
+    type: "vless"
+    server: "104.17.220.114"
+    port: 80
+    uuid: "98f7d01d-e770-471f-80ff-8f480ad84f7c"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "divine-mode-ac41.amirss.workers.dev"
+  - name: "RELAY🚩 | focalin.adaspolo2.store-443 | 63.77ms"
+    type: "vless"
+    server: "104.18.32.47"
+    port: 443
+    uuid: "9814fddd-c97d-4f62-8af2-0639d708b2d9"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "focalin.adaspolo2.store"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/random"
+      headers:
+        Host: "focalin.adaspolo2.store"
+  - name: "REALITY|IR🇮🇷 | 62.60.245.10-443 | 94.96ms"
+    type: "vless"
+    server: "62.60.245.10"
+    port: 443
+    uuid: "97de1f85-5f2c-4446-8507-b437125623a2"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "mNPCrTF4rKb_SRmOH-9-IBs5ihK6Pn4SH29iZtKmiX0"
+      short-id: "abcd1234"
+  - name: "REALITY|FI🇫🇮 | 193.29.224.214-443 | 118.15ms"
+    type: "vless"
+    server: "193.29.224.214"
+    port: 443
+    uuid: "97de1f85-5f2c-4446-8507-b437125623a2"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "mNPCrTF4rKb_SRmOH-9-IBs5ihK6Pn4SH29iZtKmiX0"
+      short-id: "abcd1234"
+  - name: "RELAY🚩 | potifar.kravend4.workers.dev-80 | 37.69ms"
+    type: "vless"
+    server: "162.159.61.158"
+    port: 80
+    uuid: "97ddf9a6-de5b-4229-bc41-4627321eff43"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "potifar.kravend4.workers.dev"
+  - name: "US🇺🇸 | google.com-443 | 6.15ms"
+    type: "vless"
+    server: "193.58.119.134"
+    port: 443
+    uuid: "97d216c9-7561-45fa-fd67-e56fde36360b"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "REALITY|GB🇬🇧 | 31.76.39.21-443 | 74.99ms"
+    type: "vless"
+    server: "31.76.39.21"
+    port: 443
+    uuid: "9778a597-c81f-4459-9754-140b2ba8f784"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "5post-gate.x5.ru"
+    client-fingerprint: "qq"
+    reality-opts:
+      public-key: "akcAXaW7GNwXT6bTrtD6oZIY9rdEzW4TfZvYqDRzsTc"
+      short-id: "a8f3c1d7e9b4c2f6"
+  - name: "US🇺🇸 | shangulin.global.ssl.fastly.net-80 | 12.73ms"
+    type: "vless"
+    server: "23.235.42.205"
+    port: 80
+    uuid: "96eec36e-2c44-5b09-898e-6f0f0526e57f"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "RELAY🚩 | vless-sub.n7p8ri7j.workers.dev-2087 | 13.53ms"
+    type: "vless"
+    server: "104.16.60.8"
+    port: 2087
+    uuid: "962a733d-2614-0b9b-7ffe-9ac92ffea8eb"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "vless-sub.n7p8ri7j.workers.dev"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/ahmedquran19.xyz/current_time"
+      headers:
+        Host: "vless-sub.n7p8ri7j.workers.dev"
+  - name: "REALITY|BY🇧🇾 | by.api-yandex.net-443 | 210.05ms"
+    type: "vless"
+    server: "by.api-yandex.net"
+    port: 443
+    uuid: "959b4df5-15bc-4eb8-8b93-95f6af50cd80"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "by.api-yandex.net"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "DjRqjdBkJgAG_le5Q14JXTki6m9XCsNKxgw74IB0kR4"
+      short-id: "0f4dacf62211e75f"
+  - name: "REALITY|RU🇷🇺 | 145.249.109.121-8443 | 89.25ms"
+    type: "vless"
+    server: "145.249.109.121"
+    port: 8443
+    uuid: "93961d050c164d01aa96cc07522338d9"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "m.vk.com"
+    client-fingerprint: "random"
+    reality-opts:
+      public-key: "7FAbz_eJ_ip4pK0GCGrx8chOMAbxHW8mieBRuv4CR0k"
+      short-id: "aabbccdd"
+  - name: "NL🇳🇱 | cdn9-33.vk-cdnvideo.com-8443 | 206.17ms"
+    type: "vless"
+    server: "cdn9-33.vk-cdnvideo.com"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 131.93ms"
+    type: "vless"
+    server: "cdn7-39.vk-cdnvideo.com"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 194.4ms"
+    type: "vless"
+    server: "cdn7-09.vk-cdnvideo.com"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-09.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
+  - name: "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 112.96ms"
+    type: "vless"
+    server: "cdn3-87.vk-cdnvideo.com"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    client-fingerprint: "chrome"
+  - name: "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 177.94ms"
+    type: "vless"
+    server: "89.232.177.114"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn3-87.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
+  - name: "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 96.3ms"
+    type: "vless"
+    server: "77.74.123.170"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn3-87.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
+  - name: "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 170.06ms"
+    type: "vless"
+    server: "77.74.123.169"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn3-87.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
+  - name: "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 93.98ms"
+    type: "vless"
+    server: "77.74.123.168"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn3-87.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
+  - name: "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 103.12ms"
+    type: "vless"
+    server: "77.74.123.167"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-09.vk-cdnvideo.com"
+  - name: "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 179.54ms"
+    type: "vless"
+    server: "77.74.123.165"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-39.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
+  - name: "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 119.82ms"
+    type: "vless"
+    server: "77.74.123.163"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn3-87.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
+  - name: "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 102.19ms"
+    type: "vless"
+    server: "46.229.243.74"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-09.vk-cdnvideo.com"
+  - name: "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 129.06ms"
+    type: "vless"
+    server: "46.229.243.72"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-09.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
+  - name: "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 103.62ms"
+    type: "vless"
+    server: "46.229.243.71"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-09.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
+  - name: "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 122.02ms"
+    type: "vless"
+    server: "46.229.243.70"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-09.vk-cdnvideo.com"
+  - name: "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 98.61ms"
+    type: "vless"
+    server: "46.229.243.69"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-39.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
+  - name: "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 136.14ms"
+    type: "vless"
+    server: "46.229.243.67"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-09.vk-cdnvideo.com"
+  - name: "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 124.56ms"
+    type: "vless"
+    server: "46.229.243.133"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn3-87.vk-cdnvideo.com"
+  - name: "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 99.51ms"
+    type: "vless"
+    server: "46.229.243.132"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-39.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
+  - name: "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 99.86ms"
+    type: "vless"
+    server: "213.171.30.187"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn3-87.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
+  - name: "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 92.94ms"
+    type: "vless"
+    server: "162.249.126.76"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-09.vk-cdnvideo.com"
+  - name: "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 201.05ms"
+    type: "vless"
+    server: "162.249.126.74"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-39.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
+  - name: "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 98.22ms"
+    type: "vless"
+    server: "162.249.126.72"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn3-87.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
+  - name: "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 102.06ms"
+    type: "vless"
+    server: "162.249.126.69"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn3-87.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
+  - name: "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 200.16ms"
+    type: "vless"
+    server: "162.249.126.67"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-09.vk-cdnvideo.com"
+  - name: "RELAY🚩 | grabacademyportal.grab.com.cyylr.eu.cc-443 | 274.68ms"
+    type: "vless"
+    server: "141.193.213.11"
+    port: 443
+    uuid: "9232a847-8f7d-4548-a23a-a8b3550e0f15"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "grabacademyportal.grab.com.cyylr.eu.cc"
+    ws-opts:
+      path: "/id-tksi"
+      headers:
+        Host: "grabacademyportal.grab.com.cyylr.eu.cc"
+proxy-groups:
+  - name: "نوع انتخاب پروکسی 🔀"
+    type: "select"
+    proxies:
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+      - "قطع اینترنت ⛔"
+  - name: "دستی 🤏🏻"
+    type: "select"
+    proxies:
+      - "US🇺🇸 | Sudoos.global.ssl.fastly.net-80 | 16.27ms"
+      - "REALITY|LT🇱🇹 | lt-cherry-01.com-8443 | 429.16ms"
+      - "TR🇹🇷 | verst.salon13.beauty-8080 | 265.56ms"
+      - "RELAY🚩 | dev.qsaas.dev-443 | 68.65ms"
+      - "RELAY🚩 | dev.twistsparrow.xyz-443 | 25.12ms"
+      - "RELAY🚩 | dev.twistsparrow.xyz-443 | 3.53ms"
+      - "RELAY🚩 | dev.twistsparrow.xyz-443 | 2.31ms"
+      - "RELAY🚩 | octopusss4.com-443 | 103.09ms"
+      - "RELAY🚩 | octopusss4.com-443 | 5.35ms"
+      - "RELAY🚩 | octopusss4.com-443 | 9.62ms"
+      - "RELAY🚩 | octopusss4.com-443 | 2.83ms"
+      - "RELAY🚩 | octopusss4.com-443 | 2.69ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.7ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.31ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3ms-1"
+      - "RELAY🚩 | octopusss4.com-443 | 3.74ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.04ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.34ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.28ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.37ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.27ms"
+      - "RELAY🚩 | crimson-king-301d.nexoxnet.workers.dev-2083 | 15.03ms"
+      - "RELAY🚩 | HovEyda-ARIAMEHR-KinG.PAgEs.Dev-443 | 17.42ms"
+      - "RELAY🚩 | bpb-worker-panel-chf.pages.dev-443 | 21.6ms"
+      - "RELAY🚩 | germany.xydcqd.workers.dev-80 | 13.83ms"
+      - "REALITY|NL🇳🇱 | 144.31.30.69-443 | 94.29ms"
+      - "REALITY|RU🇷🇺 | ser.moktana.app-443 | 147.92ms"
+      - "REALITY|AM🇦🇲 | 77.91.68.70-55983 | 147.38ms"
+      - "REALITY|AT🇦🇹 | 185.224.3.41-10443 | 100.12ms"
+      - "US🇺🇸 | Namaid4.global.ssl.fastly.net-80 | 18.25ms"
+      - "FI🇫🇮 | 193.233.23.121-40611 | 115.25ms"
+      - "RELAY🚩 | little-surf-1d9a.amirhost1.workers.dev-2087 | 14.37ms"
+      - "DE🇩🇪 | ov-germany1.09vpn.com-80 | 103.58ms"
+      - "RELAY🚩 | do-sfo3.862400.xyz-443 | 144.16ms"
+      - "RELAY🚩 | uk-03p.allhubb.info-443 | 176.55ms"
+      - "REALITY|DE🇩🇪 | de02.lumixvpn.org-443 | 272.65ms"
+      - "US🇺🇸 | 128.105.145.226-2022 | 20.42ms"
+      - "RELAY🚩 | xvh.andishehparenting.com-2086 | 90.83ms"
+      - "RELAY🚩 | xU.aSaCO.sTorE-80 | 19.01ms"
+      - "RELAY🚩 | xvh.andishehparenting.com-2086 | 3.11ms"
+      - "US🇺🇸 | Zmaoz.Faculty.Ucdavis.Edu-443 | 32.13ms"
+      - "REALITY|MD🇲🇩 | md.riotvpn.eu-443 | 529.1ms"
+      - "REALITY|SE🇸🇪 | auto.riotvpn.eu-443 | 616.12ms"
+      - "REALITY|FR🇫🇷 | ads04.vxmaxpro.online-443 | 201.78ms"
+      - "RELAY🚩 | testconnection1.iranvatanam.com-2086 | 13.8ms"
+      - "RELAY🚩 | kamalnet.pages.dev-2083 | 19.12ms"
+      - "US🇺🇸 | live.skornorth.com-80 | 92.51ms"
+      - "REALITY|DE🇩🇪 | 5.75.196.174-443 | 96.74ms"
+      - "RELAY🚩 | main.boobie.eu.cc-80 | 243.97ms"
+      - "RELAY🚩 | main.boobie.eu.cc-80 | 3.53ms"
+      - "NL🇳🇱 | SC-TheNetherlands2.09vpn.com-80 | 122.36ms"
+      - "REALITY|NL🇳🇱 | leg.goodmaximum.com-443 | 122.91ms"
+      - "RELAY🚩 | ftp.singoshop.ir-8443 | 183.54ms"
+      - "RELAY🚩 | ir1.airpanel.top-2053 | 55.57ms"
+      - "RELAY🚩 | ir1.airpanel.top-2053 | 3.28ms"
+      - "RELAY🚩 | ir1.airpanel.top-2053 | 3.27ms"
+      - "REALITY|TR🇹🇷 | 83.217.9.140-8443 | 129.87ms"
+      - "DK🇩🇰 | 45.148.31.0-15855 | 95.35ms"
+      - "REALITY|DE🇩🇪 | 89.167.25.28-11005 | 117.2ms"
+      - "RELAY🚩 | pqh30v5.carwashipdir.shop-443 | 16ms"
+      - "REALITY|AE🇦🇪 | 85.234.73.125-13278 | 183.88ms"
+      - "RELAY🚩 | bustancloudd.primenet3.shop-2082 | 21.5ms"
+      - "US🇺🇸 | superip2.global.ssl.fastly.net-80 | 7.27ms"
+      - "RELAY🚩 | 37cdnws.iamali.info-443 | 176.98ms"
+      - "RELAY🚩 | 35cdnws.frnstatic.info-443 | 173.45ms"
+      - "RELAY🚩 | 37cdnws.iamali.info-443 | 3.67ms"
+      - "RELAY🚩 | 37cdnws.iamali.info-443 | 3.02ms"
+      - "RELAY🚩 | jp.aniua.qzz.io-2096 | 89.25ms"
+      - "RELAY🚩 | cloudflare.vhub.pro-443 | 14.33ms"
+      - "RELAY🚩 | pages.dev-443 | 9.52ms"
+      - "FR🇫🇷 | ratatouille.adaspoloandco.com-8443 | 155.21ms"
+      - "REALITY|TR🇹🇷 | 46.31.76.3-80 | 132.03ms"
+      - "REALITY|JP🇯🇵 | 31.76.91.24-443 | 150.72ms"
+      - "REALITY|JP🇯🇵 | 31.76.91.21-443 | 150.84ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.8-443 | 101.33ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.69-443 | 94.74ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.60-443 | 100.98ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.51-443 | 94.77ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.34-443 | 94.65ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.26-443 | 95.3ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.24-443 | 94.74ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.16-443 | 92.26ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.128-443 | 95.79ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.111-443 | 92.33ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.107-443 | 95.1ms"
+      - "RELAY🚩 | defensive-alarm17rrmk7y7y.samsungovens.ir.-2053 | 180.47ms"
+      - "REALITY|DE🇩🇪 | de.ko.prod.n7.homes-8443 | 111.33ms"
+      - "REALITY|DE🇩🇪 | 23.26.37.119-8443 | 96.9ms"
+      - "RELAY🚩 | 0221.enedrehd.workers.dev-2095 | 23.21ms"
+      - "REALITY|RU🇷🇺 | ru3.sipipro.su-443 | 148.25ms"
+      - "US🇺🇸 | tignaltofansv8.global.ssl.fastly.net-80 | 7.45ms"
+      - "US🇺🇸 | tignaltofansv8.global.ssl.fastly.net-80 | 7.04ms"
+      - "RELAY🚩 | afrcloud22.mmv.kr-443 | 416.15ms"
+      - "RELAY🚩 | server1.poludiro.workers.dev-8080 | 13.74ms"
+      - "RELAY🚩 | v2.raycv05.workers.dev-80 | 21.92ms"
+      - "REALITY|LT🇱🇹 | 130.12.171.120-20001 | 110.17ms"
+      - "REALITY|NL🇳🇱 | 77.246.109.191-34045 | 93.7ms"
+      - "RELAY🚩 | DiprOX.pages.DEV-443 | 24.8ms"
+      - "RELAY🚩 | DiprOX.pages.DEV-443 | 3.55ms"
+      - "RELAY🚩 | DiprOX.pages.DEV-443 | 4.35ms"
+      - "REALITY|NL🇳🇱 | 213.176.16.74-443 | 88.73ms"
+      - "REALITY|US🇺🇸 | nether2cxc.ignorelist.com-443 | 190.44ms"
+      - "REALITY|US🇺🇸 | cxcczechia1.chickenkiller.com-443 | 167.62ms"
+      - "REALITY|FI🇫🇮 | 65.109.211.154-443 | 116.28ms"
+      - "US🇺🇸 | live.skornorth.com-443 | 10.06ms"
+      - "US🇺🇸 | 77.110.127.191-9443 | 15.46ms"
+      - "RELAY🚩 | xxx.donated003.workers.dev-443 | 40.45ms"
+      - "RELAY🚩 | fuckingcloudflare.2-5e8.workers.dev-2095 | 20.21ms"
+      - "RELAY🚩 | baipiao1.curly-train.pages.dev-2087 | 18.62ms"
+      - "RELAY🚩 | newwk1.f1w.de5.net-2083 | 169.37ms"
+      - "RELAY🚩 | 1750293123492.china.baidu.bilibili.china.aeko.cn-8080 | 29.25ms"
+      - "REALITY|RU🇷🇺 | youtube.happvpn.com-443 | 211.63ms"
+      - "REALITY|FI🇫🇮 | fi.srv.happvpn.com-443 | 123.82ms"
+      - "RELAY🚩 | rAyAn-007.fOtOn.dPdNs.oRg-443 | 85.48ms"
+      - "RELAY🚩 | rahgozar.italiantourism.net.-2087 | 39.66ms"
+      - "RELAY🚩 | ads.ruangguru.com.cyylr.eu.cc-443 | 3.08ms"
+      - "RELAY🚩 | azadnet-btq.pages.dev-443 | 17.79ms"
+      - "RELAY🚩 | azadnet-3zp.pages.dev-443 | 15.83ms"
+      - "RELAY🚩 | azadnet-3zp.pages.dev-443 | 4.05ms"
+      - "RELAY🚩 | azadnet-bjv.pages.dev-443 | 20.95ms"
+      - "RELAY🚩 | zh.hollowspot.ir-8443 | 176.46ms"
+      - "RELAY🚩 | de1.nagona.top-443 | 73.58ms"
+      - "DE🇩🇪 | de1.accuratenetworkchecker.ir-443 | 267.55ms"
+      - "US🇺🇸 | speedtest.net-443 | 2.07ms"
+      - "REALITY|RU🇷🇺 | 193.233.251.62-443 | 118.96ms"
+      - "RELAY🚩 | 3-7ny.pages.dev-443 | 15.3ms"
+      - "RELAY🚩 | 1-brc.pages.dev-443 | 15.32ms"
+      - "RELAY🚩 | 3-2ll.pages.dev-443 | 17.2ms"
+      - "JP🇯🇵 | 134.122.194.186-443 | 310.16ms"
+      - "US🇺🇸 | play.google.com-80 | 5.36ms"
+      - "RELAY🚩 | ircp-617.pages.dev.-443 | 12.91ms"
+      - "RELAY🚩 | cyylr.eu.cc-443 | 278.61ms"
+      - "RELAY🚩 | cyylr.eu.cc-443 | 3.28ms"
+      - "RELAY🚩 | cyylr.eu.cc-443 | 3.97ms"
+      - "RELAY🚩 | cyylr.eu.cc-443 | 2.68ms"
+      - "RELAY🚩 | ssj.new-persian-song.ir-8443 | 95.37ms"
+      - "DE🇩🇪 | vh.mojaz-persian-music.ir-8443 | 280.23ms"
+      - "RELAY🚩 | icyou.daftarakeman.ir-8443 | 175.68ms"
+      - "REALITY|LT🇱🇹 | 93.115.25.42-8443 | 115.4ms"
+      - "REALITY|US🇺🇸 | 137.184.218.169-36925 | 8.11ms"
+      - "REALITY|FI🇫🇮 | node-fi.dostup-est.info-8443 | 280.24ms"
+      - "REALITY|DE🇩🇪 | 85.208.139.98-8444 | 93.26ms"
+      - "REALITY|RU🇷🇺 | b02.connectv.net-443 | 158.23ms"
+      - "RELAY🚩 | bOLd-fRoST-5566.AKBArI1355-KHO.WORkERS.DEV-8443 | 19.81ms"
+      - "RELAY🚩 | telegramkakoolnews.kakoolnewsa.workers.dev-443 | 14.25ms"
+      - "RELAY🚩 | kakoolnews.kakoolnews8.workers.dev-443 | 16.12ms"
+      - "RELAY🚩 | unnes.ac.id.cyylr.eu.cc-443 | 10.07ms"
+      - "RELAY🚩 | uciranir-uciranir-uiranir-uciranir-uciranir-uciranir-uciranir2.kehib41931.workers.dev-443 | 18.05ms"
+      - "RELAY🚩 | octopusss5.info-443 | 177.48ms"
+      - "RELAY🚩 | octopusss5.info-443 | 3.65ms"
+      - "RELAY🚩 | bpb-wORKer-paNeL-3JC.pAgeS.DeV-443 | 15.53ms"
+      - "DE🇩🇪 | nl.furkbalancer.net-8443 | 171.67ms"
+      - "RELAY🚩 | hello-world-royal-unit-def7.hamidimorteza680.workers.dev-80 | 18.19ms"
+      - "RELAY🚩 | mcix.ircf.space-443 | 79.34ms"
+      - "REALITY|UA🇺🇦 | 91.218.122.10-8443 | 116.6ms"
+      - "REALITY|NL🇳🇱 | 155.212.37.10-993 | 114.87ms"
+      - "REALITY|TR🇹🇷 | 155.212.110.2-993 | 107.21ms"
+      - "RELAY🚩 | xcc.dl5movis.ir-8080 | 182.73ms"
+      - "US🇺🇸 | cdn.vidboxco.ir-443 | 203.21ms"
+      - "REALITY|NL🇳🇱 | nl1.rsvps.tech-443 | 554.31ms"
+      - "REALITY|LT🇱🇹 | lt-modx.nodexphere.net-443 | 118.27ms"
+      - "RELAY🚩 | cdn-no.lopzo.ir-443 | 185.55ms"
+      - "REALITY|DE🇩🇪 | moo2.gafe-lorbad.ir-449 | 270.1ms"
+      - "REALITY|TW🇹🇼 | tw3.miyazono-kaori.com-443 | 223.75ms"
+      - "RELAY🚩 | wallweb.hydradllvip.info-443 | 175.28ms"
+      - "REALITY|RU🇷🇺 | 51.250.106.87-443 | 135.05ms"
+      - "DE🇩🇪 | interim.adaspoloandco.com-8443 | 124.03ms"
+      - "RELAY🚩 | juzi8186.qea.ccwu.cc-8443 | 206.17ms"
+      - "REALITY|RU🇷🇺 | 178.130.46.56-8443 | 88.2ms"
+      - "REALITY|CH🇨🇭 | areal1.greewebservices.ir-2425 | 304.91ms"
+      - "RELAY🚩 | divine-surf-b984.princess310.workers.dev-443 | 32.46ms"
+      - "REALITY|RU🇷🇺 | 130.49.179.127-443 | 85.65ms"
+      - "REALITY|PL🇵🇱 | pl.fantoff.online-443 | 227.1ms"
+      - "REALITY|RU🇷🇺 | 94.103.89.223-8443 | 126.75ms"
+      - "RELAY🚩 | lOng-DisK-e57f.MEhRdaD00000.WorkErS.DEV-2087 | 16.25ms"
+      - "REALITY|AT🇦🇹 | at.synthori.space-8443 | 148.59ms"
+      - "RELAY🚩 | liz2.jooje.lat-2083 | 20.19ms"
+      - "REALITY|RU🇷🇺 | 85.239.34.16-7443 | 137.38ms"
+      - "REALITY|US🇺🇸 | 167.104.223.14-443 | 78.07ms"
+      - "FR🇫🇷 | bab-6.site-443 | 150.74ms"
+      - "FR🇫🇷 | bab-6.site-443 | 150.22ms"
+      - "US🇺🇸 | norbertde1.global.ssl.fastly.net-80 | 7.03ms"
+      - "DE🇩🇪 | du.mobileemdad.top-42542 | 115.6ms"
+      - "DE🇩🇪 | 46.249.98.109-8080 | 96.63ms"
+      - "REALITY|TR🇹🇷 | 62.133.63.232-8443 | 129.96ms"
+      - "RELAY🚩 | unnes.ac.id.cyylr.eu.cc-443 | 4ms"
+      - "RELAY🚩 | toshirpilafkani-torostamtahamtani.mgwarrior.ir-2087 | 191.34ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 251.38ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 223.08ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 96.77ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 101.36ms"
+      - "RELAY🚩 | g1.nybaz.space-80 | 9.98ms"
+      - "RELAY🚩 | www.game-dns.ir-2083 | 180.76ms"
+      - "US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 12.35ms"
+      - "US🇺🇸 | speedtest.net-443 | 2.75ms"
+      - "REALITY|AL🇦🇱 | 144.31.131.33-443 | 109.6ms"
+      - "REALITY|CZ🇨🇿 | 188.130.208.220-5443 | 104.5ms"
+      - "RELAY🚩 | pagescm.freen7.de5.net-443 | 183.8ms"
+      - "REALITY|US🇺🇸 | 167.104.223.57-7443 | 77.69ms"
+      - "REALITY|DE🇩🇪 | 150.241.90.13-443 | 109.37ms"
+      - "REALITY|FI🇫🇮 | 62.60.255.11-443 | 111.78ms"
+      - "RELAY🚩 | collection.linefriends.com.cyylr.eu.cc-443 | 245.89ms"
+      - "REALITY|MD🇲🇩 | md.riotvpn.eu-8443 | 112.06ms"
+      - "RELAY🚩 | afrcloud5.c01.kr-443 | 206.65ms"
+      - "RELAY🚩 | worker-jolly-block-2e78.gamal32324.workers.Dev-443 | 15ms"
+      - "RELAY🚩 | cdn-allxn--b6gaceuorg.l4o117en.workers.dev-8080 | 28.56ms"
+      - "RELAY🚩 | sourceforge.net-443 | 8.29ms"
+      - "RELAY🚩 | chiRPy-opinioNGuuQL3f99i.wIndlER.cO.uk-2096 | 124.34ms"
+      - "REALITY|RU🇷🇺 | 212.192.14.223-8443 | 122.71ms"
+      - "REALITY|DE🇩🇪 | de.corsair-web.space-8443 | 274.9ms"
+      - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 180.32ms"
+      - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 3.93ms"
+      - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 3.44ms"
+      - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 3.57ms"
+      - "RELAY🚩 | afrcloud22.mmv.kr-443 | 4.11ms"
+      - "REALITY|TR🇹🇷 | 185.39.204.189-443 | 127.69ms"
+      - "IR🇮🇷 | divarcdn.com-443 | 157.38ms"
+      - "RELAY🚩 | frosty-field-7475.hamedpop8.workers.dev-2095 | 15.34ms"
+      - "REALITY|RU🇷🇺 | 145.249.109.142-443 | 89.93ms"
+      - "REALITY|RELAY🚩 | france.cloudpath.live-443 | 27.81ms"
+      - "IR🇮🇷 | uplod.ir-443 | 346.16ms"
+      - "REALITY|PL🇵🇱 | tg.riotvpn.eu-443 | 463.92ms"
+      - "US🇺🇸 | ks.ylks.xyz-443 | 79.45ms"
+      - "US🇺🇸 | ks.ylks.xyz-443 | 43.68ms"
+      - "US🇺🇸 | ks.ylks.xyz-443 | 4404.49ms"
+      - "US🇺🇸 | hp.ylks.xyz-443 | 54.15ms"
+      - "US🇺🇸 | kq.ylks.xyz-443 | 72.89ms"
+      - "US🇺🇸 | kr.ylks.xyz-443 | 40.74ms"
+      - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 104.57ms"
+      - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 2.85ms"
+      - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 2.86ms"
+      - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 3.17ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 34.68ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.35ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.47ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 2.95ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 2.82ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 4.53ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.24ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.74ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.23ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.46ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.28ms"
+      - "REALITY|FI🇫🇮 | 31.56.227.217-8443 | 228.02ms"
+      - "US🇺🇸 | tignaltofansv4.global.ssl.fastly.net-80 | 8.1ms"
+      - "US🇺🇸 | tignaltofan.global.ssl.fastly.net-80 | 5.05ms"
+      - "US🇺🇸 | tignaltofansv4.global.ssl.fastly.net-80 | 7.54ms"
+      - "RELAY🚩 | 0314.hiyasta2.workers.dev-8880 | 30.6ms"
+      - "RELAY🚩 | www.middle.cc.cd-443 | 508.4ms"
+      - "REALITY|DE🇩🇪 | 5.75.196.174-8080 | 95.63ms"
+      - "RELAY🚩 | mainsub.m4network-f4c.workers.dev-443 | 22.65ms"
+      - "US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 23.41ms"
+      - "US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 18.55ms"
+      - "REALITY|US🇺🇸 | us02.ssr.ee-443 | 190.62ms"
+      - "REALITY|AE🇦🇪 | db02.ssr.ee-443 | 314.68ms"
+      - "REALITY|AE🇦🇪 | db01.ssr.ee-443 | 200.28ms"
+      - "RELAY🚩 | v2ngfast.werdfg44.workers.dev-8443 | 17.53ms"
+      - "REALITY|US🇺🇸 | 156.229.161.107-10001 | 59.83ms"
+      - "RELAY🚩 | vip1.yomato7390.workers.Dev-443 | 16.45ms"
+      - "REALITY|RU🇷🇺 | 144.31.190.130-8081 | 121.93ms"
+      - "REALITY|DE🇩🇪 | 5.75.196.174-20141 | 98.57ms"
+      - "RELAY🚩 | mci-google-bing3164.sdb5j.workers.dev-443 | 21.73ms"
+      - "RELAY🚩 | divine-mode-ac41.amirss.workers.dev-80 | 21.29ms"
+      - "RELAY🚩 | focalin.adaspolo2.store-443 | 63.77ms"
+      - "REALITY|IR🇮🇷 | 62.60.245.10-443 | 94.96ms"
+      - "REALITY|FI🇫🇮 | 193.29.224.214-443 | 118.15ms"
+      - "RELAY🚩 | potifar.kravend4.workers.dev-80 | 37.69ms"
+      - "US🇺🇸 | google.com-443 | 6.15ms"
+      - "REALITY|GB🇬🇧 | 31.76.39.21-443 | 74.99ms"
+      - "US🇺🇸 | shangulin.global.ssl.fastly.net-80 | 12.73ms"
+      - "RELAY🚩 | vless-sub.n7p8ri7j.workers.dev-2087 | 13.53ms"
+      - "REALITY|BY🇧🇾 | by.api-yandex.net-443 | 210.05ms"
+      - "REALITY|RU🇷🇺 | 145.249.109.121-8443 | 89.25ms"
+      - "NL🇳🇱 | cdn9-33.vk-cdnvideo.com-8443 | 206.17ms"
+      - "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 131.93ms"
+      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 194.4ms"
+      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 112.96ms"
+      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 177.94ms"
+      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 96.3ms"
+      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 170.06ms"
+      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 93.98ms"
+      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 103.12ms"
+      - "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 179.54ms"
+      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 119.82ms"
+      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 102.19ms"
+      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 129.06ms"
+      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 103.62ms"
+      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 122.02ms"
+      - "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 98.61ms"
+      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 136.14ms"
+      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 124.56ms"
+      - "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 99.51ms"
+      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 99.86ms"
+      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 92.94ms"
+      - "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 201.05ms"
+      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 98.22ms"
+      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 102.06ms"
+      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 200.16ms"
+      - "RELAY🚩 | grabacademyportal.grab.com.cyylr.eu.cc-443 | 274.68ms"
+  - name: "خودکار (بهترین پینگ) 🤖"
+    type: "url-test"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+    lazy: true
+    proxies:
+      - "US🇺🇸 | Sudoos.global.ssl.fastly.net-80 | 16.27ms"
+      - "REALITY|LT🇱🇹 | lt-cherry-01.com-8443 | 429.16ms"
+      - "TR🇹🇷 | verst.salon13.beauty-8080 | 265.56ms"
+      - "RELAY🚩 | dev.qsaas.dev-443 | 68.65ms"
+      - "RELAY🚩 | dev.twistsparrow.xyz-443 | 25.12ms"
+      - "RELAY🚩 | dev.twistsparrow.xyz-443 | 3.53ms"
+      - "RELAY🚩 | dev.twistsparrow.xyz-443 | 2.31ms"
+      - "RELAY🚩 | octopusss4.com-443 | 103.09ms"
+      - "RELAY🚩 | octopusss4.com-443 | 5.35ms"
+      - "RELAY🚩 | octopusss4.com-443 | 9.62ms"
+      - "RELAY🚩 | octopusss4.com-443 | 2.83ms"
+      - "RELAY🚩 | octopusss4.com-443 | 2.69ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.7ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.31ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3ms-1"
+      - "RELAY🚩 | octopusss4.com-443 | 3.74ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.04ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.34ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.28ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.37ms"
+      - "RELAY🚩 | octopusss4.com-443 | 3.27ms"
+      - "RELAY🚩 | crimson-king-301d.nexoxnet.workers.dev-2083 | 15.03ms"
+      - "RELAY🚩 | HovEyda-ARIAMEHR-KinG.PAgEs.Dev-443 | 17.42ms"
+      - "RELAY🚩 | bpb-worker-panel-chf.pages.dev-443 | 21.6ms"
+      - "RELAY🚩 | germany.xydcqd.workers.dev-80 | 13.83ms"
+      - "REALITY|NL🇳🇱 | 144.31.30.69-443 | 94.29ms"
+      - "REALITY|RU🇷🇺 | ser.moktana.app-443 | 147.92ms"
+      - "REALITY|AM🇦🇲 | 77.91.68.70-55983 | 147.38ms"
+      - "REALITY|AT🇦🇹 | 185.224.3.41-10443 | 100.12ms"
+      - "US🇺🇸 | Namaid4.global.ssl.fastly.net-80 | 18.25ms"
+      - "FI🇫🇮 | 193.233.23.121-40611 | 115.25ms"
+      - "RELAY🚩 | little-surf-1d9a.amirhost1.workers.dev-2087 | 14.37ms"
+      - "DE🇩🇪 | ov-germany1.09vpn.com-80 | 103.58ms"
+      - "RELAY🚩 | do-sfo3.862400.xyz-443 | 144.16ms"
+      - "RELAY🚩 | uk-03p.allhubb.info-443 | 176.55ms"
+      - "REALITY|DE🇩🇪 | de02.lumixvpn.org-443 | 272.65ms"
+      - "US🇺🇸 | 128.105.145.226-2022 | 20.42ms"
+      - "RELAY🚩 | xvh.andishehparenting.com-2086 | 90.83ms"
+      - "RELAY🚩 | xU.aSaCO.sTorE-80 | 19.01ms"
+      - "RELAY🚩 | xvh.andishehparenting.com-2086 | 3.11ms"
+      - "US🇺🇸 | Zmaoz.Faculty.Ucdavis.Edu-443 | 32.13ms"
+      - "REALITY|MD🇲🇩 | md.riotvpn.eu-443 | 529.1ms"
+      - "REALITY|SE🇸🇪 | auto.riotvpn.eu-443 | 616.12ms"
+      - "REALITY|FR🇫🇷 | ads04.vxmaxpro.online-443 | 201.78ms"
+      - "RELAY🚩 | testconnection1.iranvatanam.com-2086 | 13.8ms"
+      - "RELAY🚩 | kamalnet.pages.dev-2083 | 19.12ms"
+      - "US🇺🇸 | live.skornorth.com-80 | 92.51ms"
+      - "REALITY|DE🇩🇪 | 5.75.196.174-443 | 96.74ms"
+      - "RELAY🚩 | main.boobie.eu.cc-80 | 243.97ms"
+      - "RELAY🚩 | main.boobie.eu.cc-80 | 3.53ms"
+      - "NL🇳🇱 | SC-TheNetherlands2.09vpn.com-80 | 122.36ms"
+      - "REALITY|NL🇳🇱 | leg.goodmaximum.com-443 | 122.91ms"
+      - "RELAY🚩 | ftp.singoshop.ir-8443 | 183.54ms"
+      - "RELAY🚩 | ir1.airpanel.top-2053 | 55.57ms"
+      - "RELAY🚩 | ir1.airpanel.top-2053 | 3.28ms"
+      - "RELAY🚩 | ir1.airpanel.top-2053 | 3.27ms"
+      - "REALITY|TR🇹🇷 | 83.217.9.140-8443 | 129.87ms"
+      - "DK🇩🇰 | 45.148.31.0-15855 | 95.35ms"
+      - "REALITY|DE🇩🇪 | 89.167.25.28-11005 | 117.2ms"
+      - "RELAY🚩 | pqh30v5.carwashipdir.shop-443 | 16ms"
+      - "REALITY|AE🇦🇪 | 85.234.73.125-13278 | 183.88ms"
+      - "RELAY🚩 | bustancloudd.primenet3.shop-2082 | 21.5ms"
+      - "US🇺🇸 | superip2.global.ssl.fastly.net-80 | 7.27ms"
+      - "RELAY🚩 | 37cdnws.iamali.info-443 | 176.98ms"
+      - "RELAY🚩 | 35cdnws.frnstatic.info-443 | 173.45ms"
+      - "RELAY🚩 | 37cdnws.iamali.info-443 | 3.67ms"
+      - "RELAY🚩 | 37cdnws.iamali.info-443 | 3.02ms"
+      - "RELAY🚩 | jp.aniua.qzz.io-2096 | 89.25ms"
+      - "RELAY🚩 | cloudflare.vhub.pro-443 | 14.33ms"
+      - "RELAY🚩 | pages.dev-443 | 9.52ms"
+      - "FR🇫🇷 | ratatouille.adaspoloandco.com-8443 | 155.21ms"
+      - "REALITY|TR🇹🇷 | 46.31.76.3-80 | 132.03ms"
+      - "REALITY|JP🇯🇵 | 31.76.91.24-443 | 150.72ms"
+      - "REALITY|JP🇯🇵 | 31.76.91.21-443 | 150.84ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.8-443 | 101.33ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.69-443 | 94.74ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.60-443 | 100.98ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.51-443 | 94.77ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.34-443 | 94.65ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.26-443 | 95.3ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.24-443 | 94.74ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.16-443 | 92.26ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.128-443 | 95.79ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.111-443 | 92.33ms"
+      - "REALITY|IT🇮🇹 | 31.76.113.107-443 | 95.1ms"
+      - "RELAY🚩 | defensive-alarm17rrmk7y7y.samsungovens.ir.-2053 | 180.47ms"
+      - "REALITY|DE🇩🇪 | de.ko.prod.n7.homes-8443 | 111.33ms"
+      - "REALITY|DE🇩🇪 | 23.26.37.119-8443 | 96.9ms"
+      - "RELAY🚩 | 0221.enedrehd.workers.dev-2095 | 23.21ms"
+      - "REALITY|RU🇷🇺 | ru3.sipipro.su-443 | 148.25ms"
+      - "US🇺🇸 | tignaltofansv8.global.ssl.fastly.net-80 | 7.45ms"
+      - "US🇺🇸 | tignaltofansv8.global.ssl.fastly.net-80 | 7.04ms"
+      - "RELAY🚩 | afrcloud22.mmv.kr-443 | 416.15ms"
+      - "RELAY🚩 | server1.poludiro.workers.dev-8080 | 13.74ms"
+      - "RELAY🚩 | v2.raycv05.workers.dev-80 | 21.92ms"
+      - "REALITY|LT🇱🇹 | 130.12.171.120-20001 | 110.17ms"
+      - "REALITY|NL🇳🇱 | 77.246.109.191-34045 | 93.7ms"
+      - "RELAY🚩 | DiprOX.pages.DEV-443 | 24.8ms"
+      - "RELAY🚩 | DiprOX.pages.DEV-443 | 3.55ms"
+      - "RELAY🚩 | DiprOX.pages.DEV-443 | 4.35ms"
+      - "REALITY|NL🇳🇱 | 213.176.16.74-443 | 88.73ms"
+      - "REALITY|US🇺🇸 | nether2cxc.ignorelist.com-443 | 190.44ms"
+      - "REALITY|US🇺🇸 | cxcczechia1.chickenkiller.com-443 | 167.62ms"
+      - "REALITY|FI🇫🇮 | 65.109.211.154-443 | 116.28ms"
+      - "US🇺🇸 | live.skornorth.com-443 | 10.06ms"
+      - "US🇺🇸 | 77.110.127.191-9443 | 15.46ms"
+      - "RELAY🚩 | xxx.donated003.workers.dev-443 | 40.45ms"
+      - "RELAY🚩 | fuckingcloudflare.2-5e8.workers.dev-2095 | 20.21ms"
+      - "RELAY🚩 | baipiao1.curly-train.pages.dev-2087 | 18.62ms"
+      - "RELAY🚩 | newwk1.f1w.de5.net-2083 | 169.37ms"
+      - "RELAY🚩 | 1750293123492.china.baidu.bilibili.china.aeko.cn-8080 | 29.25ms"
+      - "REALITY|RU🇷🇺 | youtube.happvpn.com-443 | 211.63ms"
+      - "REALITY|FI🇫🇮 | fi.srv.happvpn.com-443 | 123.82ms"
+      - "RELAY🚩 | rAyAn-007.fOtOn.dPdNs.oRg-443 | 85.48ms"
+      - "RELAY🚩 | rahgozar.italiantourism.net.-2087 | 39.66ms"
+      - "RELAY🚩 | ads.ruangguru.com.cyylr.eu.cc-443 | 3.08ms"
+      - "RELAY🚩 | azadnet-btq.pages.dev-443 | 17.79ms"
+      - "RELAY🚩 | azadnet-3zp.pages.dev-443 | 15.83ms"
+      - "RELAY🚩 | azadnet-3zp.pages.dev-443 | 4.05ms"
+      - "RELAY🚩 | azadnet-bjv.pages.dev-443 | 20.95ms"
+      - "RELAY🚩 | zh.hollowspot.ir-8443 | 176.46ms"
+      - "RELAY🚩 | de1.nagona.top-443 | 73.58ms"
+      - "DE🇩🇪 | de1.accuratenetworkchecker.ir-443 | 267.55ms"
+      - "US🇺🇸 | speedtest.net-443 | 2.07ms"
+      - "REALITY|RU🇷🇺 | 193.233.251.62-443 | 118.96ms"
+      - "RELAY🚩 | 3-7ny.pages.dev-443 | 15.3ms"
+      - "RELAY🚩 | 1-brc.pages.dev-443 | 15.32ms"
+      - "RELAY🚩 | 3-2ll.pages.dev-443 | 17.2ms"
+      - "JP🇯🇵 | 134.122.194.186-443 | 310.16ms"
+      - "US🇺🇸 | play.google.com-80 | 5.36ms"
+      - "RELAY🚩 | ircp-617.pages.dev.-443 | 12.91ms"
+      - "RELAY🚩 | cyylr.eu.cc-443 | 278.61ms"
+      - "RELAY🚩 | cyylr.eu.cc-443 | 3.28ms"
+      - "RELAY🚩 | cyylr.eu.cc-443 | 3.97ms"
+      - "RELAY🚩 | cyylr.eu.cc-443 | 2.68ms"
+      - "RELAY🚩 | ssj.new-persian-song.ir-8443 | 95.37ms"
+      - "DE🇩🇪 | vh.mojaz-persian-music.ir-8443 | 280.23ms"
+      - "RELAY🚩 | icyou.daftarakeman.ir-8443 | 175.68ms"
+      - "REALITY|LT🇱🇹 | 93.115.25.42-8443 | 115.4ms"
+      - "REALITY|US🇺🇸 | 137.184.218.169-36925 | 8.11ms"
+      - "REALITY|FI🇫🇮 | node-fi.dostup-est.info-8443 | 280.24ms"
+      - "REALITY|DE🇩🇪 | 85.208.139.98-8444 | 93.26ms"
+      - "REALITY|RU🇷🇺 | b02.connectv.net-443 | 158.23ms"
+      - "RELAY🚩 | bOLd-fRoST-5566.AKBArI1355-KHO.WORkERS.DEV-8443 | 19.81ms"
+      - "RELAY🚩 | telegramkakoolnews.kakoolnewsa.workers.dev-443 | 14.25ms"
+      - "RELAY🚩 | kakoolnews.kakoolnews8.workers.dev-443 | 16.12ms"
+      - "RELAY🚩 | unnes.ac.id.cyylr.eu.cc-443 | 10.07ms"
+      - "RELAY🚩 | uciranir-uciranir-uiranir-uciranir-uciranir-uciranir-uciranir2.kehib41931.workers.dev-443 | 18.05ms"
+      - "RELAY🚩 | octopusss5.info-443 | 177.48ms"
+      - "RELAY🚩 | octopusss5.info-443 | 3.65ms"
+      - "RELAY🚩 | bpb-wORKer-paNeL-3JC.pAgeS.DeV-443 | 15.53ms"
+      - "DE🇩🇪 | nl.furkbalancer.net-8443 | 171.67ms"
+      - "RELAY🚩 | hello-world-royal-unit-def7.hamidimorteza680.workers.dev-80 | 18.19ms"
+      - "RELAY🚩 | mcix.ircf.space-443 | 79.34ms"
+      - "REALITY|UA🇺🇦 | 91.218.122.10-8443 | 116.6ms"
+      - "REALITY|NL🇳🇱 | 155.212.37.10-993 | 114.87ms"
+      - "REALITY|TR🇹🇷 | 155.212.110.2-993 | 107.21ms"
+      - "RELAY🚩 | xcc.dl5movis.ir-8080 | 182.73ms"
+      - "US🇺🇸 | cdn.vidboxco.ir-443 | 203.21ms"
+      - "REALITY|NL🇳🇱 | nl1.rsvps.tech-443 | 554.31ms"
+      - "REALITY|LT🇱🇹 | lt-modx.nodexphere.net-443 | 118.27ms"
+      - "RELAY🚩 | cdn-no.lopzo.ir-443 | 185.55ms"
+      - "REALITY|DE🇩🇪 | moo2.gafe-lorbad.ir-449 | 270.1ms"
+      - "REALITY|TW🇹🇼 | tw3.miyazono-kaori.com-443 | 223.75ms"
+      - "RELAY🚩 | wallweb.hydradllvip.info-443 | 175.28ms"
+      - "REALITY|RU🇷🇺 | 51.250.106.87-443 | 135.05ms"
+      - "DE🇩🇪 | interim.adaspoloandco.com-8443 | 124.03ms"
+      - "RELAY🚩 | juzi8186.qea.ccwu.cc-8443 | 206.17ms"
+      - "REALITY|RU🇷🇺 | 178.130.46.56-8443 | 88.2ms"
+      - "REALITY|CH🇨🇭 | areal1.greewebservices.ir-2425 | 304.91ms"
+      - "RELAY🚩 | divine-surf-b984.princess310.workers.dev-443 | 32.46ms"
+      - "REALITY|RU🇷🇺 | 130.49.179.127-443 | 85.65ms"
+      - "REALITY|PL🇵🇱 | pl.fantoff.online-443 | 227.1ms"
+      - "REALITY|RU🇷🇺 | 94.103.89.223-8443 | 126.75ms"
+      - "RELAY🚩 | lOng-DisK-e57f.MEhRdaD00000.WorkErS.DEV-2087 | 16.25ms"
+      - "REALITY|AT🇦🇹 | at.synthori.space-8443 | 148.59ms"
+      - "RELAY🚩 | liz2.jooje.lat-2083 | 20.19ms"
+      - "REALITY|RU🇷🇺 | 85.239.34.16-7443 | 137.38ms"
+      - "REALITY|US🇺🇸 | 167.104.223.14-443 | 78.07ms"
+      - "FR🇫🇷 | bab-6.site-443 | 150.74ms"
+      - "FR🇫🇷 | bab-6.site-443 | 150.22ms"
+      - "US🇺🇸 | norbertde1.global.ssl.fastly.net-80 | 7.03ms"
+      - "DE🇩🇪 | du.mobileemdad.top-42542 | 115.6ms"
+      - "DE🇩🇪 | 46.249.98.109-8080 | 96.63ms"
+      - "REALITY|TR🇹🇷 | 62.133.63.232-8443 | 129.96ms"
+      - "RELAY🚩 | unnes.ac.id.cyylr.eu.cc-443 | 4ms"
+      - "RELAY🚩 | toshirpilafkani-torostamtahamtani.mgwarrior.ir-2087 | 191.34ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 251.38ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 223.08ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 96.77ms"
+      - "RU🇷🇺 | r1.mizulina.top-22231 | 101.36ms"
+      - "RELAY🚩 | g1.nybaz.space-80 | 9.98ms"
+      - "RELAY🚩 | www.game-dns.ir-2083 | 180.76ms"
+      - "US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 12.35ms"
+      - "US🇺🇸 | speedtest.net-443 | 2.75ms"
+      - "REALITY|AL🇦🇱 | 144.31.131.33-443 | 109.6ms"
+      - "REALITY|CZ🇨🇿 | 188.130.208.220-5443 | 104.5ms"
+      - "RELAY🚩 | pagescm.freen7.de5.net-443 | 183.8ms"
+      - "REALITY|US🇺🇸 | 167.104.223.57-7443 | 77.69ms"
+      - "REALITY|DE🇩🇪 | 150.241.90.13-443 | 109.37ms"
+      - "REALITY|FI🇫🇮 | 62.60.255.11-443 | 111.78ms"
+      - "RELAY🚩 | collection.linefriends.com.cyylr.eu.cc-443 | 245.89ms"
+      - "REALITY|MD🇲🇩 | md.riotvpn.eu-8443 | 112.06ms"
+      - "RELAY🚩 | afrcloud5.c01.kr-443 | 206.65ms"
+      - "RELAY🚩 | worker-jolly-block-2e78.gamal32324.workers.Dev-443 | 15ms"
+      - "RELAY🚩 | cdn-allxn--b6gaceuorg.l4o117en.workers.dev-8080 | 28.56ms"
+      - "RELAY🚩 | sourceforge.net-443 | 8.29ms"
+      - "RELAY🚩 | chiRPy-opinioNGuuQL3f99i.wIndlER.cO.uk-2096 | 124.34ms"
+      - "REALITY|RU🇷🇺 | 212.192.14.223-8443 | 122.71ms"
+      - "REALITY|DE🇩🇪 | de.corsair-web.space-8443 | 274.9ms"
+      - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 180.32ms"
+      - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 3.93ms"
+      - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 3.44ms"
+      - "RELAY🚩 | juzi.qea.ccwu.cc-443 | 3.57ms"
+      - "RELAY🚩 | afrcloud22.mmv.kr-443 | 4.11ms"
+      - "REALITY|TR🇹🇷 | 185.39.204.189-443 | 127.69ms"
+      - "IR🇮🇷 | divarcdn.com-443 | 157.38ms"
+      - "RELAY🚩 | frosty-field-7475.hamedpop8.workers.dev-2095 | 15.34ms"
+      - "REALITY|RU🇷🇺 | 145.249.109.142-443 | 89.93ms"
+      - "REALITY|RELAY🚩 | france.cloudpath.live-443 | 27.81ms"
+      - "IR🇮🇷 | uplod.ir-443 | 346.16ms"
+      - "REALITY|PL🇵🇱 | tg.riotvpn.eu-443 | 463.92ms"
+      - "US🇺🇸 | ks.ylks.xyz-443 | 79.45ms"
+      - "US🇺🇸 | ks.ylks.xyz-443 | 43.68ms"
+      - "US🇺🇸 | ks.ylks.xyz-443 | 4404.49ms"
+      - "US🇺🇸 | hp.ylks.xyz-443 | 54.15ms"
+      - "US🇺🇸 | kq.ylks.xyz-443 | 72.89ms"
+      - "US🇺🇸 | kr.ylks.xyz-443 | 40.74ms"
+      - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 104.57ms"
+      - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 2.85ms"
+      - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 2.86ms"
+      - "RELAY🚩 | Parsashonam.atlasq.ir-443 | 3.17ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 34.68ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.35ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.47ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 2.95ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 2.82ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 4.53ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.24ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.74ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.23ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.46ms"
+      - "RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 3.28ms"
+      - "REALITY|FI🇫🇮 | 31.56.227.217-8443 | 228.02ms"
+      - "US🇺🇸 | tignaltofansv4.global.ssl.fastly.net-80 | 8.1ms"
+      - "US🇺🇸 | tignaltofan.global.ssl.fastly.net-80 | 5.05ms"
+      - "US🇺🇸 | tignaltofansv4.global.ssl.fastly.net-80 | 7.54ms"
+      - "RELAY🚩 | 0314.hiyasta2.workers.dev-8880 | 30.6ms"
+      - "RELAY🚩 | www.middle.cc.cd-443 | 508.4ms"
+      - "REALITY|DE🇩🇪 | 5.75.196.174-8080 | 95.63ms"
+      - "RELAY🚩 | mainsub.m4network-f4c.workers.dev-443 | 22.65ms"
+      - "US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 23.41ms"
+      - "US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 18.55ms"
+      - "REALITY|US🇺🇸 | us02.ssr.ee-443 | 190.62ms"
+      - "REALITY|AE🇦🇪 | db02.ssr.ee-443 | 314.68ms"
+      - "REALITY|AE🇦🇪 | db01.ssr.ee-443 | 200.28ms"
+      - "RELAY🚩 | v2ngfast.werdfg44.workers.dev-8443 | 17.53ms"
+      - "REALITY|US🇺🇸 | 156.229.161.107-10001 | 59.83ms"
+      - "RELAY🚩 | vip1.yomato7390.workers.Dev-443 | 16.45ms"
+      - "REALITY|RU🇷🇺 | 144.31.190.130-8081 | 121.93ms"
+      - "REALITY|DE🇩🇪 | 5.75.196.174-20141 | 98.57ms"
+      - "RELAY🚩 | mci-google-bing3164.sdb5j.workers.dev-443 | 21.73ms"
+      - "RELAY🚩 | divine-mode-ac41.amirss.workers.dev-80 | 21.29ms"
+      - "RELAY🚩 | focalin.adaspolo2.store-443 | 63.77ms"
+      - "REALITY|IR🇮🇷 | 62.60.245.10-443 | 94.96ms"
+      - "REALITY|FI🇫🇮 | 193.29.224.214-443 | 118.15ms"
+      - "RELAY🚩 | potifar.kravend4.workers.dev-80 | 37.69ms"
+      - "US🇺🇸 | google.com-443 | 6.15ms"
+      - "REALITY|GB🇬🇧 | 31.76.39.21-443 | 74.99ms"
+      - "US🇺🇸 | shangulin.global.ssl.fastly.net-80 | 12.73ms"
+      - "RELAY🚩 | vless-sub.n7p8ri7j.workers.dev-2087 | 13.53ms"
+      - "REALITY|BY🇧🇾 | by.api-yandex.net-443 | 210.05ms"
+      - "REALITY|RU🇷🇺 | 145.249.109.121-8443 | 89.25ms"
+      - "NL🇳🇱 | cdn9-33.vk-cdnvideo.com-8443 | 206.17ms"
+      - "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 131.93ms"
+      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 194.4ms"
+      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 112.96ms"
+      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 177.94ms"
+      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 96.3ms"
+      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 170.06ms"
+      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 93.98ms"
+      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 103.12ms"
+      - "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 179.54ms"
+      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 119.82ms"
+      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 102.19ms"
+      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 129.06ms"
+      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 103.62ms"
+      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 122.02ms"
+      - "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 98.61ms"
+      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 136.14ms"
+      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 124.56ms"
+      - "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 99.51ms"
+      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 99.86ms"
+      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 92.94ms"
+      - "RO🇷🇴 | cdn7-39.vk-cdnvideo.com-8443 | 201.05ms"
+      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 98.22ms"
+      - "NL🇳🇱 | cdn3-87.vk-cdnvideo.com-8443 | 102.06ms"
+      - "NL🇳🇱 | cdn7-09.vk-cdnvideo.com-8443 | 200.16ms"
+      - "RELAY🚩 | grabacademyportal.grab.com.cyylr.eu.cc-443 | 274.68ms"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تلگرام 💬"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "بدون فیلترشکن 🛡️"
+    type: "select"
+    proxies:
+      - "DIRECT"
+    hidden: true
+  - name: "قطع اینترنت ⛔"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+  - name: "اجازه ندادن 🚫"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+rules:
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
+  - "GEOIP,ir,سایتای ایرانی 🇮🇷"
+  - "MATCH,نوع انتخاب پروکسی 🔀"

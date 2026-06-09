@@ -1,0 +1,783 @@
+global-client-fingerprint: "chrome"
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7894
+allow-lan: true
+tcp-concurrent: true
+enable-process: true
+find-process-mode: "always"
+ipv6: true
+log-level: "info"
+geo-auto-update: true
+geo-update-interval: 168
+secret: ""
+bind-address: "*"
+unified-delay: false
+disable-keep-alive: false
+keep-alive-idle: 30
+keep-alive-interval: 30
+dns:
+  enable: true
+  ipv6: true
+  respect-rules: false
+  prefer-h3: true
+  cache-algorithm: "arc"
+  use-system-hosts: true
+  use-host: true
+  listen: "0.0.0.0:53"
+  enhanced-mode: "fake-ip"
+  fake-ip-filter-mode: "blacklist"
+  fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter:
+    - "*.lan"
+    - "*.localdomain"
+    - "*.invalid"
+    - "*.localhost"
+    - "*.test"
+    - "*.local"
+    - "*.home.arpa"
+    - "time.*.com"
+    - "ntp.*.com"
+    - "*.ir"
+  default-nameserver:
+    - "8.8.8.8"
+    - "8.8.4.4"
+    - "1.1.1.1"
+    - "9.9.9.9"
+  nameserver:
+    - "https://dns.google/dns-query"
+    - "https://cloudflare-dns.com/dns-query"
+  direct-nameserver:
+    - "78.157.42.100"
+    - "78.157.42.101"
+  proxy-server-nameserver:
+    - "1.1.1.1"
+    - "8.8.8.8"
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - 8080
+        - 8880
+        - 2052
+        - 2082
+        - 2086
+        - 2095
+    TLS:
+      ports:
+        - 443
+        - 8443
+        - 2053
+        - 2083
+        - 2087
+        - 2096
+tun:
+  enable: true
+  stack: "mixed"
+  auto-route: true
+  auto-detect-interface: true
+  auto-redir: true
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+rule-providers:
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+proxies:
+  - name: "1. 🇷🇺 Russia"
+    type: "vless"
+    server: "46.229.215.189"
+    port: 8443
+    uuid: "9e5201b2-5061-413b-b310-36cc6ec590c6"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "smartcaptcha.yandexcloud.net"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "92bt1gYq9EAz3SSOtKDrmqnbetNcaStEDicwrFg0_Rc"
+  - name: "2. 🇲🇩 Moldova"
+    type: "vless"
+    server: "185.242.19.249"
+    port: 443
+    uuid: "cfb70000-ed61-4a7e-89a3-2b9c2caa6001"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "top707762634.mwscdn.ru"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/livestreamcontent/"
+      headers:
+        Host: "top707762634.mwscdn.ru"
+  - name: "3. 🇳🇴 Norway"
+    type: "vless"
+    server: "194.5.98.105"
+    port: 2053
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/intro/chat"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "4. 🇳🇴 Norway"
+    type: "vless"
+    server: "194.5.98.105"
+    port: 8443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    ws-opts:
+      path: "/contact"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "7. 🇩🇰 Denmark"
+    type: "vless"
+    server: "193.181.214.98"
+    port: 2083
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/dh/favorite/docs"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "8. 🇦🇹 Austria"
+    type: "vless"
+    server: "132.243.203.223"
+    port: 8443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    ws-opts:
+      path: "/tools/channels"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "9. 🇩🇪 Germany"
+    type: "vless"
+    server: "185.229.9.8"
+    port: 443
+    uuid: "8af45e88-4616-449d-b632-0417423ea473"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ads.x5.ru"
+    client-fingerprint: "random"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "r6LKP3g2W5ruKICTDfH8rwM1PbMjdcgHU7cG6jppxTs"
+      short-id: "27e53bbcab7593d7"
+  - name: "11. 🇬🇧 United Kingdom"
+    type: "vless"
+    server: "31.77.201.3"
+    port: 7443
+    uuid: "10484bee-8516-400a-9b1e-efb5144ad324"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "icloud.com"
+    client-fingerprint: "random"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "5QAO98ot2U7TcGs_f6EEaQjCzNOJLNHqPf6smYsdFVI"
+      short-id: "d82fb387"
+  - name: "12. 🇩🇪 Germany"
+    type: "vless"
+    server: "130.193.56.208"
+    port: 443
+    uuid: "7d494f0c-51c2-466f-a92f-865369ea47ea"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "wl-11-2.nodes.ac"
+    client-fingerprint: "qq"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "UfrA4c5fjRVKJTtAiDOd9lEdmkgfZBSTm9bSMzC4zCg"
+      short-id: "c792be29a38dbefe"
+  - name: "13. 🇵🇱 Poland"
+    type: "vless"
+    server: "195.210.47.233"
+    port: 8443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    ws-opts:
+      path: "/games/go.php"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "14. 🇩🇰 Denmark"
+    type: "vless"
+    server: "92.113.146.87"
+    port: 443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/trade"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "15. 🇦🇹 Austria"
+    type: "vless"
+    server: "132.243.203.193"
+    port: 8443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    ws-opts:
+      path: "/show"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "16. 🇧🇬 Bulgaria"
+    type: "vless"
+    server: "193.37.212.56"
+    port: 2053
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/data"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "17. 🇫🇷 France"
+    type: "vless"
+    server: "104.155.124.198"
+    port: 443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/account"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "19. 🇳🇱 The Netherlands"
+    type: "vless"
+    server: "185.147.26.105"
+    port: 443
+    uuid: "13bbbb75-2ec5-4262-9784-fe8b6e94510b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "timeweb.cloud"
+    client-fingerprint: "random"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "ELp9PUvVnkoFJYiscWrbnPXRnsYdELSCbIz9wNmMRRw"
+      short-id: "965af8960474c29c"
+  - name: "21. 🇩🇪 Germany"
+    type: "vless"
+    server: "51.250.33.25"
+    port: 443
+    uuid: "7d494f0c-51c2-466f-a92f-865369ea47ea"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "wl-6-5.nodes.ac"
+    client-fingerprint: "qq"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "c8Sx7-8OcvtHEbVU59r-9DQrNdSI91GbMaHR-du4BxA"
+      short-id: "b7b3ff64ca530808"
+  - name: "22. 🇮🇸 Iceland"
+    type: "vless"
+    server: "89.147.109.212"
+    port: 443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    ws-opts:
+      path: "/trade"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "23. 🇰🇿 Kazakhstan"
+    type: "vless"
+    server: "85.202.195.169"
+    port: 443
+    uuid: "87a61ee1-f6eb-48b4-ac90-c255ce067a07"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "kz1.dendibase.org"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "mbvZt-7r8xaJ8gIfPrhukRATKlB8fQNG8AxPLZeZ6Gg"
+  - name: "24. 🇸🇪 Sweden"
+    type: "vless"
+    server: "104.16.150.246"
+    port: 2087
+    uuid: "77777777-8a3e-6666-b6d1-a9c5f0e8b3a2"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "fgnix832fx.fx6hsv0.ccwu.cc"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "fgnix832fx.fx6hsv0.ccwu.cc"
+  - name: "25. 🇮🇱 Israel"
+    type: "vless"
+    server: "80.178.58.56"
+    port: 443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    ws-opts:
+      path: "/reg/torrent/products"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "26. 🇵🇱 Poland"
+    type: "vless"
+    server: "195.49.215.254"
+    port: 8443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    ws-opts:
+      path: "/thread/apps"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "27. 🇦🇹 Austria"
+    type: "vless"
+    server: "185.86.77.181"
+    port: 8443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    ws-opts:
+      path: "/album"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "28. 🇿🇦 South Africa"
+    type: "vless"
+    server: "139.84.236.69"
+    port: 443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/vip"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "30. 🇦🇹 Austria"
+    type: "vless"
+    server: "132.243.203.221"
+    port: 8443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/uploads/events"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "31. 🇩🇪 Germany"
+    type: "vless"
+    server: "178.154.204.55"
+    port: 443
+    uuid: "7d494f0c-51c2-466f-a92f-865369ea47ea"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "wl-4-3.nodes.ac"
+    client-fingerprint: "qq"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "ljUVISw0FlRCXDz6xRTVnmms_IfVrIFLJ5bg81MDNQY"
+      short-id: "7171871f66279d10"
+  - name: "32. 🇵🇱 Poland"
+    type: "vless"
+    server: "93.85.88.60"
+    port: 8443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/urls/photos/mag"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "33. 🇿🇦 South Africa"
+    type: "vless"
+    server: "156.38.157.171"
+    port: 2053
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/out"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "34. 🇩🇪 Germany"
+    type: "vless"
+    server: "178.154.215.113"
+    port: 443
+    uuid: "7d494f0c-51c2-466f-a92f-865369ea47ea"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "wl-4-1.legendary.ac"
+    client-fingerprint: "qq"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "E-nzKjkLlehnOE5Lub_r6tCOQcvnxVaSAETjFHESciw"
+      short-id: "30e93292b543f308"
+  - name: "35. 🇦🇲 Armenia"
+    type: "vless"
+    server: "91.198.108.191"
+    port: 443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/member/clips"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "36. 🇧🇷 Brazil"
+    type: "vless"
+    server: "216.238.110.198"
+    port: 8443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    ws-opts:
+      path: "/temp/study/streaming"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "38. 🇦🇹 Austria"
+    type: "vless"
+    server: "132.243.203.210"
+    port: 8443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    ws-opts:
+      path: "/app/city"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "40. 🇮🇸 Iceland"
+    type: "vless"
+    server: "89.147.111.223"
+    port: 2053
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    ws-opts:
+      path: "/pictures"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "41. 🇷🇺 Russia"
+    type: "vless"
+    server: "ru-selectel-01.com"
+    port: 8443
+    uuid: "8cd00214-09da-48d9-8004-8281ff918d36"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "sni.ru-selectel-01.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "rZgu2lJcC2yrYnx66znee-Z75mW6m4TRfWt7_neoEVI"
+      short-id: "1c74cf626ef50bb3"
+  - name: "43. 🇩🇪 Germany"
+    type: "vless"
+    server: "95.139.91.132"
+    port: 443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/course/anime/event"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "44. 🇷🇴 Romania"
+    type: "vless"
+    server: "38.79.154.92"
+    port: 443
+    uuid: "36af4874-d6a3-4f7c-82a7-1cb724961b52"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "linek.perry.us.kg"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/downloads"
+      headers:
+        Host: "linek.perry.us.kg"
+  - name: "45. 🇳🇱 The Netherlands"
+    type: "vless"
+    server: "84.201.167.190"
+    port: 443
+    uuid: "87a61ee1-f6eb-48b4-ac90-c255ce067a07"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "smartcaptcha.yandexcloud.net"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "vffVSILmcC4J4EcoKf5ZBhqGXA1u356YqQaBh97_OBQ"
+      short-id: "27e53bbcab7593d1"
+  - name: "5. 🇩🇪 Germany"
+    type: "ss"
+    server: "46.225.30.16"
+    port: 49534
+    cipher: "2022-blake3-aes-256-gcm"
+    password: "tEY1W9tCYB6R5Y22378dJ9yh4H4PAZlAM/m31aG1PYM="
+    udp: true
+  - name: "6. 🇫🇮 Finland"
+    type: "ss"
+    server: "109.107.182.229"
+    port: 51544
+    cipher: "chacha20-ietf-poly1305"
+    password: "Ca4cxMttEzzRFSLpz3IcBF"
+    udp: true
+  - name: "18. 🇷🇺 Russia"
+    type: "ss"
+    server: "195.133.2.2"
+    port: 34898
+    cipher: "chacha20-ietf-poly1305"
+    password: "A9awLBKgvsHU6GsxVUK6PY"
+    udp: true
+  - name: "20. 🇵🇱 Poland"
+    type: "ss"
+    server: "54.36.174.134"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "8zw5j9h"
+    udp: true
+  - name: "37. 🇸🇬 Singapore"
+    type: "ss"
+    server: "168.138.175.92"
+    port: 9888
+    cipher: "aes-128-gcm"
+    password: "JVSuuib4ydvY8m7u6jElTYbeRO8ygJ4Hi8Iq733BqAkF"
+    udp: true
+  - name: "10. 🇵🇱 Poland"
+    type: "trojan"
+    server: "64.176.65.85"
+    port: 443
+    password: "iGccGWTMHtoXtBhGYK4mogg7iIUhGbcvCf"
+    udp: true
+    tls: true
+    network: "tcp"
+proxy-groups:
+  - name: "نوع انتخاب پروکسی 🔀"
+    type: "select"
+    proxies:
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+      - "قطع اینترنت ⛔"
+  - name: "دستی 🤏🏻"
+    type: "select"
+    proxies:
+      - "1. 🇷🇺 Russia"
+      - "2. 🇲🇩 Moldova"
+      - "3. 🇳🇴 Norway"
+      - "4. 🇳🇴 Norway"
+      - "7. 🇩🇰 Denmark"
+      - "8. 🇦🇹 Austria"
+      - "9. 🇩🇪 Germany"
+      - "11. 🇬🇧 United Kingdom"
+      - "12. 🇩🇪 Germany"
+      - "13. 🇵🇱 Poland"
+      - "14. 🇩🇰 Denmark"
+      - "15. 🇦🇹 Austria"
+      - "16. 🇧🇬 Bulgaria"
+      - "17. 🇫🇷 France"
+      - "19. 🇳🇱 The Netherlands"
+      - "21. 🇩🇪 Germany"
+      - "22. 🇮🇸 Iceland"
+      - "23. 🇰🇿 Kazakhstan"
+      - "24. 🇸🇪 Sweden"
+      - "25. 🇮🇱 Israel"
+      - "26. 🇵🇱 Poland"
+      - "27. 🇦🇹 Austria"
+      - "28. 🇿🇦 South Africa"
+      - "30. 🇦🇹 Austria"
+      - "31. 🇩🇪 Germany"
+      - "32. 🇵🇱 Poland"
+      - "33. 🇿🇦 South Africa"
+      - "34. 🇩🇪 Germany"
+      - "35. 🇦🇲 Armenia"
+      - "36. 🇧🇷 Brazil"
+      - "38. 🇦🇹 Austria"
+      - "40. 🇮🇸 Iceland"
+      - "41. 🇷🇺 Russia"
+      - "43. 🇩🇪 Germany"
+      - "44. 🇷🇴 Romania"
+      - "45. 🇳🇱 The Netherlands"
+      - "5. 🇩🇪 Germany"
+      - "6. 🇫🇮 Finland"
+      - "18. 🇷🇺 Russia"
+      - "20. 🇵🇱 Poland"
+      - "37. 🇸🇬 Singapore"
+      - "10. 🇵🇱 Poland"
+  - name: "خودکار (بهترین پینگ) 🤖"
+    type: "url-test"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+    lazy: true
+    proxies:
+      - "1. 🇷🇺 Russia"
+      - "2. 🇲🇩 Moldova"
+      - "3. 🇳🇴 Norway"
+      - "4. 🇳🇴 Norway"
+      - "7. 🇩🇰 Denmark"
+      - "8. 🇦🇹 Austria"
+      - "9. 🇩🇪 Germany"
+      - "11. 🇬🇧 United Kingdom"
+      - "12. 🇩🇪 Germany"
+      - "13. 🇵🇱 Poland"
+      - "14. 🇩🇰 Denmark"
+      - "15. 🇦🇹 Austria"
+      - "16. 🇧🇬 Bulgaria"
+      - "17. 🇫🇷 France"
+      - "19. 🇳🇱 The Netherlands"
+      - "21. 🇩🇪 Germany"
+      - "22. 🇮🇸 Iceland"
+      - "23. 🇰🇿 Kazakhstan"
+      - "24. 🇸🇪 Sweden"
+      - "25. 🇮🇱 Israel"
+      - "26. 🇵🇱 Poland"
+      - "27. 🇦🇹 Austria"
+      - "28. 🇿🇦 South Africa"
+      - "30. 🇦🇹 Austria"
+      - "31. 🇩🇪 Germany"
+      - "32. 🇵🇱 Poland"
+      - "33. 🇿🇦 South Africa"
+      - "34. 🇩🇪 Germany"
+      - "35. 🇦🇲 Armenia"
+      - "36. 🇧🇷 Brazil"
+      - "38. 🇦🇹 Austria"
+      - "40. 🇮🇸 Iceland"
+      - "41. 🇷🇺 Russia"
+      - "43. 🇩🇪 Germany"
+      - "44. 🇷🇴 Romania"
+      - "45. 🇳🇱 The Netherlands"
+      - "5. 🇩🇪 Germany"
+      - "6. 🇫🇮 Finland"
+      - "18. 🇷🇺 Russia"
+      - "20. 🇵🇱 Poland"
+      - "37. 🇸🇬 Singapore"
+      - "10. 🇵🇱 Poland"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تلگرام 💬"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "بدون فیلترشکن 🛡️"
+    type: "select"
+    proxies:
+      - "DIRECT"
+    hidden: true
+  - name: "قطع اینترنت ⛔"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+  - name: "اجازه ندادن 🚫"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+rules:
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
+  - "GEOIP,ir,سایتای ایرانی 🇮🇷"
+  - "MATCH,نوع انتخاب پروکسی 🔀"

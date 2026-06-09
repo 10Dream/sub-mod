@@ -1,0 +1,385 @@
+global-client-fingerprint: "chrome"
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7894
+allow-lan: true
+tcp-concurrent: true
+enable-process: true
+find-process-mode: "always"
+ipv6: true
+log-level: "info"
+geo-auto-update: true
+geo-update-interval: 168
+secret: ""
+bind-address: "*"
+unified-delay: false
+disable-keep-alive: false
+keep-alive-idle: 30
+keep-alive-interval: 30
+dns:
+  enable: true
+  ipv6: true
+  respect-rules: false
+  prefer-h3: true
+  cache-algorithm: "arc"
+  use-system-hosts: true
+  use-host: true
+  listen: "0.0.0.0:53"
+  enhanced-mode: "fake-ip"
+  fake-ip-filter-mode: "blacklist"
+  fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter:
+    - "*.lan"
+    - "*.localdomain"
+    - "*.invalid"
+    - "*.localhost"
+    - "*.test"
+    - "*.local"
+    - "*.home.arpa"
+    - "time.*.com"
+    - "ntp.*.com"
+    - "*.ir"
+  default-nameserver:
+    - "8.8.8.8"
+    - "8.8.4.4"
+    - "1.1.1.1"
+    - "9.9.9.9"
+  nameserver:
+    - "https://dns.google/dns-query"
+    - "https://cloudflare-dns.com/dns-query"
+  direct-nameserver:
+    - "78.157.42.100"
+    - "78.157.42.101"
+  proxy-server-nameserver:
+    - "1.1.1.1"
+    - "8.8.8.8"
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - 8080
+        - 8880
+        - 2052
+        - 2082
+        - 2086
+        - 2095
+    TLS:
+      ports:
+        - 443
+        - 8443
+        - 2053
+        - 2083
+        - 2087
+        - 2096
+tun:
+  enable: true
+  stack: "mixed"
+  auto-route: true
+  auto-detect-interface: true
+  auto-redir: true
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+rule-providers:
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+proxies:
+  - name: "🇮🇷 IR | VLESS | @ai_duet #1"
+    type: "vless"
+    server: "tamin.ir"
+    port: 80
+    uuid: "aa5e25fc-c7d7-4e6e-b7f7-105a35c0175a"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇮🇷 IR | VLESS | @bored_vpn #1"
+    type: "vless"
+    server: "blubank.ir"
+    port: 80
+    uuid: "afb3eb91-6ab7-4c70-874e-716e2481cb7d"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇮🇷 IR | VLESS | @config_proxy #1"
+    type: "vless"
+    server: "185.143.233.235"
+    port: 80
+    uuid: "22109ab6-bfdd-4062-ae1c-054c74353e39"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇮🇷 IR | VLESS | @config_proxy #2"
+    type: "vless"
+    server: "185.143.234.235"
+    port: 80
+    uuid: "b8799fac-622a-4142-aab2-2aa862ad35f2"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇮🇷 IR | VLESS | @ehsawn8 #1"
+    type: "vless"
+    server: "snapp.ir"
+    port: 80
+    uuid: "e2123c77-6833-4d02-906d-8715422eef5a"
+    udp: true
+    tls: false
+    network: "ws"
+  - name: "🇮🇷 IR | VLESS | @frev2rayng #1"
+    type: "vless"
+    server: "parspack.com"
+    port: 80
+    uuid: "815724d3-0d61-4761-be07-471441d42be5"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇮🇷 IR | VLESS | @lax_vpn #1"
+    type: "vless"
+    server: "s19.speedyconnect.pro"
+    port: 443
+    uuid: "97dce074-7db1-4d59-99ca-0ef8311e2425"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇮🇷 IR | VLESS | @miov2ray #1"
+    type: "vless"
+    server: "parspack.com"
+    port: 443
+    uuid: "51905fd3-29de-4b4e-b351-83542f1d5390"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇮🇷 IR | VLESS | @nn_vpn #1"
+    type: "vless"
+    server: "allsms.rozfa.com"
+    port: 443
+    uuid: "6a89dc04-7781-46fe-b35c-e14a6b6e60b8"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇮🇷 IR | VLESS | @nofiltering2 #1"
+    type: "vless"
+    server: "tun2.axenet.company"
+    port: 8443
+    uuid: "e6d74f1f-bce5-43e3-b65a-63bb6d825764"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇮🇷 IR | VLESS | @v2ang #1"
+    type: "vless"
+    server: "193.151.141.36"
+    port: 2026
+    uuid: "fdfa6120-6f97-4153-ac3d-979d9ecae058"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇮🇷 IR | VLESS | @v2ang #2"
+    type: "vless"
+    server: "::ffff:c197:8d24"
+    port: 2026
+    uuid: "c9c416ed-8a72-4572-8bd6-12292dee8dfd"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇮🇷 IR | VLESS | @v2ray_iran88 #1"
+    type: "vless"
+    server: "185.143.233.120"
+    port: 2086
+    uuid: "e9e437c2-1ee5-4f0d-ae09-4bfafc835e47"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇮🇷 IR | VLESS | @v2raymelliii #1"
+    type: "vless"
+    server: "ikco.ir"
+    port: 2052
+    uuid: "e4f8a283-8793-4ff7-ba4e-adc927d463fc"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇮🇷 IR | VLESS | @v2rayngalpha #1"
+    type: "vless"
+    server: "tgju.org"
+    port: 80
+    uuid: "d342d11e-d424-4583-b36e-524ab1f0afa4"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇮🇷 IR | VLESS | @v_2rayng0 #1"
+    type: "vless"
+    server: "wp14.virgool.best"
+    port: 55014
+    uuid: "b01631fa-502b-497f-b8ed-2fda669667ad"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇮🇷 IR | VLESS | @vip_vpn_2022 #1"
+    type: "vless"
+    server: "185.143.233.5"
+    port: 443
+    uuid: "1a83df32-42f2-4395-97bb-1fb91822c630"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "🇮🇷 IR | SS | @prrofile_purple #1"
+    type: "ss"
+    server: "dl3.p31download.info"
+    port: 2095
+    cipher: "2022-blake3-aes-128-gcm"
+    password: "bM7oNtOWU6N4CgenbB+W7g==:GlGZNEATIxFIGZYlmuuRow=="
+    udp: true
+  - name: "🇮🇷 IR | SS | @v2rayng3 #1"
+    type: "ss"
+    server: "xiaomandapple4certificate.ikco.ir.soserverbot.shop"
+    port: 15152
+    cipher: "chacha20-ietf-poly1305"
+    password: "vxNw5diZYN3srq8uCfmQR98vYc39ect4"
+    udp: true
+  - name: "🇮🇷 IR | SS | @v2rayng3 #2"
+    type: "ss"
+    server: "e1.cover20.ir"
+    port: 51570
+    cipher: "chacha20-ietf-poly1305"
+    password: "Jrma1GR8Ou+H81YOGpOSmj9DdOXIV1aDtN2rmeJE8B4="
+    udp: true
+  - name: "🇮🇷 IR | VMESS | @khoneproxy #1"
+    type: "vmess"
+    server: "37.32.23.122"
+    port: 443
+    uuid: "d12bc882-43c7-415e-87c5-2a7fdc8371c0"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇮🇷 IR | VMESS | @khoneproxy #2"
+    type: "vmess"
+    server: "78.47.131.39"
+    port: 8443
+    uuid: "4d598e48-234f-4c60-fdd3-fa90e084770d"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+proxy-groups:
+  - name: "نوع انتخاب پروکسی 🔀"
+    type: "select"
+    proxies:
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+      - "قطع اینترنت ⛔"
+  - name: "دستی 🤏🏻"
+    type: "select"
+    proxies:
+      - "🇮🇷 IR | VLESS | @ai_duet #1"
+      - "🇮🇷 IR | VLESS | @bored_vpn #1"
+      - "🇮🇷 IR | VLESS | @config_proxy #1"
+      - "🇮🇷 IR | VLESS | @config_proxy #2"
+      - "🇮🇷 IR | VLESS | @ehsawn8 #1"
+      - "🇮🇷 IR | VLESS | @frev2rayng #1"
+      - "🇮🇷 IR | VLESS | @lax_vpn #1"
+      - "🇮🇷 IR | VLESS | @miov2ray #1"
+      - "🇮🇷 IR | VLESS | @nn_vpn #1"
+      - "🇮🇷 IR | VLESS | @nofiltering2 #1"
+      - "🇮🇷 IR | VLESS | @v2ang #1"
+      - "🇮🇷 IR | VLESS | @v2ang #2"
+      - "🇮🇷 IR | VLESS | @v2ray_iran88 #1"
+      - "🇮🇷 IR | VLESS | @v2raymelliii #1"
+      - "🇮🇷 IR | VLESS | @v2rayngalpha #1"
+      - "🇮🇷 IR | VLESS | @v_2rayng0 #1"
+      - "🇮🇷 IR | VLESS | @vip_vpn_2022 #1"
+      - "🇮🇷 IR | SS | @prrofile_purple #1"
+      - "🇮🇷 IR | SS | @v2rayng3 #1"
+      - "🇮🇷 IR | SS | @v2rayng3 #2"
+      - "🇮🇷 IR | VMESS | @khoneproxy #1"
+      - "🇮🇷 IR | VMESS | @khoneproxy #2"
+  - name: "خودکار (بهترین پینگ) 🤖"
+    type: "url-test"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+    lazy: true
+    proxies:
+      - "🇮🇷 IR | VLESS | @ai_duet #1"
+      - "🇮🇷 IR | VLESS | @bored_vpn #1"
+      - "🇮🇷 IR | VLESS | @config_proxy #1"
+      - "🇮🇷 IR | VLESS | @config_proxy #2"
+      - "🇮🇷 IR | VLESS | @ehsawn8 #1"
+      - "🇮🇷 IR | VLESS | @frev2rayng #1"
+      - "🇮🇷 IR | VLESS | @lax_vpn #1"
+      - "🇮🇷 IR | VLESS | @miov2ray #1"
+      - "🇮🇷 IR | VLESS | @nn_vpn #1"
+      - "🇮🇷 IR | VLESS | @nofiltering2 #1"
+      - "🇮🇷 IR | VLESS | @v2ang #1"
+      - "🇮🇷 IR | VLESS | @v2ang #2"
+      - "🇮🇷 IR | VLESS | @v2ray_iran88 #1"
+      - "🇮🇷 IR | VLESS | @v2raymelliii #1"
+      - "🇮🇷 IR | VLESS | @v2rayngalpha #1"
+      - "🇮🇷 IR | VLESS | @v_2rayng0 #1"
+      - "🇮🇷 IR | VLESS | @vip_vpn_2022 #1"
+      - "🇮🇷 IR | SS | @prrofile_purple #1"
+      - "🇮🇷 IR | SS | @v2rayng3 #1"
+      - "🇮🇷 IR | SS | @v2rayng3 #2"
+      - "🇮🇷 IR | VMESS | @khoneproxy #1"
+      - "🇮🇷 IR | VMESS | @khoneproxy #2"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تلگرام 💬"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "بدون فیلترشکن 🛡️"
+    type: "select"
+    proxies:
+      - "DIRECT"
+    hidden: true
+  - name: "قطع اینترنت ⛔"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+  - name: "اجازه ندادن 🚫"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+rules:
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
+  - "GEOIP,ir,سایتای ایرانی 🇮🇷"
+  - "MATCH,نوع انتخاب پروکسی 🔀"

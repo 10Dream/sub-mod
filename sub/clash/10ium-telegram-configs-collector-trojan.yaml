@@ -1,0 +1,1401 @@
+global-client-fingerprint: "chrome"
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7894
+allow-lan: true
+tcp-concurrent: true
+enable-process: true
+find-process-mode: "always"
+ipv6: true
+log-level: "info"
+geo-auto-update: true
+geo-update-interval: 168
+secret: ""
+bind-address: "*"
+unified-delay: false
+disable-keep-alive: false
+keep-alive-idle: 30
+keep-alive-interval: 30
+dns:
+  enable: true
+  ipv6: true
+  respect-rules: false
+  prefer-h3: true
+  cache-algorithm: "arc"
+  use-system-hosts: true
+  use-host: true
+  listen: "0.0.0.0:53"
+  enhanced-mode: "fake-ip"
+  fake-ip-filter-mode: "blacklist"
+  fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter:
+    - "*.lan"
+    - "*.localdomain"
+    - "*.invalid"
+    - "*.localhost"
+    - "*.test"
+    - "*.local"
+    - "*.home.arpa"
+    - "time.*.com"
+    - "ntp.*.com"
+    - "*.ir"
+  default-nameserver:
+    - "8.8.8.8"
+    - "8.8.4.4"
+    - "1.1.1.1"
+    - "9.9.9.9"
+  nameserver:
+    - "https://dns.google/dns-query"
+    - "https://cloudflare-dns.com/dns-query"
+  direct-nameserver:
+    - "78.157.42.100"
+    - "78.157.42.101"
+  proxy-server-nameserver:
+    - "1.1.1.1"
+    - "8.8.8.8"
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - 8080
+        - 8880
+        - 2052
+        - 2082
+        - 2086
+        - 2095
+    TLS:
+      ports:
+        - 443
+        - 8443
+        - 2053
+        - 2083
+        - 2087
+        - 2096
+tun:
+  enable: true
+  stack: "mixed"
+  auto-route: true
+  auto-detect-interface: true
+  auto-redir: true
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+rule-providers:
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+proxies:
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-8.35.211.159:2087"
+    type: "trojan"
+    server: "8.35.211.159"
+    port: 2087
+    password: "1991"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "v2ngfast-v2ngfast-v2ngfast-v2ngfast.wijer68412.workers.dev"
+    ws-opts:
+      headers:
+        Host: "v2ngfast-v2ngfast-v2ngfast-v2ngfast.wijer68412.workers.dev"
+  - name: "🔒 TR-TCP-TLS 🇹🇼 TW-61.228.65.191:8443"
+    type: "trojan"
+    server: "61.228.65.191"
+    port: 8443
+    password: "96983eb4-c8f1-316e-ab00-500014ed3d8b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "official.taipeicitygovernment.biz.ua"
+  - name: "🔒 TR-TCP-REALITY 🇹🇷 TR-83.217.9.17:9443"
+    type: "trojan"
+    server: "83.217.9.17"
+    port: 9443
+    password: "f4dfddc98fd7441a8827176d951b302e"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "m.vk.com"
+  - name: "🔒 TR-TCP-TLS 🇹🇼 TW-60.250.152.229:8443"
+    type: "trojan"
+    server: "60.250.152.229"
+    port: 8443
+    password: "96983eb4-c8f1-316e-ab00-500014ed3d8b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "official.taipeicitygovernment.cn.ua"
+  - name: "🔒 TR-TCP-TLS 🇭🇰 HK-103.177.136.44:45553"
+    type: "trojan"
+    server: "103.177.136.44"
+    port: 45553
+    password: "4f4d1167-ef14-4304-9bce-0740472503ef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ch.01.naiun.bilibili.com"
+  - name: "🔒 TR-TCP-NA 🇩🇪 DE-94.103.173.70:9443"
+    type: "trojan"
+    server: "94.103.173.70"
+    port: 9443
+    password: "LYaEYwjN8LjWTRJdCCTzW7V6gK7atJVu"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "🔒 TR-TCP-NA 🏴‍☠️ NA-172.67.167.45:443"
+    type: "trojan"
+    server: "172.67.167.45"
+    port: 443
+    password: "51410d3cb2931a01b366bb5c868264bf"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "🔒 TR-TCP-TLS 🇸🇬 SG-188.253.12.96:45553"
+    type: "trojan"
+    server: "188.253.12.96"
+    port: 45553
+    password: "4f4d1167-ef14-4304-9bce-0740472503ef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ch.01.naiun.bilibili.com"
+  - name: "🔒 TR-TCP-TLS 🇯🇵 JP-52.195.12.80:443"
+    type: "trojan"
+    server: "52.195.12.80"
+    port: 443
+    password: "IL37892054"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "upright-rhino.rooster465.autos"
+  - name: "🔒 TR-TCP-NA 🏴‍☠️ NA-104.16.7.70:443"
+    type: "trojan"
+    server: "104.16.7.70"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.ignitelimit.com"
+  - name: "🔒 TR-TCP-TLS 🇭🇰 HK-219.76.13.180:443"
+    type: "trojan"
+    server: "219.76.13.180"
+    port: 443
+    password: "F3CSSRxD8uljgF73IAn34C3aE9wSqAzZDp5ZOCpxDBRacNYelOYayKTe826Xy0"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "stutter.freetrade.link"
+  - name: "🔒 TR-WS-NA 🏴‍☠️ NA-104.17.25.173:443"
+    type: "trojan"
+    server: "104.17.25.173"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.gossipglove.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.gossipglove.com"
+  - name: "🔒 TR-WS-TLS 🇸🇨 SC-45.130.125.18:443"
+    type: "trojan"
+    server: "45.130.125.18"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "🔒 TR-WS-NA 🏴‍☠️ NA-104.17.148.22:443"
+    type: "trojan"
+    server: "104.17.148.22"
+    port: 443
+    password: "A4u^p(_UR*F6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "027.ELeCTroCelLco-CF-027.wORkERS.dEv"
+    ws-opts:
+      path: "/eyJqdW5rIjoidlhnMXN5OXFUSiIsInByb3RvY29sIjoidHIiLCJtb2RlIjoicHJveHlpcCIsInBhbmVsSVBzIjpbXX0="
+      headers:
+        Host: "027.electrocellco-cf-027.workers.dev"
+  - name: "🔒 TR-WS-TLS 🇧🇦 BA-185.99.2.175:443"
+    type: "trojan"
+    server: "185.99.2.175"
+    port: 443
+    password: "317b5e7d-e52c-48ed-bcfe-64387b0d2a12"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "joss.gpj.web.id"
+    ws-opts:
+      headers:
+        Host: "joss.gpj.web.id"
+  - name: "🔒 TR-TCP-NA 🏴‍☠️ NA-1.1.1.1:8080"
+    type: "trojan"
+    server: "1.1.1.1"
+    port: 8080
+    password: "cfa36789-94aa-4c4c-ad06-ab35a8eb9312"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "1.1.1.1"
+  - name: "🔒 TR-TCP-TLS 🇫🇷 FR-35.181.123.19:22223"
+    type: "trojan"
+    server: "35.181.123.19"
+    port: 22223
+    password: "telegram-id-directvpn"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "trojan.burgerip.co.uk"
+  - name: "🔒 TR-TCP-TLS 🇺🇸 US-155.117.198.85:45553"
+    type: "trojan"
+    server: "155.117.198.85"
+    port: 45553
+    password: "4f4d1167-ef14-4304-9bce-0740472503ef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ch.01.naiun.bilibili.com"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.21.48.61:443"
+    type: "trojan"
+    server: "104.21.48.61"
+    port: 443
+    password: "auto"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "nameless-term-9c25.vpnconnect202020.workers.dev"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "nameless-term-9c25.vpnconnect202020.workers.dev"
+  - name: "🔒 TR-TCP-TLS 🇹🇼 TW-60.250.152.230:3462"
+    type: "trojan"
+    server: "60.250.152.230"
+    port: 3462
+    password: "6e1b9a65-884f-3aa9-9469-bf6ec0f08610"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "a03.taipeicitygovernment.cn.ua"
+  - name: "🔒 TR-WS-TLS 🇺🇸 US-167.68.4.199:2053"
+    type: "trojan"
+    server: "167.68.4.199"
+    port: 2053
+    password: "Aimer"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "epge.muarua.filegear-sg.me"
+    ws-opts:
+      path: "/?ed"
+      headers:
+        Host: "epge.muarua.filegear-sg.me"
+  - name: "🔒 TR-WS-NA 🏴‍☠️ NA-104.21.227.134:443"
+    type: "trojan"
+    server: "104.21.227.134"
+    port: 443
+    password: "77b19c69-9840-443d-a66b-f08c81b6950a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sgp1.xn--ghq880n3na965a.com"
+    ws-opts:
+      path: "/images"
+      headers:
+        Host: "sgp1.xn--ghq880n3na965a.com"
+  - name: "🔒 TR-WS-TLS 🇺🇸 US-208.103.161.101:443"
+    type: "trojan"
+    server: "208.103.161.101"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.creationlong.org"
+  - name: "🔒 TR-WS-TLS 🇸🇨 SC-45.130.125.0:443"
+    type: "trojan"
+    server: "45.130.125.0"
+    port: 443
+    password: "Config0plus"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "api24-normal.tiktokv.com.cyylr.eu.cc"
+    ws-opts:
+      path: "/id-tksi"
+      headers:
+        Host: "api24-normal.tiktokv.com.cyylr.eu.cc"
+  - name: "🔒 TR-TCP-TLS 🇸🇬 SG-188.253.12.93:45553"
+    type: "trojan"
+    server: "188.253.12.93"
+    port: 45553
+    password: "4f4d1167-ef14-4304-9bce-0740472503ef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ch.01.naiun.bilibili.com"
+  - name: "🔒 TR-WS-TLS 🇸🇪 SE-185.146.173.158:443"
+    type: "trojan"
+    server: "185.146.173.158"
+    port: 443
+    password: "auto"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "esetsecuritylicense.bwnsmv.workers.dev"
+    ws-opts:
+      headers:
+        Host: "esetsecuritylicense.bwnsmv.workers.dev"
+  - name: "🔒 TR-TCP-TLS 🇺🇸 US-155.117.198.88:48697"
+    type: "trojan"
+    server: "155.117.198.88"
+    port: 48697
+    password: "4f4d1167-ef14-4304-9bce-0740472503ef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "gh.01.naiun.bilibili.com"
+  - name: "🔒 TR-TCP-TLS 🇭🇰 HK-103.177.136.42:48697"
+    type: "trojan"
+    server: "103.177.136.42"
+    port: 48697
+    password: "4f4d1167-ef14-4304-9bce-0740472503ef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "gh.01.naiun.bilibili.com"
+  - name: "🔒 TR-TCP-NA 🇺🇸 US-155.117.198.82:46424"
+    type: "trojan"
+    server: "155.117.198.82"
+    port: 46424
+    password: "4f4d1167-ef14-4304-9bce-0740472503ef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "de.01.naiun.bilibili.com"
+  - name: "🔒 TR-WS-TLS 🇳🇱 NL-31.59.170.59:8443"
+    type: "trojan"
+    server: "31.59.170.59"
+    port: 8443
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-TCP-TLS 🇩🇪 DE-185.137.157.254:443"
+    type: "trojan"
+    server: "185.137.157.254"
+    port: 443
+    password: "hxn2jK9Uzezogua0oHuq9Y8viN=UCe.2Jd"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.directorypipeline.click"
+  - name: "🔒 TR-TCP-TLS 🇸🇬 SG-188.253.12.92:41943"
+    type: "trojan"
+    server: "188.253.12.92"
+    port: 41943
+    password: "4f4d1167-ef14-4304-9bce-0740472503ef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "az.01.naiun.bilibili.com"
+  - name: "🔒 TR-TCP-TLS 🇺🇸 US-103.224.182.214:443"
+    type: "trojan"
+    server: "103.224.182.214"
+    port: 443
+    password: "7b561e94-42f3-4f92-979c-4cf97c328025"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "xjp.ziqiyun.xyz"
+  - name: "🔒 TR-TCP-TLS 🇹🇼 TW-61.228.68.65:8443"
+    type: "trojan"
+    server: "61.228.68.65"
+    port: 8443
+    password: "96983eb4-c8f1-316e-ab00-500014ed3d8b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "official.taipeicitygovernment.chernovtsy.ua"
+  - name: "🔒 TR-TCP-TLS 🇹🇼 TW-61.228.65.103:3462"
+    type: "trojan"
+    server: "61.228.65.103"
+    port: 3462
+    password: "736cd94d-7b94-3e44-8106-3419f64eaf09"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "a12.taipeicitygovernment.org.ua"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.20.5.134:2053"
+    type: "trojan"
+    server: "104.20.5.134"
+    port: 2053
+    password: "YwuvGJk36B"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "kotlet.arshiacomplus.dpdns.org"
+    ws-opts:
+      path: "/yamtekodasayahhh"
+      headers:
+        Host: "kotlet.arshiacomplus.dpdns.org"
+  - name: "🔒 TR-WS-NA 🏴‍☠️ NA-104.18.1.55:443"
+    type: "trojan"
+    server: "104.18.1.55"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/assignment"
+  - name: "🔒 TR-TCP-TLS 🇹🇼 TW-61.228.65.103:8443"
+    type: "trojan"
+    server: "61.228.65.103"
+    port: 8443
+    password: "96983eb4-c8f1-316e-ab00-500014ed3d8b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "official.taipeicitygovernment.kyiv.ua"
+  - name: "🔒 TR-WS-TLS 🇺🇸 US-66.81.247.155:443"
+    type: "trojan"
+    server: "66.81.247.155"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.24.216.88:443"
+    type: "trojan"
+    server: "104.24.216.88"
+    port: 443
+    password: "wyV9GtIpor"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "dd.aananas.ir."
+    ws-opts:
+      path: "/?ed=2048"
+  - name: "🔒 TR-WS-TLS 🇸🇨 SC-45.130.125.160:443"
+    type: "trojan"
+    server: "45.130.125.160"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "🔒 TR-WS-NA 🏴‍☠️ NA-104.16.250.22:443"
+    type: "trojan"
+    server: "104.16.250.22"
+    port: 443
+    password: "77b19c69-9840-443d-a66b-f08c81b6950a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "usyzec7oxwa2720fq2.xn--9iqy04attf9l0c.top"
+    ws-opts:
+      path: "/images"
+      headers:
+        Host: "usyzec7oxwa2720fq2.xn--9iqy04attf9l0c.top"
+  - name: "🔒 TR-TCP-TLS 🇩🇪 DE-18.159.127.127:22222"
+    type: "trojan"
+    server: "18.159.127.127"
+    port: 22222
+    password: "telegram-id-privatevpns"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "trojan.burgerip.co.uk"
+  - name: "🔒 TR-WS-TLS 🇺🇸 US-141.193.213.11:443"
+    type: "trojan"
+    server: "141.193.213.11"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "🔒 TR-WS-TLS 🇩🇪 DE-91.220.8.170:8443"
+    type: "trojan"
+    server: "91.220.8.170"
+    port: 8443
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-TCP-TLS 🇹🇼 TW-60.250.152.209:8443"
+    type: "trojan"
+    server: "60.250.152.209"
+    port: 8443
+    password: "96983eb4-c8f1-316e-ab00-500014ed3d8b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "official.taipeicitygovernment.kyiv.ua"
+  - name: "🔒 TR-WS-TLS 🇺🇸 US-167.68.4.223:2096"
+    type: "trojan"
+    server: "167.68.4.223"
+    port: 2096
+    password: "Aimer"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "epcca.ambercc.filegear-sg.me"
+    ws-opts:
+      path: "/"
+  - name: "🔒 TR-TCP-TLS 🇺🇸 US-172.239.34.52:443"
+    type: "trojan"
+    server: "172.239.34.52"
+    port: 443
+    password: "4863e1b2-ec2f-4c71-b862-ce533028e57e"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "trus.moonfree.top"
+  - name: "🔒 TR-TCP-REALITY 🇳🇱 NL-185.221.222.19:9443"
+    type: "trojan"
+    server: "185.221.222.19"
+    port: 9443
+    password: "d0a35aaeb22042e0909540e94c9765e9"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "apple.com"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.152.233:443"
+    type: "trojan"
+    server: "104.18.152.233"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "🔒 TR-WS-NA 🇯🇵 JP-13.231.173.201:20230"
+    type: "trojan"
+    server: "13.231.173.201"
+    port: 20230
+    password: "2ba7e4d0-f2f9-456e-a43e-f5a724d7e367"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.alibaba.com"
+  - name: "🔒 TR-WS-TLS 🇫🇮 FI-141.105.143.132:2053"
+    type: "trojan"
+    server: "141.105.143.132"
+    port: 2053
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-TCP-TLS 🇺🇸 US-155.117.198.85:46424"
+    type: "trojan"
+    server: "155.117.198.85"
+    port: 46424
+    password: "4f4d1167-ef14-4304-9bce-0740472503ef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "de.01.naiun.bilibili.com"
+  - name: "🔒 TR-WS-TLS 🇫🇮 FI-188.215.31.36:2053"
+    type: "trojan"
+    server: "188.215.31.36"
+    port: 2053
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-TLS 🇩🇪 DE-77.37.65.221:8443"
+    type: "trojan"
+    server: "77.37.65.221"
+    port: 8443
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-TCP-TLS 🇮🇹 IT-151.241.215.148:443"
+    type: "trojan"
+    server: "151.241.215.148"
+    port: 443
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "Koma-YT.PAGeS.Dev"
+  - name: "🔒 TR-TCP-TLS 🏴‍☠️ NA-104.18.38.47:443"
+    type: "trojan"
+    server: "104.18.38.47"
+    port: 443
+    password: "87d1bfd4-574e-4c96-ad42-0426f27461ff"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "mfa.gov.ua"
+  - name: "🔒 TR-TCP-TLS 🏴‍☠️ NA-104.21.91.112:443"
+    type: "trojan"
+    server: "104.21.91.112"
+    port: 443
+    password: "8800c518-e68a-4441-a45c-cd67855784c8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "kr1.sanfen001.pics"
+  - name: "🔒 TR-TCP-TLS 🇹🇼 TW-60.250.152.230:8443"
+    type: "trojan"
+    server: "60.250.152.230"
+    port: 8443
+    password: "96983eb4-c8f1-316e-ab00-500014ed3d8b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "official.taipeicitygovernment.dp.ua"
+  - name: "🔒 TR-WS-NA 🏴‍☠️ NA-104.18.22.63:443"
+    type: "trojan"
+    server: "104.18.22.63"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/assignment"
+  - name: "🔒 TR-WS-TLS 🇳🇱 NL-213.165.38.7:8443"
+    type: "trojan"
+    server: "213.165.38.7"
+    port: 8443
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.79.73:443"
+    type: "trojan"
+    server: "104.16.79.73"
+    port: 443
+    password: "09548571-364e-4876-8e92-98f423e73913"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "aaa.r-o-o-t2.ir"
+    ws-opts:
+      path: "/I1P2U8JP51av1yhmNbaBgIw8"
+      headers:
+        Host: "aaa.r-o-o-t2.ir"
+  - name: "🔒 TR-WS-NA 🏴‍☠️ NA-104.21.224.5:443"
+    type: "trojan"
+    server: "104.21.224.5"
+    port: 443
+    password: "77b19c69-9840-443d-a66b-f08c81b6950a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "usl16qf2h2j36ow.xinshiji.icu"
+    ws-opts:
+      path: "/images"
+      headers:
+        Host: "usl16qf2h2j36ow.xinshiji.icu"
+  - name: "🔒 TR-WS-NA 🇮🇷 IR-185.143.235.200:2082"
+    type: "trojan"
+    server: "185.143.235.200"
+    port: 2082
+    password: "fTkGeLgRco"
+    udp: true
+    tls: true
+    network: "ws"
+  - name: "🔒 TR-TCP-TLS 🇺🇸 US-45.79.8.17:443"
+    type: "trojan"
+    server: "45.79.8.17"
+    port: 443
+    password: "rXyShM8Jni+5Sbq3k4gkyr5Lq0zOMRL2Uf"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "45.79.8.17"
+  - name: "🔒 TR-WS-TLS 🇦🇹 AT-212.183.88.136:443"
+    type: "trojan"
+    server: "212.183.88.136"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "🔒 TR-TCP-TLS 🇭🇰 HK-42.200.176.190:2053"
+    type: "trojan"
+    server: "42.200.176.190"
+    port: 2053
+    password: "96983eb4-c8f1-316e-ab00-500014ed3d8b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "official.tokyometropolis.ivano-frankivsk.ua"
+  - name: "🔒 TR-TCP-TLS 🇸🇬 SG-188.253.12.99:45619"
+    type: "trojan"
+    server: "188.253.12.99"
+    port: 45619
+    password: "4f4d1167-ef14-4304-9bce-0740472503ef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fr.01.naiun.bilibili.com"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.32.47:443"
+    type: "trojan"
+    server: "104.18.32.47"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "🔒 TR-WS-TLS 🇫🇮 FI-31.59.41.182:8443"
+    type: "trojan"
+    server: "31.59.41.182"
+    port: 8443
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-TLS 🇺🇸 US-216.24.57.6:443"
+    type: "trojan"
+    server: "216.24.57.6"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.creationlong.org"
+  - name: "🔒 TR-TCP-TLS 🇸🇬 SG-188.253.12.94:45553"
+    type: "trojan"
+    server: "188.253.12.94"
+    port: 45553
+    password: "4f4d1167-ef14-4304-9bce-0740472503ef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ch.01.naiun.bilibili.com"
+  - name: "🔒 TR-WS-TLS 🇫🇮 FI-217.145.79.119:8443"
+    type: "trojan"
+    server: "217.145.79.119"
+    port: 8443
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.13.149:443"
+    type: "trojan"
+    server: "104.18.13.149"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "🔒 TR-WS-TLS 🇺🇸 US-37.46.19.79:8443"
+    type: "trojan"
+    server: "37.46.19.79"
+    port: 8443
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-TCP-TLS 🇰🇷 KR-123.140.124.25:2053"
+    type: "trojan"
+    server: "123.140.124.25"
+    port: 2053
+    password: "96983eb4-c8f1-316e-ab00-500014ed3d8b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "official.seoulcityhall.com.ua"
+  - name: "🔒 TR-TCP-... 🏴‍☠️ NA-104.21.37.37:443"
+    type: "trojan"
+    server: "104.21.37.37"
+    port: 443
+    password: "WOeXShhJpL"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "🔒 TR-TCP-TLS 🇺🇸 US-155.117.198.83:45619"
+    type: "trojan"
+    server: "155.117.198.83"
+    port: 45619
+    password: "4f4d1167-ef14-4304-9bce-0740472503ef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fr.01.naiun.bilibili.com"
+  - name: "🔒 TR-WS-TLS 🇨🇭 CH-185.18.250.252:443"
+    type: "trojan"
+    server: "185.18.250.252"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.multiplydose.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "🔒 TR-TCP-TLS 🇹🇼 TW-114.44.104.234:8443"
+    type: "trojan"
+    server: "114.44.104.234"
+    port: 8443
+    password: "96983eb4-c8f1-316e-ab00-500014ed3d8b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "official.taipeicitygovernment.cn.ua"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.21.12.87:443"
+    type: "trojan"
+    server: "104.21.12.87"
+    port: 443
+    password: "0b65bb06-6b28-487a-8e3c-820dda51e977"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "series-v1.samanehha.co"
+    ws-opts:
+      path: "/43xf5zgeApzDAfhOHq"
+  - name: "🔒 TR-WS-TLS 🇪🇪 EE-185.252.177.115:8443"
+    type: "trojan"
+    server: "185.252.177.115"
+    port: 8443
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-TCP-NA 🇩🇪 DE-172.236.220.10:443"
+    type: "trojan"
+    server: "172.236.220.10"
+    port: 443
+    password: "s_WEN9lMmufG+qDIsn-4C7JOVAnDdbS3Ui"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "🔒 TR-TCP-NA 🇺🇸 US-155.117.198.88:47909"
+    type: "trojan"
+    server: "155.117.198.88"
+    port: 47909
+    password: "4f4d1167-ef14-4304-9bce-0740472503ef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "is.01.naiun.bilibili.com"
+  - name: "🔒 TR-TCP-TLS 🇺🇸 US-155.117.198.89:48697"
+    type: "trojan"
+    server: "155.117.198.89"
+    port: 48697
+    password: "4f4d1167-ef14-4304-9bce-0740472503ef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "gh.01.naiun.bilibili.com"
+  - name: "🔒 TR-WS-NA 🇺🇸 US-141.193.213.10:443"
+    type: "trojan"
+    server: "141.193.213.10"
+    port: 443
+    password: "6b7f37af-a853-4f01-a031-5fa4eca4f5bf"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ads.ruangguru.com.cyylr.eu.cc"
+    ws-opts:
+      path: "/in-do"
+      headers:
+        Host: "ads.ruangguru.com.cyylr.eu.cc"
+  - name: "🔒 TR-TCP-NA 🇺🇸 US-155.117.198.87:45619"
+    type: "trojan"
+    server: "155.117.198.87"
+    port: 45619
+    password: "4f4d1167-ef14-4304-9bce-0740472503ef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fr.01.naiun.bilibili.com"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-172.64.229.170:2096"
+    type: "trojan"
+    server: "172.64.229.170"
+    port: 2096
+    password: "1991"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "v2ngfast-v2ngfast-v2ngfast-v2ngfast.febeta9963.workers.dev"
+    ws-opts:
+      headers:
+        Host: "v2ngfast-v2ngfast-v2ngfast-v2ngfast.febeta9963.workers.dev"
+  - name: "🔒 TR-TCP-TLS 🇹🇼 TW-60.250.152.208:8443"
+    type: "trojan"
+    server: "60.250.152.208"
+    port: 8443
+    password: "96983eb4-c8f1-316e-ab00-500014ed3d8b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "official.taipeicitygovernment.kiev.ua"
+  - name: "🔒 TR-TCP-TLS 🇺🇸 US-155.117.198.89:45619"
+    type: "trojan"
+    server: "155.117.198.89"
+    port: 45619
+    password: "4f4d1167-ef14-4304-9bce-0740472503ef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fr.01.naiun.bilibili.com"
+  - name: "🔒 TR-TCP-TLS 🇸🇬 SG-188.253.12.90:45553"
+    type: "trojan"
+    server: "188.253.12.90"
+    port: 45553
+    password: "4f4d1167-ef14-4304-9bce-0740472503ef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ch.01.naiun.bilibili.com"
+  - name: "🔒 TR-TCP-TLS 🇸🇬 SG-15.235.197.4:80"
+    type: "trojan"
+    server: "15.235.197.4"
+    port: 80
+    password: "16bcc187-a1a0-4b8a-8b69-627f38b7cc0d"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "getandroid.com"
+  - name: "🔒 TR-WS-TLS 🇫🇮 FI-193.109.84.103:2053"
+    type: "trojan"
+    server: "193.109.84.103"
+    port: 2053
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.21.35.43:443"
+    type: "trojan"
+    server: "104.21.35.43"
+    port: 443
+    password: "auto"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "esetsecuritylicense3.wawafec355.workers.dev"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "esetsecuritylicense3.wawafec355.workers.dev"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-8.6.112.0:443"
+    type: "trojan"
+    server: "8.6.112.0"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "🔒 TR-TCP-NA 🇺🇸 US-155.117.198.86:41943"
+    type: "trojan"
+    server: "155.117.198.86"
+    port: 41943
+    password: "4f4d1167-ef14-4304-9bce-0740472503ef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "az.01.naiun.bilibili.com"
+  - name: "🔒 TR-TCP-REALITY 🇷🇺 RU-145.249.109.128:9443"
+    type: "trojan"
+    server: "145.249.109.128"
+    port: 9443
+    password: "3baa4ffc8ff14deba32e13658e39be06"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "m.vk.com"
+  - name: "🔒 TR-WS-NA 🇺🇸 US-165.215.250.14:443"
+    type: "trojan"
+    server: "165.215.250.14"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.80.73:443"
+    type: "trojan"
+    server: "104.16.80.73"
+    port: 443
+    password: "09548571-364e-4876-8e92-98f423e73913"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "aaa.r-o-o-t2.ir"
+    ws-opts:
+      path: "/I1P2U8JP51av1yhmNbaBgIw8"
+      headers:
+        Host: "aaa.r-o-o-t2.ir"
+  - name: "🔒 TR-WS-TLS 🇫🇮 FI-185.92.183.132:2053"
+    type: "trojan"
+    server: "185.92.183.132"
+    port: 2053
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+proxy-groups:
+  - name: "نوع انتخاب پروکسی 🔀"
+    type: "select"
+    proxies:
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+      - "قطع اینترنت ⛔"
+  - name: "دستی 🤏🏻"
+    type: "select"
+    proxies:
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-8.35.211.159:2087"
+      - "🔒 TR-TCP-TLS 🇹🇼 TW-61.228.65.191:8443"
+      - "🔒 TR-TCP-REALITY 🇹🇷 TR-83.217.9.17:9443"
+      - "🔒 TR-TCP-TLS 🇹🇼 TW-60.250.152.229:8443"
+      - "🔒 TR-TCP-TLS 🇭🇰 HK-103.177.136.44:45553"
+      - "🔒 TR-TCP-NA 🇩🇪 DE-94.103.173.70:9443"
+      - "🔒 TR-TCP-NA 🏴‍☠️ NA-172.67.167.45:443"
+      - "🔒 TR-TCP-TLS 🇸🇬 SG-188.253.12.96:45553"
+      - "🔒 TR-TCP-TLS 🇯🇵 JP-52.195.12.80:443"
+      - "🔒 TR-TCP-NA 🏴‍☠️ NA-104.16.7.70:443"
+      - "🔒 TR-TCP-TLS 🇭🇰 HK-219.76.13.180:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.17.25.173:443"
+      - "🔒 TR-WS-TLS 🇸🇨 SC-45.130.125.18:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.17.148.22:443"
+      - "🔒 TR-WS-TLS 🇧🇦 BA-185.99.2.175:443"
+      - "🔒 TR-TCP-NA 🏴‍☠️ NA-1.1.1.1:8080"
+      - "🔒 TR-TCP-TLS 🇫🇷 FR-35.181.123.19:22223"
+      - "🔒 TR-TCP-TLS 🇺🇸 US-155.117.198.85:45553"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.21.48.61:443"
+      - "🔒 TR-TCP-TLS 🇹🇼 TW-60.250.152.230:3462"
+      - "🔒 TR-WS-TLS 🇺🇸 US-167.68.4.199:2053"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.21.227.134:443"
+      - "🔒 TR-WS-TLS 🇺🇸 US-208.103.161.101:443"
+      - "🔒 TR-WS-TLS 🇸🇨 SC-45.130.125.0:443"
+      - "🔒 TR-TCP-TLS 🇸🇬 SG-188.253.12.93:45553"
+      - "🔒 TR-WS-TLS 🇸🇪 SE-185.146.173.158:443"
+      - "🔒 TR-TCP-TLS 🇺🇸 US-155.117.198.88:48697"
+      - "🔒 TR-TCP-TLS 🇭🇰 HK-103.177.136.42:48697"
+      - "🔒 TR-TCP-NA 🇺🇸 US-155.117.198.82:46424"
+      - "🔒 TR-WS-TLS 🇳🇱 NL-31.59.170.59:8443"
+      - "🔒 TR-TCP-TLS 🇩🇪 DE-185.137.157.254:443"
+      - "🔒 TR-TCP-TLS 🇸🇬 SG-188.253.12.92:41943"
+      - "🔒 TR-TCP-TLS 🇺🇸 US-103.224.182.214:443"
+      - "🔒 TR-TCP-TLS 🇹🇼 TW-61.228.68.65:8443"
+      - "🔒 TR-TCP-TLS 🇹🇼 TW-61.228.65.103:3462"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.20.5.134:2053"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.18.1.55:443"
+      - "🔒 TR-TCP-TLS 🇹🇼 TW-61.228.65.103:8443"
+      - "🔒 TR-WS-TLS 🇺🇸 US-66.81.247.155:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.24.216.88:443"
+      - "🔒 TR-WS-TLS 🇸🇨 SC-45.130.125.160:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.16.250.22:443"
+      - "🔒 TR-TCP-TLS 🇩🇪 DE-18.159.127.127:22222"
+      - "🔒 TR-WS-TLS 🇺🇸 US-141.193.213.11:443"
+      - "🔒 TR-WS-TLS 🇩🇪 DE-91.220.8.170:8443"
+      - "🔒 TR-TCP-TLS 🇹🇼 TW-60.250.152.209:8443"
+      - "🔒 TR-WS-TLS 🇺🇸 US-167.68.4.223:2096"
+      - "🔒 TR-TCP-TLS 🇺🇸 US-172.239.34.52:443"
+      - "🔒 TR-TCP-REALITY 🇳🇱 NL-185.221.222.19:9443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.152.233:443"
+      - "🔒 TR-WS-NA 🇯🇵 JP-13.231.173.201:20230"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-141.105.143.132:2053"
+      - "🔒 TR-TCP-TLS 🇺🇸 US-155.117.198.85:46424"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-188.215.31.36:2053"
+      - "🔒 TR-WS-TLS 🇩🇪 DE-77.37.65.221:8443"
+      - "🔒 TR-TCP-TLS 🇮🇹 IT-151.241.215.148:443"
+      - "🔒 TR-TCP-TLS 🏴‍☠️ NA-104.18.38.47:443"
+      - "🔒 TR-TCP-TLS 🏴‍☠️ NA-104.21.91.112:443"
+      - "🔒 TR-TCP-TLS 🇹🇼 TW-60.250.152.230:8443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.18.22.63:443"
+      - "🔒 TR-WS-TLS 🇳🇱 NL-213.165.38.7:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.79.73:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.21.224.5:443"
+      - "🔒 TR-WS-NA 🇮🇷 IR-185.143.235.200:2082"
+      - "🔒 TR-TCP-TLS 🇺🇸 US-45.79.8.17:443"
+      - "🔒 TR-WS-TLS 🇦🇹 AT-212.183.88.136:443"
+      - "🔒 TR-TCP-TLS 🇭🇰 HK-42.200.176.190:2053"
+      - "🔒 TR-TCP-TLS 🇸🇬 SG-188.253.12.99:45619"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.32.47:443"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-31.59.41.182:8443"
+      - "🔒 TR-WS-TLS 🇺🇸 US-216.24.57.6:443"
+      - "🔒 TR-TCP-TLS 🇸🇬 SG-188.253.12.94:45553"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-217.145.79.119:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.13.149:443"
+      - "🔒 TR-WS-TLS 🇺🇸 US-37.46.19.79:8443"
+      - "🔒 TR-TCP-TLS 🇰🇷 KR-123.140.124.25:2053"
+      - "🔒 TR-TCP-... 🏴‍☠️ NA-104.21.37.37:443"
+      - "🔒 TR-TCP-TLS 🇺🇸 US-155.117.198.83:45619"
+      - "🔒 TR-WS-TLS 🇨🇭 CH-185.18.250.252:443"
+      - "🔒 TR-TCP-TLS 🇹🇼 TW-114.44.104.234:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.21.12.87:443"
+      - "🔒 TR-WS-TLS 🇪🇪 EE-185.252.177.115:8443"
+      - "🔒 TR-TCP-NA 🇩🇪 DE-172.236.220.10:443"
+      - "🔒 TR-TCP-NA 🇺🇸 US-155.117.198.88:47909"
+      - "🔒 TR-TCP-TLS 🇺🇸 US-155.117.198.89:48697"
+      - "🔒 TR-WS-NA 🇺🇸 US-141.193.213.10:443"
+      - "🔒 TR-TCP-NA 🇺🇸 US-155.117.198.87:45619"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-172.64.229.170:2096"
+      - "🔒 TR-TCP-TLS 🇹🇼 TW-60.250.152.208:8443"
+      - "🔒 TR-TCP-TLS 🇺🇸 US-155.117.198.89:45619"
+      - "🔒 TR-TCP-TLS 🇸🇬 SG-188.253.12.90:45553"
+      - "🔒 TR-TCP-TLS 🇸🇬 SG-15.235.197.4:80"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-193.109.84.103:2053"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.21.35.43:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-8.6.112.0:443"
+      - "🔒 TR-TCP-NA 🇺🇸 US-155.117.198.86:41943"
+      - "🔒 TR-TCP-REALITY 🇷🇺 RU-145.249.109.128:9443"
+      - "🔒 TR-WS-NA 🇺🇸 US-165.215.250.14:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.80.73:443"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-185.92.183.132:2053"
+  - name: "خودکار (بهترین پینگ) 🤖"
+    type: "url-test"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+    lazy: true
+    proxies:
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-8.35.211.159:2087"
+      - "🔒 TR-TCP-TLS 🇹🇼 TW-61.228.65.191:8443"
+      - "🔒 TR-TCP-REALITY 🇹🇷 TR-83.217.9.17:9443"
+      - "🔒 TR-TCP-TLS 🇹🇼 TW-60.250.152.229:8443"
+      - "🔒 TR-TCP-TLS 🇭🇰 HK-103.177.136.44:45553"
+      - "🔒 TR-TCP-NA 🇩🇪 DE-94.103.173.70:9443"
+      - "🔒 TR-TCP-NA 🏴‍☠️ NA-172.67.167.45:443"
+      - "🔒 TR-TCP-TLS 🇸🇬 SG-188.253.12.96:45553"
+      - "🔒 TR-TCP-TLS 🇯🇵 JP-52.195.12.80:443"
+      - "🔒 TR-TCP-NA 🏴‍☠️ NA-104.16.7.70:443"
+      - "🔒 TR-TCP-TLS 🇭🇰 HK-219.76.13.180:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.17.25.173:443"
+      - "🔒 TR-WS-TLS 🇸🇨 SC-45.130.125.18:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.17.148.22:443"
+      - "🔒 TR-WS-TLS 🇧🇦 BA-185.99.2.175:443"
+      - "🔒 TR-TCP-NA 🏴‍☠️ NA-1.1.1.1:8080"
+      - "🔒 TR-TCP-TLS 🇫🇷 FR-35.181.123.19:22223"
+      - "🔒 TR-TCP-TLS 🇺🇸 US-155.117.198.85:45553"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.21.48.61:443"
+      - "🔒 TR-TCP-TLS 🇹🇼 TW-60.250.152.230:3462"
+      - "🔒 TR-WS-TLS 🇺🇸 US-167.68.4.199:2053"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.21.227.134:443"
+      - "🔒 TR-WS-TLS 🇺🇸 US-208.103.161.101:443"
+      - "🔒 TR-WS-TLS 🇸🇨 SC-45.130.125.0:443"
+      - "🔒 TR-TCP-TLS 🇸🇬 SG-188.253.12.93:45553"
+      - "🔒 TR-WS-TLS 🇸🇪 SE-185.146.173.158:443"
+      - "🔒 TR-TCP-TLS 🇺🇸 US-155.117.198.88:48697"
+      - "🔒 TR-TCP-TLS 🇭🇰 HK-103.177.136.42:48697"
+      - "🔒 TR-TCP-NA 🇺🇸 US-155.117.198.82:46424"
+      - "🔒 TR-WS-TLS 🇳🇱 NL-31.59.170.59:8443"
+      - "🔒 TR-TCP-TLS 🇩🇪 DE-185.137.157.254:443"
+      - "🔒 TR-TCP-TLS 🇸🇬 SG-188.253.12.92:41943"
+      - "🔒 TR-TCP-TLS 🇺🇸 US-103.224.182.214:443"
+      - "🔒 TR-TCP-TLS 🇹🇼 TW-61.228.68.65:8443"
+      - "🔒 TR-TCP-TLS 🇹🇼 TW-61.228.65.103:3462"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.20.5.134:2053"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.18.1.55:443"
+      - "🔒 TR-TCP-TLS 🇹🇼 TW-61.228.65.103:8443"
+      - "🔒 TR-WS-TLS 🇺🇸 US-66.81.247.155:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.24.216.88:443"
+      - "🔒 TR-WS-TLS 🇸🇨 SC-45.130.125.160:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.16.250.22:443"
+      - "🔒 TR-TCP-TLS 🇩🇪 DE-18.159.127.127:22222"
+      - "🔒 TR-WS-TLS 🇺🇸 US-141.193.213.11:443"
+      - "🔒 TR-WS-TLS 🇩🇪 DE-91.220.8.170:8443"
+      - "🔒 TR-TCP-TLS 🇹🇼 TW-60.250.152.209:8443"
+      - "🔒 TR-WS-TLS 🇺🇸 US-167.68.4.223:2096"
+      - "🔒 TR-TCP-TLS 🇺🇸 US-172.239.34.52:443"
+      - "🔒 TR-TCP-REALITY 🇳🇱 NL-185.221.222.19:9443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.152.233:443"
+      - "🔒 TR-WS-NA 🇯🇵 JP-13.231.173.201:20230"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-141.105.143.132:2053"
+      - "🔒 TR-TCP-TLS 🇺🇸 US-155.117.198.85:46424"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-188.215.31.36:2053"
+      - "🔒 TR-WS-TLS 🇩🇪 DE-77.37.65.221:8443"
+      - "🔒 TR-TCP-TLS 🇮🇹 IT-151.241.215.148:443"
+      - "🔒 TR-TCP-TLS 🏴‍☠️ NA-104.18.38.47:443"
+      - "🔒 TR-TCP-TLS 🏴‍☠️ NA-104.21.91.112:443"
+      - "🔒 TR-TCP-TLS 🇹🇼 TW-60.250.152.230:8443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.18.22.63:443"
+      - "🔒 TR-WS-TLS 🇳🇱 NL-213.165.38.7:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.79.73:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.21.224.5:443"
+      - "🔒 TR-WS-NA 🇮🇷 IR-185.143.235.200:2082"
+      - "🔒 TR-TCP-TLS 🇺🇸 US-45.79.8.17:443"
+      - "🔒 TR-WS-TLS 🇦🇹 AT-212.183.88.136:443"
+      - "🔒 TR-TCP-TLS 🇭🇰 HK-42.200.176.190:2053"
+      - "🔒 TR-TCP-TLS 🇸🇬 SG-188.253.12.99:45619"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.32.47:443"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-31.59.41.182:8443"
+      - "🔒 TR-WS-TLS 🇺🇸 US-216.24.57.6:443"
+      - "🔒 TR-TCP-TLS 🇸🇬 SG-188.253.12.94:45553"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-217.145.79.119:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.13.149:443"
+      - "🔒 TR-WS-TLS 🇺🇸 US-37.46.19.79:8443"
+      - "🔒 TR-TCP-TLS 🇰🇷 KR-123.140.124.25:2053"
+      - "🔒 TR-TCP-... 🏴‍☠️ NA-104.21.37.37:443"
+      - "🔒 TR-TCP-TLS 🇺🇸 US-155.117.198.83:45619"
+      - "🔒 TR-WS-TLS 🇨🇭 CH-185.18.250.252:443"
+      - "🔒 TR-TCP-TLS 🇹🇼 TW-114.44.104.234:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.21.12.87:443"
+      - "🔒 TR-WS-TLS 🇪🇪 EE-185.252.177.115:8443"
+      - "🔒 TR-TCP-NA 🇩🇪 DE-172.236.220.10:443"
+      - "🔒 TR-TCP-NA 🇺🇸 US-155.117.198.88:47909"
+      - "🔒 TR-TCP-TLS 🇺🇸 US-155.117.198.89:48697"
+      - "🔒 TR-WS-NA 🇺🇸 US-141.193.213.10:443"
+      - "🔒 TR-TCP-NA 🇺🇸 US-155.117.198.87:45619"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-172.64.229.170:2096"
+      - "🔒 TR-TCP-TLS 🇹🇼 TW-60.250.152.208:8443"
+      - "🔒 TR-TCP-TLS 🇺🇸 US-155.117.198.89:45619"
+      - "🔒 TR-TCP-TLS 🇸🇬 SG-188.253.12.90:45553"
+      - "🔒 TR-TCP-TLS 🇸🇬 SG-15.235.197.4:80"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-193.109.84.103:2053"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.21.35.43:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-8.6.112.0:443"
+      - "🔒 TR-TCP-NA 🇺🇸 US-155.117.198.86:41943"
+      - "🔒 TR-TCP-REALITY 🇷🇺 RU-145.249.109.128:9443"
+      - "🔒 TR-WS-NA 🇺🇸 US-165.215.250.14:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.80.73:443"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-185.92.183.132:2053"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تلگرام 💬"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "بدون فیلترشکن 🛡️"
+    type: "select"
+    proxies:
+      - "DIRECT"
+    hidden: true
+  - name: "قطع اینترنت ⛔"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+  - name: "اجازه ندادن 🚫"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+rules:
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
+  - "GEOIP,ir,سایتای ایرانی 🇮🇷"
+  - "MATCH,نوع انتخاب پروکسی 🔀"

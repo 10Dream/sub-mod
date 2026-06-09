@@ -1,0 +1,456 @@
+global-client-fingerprint: "chrome"
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7894
+allow-lan: true
+tcp-concurrent: true
+enable-process: true
+find-process-mode: "always"
+ipv6: true
+log-level: "info"
+geo-auto-update: true
+geo-update-interval: 168
+secret: ""
+bind-address: "*"
+unified-delay: false
+disable-keep-alive: false
+keep-alive-idle: 30
+keep-alive-interval: 30
+dns:
+  enable: true
+  ipv6: true
+  respect-rules: false
+  prefer-h3: true
+  cache-algorithm: "arc"
+  use-system-hosts: true
+  use-host: true
+  listen: "0.0.0.0:53"
+  enhanced-mode: "fake-ip"
+  fake-ip-filter-mode: "blacklist"
+  fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter:
+    - "*.lan"
+    - "*.localdomain"
+    - "*.invalid"
+    - "*.localhost"
+    - "*.test"
+    - "*.local"
+    - "*.home.arpa"
+    - "time.*.com"
+    - "ntp.*.com"
+    - "*.ir"
+  default-nameserver:
+    - "8.8.8.8"
+    - "8.8.4.4"
+    - "1.1.1.1"
+    - "9.9.9.9"
+  nameserver:
+    - "https://dns.google/dns-query"
+    - "https://cloudflare-dns.com/dns-query"
+  direct-nameserver:
+    - "78.157.42.100"
+    - "78.157.42.101"
+  proxy-server-nameserver:
+    - "1.1.1.1"
+    - "8.8.8.8"
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - 8080
+        - 8880
+        - 2052
+        - 2082
+        - 2086
+        - 2095
+    TLS:
+      ports:
+        - 443
+        - 8443
+        - 2053
+        - 2083
+        - 2087
+        - 2096
+tun:
+  enable: true
+  stack: "mixed"
+  auto-route: true
+  auto-detect-interface: true
+  auto-redir: true
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+rule-providers:
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+proxies:
+  - name: "🇸🇨 SC | VLESS | @ai_duet #1"
+    type: "vless"
+    server: "45.130.125.160"
+    port: 443
+    uuid: "406d8436-0eb9-4eb2-84fb-960e076ffba6"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇽🇽 XX | VLESS | @bored_vpn #3"
+    type: "vless"
+    server: "172.66.213.38"
+    port: 8443
+    uuid: "0344d3af-b67b-44e0-a5ee-ef7fa03a9e0e"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇩🇪 DE | VLESS | @free1_vpn #1"
+    type: "vless"
+    server: "146.75.117.91"
+    port: 80
+    uuid: "96eec36e-2c44-5b09-898e-6f0f0526e57f"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇺🇸 US | VLESS | @free4allvpn #1"
+    type: "vless"
+    server: "151.101.25.242"
+    port: 80
+    uuid: "02d87d00-c769-48d8-91cb-bd05e2f62790"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇸🇨 SC | VLESS | @mehrosaboran #1"
+    type: "vless"
+    server: "45.130.125.218"
+    port: 8443
+    uuid: "77e69c70-31b4-44ea-af46-4664df9a614c"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇸🇨 SC | VLESS | @mehrosaboran #2"
+    type: "vless"
+    server: "45.130.125.192"
+    port: 8443
+    uuid: "3d7c04ea-0d63-4847-b916-1103cc6a488f"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇽🇽 XX | VLESS | @mimitdl #2"
+    type: "vless"
+    server: "104.16.75.207"
+    port: 2087
+    uuid: "ef0adf73-a279-4bd3-9f1b-bb5f4137ddb3"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇩🇪 DE | VLESS | @mtpv2ray #1"
+    type: "vless"
+    server: "45.157.232.164"
+    port: 15198
+    uuid: "ee493449-df40-4d17-9a50-cf28c9288923"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇽🇽 XX | VLESS | @outline_ir #3"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 8443
+    uuid: "b9bea4eb-327d-43b3-98df-f911d69a54a4"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇽🇽 XX | VLESS | @parsashonam #1"
+    type: "vless"
+    server: "104.17.121.71"
+    port: 443
+    uuid: "Telegram-Parsashonam-9"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇽🇽 XX | VLESS | @parsashonam #2"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "Telegram-Parsashonam-12"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇽🇽 XX | VLESS | @proxie #1"
+    type: "vless"
+    server: "104.21.62.144"
+    port: 443
+    uuid: "f98e06c6-6b36-47f1-a0e3-77d7937c3ec7"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "🇺🇸 US | VLESS | @proxygrizzly #1"
+    type: "vless"
+    server: "147.182.183.207"
+    port: 443
+    uuid: "e7be1334-6a1d-47c0-8c9a-c7a5b8575499"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇺🇸 US | VLESS | @prrofile_purple #1"
+    type: "vless"
+    server: "167.82.2.79"
+    port: 443
+    uuid: "23e35579-baad-487c-80de-aca4475d50b2"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇺🇸 US | VLESS | @prrofile_purple #2"
+    type: "vless"
+    server: "199.232.78.160"
+    port: 443
+    uuid: "23e35579-baad-487c-80de-aca4475d50b2"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇱🇹 LT | VLESS | @prrofile_purple #1"
+    type: "vless"
+    server: "91.188.254.124"
+    port: 2083
+    uuid: "efffa718-6ce3-4b0f-88dc-fc68ed38ff1f"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇺🇸 US | VLESS | @qeshmserver #1"
+    type: "vless"
+    server: "151.101.3.8"
+    port: 80
+    uuid: "qeshmserver"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "🇸🇨 SC | VLESS | @turboo_server #1"
+    type: "vless"
+    server: "45.130.125.76"
+    port: 2053
+    uuid: "b37be529-83c9-4851-a3cf-73d7d05bf308"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇸🇨 SC | VLESS | @v2ray_free_conf #1"
+    type: "vless"
+    server: "45.130.125.194"
+    port: 8443
+    uuid: "2d11f9a7-5cb9-4a76-acbe-0064305b570a"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇺🇸 US | VLESS | @v2rayngconfiig #1"
+    type: "vless"
+    server: "151.101.193.57"
+    port: 80
+    uuid: "5cdf99d3-a51b-570e-8245-f87d674dc652"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇽🇽 XX | VLESS | @v2rayngconfiig #1"
+    type: "vless"
+    server: "104.20.46.193"
+    port: 443
+    uuid: "bd68a2b8-3896-4f87-8787-5270461ea0f4"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇽🇽 XX | VLESS | @v2rayngvpn_1 #2"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 2053
+    uuid: "b02447d1-2de5-462e-b411-e67663f22861"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇺🇸 US | VLESS | @v2rayngvpn_1 #1"
+    type: "vless"
+    server: "151.101.65.57"
+    port: 80
+    uuid: "96eec36e-2c44-5b09-898e-6f0f0526e57f"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇺🇸 US | VLESS | @vpnowl #1"
+    type: "vless"
+    server: "104.198.14.52"
+    port: 443
+    uuid: "598cbaec-00f6-4d84-8644-b35fdcec6904"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇺🇸 US | VLESS | @kafing_2 #1"
+    type: "vless"
+    server: "spd-mynames.global.ssl.fastly.net"
+    port: 80
+    uuid: "8e378a41-d5e1-427a-aaf8-30190d4be0a0"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇺🇸 US | VLESS | @mehrosaboran #1"
+    type: "vless"
+    server: "vercel.payroodme.com"
+    port: 443
+    uuid: "80ccd8d3-92f3-4117-baa3-e2e93273b167"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇹🇭 TH | VLESS | @netmellianti #1"
+    type: "vless"
+    server: "bm.xq-vpn.com"
+    port: 80
+    uuid: "FREE"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇮🇷 IR | VLESS | @nofiltering2 #1"
+    type: "vless"
+    server: "tun2.axenet.company"
+    port: 8443
+    uuid: "e6d74f1f-bce5-43e3-b65a-63bb6d825764"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇺🇸 US | VLESS | @prrofile_purple #3"
+    type: "vless"
+    server: "speedtest.net"
+    port: 80
+    uuid: "aeeef25a-5ec2-4129-a043-2ca89357e15d"
+    udp: true
+    tls: false
+    network: "tcp"
+proxy-groups:
+  - name: "نوع انتخاب پروکسی 🔀"
+    type: "select"
+    proxies:
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+      - "قطع اینترنت ⛔"
+  - name: "دستی 🤏🏻"
+    type: "select"
+    proxies:
+      - "🇸🇨 SC | VLESS | @ai_duet #1"
+      - "🇽🇽 XX | VLESS | @bored_vpn #3"
+      - "🇩🇪 DE | VLESS | @free1_vpn #1"
+      - "🇺🇸 US | VLESS | @free4allvpn #1"
+      - "🇸🇨 SC | VLESS | @mehrosaboran #1"
+      - "🇸🇨 SC | VLESS | @mehrosaboran #2"
+      - "🇽🇽 XX | VLESS | @mimitdl #2"
+      - "🇩🇪 DE | VLESS | @mtpv2ray #1"
+      - "🇽🇽 XX | VLESS | @outline_ir #3"
+      - "🇽🇽 XX | VLESS | @parsashonam #1"
+      - "🇽🇽 XX | VLESS | @parsashonam #2"
+      - "🇽🇽 XX | VLESS | @proxie #1"
+      - "🇺🇸 US | VLESS | @proxygrizzly #1"
+      - "🇺🇸 US | VLESS | @prrofile_purple #1"
+      - "🇺🇸 US | VLESS | @prrofile_purple #2"
+      - "🇱🇹 LT | VLESS | @prrofile_purple #1"
+      - "🇺🇸 US | VLESS | @qeshmserver #1"
+      - "🇸🇨 SC | VLESS | @turboo_server #1"
+      - "🇸🇨 SC | VLESS | @v2ray_free_conf #1"
+      - "🇺🇸 US | VLESS | @v2rayngconfiig #1"
+      - "🇽🇽 XX | VLESS | @v2rayngconfiig #1"
+      - "🇽🇽 XX | VLESS | @v2rayngvpn_1 #2"
+      - "🇺🇸 US | VLESS | @v2rayngvpn_1 #1"
+      - "🇺🇸 US | VLESS | @vpnowl #1"
+      - "🇺🇸 US | VLESS | @kafing_2 #1"
+      - "🇺🇸 US | VLESS | @mehrosaboran #1"
+      - "🇹🇭 TH | VLESS | @netmellianti #1"
+      - "🇮🇷 IR | VLESS | @nofiltering2 #1"
+      - "🇺🇸 US | VLESS | @prrofile_purple #3"
+  - name: "خودکار (بهترین پینگ) 🤖"
+    type: "url-test"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+    lazy: true
+    proxies:
+      - "🇸🇨 SC | VLESS | @ai_duet #1"
+      - "🇽🇽 XX | VLESS | @bored_vpn #3"
+      - "🇩🇪 DE | VLESS | @free1_vpn #1"
+      - "🇺🇸 US | VLESS | @free4allvpn #1"
+      - "🇸🇨 SC | VLESS | @mehrosaboran #1"
+      - "🇸🇨 SC | VLESS | @mehrosaboran #2"
+      - "🇽🇽 XX | VLESS | @mimitdl #2"
+      - "🇩🇪 DE | VLESS | @mtpv2ray #1"
+      - "🇽🇽 XX | VLESS | @outline_ir #3"
+      - "🇽🇽 XX | VLESS | @parsashonam #1"
+      - "🇽🇽 XX | VLESS | @parsashonam #2"
+      - "🇽🇽 XX | VLESS | @proxie #1"
+      - "🇺🇸 US | VLESS | @proxygrizzly #1"
+      - "🇺🇸 US | VLESS | @prrofile_purple #1"
+      - "🇺🇸 US | VLESS | @prrofile_purple #2"
+      - "🇱🇹 LT | VLESS | @prrofile_purple #1"
+      - "🇺🇸 US | VLESS | @qeshmserver #1"
+      - "🇸🇨 SC | VLESS | @turboo_server #1"
+      - "🇸🇨 SC | VLESS | @v2ray_free_conf #1"
+      - "🇺🇸 US | VLESS | @v2rayngconfiig #1"
+      - "🇽🇽 XX | VLESS | @v2rayngconfiig #1"
+      - "🇽🇽 XX | VLESS | @v2rayngvpn_1 #2"
+      - "🇺🇸 US | VLESS | @v2rayngvpn_1 #1"
+      - "🇺🇸 US | VLESS | @vpnowl #1"
+      - "🇺🇸 US | VLESS | @kafing_2 #1"
+      - "🇺🇸 US | VLESS | @mehrosaboran #1"
+      - "🇹🇭 TH | VLESS | @netmellianti #1"
+      - "🇮🇷 IR | VLESS | @nofiltering2 #1"
+      - "🇺🇸 US | VLESS | @prrofile_purple #3"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تلگرام 💬"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "بدون فیلترشکن 🛡️"
+    type: "select"
+    proxies:
+      - "DIRECT"
+    hidden: true
+  - name: "قطع اینترنت ⛔"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+  - name: "اجازه ندادن 🚫"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+rules:
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
+  - "GEOIP,ir,سایتای ایرانی 🇮🇷"
+  - "MATCH,نوع انتخاب پروکسی 🔀"

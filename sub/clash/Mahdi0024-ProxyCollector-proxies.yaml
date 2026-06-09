@@ -1,0 +1,706 @@
+global-client-fingerprint: "chrome"
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7894
+allow-lan: true
+tcp-concurrent: true
+enable-process: true
+find-process-mode: "always"
+ipv6: true
+log-level: "info"
+geo-auto-update: true
+geo-update-interval: 168
+secret: ""
+bind-address: "*"
+unified-delay: false
+disable-keep-alive: false
+keep-alive-idle: 30
+keep-alive-interval: 30
+dns:
+  enable: true
+  ipv6: true
+  respect-rules: false
+  prefer-h3: true
+  cache-algorithm: "arc"
+  use-system-hosts: true
+  use-host: true
+  listen: "0.0.0.0:53"
+  enhanced-mode: "fake-ip"
+  fake-ip-filter-mode: "blacklist"
+  fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter:
+    - "*.lan"
+    - "*.localdomain"
+    - "*.invalid"
+    - "*.localhost"
+    - "*.test"
+    - "*.local"
+    - "*.home.arpa"
+    - "time.*.com"
+    - "ntp.*.com"
+    - "*.ir"
+  default-nameserver:
+    - "8.8.8.8"
+    - "8.8.4.4"
+    - "1.1.1.1"
+    - "9.9.9.9"
+  nameserver:
+    - "https://dns.google/dns-query"
+    - "https://cloudflare-dns.com/dns-query"
+  direct-nameserver:
+    - "78.157.42.100"
+    - "78.157.42.101"
+  proxy-server-nameserver:
+    - "1.1.1.1"
+    - "8.8.8.8"
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - 8080
+        - 8880
+        - 2052
+        - 2082
+        - 2086
+        - 2095
+    TLS:
+      ports:
+        - 443
+        - 8443
+        - 2053
+        - 2083
+        - 2087
+        - 2096
+tun:
+  enable: true
+  stack: "mixed"
+  auto-route: true
+  auto-detect-interface: true
+  auto-redir: true
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+rule-providers:
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+proxies:
+  - name: "🇩🇪 DE 1"
+    type: "vless"
+    server: "18.192.50.101"
+    port: 443
+    uuid: "3f3bb5cc-da8b-4551-8b76-ba223f1a5255"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇩🇪 DE 2"
+    type: "vless"
+    server: "91.107.191.12"
+    port: 29376
+    uuid: "03bc875d-0d8e-49b6-9094-89a8159e65ee"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇫🇷 FR 1"
+    type: "vless"
+    server: "cdg-1.fromblancwithlove.com"
+    port: 8443
+    uuid: "55f7d143-a594-4a91-b030-f227039f85ef"
+    udp: true
+    tls: false
+    network: "tcp"
+    alpn:
+      - "h2"
+  - name: "🇸🇪 SE 1"
+    type: "vless"
+    server: "109.120.132.142"
+    port: 40617
+    uuid: "d8d05386-e381-40a4-bb63-715c208b3ed3"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇫🇮 FI 1"
+    type: "vless"
+    server: "193.233.23.196"
+    port: 26048
+    uuid: "3007b043-acdf-43a4-900e-c7c015406f89"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇬🇧 GB 1"
+    type: "vless"
+    server: "8.208.22.155"
+    port: 10034
+    uuid: "e4e7866d-920b-4a53-a8e2-6ae9b2a42fc2"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇳🇱 NL 1"
+    type: "vless"
+    server: "46.229.243.70"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-09.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
+  - name: "🇰🇷 KR 1"
+    type: "vmess"
+    server: "152.67.218.38"
+    port: 443
+    uuid: "b5e9480a-b7aa-40a4-f9a7-5299b5e363b4"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇺🇸 US 1"
+    type: "vmess"
+    server: "67.220.95.3"
+    port: 18000
+    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
+    alterId: 0
+    cipher: "aes-128-gcm"
+    udp: true
+  - name: "🇺🇸 US 57"
+    type: "vmess"
+    server: "57.151.100.27"
+    port: 10086
+    uuid: "550e8400-e29b-41d4-a716-446655440000"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇮🇩 ID 1"
+    type: "vmess"
+    server: "v24.hdacd.com"
+    port: 30824
+    uuid: "cbb3f877-d1fb-344c-87a9-d153bffd5484"
+    alterId: 2
+    udp: true
+  - name: "🇸🇬 SG 1"
+    type: "vmess"
+    server: "149.88.23.207"
+    port: 18000
+    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
+    alterId: 0
+    udp: true
+  - name: "🇸🇬 SG 2"
+    type: "vmess"
+    server: "149.88.23.202"
+    port: 18000
+    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
+    alterId: 0
+    udp: true
+  - name: "🇯🇵 JP 5"
+    type: "vmess"
+    server: "168.138.43.75"
+    port: 80
+    uuid: "11c3627f-31e8-4695-dfbd-34076e2f1f5d"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇯🇵 JP 6"
+    type: "vmess"
+    server: "109.61.109.204"
+    port: 64183
+    uuid: "f1a513d2-c32a-49dc-8e64-d4f8a2f1e001"
+    alterId: 0
+    udp: true
+  - name: "🇯🇵 JP 7"
+    type: "vmess"
+    server: "109.61.109.204"
+    port: 17883
+    uuid: "b2da9920-b0a7-4354-9e26-3833ab8d00d0"
+    alterId: 0
+    udp: true
+  - name: "🇯🇵 JP 8"
+    type: "vmess"
+    server: "109.61.109.204"
+    port: 59023
+    uuid: "9631096d-3032-4942-9446-bdf12665682b"
+    alterId: 0
+    udp: true
+  - name: "🇯🇵 JP 9"
+    type: "vmess"
+    server: "109.61.109.204"
+    port: 59873
+    uuid: "d0e97ee2-c6de-48f8-bd4a-8e63a9cd9e89"
+    alterId: 0
+    udp: true
+  - name: "🇯🇵 JP 10"
+    type: "vmess"
+    server: "109.61.109.204"
+    port: 42712
+    uuid: "4f3cfda3-a255-40eb-8801-71f9fffb19d6"
+    alterId: 0
+    udp: true
+  - name: "🇯🇵 JP 11"
+    type: "vmess"
+    server: "109.61.109.204"
+    port: 65222
+    uuid: "3786e67a-41eb-4b92-b31e-417e89493b93"
+    alterId: 0
+    udp: true
+  - name: "🇯🇵 JP 12"
+    type: "vmess"
+    server: "109.61.109.204"
+    port: 47956
+    uuid: "c50f9480-2e1d-40db-9458-630e79636663"
+    alterId: 0
+    udp: true
+  - name: "🇯🇵 JP 13"
+    type: "vmess"
+    server: "109.61.109.204"
+    port: 42696
+    uuid: "b01d1e26-2f84-48da-88a1-1d06a77857f3"
+    alterId: 0
+    udp: true
+  - name: "🇯🇵 JP 14"
+    type: "vmess"
+    server: "109.61.109.204"
+    port: 41418
+    uuid: "3b475934-cb2a-4d96-b260-5e50cca5d430"
+    alterId: 0
+    udp: true
+  - name: "🇯🇵 JP 15"
+    type: "vmess"
+    server: "109.61.109.204"
+    port: 44104
+    uuid: "e3cb685e-7840-45cb-9d64-b2028d9b635e"
+    alterId: 0
+    udp: true
+  - name: "🇯🇵 JP 16"
+    type: "vmess"
+    server: "109.61.109.204"
+    port: 65388
+    uuid: "6d600864-32da-49fd-baf4-7df051762454"
+    alterId: 0
+    udp: true
+  - name: "🇯🇵 JP 17"
+    type: "vmess"
+    server: "109.61.109.204"
+    port: 43258
+    uuid: "12929592-a7bd-41eb-ab4d-d804f76c4ff9"
+    alterId: 0
+    udp: true
+  - name: "🇯🇵 JP 18"
+    type: "vmess"
+    server: "109.61.109.204"
+    port: 58373
+    uuid: "e1cc26b3-df0b-477b-afb0-53659a25e978"
+    alterId: 0
+    udp: true
+  - name: "🇯🇵 JP 19"
+    type: "vmess"
+    server: "109.61.109.204"
+    port: 26883
+    uuid: "254551f6-ec28-4938-ad0e-0aa4aa1965ec"
+    alterId: 0
+    udp: true
+  - name: "🇨🇦 CA 1"
+    type: "vmess"
+    server: "23.162.200.198"
+    port: 18000
+    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
+    alterId: 0
+    udp: true
+  - name: "🇨🇦 CA 2"
+    type: "vmess"
+    server: "134.195.196.211"
+    port: 18000
+    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
+    alterId: 0
+    udp: true
+  - name: "🇨🇿 CZ 1"
+    type: "vmess"
+    server: "82.198.246.97"
+    port: 180
+    uuid: "d13fc2f5-3e05-4795-81eb-44143a09e552"
+    alterId: 0
+    udp: true
+  - name: "🇨🇿 CZ 2"
+    type: "vmess"
+    server: "82.198.246.250"
+    port: 180
+    uuid: "d13fc2f5-3e05-4795-81eb-44143a09e552"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇪🇸 ES 1"
+    type: "vmess"
+    server: "85.90.217.42"
+    port: 22324
+    uuid: "04621bae-ab36-11ec-b909-0242ac120002"
+    alterId: 0
+    udp: true
+  - name: "🇫🇷 FR 2"
+    type: "vmess"
+    server: "185.248.33.173"
+    port: 63961
+    uuid: "12929592-a7bd-41eb-ab4d-d804f76c4ff9"
+    alterId: 0
+    udp: true
+  - name: "🇫🇷 FR 3"
+    type: "vmess"
+    server: "185.248.33.173"
+    port: 18702
+    uuid: "54a0bf6d-f2b5-4b2a-942c-798fb129527e"
+    alterId: 0
+    udp: true
+  - name: "🇵🇭 PH 1"
+    type: "vmess"
+    server: "61.245.11.60"
+    port: 80
+    uuid: "a3e3a710-79f8-4ae0-b83c-607aab40d197"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇲🇾 MY 1"
+    type: "vmess"
+    server: "47.250.149.51"
+    port: 50018
+    uuid: "9665280c-a3d1-4aab-ef9f-a3a497337d91"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇮🇳 IN 1"
+    type: "vmess"
+    server: "172.232.103.186"
+    port: 22324
+    uuid: "04621bae-ab36-11ec-b909-0242ac120002"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇰🇷 KR 3"
+    type: "trojan"
+    server: "130.94.29.102"
+    port: 443
+    password: "d1UH4TrhvCmjc-s4nmChew1qGqX3MNMqel"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.ws-converter.click"
+  - name: "🇩🇪 DE 4"
+    type: "trojan"
+    server: "51.75.86.196"
+    port: 55646
+    password: "03mpolj39zyewzufal2r"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "🇺🇸 US 2"
+    type: "trojan"
+    server: "172.235.63.252"
+    port: 443
+    password: "bX_lNHWoW6ywq82mI=KUr+8i__VSp0Hs_E"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "🇺🇸 US 5"
+    type: "trojan"
+    server: "www.calmlunch.com"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "🇺🇸 US 10"
+    type: "trojan"
+    server: "www.ignitelimit.com"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "🇺🇸 US 11"
+    type: "trojan"
+    server: "www.gossipglove.com"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.gossipglove.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "🇺🇸 US 47"
+    type: "trojan"
+    server: "www.calmloud.com"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "🇺🇸 US 50"
+    type: "trojan"
+    server: "www.creationlong.org"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/assignment"
+  - name: "🇺🇸 US 66"
+    type: "trojan"
+    server: "155.117.198.82"
+    port: 45553
+    password: "4f4d1167-ef14-4304-9bce-0740472503ef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ch.01.naiun.bilibili.com"
+  - name: "🇭🇰 HK 1"
+    type: "trojan"
+    server: "103.177.136.41"
+    port: 48697
+    password: "4f4d1167-ef14-4304-9bce-0740472503ef"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "gh.01.naiun.bilibili.com"
+  - name: "🇨🇭 CH 1"
+    type: "trojan"
+    server: "89.125.95.152"
+    port: 11300
+    password: "duaR-NjjdGGLeZ+W6j=3NY46vZW+zyMD1z"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.toughapp.click"
+  - name: "🇰🇿 KZ 1"
+    type: "trojan"
+    server: "45.82.14.144"
+    port: 2025
+    password: "vpn"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "wrmelmwxlf.gktevlrqznwqqozy.fabpfs66gizmnojhcvqxwl.kytrcfzqla87gvgvs6c7kjnrubuh.cc"
+  - name: "🇯🇵 JP 1"
+    type: "trojan"
+    server: "aa.ccmusic.jp"
+    port: 443
+    password: "tsuchiya"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "🇯🇵 JP 4"
+    type: "trojan"
+    server: "161.34.39.108"
+    port: 443
+    password: "tsuchiya"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "aa.ccmusic.jp"
+  - name: "🇸🇬 SG 3"
+    type: "tuic"
+    server: "8.219.215.193"
+    port: 5835
+    uuid: "48b603e6-6568-464e-a32f-4cf0526a9f1a"
+    password: "48b603e6-6568-464e-a32f-4cf0526a9f1a"
+    disable-sni: true
+    reduce-rtt: true
+    udp-relay-mode: "bbr"
+    sni: "claw.isbigdick.cc.cd"
+    alpn:
+      - "h3"
+    congestion-controller: "bbr"
+proxy-groups:
+  - name: "نوع انتخاب پروکسی 🔀"
+    type: "select"
+    proxies:
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+      - "قطع اینترنت ⛔"
+  - name: "دستی 🤏🏻"
+    type: "select"
+    proxies:
+      - "🇩🇪 DE 1"
+      - "🇩🇪 DE 2"
+      - "🇫🇷 FR 1"
+      - "🇸🇪 SE 1"
+      - "🇫🇮 FI 1"
+      - "🇬🇧 GB 1"
+      - "🇳🇱 NL 1"
+      - "🇰🇷 KR 1"
+      - "🇺🇸 US 1"
+      - "🇺🇸 US 57"
+      - "🇮🇩 ID 1"
+      - "🇸🇬 SG 1"
+      - "🇸🇬 SG 2"
+      - "🇯🇵 JP 5"
+      - "🇯🇵 JP 6"
+      - "🇯🇵 JP 7"
+      - "🇯🇵 JP 8"
+      - "🇯🇵 JP 9"
+      - "🇯🇵 JP 10"
+      - "🇯🇵 JP 11"
+      - "🇯🇵 JP 12"
+      - "🇯🇵 JP 13"
+      - "🇯🇵 JP 14"
+      - "🇯🇵 JP 15"
+      - "🇯🇵 JP 16"
+      - "🇯🇵 JP 17"
+      - "🇯🇵 JP 18"
+      - "🇯🇵 JP 19"
+      - "🇨🇦 CA 1"
+      - "🇨🇦 CA 2"
+      - "🇨🇿 CZ 1"
+      - "🇨🇿 CZ 2"
+      - "🇪🇸 ES 1"
+      - "🇫🇷 FR 2"
+      - "🇫🇷 FR 3"
+      - "🇵🇭 PH 1"
+      - "🇲🇾 MY 1"
+      - "🇮🇳 IN 1"
+      - "🇰🇷 KR 3"
+      - "🇩🇪 DE 4"
+      - "🇺🇸 US 2"
+      - "🇺🇸 US 5"
+      - "🇺🇸 US 10"
+      - "🇺🇸 US 11"
+      - "🇺🇸 US 47"
+      - "🇺🇸 US 50"
+      - "🇺🇸 US 66"
+      - "🇭🇰 HK 1"
+      - "🇨🇭 CH 1"
+      - "🇰🇿 KZ 1"
+      - "🇯🇵 JP 1"
+      - "🇯🇵 JP 4"
+      - "🇸🇬 SG 3"
+  - name: "خودکار (بهترین پینگ) 🤖"
+    type: "url-test"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+    lazy: true
+    proxies:
+      - "🇩🇪 DE 1"
+      - "🇩🇪 DE 2"
+      - "🇫🇷 FR 1"
+      - "🇸🇪 SE 1"
+      - "🇫🇮 FI 1"
+      - "🇬🇧 GB 1"
+      - "🇳🇱 NL 1"
+      - "🇰🇷 KR 1"
+      - "🇺🇸 US 1"
+      - "🇺🇸 US 57"
+      - "🇮🇩 ID 1"
+      - "🇸🇬 SG 1"
+      - "🇸🇬 SG 2"
+      - "🇯🇵 JP 5"
+      - "🇯🇵 JP 6"
+      - "🇯🇵 JP 7"
+      - "🇯🇵 JP 8"
+      - "🇯🇵 JP 9"
+      - "🇯🇵 JP 10"
+      - "🇯🇵 JP 11"
+      - "🇯🇵 JP 12"
+      - "🇯🇵 JP 13"
+      - "🇯🇵 JP 14"
+      - "🇯🇵 JP 15"
+      - "🇯🇵 JP 16"
+      - "🇯🇵 JP 17"
+      - "🇯🇵 JP 18"
+      - "🇯🇵 JP 19"
+      - "🇨🇦 CA 1"
+      - "🇨🇦 CA 2"
+      - "🇨🇿 CZ 1"
+      - "🇨🇿 CZ 2"
+      - "🇪🇸 ES 1"
+      - "🇫🇷 FR 2"
+      - "🇫🇷 FR 3"
+      - "🇵🇭 PH 1"
+      - "🇲🇾 MY 1"
+      - "🇮🇳 IN 1"
+      - "🇰🇷 KR 3"
+      - "🇩🇪 DE 4"
+      - "🇺🇸 US 2"
+      - "🇺🇸 US 5"
+      - "🇺🇸 US 10"
+      - "🇺🇸 US 11"
+      - "🇺🇸 US 47"
+      - "🇺🇸 US 50"
+      - "🇺🇸 US 66"
+      - "🇭🇰 HK 1"
+      - "🇨🇭 CH 1"
+      - "🇰🇿 KZ 1"
+      - "🇯🇵 JP 1"
+      - "🇯🇵 JP 4"
+      - "🇸🇬 SG 3"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تلگرام 💬"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "بدون فیلترشکن 🛡️"
+    type: "select"
+    proxies:
+      - "DIRECT"
+    hidden: true
+  - name: "قطع اینترنت ⛔"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+  - name: "اجازه ندادن 🚫"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+rules:
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
+  - "GEOIP,ir,سایتای ایرانی 🇮🇷"
+  - "MATCH,نوع انتخاب پروکسی 🔀"

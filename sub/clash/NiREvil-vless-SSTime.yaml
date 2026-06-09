@@ -1,0 +1,973 @@
+global-client-fingerprint: "chrome"
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7894
+allow-lan: true
+tcp-concurrent: true
+enable-process: true
+find-process-mode: "always"
+ipv6: true
+log-level: "info"
+geo-auto-update: true
+geo-update-interval: 168
+secret: ""
+bind-address: "*"
+unified-delay: false
+disable-keep-alive: false
+keep-alive-idle: 30
+keep-alive-interval: 30
+dns:
+  enable: true
+  ipv6: true
+  respect-rules: false
+  prefer-h3: true
+  cache-algorithm: "arc"
+  use-system-hosts: true
+  use-host: true
+  listen: "0.0.0.0:53"
+  enhanced-mode: "fake-ip"
+  fake-ip-filter-mode: "blacklist"
+  fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter:
+    - "*.lan"
+    - "*.localdomain"
+    - "*.invalid"
+    - "*.localhost"
+    - "*.test"
+    - "*.local"
+    - "*.home.arpa"
+    - "time.*.com"
+    - "ntp.*.com"
+    - "*.ir"
+  default-nameserver:
+    - "8.8.8.8"
+    - "8.8.4.4"
+    - "1.1.1.1"
+    - "9.9.9.9"
+  nameserver:
+    - "https://dns.google/dns-query"
+    - "https://cloudflare-dns.com/dns-query"
+  direct-nameserver:
+    - "78.157.42.100"
+    - "78.157.42.101"
+  proxy-server-nameserver:
+    - "1.1.1.1"
+    - "8.8.8.8"
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - 8080
+        - 8880
+        - 2052
+        - 2082
+        - 2086
+        - 2095
+    TLS:
+      ports:
+        - 443
+        - 8443
+        - 2053
+        - 2083
+        - 2087
+        - 2096
+tun:
+  enable: true
+  stack: "mixed"
+  auto-route: true
+  auto-detect-interface: true
+  auto-redir: true
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+rule-providers:
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+proxies:
+  - name: "🇳🇱NL  ROSE—01"
+    type: "ss"
+    server: "109.201.152.181"
+    port: 443
+    cipher: "aes-128-cfb"
+    password: "shadowsocks"
+    udp: true
+  - name: "🇬🇧GB  ROSE—02"
+    type: "ss"
+    server: "141.98.101.182"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "🇬🇧GB  ROSE—03"
+    type: "ss"
+    server: "141.98.101.179"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "🇬🇧GB  ROSE—04"
+    type: "ss"
+    server: "141.98.101.178"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "🇳🇱NL  ROSE—21"
+    type: "ss"
+    server: "82.38.31.208"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇳🇱NL  ROSE—22"
+    type: "ss"
+    server: "82.38.31.218"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇳🇱NL  ROSE—23"
+    type: "ss"
+    server: "82.38.31.35"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇳🇱NL  ROSE—24"
+    type: "ss"
+    server: "82.38.31.155"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇳🇱NL  ROSE—25"
+    type: "ss"
+    server: "108.181.58.239"
+    port: 8388
+    cipher: "chacha20-ietf-poly1305"
+    password: "CJmTCCx7Ltud"
+    udp: true
+  - name: "🇺🇸US  ROSE—26"
+    type: "ss"
+    server: "107.172.250.161"
+    port: 59556
+    cipher: "chacha20-ietf-poly1305"
+    password: "QTmLViU4VEmuwbOxUw4IXd"
+    udp: true
+  - name: "🇯🇵JP  ROSE—27"
+    type: "ss"
+    server: "103.106.228.175"
+    port: 8009
+    cipher: "aes-256-gcm"
+    password: "XKFKl2rULjIp74"
+    udp: true
+  - name: "🇫🇮FI  ROSE—28"
+    type: "ss"
+    server: "193.47.60.186"
+    port: 28687
+    cipher: "chacha20-ietf-poly1305"
+    password: "yKVMoB3AwiTEznpnoq2FYR"
+    udp: true
+  - name: "🇺🇸US  ROSE—29"
+    type: "ss"
+    server: "108.181.0.177"
+    port: 8388
+    cipher: "chacha20-ietf-poly1305"
+    password: "G5p6ww4o67HB"
+    udp: true
+  - name: "🇳🇱NL  ROSE—30"
+    type: "ss"
+    server: "195.93.253.245"
+    port: 49137
+    cipher: "chacha20-ietf-poly1305"
+    password: "FDeCHSu4lt8qflCS5zDOy8"
+    udp: true
+  - name: "🇺🇸US  ROSE—31"
+    type: "ss"
+    server: "62.146.231.112"
+    port: 12012
+    cipher: "chacha20-ietf-poly1305"
+    password: "4e287631dc4fc8fc"
+    udp: true
+  - name: "🇳🇱NL  ROSE—32"
+    type: "ss"
+    server: "82.38.31.176"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇳🇱NL  ROSE—33"
+    type: "ss"
+    server: "82.38.31.199"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇳🇱NL  ROSE—34"
+    type: "ss"
+    server: "82.38.31.205"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇳🇱NL  ROSE—35"
+    type: "ss"
+    server: "82.38.31.190"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇳🇱NL  ROSE—36"
+    type: "ss"
+    server: "82.38.31.189"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇳🇱NL  ROSE—37"
+    type: "ss"
+    server: "82.38.31.210"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇳🇱NL  ROSE—38"
+    type: "ss"
+    server: "82.38.31.214"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇳🇱NL  ROSE—39"
+    type: "ss"
+    server: "195.93.253.240"
+    port: 14130
+    cipher: "chacha20-ietf-poly1305"
+    password: "bvGa054MauyCOmaeYtWuOJ"
+    udp: true
+  - name: "🇳🇱NL  ROSE—40"
+    type: "ss"
+    server: "82.38.31.149"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇭🇰HK  ROSE—41"
+    type: "ss"
+    server: "212.192.15.225"
+    port: 20129
+    cipher: "aes-256-gcm"
+    password: "7e1dd4c55bf85da5"
+    udp: true
+  - name: "🇳🇱NL  ROSE—42"
+    type: "ss"
+    server: "82.38.31.184"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇺🇸US  ROSE—43"
+    type: "ss"
+    server: "216.105.168.18"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "hCCWOcIsK5wrFz4OX70rWf"
+    udp: true
+  - name: "🇯🇵JP  ROSE—44"
+    type: "ss"
+    server: "147.90.234.133"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "hbGrpfvNrJsUmKmPbR3iY2"
+    udp: true
+  - name: "🇫🇮FI  ROSE—45"
+    type: "ss"
+    server: "195.133.2.2"
+    port: 34898
+    cipher: "chacha20-ietf-poly1305"
+    password: "v2LIewZzNUsIrqODr22FVc"
+    udp: true
+  - name: "🇳🇱NL  ROSE—46"
+    type: "ss"
+    server: "82.38.31.202"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇰🇷KR  ROSE—47"
+    type: "ss"
+    server: "218.237.185.230"
+    port: 4652
+    cipher: "aes-256-cfb"
+    password: "qwerREWQ@@"
+    udp: true
+  - name: "🇨🇴CO  ROSE—48"
+    type: "ss"
+    server: "154.223.16.41"
+    port: 4444
+    cipher: "aes-256-gcm"
+    password: "pKEW8JPByTVTLtM"
+    udp: true
+  - name: "🇯🇵JP  ROSE—49"
+    type: "ss"
+    server: "tinkered-pennies-puppies.freesocks.work"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "hbGrpfvNrJsUmKmPbR3iY2"
+    udp: true
+  - name: "🇺🇸US  ROSE—50"
+    type: "ss"
+    server: "92.118.112.203"
+    port: 41348
+    cipher: "chacha20-ietf-poly1305"
+    password: "66iAPUHyyA3YxBb3DmloTuArM0IiPeY2HCoH3m"
+    udp: true
+  - name: "🇫🇮FI  ROSE—51"
+    type: "ss"
+    server: "109.107.182.229"
+    port: 51544
+    cipher: "chacha20-ietf-poly1305"
+    password: "MZeSTvpl2uoey1R0frhPyJ"
+    udp: true
+  - name: "🇰🇷KR  ROSE—52"
+    type: "ss"
+    server: "p141.panda001.net"
+    port: 4652
+    cipher: "aes-256-cfb"
+    password: "qwerREWQ@@"
+    udp: true
+  - name: "🇰🇷KR  ROSE—53"
+    type: "ss"
+    server: "211.178.105.134"
+    port: 6123
+    cipher: "aes-256-cfb"
+    password: "qwerREWQ@@"
+    udp: true
+  - name: "🇧🇷BR  ROSE—54"
+    type: "ss"
+    server: "109.104.155.45"
+    port: 41348
+    cipher: "chacha20-ietf-poly1305"
+    password: "NVcw9OTGwmThWmhs1uh7rrIJcVz7ln96ifYZiv4zsWvToTjg"
+    udp: true
+  - name: "🇮🇳IN  ROSE—55"
+    type: "ss"
+    server: "103.120.178.193"
+    port: 31348
+    cipher: "chacha20-ietf-poly1305"
+    password: "EBDRo9THx4CqiFU7h5gfov76oNwzZURAh0ZwbWjBKddtUhvz"
+    udp: true
+  - name: "🇸🇦SA  ROSE—56"
+    type: "ss"
+    server: "156.244.8.155"
+    port: 5004
+    cipher: "aes-256-gcm"
+    password: "g5MeD6Ft3CWlJId"
+    udp: true
+  - name: "🇭🇰HK  ROSE—57"
+    type: "ss"
+    server: "112.213.102.188"
+    port: 41632
+    cipher: "aes-256-cfb"
+    password: "qwerREWQ@@"
+    udp: true
+  - name: "🇹🇼TW  ROSE—58"
+    type: "ss"
+    server: "185.189.160.105"
+    port: 41632
+    cipher: "aes-256-cfb"
+    password: "qwerREWQ@@"
+    udp: true
+  - name: "🇬🇧GB  ROSE—59"
+    type: "ss"
+    server: "57.129.129.247"
+    port: 19308
+    cipher: "chacha20-ietf-poly1305"
+    password: "4a055e9e903128a1"
+    udp: true
+  - name: "🇮🇹IT  ROSE—60"
+    type: "ss"
+    server: "185.213.20.110"
+    port: 7001
+    cipher: "aes-256-gcm"
+    password: "RexnBgU7EV5ADxG"
+    udp: true
+  - name: "🇰🇷KR  ROSE—61"
+    type: "ss"
+    server: "221.139.79.57"
+    port: 13979
+    cipher: "aes-256-cfb"
+    password: "qwerREWQ@@"
+    udp: true
+  - name: "🇭🇰HK  ROSE—62"
+    type: "ss"
+    server: "216.250.97.82"
+    port: 38388
+    cipher: "aes-256-cfb"
+    password: "Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV"
+    udp: true
+  - name: "🇫🇷FR  ROSE—63"
+    type: "ss"
+    server: "45.95.233.55"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "1aGtCco8UuisW3vnFvtNls"
+    udp: true
+  - name: "🇵🇱PL  ROSE—64"
+    type: "ss"
+    server: "54.36.174.134"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "8zw5j9h"
+    udp: true
+  - name: "🇳🇱NL  ROSE—65"
+    type: "ss"
+    server: "193.29.139.189"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "cvII85TrW6n0OGyfpHVS1u"
+    udp: true
+  - name: "🇳🇱NL  ROSE—66"
+    type: "ss"
+    server: "185.18.54.70"
+    port: 31348
+    cipher: "chacha20-ietf-poly1305"
+    password: "MPS4QxIySO20yGnFTGEbyYTOwd2HlEmcC0ksqogxZtLyLYRl"
+    udp: true
+  - name: "🇳🇱NL  ROSE—67"
+    type: "ss"
+    server: "82.38.31.194"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇳🇱NL  ROSE—68"
+    type: "ss"
+    server: "193.29.139.143"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "1RWwXhwfAB5gAEozU4G2Pg"
+    udp: true
+  - name: "🇳🇱NL  ROSE—69"
+    type: "ss"
+    server: "82.38.31.179"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇺🇸US  ROSE—70"
+    type: "ss"
+    server: "38.135.24.131"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "hbGrpfvNrJsUmKmPbR3iY2"
+    udp: true
+  - name: "🇳🇱NL  ROSE—71"
+    type: "ss"
+    server: "82.38.31.217"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇳🇱NL  ROSE—72"
+    type: "ss"
+    server: "82.38.31.187"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇳🇱NL  ROSE—73"
+    type: "ss"
+    server: "82.38.31.191"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇳🇱NL  ROSE—74"
+    type: "ss"
+    server: "82.38.31.186"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇨🇦CA  ROSE—75"
+    type: "ss"
+    server: "79.141.166.54"
+    port: 41348
+    cipher: "chacha20-ietf-poly1305"
+    password: "8r2HCHTRXSqDcOvIXnssDuguU74msDjEu5XhlkkuydW7is75"
+    udp: true
+  - name: "🇹🇷TR  ROSE—76"
+    type: "ss"
+    server: "193.124.46.134"
+    port: 8444
+    cipher: "chacha20-ietf-poly1305"
+    password: "tunnel-fbrof"
+    udp: true
+  - name: "🇵🇱PL  ROSE—77"
+    type: "ss"
+    server: "217.30.10.70"
+    port: 9014
+    cipher: "aes-256-cfb"
+    password: "KnJGad3FqTvjqbaX"
+    udp: true
+  - name: "🇵🇱PL  ROSE—78"
+    type: "ss"
+    server: "217.30.10.70"
+    port: 9003
+    cipher: "aes-256-cfb"
+    password: "JdmRK9gMEqFgs8nP"
+    udp: true
+  - name: "🇵🇱PL  ROSE—79"
+    type: "ss"
+    server: "217.30.10.70"
+    port: 9011
+    cipher: "aes-256-cfb"
+    password: "M3t2ZEQcMGRWBjRa"
+    udp: true
+  - name: "🇵🇱PL  ROSE—80"
+    type: "ss"
+    server: "217.30.10.70"
+    port: 9042
+    cipher: "aes-256-cfb"
+    password: "S7KwUu7yBy58S3Ga"
+    udp: true
+  - name: "🇺🇸US  ROSE—81"
+    type: "ss"
+    server: "107.172.219.230"
+    port: 2096
+    cipher: "chacha20-ietf-poly1305"
+    password: "768b923a-4918-46ad-96e7-9cf5543ddc4c"
+    udp: true
+  - name: "#🇬🇧GB  ROSE—82"
+    type: "ss"
+    server: "uk1.ssobfs.site"
+    port: 8388
+    cipher: "chacha20-ietf-poly1305"
+    password: "MWRlM"
+    udp: true
+  - name: "🇵🇱PL  ROSE—83"
+    type: "ss"
+    server: "217.30.10.70"
+    port: 9001
+    cipher: "aes-256-cfb"
+    password: "UkXRsXvR6buDMG2Y"
+    udp: true
+  - name: "🇵🇱PL  ROSE—84"
+    type: "ss"
+    server: "217.30.10.70"
+    port: 9070
+    cipher: "aes-256-cfb"
+    password: "bf7v334KKDV3YDhH"
+    udp: true
+  - name: "🇵🇱PL  ROSE—85"
+    type: "ss"
+    server: "217.30.10.70"
+    port: 9018
+    cipher: "aes-256-cfb"
+    password: "fG2artUmHfNT2cX7"
+    udp: true
+  - name: "🇨🇳CN  ROSE—86"
+    type: "ss"
+    server: "61.171.92.202"
+    port: 1001
+    cipher: "aes-256-gcm"
+    password: "123"
+    udp: true
+  - name: "🇭🇰HK  ROSE—87"
+    type: "ss"
+    server: "103.141.221.124"
+    port: 8388
+    cipher: "chacha20-ietf"
+    password: "asd123456"
+    udp: true
+  - name: "🇭🇰HK  ROSE—88"
+    type: "ss"
+    server: "103.141.221.101"
+    port: 8388
+    cipher: "chacha20-ietf"
+    password: "asd123456"
+    udp: true
+  - name: "🇭🇰HK  ROSE—89"
+    type: "ss"
+    server: "103.149.182.105"
+    port: 8388
+    cipher: "chacha20-ietf"
+    password: "asd123456"
+    udp: true
+  - name: "🇳🇱NL  ROSE—05"
+    type: "hysteria2"
+    server: "144.31.224.163"
+    port: 8932
+    password: "rstnnl2705:ZmRjX7MkeEqZ5GQUIT5VO53ARuy6nrmQ"
+    sni: "nrealistic.nn-foto.ru"
+    skip-cert-verify: true
+    obfs: "salamander"
+    obfs-password: "CvxXZnSth1bVJKGFP2cof4rI52ifHJ2W"
+  - name: "🇩🇪DE  ROSE—06"
+    type: "hysteria2"
+    server: "18.157.222.169"
+    port: 1040
+    password: "Masir_Sefid"
+    sni: "free.masir-sefid.shop"
+    obfs: "salamander"
+    obfs-password: "Masir_Sefid"
+  - name: "🇩🇪DE  ROSE—07"
+    type: "hysteria2"
+    server: "18.157.51.145"
+    port: 443
+    password: "masir_sefid"
+    sni: "content.masir-sefid.shop"
+    obfs: "salamander"
+    obfs-password: "masir_sefid"
+  - name: "🇫🇷FR  ROSE—08"
+    type: "hysteria2"
+    server: "62.210.26.173"
+    port: 64772
+    password: "github.com/Alvin9999-newpac/fanqiang"
+    sni: "bing.com"
+    skip-cert-verify: true
+  - name: "🇭🇰HK  ROSE—09"
+    type: "hysteria2"
+    server: "89.251.26.111"
+    port: 55555
+    password: "e3a5bb40be52de65"
+    sni: "apps.apple.com"
+    skip-cert-verify: true
+  - name: "🇩🇪DE  ROSE—10"
+    type: "hysteria2"
+    server: "185.227.108.195"
+    port: 11000
+    password: "e4e7866d-920b-4a53-a8e2-6ae9b2a42fc2"
+    sni: "de-node.farnet.top"
+  - name: "🇺🇸US  ROSE—11"
+    type: "hysteria2"
+    server: "aestheticperforator.ru"
+    port: 8443
+    password: "b880e510-8196-44bb-b715-781a9461b4a0"
+    sni: "aestheticperforator.ru"
+  - name: "🇺🇸US  ROSE—12"
+    type: "hysteria2"
+    server: "reddeadfan.rd-team.ru"
+    port: 2026
+    password: "rstnnl2705:QtmSqzxgO95zXwNcgVYSjDl02aRsjrrl"
+    sni: "reddeadfan.rd-team.ru"
+    skip-cert-verify: true
+    obfs: "salamander"
+    obfs-password: "FxZylbqClUqVqAs2nezW9kPyFb2edZ2"
+  - name: "🇩🇪DE  ROSE—13"
+    type: "hysteria2"
+    server: "130.61.50.75"
+    port: 6443
+    password: "zhangyang"
+    sni: "dash.cloudflare.com"
+    skip-cert-verify: true
+  - name: "🇺🇸US  ROSE—14"
+    type: "hysteria2"
+    server: "155.248.209.237"
+    port: 33333
+    password: "bce6c821-200d-421f-bf3d-7159e5246ea0"
+    skip-cert-verify: true
+  - name: "🇺🇸US  ROSE—15"
+    type: "hysteria2"
+    server: "hy2.123266.xyz"
+    port: 33333
+    password: "bce6c821-200d-421f-bf3d-7159e5246ea0"
+    sni: "hy2.123266.xyz"
+    skip-cert-verify: true
+  - name: "🇨🇭CH  ROSE—16"
+    type: "hysteria2"
+    server: "45.140.205.161"
+    port: 1935
+    password: "switzerland_2_hysteria2_fastlane_c084pzcdu:MK77JlUBs60utA02TSFRotrAn6wC7IlV"
+    sni: "ch2.h.fastlanehosting.ru"
+  - name: "🇩🇪DE  ROSE—17"
+    type: "hysteria2"
+    server: "185.228.139.247"
+    port: 4433
+    password: "18cf8030-1ceb-4b7d-8c0c-c036413c144e"
+    sni: "de2.xiaoliyu.cyou"
+    skip-cert-verify: true
+  - name: "🇩🇪DE  ROSE—18"
+    type: "hysteria2"
+    server: "202.61.205.86"
+    port: 4433
+    password: "18cf8030-1ceb-4b7d-8c0c-c036413c144e"
+    sni: "de1.xiaoliyu.cyou"
+    skip-cert-verify: true
+  - name: "🇫🇮FI  ROSE—19"
+    type: "hysteria2"
+    server: "musicclips.videolinks.ru"
+    port: 8443
+    password: "rstnnl2705:56Uhk1CcaR5mCmGpaN0AsOAmRscZSIaM"
+    sni: "musicclips.videolinks.ru"
+    skip-cert-verify: true
+    obfs: "salamander"
+    obfs-password: "hH0l2Acqz3RtodoSCNCpNJqDSZtp4Qw"
+  - name: "🇳🇱NL  ROSE—20"
+    type: "hysteria2"
+    server: "nrealistic.nn-foto.ru"
+    port: 8932
+    password: "rstnnl2705:ZmRjX7MkeEqZ5GQUIT5VO53ARuy6nrmQ"
+    sni: "nrealistic.nn-foto.ru"
+    skip-cert-verify: true
+    obfs: "salamander"
+    obfs-password: "CvxXZnSth1bVJKGFP2cof4rI52ifHJ2W"
+proxy-groups:
+  - name: "نوع انتخاب پروکسی 🔀"
+    type: "select"
+    proxies:
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+      - "قطع اینترنت ⛔"
+  - name: "دستی 🤏🏻"
+    type: "select"
+    proxies:
+      - "🇳🇱NL  ROSE—01"
+      - "🇬🇧GB  ROSE—02"
+      - "🇬🇧GB  ROSE—03"
+      - "🇬🇧GB  ROSE—04"
+      - "🇳🇱NL  ROSE—21"
+      - "🇳🇱NL  ROSE—22"
+      - "🇳🇱NL  ROSE—23"
+      - "🇳🇱NL  ROSE—24"
+      - "🇳🇱NL  ROSE—25"
+      - "🇺🇸US  ROSE—26"
+      - "🇯🇵JP  ROSE—27"
+      - "🇫🇮FI  ROSE—28"
+      - "🇺🇸US  ROSE—29"
+      - "🇳🇱NL  ROSE—30"
+      - "🇺🇸US  ROSE—31"
+      - "🇳🇱NL  ROSE—32"
+      - "🇳🇱NL  ROSE—33"
+      - "🇳🇱NL  ROSE—34"
+      - "🇳🇱NL  ROSE—35"
+      - "🇳🇱NL  ROSE—36"
+      - "🇳🇱NL  ROSE—37"
+      - "🇳🇱NL  ROSE—38"
+      - "🇳🇱NL  ROSE—39"
+      - "🇳🇱NL  ROSE—40"
+      - "🇭🇰HK  ROSE—41"
+      - "🇳🇱NL  ROSE—42"
+      - "🇺🇸US  ROSE—43"
+      - "🇯🇵JP  ROSE—44"
+      - "🇫🇮FI  ROSE—45"
+      - "🇳🇱NL  ROSE—46"
+      - "🇰🇷KR  ROSE—47"
+      - "🇨🇴CO  ROSE—48"
+      - "🇯🇵JP  ROSE—49"
+      - "🇺🇸US  ROSE—50"
+      - "🇫🇮FI  ROSE—51"
+      - "🇰🇷KR  ROSE—52"
+      - "🇰🇷KR  ROSE—53"
+      - "🇧🇷BR  ROSE—54"
+      - "🇮🇳IN  ROSE—55"
+      - "🇸🇦SA  ROSE—56"
+      - "🇭🇰HK  ROSE—57"
+      - "🇹🇼TW  ROSE—58"
+      - "🇬🇧GB  ROSE—59"
+      - "🇮🇹IT  ROSE—60"
+      - "🇰🇷KR  ROSE—61"
+      - "🇭🇰HK  ROSE—62"
+      - "🇫🇷FR  ROSE—63"
+      - "🇵🇱PL  ROSE—64"
+      - "🇳🇱NL  ROSE—65"
+      - "🇳🇱NL  ROSE—66"
+      - "🇳🇱NL  ROSE—67"
+      - "🇳🇱NL  ROSE—68"
+      - "🇳🇱NL  ROSE—69"
+      - "🇺🇸US  ROSE—70"
+      - "🇳🇱NL  ROSE—71"
+      - "🇳🇱NL  ROSE—72"
+      - "🇳🇱NL  ROSE—73"
+      - "🇳🇱NL  ROSE—74"
+      - "🇨🇦CA  ROSE—75"
+      - "🇹🇷TR  ROSE—76"
+      - "🇵🇱PL  ROSE—77"
+      - "🇵🇱PL  ROSE—78"
+      - "🇵🇱PL  ROSE—79"
+      - "🇵🇱PL  ROSE—80"
+      - "🇺🇸US  ROSE—81"
+      - "#🇬🇧GB  ROSE—82"
+      - "🇵🇱PL  ROSE—83"
+      - "🇵🇱PL  ROSE—84"
+      - "🇵🇱PL  ROSE—85"
+      - "🇨🇳CN  ROSE—86"
+      - "🇭🇰HK  ROSE—87"
+      - "🇭🇰HK  ROSE—88"
+      - "🇭🇰HK  ROSE—89"
+      - "🇳🇱NL  ROSE—05"
+      - "🇩🇪DE  ROSE—06"
+      - "🇩🇪DE  ROSE—07"
+      - "🇫🇷FR  ROSE—08"
+      - "🇭🇰HK  ROSE—09"
+      - "🇩🇪DE  ROSE—10"
+      - "🇺🇸US  ROSE—11"
+      - "🇺🇸US  ROSE—12"
+      - "🇩🇪DE  ROSE—13"
+      - "🇺🇸US  ROSE—14"
+      - "🇺🇸US  ROSE—15"
+      - "🇨🇭CH  ROSE—16"
+      - "🇩🇪DE  ROSE—17"
+      - "🇩🇪DE  ROSE—18"
+      - "🇫🇮FI  ROSE—19"
+      - "🇳🇱NL  ROSE—20"
+  - name: "خودکار (بهترین پینگ) 🤖"
+    type: "url-test"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+    lazy: true
+    proxies:
+      - "🇳🇱NL  ROSE—01"
+      - "🇬🇧GB  ROSE—02"
+      - "🇬🇧GB  ROSE—03"
+      - "🇬🇧GB  ROSE—04"
+      - "🇳🇱NL  ROSE—21"
+      - "🇳🇱NL  ROSE—22"
+      - "🇳🇱NL  ROSE—23"
+      - "🇳🇱NL  ROSE—24"
+      - "🇳🇱NL  ROSE—25"
+      - "🇺🇸US  ROSE—26"
+      - "🇯🇵JP  ROSE—27"
+      - "🇫🇮FI  ROSE—28"
+      - "🇺🇸US  ROSE—29"
+      - "🇳🇱NL  ROSE—30"
+      - "🇺🇸US  ROSE—31"
+      - "🇳🇱NL  ROSE—32"
+      - "🇳🇱NL  ROSE—33"
+      - "🇳🇱NL  ROSE—34"
+      - "🇳🇱NL  ROSE—35"
+      - "🇳🇱NL  ROSE—36"
+      - "🇳🇱NL  ROSE—37"
+      - "🇳🇱NL  ROSE—38"
+      - "🇳🇱NL  ROSE—39"
+      - "🇳🇱NL  ROSE—40"
+      - "🇭🇰HK  ROSE—41"
+      - "🇳🇱NL  ROSE—42"
+      - "🇺🇸US  ROSE—43"
+      - "🇯🇵JP  ROSE—44"
+      - "🇫🇮FI  ROSE—45"
+      - "🇳🇱NL  ROSE—46"
+      - "🇰🇷KR  ROSE—47"
+      - "🇨🇴CO  ROSE—48"
+      - "🇯🇵JP  ROSE—49"
+      - "🇺🇸US  ROSE—50"
+      - "🇫🇮FI  ROSE—51"
+      - "🇰🇷KR  ROSE—52"
+      - "🇰🇷KR  ROSE—53"
+      - "🇧🇷BR  ROSE—54"
+      - "🇮🇳IN  ROSE—55"
+      - "🇸🇦SA  ROSE—56"
+      - "🇭🇰HK  ROSE—57"
+      - "🇹🇼TW  ROSE—58"
+      - "🇬🇧GB  ROSE—59"
+      - "🇮🇹IT  ROSE—60"
+      - "🇰🇷KR  ROSE—61"
+      - "🇭🇰HK  ROSE—62"
+      - "🇫🇷FR  ROSE—63"
+      - "🇵🇱PL  ROSE—64"
+      - "🇳🇱NL  ROSE—65"
+      - "🇳🇱NL  ROSE—66"
+      - "🇳🇱NL  ROSE—67"
+      - "🇳🇱NL  ROSE—68"
+      - "🇳🇱NL  ROSE—69"
+      - "🇺🇸US  ROSE—70"
+      - "🇳🇱NL  ROSE—71"
+      - "🇳🇱NL  ROSE—72"
+      - "🇳🇱NL  ROSE—73"
+      - "🇳🇱NL  ROSE—74"
+      - "🇨🇦CA  ROSE—75"
+      - "🇹🇷TR  ROSE—76"
+      - "🇵🇱PL  ROSE—77"
+      - "🇵🇱PL  ROSE—78"
+      - "🇵🇱PL  ROSE—79"
+      - "🇵🇱PL  ROSE—80"
+      - "🇺🇸US  ROSE—81"
+      - "#🇬🇧GB  ROSE—82"
+      - "🇵🇱PL  ROSE—83"
+      - "🇵🇱PL  ROSE—84"
+      - "🇵🇱PL  ROSE—85"
+      - "🇨🇳CN  ROSE—86"
+      - "🇭🇰HK  ROSE—87"
+      - "🇭🇰HK  ROSE—88"
+      - "🇭🇰HK  ROSE—89"
+      - "🇳🇱NL  ROSE—05"
+      - "🇩🇪DE  ROSE—06"
+      - "🇩🇪DE  ROSE—07"
+      - "🇫🇷FR  ROSE—08"
+      - "🇭🇰HK  ROSE—09"
+      - "🇩🇪DE  ROSE—10"
+      - "🇺🇸US  ROSE—11"
+      - "🇺🇸US  ROSE—12"
+      - "🇩🇪DE  ROSE—13"
+      - "🇺🇸US  ROSE—14"
+      - "🇺🇸US  ROSE—15"
+      - "🇨🇭CH  ROSE—16"
+      - "🇩🇪DE  ROSE—17"
+      - "🇩🇪DE  ROSE—18"
+      - "🇫🇮FI  ROSE—19"
+      - "🇳🇱NL  ROSE—20"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تلگرام 💬"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "بدون فیلترشکن 🛡️"
+    type: "select"
+    proxies:
+      - "DIRECT"
+    hidden: true
+  - name: "قطع اینترنت ⛔"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+  - name: "اجازه ندادن 🚫"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+rules:
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
+  - "GEOIP,ir,سایتای ایرانی 🇮🇷"
+  - "MATCH,نوع انتخاب پروکسی 🔀"

@@ -1,0 +1,373 @@
+global-client-fingerprint: "chrome"
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7894
+allow-lan: true
+tcp-concurrent: true
+enable-process: true
+find-process-mode: "always"
+ipv6: true
+log-level: "info"
+geo-auto-update: true
+geo-update-interval: 168
+secret: ""
+bind-address: "*"
+unified-delay: false
+disable-keep-alive: false
+keep-alive-idle: 30
+keep-alive-interval: 30
+dns:
+  enable: true
+  ipv6: true
+  respect-rules: false
+  prefer-h3: true
+  cache-algorithm: "arc"
+  use-system-hosts: true
+  use-host: true
+  listen: "0.0.0.0:53"
+  enhanced-mode: "fake-ip"
+  fake-ip-filter-mode: "blacklist"
+  fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter:
+    - "*.lan"
+    - "*.localdomain"
+    - "*.invalid"
+    - "*.localhost"
+    - "*.test"
+    - "*.local"
+    - "*.home.arpa"
+    - "time.*.com"
+    - "ntp.*.com"
+    - "*.ir"
+  default-nameserver:
+    - "8.8.8.8"
+    - "8.8.4.4"
+    - "1.1.1.1"
+    - "9.9.9.9"
+  nameserver:
+    - "https://dns.google/dns-query"
+    - "https://cloudflare-dns.com/dns-query"
+  direct-nameserver:
+    - "78.157.42.100"
+    - "78.157.42.101"
+  proxy-server-nameserver:
+    - "1.1.1.1"
+    - "8.8.8.8"
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - 8080
+        - 8880
+        - 2052
+        - 2082
+        - 2086
+        - 2095
+    TLS:
+      ports:
+        - 443
+        - 8443
+        - 2053
+        - 2083
+        - 2087
+        - 2096
+tun:
+  enable: true
+  stack: "mixed"
+  auto-route: true
+  auto-detect-interface: true
+  auto-redir: true
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+rule-providers:
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+proxies:
+  - name: "🇺🇸 US | SS | @NamiraConfigs #1"
+    type: "ss"
+    server: "71.19.148.74"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "gqkUCvmeOTghYJXF1YIuk5"
+    udp: true
+  - name: "🇨🇾 CY | SS | @NamiraConfigs #1"
+    type: "ss"
+    server: "134.255.210.49"
+    port: 990
+    cipher: "chacha20-ietf-poly1305"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "🇳🇱 NL | SS | @easy_free_vpn #1"
+    type: "ss"
+    server: "193.29.139.151"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧 GB | SS | @father_vpn #1"
+    type: "ss"
+    server: "82.38.31.176"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇬🇧 GB | SS | @free4allvpn #2"
+    type: "ss"
+    server: "82.38.31.205"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇦🇪 AE | SS | @manstervpn #1"
+    type: "ss"
+    server: "3.29.198.112"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "u17T3BvpYaaiuW2c"
+    udp: true
+  - name: "🇬🇧 GB | SS | @mt_proxy #1"
+    type: "ss"
+    server: "82.38.31.189"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇬🇧 GB | SS | @netfreedom0 #1"
+    type: "ss"
+    server: "82.38.31.35"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇭🇰 HK | SS | @netfreedom0 #1"
+    type: "ss"
+    server: "103.149.182.79"
+    port: 8388
+    cipher: "chacha20-ietf"
+    password: "asd123456"
+    udp: true
+  - name: "🇬🇧 GB | SS | @netfreedom0 #2"
+    type: "ss"
+    server: "82.38.31.184"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇹🇼 TW | SS | @netfreedom0 #1"
+    type: "ss"
+    server: "185.189.160.105"
+    port: 41632
+    cipher: "aes-256-cfb"
+    password: "qwerREWQ@@"
+    udp: true
+  - name: "🇬🇧 GB | SS | @netfreedom0 #3"
+    type: "ss"
+    server: "82.38.31.155"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇰🇷 KR | SS | @netfreedom0 #1"
+    type: "ss"
+    server: "221.139.79.57"
+    port: 13979
+    cipher: "aes-256-cfb"
+    password: "qwerREWQ@@"
+    udp: true
+  - name: "🇳🇱 NL | SS | @outlinereleasedkey #1"
+    type: "ss"
+    server: "193.29.139.235"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇯🇵 JP | SS | @outlinereleasedkey #1"
+    type: "ss"
+    server: "149.22.87.240"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "🇬🇧 GB | SS | @v2rayopen #1"
+    type: "ss"
+    server: "82.38.31.190"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇩🇪 DE | SS | @vmesskhodam #1"
+    type: "ss"
+    server: "49.13.3.249"
+    port: 23997
+    cipher: "2022-blake3-aes-256-gcm"
+    password: "dyL+KqX8hIMn+UyADwSJOPm72A0A83TsDOFXBn6I2mA="
+    udp: true
+  - name: "🇵🇪 PE | SS | @NamiraConfigs #1"
+    type: "ss"
+    server: "185.47.252.251"
+    port: 990
+    cipher: "chacha20-ietf-poly1305"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "🇸🇮 SI | SS | @NamiraConfigs #1"
+    type: "ss"
+    server: "192.71.244.150"
+    port: 990
+    cipher: "chacha20-ietf-poly1305"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "🇬🇧 GB | SS | @outline_ir #1"
+    type: "ss"
+    server: "series-a1.samanehha.co"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "W74XFALLLuw6m5IA"
+    udp: true
+  - name: "🇮🇷 IR | SS | @prrofile_purple #1"
+    type: "ss"
+    server: "dl3.p31download.info"
+    port: 2095
+    cipher: "2022-blake3-aes-128-gcm"
+    password: "bM7oNtOWU6N4CgenbB+W7g==:GlGZNEATIxFIGZYlmuuRow=="
+    udp: true
+  - name: "🇮🇷 IR | SS | @v2rayng3 #1"
+    type: "ss"
+    server: "xiaomandapple4certificate.ikco.ir.soserverbot.shop"
+    port: 15152
+    cipher: "chacha20-ietf-poly1305"
+    password: "vxNw5diZYN3srq8uCfmQR98vYc39ect4"
+    udp: true
+  - name: "🇮🇷 IR | SS | @v2rayng3 #2"
+    type: "ss"
+    server: "e1.cover20.ir"
+    port: 51570
+    cipher: "chacha20-ietf-poly1305"
+    password: "Jrma1GR8Ou+H81YOGpOSmj9DdOXIV1aDtN2rmeJE8B4="
+    udp: true
+proxy-groups:
+  - name: "نوع انتخاب پروکسی 🔀"
+    type: "select"
+    proxies:
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+      - "قطع اینترنت ⛔"
+  - name: "دستی 🤏🏻"
+    type: "select"
+    proxies:
+      - "🇺🇸 US | SS | @NamiraConfigs #1"
+      - "🇨🇾 CY | SS | @NamiraConfigs #1"
+      - "🇳🇱 NL | SS | @easy_free_vpn #1"
+      - "🇬🇧 GB | SS | @father_vpn #1"
+      - "🇬🇧 GB | SS | @free4allvpn #2"
+      - "🇦🇪 AE | SS | @manstervpn #1"
+      - "🇬🇧 GB | SS | @mt_proxy #1"
+      - "🇬🇧 GB | SS | @netfreedom0 #1"
+      - "🇭🇰 HK | SS | @netfreedom0 #1"
+      - "🇬🇧 GB | SS | @netfreedom0 #2"
+      - "🇹🇼 TW | SS | @netfreedom0 #1"
+      - "🇬🇧 GB | SS | @netfreedom0 #3"
+      - "🇰🇷 KR | SS | @netfreedom0 #1"
+      - "🇳🇱 NL | SS | @outlinereleasedkey #1"
+      - "🇯🇵 JP | SS | @outlinereleasedkey #1"
+      - "🇬🇧 GB | SS | @v2rayopen #1"
+      - "🇩🇪 DE | SS | @vmesskhodam #1"
+      - "🇵🇪 PE | SS | @NamiraConfigs #1"
+      - "🇸🇮 SI | SS | @NamiraConfigs #1"
+      - "🇬🇧 GB | SS | @outline_ir #1"
+      - "🇮🇷 IR | SS | @prrofile_purple #1"
+      - "🇮🇷 IR | SS | @v2rayng3 #1"
+      - "🇮🇷 IR | SS | @v2rayng3 #2"
+  - name: "خودکار (بهترین پینگ) 🤖"
+    type: "url-test"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+    lazy: true
+    proxies:
+      - "🇺🇸 US | SS | @NamiraConfigs #1"
+      - "🇨🇾 CY | SS | @NamiraConfigs #1"
+      - "🇳🇱 NL | SS | @easy_free_vpn #1"
+      - "🇬🇧 GB | SS | @father_vpn #1"
+      - "🇬🇧 GB | SS | @free4allvpn #2"
+      - "🇦🇪 AE | SS | @manstervpn #1"
+      - "🇬🇧 GB | SS | @mt_proxy #1"
+      - "🇬🇧 GB | SS | @netfreedom0 #1"
+      - "🇭🇰 HK | SS | @netfreedom0 #1"
+      - "🇬🇧 GB | SS | @netfreedom0 #2"
+      - "🇹🇼 TW | SS | @netfreedom0 #1"
+      - "🇬🇧 GB | SS | @netfreedom0 #3"
+      - "🇰🇷 KR | SS | @netfreedom0 #1"
+      - "🇳🇱 NL | SS | @outlinereleasedkey #1"
+      - "🇯🇵 JP | SS | @outlinereleasedkey #1"
+      - "🇬🇧 GB | SS | @v2rayopen #1"
+      - "🇩🇪 DE | SS | @vmesskhodam #1"
+      - "🇵🇪 PE | SS | @NamiraConfigs #1"
+      - "🇸🇮 SI | SS | @NamiraConfigs #1"
+      - "🇬🇧 GB | SS | @outline_ir #1"
+      - "🇮🇷 IR | SS | @prrofile_purple #1"
+      - "🇮🇷 IR | SS | @v2rayng3 #1"
+      - "🇮🇷 IR | SS | @v2rayng3 #2"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تلگرام 💬"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "بدون فیلترشکن 🛡️"
+    type: "select"
+    proxies:
+      - "DIRECT"
+    hidden: true
+  - name: "قطع اینترنت ⛔"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+  - name: "اجازه ندادن 🚫"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+rules:
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
+  - "GEOIP,ir,سایتای ایرانی 🇮🇷"
+  - "MATCH,نوع انتخاب پروکسی 🔀"

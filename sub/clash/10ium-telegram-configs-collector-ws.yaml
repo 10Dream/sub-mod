@@ -1,0 +1,6469 @@
+global-client-fingerprint: "chrome"
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7894
+allow-lan: true
+tcp-concurrent: true
+enable-process: true
+find-process-mode: "always"
+ipv6: true
+log-level: "info"
+geo-auto-update: true
+geo-update-interval: 168
+secret: ""
+bind-address: "*"
+unified-delay: false
+disable-keep-alive: false
+keep-alive-idle: 30
+keep-alive-interval: 30
+dns:
+  enable: true
+  ipv6: true
+  respect-rules: false
+  prefer-h3: true
+  cache-algorithm: "arc"
+  use-system-hosts: true
+  use-host: true
+  listen: "0.0.0.0:53"
+  enhanced-mode: "fake-ip"
+  fake-ip-filter-mode: "blacklist"
+  fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter:
+    - "*.lan"
+    - "*.localdomain"
+    - "*.invalid"
+    - "*.localhost"
+    - "*.test"
+    - "*.local"
+    - "*.home.arpa"
+    - "time.*.com"
+    - "ntp.*.com"
+    - "*.ir"
+  default-nameserver:
+    - "8.8.8.8"
+    - "8.8.4.4"
+    - "1.1.1.1"
+    - "9.9.9.9"
+  nameserver:
+    - "https://dns.google/dns-query"
+    - "https://cloudflare-dns.com/dns-query"
+  direct-nameserver:
+    - "78.157.42.100"
+    - "78.157.42.101"
+  proxy-server-nameserver:
+    - "1.1.1.1"
+    - "8.8.8.8"
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - 8080
+        - 8880
+        - 2052
+        - 2082
+        - 2086
+        - 2095
+    TLS:
+      ports:
+        - 443
+        - 8443
+        - 2053
+        - 2083
+        - 2087
+        - 2096
+tun:
+  enable: true
+  stack: "mixed"
+  auto-route: true
+  auto-detect-interface: true
+  auto-redir: true
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+rule-providers:
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+proxies:
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-104.129.167.138:2096"
+    type: "vless"
+    server: "104.129.167.138"
+    port: 2096
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sni.111000.indevs.in"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "sni.111000.indevs.in"
+  - name: "🔒 VL-WS-NA 🇮🇷 IR-185.143.235.201:2052"
+    type: "vless"
+    server: "185.143.235.201"
+    port: 2052
+    uuid: "f5b731fc-a97c-454d-83dc-3963b96c3ec1"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      headers:
+        Host: "vshop.virapo.ir"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-165.232.136.226:443"
+    type: "vless"
+    server: "165.232.136.226"
+    port: 443
+    uuid: "5a23e6b2-3cd3-4475-898e-0885d71da6ec"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "us2.wxgqlfx.xyz"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/TG@wxgqlfx"
+      headers:
+        Host: "us2.wxgqlfx.xyz"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.33.162:443"
+    type: "vless"
+    server: "172.64.33.162"
+    port: 443
+    uuid: "c35050ce-01ab-45a9-91b8-54cec637d0a8"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss5.info"
+    ws-opts:
+      path: "/udfyfws"
+      headers:
+        Host: "octopusss5.info"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.53.227:2087"
+    type: "vless"
+    server: "172.64.53.227"
+    port: 2087
+    uuid: "77777777-8a3e-6666-b6d1-a9c5f0e8b3a2"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "fgnix832fx.fx6hsv0.ccwu.cc"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "fgnix832fx.fx6hsv0.ccwu.cc"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.205.1:2053"
+    type: "vless"
+    server: "172.67.205.1"
+    port: 2053
+    uuid: "a6cc137f-4f6a-4b42-a596-276761684204"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "vip.amojimi.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/jim-2096"
+      headers:
+        Host: "vip.amojimi.ir"
+  - name: "🔒 VL-WS-NA 🇮🇷 IR-185.143.233.235:80"
+    type: "vless"
+    server: "185.143.233.235"
+    port: 80
+    uuid: "321be3ae-f91e-4714-b6b9-db3a40e1f962"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "po.masterdadeh.ir"
+  - name: "🔒 VL-WS-NONE 🇮🇷 IR-94.183.149.168:8880"
+    type: "vless"
+    server: "94.183.149.168"
+    port: 8880
+    uuid: "d24e1b75-d80f-4818-d621-ee919ea71c16"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+  - name: "🔒 VL-WS-NONE 🇷🇺 RU-185.148.105.30:8880"
+    type: "vless"
+    server: "185.148.105.30"
+    port: 8880
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "vms.lifetime52.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.20.94:443"
+    type: "vless"
+    server: "104.18.20.94"
+    port: 443
+    uuid: "c135158e-5869-4397-8116-6695ca18cd48"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cf.hulume.ccwu.cc"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "cf.hulume.ccwu.cc"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.145.166:2087"
+    type: "vless"
+    server: "172.64.145.166"
+    port: 2087
+    uuid: "77777777-8a3e-6666-b6d1-a9c5f0e8b3a2"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "fgnix832fx.fx6hsv0.ccwu.cc"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "fgnix832fx.fx6hsv0.ccwu.cc"
+  - name: "🔒 VL-WS-TLS 🇩🇪 DE-64.226.111.107:443"
+    type: "vless"
+    server: "64.226.111.107"
+    port: 443
+    uuid: "1f3b7793-1b62-b589-1b70-b172f3953b17"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "bold-pond-cdb1.testsantana.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "sync"
+      headers:
+        Host: "bold-pond-cdb1.testsantana.workers.dev"
+  - name: "🔒 VL-WS-NONE 🏴‍☠️ NA-104.19.229.21:2095"
+    type: "vless"
+    server: "104.19.229.21"
+    port: 2095
+    uuid: "1e32172a-100f-4334-a306-f06b9b89954f"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/?ed=2048"
+      headers:
+        Host: "haPpy-pOsT2cucHd4dvi.SPOrTLAnD.CoMPaNY."
+  - name: "🔒 VL-WS-TLS 🇳🇱 NL-2.59.183.233:444"
+    type: "vless"
+    server: "2.59.183.233"
+    port: 444
+    uuid: "5a23e6b2-3cd3-4475-898e-0885d71da6ec"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "us2.wxgqlfx.xyz"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/TG@wxgqlfx"
+      headers:
+        Host: "us2.wxgqlfx.xyz"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.195.149:443"
+    type: "vless"
+    server: "162.159.195.149"
+    port: 443
+    uuid: "6c0ed3fb-f0b0-5b53-a762-f8f8d832bdba"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "vfarid.xcdi.WoRkErS.DEV"
+    client-fingerprint: "randomized"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "vless-ws/?ed=2048"
+      headers:
+        Host: "vfarid.xcdi.WoRkErS.DEV"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.26.3.162:443"
+    type: "vless"
+    server: "104.26.3.162"
+    port: 443
+    uuid: "c135158e-5869-4397-8116-6695ca18cd48"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cf.hulume.ccwu.cc"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "cf.hulume.ccwu.cc"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-173.245.59.217:443"
+    type: "vless"
+    server: "173.245.59.217"
+    port: 443
+    uuid: "5b44fc89-c5be-48e6-aa2e-0f90ff733390"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "638981351826446112.insight-amshd.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+    ws-opts:
+      path: "/dndgjqws"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.160.192:443"
+    type: "vless"
+    server: "172.67.160.192"
+    port: 443
+    uuid: "2bcfbfba-b446-4ad5-93ad-72af9e008f61"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "nuclear.us.kg"
+    ws-opts:
+      path: "/free/1.226.227.169:50001"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.129.196:443"
+    type: "vless"
+    server: "162.159.129.196"
+    port: 443
+    uuid: "adeaebbe-5719-4c28-9b11-5df0d3331c88"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Freedom32.Pages.DEV"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+    ws-opts:
+      path: "/assets?ed=2560"
+      headers:
+        Host: "freedom32.pages.dev"
+  - name: "🔒 VL-WS-NONE 🇮🇷 IR-185.143.235.201:8080"
+    type: "vless"
+    server: "185.143.235.201"
+    port: 8080
+    uuid: "c9c64515-8daa-49ce-84e6-3067b1ad6d90"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "chat.niropardaz.ir"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.20.7.182:8443"
+    type: "vless"
+    server: "104.20.7.182"
+    port: 8443
+    uuid: "cb24e412-92bd-4f6b-b59a-79348d2d916d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Dnlu.cdnpros.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "Dnlu.cdnpros.ir"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-206.223.84.247:443"
+    type: "vless"
+    server: "206.223.84.247"
+    port: 443
+    uuid: "5a23e6b2-3cd3-4475-898e-0885d71da6ec"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "us2.wxgqlfx.xyz"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/TG@wxgqlfx"
+      headers:
+        Host: "us2.wxgqlfx.xyz"
+  - name: "🔒 VL-WS-TLS 🇳🇱 NL-45.131.6.191:2096"
+    type: "vless"
+    server: "45.131.6.191"
+    port: 2096
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sni.my111000.tech"
+    ws-opts:
+      path: "Telegram%F0%9F%87%A8%F0%9F%87%B3@WangCai2/"
+      headers:
+        Host: "sni.my111000.tech"
+  - name: "🔒 VL-WS-TLS 🇩🇪 DE-18.198.227.161:443"
+    type: "vless"
+    server: "18.198.227.161"
+    port: 443
+    uuid: "1f3b7793-1b62-b589-1b70-b172f3953b17"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "bold-pond-cdb1.testsantana.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "sync"
+      headers:
+        Host: "bold-pond-cdb1.testsantana.workers.dev"
+  - name: "🔒 VL-WS-TLS 🇭🇰 HK-154.38.116.8:443"
+    type: "vless"
+    server: "154.38.116.8"
+    port: 443
+    uuid: "5a23e6b2-3cd3-4475-898e-0885d71da6ec"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "us2.wxgqlfx.xyz"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/TG@wxgqlfx"
+      headers:
+        Host: "us2.wxgqlfx.xyz"
+  - name: "🔒 VL-WS-NA 🇮🇷 IR-185.143.234.21:80"
+    type: "vless"
+    server: "185.143.234.21"
+    port: 80
+    uuid: "01e388b7-61be-4aee-befc-fec3c48fac16"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "cdn.greenetplus.ir"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.0.4:443"
+    type: "vless"
+    server: "104.16.0.4"
+    port: 443
+    uuid: "c135158e-5869-4397-8116-6695ca18cd48"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cf.hulume.ccwu.cc"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "cf.hulume.ccwu.cc"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-108.162.195.64:443"
+    type: "vless"
+    server: "108.162.195.64"
+    port: 443
+    uuid: "6703e86c-e92e-c020-11a1-2f27451a7d84"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "abolfazl.mnmnmmnmnmn.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/sync"
+      headers:
+        Host: "abolfazl.mnmnmmnmnmn.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.148.22:443"
+    type: "vless"
+    server: "104.17.148.22"
+    port: 443
+    uuid: "2ee1ec37-c543-47ce-946c-2f689b20af86"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "pages.dev"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/@custom_config?ed=2560"
+      headers:
+        Host: "jobinja.pages.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.11.130:443"
+    type: "vless"
+    server: "104.21.11.130"
+    port: 443
+    uuid: "27302727-9dfa-4975-990e-88c7a63747cd"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "chatgpt.arpa.fz.wikipedia.org.xn--m39h.www.cdn.speedtest.net.h.google.ru.zula.ir.1.1.1.xn--6bi8548mabeaana921b9b830dbbb0nn92a.tls.xn--mn8haaaaa252bbabbbb.xn--mn8haaaaa252bbabbbb.fake.xn--j9h1028mqmaoytii00aha21hfjrd.aparat.com.zula.ir.wts.ip-dynamic.org"
+    ws-opts:
+      path: "/index.html?ed=2048"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.36.20:443"
+    type: "vless"
+    server: "162.159.36.20"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-141.101.122.148:443"
+    type: "vless"
+    server: "141.101.122.148"
+    port: 443
+    uuid: "ac51ad36-5052-460a-842a-e13455d30cb8"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "RR-FF.pages.DEV"
+    client-fingerprint: "firefox"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/assets?ed=2560"
+      headers:
+        Host: "rr-ff.pages.dev"
+  - name: "🔒 VL-WS-TLS 🇸🇨 SC-45.130.125.158:2083"
+    type: "vless"
+    server: "45.130.125.158"
+    port: 2083
+    uuid: "dcf1d07e-75d2-4b32-87bb-9a4bbf9a3ee1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "long-mouse-d748.mimsadian.workers.dev"
+    client-fingerprint: "ios"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/avaaalvpn/proxyip=149.248.199.173"
+      headers:
+        Host: "long-mouse-d748.mimsadian.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.3.133:2083"
+    type: "vless"
+    server: "104.21.3.133"
+    port: 2083
+    uuid: "2b8738de-1af5-4267-b101-c05707769ed4"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "FANs.LIVeRPOol.QZz.IO"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/eyJqdW5rIjoiY0Y0cENQUmxsNyIsInByb3RvY29sIjoidmwiLCJtb2RlIjoicHJveHlpcCIsInBhbmVsSVBzIjpbXX0=?ed=2560"
+      headers:
+        Host: "fans.liverpool.qzz.io"
+  - name: "🔒 VL-WS-TLS 🇩🇪 DE-185.135.9.138:2096"
+    type: "vless"
+    server: "185.135.9.138"
+    port: 2096
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sni.111000.indevs.in"
+    ws-opts:
+      path: "/?telegram%F0%9F%87%A8%F0%9F%87%B3+%40wangcai2="
+      headers:
+        Host: "sni.111000.indevs.in"
+  - name: "🔒 VL-WS-NONE 🇺🇸 US-130.250.137.30:8880"
+    type: "vless"
+    server: "130.250.137.30"
+    port: 8880
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "vms.lifetime05.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.33.121:8443"
+    type: "vless"
+    server: "104.19.33.121"
+    port: 8443
+    uuid: "f32e4cdb-f875-40b7-86ea-063349d4303a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "proud-frog-724b.foyasunop666.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "proud-frog-724b.foyasunop666.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.155.209:2087"
+    type: "vless"
+    server: "172.64.155.209"
+    port: 2087
+    uuid: "e0d7de52-1645-4169-9086-b02e63b5060a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "car.iranpuls.ir"
+    client-fingerprint: "android"
+    ws-opts:
+      path: "/?ed=2048"
+  - name: "🔒 VL-WS-TLS 🇯🇵 JP-153.121.45.101:443"
+    type: "vless"
+    server: "153.121.45.101"
+    port: 443
+    uuid: "f61a4285-7264-4d07-9408-7b9ba1922c26"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "gaosir.unfeeling.sbs"
+    ws-opts:
+      path: "/freecodes/?ed=2560"
+      headers:
+        Host: "gaosir.unfeeling.sbs"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.42.54:443"
+    type: "vless"
+    server: "104.18.42.54"
+    port: 443
+    uuid: "00000000-0000-4000-8000-000000000000"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "vfn-6o8h-kht7rpd.zipgd3vx91o.ddns-ip.net"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/@Marisa_kristi"
+      headers:
+        Host: "vfn-6o8h-kht7rpd.zipgd3vx91o.ddns-ip.net"
+  - name: "🔒 VL-WS-NONE 🇮🇷 IR-185.143.232.32:2095"
+    type: "vless"
+    server: "185.143.232.32"
+    port: 2095
+    uuid: "309f8c4b-4314-443f-97f4-e51de5605c7e"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      headers:
+        Host: "Cx.ratabestan.ir"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-8.39.125.90:443"
+    type: "vless"
+    server: "8.39.125.90"
+    port: 443
+    uuid: "57dc2c12-e27f-a250-2479-6eed68599b66"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "misty-salad-77ae.hiupokjiop.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/mahdi--mmahdi--mahdi----mahdi--mahdi--mahdi"
+      headers:
+        Host: "misty-salad-77ae.hiupokjiop.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.120.57:443"
+    type: "vless"
+    server: "172.67.120.57"
+    port: 443
+    uuid: "adeaebbe-5719-4c28-9b11-5df0d3331c88"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Freedom32.Pages.DEV"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+    ws-opts:
+      path: "/assets?ed=2560"
+      headers:
+        Host: "freedom32.pages.dev"
+  - name: "🔒 VL-WS-NONE 🏴‍☠️ NA-104.18.12.229:8880"
+    type: "vless"
+    server: "104.18.12.229"
+    port: 8880
+    uuid: "78c5b6bd-1cb6-463c-bcba-9f17ef70c85b"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "square-frost-8d11.9660004.workers.dev"
+  - name: "🔒 VL-WS-NA 🏴‍☠️ NA-104.21.46.101:2086"
+    type: "vless"
+    server: "104.21.46.101"
+    port: 2086
+    uuid: "4a956dfd-b65a-4846-b6da-c85fc79918a5"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "eyJqdW5rIjoibW81VDZwNXg5S2IiLCJwcm90b2NvbCI6InZsIiwibW9kZSI6InByZWZpeCIsInBhbmVsSVBzIjpbIlsyNjAyOmZjNTk6YjA6NjQ6Ol0iXX0=?ed=2560"
+      headers:
+        Host: "green-scene-32df.atalastchance.workers.dev"
+  - name: "🔒 VL-WS-NONE 🇮🇷 IR-185.143.233.235:8080"
+    type: "vless"
+    server: "185.143.233.235"
+    port: 8080
+    uuid: "2e409cdc-d0c9-4fc0-b285-9371034b8002"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.66.47.95:443"
+    type: "vless"
+    server: "172.66.47.95"
+    port: 443
+    uuid: "8b5acf77-2c2e-4eed-9ad1-be81851b99ea"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "e1-f55.pages.dev"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "e1-f55.pages.dev"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-69.63.218.168:10101"
+    type: "vless"
+    server: "69.63.218.168"
+    port: 10101
+    uuid: "00000000-0000-4000-8000-000000000000"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "vfn-6o8h-kht7rpd.zipgd3vx91o.ddns-ip.net"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/@Marisa_kristi"
+      headers:
+        Host: "vfn-6o8h-kht7rpd.zipgd3vx91o.ddns-ip.net"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.66.45.18:443"
+    type: "vless"
+    server: "172.66.45.18"
+    port: 443
+    uuid: "923509aa-bfb0-4758-a5a1-a6c2d0468169"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ef87bb2b.meti-e9q.pages.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/ck2vlelfdajoybac?ed=2560"
+      headers:
+        Host: "ef87bb2b.meti-e9q.pages.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.148.251:2096"
+    type: "vless"
+    server: "172.64.148.251"
+    port: 2096
+    uuid: "f4d70ca7-cdf8-4bfe-ac45-c6143a654b20"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "mh.sudonetwork.com"
+    client-fingerprint: "firefox"
+    ws-opts:
+      path: "/?ed=2560"
+      headers:
+        Host: "mh.sudonetwork.com"
+  - name: "🔒 VL-WS-NONE 🇫🇷 FR-141.95.52.109:80"
+    type: "vless"
+    server: "141.95.52.109"
+    port: 80
+    uuid: "94f51128-b5eb-4eb6-8010-12b7c55e559b"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/vless/"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.155.209:443"
+    type: "vless"
+    server: "172.64.155.209"
+    port: 443
+    uuid: "31578281-943d-470f-8d9a-af823902a72b"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "dmlkzw9z.vconet.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/eyJ2aWRlbyI6ImRtbGt6dzl6IiwicHJvdG9jb2wiOiJ2bCIsIm1vZGUiOiJwcm94eWlwIiwicGFuZWxJUHMiOltpcl19/?ed=2048"
+      headers:
+        Host: "dmlkzw9z.vconet.ir"
+  - name: "🔒 VL-WS-NONE 🇮🇷 IR-185.143.234.122:80"
+    type: "vless"
+    server: "185.143.234.122"
+    port: 80
+    uuid: "fe415fa5-8789-4ee9-b857-2c9fe92f6366"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "test.ksmrx.ir"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.130.66:443"
+    type: "vless"
+    server: "172.67.130.66"
+    port: 443
+    uuid: "90cd4a77-141a-43c9-991b-08263cfe9c10"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "79193c43.aryoovpn-5fr.pages.dev"
+    ws-opts:
+      path: "/Telegram@Azarakhsh_Proxy/?ed=2048"
+      headers:
+        Host: "79193c43.aryoovpn-5fr.pages.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.153.203:443"
+    type: "vless"
+    server: "104.19.153.203"
+    port: 443
+    uuid: "eeb6823c-b926-4ea2-866a-5542edd26e59"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "vl.hhll.qqs.me"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/proxyip=104.168.132.123,172.104.53.198,85.121.50.16,151.242.125.226"
+      headers:
+        Host: "vl.hhll.qqs.me"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.66.44.211:443"
+    type: "vless"
+    server: "172.66.44.211"
+    port: 443
+    uuid: "690f16d0-6425-462b-86e0-a70a8169c5d9"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "pardazeshvpn-tg97.pages.dev"
+    client-fingerprint: "randomized"
+    ws-opts:
+      path: "/Telegram@mobilesignal/?ed=2048"
+      headers:
+        Host: "pardazeshvpn-tg97.pages.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.38.172:443"
+    type: "vless"
+    server: "162.159.38.172"
+    port: 443
+    uuid: "c135158e-5869-4397-8116-6695ca18cd48"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cf.hulume.ccwu.cc"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "cf.hulume.ccwu.cc"
+  - name: "🔒 VL-WS-NONE 🏴‍☠️ NA-172.64.145.158:80"
+    type: "vless"
+    server: "172.64.145.158"
+    port: 80
+    uuid: "fe273991-0514-4a16-8ec4-b15ae861c000"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "zyzzzoao.xn--fiqv8j.eu.org"
+  - name: "🔒 VL-WS-NONE 🏴‍☠️ NA-104.18.4.46:8880"
+    type: "vless"
+    server: "104.18.4.46"
+    port: 8880
+    uuid: "623d675e-8748-4881-ac0f-dc1a10b595b1"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "vahidasd1988-se08ot-3.vahidasd1988.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.107.111:443"
+    type: "vless"
+    server: "104.17.107.111"
+    port: 443
+    uuid: "388a05d9-62c1-4e16-ac3f-e33459340e4c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "PAgeS.Dev"
+    client-fingerprint: "firefox"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      headers:
+        Host: "emAdv2ray.PagEs.dev"
+  - name: "🔒 VL-WS-TLS 🇫🇷 FR-57.128.183.59:8443"
+    type: "vless"
+    server: "57.128.183.59"
+    port: 8443
+    uuid: "5a23e6b2-3cd3-4475-898e-0885d71da6ec"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "us2.wxgqlfx.xyz"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/TG@wxgqlfx"
+      headers:
+        Host: "us2.wxgqlfx.xyz"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-198.62.62.231:443"
+    type: "vless"
+    server: "198.62.62.231"
+    port: 443
+    uuid: "a13df940-020c-465f-bc89-ee5279b5cd6a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "hp.ylks.xyz"
+    ws-opts:
+      path: "/blue"
+  - name: "🔒 VL-WS-NA 🇮🇷 IR-185.143.234.235:80"
+    type: "vless"
+    server: "185.143.234.235"
+    port: 80
+    uuid: "321be3ae-f91e-4714-b6b9-db3a40e1f962"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "po.masterdadeh.ir"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-159.246.55.253:2096"
+    type: "vless"
+    server: "159.246.55.253"
+    port: 2096
+    uuid: "f61a4285-7264-4d07-9408-7b9ba1922c26"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "gaosir.unfeeling.sbs"
+    client-fingerprint: "chrome"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.64.105:2053"
+    type: "vless"
+    server: "104.19.64.105"
+    port: 2053
+    uuid: "8ac7e6cd-2c42-4952-8d45-ce6bbb05e8ef"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "za12kl3.bingnet.online"
+    ws-opts:
+      headers:
+        Host: "za12kl3.bingnet.online"
+  - name: "🔒 VL-WS-TLS 🇮🇷 IR-185.143.233.5:8443"
+    type: "vless"
+    server: "185.143.233.5"
+    port: 8443
+    uuid: "9c42f185-4b91-489c-87eb-5da10f9699ac"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sub.sesrsa.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "p1.sesrsa.com"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.152.233:443"
+    type: "vless"
+    server: "104.18.152.233"
+    port: 443
+    uuid: "08b006dc-17e4-411d-9528-4369d72ad646"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "support.zoom.us.ex33r.eu.cc"
+    alpn:
+      - "networld_vpn-channel@.networld_vpn-channel@.networld_vpn-channel@.networld_vpn-channel@.networld_vpn-channel@.networld_vpn-channel@.networld_vpn-"
+    ws-opts:
+      path: "/sg-melbi"
+      headers:
+        Host: "support.zoom.us.ex33r.eu.cc"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.91.32:2087"
+    type: "vless"
+    server: "104.21.91.32"
+    port: 2087
+    uuid: "69c115fd-ddd9-4d7f-bd90-6f34c810cf0e"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "v2configlab.v2configlab5.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "v2configlab.v2configlab5.workers.dev"
+  - name: "🔒 VL-WS-NONE 🏴‍☠️ NA-104.16.1.3:2095"
+    type: "vless"
+    server: "104.16.1.3"
+    port: 2095
+    uuid: "8153646b-d755-4749-a260-d7d5d4f964cc"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/eyJqdW5rIjoiNTVYa0JWdWR4YklWV1pBNiIsInByb3RvY29sIjoidmwiLCJtb2RlIjoicHJveHlpcCIsInBhbmVsSVBzIjpbIjU3LjEyOS40Ny41MiJdfQ==?ed=2560"
+      headers:
+        Host: "xasavpn.mahdi1391rh-fb2.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.73.71:2096"
+    type: "vless"
+    server: "172.67.73.71"
+    port: 2096
+    uuid: "4622a3b1-b815-4521-b7b3-ba0f59af5f18"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cactus.lezzatflow.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "cactus.lezzatflow.ir"
+  - name: "🔒 VL-WS-TLS 🇷🇺 RU-185.148.104.253:2096"
+    type: "vless"
+    server: "185.148.104.253"
+    port: 2096
+    uuid: "7556317c-dff6-46e8-ad29-b408f2a6456e"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "vless.muzheng.top"
+    client-fingerprint: "chrome"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.27.117.84:8443"
+    type: "vless"
+    server: "104.27.117.84"
+    port: 8443
+    uuid: "72639c63-427e-4d02-8a38-b3355caab152"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "young-field-911e.m38625271.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      headers:
+        Host: "young-field-911e.m38625271.workers.dev"
+  - name: "🔒 VL-WS-NONE 🇮🇷 IR-185.143.234.235:8080"
+    type: "vless"
+    server: "185.143.234.235"
+    port: 8080
+    uuid: "72870031-73ba-4f43-a6b9-64a87d386a87"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/streem"
+      headers:
+        Host: "v1.gitnet.ir"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-208.103.161.110:443"
+    type: "vless"
+    server: "208.103.161.110"
+    port: 443
+    uuid: "9ccd06a2-5616-47e3-9763-f9696959d7ad"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "rAyAn-cOnFiG-de-1.pAriSa.dPdNs.oRg"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/ws"
+      headers:
+        Host: "rAyAn-cOnFiG-de-1.pAriSa.dPdNs.oRg"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.248.84:443"
+    type: "vless"
+    server: "104.19.248.84"
+    port: 443
+    uuid: "3c36eadb-747a-4166-8db0-23fec9883ea2"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "HarmonY-448.pages.DEV"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+    ws-opts:
+      path: "/assets?ed=2560"
+      headers:
+        Host: "harmony-448.pages.dev"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-151.101.194.219:443"
+    type: "vless"
+    server: "151.101.194.219"
+    port: 443
+    uuid: "fb9892d2-d6d8-4e21-98e6-f6e89edf7f3f"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Speedtest.net"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/@ExpressVpn_420----@ExpressVpn_420----@ExpressVpn_420----@ExpressVpn_420----@ExpressVpn_420----@ExpressVpn_420----@ExpressVpn_420----@ExpressVpn_420----@ExpressVpn_420----@ExpressVpn_420----@ExpressVpn_420----@ExpressVpn_420?ed=2048"
+      headers:
+        Host: "1236.cu"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.253.172:443"
+    type: "vless"
+    server: "162.159.253.172"
+    port: 443
+    uuid: "adeaebbe-5719-4c28-9b11-5df0d3331c88"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Freedom32.Pages.DEV"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/assets?ed=2560"
+      headers:
+        Host: "freedom32.pages.dev"
+  - name: "🔒 VL-WS-TLS 🇷🇺 RU-176.124.223.138:2096"
+    type: "vless"
+    server: "176.124.223.138"
+    port: 2096
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sni.111000.indevs.in"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/?ed=2560&telegram🇨🇳+@wangcai2"
+      headers:
+        Host: "sni.111000.indevs.in"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-199.181.197.138:2096"
+    type: "vless"
+    server: "199.181.197.138"
+    port: 2096
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sni.111000.indevs.in"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "sni.111000.indevs.in"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.58.65:443"
+    type: "vless"
+    server: "162.159.58.65"
+    port: 443
+    uuid: "c135158e-5869-4397-8116-6695ca18cd48"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cf.hulume.ccwu.cc"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "cf.hulume.ccwu.cc"
+  - name: "🔒 VL-WS-TLS 🇮🇷 IR-79.127.127.68:443"
+    type: "vless"
+    server: "79.127.127.68"
+    port: 443
+    uuid: "6a89dc04-7781-46fe-b35c-e14a6b6e60b8"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "test-teSt-tEsT-teSt.pagES.DEv"
+    client-fingerprint: "randomized"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/Telegram-@V2ray_Alpha/?ed=2048"
+      headers:
+        Host: "TESt-TEsT-TEST-TEsT.pAGes.dEV"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.206.214:443"
+    type: "vless"
+    server: "172.67.206.214"
+    port: 443
+    uuid: "c6ba83a7-c4b5-481f-8f71-0f17deff0bf2"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "BIlLOwIng-suNSEt-e340.QaRAaTAyi.worKeRs.deV"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "eyJqdW5rIjoiVnJ5TkZEWnQiLCJwcm90b2NvbCI6InZsIiwibW9kZSI6InByZWZpeCIsInBhbmVsSVBzIjpbIlsyNjAyOmZjNTk6YjA6NjQ6Ol0iXX0=?ed=2560"
+      headers:
+        Host: "billowing-sunset-e340.qaraatayi.workers.dev"
+  - name: "🔒 VL-WS-NA 🇮🇷 IR-185.143.233.122:8880"
+    type: "vless"
+    server: "185.143.233.122"
+    port: 8880
+    uuid: "d9307ab3-1ed0-4b6d-bfd0-e104c7ccc25a"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "azsv2.ir5ive.ir"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.192.173:443"
+    type: "vless"
+    server: "162.159.192.173"
+    port: 443
+    uuid: "6c0ed3fb-f0b0-5b53-a762-f8f8d832bdba"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "vfarid.xcdi.WoRkErS.DEV"
+    client-fingerprint: "randomized"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "vless-ws/?ed=2048"
+      headers:
+        Host: "vfarid.xcdi.WoRkErS.DEV"
+  - name: "🔒 VL-WS-NONE 🇷🇺 RU-45.142.120.30:8880"
+    type: "vless"
+    server: "45.142.120.30"
+    port: 8880
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "vms.lifetime08.workers.dev"
+  - name: "🔒 VL-WS-TLS 🇫🇷 FR-149.202.58.99:443"
+    type: "vless"
+    server: "149.202.58.99"
+    port: 443
+    uuid: "b585dc5e-55bf-4a8b-913a-27c9ccac05c3"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "bab-6.site"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/vws/"
+      headers:
+        Host: "bab-6.site"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.34.103:2083"
+    type: "vless"
+    server: "162.159.34.103"
+    port: 2083
+    uuid: "12cb0a24-0438-4980-8617-9c93205895fa"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "yellow-field-6ce5.kakoolnews.workers.dev"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "yellow-field-6ce5.kakoolnews.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.38.110:443"
+    type: "vless"
+    server: "162.159.38.110"
+    port: 443
+    uuid: "289f0d70-5985-46e9-b05a-9f66f821f47d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "asli25hpgyrsalina.gladiyator-dl.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/assets?ed=512"
+      headers:
+        Host: "asli25hpgyrsalina.gladiyator-dl.ir"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.40.152:8443"
+    type: "vless"
+    server: "104.18.40.152"
+    port: 8443
+    uuid: "bafacd98-136a-4530-838d-4e5c51838dac"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "juzi8186.qea.ccwu.cc"
+    client-fingerprint: "firefox"
+    ws-opts:
+      path: "/shop/juzibaipiao?ed=2560"
+      headers:
+        Host: "juzi8186.qea.ccwu.cc"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.153.4:443"
+    type: "vless"
+    server: "162.159.153.4"
+    port: 443
+    uuid: "f2a73750-3087-48ff-a763-1348c15dce68"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "rAyAn-007.mAxImA.DpDnS.OrG"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/?ed=2560"
+      headers:
+        Host: "rAyAn-007.mAxImA.DpDnS.OrG"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-132.226.119.111:24361"
+    type: "vless"
+    server: "132.226.119.111"
+    port: 24361
+    uuid: "5a23e6b2-3cd3-4475-898e-0885d71da6ec"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "us2.wxgqlfx.xyz"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/TG@wxgqlfx"
+      headers:
+        Host: "us2.wxgqlfx.xyz"
+  - name: "🔒 VL-WS-NONE 🇮🇷 IR-185.143.234.122:2052"
+    type: "vless"
+    server: "185.143.234.122"
+    port: 2052
+    uuid: "1662f026-bca9-4db7-8f85-e2c76d7073ff"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/ICVPNN"
+      headers:
+        Host: "vpn.ksmrx.ir"
+  - name: "🔒 VL-WS-NONE 🏴‍☠️ NA-104.26.14.16:8080"
+    type: "vless"
+    server: "104.26.14.16"
+    port: 8080
+    uuid: "cabbfe13-038b-4dbb-9c45-5079c829abfa"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      headers:
+        Host: "tr-cd.sublink-vip2.com"
+  - name: "🔒 VL-WS-TLS 🇫🇷 FR-20.33.23.66:443"
+    type: "vless"
+    server: "20.33.23.66"
+    port: 443
+    uuid: "79863d42-9f1c-4e8e-a65b-1003090871c1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "coNFIghayE.moKhaBeraTebInZON.workErS.deV"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/eyJqdW5rIjoiUHVXcXFjYTJGVGI3IiwicHJvdG9jb2wiOiJ2bCIsIm1vZGUiOiJwcmVmaXgiLCJwYW5lbElQcyI6WyJbMmEwMjo4OTg6MTQ2OjY0OjpdIl19?ed=2560"
+      headers:
+        Host: "confighaye.mokhaberatebinzon.workers.dev"
+  - name: "🔒 VL-WS-NA 🏴‍☠️ NA-104.18.32.47:2086"
+    type: "vless"
+    server: "104.18.32.47"
+    port: 2086
+    uuid: "25d09b1a-19bf-4c2c-ae73-b7e4a8c16596"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/login"
+      headers:
+        Host: "popopo.best-game.org"
+  - name: "🔒 VL-WS-NONE 🇵🇱 PL-82.40.62.5:8080"
+    type: "vless"
+    server: "82.40.62.5"
+    port: 8080
+    uuid: "a3ef337f-edf9-47a1-aeba-ca55f6bc9f50"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/Manoch"
+      headers:
+        Host: "play.google.com"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.192.105:443"
+    type: "vless"
+    server: "162.159.192.105"
+    port: 443
+    uuid: "92ed0f80-0fc3-4304-94bc-269c33c6641b"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "mahcjf.mahxraytm.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/Mahxray?ed=2095"
+      headers:
+        Host: "mahcjf.mahxraytm.com"
+  - name: "🔒 VL-WS-NONE 🇹🇷 TR-5.188.190.94:2052"
+    type: "vless"
+    server: "5.188.190.94"
+    port: 2052
+    uuid: "2e409cdc-d0c9-4fc0-b285-9371034b8002"
+    udp: true
+    tls: false
+    network: "ws"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-66.235.200.1:443"
+    type: "vless"
+    server: "66.235.200.1"
+    port: 443
+    uuid: "994c91dd-b282-4c25-a0c5-af76b480c080"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "mci-google-bing3164.sdb5j.workers.dev"
+    client-fingerprint: "randomized"
+    ws-opts:
+      path: "/?ed=2048"
+      headers:
+        Host: "mci-google-bing3164.sdb5j.workers.dev"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-198.62.62.4:443"
+    type: "vless"
+    server: "198.62.62.4"
+    port: 443
+    uuid: "d0298536-d670-4045-bbb1-ddd5ea68683e"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "azadnet-btq.pages.dev"
+    client-fingerprint: "randomized"
+    ws-opts:
+      path: "/azadnet-btq.pages.dev/?ed=2560&PROT_TYPE=vless"
+      headers:
+        Host: "azadnet-btq.pages.dev"
+  - name: "🔒 VL-WS-NONE 🏴‍☠️ NA-104.19.250.28:80"
+    type: "vless"
+    server: "104.19.250.28"
+    port: 80
+    uuid: "bf482aae-ede4-4573-a0c4-d294c01af0d6"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      headers:
+        Host: "xU.aSaCO.sTorE"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.33.217:443"
+    type: "vless"
+    server: "172.64.33.217"
+    port: 443
+    uuid: "53f0bca8-f170-4ef7-8031-c7d441189dbf"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "638987647974712110.outback-amshs.info"
+    ws-opts:
+      path: "/cahttingws"
+      headers:
+        Host: "638987647974712110.outback-amshs.info"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.152.4:443"
+    type: "vless"
+    server: "162.159.152.4"
+    port: 443
+    uuid: "396c904b-4b62-4334-b793-ee25fc0c61cc"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "pages.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/eyJqdW5rIjoiTHczMWlhREZIb0ljUDhoaCIsInByb3RvY29sIjoidmwiLCJtb2RlIjoicHJveHlpcCIsInBhbmVsSVBzIjpbXX0=?ed=2560"
+      headers:
+        Host: "8vmU06cxdz59m931xnREgj8qpnoq1-06.pages.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.3.219:8443"
+    type: "vless"
+    server: "104.21.3.219"
+    port: 8443
+    uuid: "57ba2ab1-a283-42eb-82ee-dc3561a805b8"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ovhwuxian.pai50288.uk"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/57ba2ab1"
+      headers:
+        Host: "ovhwuxian.pai50288.uk"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.171.241:2087"
+    type: "vless"
+    server: "104.17.171.241"
+    port: 2087
+    uuid: "faea8ba5-b8d4-4ef2-8570-60d3c09ef2d3"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ancient-limit-ae74.meyhamireza0.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "ancient-limit-ae74.meyhamireza0.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.25.123.80:443"
+    type: "vless"
+    server: "104.25.123.80"
+    port: 443
+    uuid: "5ec3a039-ea63-4bf9-a848-a65c9bfa66f5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "gb-42123.shenzogmbh.com"
+    ws-opts:
+      path: "/api/v1"
+      headers:
+        Host: "gb-42123.shenzogmbh.com"
+  - name: "🔒 VL-WS-TLS 🇷🇺 RU-45.67.215.233:443"
+    type: "vless"
+    server: "45.67.215.233"
+    port: 443
+    uuid: "55b0463c-e27f-455b-a25a-70123297b9f4"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "rAyAn-cOnFiG-sg-1.pAriSa.dPdNs.oRg"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/ws"
+      headers:
+        Host: "rAyAn-cOnFiG-sg-1.pAriSa.dPdNs.oRg"
+  - name: "🔒 VL-WS-TLS 🇬🇧 GB-194.36.55.138:2096"
+    type: "vless"
+    server: "194.36.55.138"
+    port: 2096
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sni.111000.indevs.in"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "sni.111000.indevs.in"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-65.8.54.85:443"
+    type: "vless"
+    server: "65.8.54.85"
+    port: 443
+    uuid: "82ebd58c-156a-4c2b-9cf9-1762f0a1e04f"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "rAyAn-007.lEiLa.dPdNs.oRg"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/?ed=2560"
+      headers:
+        Host: "rAyAn-007.lEiLa.dPdNs.oRg"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.245.168:8443"
+    type: "vless"
+    server: "162.159.245.168"
+    port: 8443
+    uuid: "72639c63-427e-4d02-8a38-b3355caab152"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "young-field-911e.m38625271.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "young-field-911e.m38625271.workers.dev"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-167.68.4.253:2096"
+    type: "vless"
+    server: "167.68.4.253"
+    port: 2096
+    uuid: "7556317c-dff6-46e8-ad29-b408f2a6456e"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "vless.muzheng.top"
+    client-fingerprint: "chrome"
+    ws-opts:
+      headers:
+        Host: "vless.muzheng.top"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.254.89:443"
+    type: "vless"
+    server: "104.16.254.89"
+    port: 443
+    uuid: "9ce7ac33-5004-40ea-8236-15bc2d25a37c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "v2ngnet.atomiclove1594.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/v2ngnet--v2ngnet--v2ngnet--v2ngnet--v2ngnet--v2ngnet--v2ngnet--v2ngnet"
+      headers:
+        Host: "v2ngnet.atomiclove1594.workers.dev"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-66.81.247.155:443"
+    type: "vless"
+    server: "66.81.247.155"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.44.205:443"
+    type: "vless"
+    server: "162.159.44.205"
+    port: 443
+    uuid: "d0298536-d670-4045-bbb1-ddd5ea68683e"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "azadnet-3zp.pages.dev"
+    client-fingerprint: "randomized"
+    ws-opts:
+      path: "/azadnet-3zp.pages.dev/?ed=2560&PROT_TYPE=vless"
+      headers:
+        Host: "azadnet-3zp.pages.dev"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-166.62.104.61:2096"
+    type: "vless"
+    server: "166.62.104.61"
+    port: 2096
+    uuid: "12345678-1234-1234-1234-123456789123"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "vless.hubp.de"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/snippets"
+      headers:
+        Host: "vless.hubp.de"
+  - name: "🔒 VL-WS-NONE 🇮🇷 IR-87.107.82.171:8080"
+    type: "vless"
+    server: "87.107.82.171"
+    port: 8080
+    uuid: "f6bec3c4-c29d-4392-a4fe-96936b9b3005"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/abc?ed=2048"
+      headers:
+        Host: "film-doni.com"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-198.41.223.103:443"
+    type: "vless"
+    server: "198.41.223.103"
+    port: 443
+    uuid: "3c36eadb-747a-4166-8db0-23fec9883ea2"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "HarmonY-448.pages.DEV"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h3"
+    ws-opts:
+      path: "/assets?ed=2560"
+      headers:
+        Host: "harmony-448.pages.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.12.151:443"
+    type: "vless"
+    server: "162.159.12.151"
+    port: 443
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sni.111000.indevs.in"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "sni.111000.indevs.in"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.87.65:443"
+    type: "vless"
+    server: "104.21.87.65"
+    port: 443
+    uuid: "36d9003c-7240-40bc-af62-07c39f7a0b94"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "SerVEr20.PEEkCOnfig5.WORkerS.deV"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/eyJqdW5rIjoiYmNCdUhCVkFEIiwicHJvdG9jb2wiOiJ2bCIsIm1vZGUiOiJwcmVmaXgiLCJwYW5lbElQcyI6WyJbMmEwMjo4OTg6MTQ2OjY0OjpdIiwiWzI2MDI6ZmM1OTpiMDo2NDo6XSIsIlsyNjAyOmZjNTk6MTE6NjQ6Ol0iXX0=?ed=2560"
+      headers:
+        Host: "server20.peekconfig5.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-198.41.223.184:2096"
+    type: "vless"
+    server: "198.41.223.184"
+    port: 2096
+    uuid: "d3d962b1-7fc4-4f34-8292-b57e75cd0316"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "purple-water-9854.ipcfchannel.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "purple-water-9854.ipcfchannel.workers.dev"
+  - name: "🔒 VL-WS-TLS 🇫🇷 FR-152.228.134.48:2053"
+    type: "vless"
+    server: "152.228.134.48"
+    port: 2053
+    uuid: "5a23e6b2-3cd3-4475-898e-0885d71da6ec"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "us2.wxgqlfx.xyz"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/TG@wxgqlfx"
+      headers:
+        Host: "us2.wxgqlfx.xyz"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.63.25:2083"
+    type: "vless"
+    server: "104.16.63.25"
+    port: 2083
+    uuid: "c2e0d5cb-de84-4f44-b230-6e0e77ebab40"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "mx.mahoshid.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+    ws-opts:
+      path: "?ed=2048"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-198.41.223.121:443"
+    type: "vless"
+    server: "198.41.223.121"
+    port: 443
+    uuid: "d555dac9-27cb-4ddb-89f5-6a1d8d1e4798"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "momi.timoreyhaneh.workers.dev"
+    ws-opts:
+      headers:
+        Host: "momi.timoreyhaneh.workers.dev"
+  - name: "🔒 VL-WS-TLS 🇫🇷 FR-38.242.229.125:8443"
+    type: "vless"
+    server: "38.242.229.125"
+    port: 8443
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sni.111000.indevs.in"
+    ws-opts:
+      path: "/?Telegram%F0%9F%87%A8%F0%9F%87%B3%40WangCai2="
+      headers:
+        Host: "sni.111000.indevs.in"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.65.15:443"
+    type: "vless"
+    server: "104.21.65.15"
+    port: 443
+    uuid: "0b0b8f0b-4b9e-4965-8e02-3ce8fa02ac55"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "freedom7.haner40160.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "freedom7.haner40160.workers.dev"
+  - name: "🔒 VL-WS-NONE 🏴‍☠️ NA-104.17.147.22:80"
+    type: "vless"
+    server: "104.17.147.22"
+    port: 80
+    uuid: "7d2dfb7a-2ecc-4448-bcbe-245a2092fe85"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/Telegram-Xv2ry2-q1?ed=512"
+      headers:
+        Host: "www.speedtest.net.25.15.432.20.20.20.20.ir.xn--g28h.dns-dynamic.net."
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.60.231:443"
+    type: "vless"
+    server: "162.159.60.231"
+    port: 443
+    uuid: "e5cc16a6-ea42-46b2-82ae-ad2157e1641b"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "hhlfy.twiladaphne.ndjp.net"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "hhlfy.twiladaphne.ndjp.net"
+  - name: "🔒 VL-WS-NONE 🇳🇱 NL-163.172.214.188:80"
+    type: "vless"
+    server: "163.172.214.188"
+    port: 80
+    uuid: "40cc9b52-25b8-4cd5-8b45-715ae26e6baf"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/vless/"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-208.103.161.170:443"
+    type: "vless"
+    server: "208.103.161.170"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.52.30:2087"
+    type: "vless"
+    server: "172.64.52.30"
+    port: 2087
+    uuid: "77777777-8a3e-6666-b6d1-a9c5f0e8b3a2"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "fgnix832fx.fx6hsv0.ccwu.cc"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "fgnix832fx.fx6hsv0.ccwu.cc"
+  - name: "🔒 VL-WS-NONE 🇳🇱 NL-163.172.213.174:80"
+    type: "vless"
+    server: "163.172.213.174"
+    port: 80
+    uuid: "e73df646-1f62-41bf-8c50-653497d603d0"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/vless/"
+      headers:
+        Host: "SC-TheNetherlands2.09vpn.com"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.20.5.134:443"
+    type: "vless"
+    server: "104.20.5.134"
+    port: 443
+    uuid: "d89d6641-3b1a-4f51-a194-9c9109fd21b6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "DiprOX.pages.DEV"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "DiprOX.pages.DEV"
+  - name: "🔒 VL-WS-NA 🇺🇸 US-151.101.193.55:80"
+    type: "vless"
+    server: "151.101.193.55"
+    port: 80
+    uuid: "20df8c30-c07a-494e-b83d-4af21ee57788"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/containers/fi"
+      headers:
+        Host: "lexeu.global.ssl.fastly.net"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.12.41:443"
+    type: "vless"
+    server: "162.159.12.41"
+    port: 443
+    uuid: "e5cc16a6-ea42-46b2-82ae-ad2157e1641b"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "hhlfy.twiladaphne.ndjp.net"
+    ws-opts:
+      path: "/fp=random"
+      headers:
+        Host: "hhlfy.twiladaphne.ndjp.net"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.172.97:443"
+    type: "vless"
+    server: "104.17.172.97"
+    port: 443
+    uuid: "adeaebbe-5719-4c28-9b11-5df0d3331c88"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Freedom32.Pages.DEV"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+    ws-opts:
+      path: "/assets?ed=2560"
+      headers:
+        Host: "freedom32.pages.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-188.114.96.250:443"
+    type: "vless"
+    server: "188.114.96.250"
+    port: 443
+    uuid: "17540a16-a0dd-5694-7e1e-14e281ccc032"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "crm.lotussec.com"
+    ws-opts:
+      path: "/@JavidnamanIran/Javid-SHAH-KingRezaPahlavi/"
+      headers:
+        Host: "crm.lotussec.com"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.144.20:443"
+    type: "vless"
+    server: "172.64.144.20"
+    port: 443
+    uuid: "db2c8a95-f751-46e3-b05e-d2def66850fb"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ayanamirei.11160321.xyz"
+    ws-opts:
+      path: "/http://37.187.124.25:8187/"
+      headers:
+        Host: "ayanamirei.11160321.xyz"
+  - name: "🔒 VL-WS-NA 🏴‍☠️ NA-104.16.149.244:2095"
+    type: "vless"
+    server: "104.16.149.244"
+    port: 2095
+    uuid: "86c50e3a-5b87-49dd-bd20-03c7f2735e40"
+    udp: true
+    tls: false
+    network: "ws"
+    servername: "cnmfangbinxing.cnmfangbinxing-a.workers.dev"
+    client-fingerprint: "randomized"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "cnmfangbinxing.cnmfangbinxing-a.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.173.68:2083"
+    type: "vless"
+    server: "104.19.173.68"
+    port: 2083
+    uuid: "875d0422-9b8d-4a43-9471-44144a468c75"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "chIKArMiKoNi.X-UpLoAd.oRG"
+    ws-opts:
+      path: "/?ed=2048"
+      headers:
+        Host: "chIKArMiKoNi.X-UpLoAd.oRG"
+  - name: "🔒 VL-WS-TLS 🇮🇷 IR-5.160.128.69:443"
+    type: "vless"
+    server: "5.160.128.69"
+    port: 443
+    uuid: "bbd67e54-1b4b-488b-a5df-708ef896ecaa"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "bc11.benioromi.com"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-190.93.245.94:2096"
+    type: "vless"
+    server: "190.93.245.94"
+    port: 2096
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sni.111000.indevs.in"
+  - name: "🔒 VL-WS-TLS 🇰🇷 KR-152.70.249.67:443"
+    type: "vless"
+    server: "152.70.249.67"
+    port: 443
+    uuid: "a13df940-020c-465f-bc89-ee5279b5cd6a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "kr.ylks.xyz"
+    ws-opts:
+      path: "/blue"
+  - name: "🔒 VL-WS-NONE 🇮🇷 IR-185.143.234.122:8880"
+    type: "vless"
+    server: "185.143.234.122"
+    port: 8880
+    uuid: "d9307ab3-1ed0-4b6d-bfd0-e104c7ccc25a"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "azsv2.ir5ive.ir"
+  - name: "🔒 VL-WS-TLS 🇷🇺 RU-45.67.215.165:443"
+    type: "vless"
+    server: "45.67.215.165"
+    port: 443
+    uuid: "bb7b4908-a24a-44ae-b9c7-6691b2576269"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "wallweb.hydradllvip.info"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/?ed"
+      headers:
+        Host: "wallweb.hydradllvip.info"
+  - name: "🔒 VL-WS-NA 🇸🇪 SE-185.146.173.58:8080"
+    type: "vless"
+    server: "185.146.173.58"
+    port: 8080
+    uuid: "726c7800-a083-4b83-b9cf-9a9872ea1fcb"
+    udp: true
+    tls: false
+    network: "ws"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.82.55:443"
+    type: "vless"
+    server: "104.18.82.55"
+    port: 443
+    uuid: "29187857-4a1f-4d1e-88eb-0016771e0dbb"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "vless.hubp.de"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "vless.hubp.de"
+  - name: "🔒 VL-WS-NA 🏴‍☠️ NA-188.114.97.6:80"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 80
+    uuid: "35a11533-6fce-4459-b06c-77d0442c2021"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/nl-tw"
+      headers:
+        Host: "s.blibli.com.r3xxe.eu.cc"
+  - name: "🔒 VL-WS-NONE 🇮🇷 IR-185.143.235.200:8880"
+    type: "vless"
+    server: "185.143.235.200"
+    port: 8880
+    uuid: "4408eafa-2c4d-4b48-aa1f-5ebee616c34e"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/admin"
+      headers:
+        Host: "opir2.artativa.ir"
+  - name: "🔒 VL-WS-NA 🏴‍☠️ NA-104.21.224.176:80"
+    type: "vless"
+    server: "104.21.224.176"
+    port: 80
+    uuid: "d342d11e-d424-4583-b36e-524ab1f0afa4"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/?ed=2048"
+      headers:
+        Host: "a.ssll.gay"
+  - name: "🔒 VL-WS-NA 🇺🇸 US-199.232.197.131:80"
+    type: "vless"
+    server: "199.232.197.131"
+    port: 80
+    uuid: "0058c215-ab1e-400c-a403-b5b2fda7e846"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "max-gb1.global.ssl.fastly.net"
+  - name: "🔒 VL-WS-NA 🇮🇷 IR-185.143.233.122:8080"
+    type: "vless"
+    server: "185.143.233.122"
+    port: 8080
+    uuid: "00e9b5b4-403e-46f8-b960-1d46a156c839"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/price-info"
+      headers:
+        Host: "pt.ipv10.ir"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-65.8.54.107:443"
+    type: "vless"
+    server: "65.8.54.107"
+    port: 443
+    uuid: "82ebd58c-156a-4c2b-9cf9-1762f0a1e04f"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "rAyAn-007.lEiLa.dPdNs.oRg"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/?ed=2560"
+      headers:
+        Host: "rAyAn-007.lEiLa.dPdNs.oRg"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.72.251:443"
+    type: "vless"
+    server: "104.16.72.251"
+    port: 443
+    uuid: "c466ef48-fb57-40c6-808d-ee48d537844d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "kakoolnews.kakoolnews8.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "kakoolnews.kakoolnews8.workers.dev"
+  - name: "🔒 VL-WS-TLS 🇩🇪 DE-63.177.223.7:22224"
+    type: "vless"
+    server: "63.177.223.7"
+    port: 22224
+    uuid: "05519058-d2ac-4f28-9e4a-2b2a1386749e"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "trojan.burgerip.co.uk"
+    ws-opts:
+      path: "/telegram-channel-vlessconfig"
+  - name: "🔒 VL-WS-NA 🏴‍☠️ NA-104.21.5.177:80"
+    type: "vless"
+    server: "104.21.5.177"
+    port: 80
+    uuid: "af77d53f-a0e4-456e-b977-696bf081dcc8"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "g1.nybaz.space"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-141.193.213.11:443"
+    type: "vless"
+    server: "141.193.213.11"
+    port: 443
+    uuid: "9232a847-8f7d-4548-a23a-a8b3550e0f15"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "grabacademyportal.grab.com.cyylr.eu.cc"
+    ws-opts:
+      path: "/id-tksi"
+      headers:
+        Host: "grabacademyportal.grab.com.cyylr.eu.cc"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.250.22:443"
+    type: "vless"
+    server: "104.16.250.22"
+    port: 443
+    uuid: "77b19c69-9840-443d-a66b-f08c81b6950a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ehofwajefoij.xinshiji.icu"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/worktools"
+      headers:
+        Host: "ehofwajefoij.xinshiji.icu"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.146.211:2087"
+    type: "vless"
+    server: "172.64.146.211"
+    port: 2087
+    uuid: "77777777-8a3e-6666-b6d1-a9c5f0e8b3a2"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "fgnix832fx.fx6hsv0.ccwu.cc"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "fgnix832fx.fx6hsv0.ccwu.cc"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.63.25:443"
+    type: "vless"
+    server: "104.16.63.25"
+    port: 443
+    uuid: "5ed7fb94-bacd-485b-aca1-6a439738ed1f"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "falkinichlol.appleseraj.ir"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "?ed/@V2rayNG_SPDNet,@V2rayNG_SPDNet@V2rayNG_SPDNet,@V2rayNG_SPDNet=2048"
+      headers:
+        Host: "falkinichlol.appleseraj.ir"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.25.249.113:2096"
+    type: "vless"
+    server: "104.25.249.113"
+    port: 2096
+    uuid: "f4d70ca7-cdf8-4bfe-ac45-c6143a654b20"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "mh.sudonetwork.com"
+    client-fingerprint: "firefox"
+    ws-opts:
+      path: "/?ed=2560"
+      headers:
+        Host: "mh.sudonetwork.com"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.152.23:443"
+    type: "vless"
+    server: "172.64.152.23"
+    port: 443
+    uuid: "0f1b6d8d-3f8c-4713-b32d-c94947083485"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "apexbhao1.qzz.io"
+    ws-opts:
+      path: "/43.218.77.16=1443"
+      headers:
+        Host: "apexbhao1.qzz.io"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-198.41.208.110:443"
+    type: "vless"
+    server: "198.41.208.110"
+    port: 443
+    uuid: "57dc2c12-e27f-a250-2479-6eed68599b66"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "misty-salad-77ae.hiupokjiop.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/mahdi--mmahdi--mahdi----mahdi--mahdi--mahdi"
+      headers:
+        Host: "misty-salad-77ae.hiupokjiop.workers.dev"
+  - name: "🔒 VL-WS-TLS 🇰🇿 KZ-194.59.5.238:2096"
+    type: "vless"
+    server: "194.59.5.238"
+    port: 2096
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sni.jpmj.dev"
+    ws-opts:
+      path: "/?telegram%F0%9F%87%A8%F0%9F%87%B3+%40wangcai2="
+      headers:
+        Host: "sni.jpmj.dev"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-141.193.213.10:443"
+    type: "vless"
+    server: "141.193.213.10"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.76.108:443"
+    type: "vless"
+    server: "172.67.76.108"
+    port: 443
+    uuid: "c135158e-5869-4397-8116-6695ca18cd48"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cf.hulume.ccwu.cc"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "cf.hulume.ccwu.cc"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.155.229:443"
+    type: "vless"
+    server: "104.18.155.229"
+    port: 443
+    uuid: "42026ed0-7d74-4585-8e46-0fe6aa4d665a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.genflix.co.id.r3xxe.eu.cc"
+    ws-opts:
+      path: "/au-do"
+      headers:
+        Host: "www.genflix.co.id.r3xxe.eu.cc"
+  - name: "🔒 VL-WS-TLS 🇩🇪 DE-185.158.133.138:2096"
+    type: "vless"
+    server: "185.158.133.138"
+    port: 2096
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sni.111000.indevs.in"
+    ws-opts:
+      path: "/?telegram%F0%9F%87%A8%F0%9F%87%B3+%40wangcai2="
+      headers:
+        Host: "sni.111000.indevs.in"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-43.130.134.123:65001"
+    type: "vless"
+    server: "43.130.134.123"
+    port: 65001
+    uuid: "5a23e6b2-3cd3-4475-898e-0885d71da6ec"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "us2.wxgqlfx.xyz"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/TG@wxgqlfx"
+      headers:
+        Host: "us2.wxgqlfx.xyz"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.245.82:8443"
+    type: "vless"
+    server: "162.159.245.82"
+    port: 8443
+    uuid: "72639c63-427e-4d02-8a38-b3355caab152"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "young-field-911e.m38625271.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      headers:
+        Host: "young-field-911e.m38625271.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.66.47.156:443"
+    type: "vless"
+    server: "172.66.47.156"
+    port: 443
+    uuid: "89b3cbba-e6ac-485a-9481-976a0415eab9"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "wwW.oPEnsIGnAL.cOM.naynay09.Dynv6.nET"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.145.21:443"
+    type: "vless"
+    server: "172.67.145.21"
+    port: 443
+    uuid: "ef23616d-8a9d-4b22-b2f5-9bda864de179"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "INDEX.Arcane509.Workers.DEV"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      headers:
+        Host: "index.arcane509.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.60.105:443"
+    type: "vless"
+    server: "162.159.60.105"
+    port: 443
+    uuid: "5dc15e15-f285-4a9d-959b-0e4fbdd77b63"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "powered-by-surena.configfarsi695fce27aa549.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/?ed"
+      headers:
+        Host: "powered-by-surena.configfarsi695fce27aa549.workers.dev"
+  - name: "🔒 VL-WS-TLS 🇸🇨 SC-45.130.125.160:443"
+    type: "vless"
+    server: "45.130.125.160"
+    port: 443
+    uuid: "0a2f8145-290f-4848-a011-3d1e5fe62a14"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ssj.new-persian-song.ir"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/?ed=80"
+      headers:
+        Host: "ssj.new-persian-song.ir"
+  - name: "🔒 VL-WS-NONE 🇮🇷 IR-185.143.232.35:2095"
+    type: "vless"
+    server: "185.143.232.35"
+    port: 2095
+    uuid: "309f8c4b-4314-443f-97f4-e51de5605c7e"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      headers:
+        Host: "Cx.ratabestan.ir"
+  - name: "🔒 VL-WS-TLS 🇳🇱 NL-89.125.123.248:443"
+    type: "vless"
+    server: "89.125.123.248"
+    port: 443
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sni.latonyamadeline.ndjp.net"
+    ws-opts:
+      path: "/?ed=2560&https://t.me/WangCai2🇨🇳"
+      headers:
+        Host: "sni.latonyamadeline.ndjp.net"
+  - name: "🔒 VL-WS-NONE 🇮🇷 IR-185.143.232.18:2095"
+    type: "vless"
+    server: "185.143.232.18"
+    port: 2095
+    uuid: "309f8c4b-4314-443f-97f4-e51de5605c7e"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      headers:
+        Host: "Cx.ratabestan.ir"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.117.43:443"
+    type: "vless"
+    server: "104.16.117.43"
+    port: 443
+    uuid: "17540a16-a0dd-5694-7e1e-14e281ccc032"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "crm.lotussec.com"
+    ws-opts:
+      path: "/@JavidnamanIran/Javid-SHAH-KingRezaPahlavi/"
+      headers:
+        Host: "crm.lotussec.com"
+  - name: "🔒 VL-WS-NONE 🇺🇸 US-165.215.250.12:80"
+    type: "vless"
+    server: "165.215.250.12"
+    port: 80
+    uuid: "bf482aae-ede4-4573-a0c4-d294c01af0d6"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      headers:
+        Host: "xU.aSaCO.sTorE"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.64.105:8443"
+    type: "vless"
+    server: "104.19.64.105"
+    port: 8443
+    uuid: "5c0700dc-0ce4-4171-ae82-6953911466c1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "focalin.adaspoloandco.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/RizZrAcK"
+      headers:
+        Host: "focalin.adaspoloandco.com"
+  - name: "🔒 VL-WS-NONE 🇺🇸 US-77.110.127.191:9443"
+    type: "vless"
+    server: "77.110.127.191"
+    port: 9443
+    uuid: "e0de62c9-f317-4275-b7e5-8da7b7fa9bc6"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/pourya"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-209.46.30.149:443"
+    type: "vless"
+    server: "209.46.30.149"
+    port: 443
+    uuid: "933e8995-3b6d-4d42-8b23-e649f0e7205f"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "resources.office.com.r3xxe.eu.cc"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/us-gllc"
+      headers:
+        Host: "resources.office.com.r3xxe.eu.cc"
+  - name: "🔒 VL-WS-NA 🏴‍☠️ NA-104.21.17.199:8880"
+    type: "vless"
+    server: "104.21.17.199"
+    port: 8880
+    uuid: "4788ff67-57af-425a-9b47-5a63b20e2f57"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/?ed"
+      headers:
+        Host: "m.mobile-unix.ir"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.41.131:443"
+    type: "vless"
+    server: "104.21.41.131"
+    port: 443
+    uuid: "c3c20db7-d32b-454a-9843-ec22d064a842"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "uciranir-uciranir-uiranir-uciranir-uciranir-uciranir-uciranir2.kehib41931.workers.dev"
+    ws-opts:
+      path: "/-@UCIRANIR-@UCIRANIR-@UCIRANIR-@UCIRANIR-@UCIRANIR-@UCIRANIR-@UCIRANIR/?ed=2047"
+      headers:
+        Host: "uciranir-uciranir-uiranir-uciranir-uciranir-uciranir-uciranir2.kehib41931.workers.dev"
+  - name: "🔒 VL-WS-NONE 🇸🇨 SC-154.197.75.50:8880"
+    type: "vless"
+    server: "154.197.75.50"
+    port: 8880
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/?ed=2560&https://t.me/youtube@ZYFXS🇨🇳"
+      headers:
+        Host: "vms.lifetime37.workers.dev"
+  - name: "🔒 VL-WS-NONE 🏴‍☠️ NA-104.16.86.2:80"
+    type: "vless"
+    server: "104.16.86.2"
+    port: 80
+    uuid: "9f0eae34-97c1-4c07-8a55-438379981334"
+    udp: true
+    tls: false
+    network: "ws"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/?ed"
+      headers:
+        Host: "snowy-bush-4df8-ppal03.toxebex651.workers.dev"
+  - name: "🔒 VL-WS-NA 🏴‍☠️ NA-172.67.211.74:80"
+    type: "vless"
+    server: "172.67.211.74"
+    port: 80
+    uuid: "e84064cc-617f-4ba8-aa6f-13e920fd2610"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "main.boobie.eu.cc"
+  - name: "🔒 VL-WS-NONE 🇸🇨 SC-45.130.125.96:80"
+    type: "vless"
+    server: "45.130.125.96"
+    port: 80
+    uuid: "bf482aae-ede4-4573-a0c4-d294c01af0d6"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      headers:
+        Host: "xU.aSaCO.sTorE"
+  - name: "🔒 VL-WS-TLS 🇸🇬 SG-45.32.103.8:20742"
+    type: "vless"
+    server: "45.32.103.8"
+    port: 20742
+    uuid: "00000000-0000-4000-8000-000000000000"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "vfn-6o8h-kht7rpd.zipgd3vx91o.ddns-ip.net"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/@Marisa_kristi"
+      headers:
+        Host: "vfn-6o8h-kht7rpd.zipgd3vx91o.ddns-ip.net"
+  - name: "🔒 VL-WS-TLS 🇱🇹 LT-212.80.218.89:443"
+    type: "vless"
+    server: "212.80.218.89"
+    port: 443
+    uuid: "5a23e6b2-3cd3-4475-898e-0885d71da6ec"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "us2.wxgqlfx.xyz"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/TG@wxgqlfx"
+      headers:
+        Host: "us2.wxgqlfx.xyz"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-188.114.97.6:2083"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 2083
+    uuid: "875d0422-9b8d-4a43-9471-44144a468c75"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "chIKArMiKoNi.X-UpLoAd.oRG"
+    ws-opts:
+      path: "/?ed=2048"
+      headers:
+        Host: "chIKArMiKoNi.X-UpLoAd.oRG"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.44.165:8443"
+    type: "vless"
+    server: "104.18.44.165"
+    port: 8443
+    uuid: "9ce7ac33-5004-40ea-8236-15bc2d25a37c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "v2ngnet.alangou4545.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/v2ngnet--v2ngnet--v2ngnet--v2ngnet--v2ngnet--v2ngnet--v2ngnet--v2ngnet"
+      headers:
+        Host: "v2ngnet.alangou4545.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.148.22:2087"
+    type: "vless"
+    server: "104.17.148.22"
+    port: 2087
+    uuid: "a0d47204-1b5d-4038-82d0-467cc88a1763"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "test2.iranvatanam.com"
+    ws-opts:
+      path: "/?ed=2048"
+  - name: "🔒 VL-WS-TLS 🇷🇺 RU-45.8.211.134:2096"
+    type: "vless"
+    server: "45.8.211.134"
+    port: 2096
+    uuid: "9451efa1-bdee-4ddc-84ed-1d32c895ad07"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "eel.zuLaiR.siTE."
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "eel.zuLaiR.siTE."
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-188.114.97.6:8443"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 8443
+    uuid: "04d0cd8b-4755-491a-94f0-d1dd4083598d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "fic.themonji.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/?ed=2048"
+      headers:
+        Host: "fic.themonji.com"
+  - name: "🔒 VL-WS-NA 🏴‍☠️ NA-104.16.248.249:2095"
+    type: "vless"
+    server: "104.16.248.249"
+    port: 2095
+    uuid: "86c50e3a-5b87-49dd-bd20-03c7f2735e40"
+    udp: true
+    tls: false
+    network: "ws"
+    servername: "cnmfangbinxing.cnmfangbinxing-a.workers.dev"
+    client-fingerprint: "randomized"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "cnmfangbinxing.cnmfangbinxing-a.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.20.6.134:2096"
+    type: "vless"
+    server: "104.20.6.134"
+    port: 2096
+    uuid: "f4d70ca7-cdf8-4bfe-ac45-c6143a654b20"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "mh.sudonetwork.com"
+    client-fingerprint: "firefox"
+    ws-opts:
+      path: "/?ed=2560"
+      headers:
+        Host: "mh.sudonetwork.com"
+  - name: "🔒 VL-WS-TLS 🇩🇪 DE-89.116.46.210:443"
+    type: "vless"
+    server: "89.116.46.210"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.66.131:443"
+    type: "vless"
+    server: "172.64.66.131"
+    port: 443
+    uuid: "ac51ad36-5052-460a-842a-e13455d30cb8"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "RR-FF.pages.DEV"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+    ws-opts:
+      path: "/assets?ed=2560"
+      headers:
+        Host: "rr-ff.pages.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.146.222:2096"
+    type: "vless"
+    server: "172.64.146.222"
+    port: 2096
+    uuid: "c2bad7c0-eb2c-42f6-807e-56570e8094c9"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "artin-7ra.pages.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/pay/class/favourites"
+      headers:
+        Host: "artin-7ra.pages.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.53.42:2087"
+    type: "vless"
+    server: "172.64.53.42"
+    port: 2087
+    uuid: "77777777-8a3e-6666-b6d1-a9c5f0e8b3a2"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "fgnix832fx.fx6hsv0.ccwu.cc"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "fgnix832fx.fx6hsv0.ccwu.cc"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-199.232.78.158:443"
+    type: "vless"
+    server: "199.232.78.158"
+    port: 443
+    uuid: "b2bfb4f3-f4c3-4323-9810-a086fef2f25d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "default.ssl.fastly.net"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "pan1.global.ssl.fastly.net"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.26.15.30:2096"
+    type: "vless"
+    server: "104.26.15.30"
+    port: 2096
+    uuid: "6285e567-0c25-4ce2-a2fa-80517c1345e1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "1223-9ux.pages.dev"
+    client-fingerprint: "randomized"
+    ws-opts:
+      path: "/?ed=2048"
+      headers:
+        Host: "1223-9ux.pages.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-8.39.125.32:8443"
+    type: "vless"
+    server: "8.39.125.32"
+    port: 8443
+    uuid: "7b3a6434-b9c9-4fab-8eee-2b0f9a3770a6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "patient-salad-9669.rsgrggr.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/proxyip=64.188.69.127"
+      headers:
+        Host: "patient-salad-9669.rsgrggr.workers.dev"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-151.101.66.219:443"
+    type: "vless"
+    server: "151.101.66.219"
+    port: 443
+    uuid: "2d813293-d830-43af-b81e-1b257330cf5a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "speedtest.net"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/pKkBrz3q4hs5kZOO/MTI5LjE1NC41MC4xNTk=?ed=2560"
+      headers:
+        Host: "hopework.ir"
+  - name: "🔒 VL-WS-NA 🏴‍☠️ NA-104.19.222.169:2082"
+    type: "vless"
+    server: "104.19.222.169"
+    port: 2082
+    uuid: "ef23616d-8a9d-4b22-b2f5-9bda864de179"
+    udp: true
+    tls: false
+    network: "ws"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/gfdn0yadxgfr"
+      headers:
+        Host: "index.arcane509.workers.dev"
+  - name: "🔒 VL-WS-NA 🇺🇸 US-151.101.3.19:80"
+    type: "vless"
+    server: "151.101.3.19"
+    port: 80
+    uuid: "0b516cf6-cd76-470c-954d-9374d734f445"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/site"
+      headers:
+        Host: "yalandonya.global.ssl.fastly.net"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.250.20:443"
+    type: "vless"
+    server: "104.19.250.20"
+    port: 443
+    uuid: "24d49ddd-67c1-4821-b5b9-f12107366978"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "bahari.kiamobilepart.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/api"
+      headers:
+        Host: "bahari.kiamobilepart.com"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-160.153.0.179:443"
+    type: "vless"
+    server: "160.153.0.179"
+    port: 443
+    uuid: "24136735-1c85-46b8-96f8-b5f0eadec78c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "xxx.66500-280b-471c-b2b8-d68b7f9960004.workers.dev"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+    ws-opts:
+      path: "/?ed=2048"
+      headers:
+        Host: "xxx.66500-280b-471c-b2b8-d68b7f9960004.workers.dev"
+  - name: "🔒 VL-WS-TLS 🇨🇦 CA-148.113.196.75:8443"
+    type: "vless"
+    server: "148.113.196.75"
+    port: 8443
+    uuid: "08f96221-9b7b-4e6f-8ffe-aee8b9c9b504"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ov-canada1.09vpn.com"
+    ws-opts:
+      path: "/vless/"
+  - name: "🔒 VL-WS-NONE 🇮🇷 IR-185.143.232.33:2095"
+    type: "vless"
+    server: "185.143.232.33"
+    port: 2095
+    uuid: "309f8c4b-4314-443f-97f4-e51de5605c7e"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      headers:
+        Host: "Cx.ratabestan.ir"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.193.138:443"
+    type: "vless"
+    server: "162.159.193.138"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "🔒 VL-WS-NA 🏴‍☠️ NA-104.18.28.7:2095"
+    type: "vless"
+    server: "104.18.28.7"
+    port: 2095
+    uuid: "86c50e3a-5b87-49dd-bd20-03c7f2735e40"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "freedom.pusytroller.cf"
+  - name: "🔒 VL-WS-NA 🇺🇸 US-151.101.129.55:80"
+    type: "vless"
+    server: "151.101.129.55"
+    port: 80
+    uuid: "20df8c30-c07a-494e-b83d-4af21ee57788"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/containers/fi"
+      headers:
+        Host: "lexeu.global.ssl.fastly.net"
+  - name: "🔒 VL-WS-NONE 🇸🇨 SC-154.197.75.30:8880"
+    type: "vless"
+    server: "154.197.75.30"
+    port: 8880
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "vms.lifetime37.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.149.159:2083"
+    type: "vless"
+    server: "172.64.149.159"
+    port: 2083
+    uuid: "9a04be68-5e26-4d32-894a-1a4e95186ec2"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "baipiaoge-bp.pages.dev"
+    ws-opts:
+      path: "/proxyip=tw.tp81.netlib.re:81"
+      headers:
+        Host: "baipiaoge-bp.pages.dev"
+  - name: "🔒 VL-WS-TLS 🇯🇵 JP-54.178.110.17:4443"
+    type: "vless"
+    server: "54.178.110.17"
+    port: 4443
+    uuid: "00000000-0000-4000-8000-000000000000"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "vfn-6o8h-kht7rpd.zipgd3vx91o.ddns-ip.net"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/@Marisa_kristi"
+      headers:
+        Host: "vfn-6o8h-kht7rpd.zipgd3vx91o.ddns-ip.net"
+  - name: "🔒 VL-WS-NONE 🇩🇰 DK-45.148.31.0:15855"
+    type: "vless"
+    server: "45.148.31.0"
+    port: 15855
+    uuid: "e4fc4761-154f-490e-bbaa-b4fa193f1073"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "45.148.31.0"
+  - name: "🔒 VL-WS-NONE 🇮🇷 IR-185.143.234.21:2086"
+    type: "vless"
+    server: "185.143.234.21"
+    port: 2086
+    uuid: "e12f0666-a46f-4199-9a91-7e35d3bea0bb"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      headers:
+        Host: "vh.zynorax.ir"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.163.76:443"
+    type: "vless"
+    server: "172.67.163.76"
+    port: 443
+    uuid: "b74bbaca-8bbe-41e1-9af9-18d467836282"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "017.EleCTRoCelLCo-CF-017.Workers.dEv"
+    client-fingerprint: "chrome"
+    ws-opts:
+      headers:
+        Host: "017.EleCTRoCelLCo-CF-017.Workers.dEv"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-190.93.246.137:8443"
+    type: "vless"
+    server: "190.93.246.137"
+    port: 8443
+    uuid: "a4485ca6-84cf-4788-aadf-66a1037e6b60"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "new2.arshia-nova.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/api/v2/stream"
+      headers:
+        Host: "new2.arshia-nova.ir"
+  - name: "🔒 VL-WS-NONE 🇮🇷 IR-185.143.232.55:2095"
+    type: "vless"
+    server: "185.143.232.55"
+    port: 2095
+    uuid: "309f8c4b-4314-443f-97f4-e51de5605c7e"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      headers:
+        Host: "Cx.ratabestan.ir"
+  - name: "🔒 VL-WS-NONE 🏴‍☠️ NA-104.18.41.75:80"
+    type: "vless"
+    server: "104.18.41.75"
+    port: 80
+    uuid: "0ca855d9-7c03-40eb-929b-919f934abdc3"
+    udp: true
+    tls: false
+    network: "ws"
+    servername: "amirvpn.amirhm00100.workers.dev"
+    ws-opts:
+      path: "/?ed=2048"
+      headers:
+        Host: "amirvpn.amirhm00100.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.153.2:443"
+    type: "vless"
+    server: "162.159.153.2"
+    port: 443
+    uuid: "00000000-0000-4000-8000-000000000000"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "vfn-6o8h-kht7rpd.zipgd3vx91o.ddns-ip.net"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/@Marisa_kristi"
+      headers:
+        Host: "vfn-6o8h-kht7rpd.zipgd3vx91o.ddns-ip.net"
+  - name: "🔒 VL-WS-NONE 🇮🇷 IR-185.143.232.59:2095"
+    type: "vless"
+    server: "185.143.232.59"
+    port: 2095
+    uuid: "309f8c4b-4314-443f-97f4-e51de5605c7e"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      headers:
+        Host: "Cx.ratabestan.ir"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.148.22:2053"
+    type: "vless"
+    server: "104.17.148.22"
+    port: 2053
+    uuid: "05c2bca9-7591-4389-ba10-9309e7a28329"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "nv.zarinxservice.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "nv.zarinxservice.ir"
+  - name: "🔒 VL-WS-TLS 🇷🇺 RU-5.42.220.253:8443"
+    type: "vless"
+    server: "5.42.220.253"
+    port: 8443
+    uuid: "f61a4285-7264-4d07-9408-7b9ba1922c26"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "gaosir.unfeeling.sbs"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/x@节点狂魔"
+      headers:
+        Host: "gaosir.unfeeling.sbs"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.141.147:443"
+    type: "vless"
+    server: "162.159.141.147"
+    port: 443
+    uuid: "d2d0f796-edb0-427a-af32-ae360679f9e7"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "rAyAn-007.fOtOn.dPdNs.oRg"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/?ed=2560"
+      headers:
+        Host: "rayan-007.foton.dpdns.org"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.17.207:443"
+    type: "vless"
+    server: "162.159.17.207"
+    port: 443
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sni.111000.v6.army"
+    ws-opts:
+      path: "/?https%3A%2F%2Ft.me%2Fwangcai2%F0%9F%87%A8%F0%9F%87%B3="
+      headers:
+        Host: "sni.111000.v6.army"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.24.195.174:2096"
+    type: "vless"
+    server: "104.24.195.174"
+    port: 2096
+    uuid: "a12b2959-1e85-472c-84fd-3aa12656efa9"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Jerboa.zulair.siTE."
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "Jerboa.zulair.siTE."
+  - name: "🔒 VL-WS-NA 🏴‍☠️ NA-172.67.174.133:2095"
+    type: "vless"
+    server: "172.67.174.133"
+    port: 2095
+    uuid: "86c50e3a-5b87-49dd-bd20-03c7f2735e40"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/fp=randomized"
+      headers:
+        Host: "cnmfangbinxing.cnmfangbinxing-k.workers.dev"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-151.101.66.228:443"
+    type: "vless"
+    server: "151.101.66.228"
+    port: 443
+    uuid: "d6ec4a5b-3e01-4688-a40b-e8c714f4b461"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Zmaoz.Faculty.Ucdavis.Edu"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/@custom_config?ed=2560"
+      headers:
+        Host: "downloadlynet.ir."
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.24.58.104:443"
+    type: "vless"
+    server: "104.24.58.104"
+    port: 443
+    uuid: "2187354d-0ffe-428a-9977-13c43e8620ec"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "nimhubnet4.nvclud.ir."
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/?ed=2095"
+      headers:
+        Host: "nimhubnet4.nvclud.ir."
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.52.68:2087"
+    type: "vless"
+    server: "172.64.52.68"
+    port: 2087
+    uuid: "77777777-8a3e-6666-b6d1-a9c5f0e8b3a2"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "fgnix832fx.fx6hsv0.ccwu.cc"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "fgnix832fx.fx6hsv0.ccwu.cc"
+  - name: "🔒 VL-WS-NONE 🏴‍☠️ NA-172.64.146.163:80"
+    type: "vless"
+    server: "172.64.146.163"
+    port: 80
+    uuid: "478cc26d-16b3-4fdd-be64-60d5a58c1622"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      headers:
+        Host: "tt.andishehparenting.com"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.185.98:2053"
+    type: "vless"
+    server: "172.67.185.98"
+    port: 2053
+    uuid: "5cd31a40-32d7-4db8-8772-79e0f55ffa21"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ion.api-music-fa.com"
+    ws-opts:
+      path: "/J5aKLOY1R9ONWYCM"
+      headers:
+        Host: "ion.api-music-fa.com"
+  - name: "🔒 VL-WS-NONE 🏴‍☠️ NA-162.159.38.119:80"
+    type: "vless"
+    server: "162.159.38.119"
+    port: 80
+    uuid: "22c15b3f-e205-48e2-9b30-1a2c3480e7b2"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "sRv16.hAMiIbaR.CoM"
+  - name: "🔒 VL-WS-NA 🏴‍☠️ NA-104.17.109.71:8080"
+    type: "vless"
+    server: "104.17.109.71"
+    port: 8080
+    uuid: "636de463-b509-4631-adc6-400b21733278"
+    udp: true
+    tls: false
+    network: "ws"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/z5eg4ngdcqls"
+      headers:
+        Host: "index.harmony509.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.210.179:2087"
+    type: "vless"
+    server: "172.67.210.179"
+    port: 2087
+    uuid: "0080ae3d-3950-4126-8235-873ce3f18548"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "NEwS.LondONNEwS.qZz.io"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/eyJqdW5rIjoiVjh0WGJwTzEiLCJwcm90b2NvbCI6InZsIiwibW9kZSI6InByb3h5aXAiLCJwYW5lbElQcyI6W119?ed=2560"
+      headers:
+        Host: "news.londonnews.qzz.io"
+  - name: "🔒 VL-WS-TLS 🇬🇧 GB-185.193.29.138:2096"
+    type: "vless"
+    server: "185.193.29.138"
+    port: 2096
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sni.111000.indevs.in"
+    ws-opts:
+      headers:
+        Host: "sni.111000.indevs.in"
+  - name: "🔒 VL-WS-NONE 🇷🇴 RO-45.85.118.93:2095"
+    type: "vless"
+    server: "45.85.118.93"
+    port: 2095
+    uuid: "d342d11e-d424-4583-b36e-524ab1f0afa4"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/TM-AZARBAYJAB1TM-AZARBAYJAB1?ed=2560"
+      headers:
+        Host: "fuckingcloudflare.2-5e8.workers.dev"
+  - name: "🔒 VL-WS-NONE 🇱🇹 LT-88.216.67.30:8880"
+    type: "vless"
+    server: "88.216.67.30"
+    port: 8880
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "vms.lifetime05.workers.dev"
+  - name: "🔒 VL-WS-NONE 🇺🇸 US-151.101.130.219:80"
+    type: "vless"
+    server: "151.101.130.219"
+    port: 80
+    uuid: "af801363-823e-4143-aae6-73a4566e5da6"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/telegram-EXPRESSVPN_420,telegram-EXPRESSVPN_420,telegram-EXPRESSVPN_420,telegram-EXPRESSVPN_420,telegram-EXPRESSVPN_420,telegram-EXPRESSVPN_420,telegram-EXPRESSVPN_420,telegram-EXPRESSVPN_420,telegram-EXPRESSVPN_420,telegram-EXPRESSVPN_420,telegram-EXPRESSVPN_420,telegram-EXPRESSVPN_420?ed=2048"
+      headers:
+        Host: "Leisanskvar.net"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.36.5:443"
+    type: "vless"
+    server: "162.159.36.5"
+    port: 443
+    uuid: "a8d37bf8-ff5b-4de8-8796-2de9c4072b41"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "asb001-cdn.nekohub.xyz"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/vless_ws?ed=4096"
+      headers:
+        Host: "asb001.nekohub.xyz"
+  - name: "🔒 VL-WS-TLS 🇷🇺 RU-45.67.215.41:443"
+    type: "vless"
+    server: "45.67.215.41"
+    port: 443
+    uuid: "48198295-b7ba-4b5c-8d85-085d55a6c869"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "xs.ylks.xyz"
+    ws-opts:
+      path: "/?proxyip"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.26.0.221:443"
+    type: "vless"
+    server: "104.26.0.221"
+    port: 443
+    uuid: "3f9c8463-8610-3ed8-86c8-a26713067825"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "dabaius2.sylu.net"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+    ws-opts:
+      path: "/db10240eb751d6ab"
+      headers:
+        Host: "dabaius2.sylu.net"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.145.202:2053"
+    type: "vless"
+    server: "172.64.145.202"
+    port: 2053
+    uuid: "bafacd98-136a-4530-838d-4e5c51838dac"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "juzi8186.qea.ccwu.cc"
+    client-fingerprint: "firefox"
+    ws-opts:
+      path: "/out/comics/document/juzibaipiao?ed=2560"
+      headers:
+        Host: "juzi8186.qea.ccwu.cc"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.10.145:443"
+    type: "vless"
+    server: "162.159.10.145"
+    port: 443
+    uuid: "5dc15e15-f285-4a9d-959b-0e4fbdd77b63"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "powered-by-surena.configfarsi695fce27aa549.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/?ed"
+      headers:
+        Host: "powered-by-surena.configfarsi695fce27aa549.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-188.114.97.88:443"
+    type: "vless"
+    server: "188.114.97.88"
+    port: 443
+    uuid: "6c0ed3fb-f0b0-5b53-a762-f8f8d832bdba"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "vfarid.xcdi.WoRkErS.DEV"
+    client-fingerprint: "randomized"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "vless-ws/?ed=2048"
+      headers:
+        Host: "vfarid.xcdi.WoRkErS.DEV"
+  - name: "🔒 VL-WS-NONE 🇮🇷 IR-185.143.234.200:2052"
+    type: "vless"
+    server: "185.143.234.200"
+    port: 2052
+    uuid: "2e4bbfbf-9640-4d29-9872-3ef879ecf313"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "s2.bamasos.com"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.185.98:8443"
+    type: "vless"
+    server: "172.67.185.98"
+    port: 8443
+    uuid: "635dfb8e-3d28-40c2-bd27-9b85e7bc6bb6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ion.api-music-fa.com"
+    ws-opts:
+      path: "/J5aKLOY1R9ONWYCM"
+      headers:
+        Host: "ion.api-music-fa.com"
+  - name: "🔒 VL-WS-TLS 🇩🇪 DE-45.147.248.115:443"
+    type: "vless"
+    server: "45.147.248.115"
+    port: 443
+    uuid: "79863d42-9f1c-4e8e-a65b-1003090871c1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "coNFIghayE.moKhaBeraTebInZON.workErS.deV"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/eyJqdW5rIjoiUHVXcXFjYTJGVGI3IiwicHJvdG9jb2wiOiJ2bCIsIm1vZGUiOiJwcmVmaXgiLCJwYW5lbElQcyI6WyJbMmEwMjo4OTg6MTQ2OjY0OjpdIl19"
+      headers:
+        Host: "confighaye.mokhaberatebinzon.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.38.47:8443"
+    type: "vless"
+    server: "104.18.38.47"
+    port: 8443
+    uuid: "a8d37bf8-ff5b-4de8-8796-2de9c4072b41"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ccsus11-cdn.nekohub.xyz"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/vless_ws?ed=4096"
+      headers:
+        Host: "ccsus11.nekohub.xyz"
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-151.101.194.133:443"
+    type: "vless"
+    server: "151.101.194.133"
+    port: 443
+    uuid: "84421222-9d0f-4b6c-9815-a7cd0aff8192"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "live.wkrq.com"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/@custom_config?ed=2560"
+      headers:
+        Host: "downloadlynet.ir."
+  - name: "🔒 VL-WS-NONE 🇺🇸 US-104.254.140.30:8880"
+    type: "vless"
+    server: "104.254.140.30"
+    port: 8880
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "vms.lifetime54.workers.dev"
+  - name: "🔒 VL-WS-TLS 🇮🇷 IR-185.226.140.140:443"
+    type: "vless"
+    server: "185.226.140.140"
+    port: 443
+    uuid: "f37a03c0-44a4-4bab-b16e-d04bdc8b9454"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cloudn.gamespasebot.ir"
+    client-fingerprint: "randomized"
+    ws-opts:
+      path: "/dash"
+      headers:
+        Host: "cloudn.gamespasebot.ir"
+  - name: "🔒 VL-WS-NONE 🇬🇧 GB-91.193.58.79:80"
+    type: "vless"
+    server: "91.193.58.79"
+    port: 80
+    uuid: "bf482aae-ede4-4573-a0c4-d294c01af0d6"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      headers:
+        Host: "xU.aSaCO.sTorE"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.229.21:2053"
+    type: "vless"
+    server: "104.19.229.21"
+    port: 2053
+    uuid: "dccfaf5b-634c-4b04-b5cc-fe78cc201dcf"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "defensive-alarm17rrmk7y7y.samsungovens.ir."
+    ws-opts:
+      path: "/?ed=2048"
+      headers:
+        Host: "defensive-alarm17rrmk7y7y.samsungovens.ir."
+  - name: "🔒 VL-WS-TLS 🇺🇸 US-108.165.216.138:2096"
+    type: "vless"
+    server: "108.165.216.138"
+    port: 2096
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sni.111000.indevs.in"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "sni.111000.indevs.in"
+  - name: "🔒 VL-WS-TLS 🇳🇿 NZ-202.37.33.80:443"
+    type: "vless"
+    server: "202.37.33.80"
+    port: 443
+    uuid: "cc752a3e-1537-4e86-bb50-1b897bf7b33c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cyylr.eu.cc"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/sg-melbi"
+      headers:
+        Host: "cyylr.eu.cc"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.163.249:443"
+    type: "vless"
+    server: "104.17.163.249"
+    port: 443
+    uuid: "c135158e-5869-4397-8116-6695ca18cd48"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cf.hulume.ccwu.cc"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "cf.hulume.ccwu.cc"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.145.158:443"
+    type: "vless"
+    server: "172.64.145.158"
+    port: 443
+    uuid: "114b36f7-77d7-4625-a8d2-343f75f64d5c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "migmigvpn.milad021tak.workers.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/?ed=2560"
+      headers:
+        Host: "migmigvpn.milad021tak.workers.dev"
+  - name: "🔒 VL-WS-NONE 🇮🇷 IR-185.143.233.122:2052"
+    type: "vless"
+    server: "185.143.233.122"
+    port: 2052
+    uuid: "1662f026-bca9-4db7-8f85-e2c76d7073ff"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/ICVPNN"
+      headers:
+        Host: "vpn.ksmrx.ir"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.18.105:443"
+    type: "vless"
+    server: "162.159.18.105"
+    port: 443
+    uuid: "a6f1755f-0140-4bea-8727-0db1bed7c4df"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "juzi.qea.ccwu.cc"
+    ws-opts:
+      path: "/?TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=2048"
+      headers:
+        Host: "juzi.qea.ccwu.cc"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.149.209:443"
+    type: "vless"
+    server: "172.64.149.209"
+    port: 443
+    uuid: "00000000-0000-4000-8000-000000000000"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "vfn-6o8h-kht7rpd.zipgd3vx91o.ddns-ip.net"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/@Marisa_kristi"
+      headers:
+        Host: "vfn-6o8h-kht7rpd.zipgd3vx91o.ddns-ip.net"
+  - name: "🔒 VL-WS-NA 🏴‍☠️ NA-104.17.95.220:2052"
+    type: "vless"
+    server: "104.17.95.220"
+    port: 2052
+    uuid: "ef23616d-8a9d-4b22-b2f5-9bda864de179"
+    udp: true
+    tls: false
+    network: "ws"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/7u2613qopnft"
+      headers:
+        Host: "index.arcane509.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.147.22:2083"
+    type: "vless"
+    server: "104.17.147.22"
+    port: 2083
+    uuid: "c940bc2c-5d35-4676-bb5c-1d13abb79cbe"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "golestan.hajalwi.ir."
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      headers:
+        Host: "golestan.hajalwi.ir."
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.42.163:2053"
+    type: "vless"
+    server: "104.18.42.163"
+    port: 2053
+    uuid: "bafacd98-136a-4530-838d-4e5c51838dac"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "juzi8186.qea.ccwu.cc"
+    client-fingerprint: "firefox"
+    ws-opts:
+      path: "/tv/juzibaipiao?ed=2560"
+      headers:
+        Host: "juzi8186.qea.ccwu.cc"
+  - name: "🔒 VL-WS-TLS 🇰🇷 KR-121.180.225.222:16000"
+    type: "vless"
+    server: "121.180.225.222"
+    port: 16000
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sni.latonyamadeline.ndjp.net"
+    ws-opts:
+      path: "/?ed=2560&https://t.me/WangCai2🇨🇳"
+      headers:
+        Host: "sni.latonyamadeline.ndjp.net"
+  - name: "🔒 VL-WS-TLS 🇸🇬 SG-43.175.169.174:443"
+    type: "vless"
+    server: "43.175.169.174"
+    port: 443
+    uuid: "37c8b06a-25cf-42d7-b2ea-31d3c8561998"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sni.mmadcoffee.info"
+    client-fingerprint: "random"
+    ws-opts:
+      path: "/14708/31d3c8561998/"
+      headers:
+        Host: "imap.mmadcoffee.info"
+  - name: "🔒 VL-WS-TLS 🇫🇷 FR-152.228.134.58:8443"
+    type: "vless"
+    server: "152.228.134.58"
+    port: 8443
+    uuid: "5a23e6b2-3cd3-4475-898e-0885d71da6ec"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "us2.wxgqlfx.xyz"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/TG@wxgqlfx"
+      headers:
+        Host: "us2.wxgqlfx.xyz"
+  - name: "🔒 VL-WS-TLS 🇩🇪 DE-88.198.82.157:443"
+    type: "vless"
+    server: "88.198.82.157"
+    port: 443
+    uuid: "5a23e6b2-3cd3-4475-898e-0885d71da6ec"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "us2.wxgqlfx.xyz"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/TG@wxgqlfx"
+      headers:
+        Host: "us2.wxgqlfx.xyz"
+  - name: "🔒 VL-WS-NA 🇹🇷 TR-38.180.104.152:21077"
+    type: "vless"
+    server: "38.180.104.152"
+    port: 21077
+    uuid: "a566934d-1191-4304-b312-feebee678111"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "www.google.com"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-188.114.97.6:443"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "1ed6f429-9d32-4769-a318-ca74135558d2"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cloud3.royalv.shop"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "cloud3.royalv.shop"
+  - name: "🔒 VL-WS-NA 🏴‍☠️ NA-188.114.96.3:443"
+    type: "vless"
+    server: "188.114.96.3"
+    port: 443
+    uuid: "884f9b2c-f0c5-44dd-a68e-3e39ce93bb39"
+    udp: true
+    tls: false
+    network: "ws"
+  - name: "🔒 VL-WS-NONE 🇩🇪 DE-5.10.214.53:80"
+    type: "vless"
+    server: "5.10.214.53"
+    port: 80
+    uuid: "bf482aae-ede4-4573-a0c4-d294c01af0d6"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      headers:
+        Host: "xU.aSaCO.sTorE"
+  - name: "🔒 VL-WS-NONE 🇮🇲 IM-185.162.230.30:8880"
+    type: "vless"
+    server: "185.162.230.30"
+    port: 8880
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "vms.lifetime02.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-108.162.195.209:443"
+    type: "vless"
+    server: "108.162.195.209"
+    port: 443
+    uuid: "d0298536-d670-4045-bbb1-ddd5ea68683e"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "azadnet-bjv.pages.dev"
+    client-fingerprint: "randomized"
+    ws-opts:
+      path: "/azadnet-bjv.pages.dev/?ed=2560&PROT_TYPE=vless"
+      headers:
+        Host: "azadnet-bjv.pages.dev"
+  - name: "🔒 VL-WS-NA 🇮🇷 IR-185.143.234.235:2086"
+    type: "vless"
+    server: "185.143.234.235"
+    port: 2086
+    uuid: "0ed155c4-54a0-41e3-adf4-4aeeafa6fbac"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "yaabolfazl.rizone.ir"
+  - name: "🔒 VL-WS-NONE 🏴‍☠️ NA-104.21.35.228:2095"
+    type: "vless"
+    server: "104.21.35.228"
+    port: 2095
+    uuid: "db0d52c9-4080-483d-b4cf-2ec3bc8c5f00"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/eyJqdW5rIjoibEZUbWl4S2UiLCJwcm90b2NvbCI6InZsIiwibW9kZSI6InByb3h5aXAiLCJwYW5lbElQcyI6WyI4Ny4xMjAuMTY2LjE0Il19?ed=2560"
+      headers:
+        Host: "yellow-sky-510f.admin-mrj-chanel.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.131.112:443"
+    type: "vless"
+    server: "172.67.131.112"
+    port: 443
+    uuid: "ef23616d-8a9d-4b22-b2f5-9bda864de179"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "INDEX.Arcane509.Workers.DEV"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      headers:
+        Host: "index.arcane509.workers.dev"
+  - name: "🔒 VL-WS-TLS 🇫🇮 FI-31.58.137.126:8443"
+    type: "vless"
+    server: "31.58.137.126"
+    port: 8443
+    uuid: "5a23e6b2-3cd3-4475-898e-0885d71da6ec"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "us2.wxgqlfx.xyz"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/TG@wxgqlfx"
+      headers:
+        Host: "us2.wxgqlfx.xyz"
+  - name: "🔒 VL-WS-TLS 🇳🇱 NL-212.192.20.65:2053"
+    type: "vless"
+    server: "212.192.20.65"
+    port: 2053
+    uuid: "5a23e6b2-3cd3-4475-898e-0885d71da6ec"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "us2.wxgqlfx.xyz"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/TG@wxgqlfx"
+      headers:
+        Host: "us2.wxgqlfx.xyz"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-188.114.99.0:2096"
+    type: "vless"
+    server: "188.114.99.0"
+    port: 2096
+    uuid: "f4d70ca7-cdf8-4bfe-ac45-c6143a654b20"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "mh.sudonetwork.com"
+    client-fingerprint: "firefox"
+    ws-opts:
+      path: "/?ed=2560"
+      headers:
+        Host: "mh.sudonetwork.com"
+  - name: "🔒 VL-WS-NONE 🏴‍☠️ NA-104.17.147.22:2086"
+    type: "vless"
+    server: "104.17.147.22"
+    port: 2086
+    uuid: "17fb5a8c-de83-449b-9996-a85181c42224"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/eyJqdW5rIjoiVXduczlGSWJuc2JiIiwicHJvdG9jb2wiOiJ2bCIsIm1vZGUiOiJwcmVmaXgiLCJwYW5lbElQcyI6WyJbMjYwMjpmYzU5OjExOjY0OjpdIl19?ed=2560"
+      headers:
+        Host: "soft-bar-c978.babaiikhoshk.workers.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.2.139:443"
+    type: "vless"
+    server: "104.21.2.139"
+    port: 443
+    uuid: "4311bd3f-4f66-4538-a624-221b87690b2c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "mjtbknetmkhremge.ordak.qzz.io"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/fl?ed"
+      headers:
+        Host: "mjtbknetmkhremge.ordak.qzz.io"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.213.131:443"
+    type: "vless"
+    server: "104.16.213.131"
+    port: 443
+    uuid: "a6430e91-38ad-4254-b7db-d1fba6efd9e3"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "afrcloud22.mmv.kr"
+    ws-opts:
+      path: "/129.146.254.25:443"
+      headers:
+        Host: "afrcloud22.mmv.kr"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-198.41.209.243:443"
+    type: "vless"
+    server: "198.41.209.243"
+    port: 443
+    uuid: "adeaebbe-5719-4c28-9b11-5df0d3331c88"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Freedom32.Pages.DEV"
+    client-fingerprint: "firefox"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/assets?ed=2560"
+      headers:
+        Host: "freedom32.pages.dev"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.13.149:2053"
+    type: "vless"
+    server: "104.18.13.149"
+    port: 2053
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sni.111000.indevs.in"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "sni.111000.indevs.in"
+  - name: "🔒 VL-WS-NONE 🇮🇷 IR-185.143.232.201:2086"
+    type: "vless"
+    server: "185.143.232.201"
+    port: 2086
+    uuid: "7374f8a0-94bc-4a03-b44a-732c031d581f"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "srv2.pashaertebat.ir"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.40.47:443"
+    type: "vless"
+    server: "104.18.40.47"
+    port: 443
+    uuid: "ce069292-c8bf-40dd-a6b1-87818a1e64e9"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "1-brc.pages.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "1-brc.pages.dev"
+  - name: "🔒 VL-WS-TLS 🇩🇪 DE-178.105.65.54:7443"
+    type: "vless"
+    server: "178.105.65.54"
+    port: 7443
+    uuid: "3cc28977-5eff-42b7-bc6f-d29da5c2192d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "digi.ahourapv.ir"
+    client-fingerprint: "random"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "digi.ahourapv.ir"
+  - name: "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.26.38:2083"
+    type: "vless"
+    server: "104.18.26.38"
+    port: 2083
+    uuid: "c2e0d5cb-de84-4f44-b230-6e0e77ebab40"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "mx.mahoshid.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+    ws-opts:
+      path: "?ed=2048"
+  - name: "🔒 VL-WS-NONE 🇫🇮 FI-157.180.123.25:443"
+    type: "vless"
+    server: "157.180.123.25"
+    port: 443
+    uuid: "638c1918-f6f0-4ecc-85e6-a3ac50ed9c02"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/linkws?ed"
+      headers:
+        Host: "157.180.123.25"
+  - name: "🔒 VL-WS-TLS 🇨🇭 CH-185.18.250.252:443"
+    type: "vless"
+    server: "185.18.250.252"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "🔒 VL-WS-NA 🇺🇸 US-31.76.11.206:45622"
+    type: "vless"
+    server: "31.76.11.206"
+    port: 45622
+    uuid: "b0d9918c-320d-4e76-ab89-1a12ff5e1fe2"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+  - name: "🔒 VL-WS-NA 🇨🇾 CY-195.85.59.161:2095"
+    type: "vless"
+    server: "195.85.59.161"
+    port: 2095
+    uuid: "dbf403f4-b871-4446-8712-675562dbbb7b"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/?ed=2560"
+      headers:
+        Host: "0221.enedrehd.workers.dev"
+  - name: "🔒 VL-WS-NA 🇫🇷 FR-162.19.228.119:80"
+    type: "vless"
+    server: "162.19.228.119"
+    port: 80
+    uuid: "dc8eccdb-ecfa-435f-9ac1-5dc4882e7b51"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/http"
+      headers:
+        Host: "de.vpnbase.net"
+  - name: "🔒 VL-WS-TLS 🇩🇪 DE-146.70.20.110:20205"
+    type: "vless"
+    server: "146.70.20.110"
+    port: 20205
+    uuid: "00000000-0000-4000-8000-000000000000"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "vfn-6o8h-kht7rpd.zipgd3vx91o.ddns-ip.net"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/@Marisa_kristi"
+      headers:
+        Host: "vfn-6o8h-kht7rpd.zipgd3vx91o.ddns-ip.net"
+  - name: "🔒 VL-WS-NONE 🏴‍☠️ NA-108.162.194.119:80"
+    type: "vless"
+    server: "108.162.194.119"
+    port: 80
+    uuid: "22c15b3f-e205-48e2-9b30-1a2c3480e7b2"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "sRv16.hAMiIbaR.CoM"
+  - name: "🔒 VL-WS-NONE 🏴‍☠️ NA-104.17.148.22:8880"
+    type: "vless"
+    server: "104.17.148.22"
+    port: 8880
+    uuid: "79b42e75-5a6a-413f-9e1f-18ebea6044c0"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/-LiV2ry@LIGHTNING6-TEL--@LIGHTNING6-TEL--@LIGHTNING6-TEL--@LIGHTNING6-JOIN-@LIGHTNING6-TEL--@LIGHTNING6-JOIN-@LIGHTNING6-TEL-@LIGHTNING6-TEL--@LIGHTNING6-JOIN-@LIGHTNING6-TEL--@LIGHTNING6?ed=2056"
+      headers:
+        Host: "www.speedtest.net.A.lightning-6.LiVE."
+  - name: "🔒 VM-WS-NA 🇲🇾 MY-47.250.45.234:43063"
+    type: "vmess"
+    server: "47.250.45.234"
+    port: 43063
+    uuid: "c77f48f5-4be3-4461-b52b-49998e7b897b"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-NA 🇬🇧 GB-51.89.87.143:10020"
+    type: "vmess"
+    server: "51.89.87.143"
+    port: 10020
+    uuid: "52f9cbfb-5bb3-3dd3-b947-725e365c59f3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-NA 🇫🇷 FR-162.19.192.89:16626"
+    type: "vmess"
+    server: "162.19.192.89"
+    port: 16626
+    uuid: "4f37246e-87c5-45e3-b64b-37e60e25def9"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-NA 🏴‍☠️ NA-104.31.16.38:80"
+    type: "vmess"
+    server: "104.31.16.38"
+    port: 80
+    uuid: "8abe9496-5e24-4e49-b566-dcf86116017d"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-NA 🇲🇾 MY-47.250.149.51:50018"
+    type: "vmess"
+    server: "47.250.149.51"
+    port: 50018
+    uuid: "9665280c-a3d1-4aab-ef9f-a3a497337d91"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-NA 🏴‍☠️ NA-172.65.211.209:30041"
+    type: "vmess"
+    server: "172.65.211.209"
+    port: 30041
+    uuid: "d3d90998-7bfd-4fc6-930e-35bf96083d8b"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-NA 🏴‍☠️ NA-141.101.122.190:2095"
+    type: "vmess"
+    server: "141.101.122.190"
+    port: 2095
+    uuid: "417d27fb-cb93-3bd8-9bf7-71cd91319821"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-NA 🏴‍☠️ NA-104.21.75.246:80"
+    type: "vmess"
+    server: "104.21.75.246"
+    port: 80
+    uuid: "d1fb628c-206e-42a7-837b-4147255fbaeb"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-NA 🇫🇷 FR-162.19.192.89:16644"
+    type: "vmess"
+    server: "162.19.192.89"
+    port: 16644
+    uuid: "4f37246e-87c5-45e3-b64b-37e60e25def9"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-NA 🏴‍☠️ NA-104.19.40.48:8880"
+    type: "vmess"
+    server: "104.19.40.48"
+    port: 8880
+    uuid: "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-NA 🇭🇰 HK-47.244.120.197:44867"
+    type: "vmess"
+    server: "47.244.120.197"
+    port: 44867
+    uuid: "845e6b08-2919-4290-ade0-5dc7dcea59ca"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-NA 🇬🇧 GB-51.89.87.143:10123"
+    type: "vmess"
+    server: "51.89.87.143"
+    port: 10123
+    uuid: "52f9cbfb-5bb3-3dd3-b947-725e365c59f3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-NA 🇬🇧 GB-51.89.87.143:10034"
+    type: "vmess"
+    server: "51.89.87.143"
+    port: 10034
+    uuid: "52f9cbfb-5bb3-3dd3-b947-725e365c59f3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-NA 🏴‍☠️ NA-104.19.57.4:2086"
+    type: "vmess"
+    server: "104.19.57.4"
+    port: 2086
+    uuid: "e9e3cc13-db48-4cc1-8c24-7626439a5339"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-TLS 🇫🇷 FR-162.19.254.232:2087"
+    type: "vmess"
+    server: "162.19.254.232"
+    port: 2087
+    uuid: "01ccfa7a-8de7-451d-bd41-1957acaba15f"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-NA 🇲🇾 MY-85.211.251.112:12883"
+    type: "vmess"
+    server: "85.211.251.112"
+    port: 12883
+    uuid: "9207a3fc-18cc-4af7-ab1c-1c0000e57e37"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-NA 🇬🇧 GB-51.89.87.143:10055"
+    type: "vmess"
+    server: "51.89.87.143"
+    port: 10055
+    uuid: "52f9cbfb-5bb3-3dd3-b947-725e365c59f3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-NA 🇭🇰 HK-47.244.120.197:36703"
+    type: "vmess"
+    server: "47.244.120.197"
+    port: 36703
+    uuid: "45b83519-9c4f-4052-a11b-02e017b636d4"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-NA 🇲🇾 MY-85.211.246.141:12883"
+    type: "vmess"
+    server: "85.211.246.141"
+    port: 12883
+    uuid: "9207a3fc-18cc-4af7-ab1c-1c0000e57e37"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-TLS 🇺🇸 US-172.239.193.198:443"
+    type: "vmess"
+    server: "172.239.193.198"
+    port: 443
+    uuid: "9fbb6122-46e7-413b-b29d-749eef446c8d"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-TLS 🇹🇭 TH-185.78.165.153:10001"
+    type: "vmess"
+    server: "185.78.165.153"
+    port: 10001
+    uuid: "1020f486-5e30-11f1-9b9b-bb0e43c242bb"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-TLS 🇺🇸 US-172.236.100.134:443"
+    type: "vmess"
+    server: "172.236.100.134"
+    port: 443
+    uuid: "9fbb6122-46e7-413b-b29d-749eef446c8d"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-NA 🇲🇾 MY-172.197.170.109:12883"
+    type: "vmess"
+    server: "172.197.170.109"
+    port: 12883
+    uuid: "9207a3fc-18cc-4af7-ab1c-1c0000e57e37"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-TLS 🇺🇸 US-172.239.34.52:443"
+    type: "vmess"
+    server: "172.239.34.52"
+    port: 443
+    uuid: "9fbb6122-46e7-413b-b29d-749eef446c8d"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-NA 🇲🇾 MY-47.250.45.234:8613"
+    type: "vmess"
+    server: "47.250.45.234"
+    port: 8613
+    uuid: "80039b4d-bac0-4f89-82c7-54fad3b0a1ea"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-NA 🇬🇧 GB-51.89.87.143:10049"
+    type: "vmess"
+    server: "51.89.87.143"
+    port: 10049
+    uuid: "52f9cbfb-5bb3-3dd3-b947-725e365c59f3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-NA 🇫🇷 FR-51.77.200.55:10000"
+    type: "vmess"
+    server: "51.77.200.55"
+    port: 10000
+    uuid: "b7aa8ece-611e-11f1-956a-9f1aff305f8b"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 VM-WS-TLS 🇯🇵 JP-109.61.109.204:59023"
+    type: "vmess"
+    server: "109.61.109.204"
+    port: 59023
+    uuid: "9631096d-3032-4942-9446-bdf12665682b"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔒 TR-WS-NA 🏴‍☠️ NA-104.21.227.134:443"
+    type: "trojan"
+    server: "104.21.227.134"
+    port: 443
+    password: "77b19c69-9840-443d-a66b-f08c81b6950a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "usyzec7oxwa2720fq2.xn--9iqy04attf9l0c.top"
+    ws-opts:
+      path: "/images"
+      headers:
+        Host: "usyzec7oxwa2720fq2.xn--9iqy04attf9l0c.top"
+  - name: "🔒 TR-WS-TLS 🇺🇸 US-208.103.161.101:443"
+    type: "trojan"
+    server: "208.103.161.101"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.creationlong.org"
+  - name: "🔒 TR-WS-TLS 🇺🇸 US-66.81.247.155:443"
+    type: "trojan"
+    server: "66.81.247.155"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "🔒 TR-WS-TLS 🇺🇸 US-167.68.4.223:2096"
+    type: "trojan"
+    server: "167.68.4.223"
+    port: 2096
+    password: "Aimer"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "epcca.ambercc.filegear-sg.me"
+    ws-opts:
+      path: "/"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.22.63:443"
+    type: "trojan"
+    server: "104.18.22.63"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.79.73:443"
+    type: "trojan"
+    server: "104.16.79.73"
+    port: 443
+    password: "09548571-364e-4876-8e92-98f423e73913"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "aaa.r-o-o-t2.ir"
+    ws-opts:
+      path: "/I1P2U8JP51av1yhmNbaBgIw8"
+      headers:
+        Host: "aaa.r-o-o-t2.ir"
+  - name: "🔒 TR-WS-NA 🏴‍☠️ NA-104.18.32.47:443"
+    type: "trojan"
+    server: "104.18.32.47"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.gossipglove.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.gossipglove.com"
+  - name: "🔒 TR-WS-TLS 🇫🇮 FI-217.145.79.119:8443"
+    type: "trojan"
+    server: "217.145.79.119"
+    port: 8443
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-TLS 🇺🇸 US-216.24.57.6:443"
+    type: "trojan"
+    server: "216.24.57.6"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.creationlong.org"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.21.12.87:443"
+    type: "trojan"
+    server: "104.21.12.87"
+    port: 443
+    password: "0b65bb06-6b28-487a-8e3c-820dda51e977"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "series-v1.samanehha.co"
+    ws-opts:
+      path: "/43xf5zgeApzDAfhOHq"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-172.64.229.170:2096"
+    type: "trojan"
+    server: "172.64.229.170"
+    port: 2096
+    password: "1991"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "v2ngfast-v2ngfast-v2ngfast-v2ngfast.febeta9963.workers.dev"
+    ws-opts:
+      headers:
+        Host: "v2ngfast-v2ngfast-v2ngfast-v2ngfast.febeta9963.workers.dev"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.80.73:443"
+    type: "trojan"
+    server: "104.16.80.73"
+    port: 443
+    password: "09548571-364e-4876-8e92-98f423e73913"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "aaa.r-o-o-t2.ir"
+    ws-opts:
+      path: "/I1P2U8JP51av1yhmNbaBgIw8"
+      headers:
+        Host: "aaa.r-o-o-t2.ir"
+  - name: "🔒 TR-WS-NA 🏴‍☠️ NA-104.21.224.5:443"
+    type: "trojan"
+    server: "104.21.224.5"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.gossipglove.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.gossipglove.com"
+  - name: "🔒 TR-WS-NA 🏴‍☠️ NA-104.18.32.47:8443"
+    type: "trojan"
+    server: "104.18.32.47"
+    port: 8443
+    password: "ppmk"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "flat-firefly-6022.rixewi3168.workers.dev"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "flat-firefly-6022.rixewi3168.workers.dev"
+  - name: "🔒 TR-WS-TLS 🇩🇪 DE-45.80.111.7:443"
+    type: "trojan"
+    server: "45.80.111.7"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "🔒 TR-WS-NA 🏴‍☠️ NA-104.16.250.22:443"
+    type: "trojan"
+    server: "104.16.250.22"
+    port: 443
+    password: "77b19c69-9840-443d-a66b-f08c81b6950a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sgp1.xn--ghq880n3na965a.com"
+    ws-opts:
+      path: "/images"
+      headers:
+        Host: "sgp1.xn--ghq880n3na965a.com"
+  - name: "🔒 TR-WS-TLS 🇩🇪 DE-18.194.183.74:2053"
+    type: "trojan"
+    server: "18.194.183.74"
+    port: 2053
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+      headers:
+        Host: "Koma-YT.PAGeS.Dev"
+  - name: "🔒 TR-WS-NA 🇮🇷 IR-185.143.233.200:2082"
+    type: "trojan"
+    server: "185.143.233.200"
+    port: 2082
+    password: "fTkGeLgRco"
+    udp: true
+    tls: true
+    network: "ws"
+  - name: "🔒 TR-WS-TLS 🇳🇱 NL-62.84.103.249:8443"
+    type: "trojan"
+    server: "62.84.103.249"
+    port: 8443
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-NA 🏴‍☠️ NA-104.18.23.63:443"
+    type: "trojan"
+    server: "104.18.23.63"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/assignment"
+  - name: "🔒 TR-WS-TLS 🇫🇮 FI-46.8.238.49:2053"
+    type: "trojan"
+    server: "46.8.238.49"
+    port: 2053
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.72.40:443"
+    type: "trojan"
+    server: "104.16.72.40"
+    port: 443
+    password: "mitivpn"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "SaDszDx.glObaL.ssl.fastly.net.mItIvPN.store"
+    ws-opts:
+      path: "https://chatgpt.com"
+      headers:
+        Host: "mItIvPN.glOBaL.ssl.mItIvPN.store"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.7.147:443"
+    type: "trojan"
+    server: "104.18.7.147"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+  - name: "🔒 TR-WS-TLS 🇷🇺 RU-45.67.215.214:443"
+    type: "trojan"
+    server: "45.67.215.214"
+    port: 443
+    password: "78defd88-d333-67a5-9c34-d3bcef5816eb"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "tirex.sugarbreaker1.workers.dev"
+    ws-opts:
+      path: "/@TirexNet"
+      headers:
+        Host: "tirex.sugarbreaker1.workers.dev"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.90.120:443"
+    type: "trojan"
+    server: "104.16.90.120"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-141.101.90.101:443"
+    type: "trojan"
+    server: "141.101.90.101"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-188.114.97.3:443"
+    type: "trojan"
+    server: "188.114.97.3"
+    port: 443
+    password: "Puj01Rc8UcA9IzcFcYOs8KMOhCz6aX2Q"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "mfyousheng.nl.eu.org"
+    ws-opts:
+      path: "/tjwsLhx0SFASG4l9FERJ1g"
+      headers:
+        Host: "mfyousheng.nl.eu.org"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.21.40.34:443"
+    type: "trojan"
+    server: "104.21.40.34"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.gossipglove.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.gossipglove.com"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-173.245.58.57:8443"
+    type: "trojan"
+    server: "173.245.58.57"
+    port: 8443
+    password: "4646"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "v2ngfast-v2ngfast-v2ngfast-v2ngfast.moket12807.workers.dev"
+    ws-opts:
+      headers:
+        Host: "v2ngfast-v2ngfast-v2ngfast-v2ngfast.moket12807.workers.dev"
+  - name: "🔒 TR-WS-TLS 🇳🇱 NL-82.115.6.129:2053"
+    type: "trojan"
+    server: "82.115.6.129"
+    port: 2053
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-TLS 🇪🇸 ES-109.234.211.66:8443"
+    type: "trojan"
+    server: "109.234.211.66"
+    port: 8443
+    password: "trojan"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "store.timimi.dpdns.org"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "store.timimi.dpdns.org"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-172.64.147.29:443"
+    type: "trojan"
+    server: "172.64.147.29"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.gossipglove.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.83.8:443"
+    type: "trojan"
+    server: "104.16.83.8"
+    port: 443
+    password: "Ng35283528"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "c2.validbv3528.eu.org"
+    ws-opts:
+      path: "/?ed=2560"
+      headers:
+        Host: "c2.validbv3528.eu.org"
+  - name: "🔒 TR-WS-NA 🏴‍☠️ NA-162.159.152.2:443"
+    type: "trojan"
+    server: "162.159.152.2"
+    port: 443
+    password: "77b19c69-9840-443d-a66b-f08c81b6950a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "usl16qf2h2j36ow.xinshiji.icu"
+    ws-opts:
+      path: "/images"
+      headers:
+        Host: "usl16qf2h2j36ow.xinshiji.icu"
+  - name: "🔒 TR-WS-NA 🏴‍☠️ NA-104.18.185.26:443"
+    type: "trojan"
+    server: "104.18.185.26"
+    port: 443
+    password: "77b19c69-9840-443d-a66b-f08c81b6950a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "usl16qf2h2j36ow.xinshiji.icu"
+    ws-opts:
+      path: "/images"
+      headers:
+        Host: "usl16qf2h2j36ow.xinshiji.icu"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-172.66.153.92:443"
+    type: "trojan"
+    server: "172.66.153.92"
+    port: 443
+    password: "mitivpn"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "mitivpn.dsech.ss.ssandfdsgx.gloteefghedcal.ssl.fastly.net.b5r.ir"
+    ws-opts:
+      path: "https://chatgpt.com"
+  - name: "🔒 TR-WS-NA 🏴‍☠️ NA-172.64.147.24:443"
+    type: "trojan"
+    server: "172.64.147.24"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.gossipglove.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.gossipglove.com"
+  - name: "🔒 TR-WS-TLS 🇫🇷 FR-193.42.61.121:8443"
+    type: "trojan"
+    server: "193.42.61.121"
+    port: 8443
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-TLS 🇫🇮 FI-194.164.235.62:8443"
+    type: "trojan"
+    server: "194.164.235.62"
+    port: 8443
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-172.64.147.52:443"
+    type: "trojan"
+    server: "172.64.147.52"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.multiplydose.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.20.25.9:443"
+    type: "trojan"
+    server: "104.20.25.9"
+    port: 443
+    password: "mitivpn"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "mitivpn.dsech.ss.ssandfdsgx.gloteefghedcal.ssl.fastly.net.b5r.ir"
+    ws-opts:
+      path: "https://chatgpt.com"
+  - name: "🔒 TR-WS-TLS 🇫🇮 FI-188.215.31.110:8443"
+    type: "trojan"
+    server: "188.215.31.110"
+    port: 8443
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.12.149:443"
+    type: "trojan"
+    server: "104.18.12.149"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "🔒 TR-WS-NA 🇺🇸 US-216.24.57.7:443"
+    type: "trojan"
+    server: "216.24.57.7"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.211.9:8443"
+    type: "trojan"
+    server: "104.16.211.9"
+    port: 8443
+    password: "Mojtaba-shieldheart"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "broken-bread-6ba6.shieldheart4.workers.dev"
+    ws-opts:
+      headers:
+        Host: "broken-bread-6ba6.shieldheart4.workers.dev"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-162.159.33.81:443"
+    type: "trojan"
+    server: "162.159.33.81"
+    port: 443
+    password: "7964"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "v2ngfast-v2ngfast-v2ngfast-v2ngfast.novaye6130.workers.dev"
+    ws-opts:
+      headers:
+        Host: "v2ngfast-v2ngfast-v2ngfast-v2ngfast.novaye6130.workers.dev"
+  - name: "🔒 TR-WS-NA 🏴‍☠️ NA-104.18.9.83:443"
+    type: "trojan"
+    server: "104.18.9.83"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "🔒 TR-WS-TLS 🇸🇨 SC-45.130.125.160:443"
+    type: "trojan"
+    server: "45.130.125.160"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "🔒 TR-WS-TLS 🇫🇮 FI-94.183.190.229:2053"
+    type: "trojan"
+    server: "94.183.190.229"
+    port: 2053
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.32.37:443"
+    type: "trojan"
+    server: "104.18.32.37"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.gossipglove.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "🔒 TR-WS-NA 🏴‍☠️ NA-104.17.25.173:443"
+    type: "trojan"
+    server: "104.17.25.173"
+    port: 443
+    password: "77b19c69-9840-443d-a66b-f08c81b6950a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "usl16qf2h2j36ow.xinshiji.icu"
+    ws-opts:
+      path: "/images"
+      headers:
+        Host: "usl16qf2h2j36ow.xinshiji.icu"
+  - name: "🔒 TR-WS-NA 🇸🇬 SG-13.212.142.141:20230"
+    type: "trojan"
+    server: "13.212.142.141"
+    port: 20230
+    password: "2ba7e4d0-f2f9-456e-a43e-f5a724d7e367"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.alibaba.com"
+  - name: "🔒 TR-WS-TLS 🇸🇪 SE-62.60.151.252:8443"
+    type: "trojan"
+    server: "62.60.151.252"
+    port: 8443
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-TLS 🇯🇵 JP-47.245.62.4:8443"
+    type: "trojan"
+    server: "47.245.62.4"
+    port: 8443
+    password: "eeb6823c-b926-4ea2-866a-5542edd26e59"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "dxy1h.twiladaphne.ndjp.net"
+    ws-opts:
+      path: "/proxyip=104.168.132.123,172.104.53.198,85.121.50.16,151.242.125.226"
+      headers:
+        Host: "dxy1h.twiladaphne.ndjp.net"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.152.229:443"
+    type: "trojan"
+    server: "104.18.152.229"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "🔒 TR-WS-TLS 🇫🇷 FR-77.110.106.55:8443"
+    type: "trojan"
+    server: "77.110.106.55"
+    port: 8443
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-NA 🏴‍☠️ NA-104.20.6.134:443"
+    type: "trojan"
+    server: "104.20.6.134"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "🔒 TR-WS-TLS 🇪🇸 ES-103.45.245.208:2053"
+    type: "trojan"
+    server: "103.45.245.208"
+    port: 2053
+    password: "rYuChHcwQZskq9E0zdoR"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "vpn5.rnmcnm.com"
+    ws-opts:
+      path: "/ws-79dffb8106db"
+      headers:
+        Host: "vpn5.rnmcnm.com"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-8.39.125.15:2083"
+    type: "trojan"
+    server: "8.39.125.15"
+    port: 2083
+    password: "2929"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "v2ngfast-v2ngfast-v2ngfast-v2ngfast.wiyol35440.workers.dev"
+    ws-opts:
+      headers:
+        Host: "v2ngfast-v2ngfast-v2ngfast-v2ngfast.wiyol35440.workers.dev"
+  - name: "🔒 TR-WS-TLS 🇫🇷 FR-62.60.157.104:8443"
+    type: "trojan"
+    server: "62.60.157.104"
+    port: 8443
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-NA 🇮🇷 IR-185.143.234.200:2082"
+    type: "trojan"
+    server: "185.143.234.200"
+    port: 2082
+    password: "fTkGeLgRco"
+    udp: true
+    tls: true
+    network: "ws"
+  - name: "🔒 TR-WS-TLS 🇪🇸 ES-185.114.72.31:2053"
+    type: "trojan"
+    server: "185.114.72.31"
+    port: 2053
+    password: "fa115af5-0647-4549-acd9-5166695ea2de"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "joss.gpj.web.id"
+    ws-opts:
+      headers:
+        Host: "joss.gpj.web.id"
+  - name: "🔒 TR-WS-TLS 🇫🇮 FI-188.215.31.98:2053"
+    type: "trojan"
+    server: "188.215.31.98"
+    port: 2053
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-NA 🏴‍☠️ NA-104.17.147.22:443"
+    type: "trojan"
+    server: "104.17.147.22"
+    port: 443
+    password: "A4u^p(_UR*F6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "027.ELeCTroCelLco-CF-027.wORkERS.dEv"
+    ws-opts:
+      path: "/eyJqdW5rIjoidlhnMXN5OXFUSiIsInByb3RvY29sIjoidHIiLCJtb2RlIjoicHJveHlpcCIsInBhbmVsSVBzIjpbXX0="
+      headers:
+        Host: "027.electrocellco-cf-027.workers.dev"
+  - name: "🔒 TR-WS-TLS 🇬🇷 GR-91.186.217.16:8443"
+    type: "trojan"
+    server: "91.186.217.16"
+    port: 8443
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.152.225:443"
+    type: "trojan"
+    server: "104.18.152.225"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.8.83:443"
+    type: "trojan"
+    server: "104.18.8.83"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "🔒 TR-WS-NA 🇸🇬 SG-13.212.216.60:20230"
+    type: "trojan"
+    server: "13.212.216.60"
+    port: 20230
+    password: "2ba7e4d0-f2f9-456e-a43e-f5a724d7e367"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.alibaba.com"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-162.159.153.2:443"
+    type: "trojan"
+    server: "162.159.153.2"
+    port: 443
+    password: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sni.111000.dynv6.net"
+    ws-opts:
+      path: "/?proxyip=ip.111000.de5.net%3A443"
+      headers:
+        Host: "sni.111000.dynv6.net"
+  - name: "🔒 TR-WS-TLS 🇺🇸 US-151.101.108.223:443"
+    type: "trojan"
+    server: "151.101.108.223"
+    port: 443
+    password: "dbyec1mkz198dzk9"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "default.ssl.fastly.net"
+    ws-opts:
+      path: "/TELEGRAM_NUFiLTER"
+      headers:
+        Host: "nleiyajji.global.ssl.fastly.net"
+  - name: "🔒 TR-WS-TLS 🇫🇮 FI-94.183.191.228:8443"
+    type: "trojan"
+    server: "94.183.191.228"
+    port: 8443
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-172.67.192.215:443"
+    type: "trojan"
+    server: "172.67.192.215"
+    port: 443
+    password: "d0728e94-82c2-456b-b5d4-eeab540599df"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "joss.krikkrik.xyz"
+    ws-opts:
+      path: "/Free-VPN-CF-Geo-Project/AE5"
+      headers:
+        Host: "joss.krikkrik.xyz"
+  - name: "🔒 TR-WS-TLS 🇺🇸 US-199.232.78.158:443"
+    type: "trojan"
+    server: "199.232.78.158"
+    port: 443
+    password: "mitivpn"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "global.fastly.com"
+    ws-opts:
+      path: "/720f09dba195249b423f771661162528/workers/services/view/mitivpn/production/settings"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.12.149:8443"
+    type: "trojan"
+    server: "104.18.12.149"
+    port: 8443
+    password: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sni.111000.dynv6.net"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "sni.111000.dynv6.net"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-8.35.211.159:2087"
+    type: "trojan"
+    server: "8.35.211.159"
+    port: 2087
+    password: "1991"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "v2ngfast-v2ngfast-v2ngfast-v2ngfast.wijer68412.workers.dev"
+    ws-opts:
+      headers:
+        Host: "v2ngfast-v2ngfast-v2ngfast-v2ngfast.wijer68412.workers.dev"
+  - name: "🔒 TR-WS-NA 🏴‍☠️ NA-104.17.148.22:443"
+    type: "trojan"
+    server: "104.17.148.22"
+    port: 443
+    password: "A4u^p(_UR*F6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "027.ELeCTroCelLco-CF-027.wORkERS.dEv"
+    ws-opts:
+      path: "/eyJqdW5rIjoidlhnMXN5OXFUSiIsInByb3RvY29sIjoidHIiLCJtb2RlIjoicHJveHlpcCIsInBhbmVsSVBzIjpbXX0="
+      headers:
+        Host: "027.electrocellco-cf-027.workers.dev"
+  - name: "🔒 TR-WS-TLS 🇧🇦 BA-185.99.2.175:443"
+    type: "trojan"
+    server: "185.99.2.175"
+    port: 443
+    password: "317b5e7d-e52c-48ed-bcfe-64387b0d2a12"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "joss.gpj.web.id"
+    ws-opts:
+      headers:
+        Host: "joss.gpj.web.id"
+  - name: "🔒 TR-WS-TLS 🇸🇪 SE-185.146.173.158:443"
+    type: "trojan"
+    server: "185.146.173.158"
+    port: 443
+    password: "auto"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "esetsecuritylicense.bwnsmv.workers.dev"
+    ws-opts:
+      headers:
+        Host: "esetsecuritylicense.bwnsmv.workers.dev"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.20.5.134:2053"
+    type: "trojan"
+    server: "104.20.5.134"
+    port: 2053
+    password: "YwuvGJk36B"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "kotlet.arshiacomplus.dpdns.org"
+    ws-opts:
+      path: "/yamtekodasayahhh"
+      headers:
+        Host: "kotlet.arshiacomplus.dpdns.org"
+  - name: "🔒 TR-WS-TLS 🇫🇮 FI-31.59.41.182:8443"
+    type: "trojan"
+    server: "31.59.41.182"
+    port: 8443
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.13.149:443"
+    type: "trojan"
+    server: "104.18.13.149"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.21.35.43:443"
+    type: "trojan"
+    server: "104.21.35.43"
+    port: 443
+    password: "auto"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "esetsecuritylicense3.wawafec355.workers.dev"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "esetsecuritylicense3.wawafec355.workers.dev"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-8.6.112.0:443"
+    type: "trojan"
+    server: "8.6.112.0"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "🔒 TR-WS-TLS 🇫🇮 FI-185.92.183.132:2053"
+    type: "trojan"
+    server: "185.92.183.132"
+    port: 2053
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-188.114.96.4:443"
+    type: "trojan"
+    server: "188.114.96.4"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.24.59.254:443"
+    type: "trojan"
+    server: "104.24.59.254"
+    port: 443
+    password: "cf0912c2-7048-9bd8-3537-c629d470a27b"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "tiny-thunder-e91e.izehgol1405.workers.dev"
+    ws-opts:
+      path: "/sync"
+      headers:
+        Host: "tiny-thunder-e91e.izehgol1405.workers.dev"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-172.66.45.2:443"
+    type: "trojan"
+    server: "172.66.45.2"
+    port: 443
+    password: "auto"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "dcf741e8.epeius-2gy.pages.dev"
+    ws-opts:
+      headers:
+        Host: "dcf741e8.epeius-2gy.pages.dev"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.17.121.9:443"
+    type: "trojan"
+    server: "104.17.121.9"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.20.6.134:2053"
+    type: "trojan"
+    server: "104.20.6.134"
+    port: 2053
+    password: "YwuvGJk36B"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "kotlet.arshiacomplus.dpdns.org"
+    ws-opts:
+      path: "/yamtekodasayahhh"
+      headers:
+        Host: "kotlet.arshiacomplus.dpdns.org"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-162.159.152.4:8443"
+    type: "trojan"
+    server: "162.159.152.4"
+    port: 8443
+    password: "trojan"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "azadnet-f03.pages.dev"
+    ws-opts:
+      path: "/?ed"
+      headers:
+        Host: "azadnet-f03.pages.dev"
+  - name: "🔒 TR-WS-NA 🏴‍☠️ NA-104.19.174.68:443"
+    type: "trojan"
+    server: "104.19.174.68"
+    port: 443
+    password: "77b19c69-9840-443d-a66b-f08c81b6950a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "usl16qf2h2j36ow.xinshiji.icu"
+    ws-opts:
+      path: "/images"
+      headers:
+        Host: "usl16qf2h2j36ow.xinshiji.icu"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.11.110:443"
+    type: "trojan"
+    server: "104.18.11.110"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.multiplydose.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "🔒 TR-WS-NA 🇸🇬 SG-52.221.228.39:20230"
+    type: "trojan"
+    server: "52.221.228.39"
+    port: 20230
+    password: "2ba7e4d0-f2f9-456e-a43e-f5a724d7e367"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.alibaba.com"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-162.159.17.189:443"
+    type: "trojan"
+    server: "162.159.17.189"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.multiplydose.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.multiplydose.com"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.24.145.86:2087"
+    type: "trojan"
+    server: "104.24.145.86"
+    port: 2087
+    password: "Mojtaba-shieldheart"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "broken-bread-6ba6.shieldheart4.workers.dev"
+    ws-opts:
+      headers:
+        Host: "broken-bread-6ba6.shieldheart4.workers.dev"
+  - name: "🔒 TR-WS-TLS 🇫🇷 FR-31.56.228.7:2053"
+    type: "trojan"
+    server: "31.56.228.7"
+    port: 2053
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-TLS 🇫🇷 FR-46.226.167.115:2053"
+    type: "trojan"
+    server: "46.226.167.115"
+    port: 2053
+    password: "8r<[9'l6hAO#8ZQi"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "Koma-YT.PAGeS.Dev"
+    ws-opts:
+      path: "/trTelegram🇨🇳+@WangCai2"
+  - name: "🔒 TR-WS-NA 🇺🇸 US-184.33.92.115:20230"
+    type: "trojan"
+    server: "184.33.92.115"
+    port: 20230
+    password: "2ba7e4d0-f2f9-456e-a43e-f5a724d7e367"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.alibaba.com"
+  - name: "🔒 TR-WS-NA 🇯🇵 JP-54.178.123.130:20230"
+    type: "trojan"
+    server: "54.178.123.130"
+    port: 20230
+    password: "2ba7e4d0-f2f9-456e-a43e-f5a724d7e367"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.alibaba.com"
+  - name: "🔒 TR-WS-TLS 🏴‍☠️ NA-104.25.165.81:8443"
+    type: "trojan"
+    server: "104.25.165.81"
+    port: 8443
+    password: "123456"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "top-azx.pages.dev"
+    ws-opts:
+      headers:
+        Host: "top-azx.pages.dev"
+proxy-groups:
+  - name: "نوع انتخاب پروکسی 🔀"
+    type: "select"
+    proxies:
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+      - "قطع اینترنت ⛔"
+  - name: "دستی 🤏🏻"
+    type: "select"
+    proxies:
+      - "🔒 VL-WS-TLS 🇺🇸 US-104.129.167.138:2096"
+      - "🔒 VL-WS-NA 🇮🇷 IR-185.143.235.201:2052"
+      - "🔒 VL-WS-TLS 🇺🇸 US-165.232.136.226:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.33.162:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.53.227:2087"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.205.1:2053"
+      - "🔒 VL-WS-NA 🇮🇷 IR-185.143.233.235:80"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-94.183.149.168:8880"
+      - "🔒 VL-WS-NONE 🇷🇺 RU-185.148.105.30:8880"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.20.94:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.145.166:2087"
+      - "🔒 VL-WS-TLS 🇩🇪 DE-64.226.111.107:443"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.19.229.21:2095"
+      - "🔒 VL-WS-TLS 🇳🇱 NL-2.59.183.233:444"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.195.149:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.26.3.162:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-173.245.59.217:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.160.192:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.129.196:443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.235.201:8080"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.20.7.182:8443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-206.223.84.247:443"
+      - "🔒 VL-WS-TLS 🇳🇱 NL-45.131.6.191:2096"
+      - "🔒 VL-WS-TLS 🇩🇪 DE-18.198.227.161:443"
+      - "🔒 VL-WS-TLS 🇭🇰 HK-154.38.116.8:443"
+      - "🔒 VL-WS-NA 🇮🇷 IR-185.143.234.21:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.0.4:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-108.162.195.64:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.148.22:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.11.130:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.36.20:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-141.101.122.148:443"
+      - "🔒 VL-WS-TLS 🇸🇨 SC-45.130.125.158:2083"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.3.133:2083"
+      - "🔒 VL-WS-TLS 🇩🇪 DE-185.135.9.138:2096"
+      - "🔒 VL-WS-NONE 🇺🇸 US-130.250.137.30:8880"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.33.121:8443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.155.209:2087"
+      - "🔒 VL-WS-TLS 🇯🇵 JP-153.121.45.101:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.42.54:443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.232.32:2095"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-8.39.125.90:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.120.57:443"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.18.12.229:8880"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-104.21.46.101:2086"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.233.235:8080"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.66.47.95:443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-69.63.218.168:10101"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.66.45.18:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.148.251:2096"
+      - "🔒 VL-WS-NONE 🇫🇷 FR-141.95.52.109:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.155.209:443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.234.122:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.130.66:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.153.203:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.66.44.211:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.38.172:443"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-172.64.145.158:80"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.18.4.46:8880"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.107.111:443"
+      - "🔒 VL-WS-TLS 🇫🇷 FR-57.128.183.59:8443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-198.62.62.231:443"
+      - "🔒 VL-WS-NA 🇮🇷 IR-185.143.234.235:80"
+      - "🔒 VL-WS-TLS 🇺🇸 US-159.246.55.253:2096"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.64.105:2053"
+      - "🔒 VL-WS-TLS 🇮🇷 IR-185.143.233.5:8443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.152.233:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.91.32:2087"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.16.1.3:2095"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.73.71:2096"
+      - "🔒 VL-WS-TLS 🇷🇺 RU-185.148.104.253:2096"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.27.117.84:8443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.234.235:8080"
+      - "🔒 VL-WS-TLS 🇺🇸 US-208.103.161.110:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.248.84:443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-151.101.194.219:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.253.172:443"
+      - "🔒 VL-WS-TLS 🇷🇺 RU-176.124.223.138:2096"
+      - "🔒 VL-WS-TLS 🇺🇸 US-199.181.197.138:2096"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.58.65:443"
+      - "🔒 VL-WS-TLS 🇮🇷 IR-79.127.127.68:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.206.214:443"
+      - "🔒 VL-WS-NA 🇮🇷 IR-185.143.233.122:8880"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.192.173:443"
+      - "🔒 VL-WS-NONE 🇷🇺 RU-45.142.120.30:8880"
+      - "🔒 VL-WS-TLS 🇫🇷 FR-149.202.58.99:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.34.103:2083"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.38.110:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.40.152:8443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.153.4:443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-132.226.119.111:24361"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.234.122:2052"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.26.14.16:8080"
+      - "🔒 VL-WS-TLS 🇫🇷 FR-20.33.23.66:443"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-104.18.32.47:2086"
+      - "🔒 VL-WS-NONE 🇵🇱 PL-82.40.62.5:8080"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.192.105:443"
+      - "🔒 VL-WS-NONE 🇹🇷 TR-5.188.190.94:2052"
+      - "🔒 VL-WS-TLS 🇺🇸 US-66.235.200.1:443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-198.62.62.4:443"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.19.250.28:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.33.217:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.152.4:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.3.219:8443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.171.241:2087"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.25.123.80:443"
+      - "🔒 VL-WS-TLS 🇷🇺 RU-45.67.215.233:443"
+      - "🔒 VL-WS-TLS 🇬🇧 GB-194.36.55.138:2096"
+      - "🔒 VL-WS-TLS 🇺🇸 US-65.8.54.85:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.245.168:8443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-167.68.4.253:2096"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.254.89:443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-66.81.247.155:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.44.205:443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-166.62.104.61:2096"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-87.107.82.171:8080"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-198.41.223.103:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.12.151:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.87.65:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-198.41.223.184:2096"
+      - "🔒 VL-WS-TLS 🇫🇷 FR-152.228.134.48:2053"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.63.25:2083"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-198.41.223.121:443"
+      - "🔒 VL-WS-TLS 🇫🇷 FR-38.242.229.125:8443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.65.15:443"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.17.147.22:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.60.231:443"
+      - "🔒 VL-WS-NONE 🇳🇱 NL-163.172.214.188:80"
+      - "🔒 VL-WS-TLS 🇺🇸 US-208.103.161.170:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.52.30:2087"
+      - "🔒 VL-WS-NONE 🇳🇱 NL-163.172.213.174:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.20.5.134:443"
+      - "🔒 VL-WS-NA 🇺🇸 US-151.101.193.55:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.12.41:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.172.97:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-188.114.96.250:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.144.20:443"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-104.16.149.244:2095"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.173.68:2083"
+      - "🔒 VL-WS-TLS 🇮🇷 IR-5.160.128.69:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-190.93.245.94:2096"
+      - "🔒 VL-WS-TLS 🇰🇷 KR-152.70.249.67:443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.234.122:8880"
+      - "🔒 VL-WS-TLS 🇷🇺 RU-45.67.215.165:443"
+      - "🔒 VL-WS-NA 🇸🇪 SE-185.146.173.58:8080"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.82.55:443"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-188.114.97.6:80"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.235.200:8880"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-104.21.224.176:80"
+      - "🔒 VL-WS-NA 🇺🇸 US-199.232.197.131:80"
+      - "🔒 VL-WS-NA 🇮🇷 IR-185.143.233.122:8080"
+      - "🔒 VL-WS-TLS 🇺🇸 US-65.8.54.107:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.72.251:443"
+      - "🔒 VL-WS-TLS 🇩🇪 DE-63.177.223.7:22224"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-104.21.5.177:80"
+      - "🔒 VL-WS-TLS 🇺🇸 US-141.193.213.11:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.250.22:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.146.211:2087"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.63.25:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.25.249.113:2096"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.152.23:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-198.41.208.110:443"
+      - "🔒 VL-WS-TLS 🇰🇿 KZ-194.59.5.238:2096"
+      - "🔒 VL-WS-TLS 🇺🇸 US-141.193.213.10:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.76.108:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.155.229:443"
+      - "🔒 VL-WS-TLS 🇩🇪 DE-185.158.133.138:2096"
+      - "🔒 VL-WS-TLS 🇺🇸 US-43.130.134.123:65001"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.245.82:8443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.66.47.156:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.145.21:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.60.105:443"
+      - "🔒 VL-WS-TLS 🇸🇨 SC-45.130.125.160:443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.232.35:2095"
+      - "🔒 VL-WS-TLS 🇳🇱 NL-89.125.123.248:443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.232.18:2095"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.117.43:443"
+      - "🔒 VL-WS-NONE 🇺🇸 US-165.215.250.12:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.64.105:8443"
+      - "🔒 VL-WS-NONE 🇺🇸 US-77.110.127.191:9443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-209.46.30.149:443"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-104.21.17.199:8880"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.41.131:443"
+      - "🔒 VL-WS-NONE 🇸🇨 SC-154.197.75.50:8880"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.16.86.2:80"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-172.67.211.74:80"
+      - "🔒 VL-WS-NONE 🇸🇨 SC-45.130.125.96:80"
+      - "🔒 VL-WS-TLS 🇸🇬 SG-45.32.103.8:20742"
+      - "🔒 VL-WS-TLS 🇱🇹 LT-212.80.218.89:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-188.114.97.6:2083"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.44.165:8443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.148.22:2087"
+      - "🔒 VL-WS-TLS 🇷🇺 RU-45.8.211.134:2096"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-188.114.97.6:8443"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-104.16.248.249:2095"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.20.6.134:2096"
+      - "🔒 VL-WS-TLS 🇩🇪 DE-89.116.46.210:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.66.131:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.146.222:2096"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.53.42:2087"
+      - "🔒 VL-WS-TLS 🇺🇸 US-199.232.78.158:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.26.15.30:2096"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-8.39.125.32:8443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-151.101.66.219:443"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-104.19.222.169:2082"
+      - "🔒 VL-WS-NA 🇺🇸 US-151.101.3.19:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.250.20:443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-160.153.0.179:443"
+      - "🔒 VL-WS-TLS 🇨🇦 CA-148.113.196.75:8443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.232.33:2095"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.193.138:443"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-104.18.28.7:2095"
+      - "🔒 VL-WS-NA 🇺🇸 US-151.101.129.55:80"
+      - "🔒 VL-WS-NONE 🇸🇨 SC-154.197.75.30:8880"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.149.159:2083"
+      - "🔒 VL-WS-TLS 🇯🇵 JP-54.178.110.17:4443"
+      - "🔒 VL-WS-NONE 🇩🇰 DK-45.148.31.0:15855"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.234.21:2086"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.163.76:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-190.93.246.137:8443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.232.55:2095"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.18.41.75:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.153.2:443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.232.59:2095"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.148.22:2053"
+      - "🔒 VL-WS-TLS 🇷🇺 RU-5.42.220.253:8443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.141.147:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.17.207:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.24.195.174:2096"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-172.67.174.133:2095"
+      - "🔒 VL-WS-TLS 🇺🇸 US-151.101.66.228:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.24.58.104:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.52.68:2087"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-172.64.146.163:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.185.98:2053"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-162.159.38.119:80"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-104.17.109.71:8080"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.210.179:2087"
+      - "🔒 VL-WS-TLS 🇬🇧 GB-185.193.29.138:2096"
+      - "🔒 VL-WS-NONE 🇷🇴 RO-45.85.118.93:2095"
+      - "🔒 VL-WS-NONE 🇱🇹 LT-88.216.67.30:8880"
+      - "🔒 VL-WS-NONE 🇺🇸 US-151.101.130.219:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.36.5:443"
+      - "🔒 VL-WS-TLS 🇷🇺 RU-45.67.215.41:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.26.0.221:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.145.202:2053"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.10.145:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-188.114.97.88:443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.234.200:2052"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.185.98:8443"
+      - "🔒 VL-WS-TLS 🇩🇪 DE-45.147.248.115:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.38.47:8443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-151.101.194.133:443"
+      - "🔒 VL-WS-NONE 🇺🇸 US-104.254.140.30:8880"
+      - "🔒 VL-WS-TLS 🇮🇷 IR-185.226.140.140:443"
+      - "🔒 VL-WS-NONE 🇬🇧 GB-91.193.58.79:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.229.21:2053"
+      - "🔒 VL-WS-TLS 🇺🇸 US-108.165.216.138:2096"
+      - "🔒 VL-WS-TLS 🇳🇿 NZ-202.37.33.80:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.163.249:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.145.158:443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.233.122:2052"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.18.105:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.149.209:443"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-104.17.95.220:2052"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.147.22:2083"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.42.163:2053"
+      - "🔒 VL-WS-TLS 🇰🇷 KR-121.180.225.222:16000"
+      - "🔒 VL-WS-TLS 🇸🇬 SG-43.175.169.174:443"
+      - "🔒 VL-WS-TLS 🇫🇷 FR-152.228.134.58:8443"
+      - "🔒 VL-WS-TLS 🇩🇪 DE-88.198.82.157:443"
+      - "🔒 VL-WS-NA 🇹🇷 TR-38.180.104.152:21077"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-188.114.97.6:443"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-188.114.96.3:443"
+      - "🔒 VL-WS-NONE 🇩🇪 DE-5.10.214.53:80"
+      - "🔒 VL-WS-NONE 🇮🇲 IM-185.162.230.30:8880"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-108.162.195.209:443"
+      - "🔒 VL-WS-NA 🇮🇷 IR-185.143.234.235:2086"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.21.35.228:2095"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.131.112:443"
+      - "🔒 VL-WS-TLS 🇫🇮 FI-31.58.137.126:8443"
+      - "🔒 VL-WS-TLS 🇳🇱 NL-212.192.20.65:2053"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-188.114.99.0:2096"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.17.147.22:2086"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.2.139:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.213.131:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-198.41.209.243:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.13.149:2053"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.232.201:2086"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.40.47:443"
+      - "🔒 VL-WS-TLS 🇩🇪 DE-178.105.65.54:7443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.26.38:2083"
+      - "🔒 VL-WS-NONE 🇫🇮 FI-157.180.123.25:443"
+      - "🔒 VL-WS-TLS 🇨🇭 CH-185.18.250.252:443"
+      - "🔒 VL-WS-NA 🇺🇸 US-31.76.11.206:45622"
+      - "🔒 VL-WS-NA 🇨🇾 CY-195.85.59.161:2095"
+      - "🔒 VL-WS-NA 🇫🇷 FR-162.19.228.119:80"
+      - "🔒 VL-WS-TLS 🇩🇪 DE-146.70.20.110:20205"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-108.162.194.119:80"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.17.148.22:8880"
+      - "🔒 VM-WS-NA 🇲🇾 MY-47.250.45.234:43063"
+      - "🔒 VM-WS-NA 🇬🇧 GB-51.89.87.143:10020"
+      - "🔒 VM-WS-NA 🇫🇷 FR-162.19.192.89:16626"
+      - "🔒 VM-WS-NA 🏴‍☠️ NA-104.31.16.38:80"
+      - "🔒 VM-WS-NA 🇲🇾 MY-47.250.149.51:50018"
+      - "🔒 VM-WS-NA 🏴‍☠️ NA-172.65.211.209:30041"
+      - "🔒 VM-WS-NA 🏴‍☠️ NA-141.101.122.190:2095"
+      - "🔒 VM-WS-NA 🏴‍☠️ NA-104.21.75.246:80"
+      - "🔒 VM-WS-NA 🇫🇷 FR-162.19.192.89:16644"
+      - "🔒 VM-WS-NA 🏴‍☠️ NA-104.19.40.48:8880"
+      - "🔒 VM-WS-NA 🇭🇰 HK-47.244.120.197:44867"
+      - "🔒 VM-WS-NA 🇬🇧 GB-51.89.87.143:10123"
+      - "🔒 VM-WS-NA 🇬🇧 GB-51.89.87.143:10034"
+      - "🔒 VM-WS-NA 🏴‍☠️ NA-104.19.57.4:2086"
+      - "🔒 VM-WS-TLS 🇫🇷 FR-162.19.254.232:2087"
+      - "🔒 VM-WS-NA 🇲🇾 MY-85.211.251.112:12883"
+      - "🔒 VM-WS-NA 🇬🇧 GB-51.89.87.143:10055"
+      - "🔒 VM-WS-NA 🇭🇰 HK-47.244.120.197:36703"
+      - "🔒 VM-WS-NA 🇲🇾 MY-85.211.246.141:12883"
+      - "🔒 VM-WS-TLS 🇺🇸 US-172.239.193.198:443"
+      - "🔒 VM-WS-TLS 🇹🇭 TH-185.78.165.153:10001"
+      - "🔒 VM-WS-TLS 🇺🇸 US-172.236.100.134:443"
+      - "🔒 VM-WS-NA 🇲🇾 MY-172.197.170.109:12883"
+      - "🔒 VM-WS-TLS 🇺🇸 US-172.239.34.52:443"
+      - "🔒 VM-WS-NA 🇲🇾 MY-47.250.45.234:8613"
+      - "🔒 VM-WS-NA 🇬🇧 GB-51.89.87.143:10049"
+      - "🔒 VM-WS-NA 🇫🇷 FR-51.77.200.55:10000"
+      - "🔒 VM-WS-TLS 🇯🇵 JP-109.61.109.204:59023"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.21.227.134:443"
+      - "🔒 TR-WS-TLS 🇺🇸 US-208.103.161.101:443"
+      - "🔒 TR-WS-TLS 🇺🇸 US-66.81.247.155:443"
+      - "🔒 TR-WS-TLS 🇺🇸 US-167.68.4.223:2096"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.22.63:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.79.73:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.18.32.47:443"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-217.145.79.119:8443"
+      - "🔒 TR-WS-TLS 🇺🇸 US-216.24.57.6:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.21.12.87:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-172.64.229.170:2096"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.80.73:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.21.224.5:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.18.32.47:8443"
+      - "🔒 TR-WS-TLS 🇩🇪 DE-45.80.111.7:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.16.250.22:443"
+      - "🔒 TR-WS-TLS 🇩🇪 DE-18.194.183.74:2053"
+      - "🔒 TR-WS-NA 🇮🇷 IR-185.143.233.200:2082"
+      - "🔒 TR-WS-TLS 🇳🇱 NL-62.84.103.249:8443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.18.23.63:443"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-46.8.238.49:2053"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.72.40:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.7.147:443"
+      - "🔒 TR-WS-TLS 🇷🇺 RU-45.67.215.214:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.90.120:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-141.101.90.101:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-188.114.97.3:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.21.40.34:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-173.245.58.57:8443"
+      - "🔒 TR-WS-TLS 🇳🇱 NL-82.115.6.129:2053"
+      - "🔒 TR-WS-TLS 🇪🇸 ES-109.234.211.66:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-172.64.147.29:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.83.8:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-162.159.152.2:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.18.185.26:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-172.66.153.92:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-172.64.147.24:443"
+      - "🔒 TR-WS-TLS 🇫🇷 FR-193.42.61.121:8443"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-194.164.235.62:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-172.64.147.52:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.20.25.9:443"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-188.215.31.110:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.12.149:443"
+      - "🔒 TR-WS-NA 🇺🇸 US-216.24.57.7:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.211.9:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-162.159.33.81:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.18.9.83:443"
+      - "🔒 TR-WS-TLS 🇸🇨 SC-45.130.125.160:443"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-94.183.190.229:2053"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.32.37:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.17.25.173:443"
+      - "🔒 TR-WS-NA 🇸🇬 SG-13.212.142.141:20230"
+      - "🔒 TR-WS-TLS 🇸🇪 SE-62.60.151.252:8443"
+      - "🔒 TR-WS-TLS 🇯🇵 JP-47.245.62.4:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.152.229:443"
+      - "🔒 TR-WS-TLS 🇫🇷 FR-77.110.106.55:8443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.20.6.134:443"
+      - "🔒 TR-WS-TLS 🇪🇸 ES-103.45.245.208:2053"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-8.39.125.15:2083"
+      - "🔒 TR-WS-TLS 🇫🇷 FR-62.60.157.104:8443"
+      - "🔒 TR-WS-NA 🇮🇷 IR-185.143.234.200:2082"
+      - "🔒 TR-WS-TLS 🇪🇸 ES-185.114.72.31:2053"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-188.215.31.98:2053"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.17.147.22:443"
+      - "🔒 TR-WS-TLS 🇬🇷 GR-91.186.217.16:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.152.225:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.8.83:443"
+      - "🔒 TR-WS-NA 🇸🇬 SG-13.212.216.60:20230"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-162.159.153.2:443"
+      - "🔒 TR-WS-TLS 🇺🇸 US-151.101.108.223:443"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-94.183.191.228:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-172.67.192.215:443"
+      - "🔒 TR-WS-TLS 🇺🇸 US-199.232.78.158:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.12.149:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-8.35.211.159:2087"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.17.148.22:443"
+      - "🔒 TR-WS-TLS 🇧🇦 BA-185.99.2.175:443"
+      - "🔒 TR-WS-TLS 🇸🇪 SE-185.146.173.158:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.20.5.134:2053"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-31.59.41.182:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.13.149:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.21.35.43:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-8.6.112.0:443"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-185.92.183.132:2053"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-188.114.96.4:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.24.59.254:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-172.66.45.2:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.17.121.9:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.20.6.134:2053"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-162.159.152.4:8443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.19.174.68:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.11.110:443"
+      - "🔒 TR-WS-NA 🇸🇬 SG-52.221.228.39:20230"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-162.159.17.189:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.24.145.86:2087"
+      - "🔒 TR-WS-TLS 🇫🇷 FR-31.56.228.7:2053"
+      - "🔒 TR-WS-TLS 🇫🇷 FR-46.226.167.115:2053"
+      - "🔒 TR-WS-NA 🇺🇸 US-184.33.92.115:20230"
+      - "🔒 TR-WS-NA 🇯🇵 JP-54.178.123.130:20230"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.25.165.81:8443"
+  - name: "خودکار (بهترین پینگ) 🤖"
+    type: "url-test"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+    lazy: true
+    proxies:
+      - "🔒 VL-WS-TLS 🇺🇸 US-104.129.167.138:2096"
+      - "🔒 VL-WS-NA 🇮🇷 IR-185.143.235.201:2052"
+      - "🔒 VL-WS-TLS 🇺🇸 US-165.232.136.226:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.33.162:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.53.227:2087"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.205.1:2053"
+      - "🔒 VL-WS-NA 🇮🇷 IR-185.143.233.235:80"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-94.183.149.168:8880"
+      - "🔒 VL-WS-NONE 🇷🇺 RU-185.148.105.30:8880"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.20.94:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.145.166:2087"
+      - "🔒 VL-WS-TLS 🇩🇪 DE-64.226.111.107:443"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.19.229.21:2095"
+      - "🔒 VL-WS-TLS 🇳🇱 NL-2.59.183.233:444"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.195.149:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.26.3.162:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-173.245.59.217:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.160.192:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.129.196:443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.235.201:8080"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.20.7.182:8443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-206.223.84.247:443"
+      - "🔒 VL-WS-TLS 🇳🇱 NL-45.131.6.191:2096"
+      - "🔒 VL-WS-TLS 🇩🇪 DE-18.198.227.161:443"
+      - "🔒 VL-WS-TLS 🇭🇰 HK-154.38.116.8:443"
+      - "🔒 VL-WS-NA 🇮🇷 IR-185.143.234.21:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.0.4:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-108.162.195.64:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.148.22:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.11.130:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.36.20:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-141.101.122.148:443"
+      - "🔒 VL-WS-TLS 🇸🇨 SC-45.130.125.158:2083"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.3.133:2083"
+      - "🔒 VL-WS-TLS 🇩🇪 DE-185.135.9.138:2096"
+      - "🔒 VL-WS-NONE 🇺🇸 US-130.250.137.30:8880"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.33.121:8443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.155.209:2087"
+      - "🔒 VL-WS-TLS 🇯🇵 JP-153.121.45.101:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.42.54:443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.232.32:2095"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-8.39.125.90:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.120.57:443"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.18.12.229:8880"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-104.21.46.101:2086"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.233.235:8080"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.66.47.95:443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-69.63.218.168:10101"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.66.45.18:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.148.251:2096"
+      - "🔒 VL-WS-NONE 🇫🇷 FR-141.95.52.109:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.155.209:443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.234.122:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.130.66:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.153.203:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.66.44.211:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.38.172:443"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-172.64.145.158:80"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.18.4.46:8880"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.107.111:443"
+      - "🔒 VL-WS-TLS 🇫🇷 FR-57.128.183.59:8443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-198.62.62.231:443"
+      - "🔒 VL-WS-NA 🇮🇷 IR-185.143.234.235:80"
+      - "🔒 VL-WS-TLS 🇺🇸 US-159.246.55.253:2096"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.64.105:2053"
+      - "🔒 VL-WS-TLS 🇮🇷 IR-185.143.233.5:8443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.152.233:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.91.32:2087"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.16.1.3:2095"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.73.71:2096"
+      - "🔒 VL-WS-TLS 🇷🇺 RU-185.148.104.253:2096"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.27.117.84:8443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.234.235:8080"
+      - "🔒 VL-WS-TLS 🇺🇸 US-208.103.161.110:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.248.84:443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-151.101.194.219:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.253.172:443"
+      - "🔒 VL-WS-TLS 🇷🇺 RU-176.124.223.138:2096"
+      - "🔒 VL-WS-TLS 🇺🇸 US-199.181.197.138:2096"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.58.65:443"
+      - "🔒 VL-WS-TLS 🇮🇷 IR-79.127.127.68:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.206.214:443"
+      - "🔒 VL-WS-NA 🇮🇷 IR-185.143.233.122:8880"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.192.173:443"
+      - "🔒 VL-WS-NONE 🇷🇺 RU-45.142.120.30:8880"
+      - "🔒 VL-WS-TLS 🇫🇷 FR-149.202.58.99:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.34.103:2083"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.38.110:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.40.152:8443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.153.4:443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-132.226.119.111:24361"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.234.122:2052"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.26.14.16:8080"
+      - "🔒 VL-WS-TLS 🇫🇷 FR-20.33.23.66:443"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-104.18.32.47:2086"
+      - "🔒 VL-WS-NONE 🇵🇱 PL-82.40.62.5:8080"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.192.105:443"
+      - "🔒 VL-WS-NONE 🇹🇷 TR-5.188.190.94:2052"
+      - "🔒 VL-WS-TLS 🇺🇸 US-66.235.200.1:443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-198.62.62.4:443"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.19.250.28:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.33.217:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.152.4:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.3.219:8443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.171.241:2087"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.25.123.80:443"
+      - "🔒 VL-WS-TLS 🇷🇺 RU-45.67.215.233:443"
+      - "🔒 VL-WS-TLS 🇬🇧 GB-194.36.55.138:2096"
+      - "🔒 VL-WS-TLS 🇺🇸 US-65.8.54.85:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.245.168:8443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-167.68.4.253:2096"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.254.89:443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-66.81.247.155:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.44.205:443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-166.62.104.61:2096"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-87.107.82.171:8080"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-198.41.223.103:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.12.151:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.87.65:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-198.41.223.184:2096"
+      - "🔒 VL-WS-TLS 🇫🇷 FR-152.228.134.48:2053"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.63.25:2083"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-198.41.223.121:443"
+      - "🔒 VL-WS-TLS 🇫🇷 FR-38.242.229.125:8443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.65.15:443"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.17.147.22:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.60.231:443"
+      - "🔒 VL-WS-NONE 🇳🇱 NL-163.172.214.188:80"
+      - "🔒 VL-WS-TLS 🇺🇸 US-208.103.161.170:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.52.30:2087"
+      - "🔒 VL-WS-NONE 🇳🇱 NL-163.172.213.174:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.20.5.134:443"
+      - "🔒 VL-WS-NA 🇺🇸 US-151.101.193.55:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.12.41:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.172.97:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-188.114.96.250:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.144.20:443"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-104.16.149.244:2095"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.173.68:2083"
+      - "🔒 VL-WS-TLS 🇮🇷 IR-5.160.128.69:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-190.93.245.94:2096"
+      - "🔒 VL-WS-TLS 🇰🇷 KR-152.70.249.67:443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.234.122:8880"
+      - "🔒 VL-WS-TLS 🇷🇺 RU-45.67.215.165:443"
+      - "🔒 VL-WS-NA 🇸🇪 SE-185.146.173.58:8080"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.82.55:443"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-188.114.97.6:80"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.235.200:8880"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-104.21.224.176:80"
+      - "🔒 VL-WS-NA 🇺🇸 US-199.232.197.131:80"
+      - "🔒 VL-WS-NA 🇮🇷 IR-185.143.233.122:8080"
+      - "🔒 VL-WS-TLS 🇺🇸 US-65.8.54.107:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.72.251:443"
+      - "🔒 VL-WS-TLS 🇩🇪 DE-63.177.223.7:22224"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-104.21.5.177:80"
+      - "🔒 VL-WS-TLS 🇺🇸 US-141.193.213.11:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.250.22:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.146.211:2087"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.63.25:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.25.249.113:2096"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.152.23:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-198.41.208.110:443"
+      - "🔒 VL-WS-TLS 🇰🇿 KZ-194.59.5.238:2096"
+      - "🔒 VL-WS-TLS 🇺🇸 US-141.193.213.10:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.76.108:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.155.229:443"
+      - "🔒 VL-WS-TLS 🇩🇪 DE-185.158.133.138:2096"
+      - "🔒 VL-WS-TLS 🇺🇸 US-43.130.134.123:65001"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.245.82:8443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.66.47.156:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.145.21:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.60.105:443"
+      - "🔒 VL-WS-TLS 🇸🇨 SC-45.130.125.160:443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.232.35:2095"
+      - "🔒 VL-WS-TLS 🇳🇱 NL-89.125.123.248:443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.232.18:2095"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.117.43:443"
+      - "🔒 VL-WS-NONE 🇺🇸 US-165.215.250.12:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.64.105:8443"
+      - "🔒 VL-WS-NONE 🇺🇸 US-77.110.127.191:9443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-209.46.30.149:443"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-104.21.17.199:8880"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.41.131:443"
+      - "🔒 VL-WS-NONE 🇸🇨 SC-154.197.75.50:8880"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.16.86.2:80"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-172.67.211.74:80"
+      - "🔒 VL-WS-NONE 🇸🇨 SC-45.130.125.96:80"
+      - "🔒 VL-WS-TLS 🇸🇬 SG-45.32.103.8:20742"
+      - "🔒 VL-WS-TLS 🇱🇹 LT-212.80.218.89:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-188.114.97.6:2083"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.44.165:8443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.148.22:2087"
+      - "🔒 VL-WS-TLS 🇷🇺 RU-45.8.211.134:2096"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-188.114.97.6:8443"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-104.16.248.249:2095"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.20.6.134:2096"
+      - "🔒 VL-WS-TLS 🇩🇪 DE-89.116.46.210:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.66.131:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.146.222:2096"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.53.42:2087"
+      - "🔒 VL-WS-TLS 🇺🇸 US-199.232.78.158:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.26.15.30:2096"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-8.39.125.32:8443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-151.101.66.219:443"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-104.19.222.169:2082"
+      - "🔒 VL-WS-NA 🇺🇸 US-151.101.3.19:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.250.20:443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-160.153.0.179:443"
+      - "🔒 VL-WS-TLS 🇨🇦 CA-148.113.196.75:8443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.232.33:2095"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.193.138:443"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-104.18.28.7:2095"
+      - "🔒 VL-WS-NA 🇺🇸 US-151.101.129.55:80"
+      - "🔒 VL-WS-NONE 🇸🇨 SC-154.197.75.30:8880"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.149.159:2083"
+      - "🔒 VL-WS-TLS 🇯🇵 JP-54.178.110.17:4443"
+      - "🔒 VL-WS-NONE 🇩🇰 DK-45.148.31.0:15855"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.234.21:2086"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.163.76:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-190.93.246.137:8443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.232.55:2095"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.18.41.75:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.153.2:443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.232.59:2095"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.148.22:2053"
+      - "🔒 VL-WS-TLS 🇷🇺 RU-5.42.220.253:8443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.141.147:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.17.207:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.24.195.174:2096"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-172.67.174.133:2095"
+      - "🔒 VL-WS-TLS 🇺🇸 US-151.101.66.228:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.24.58.104:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.52.68:2087"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-172.64.146.163:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.185.98:2053"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-162.159.38.119:80"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-104.17.109.71:8080"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.210.179:2087"
+      - "🔒 VL-WS-TLS 🇬🇧 GB-185.193.29.138:2096"
+      - "🔒 VL-WS-NONE 🇷🇴 RO-45.85.118.93:2095"
+      - "🔒 VL-WS-NONE 🇱🇹 LT-88.216.67.30:8880"
+      - "🔒 VL-WS-NONE 🇺🇸 US-151.101.130.219:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.36.5:443"
+      - "🔒 VL-WS-TLS 🇷🇺 RU-45.67.215.41:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.26.0.221:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.145.202:2053"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.10.145:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-188.114.97.88:443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.234.200:2052"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.185.98:8443"
+      - "🔒 VL-WS-TLS 🇩🇪 DE-45.147.248.115:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.38.47:8443"
+      - "🔒 VL-WS-TLS 🇺🇸 US-151.101.194.133:443"
+      - "🔒 VL-WS-NONE 🇺🇸 US-104.254.140.30:8880"
+      - "🔒 VL-WS-TLS 🇮🇷 IR-185.226.140.140:443"
+      - "🔒 VL-WS-NONE 🇬🇧 GB-91.193.58.79:80"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.19.229.21:2053"
+      - "🔒 VL-WS-TLS 🇺🇸 US-108.165.216.138:2096"
+      - "🔒 VL-WS-TLS 🇳🇿 NZ-202.37.33.80:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.163.249:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.145.158:443"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.233.122:2052"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-162.159.18.105:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.64.149.209:443"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-104.17.95.220:2052"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.17.147.22:2083"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.42.163:2053"
+      - "🔒 VL-WS-TLS 🇰🇷 KR-121.180.225.222:16000"
+      - "🔒 VL-WS-TLS 🇸🇬 SG-43.175.169.174:443"
+      - "🔒 VL-WS-TLS 🇫🇷 FR-152.228.134.58:8443"
+      - "🔒 VL-WS-TLS 🇩🇪 DE-88.198.82.157:443"
+      - "🔒 VL-WS-NA 🇹🇷 TR-38.180.104.152:21077"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-188.114.97.6:443"
+      - "🔒 VL-WS-NA 🏴‍☠️ NA-188.114.96.3:443"
+      - "🔒 VL-WS-NONE 🇩🇪 DE-5.10.214.53:80"
+      - "🔒 VL-WS-NONE 🇮🇲 IM-185.162.230.30:8880"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-108.162.195.209:443"
+      - "🔒 VL-WS-NA 🇮🇷 IR-185.143.234.235:2086"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.21.35.228:2095"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-172.67.131.112:443"
+      - "🔒 VL-WS-TLS 🇫🇮 FI-31.58.137.126:8443"
+      - "🔒 VL-WS-TLS 🇳🇱 NL-212.192.20.65:2053"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-188.114.99.0:2096"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.17.147.22:2086"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.21.2.139:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.16.213.131:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-198.41.209.243:443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.13.149:2053"
+      - "🔒 VL-WS-NONE 🇮🇷 IR-185.143.232.201:2086"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.40.47:443"
+      - "🔒 VL-WS-TLS 🇩🇪 DE-178.105.65.54:7443"
+      - "🔒 VL-WS-TLS 🏴‍☠️ NA-104.18.26.38:2083"
+      - "🔒 VL-WS-NONE 🇫🇮 FI-157.180.123.25:443"
+      - "🔒 VL-WS-TLS 🇨🇭 CH-185.18.250.252:443"
+      - "🔒 VL-WS-NA 🇺🇸 US-31.76.11.206:45622"
+      - "🔒 VL-WS-NA 🇨🇾 CY-195.85.59.161:2095"
+      - "🔒 VL-WS-NA 🇫🇷 FR-162.19.228.119:80"
+      - "🔒 VL-WS-TLS 🇩🇪 DE-146.70.20.110:20205"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-108.162.194.119:80"
+      - "🔒 VL-WS-NONE 🏴‍☠️ NA-104.17.148.22:8880"
+      - "🔒 VM-WS-NA 🇲🇾 MY-47.250.45.234:43063"
+      - "🔒 VM-WS-NA 🇬🇧 GB-51.89.87.143:10020"
+      - "🔒 VM-WS-NA 🇫🇷 FR-162.19.192.89:16626"
+      - "🔒 VM-WS-NA 🏴‍☠️ NA-104.31.16.38:80"
+      - "🔒 VM-WS-NA 🇲🇾 MY-47.250.149.51:50018"
+      - "🔒 VM-WS-NA 🏴‍☠️ NA-172.65.211.209:30041"
+      - "🔒 VM-WS-NA 🏴‍☠️ NA-141.101.122.190:2095"
+      - "🔒 VM-WS-NA 🏴‍☠️ NA-104.21.75.246:80"
+      - "🔒 VM-WS-NA 🇫🇷 FR-162.19.192.89:16644"
+      - "🔒 VM-WS-NA 🏴‍☠️ NA-104.19.40.48:8880"
+      - "🔒 VM-WS-NA 🇭🇰 HK-47.244.120.197:44867"
+      - "🔒 VM-WS-NA 🇬🇧 GB-51.89.87.143:10123"
+      - "🔒 VM-WS-NA 🇬🇧 GB-51.89.87.143:10034"
+      - "🔒 VM-WS-NA 🏴‍☠️ NA-104.19.57.4:2086"
+      - "🔒 VM-WS-TLS 🇫🇷 FR-162.19.254.232:2087"
+      - "🔒 VM-WS-NA 🇲🇾 MY-85.211.251.112:12883"
+      - "🔒 VM-WS-NA 🇬🇧 GB-51.89.87.143:10055"
+      - "🔒 VM-WS-NA 🇭🇰 HK-47.244.120.197:36703"
+      - "🔒 VM-WS-NA 🇲🇾 MY-85.211.246.141:12883"
+      - "🔒 VM-WS-TLS 🇺🇸 US-172.239.193.198:443"
+      - "🔒 VM-WS-TLS 🇹🇭 TH-185.78.165.153:10001"
+      - "🔒 VM-WS-TLS 🇺🇸 US-172.236.100.134:443"
+      - "🔒 VM-WS-NA 🇲🇾 MY-172.197.170.109:12883"
+      - "🔒 VM-WS-TLS 🇺🇸 US-172.239.34.52:443"
+      - "🔒 VM-WS-NA 🇲🇾 MY-47.250.45.234:8613"
+      - "🔒 VM-WS-NA 🇬🇧 GB-51.89.87.143:10049"
+      - "🔒 VM-WS-NA 🇫🇷 FR-51.77.200.55:10000"
+      - "🔒 VM-WS-TLS 🇯🇵 JP-109.61.109.204:59023"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.21.227.134:443"
+      - "🔒 TR-WS-TLS 🇺🇸 US-208.103.161.101:443"
+      - "🔒 TR-WS-TLS 🇺🇸 US-66.81.247.155:443"
+      - "🔒 TR-WS-TLS 🇺🇸 US-167.68.4.223:2096"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.22.63:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.79.73:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.18.32.47:443"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-217.145.79.119:8443"
+      - "🔒 TR-WS-TLS 🇺🇸 US-216.24.57.6:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.21.12.87:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-172.64.229.170:2096"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.80.73:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.21.224.5:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.18.32.47:8443"
+      - "🔒 TR-WS-TLS 🇩🇪 DE-45.80.111.7:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.16.250.22:443"
+      - "🔒 TR-WS-TLS 🇩🇪 DE-18.194.183.74:2053"
+      - "🔒 TR-WS-NA 🇮🇷 IR-185.143.233.200:2082"
+      - "🔒 TR-WS-TLS 🇳🇱 NL-62.84.103.249:8443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.18.23.63:443"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-46.8.238.49:2053"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.72.40:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.7.147:443"
+      - "🔒 TR-WS-TLS 🇷🇺 RU-45.67.215.214:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.90.120:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-141.101.90.101:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-188.114.97.3:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.21.40.34:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-173.245.58.57:8443"
+      - "🔒 TR-WS-TLS 🇳🇱 NL-82.115.6.129:2053"
+      - "🔒 TR-WS-TLS 🇪🇸 ES-109.234.211.66:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-172.64.147.29:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.83.8:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-162.159.152.2:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.18.185.26:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-172.66.153.92:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-172.64.147.24:443"
+      - "🔒 TR-WS-TLS 🇫🇷 FR-193.42.61.121:8443"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-194.164.235.62:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-172.64.147.52:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.20.25.9:443"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-188.215.31.110:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.12.149:443"
+      - "🔒 TR-WS-NA 🇺🇸 US-216.24.57.7:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.16.211.9:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-162.159.33.81:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.18.9.83:443"
+      - "🔒 TR-WS-TLS 🇸🇨 SC-45.130.125.160:443"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-94.183.190.229:2053"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.32.37:443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.17.25.173:443"
+      - "🔒 TR-WS-NA 🇸🇬 SG-13.212.142.141:20230"
+      - "🔒 TR-WS-TLS 🇸🇪 SE-62.60.151.252:8443"
+      - "🔒 TR-WS-TLS 🇯🇵 JP-47.245.62.4:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.152.229:443"
+      - "🔒 TR-WS-TLS 🇫🇷 FR-77.110.106.55:8443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.20.6.134:443"
+      - "🔒 TR-WS-TLS 🇪🇸 ES-103.45.245.208:2053"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-8.39.125.15:2083"
+      - "🔒 TR-WS-TLS 🇫🇷 FR-62.60.157.104:8443"
+      - "🔒 TR-WS-NA 🇮🇷 IR-185.143.234.200:2082"
+      - "🔒 TR-WS-TLS 🇪🇸 ES-185.114.72.31:2053"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-188.215.31.98:2053"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.17.147.22:443"
+      - "🔒 TR-WS-TLS 🇬🇷 GR-91.186.217.16:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.152.225:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.8.83:443"
+      - "🔒 TR-WS-NA 🇸🇬 SG-13.212.216.60:20230"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-162.159.153.2:443"
+      - "🔒 TR-WS-TLS 🇺🇸 US-151.101.108.223:443"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-94.183.191.228:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-172.67.192.215:443"
+      - "🔒 TR-WS-TLS 🇺🇸 US-199.232.78.158:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.12.149:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-8.35.211.159:2087"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.17.148.22:443"
+      - "🔒 TR-WS-TLS 🇧🇦 BA-185.99.2.175:443"
+      - "🔒 TR-WS-TLS 🇸🇪 SE-185.146.173.158:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.20.5.134:2053"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-31.59.41.182:8443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.13.149:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.21.35.43:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-8.6.112.0:443"
+      - "🔒 TR-WS-TLS 🇫🇮 FI-185.92.183.132:2053"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-188.114.96.4:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.24.59.254:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-172.66.45.2:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.17.121.9:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.20.6.134:2053"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-162.159.152.4:8443"
+      - "🔒 TR-WS-NA 🏴‍☠️ NA-104.19.174.68:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.18.11.110:443"
+      - "🔒 TR-WS-NA 🇸🇬 SG-52.221.228.39:20230"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-162.159.17.189:443"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.24.145.86:2087"
+      - "🔒 TR-WS-TLS 🇫🇷 FR-31.56.228.7:2053"
+      - "🔒 TR-WS-TLS 🇫🇷 FR-46.226.167.115:2053"
+      - "🔒 TR-WS-NA 🇺🇸 US-184.33.92.115:20230"
+      - "🔒 TR-WS-NA 🇯🇵 JP-54.178.123.130:20230"
+      - "🔒 TR-WS-TLS 🏴‍☠️ NA-104.25.165.81:8443"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تلگرام 💬"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "بدون فیلترشکن 🛡️"
+    type: "select"
+    proxies:
+      - "DIRECT"
+    hidden: true
+  - name: "قطع اینترنت ⛔"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+  - name: "اجازه ندادن 🚫"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+rules:
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
+  - "GEOIP,ir,سایتای ایرانی 🇮🇷"
+  - "MATCH,نوع انتخاب پروکسی 🔀"

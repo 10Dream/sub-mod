@@ -1,0 +1,532 @@
+global-client-fingerprint: "chrome"
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7894
+allow-lan: true
+tcp-concurrent: true
+enable-process: true
+find-process-mode: "always"
+ipv6: true
+log-level: "info"
+geo-auto-update: true
+geo-update-interval: 168
+secret: ""
+bind-address: "*"
+unified-delay: false
+disable-keep-alive: false
+keep-alive-idle: 30
+keep-alive-interval: 30
+dns:
+  enable: true
+  ipv6: true
+  respect-rules: false
+  prefer-h3: true
+  cache-algorithm: "arc"
+  use-system-hosts: true
+  use-host: true
+  listen: "0.0.0.0:53"
+  enhanced-mode: "fake-ip"
+  fake-ip-filter-mode: "blacklist"
+  fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter:
+    - "*.lan"
+    - "*.localdomain"
+    - "*.invalid"
+    - "*.localhost"
+    - "*.test"
+    - "*.local"
+    - "*.home.arpa"
+    - "time.*.com"
+    - "ntp.*.com"
+    - "*.ir"
+  default-nameserver:
+    - "8.8.8.8"
+    - "8.8.4.4"
+    - "1.1.1.1"
+    - "9.9.9.9"
+  nameserver:
+    - "https://dns.google/dns-query"
+    - "https://cloudflare-dns.com/dns-query"
+  direct-nameserver:
+    - "78.157.42.100"
+    - "78.157.42.101"
+  proxy-server-nameserver:
+    - "1.1.1.1"
+    - "8.8.8.8"
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - 8080
+        - 8880
+        - 2052
+        - 2082
+        - 2086
+        - 2095
+    TLS:
+      ports:
+        - 443
+        - 8443
+        - 2053
+        - 2083
+        - 2087
+        - 2096
+tun:
+  enable: true
+  stack: "mixed"
+  auto-route: true
+  auto-detect-interface: true
+  auto-redir: true
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+rule-providers:
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+proxies:
+  - name: "🇩🇪 DE | VLESS | @configv2rayforfree #1"
+    type: "vless"
+    server: "87.120.93.184"
+    port: 585
+    uuid: "bae2fd3a-55fb-4094-99f6-c94e25d7d15d"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇳🇱 NL | VLESS | @father_vpn #1"
+    type: "vless"
+    server: "88.218.120.60"
+    port: 4443
+    uuid: "41b903e0-7d0a-45d0-9b29-83086024a88b"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇸🇮 SI | VLESS | @filterk0sh #1"
+    type: "vless"
+    server: "92.60.78.221"
+    port: 443
+    uuid: "6897c181-24b1-4880-8660-e6c5c7ee13c7"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇰🇿 KZ | VLESS | @filterk0sh #2"
+    type: "vless"
+    server: "77.73.232.61"
+    port: 19747
+    uuid: "2a9ed01e-5455-44b4-a66a-76ee8165f0ac"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇺🇸 US | VLESS | @freeconfigsplus #1"
+    type: "vless"
+    server: "159.89.87.21"
+    port: 28190
+    uuid: "14c80e0e-f7ce-4991-94fc-99a1db4a9b1e"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇱🇻 LV | VLESS | @megavpn_link #1"
+    type: "vless"
+    server: "91.218.143.194"
+    port: 43798
+    uuid: "b7725d23-840a-4f8e-993c-69b40424cfc0"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇷🇺 RU | VLESS | @megavpn_link #1"
+    type: "vless"
+    server: "158.160.250.45"
+    port: 443
+    uuid: "b6083a84-80a5-3e88-9dbb-5c8ef241be3a"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇩🇪 DE | VLESS | @mtpv2ray #1"
+    type: "vless"
+    server: "45.157.232.164"
+    port: 15198
+    uuid: "ee493449-df40-4d17-9a50-cf28c9288923"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇳🇱 NL | VLESS | @netmellianti #2"
+    type: "vless"
+    server: "103.112.71.172"
+    port: 7443
+    uuid: "0bef555b-b81f-41f4-a63b-f5707a303245"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇺🇸 US | VLESS | @proxygrizzly #1"
+    type: "vless"
+    server: "147.182.183.207"
+    port: 443
+    uuid: "e7be1334-6a1d-47c0-8c9a-c7a5b8575499"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇳🇱 NL | VLESS | @qeshmserver #1"
+    type: "vless"
+    server: "95.179.138.190"
+    port: 443
+    uuid: "telegram-id-qeshmserver"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇳🇱 NL | VLESS | @red2ray #1"
+    type: "vless"
+    server: "94.156.117.79"
+    port: 8443
+    uuid: "3dc68a32-43aa-4b5e-a60f-e11b27d03edc"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇺🇸 US | VLESS | @red2ray #2"
+    type: "vless"
+    server: "193.23.222.99"
+    port: 55152
+    uuid: "827466ba-0910-4c48-b156-2f37fdbda362"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇩🇪 DE | VLESS | @rez1vpn #1"
+    type: "vless"
+    server: "85.208.139.98"
+    port: 8444
+    uuid: "c931f737-cafe-4e4f-998a-a65517941256"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇦🇪 AE | VLESS | @rez1vpn #1"
+    type: "vless"
+    server: "185.253.116.18"
+    port: 8443
+    uuid: "cbc9f9be-bd9c-4a8a-8439-ec606ea4803f"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇨🇭 CH | VLESS | @turboo_server #1"
+    type: "vless"
+    server: "104.244.73.115"
+    port: 2053
+    uuid: "01c0530f-168d-4645-a74c-f2b3b015c217"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇮🇱 IL | VLESS | @v2aryng_vpn #1"
+    type: "vless"
+    server: "193.203.10.86"
+    port: 443
+    uuid: "f0ea76e9-c3c4-4e2c-b2f9-a97d65cc2907"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇳🇱 NL | VLESS | @v2ray_collector #1"
+    type: "vless"
+    server: "208.67.105.196"
+    port: 443
+    uuid: "c931b432-cbab-47f4-ae30-917b17e5fb1f"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇷🇺 RU | VLESS | @v2ray_collector #1"
+    type: "vless"
+    server: "188.225.80.183"
+    port: 443
+    uuid: "5475990d-e0ce-46ea-95e5-50f9e4879af9"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇸🇬 SG | VLESS | @v2rayexpress #1"
+    type: "vless"
+    server: "5.223.42.211"
+    port: 443
+    uuid: "9d33dc91-fb84-4f96-d9b1-fe28a230a94f"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇸🇪 SE | VLESS | @v2rayopen #1"
+    type: "vless"
+    server: "89.22.230.82"
+    port: 443
+    uuid: "de3104b0-0c51-49df-8350-da4bbe654820"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇩🇪 DE | VLESS | @vipv2rey #1"
+    type: "vless"
+    server: "49.13.135.58"
+    port: 443
+    uuid: "18e82ee0-3b88-48d1-9292-484c8051f690"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇩🇪 DE | VLESS | @vmesc #1"
+    type: "vless"
+    server: "168.222.43.222"
+    port: 2083
+    uuid: "878fb1aa-cfbc-42e9-8ea2-1b37e3f32831"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇺🇸 US | VLESS | @vmesskhodam #1"
+    type: "vless"
+    server: "38.107.233.130"
+    port: 443
+    uuid: "5d8fcd24-9634-4dd7-845c-3dc2d6291942"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇰🇿 KZ | VLESS | @filterk0sh #1"
+    type: "vless"
+    server: "eng14.netliberated.org"
+    port: 443
+    uuid: "0bb6dff2-0029-4b81-8c81-4fc70fae1ed9"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇺🇸 US | VLESS | @netmellianti #1"
+    type: "vless"
+    server: "as.pink-perfect.ru"
+    port: 443
+    uuid: "5d8fcd24-9634-4dd7-845c-3dc2d6291942"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇨🇾 CY | VLESS | @nn_vpn #1"
+    type: "vless"
+    server: "sadaf.netherlands.mehrdadsadaf.com"
+    port: 80
+    uuid: "59acb90b-fb9d-433b-a2f0-c039cf23dfc7"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇨🇾 CY | VLESS | @nn_vpn #2"
+    type: "vless"
+    server: "sadaf.melorin.mehrdadsadaf.com"
+    port: 80
+    uuid: "b8debe38-3858-4a7e-9bfc-ee090ac7597b"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇳🇱 NL | VLESS | @v2ray_youtube #1"
+    type: "vless"
+    server: "nl-pro.maxg.ch"
+    port: 443
+    uuid: "d0a3b7bd-6a4c-46e7-b82d-484968e4d695"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇮🇷 IR | VLESS | @v_2rayng0 #1"
+    type: "vless"
+    server: "wp14.virgool.best"
+    port: 55014
+    uuid: "b01631fa-502b-497f-b8ed-2fda669667ad"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇺🇸 US | VLESS | @vmesskhodam #2"
+    type: "vless"
+    server: "de.pink-perfect.ru"
+    port: 443
+    uuid: "5d8fcd24-9634-4dd7-845c-3dc2d6291942"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+  - name: "🇺🇸 US | VLESS | @vmesskhodam #3"
+    type: "vless"
+    server: "fr.pink-perfect.ru"
+    port: 443
+    uuid: "5d8fcd24-9634-4dd7-845c-3dc2d6291942"
+    udp: true
+    tls: true
+    network: "tcp"
+    reality-opts:
+      public-key: ""
+proxy-groups:
+  - name: "نوع انتخاب پروکسی 🔀"
+    type: "select"
+    proxies:
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+      - "قطع اینترنت ⛔"
+  - name: "دستی 🤏🏻"
+    type: "select"
+    proxies:
+      - "🇩🇪 DE | VLESS | @configv2rayforfree #1"
+      - "🇳🇱 NL | VLESS | @father_vpn #1"
+      - "🇸🇮 SI | VLESS | @filterk0sh #1"
+      - "🇰🇿 KZ | VLESS | @filterk0sh #2"
+      - "🇺🇸 US | VLESS | @freeconfigsplus #1"
+      - "🇱🇻 LV | VLESS | @megavpn_link #1"
+      - "🇷🇺 RU | VLESS | @megavpn_link #1"
+      - "🇩🇪 DE | VLESS | @mtpv2ray #1"
+      - "🇳🇱 NL | VLESS | @netmellianti #2"
+      - "🇺🇸 US | VLESS | @proxygrizzly #1"
+      - "🇳🇱 NL | VLESS | @qeshmserver #1"
+      - "🇳🇱 NL | VLESS | @red2ray #1"
+      - "🇺🇸 US | VLESS | @red2ray #2"
+      - "🇩🇪 DE | VLESS | @rez1vpn #1"
+      - "🇦🇪 AE | VLESS | @rez1vpn #1"
+      - "🇨🇭 CH | VLESS | @turboo_server #1"
+      - "🇮🇱 IL | VLESS | @v2aryng_vpn #1"
+      - "🇳🇱 NL | VLESS | @v2ray_collector #1"
+      - "🇷🇺 RU | VLESS | @v2ray_collector #1"
+      - "🇸🇬 SG | VLESS | @v2rayexpress #1"
+      - "🇸🇪 SE | VLESS | @v2rayopen #1"
+      - "🇩🇪 DE | VLESS | @vipv2rey #1"
+      - "🇩🇪 DE | VLESS | @vmesc #1"
+      - "🇺🇸 US | VLESS | @vmesskhodam #1"
+      - "🇰🇿 KZ | VLESS | @filterk0sh #1"
+      - "🇺🇸 US | VLESS | @netmellianti #1"
+      - "🇨🇾 CY | VLESS | @nn_vpn #1"
+      - "🇨🇾 CY | VLESS | @nn_vpn #2"
+      - "🇳🇱 NL | VLESS | @v2ray_youtube #1"
+      - "🇮🇷 IR | VLESS | @v_2rayng0 #1"
+      - "🇺🇸 US | VLESS | @vmesskhodam #2"
+      - "🇺🇸 US | VLESS | @vmesskhodam #3"
+  - name: "خودکار (بهترین پینگ) 🤖"
+    type: "url-test"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+    lazy: true
+    proxies:
+      - "🇩🇪 DE | VLESS | @configv2rayforfree #1"
+      - "🇳🇱 NL | VLESS | @father_vpn #1"
+      - "🇸🇮 SI | VLESS | @filterk0sh #1"
+      - "🇰🇿 KZ | VLESS | @filterk0sh #2"
+      - "🇺🇸 US | VLESS | @freeconfigsplus #1"
+      - "🇱🇻 LV | VLESS | @megavpn_link #1"
+      - "🇷🇺 RU | VLESS | @megavpn_link #1"
+      - "🇩🇪 DE | VLESS | @mtpv2ray #1"
+      - "🇳🇱 NL | VLESS | @netmellianti #2"
+      - "🇺🇸 US | VLESS | @proxygrizzly #1"
+      - "🇳🇱 NL | VLESS | @qeshmserver #1"
+      - "🇳🇱 NL | VLESS | @red2ray #1"
+      - "🇺🇸 US | VLESS | @red2ray #2"
+      - "🇩🇪 DE | VLESS | @rez1vpn #1"
+      - "🇦🇪 AE | VLESS | @rez1vpn #1"
+      - "🇨🇭 CH | VLESS | @turboo_server #1"
+      - "🇮🇱 IL | VLESS | @v2aryng_vpn #1"
+      - "🇳🇱 NL | VLESS | @v2ray_collector #1"
+      - "🇷🇺 RU | VLESS | @v2ray_collector #1"
+      - "🇸🇬 SG | VLESS | @v2rayexpress #1"
+      - "🇸🇪 SE | VLESS | @v2rayopen #1"
+      - "🇩🇪 DE | VLESS | @vipv2rey #1"
+      - "🇩🇪 DE | VLESS | @vmesc #1"
+      - "🇺🇸 US | VLESS | @vmesskhodam #1"
+      - "🇰🇿 KZ | VLESS | @filterk0sh #1"
+      - "🇺🇸 US | VLESS | @netmellianti #1"
+      - "🇨🇾 CY | VLESS | @nn_vpn #1"
+      - "🇨🇾 CY | VLESS | @nn_vpn #2"
+      - "🇳🇱 NL | VLESS | @v2ray_youtube #1"
+      - "🇮🇷 IR | VLESS | @v_2rayng0 #1"
+      - "🇺🇸 US | VLESS | @vmesskhodam #2"
+      - "🇺🇸 US | VLESS | @vmesskhodam #3"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تلگرام 💬"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "بدون فیلترشکن 🛡️"
+    type: "select"
+    proxies:
+      - "DIRECT"
+    hidden: true
+  - name: "قطع اینترنت ⛔"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+  - name: "اجازه ندادن 🚫"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+rules:
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
+  - "GEOIP,ir,سایتای ایرانی 🇮🇷"
+  - "MATCH,نوع انتخاب پروکسی 🔀"

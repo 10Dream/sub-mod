@@ -1,0 +1,1500 @@
+global-client-fingerprint: "chrome"
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7894
+allow-lan: true
+tcp-concurrent: true
+enable-process: true
+find-process-mode: "always"
+ipv6: true
+log-level: "info"
+geo-auto-update: true
+geo-update-interval: 168
+secret: ""
+bind-address: "*"
+unified-delay: false
+disable-keep-alive: false
+keep-alive-idle: 30
+keep-alive-interval: 30
+dns:
+  enable: true
+  ipv6: true
+  respect-rules: false
+  prefer-h3: true
+  cache-algorithm: "arc"
+  use-system-hosts: true
+  use-host: true
+  listen: "0.0.0.0:53"
+  enhanced-mode: "fake-ip"
+  fake-ip-filter-mode: "blacklist"
+  fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter:
+    - "*.lan"
+    - "*.localdomain"
+    - "*.invalid"
+    - "*.localhost"
+    - "*.test"
+    - "*.local"
+    - "*.home.arpa"
+    - "time.*.com"
+    - "ntp.*.com"
+    - "*.ir"
+  default-nameserver:
+    - "8.8.8.8"
+    - "8.8.4.4"
+    - "1.1.1.1"
+    - "9.9.9.9"
+  nameserver:
+    - "https://dns.google/dns-query"
+    - "https://cloudflare-dns.com/dns-query"
+  direct-nameserver:
+    - "78.157.42.100"
+    - "78.157.42.101"
+  proxy-server-nameserver:
+    - "1.1.1.1"
+    - "8.8.8.8"
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - 8080
+        - 8880
+        - 2052
+        - 2082
+        - 2086
+        - 2095
+    TLS:
+      ports:
+        - 443
+        - 8443
+        - 2053
+        - 2083
+        - 2087
+        - 2096
+tun:
+  enable: true
+  stack: "mixed"
+  auto-route: true
+  auto-detect-interface: true
+  auto-redir: true
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+rule-providers:
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+proxies:
+  - name: "US🇺🇸 | google.com-443 | 4.36ms"
+    type: "trojan"
+    server: "45.76.47.77"
+    port: 443
+    password: "wkmY1R4EcP"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "google.com"
+  - name: "RELAY🚩 | 104.16.75.207-2053 | 3.04ms"
+    type: "trojan"
+    server: "104.16.75.207"
+    port: 2053
+    password: "v2raydia"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "RELAY🚩 | wahaha.yingyangkuaixian.dpdns.org-443 | 223.68ms"
+    type: "trojan"
+    server: "91.193.58.0"
+    port: 443
+    password: "trojan"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "wahaha.yingyangkuaixian.dpdns.org"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "wahaha.yingyangkuaixian.dpdns.org"
+  - name: "RELAY🚩 | azadnet-f03.pages.dev-8443 | 29.94ms"
+    type: "trojan"
+    server: "162.159.152.4"
+    port: 8443
+    password: "trojan"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "azadnet-f03.pages.dev"
+    ws-opts:
+      path: "/?ed"
+      headers:
+        Host: "azadnet-f03.pages.dev"
+  - name: "IE🇮🇪 | 146.70.90.198-57452 | 68.49ms"
+    type: "trojan"
+    server: "146.70.90.198"
+    port: 57452
+    password: "t1k169n5zmvvwn96r9ft"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "146.70.90.198"
+  - name: "IE🇮🇪 | 146.70.90.197-57452 | 69.94ms"
+    type: "trojan"
+    server: "146.70.90.197"
+    port: 57452
+    password: "t1k169n5zmvvwn96r9ft"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "146.70.90.197"
+  - name: "DE🇩🇪 | 172.236.220.10-443 | 90.14ms"
+    type: "trojan"
+    server: "172.236.220.10"
+    port: 443
+    password: "s_WEN9lMmufG+qDIsn-4C7JOVAnDdbS3Ui"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "US🇺🇸 | 45.79.8.17-443 | 32.57ms"
+    type: "trojan"
+    server: "45.79.8.17"
+    port: 443
+    password: "rXyShM8Jni+5Sbq3k4gkyr5Lq0zOMRL2Uf"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "45.79.8.17"
+  - name: "DE🇩🇪 | 172.238.120.124-443 | 90.53ms"
+    type: "trojan"
+    server: "172.238.120.124"
+    port: 443
+    password: "r-_YbwF.j0TtHVewoFIppramjAnmSfqYzJ"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "DE🇩🇪 | www.homelywebs.click-443 | 172.22ms"
+    type: "trojan"
+    server: "91.233.8.138"
+    port: 443
+    password: "qDVh0NalwefxyZlHh3Ni2JSlhErcuC3Wiq"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.homelywebs.click"
+  - name: "RELAY🚩 | flat-firefly-6022.rixewi3168.workers.dev-8443 | 22.9ms"
+    type: "trojan"
+    server: "104.18.32.47"
+    port: 8443
+    password: "ppmk"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "flat-firefly-6022.rixewi3168.workers.dev"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "flat-firefly-6022.rixewi3168.workers.dev"
+  - name: "IR🇮🇷 | uplod.ir-443 | 339.53ms"
+    type: "trojan"
+    server: "15.204.9.172"
+    port: 443
+    password: "opentunnel.net-usa30day"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "uplod.ir"
+  - name: "IR🇮🇷 | uplod.ir-443 | 262.86ms"
+    type: "trojan"
+    server: "54.37.18.204"
+    port: 443
+    password: "opentunnel.net-english30day"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "uplod.ir"
+  - name: "IR🇮🇷 | ssadszdx.global.ssl.fastly.net.b5r.ir-443 | 435.17ms"
+    type: "trojan"
+    server: "188.114.97.6"
+    port: 443
+    password: "mitivpn"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ssadszdx.global.ssl.fastly.net.b5r.ir"
+    ws-opts:
+      path: "https://chatgpt.com"
+  - name: "PL🇵🇱 | 64.176.65.85-443 | 98.15ms"
+    type: "trojan"
+    server: "64.176.65.85"
+    port: 443
+    password: "iGccGWTMHtoXtBhGYK4mogg7iIUhGbcvCf"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "DE🇩🇪 | www.directorypipeline.click-443 | 219.37ms"
+    type: "trojan"
+    server: "185.137.157.254"
+    port: 443
+    password: "hxn2jK9Uzezogua0oHuq9Y8viN=UCe.2Jd"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.directorypipeline.click"
+  - name: "RELAY🚩 | www.multiplydose.com-443 | 86.03ms"
+    type: "trojan"
+    server: "www.multiplydose.com"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/assignment"
+  - name: "RELAY🚩 | www.gossipglove.com-443 | 14.82ms"
+    type: "trojan"
+    server: "www.gossipglove.com"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/assignment"
+  - name: "RELAY🚩 | www.creationlong.org-443 | 174.84ms"
+    type: "trojan"
+    server: "www.creationlong.org"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+  - name: "RELAY🚩 | www.calmlunch.com-443 | 21.34ms"
+    type: "trojan"
+    server: "www.calmlunch.com"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "RELAY🚩 | www.gossipglove.com-443 | 3.45ms"
+    type: "trojan"
+    server: "v3.dabache.top"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.gossipglove.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.gossipglove.com"
+  - name: "RELAY🚩 | www.calmloud.com-443 | 90.6ms"
+    type: "trojan"
+    server: "sourceforge.net"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "RELAY🚩 | www.creationlong.org-443 | 4.16ms"
+    type: "trojan"
+    server: "foriran.mizbanit.com"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.creationlong.org"
+  - name: "RELAY🚩 | www.gossipglove.com-443 | 2.82ms"
+    type: "trojan"
+    server: "chatgpt.com"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.gossipglove.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.gossipglove.com"
+  - name: "RELAY🚩 | www.calmloud.com-443 | 4.34ms"
+    type: "trojan"
+    server: "89.116.46.8"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "RELAY🚩 | www.calmloud.com-443 | 3.28ms"
+    type: "trojan"
+    server: "8.6.112.6"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "RELAY🚩 | www.calmloud.com-443 | 4.45ms"
+    type: "trojan"
+    server: "66.81.247.155"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "RELAY🚩 | www.calmlunch.com-443 | 3.3ms"
+    type: "trojan"
+    server: "45.80.111.7"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "RELAY🚩 | www.calmloud.com-443 | 3.41ms"
+    type: "trojan"
+    server: "45.130.125.96"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "RELAY🚩 | www.calmloud.com-443 | 3.42ms"
+    type: "trojan"
+    server: "45.130.125.76"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "RELAY🚩 | www.calmloud.com-443 | 6.05ms"
+    type: "trojan"
+    server: "45.130.125.69"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "RELAY🚩 | www.calmlunch.com-443 | 3.05ms"
+    type: "trojan"
+    server: "45.130.125.160"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "RELAY🚩 | www.calmloud.com-443 | 5.88ms"
+    type: "trojan"
+    server: "45.130.125.0"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "RELAY🚩 | www.ignitelimit.com-443 | 93.12ms"
+    type: "trojan"
+    server: "216.24.57.7"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "RELAY🚩 | www.creationlong.org-443 | 3.26ms"
+    type: "trojan"
+    server: "216.24.57.1"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+  - name: "RELAY🚩 | www.calmlunch.com-443 | 3.72ms"
+    type: "trojan"
+    server: "212.183.88.136"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "RELAY🚩 | www.creationlong.org-443 | 3.57ms"
+    type: "trojan"
+    server: "208.103.161.110"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.creationlong.org"
+  - name: "RELAY🚩 | www.creationlong.org-443 | 2.7ms"
+    type: "trojan"
+    server: "188.114.98.0"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.creationlong.org"
+  - name: "RELAY🚩 | www.gossipglove.com-443 | 2.94ms"
+    type: "trojan"
+    server: "188.114.96.3"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.gossipglove.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.gossipglove.com"
+  - name: "RELAY🚩 | www.creationlong.org-443 | 3.18ms"
+    type: "trojan"
+    server: "185.208.79.149"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.creationlong.org"
+  - name: "RELAY🚩 | www.multiplydose.com-443 | 3.03ms"
+    type: "trojan"
+    server: "185.18.250.252"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.multiplydose.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.multiplydose.com"
+  - name: "RELAY🚩 | www.calmlunch.com-443 | 3.39ms"
+    type: "trojan"
+    server: "185.18.250.245"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "RELAY🚩 | www.creationlong.org-443 | 3.38ms"
+    type: "trojan"
+    server: "172.64.152.23"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.creationlong.org"
+  - name: "RELAY🚩 | www.multiplydose.com-443 | 3.34ms"
+    type: "trojan"
+    server: "172.64.147.52"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.multiplydose.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "RELAY🚩 | www.gossipglove.com-443 | 3.25ms"
+    type: "trojan"
+    server: "172.64.147.24"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.gossipglove.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.gossipglove.com"
+  - name: "RELAY🚩 | www.ignitelimit.com-443 | 3.5ms"
+    type: "trojan"
+    server: "165.215.250.14"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "RELAY🚩 | www.calmloud.com-443 | 3.23ms"
+    type: "trojan"
+    server: "162.159.193.22"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "RELAY🚩 | www.calmloud.com-443 | 2.95ms"
+    type: "trojan"
+    server: "141.193.213.30"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "RELAY🚩 | www.calmloud.com-443 | 3.82ms"
+    type: "trojan"
+    server: "141.193.213.21"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "RELAY🚩 | www.calmloud.com-443 | 3.03ms"
+    type: "trojan"
+    server: "141.193.213.11"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "RELAY🚩 | www.ignitelimit.com-443 | 3.41ms"
+    type: "trojan"
+    server: "141.101.90.101"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "RELAY🚩 | www.calmloud.com-443 | 3.33ms"
+    type: "trojan"
+    server: "104.20.6.134"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "RELAY🚩 | www.calmloud.com-443 | 3.8ms"
+    type: "trojan"
+    server: "104.19.229.21"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "RELAY🚩 | www.calmloud.com-443 | 3.08ms"
+    type: "trojan"
+    server: "104.19.2.175"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "RELAY🚩 | www.calmlunch.com-443 | 3.75ms"
+    type: "trojan"
+    server: "104.18.8.83"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "RELAY🚩 | www.calmlunch.com-443 | 3.35ms"
+    type: "trojan"
+    server: "104.18.32.47"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "RELAY🚩 | www.gossipglove.com-443 | 3.38ms"
+    type: "trojan"
+    server: "104.18.32.37"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.gossipglove.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "RELAY🚩 | www.ignitelimit.com-443 | 5.21ms"
+    type: "trojan"
+    server: "104.18.22.63"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "RELAY🚩 | www.calmloud.com-443 | 3.18ms"
+    type: "trojan"
+    server: "104.18.152.233"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "RELAY🚩 | www.ignitelimit.com-443 | 3.29ms"
+    type: "trojan"
+    server: "104.18.152.225"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "RELAY🚩 | www.ignitelimit.com-443 | 3.58ms"
+    type: "trojan"
+    server: "104.18.12.149"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "RELAY🚩 | www.multiplydose.com-443 | 3.09ms"
+    type: "trojan"
+    server: "104.17.121.71"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.multiplydose.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.multiplydose.com"
+  - name: "RELAY🚩 | www.creationlong.org-443 | 4.3ms"
+    type: "trojan"
+    server: "104.16.90.120"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+  - name: "RELAY🚩 | www.ignitelimit.com-443 | 5.82ms"
+    type: "trojan"
+    server: "104.16.7.70"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "assignment"
+  - name: "RELAY🚩 | www.ignitelimit.com-443 | 3.56ms"
+    type: "trojan"
+    server: "104.16.174.44"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "RELAY🚩 | www.ignitelimit.com-443 | 4.05ms"
+    type: "trojan"
+    server: "104.16.174.36"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "RELAY🚩 | www.ignitelimit.com-443 | 2.86ms"
+    type: "trojan"
+    server: "104.16.174.12"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "RELAY🚩 | zaintest.vuclip.com.cyylr.eu.cc-443 | 278.81ms"
+    type: "trojan"
+    server: "89.116.46.68"
+    port: 443
+    password: "de4dbc41-fe13-4498-b5b4-083e451270f6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "zaintest.vuclip.com.cyylr.eu.cc"
+    ws-opts:
+      path: "/my-wbv"
+      headers:
+        Host: "zaintest.vuclip.com.cyylr.eu.cc"
+  - name: "KR🇰🇷 | www.ws-converter.click-443 | 293.29ms"
+    type: "trojan"
+    server: "130.94.29.102"
+    port: 443
+    password: "d1UH4TrhvCmjc-s4nmChew1qGqX3MNMqel"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.ws-converter.click"
+  - name: "RELAY🚩 | mashdt.pages.dev-443 | 18.55ms"
+    type: "trojan"
+    server: "104.21.75.193"
+    port: 443
+    password: "bpb-trojan"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "mashdt.pages.dev"
+    ws-opts:
+      path: "/tr?ed=2560"
+      headers:
+        Host: "mashdt.pages.dev"
+  - name: "US🇺🇸 | 172.235.63.252-443 | 60ms"
+    type: "trojan"
+    server: "172.235.63.252"
+    port: 443
+    password: "bX_lNHWoW6ywq82mI=KUr+8i__VSp0Hs_E"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "172.235.63.252"
+  - name: "RELAY🚩 | esetsecuritylicense.bwnsmv.workers.dev-443 | 22.26ms"
+    type: "trojan"
+    server: "185.146.173.158"
+    port: 443
+    password: "auto"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "esetsecuritylicense.bwnsmv.workers.dev"
+    ws-opts:
+      headers:
+        Host: "esetsecuritylicense.bwnsmv.workers.dev"
+  - name: "RELAY🚩 | esetsecuritylicense2.wawafec355.workers.dev-443 | 25.84ms"
+    type: "trojan"
+    server: "172.67.213.48"
+    port: 443
+    password: "auto"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "esetsecuritylicense2.wawafec355.workers.dev"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "esetsecuritylicense2.wawafec355.workers.dev"
+  - name: "RELAY🚩 | esetsecuritylicense.bwnsmv.workers.dev-443 | 3.25ms"
+    type: "trojan"
+    server: "172.67.203.182"
+    port: 443
+    password: "auto"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "esetsecuritylicense.bwnsmv.workers.dev"
+    ws-opts:
+      headers:
+        Host: "esetsecuritylicense.bwnsmv.workers.dev"
+  - name: "RELAY🚩 | dcf741e8.epeius-2gy.pages.dev-443 | 31.84ms"
+    type: "trojan"
+    server: "172.66.45.2"
+    port: 443
+    password: "auto"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "dcf741e8.epeius-2gy.pages.dev"
+    ws-opts:
+      headers:
+        Host: "dcf741e8.epeius-2gy.pages.dev"
+  - name: "RELAY🚩 | nameless-term-9c25.vpnconnect202020.workers.dev-443 | 23.05ms"
+    type: "trojan"
+    server: "104.21.48.61"
+    port: 443
+    password: "auto"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "nameless-term-9c25.vpnconnect202020.workers.dev"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "nameless-term-9c25.vpnconnect202020.workers.dev"
+  - name: "RELAY🚩 | esetsecuritylicense3.wawafec355.workers.dev-443 | 15.83ms"
+    type: "trojan"
+    server: "104.21.35.43"
+    port: 443
+    password: "auto"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "esetsecuritylicense3.wawafec355.workers.dev"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "esetsecuritylicense3.wawafec355.workers.dev"
+  - name: "RELAY🚩 | floral-shadow-a524.bestmanvpn2020.workers.dev-80 | 17.4ms"
+    type: "trojan"
+    server: "104.17.147.22"
+    port: 80
+    password: "auto"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      headers:
+        Host: "floral-shadow-a524.bestmanvpn2020.workers.dev"
+  - name: "RELAY🚩 | 104.21.37.37-443 | 2.95ms"
+    type: "trojan"
+    server: "104.21.37.37"
+    port: 443
+    password: "WOeXShhJpL"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "IN🇮🇳 | www.sandbox-cloud.click-443 | 297.73ms"
+    type: "trojan"
+    server: "65.20.90.225"
+    port: 443
+    password: "Tu1fZjElnkRg0ECRj0sI0u54PY8ptUmATg"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.sandbox-cloud.click"
+  - name: "DE🇩🇪 | sv-free.n2buy.ir-8443 | 280.48ms"
+    type: "trojan"
+    server: "188.114.97.6"
+    port: 8443
+    password: "Tl5Qu5x5Tn"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "sv-free.n2buy.ir"
+  - name: "REALITY|US🇺🇸 | www.yahoo.com-443 | 3.06ms"
+    type: "trojan"
+    server: "78.47.94.248"
+    port: 443
+    password: "SoftNetConnect"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "www.yahoo.com"
+  - name: "REALITY|US🇺🇸 | www.yahoo.com-443 | 2.73ms"
+    type: "trojan"
+    server: "37.27.186.225"
+    port: 443
+    password: "SoftNetConnect"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "www.yahoo.com"
+  - name: "REALITY|US🇺🇸 | www.yahoo.com-443 | 2.84ms"
+    type: "trojan"
+    server: "178.104.213.121"
+    port: 443
+    password: "SoftNetConnect"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.yahoo.com"
+  - name: "REALITY|US🇺🇸 | www.yahoo.com-443 | 3.31ms"
+    type: "trojan"
+    server: "167.233.77.47"
+    port: 443
+    password: "SoftNetConnect"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "www.yahoo.com"
+  - name: "RELAY🚩 | x1-dpim9mztudx78ieloo1t.parsiclouds.ir-443 | 181.97ms"
+    type: "trojan"
+    server: "vip-srv-for-you.parsiclouds.ir"
+    port: 443
+    password: "SHAMOJ3rnxb5LyMDn6CRXA"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "x1-dpim9mztudx78ieloo1t.parsiclouds.ir"
+  - name: "RELAY🚩 | mfyousheng.nl.eu.org-443 | 468.13ms"
+    type: "trojan"
+    server: "188.114.97.3"
+    port: 443
+    password: "Puj01Rc8UcA9IzcFcYOs8KMOhCz6aX2Q"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "mfyousheng.nl.eu.org"
+    ws-opts:
+      path: "/tjwsLhx0SFASG4l9FERJ1g"
+      headers:
+        Host: "mfyousheng.nl.eu.org"
+  - name: "US🇺🇸 | www.jewelapp.click-443 | 87.66ms"
+    type: "trojan"
+    server: "149.104.87.182"
+    port: 443
+    password: "PtRV8to08i8FMsY.Uw7=yMuIaR3eVTGmvA"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.jewelapp.click"
+  - name: "RELAY🚩 | spring-queen-a95f.cewon19053.workers.dev-2083 | 19.35ms"
+    type: "trojan"
+    server: "8.39.125.191"
+    port: 2083
+    password: "Nova-Proxy"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "spring-queen-a95f.cewon19053.workers.dev"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "spring-queen-a95f.cewon19053.workers.dev"
+  - name: "RELAY🚩 | c2.validbv3528.eu.org-443 | 95.89ms"
+    type: "trojan"
+    server: "104.16.83.8"
+    port: 443
+    password: "Ng35283528"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "c2.validbv3528.eu.org"
+    ws-opts:
+      path: "/?ed=2560"
+      headers:
+        Host: "c2.validbv3528.eu.org"
+  - name: "RELAY🚩 | broken-bread-6ba6.shieldheart4.workers.dev-2087 | 14.31ms"
+    type: "trojan"
+    server: "104.24.145.86"
+    port: 2087
+    password: "Mojtaba-shieldheart"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "broken-bread-6ba6.shieldheart4.workers.dev"
+    ws-opts:
+      headers:
+        Host: "broken-bread-6ba6.shieldheart4.workers.dev"
+  - name: "RELAY🚩 | broken-bread-6ba6.shieldheart4.workers.dev-8443 | 4.61ms"
+    type: "trojan"
+    server: "104.16.211.9"
+    port: 8443
+    password: "Mojtaba-shieldheart"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "broken-bread-6ba6.shieldheart4.workers.dev"
+    ws-opts:
+      headers:
+        Host: "broken-bread-6ba6.shieldheart4.workers.dev"
+  - name: "RELAY🚩 | broken-bread-6ba6.shieldheart4.workers.dev-8443 | 3.73ms"
+    type: "trojan"
+    server: "104.16.155.68"
+    port: 8443
+    password: "Mojtaba-shieldheart"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "broken-bread-6ba6.shieldheart4.workers.dev"
+    ws-opts:
+      headers:
+        Host: "broken-bread-6ba6.shieldheart4.workers.dev"
+  - name: "REALITY|US🇺🇸 | store.steampowered.com-443 | 35.94ms"
+    type: "trojan"
+    server: "84.234.31.111"
+    port: 443
+    password: "Masir_Sefid"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "store.steampowered.com"
+  - name: "REALITY|US🇺🇸 | store.steampowered.com-443 | 9.12ms"
+    type: "trojan"
+    server: "195.15.253.91"
+    port: 443
+    password: "Masir_Sefid"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "store.steampowered.com"
+  - name: "DE🇩🇪 | de-1.hysteria.ltd-9443 | 100.3ms"
+    type: "trojan"
+    server: "de-1.hysteria.ltd"
+    port: 9443
+    password: "LYaEYwjN8LjWTRJdCCTzW7V6gK7atJVu"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "de-1.hysteria.ltd"
+  - name: "CZ🇨🇿 | ch-2.bexum.fun-443 | 158.81ms"
+    type: "trojan"
+    server: "ch-2.bexum.fun"
+    port: 443
+    password: "LYaEYwjN8LjWTRJdCCTzW7V6gK7atJVu"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ch-2.bexum.fun"
+  - name: "REALITY|US🇺🇸 | journalofbigdata.springeropen.com-443 | 32.59ms"
+    type: "trojan"
+    server: "ru2.asc-sam.ir"
+    port: 443
+    password: "IM4e0ZQNPU"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "journalofbigdata.springeropen.com"
+  - name: "DE🇩🇪 | fra34.tracker-ws.click-443 | 188.47ms"
+    type: "trojan"
+    server: "91.233.8.25"
+    port: 443
+    password: "I1vtf6pjYsAu-nFnraWAMjKTy90AHitdAz"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fra34.tracker-ws.click"
+  - name: "JP🇯🇵 | 172.238.19.11-443 | 161.57ms"
+    type: "trojan"
+    server: "172.238.19.11"
+    port: 443
+    password: "E_hUHrn0+6VeZO=v9=fLgoPDXZWGfcrejg"
+    udp: true
+    tls: true
+    network: "raw"
+    servername: "172.238.19.11"
+proxy-groups:
+  - name: "نوع انتخاب پروکسی 🔀"
+    type: "select"
+    proxies:
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+      - "قطع اینترنت ⛔"
+  - name: "دستی 🤏🏻"
+    type: "select"
+    proxies:
+      - "US🇺🇸 | google.com-443 | 4.36ms"
+      - "RELAY🚩 | 104.16.75.207-2053 | 3.04ms"
+      - "RELAY🚩 | wahaha.yingyangkuaixian.dpdns.org-443 | 223.68ms"
+      - "RELAY🚩 | azadnet-f03.pages.dev-8443 | 29.94ms"
+      - "IE🇮🇪 | 146.70.90.198-57452 | 68.49ms"
+      - "IE🇮🇪 | 146.70.90.197-57452 | 69.94ms"
+      - "DE🇩🇪 | 172.236.220.10-443 | 90.14ms"
+      - "US🇺🇸 | 45.79.8.17-443 | 32.57ms"
+      - "DE🇩🇪 | 172.238.120.124-443 | 90.53ms"
+      - "DE🇩🇪 | www.homelywebs.click-443 | 172.22ms"
+      - "RELAY🚩 | flat-firefly-6022.rixewi3168.workers.dev-8443 | 22.9ms"
+      - "IR🇮🇷 | uplod.ir-443 | 339.53ms"
+      - "IR🇮🇷 | uplod.ir-443 | 262.86ms"
+      - "IR🇮🇷 | ssadszdx.global.ssl.fastly.net.b5r.ir-443 | 435.17ms"
+      - "PL🇵🇱 | 64.176.65.85-443 | 98.15ms"
+      - "DE🇩🇪 | www.directorypipeline.click-443 | 219.37ms"
+      - "RELAY🚩 | www.multiplydose.com-443 | 86.03ms"
+      - "RELAY🚩 | www.gossipglove.com-443 | 14.82ms"
+      - "RELAY🚩 | www.creationlong.org-443 | 174.84ms"
+      - "RELAY🚩 | www.calmlunch.com-443 | 21.34ms"
+      - "RELAY🚩 | www.gossipglove.com-443 | 3.45ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 90.6ms"
+      - "RELAY🚩 | www.creationlong.org-443 | 4.16ms"
+      - "RELAY🚩 | www.gossipglove.com-443 | 2.82ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 4.34ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 3.28ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 4.45ms"
+      - "RELAY🚩 | www.calmlunch.com-443 | 3.3ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 3.41ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 3.42ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 6.05ms"
+      - "RELAY🚩 | www.calmlunch.com-443 | 3.05ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 5.88ms"
+      - "RELAY🚩 | www.ignitelimit.com-443 | 93.12ms"
+      - "RELAY🚩 | www.creationlong.org-443 | 3.26ms"
+      - "RELAY🚩 | www.calmlunch.com-443 | 3.72ms"
+      - "RELAY🚩 | www.creationlong.org-443 | 3.57ms"
+      - "RELAY🚩 | www.creationlong.org-443 | 2.7ms"
+      - "RELAY🚩 | www.gossipglove.com-443 | 2.94ms"
+      - "RELAY🚩 | www.creationlong.org-443 | 3.18ms"
+      - "RELAY🚩 | www.multiplydose.com-443 | 3.03ms"
+      - "RELAY🚩 | www.calmlunch.com-443 | 3.39ms"
+      - "RELAY🚩 | www.creationlong.org-443 | 3.38ms"
+      - "RELAY🚩 | www.multiplydose.com-443 | 3.34ms"
+      - "RELAY🚩 | www.gossipglove.com-443 | 3.25ms"
+      - "RELAY🚩 | www.ignitelimit.com-443 | 3.5ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 3.23ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 2.95ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 3.82ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 3.03ms"
+      - "RELAY🚩 | www.ignitelimit.com-443 | 3.41ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 3.33ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 3.8ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 3.08ms"
+      - "RELAY🚩 | www.calmlunch.com-443 | 3.75ms"
+      - "RELAY🚩 | www.calmlunch.com-443 | 3.35ms"
+      - "RELAY🚩 | www.gossipglove.com-443 | 3.38ms"
+      - "RELAY🚩 | www.ignitelimit.com-443 | 5.21ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 3.18ms"
+      - "RELAY🚩 | www.ignitelimit.com-443 | 3.29ms"
+      - "RELAY🚩 | www.ignitelimit.com-443 | 3.58ms"
+      - "RELAY🚩 | www.multiplydose.com-443 | 3.09ms"
+      - "RELAY🚩 | www.creationlong.org-443 | 4.3ms"
+      - "RELAY🚩 | www.ignitelimit.com-443 | 5.82ms"
+      - "RELAY🚩 | www.ignitelimit.com-443 | 3.56ms"
+      - "RELAY🚩 | www.ignitelimit.com-443 | 4.05ms"
+      - "RELAY🚩 | www.ignitelimit.com-443 | 2.86ms"
+      - "RELAY🚩 | zaintest.vuclip.com.cyylr.eu.cc-443 | 278.81ms"
+      - "KR🇰🇷 | www.ws-converter.click-443 | 293.29ms"
+      - "RELAY🚩 | mashdt.pages.dev-443 | 18.55ms"
+      - "US🇺🇸 | 172.235.63.252-443 | 60ms"
+      - "RELAY🚩 | esetsecuritylicense.bwnsmv.workers.dev-443 | 22.26ms"
+      - "RELAY🚩 | esetsecuritylicense2.wawafec355.workers.dev-443 | 25.84ms"
+      - "RELAY🚩 | esetsecuritylicense.bwnsmv.workers.dev-443 | 3.25ms"
+      - "RELAY🚩 | dcf741e8.epeius-2gy.pages.dev-443 | 31.84ms"
+      - "RELAY🚩 | nameless-term-9c25.vpnconnect202020.workers.dev-443 | 23.05ms"
+      - "RELAY🚩 | esetsecuritylicense3.wawafec355.workers.dev-443 | 15.83ms"
+      - "RELAY🚩 | floral-shadow-a524.bestmanvpn2020.workers.dev-80 | 17.4ms"
+      - "RELAY🚩 | 104.21.37.37-443 | 2.95ms"
+      - "IN🇮🇳 | www.sandbox-cloud.click-443 | 297.73ms"
+      - "DE🇩🇪 | sv-free.n2buy.ir-8443 | 280.48ms"
+      - "REALITY|US🇺🇸 | www.yahoo.com-443 | 3.06ms"
+      - "REALITY|US🇺🇸 | www.yahoo.com-443 | 2.73ms"
+      - "REALITY|US🇺🇸 | www.yahoo.com-443 | 2.84ms"
+      - "REALITY|US🇺🇸 | www.yahoo.com-443 | 3.31ms"
+      - "RELAY🚩 | x1-dpim9mztudx78ieloo1t.parsiclouds.ir-443 | 181.97ms"
+      - "RELAY🚩 | mfyousheng.nl.eu.org-443 | 468.13ms"
+      - "US🇺🇸 | www.jewelapp.click-443 | 87.66ms"
+      - "RELAY🚩 | spring-queen-a95f.cewon19053.workers.dev-2083 | 19.35ms"
+      - "RELAY🚩 | c2.validbv3528.eu.org-443 | 95.89ms"
+      - "RELAY🚩 | broken-bread-6ba6.shieldheart4.workers.dev-2087 | 14.31ms"
+      - "RELAY🚩 | broken-bread-6ba6.shieldheart4.workers.dev-8443 | 4.61ms"
+      - "RELAY🚩 | broken-bread-6ba6.shieldheart4.workers.dev-8443 | 3.73ms"
+      - "REALITY|US🇺🇸 | store.steampowered.com-443 | 35.94ms"
+      - "REALITY|US🇺🇸 | store.steampowered.com-443 | 9.12ms"
+      - "DE🇩🇪 | de-1.hysteria.ltd-9443 | 100.3ms"
+      - "CZ🇨🇿 | ch-2.bexum.fun-443 | 158.81ms"
+      - "REALITY|US🇺🇸 | journalofbigdata.springeropen.com-443 | 32.59ms"
+      - "DE🇩🇪 | fra34.tracker-ws.click-443 | 188.47ms"
+      - "JP🇯🇵 | 172.238.19.11-443 | 161.57ms"
+  - name: "خودکار (بهترین پینگ) 🤖"
+    type: "url-test"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+    lazy: true
+    proxies:
+      - "US🇺🇸 | google.com-443 | 4.36ms"
+      - "RELAY🚩 | 104.16.75.207-2053 | 3.04ms"
+      - "RELAY🚩 | wahaha.yingyangkuaixian.dpdns.org-443 | 223.68ms"
+      - "RELAY🚩 | azadnet-f03.pages.dev-8443 | 29.94ms"
+      - "IE🇮🇪 | 146.70.90.198-57452 | 68.49ms"
+      - "IE🇮🇪 | 146.70.90.197-57452 | 69.94ms"
+      - "DE🇩🇪 | 172.236.220.10-443 | 90.14ms"
+      - "US🇺🇸 | 45.79.8.17-443 | 32.57ms"
+      - "DE🇩🇪 | 172.238.120.124-443 | 90.53ms"
+      - "DE🇩🇪 | www.homelywebs.click-443 | 172.22ms"
+      - "RELAY🚩 | flat-firefly-6022.rixewi3168.workers.dev-8443 | 22.9ms"
+      - "IR🇮🇷 | uplod.ir-443 | 339.53ms"
+      - "IR🇮🇷 | uplod.ir-443 | 262.86ms"
+      - "IR🇮🇷 | ssadszdx.global.ssl.fastly.net.b5r.ir-443 | 435.17ms"
+      - "PL🇵🇱 | 64.176.65.85-443 | 98.15ms"
+      - "DE🇩🇪 | www.directorypipeline.click-443 | 219.37ms"
+      - "RELAY🚩 | www.multiplydose.com-443 | 86.03ms"
+      - "RELAY🚩 | www.gossipglove.com-443 | 14.82ms"
+      - "RELAY🚩 | www.creationlong.org-443 | 174.84ms"
+      - "RELAY🚩 | www.calmlunch.com-443 | 21.34ms"
+      - "RELAY🚩 | www.gossipglove.com-443 | 3.45ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 90.6ms"
+      - "RELAY🚩 | www.creationlong.org-443 | 4.16ms"
+      - "RELAY🚩 | www.gossipglove.com-443 | 2.82ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 4.34ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 3.28ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 4.45ms"
+      - "RELAY🚩 | www.calmlunch.com-443 | 3.3ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 3.41ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 3.42ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 6.05ms"
+      - "RELAY🚩 | www.calmlunch.com-443 | 3.05ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 5.88ms"
+      - "RELAY🚩 | www.ignitelimit.com-443 | 93.12ms"
+      - "RELAY🚩 | www.creationlong.org-443 | 3.26ms"
+      - "RELAY🚩 | www.calmlunch.com-443 | 3.72ms"
+      - "RELAY🚩 | www.creationlong.org-443 | 3.57ms"
+      - "RELAY🚩 | www.creationlong.org-443 | 2.7ms"
+      - "RELAY🚩 | www.gossipglove.com-443 | 2.94ms"
+      - "RELAY🚩 | www.creationlong.org-443 | 3.18ms"
+      - "RELAY🚩 | www.multiplydose.com-443 | 3.03ms"
+      - "RELAY🚩 | www.calmlunch.com-443 | 3.39ms"
+      - "RELAY🚩 | www.creationlong.org-443 | 3.38ms"
+      - "RELAY🚩 | www.multiplydose.com-443 | 3.34ms"
+      - "RELAY🚩 | www.gossipglove.com-443 | 3.25ms"
+      - "RELAY🚩 | www.ignitelimit.com-443 | 3.5ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 3.23ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 2.95ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 3.82ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 3.03ms"
+      - "RELAY🚩 | www.ignitelimit.com-443 | 3.41ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 3.33ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 3.8ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 3.08ms"
+      - "RELAY🚩 | www.calmlunch.com-443 | 3.75ms"
+      - "RELAY🚩 | www.calmlunch.com-443 | 3.35ms"
+      - "RELAY🚩 | www.gossipglove.com-443 | 3.38ms"
+      - "RELAY🚩 | www.ignitelimit.com-443 | 5.21ms"
+      - "RELAY🚩 | www.calmloud.com-443 | 3.18ms"
+      - "RELAY🚩 | www.ignitelimit.com-443 | 3.29ms"
+      - "RELAY🚩 | www.ignitelimit.com-443 | 3.58ms"
+      - "RELAY🚩 | www.multiplydose.com-443 | 3.09ms"
+      - "RELAY🚩 | www.creationlong.org-443 | 4.3ms"
+      - "RELAY🚩 | www.ignitelimit.com-443 | 5.82ms"
+      - "RELAY🚩 | www.ignitelimit.com-443 | 3.56ms"
+      - "RELAY🚩 | www.ignitelimit.com-443 | 4.05ms"
+      - "RELAY🚩 | www.ignitelimit.com-443 | 2.86ms"
+      - "RELAY🚩 | zaintest.vuclip.com.cyylr.eu.cc-443 | 278.81ms"
+      - "KR🇰🇷 | www.ws-converter.click-443 | 293.29ms"
+      - "RELAY🚩 | mashdt.pages.dev-443 | 18.55ms"
+      - "US🇺🇸 | 172.235.63.252-443 | 60ms"
+      - "RELAY🚩 | esetsecuritylicense.bwnsmv.workers.dev-443 | 22.26ms"
+      - "RELAY🚩 | esetsecuritylicense2.wawafec355.workers.dev-443 | 25.84ms"
+      - "RELAY🚩 | esetsecuritylicense.bwnsmv.workers.dev-443 | 3.25ms"
+      - "RELAY🚩 | dcf741e8.epeius-2gy.pages.dev-443 | 31.84ms"
+      - "RELAY🚩 | nameless-term-9c25.vpnconnect202020.workers.dev-443 | 23.05ms"
+      - "RELAY🚩 | esetsecuritylicense3.wawafec355.workers.dev-443 | 15.83ms"
+      - "RELAY🚩 | floral-shadow-a524.bestmanvpn2020.workers.dev-80 | 17.4ms"
+      - "RELAY🚩 | 104.21.37.37-443 | 2.95ms"
+      - "IN🇮🇳 | www.sandbox-cloud.click-443 | 297.73ms"
+      - "DE🇩🇪 | sv-free.n2buy.ir-8443 | 280.48ms"
+      - "REALITY|US🇺🇸 | www.yahoo.com-443 | 3.06ms"
+      - "REALITY|US🇺🇸 | www.yahoo.com-443 | 2.73ms"
+      - "REALITY|US🇺🇸 | www.yahoo.com-443 | 2.84ms"
+      - "REALITY|US🇺🇸 | www.yahoo.com-443 | 3.31ms"
+      - "RELAY🚩 | x1-dpim9mztudx78ieloo1t.parsiclouds.ir-443 | 181.97ms"
+      - "RELAY🚩 | mfyousheng.nl.eu.org-443 | 468.13ms"
+      - "US🇺🇸 | www.jewelapp.click-443 | 87.66ms"
+      - "RELAY🚩 | spring-queen-a95f.cewon19053.workers.dev-2083 | 19.35ms"
+      - "RELAY🚩 | c2.validbv3528.eu.org-443 | 95.89ms"
+      - "RELAY🚩 | broken-bread-6ba6.shieldheart4.workers.dev-2087 | 14.31ms"
+      - "RELAY🚩 | broken-bread-6ba6.shieldheart4.workers.dev-8443 | 4.61ms"
+      - "RELAY🚩 | broken-bread-6ba6.shieldheart4.workers.dev-8443 | 3.73ms"
+      - "REALITY|US🇺🇸 | store.steampowered.com-443 | 35.94ms"
+      - "REALITY|US🇺🇸 | store.steampowered.com-443 | 9.12ms"
+      - "DE🇩🇪 | de-1.hysteria.ltd-9443 | 100.3ms"
+      - "CZ🇨🇿 | ch-2.bexum.fun-443 | 158.81ms"
+      - "REALITY|US🇺🇸 | journalofbigdata.springeropen.com-443 | 32.59ms"
+      - "DE🇩🇪 | fra34.tracker-ws.click-443 | 188.47ms"
+      - "JP🇯🇵 | 172.238.19.11-443 | 161.57ms"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تلگرام 💬"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "بدون فیلترشکن 🛡️"
+    type: "select"
+    proxies:
+      - "DIRECT"
+    hidden: true
+  - name: "قطع اینترنت ⛔"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+  - name: "اجازه ندادن 🚫"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+rules:
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
+  - "GEOIP,ir,سایتای ایرانی 🇮🇷"
+  - "MATCH,نوع انتخاب پروکسی 🔀"

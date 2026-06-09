@@ -1,0 +1,816 @@
+global-client-fingerprint: "chrome"
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7894
+allow-lan: true
+tcp-concurrent: true
+enable-process: true
+find-process-mode: "always"
+ipv6: true
+log-level: "info"
+geo-auto-update: true
+geo-update-interval: 168
+secret: ""
+bind-address: "*"
+unified-delay: false
+disable-keep-alive: false
+keep-alive-idle: 30
+keep-alive-interval: 30
+dns:
+  enable: true
+  ipv6: true
+  respect-rules: false
+  prefer-h3: true
+  cache-algorithm: "arc"
+  use-system-hosts: true
+  use-host: true
+  listen: "0.0.0.0:53"
+  enhanced-mode: "fake-ip"
+  fake-ip-filter-mode: "blacklist"
+  fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter:
+    - "*.lan"
+    - "*.localdomain"
+    - "*.invalid"
+    - "*.localhost"
+    - "*.test"
+    - "*.local"
+    - "*.home.arpa"
+    - "time.*.com"
+    - "ntp.*.com"
+    - "*.ir"
+  default-nameserver:
+    - "8.8.8.8"
+    - "8.8.4.4"
+    - "1.1.1.1"
+    - "9.9.9.9"
+  nameserver:
+    - "https://dns.google/dns-query"
+    - "https://cloudflare-dns.com/dns-query"
+  direct-nameserver:
+    - "78.157.42.100"
+    - "78.157.42.101"
+  proxy-server-nameserver:
+    - "1.1.1.1"
+    - "8.8.8.8"
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - 8080
+        - 8880
+        - 2052
+        - 2082
+        - 2086
+        - 2095
+    TLS:
+      ports:
+        - 443
+        - 8443
+        - 2053
+        - 2083
+        - 2087
+        - 2096
+tun:
+  enable: true
+  stack: "mixed"
+  auto-route: true
+  auto-detect-interface: true
+  auto-redir: true
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+rule-providers:
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+proxies:
+  - name: "VL-0318-016"
+    type: "vless"
+    server: "188.114.96.3"
+    port: 80
+    uuid: "e84064cc-617f-4ba8-aa6f-13e920fd2610"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "main.boobie.eu.cc"
+  - name: "VL-0318-011"
+    type: "vless"
+    server: "172.67.211.74"
+    port: 80
+    uuid: "e84064cc-617f-4ba8-aa6f-13e920fd2610"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "main.boobie.eu.cc"
+  - name: "VL-0318-024"
+    type: "vless"
+    server: "37.32.126.245"
+    port: 443
+    uuid: "c7addea9-6d8a-48d6-8a00-aa99b8ece143"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ws35.adsvxpro.com"
+    ws-opts:
+      path: "/path"
+      headers:
+        Host: "ws35.adsvxpro.com"
+  - name: "VL-0317-050"
+    type: "vless"
+    server: "vzb.piko-network.top"
+    port: 3306
+    uuid: "da1d322b-dcf2-4a92-a9df-e831d78ebecd"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "VL-0318-02"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 80
+    uuid: "eff5e09f-567b-4ef7-830f-c64af1e9ea76"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/id-tksi"
+      headers:
+        Host: "web.whatsapp.com.r3xxe.eu.cc"
+  - name: "VL-0318-03"
+    type: "vless"
+    server: "104.17.3.81"
+    port: 80
+    uuid: "878352ed-8eef-4dd6-a44e-21e66164a67d"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/id-pusat"
+      headers:
+        Host: "r3xxe.eu.cc"
+  - name: "VL-0318-01"
+    type: "vless"
+    server: "104.16.72.70"
+    port: 443
+    uuid: "0799a47d-d446-4a20-8e75-441fa899fbb1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "unnes.ac.id.r3xxe.eu.cc"
+    ws-opts:
+      path: "/id-pusat"
+      headers:
+        Host: "unnes.ac.id.r3xxe.eu.cc"
+  - name: "VL-0318-01-1"
+    type: "vless"
+    server: "172.67.135.254"
+    port: 80
+    uuid: "22c15b3f-e205-48e2-9b30-1a2c3480e7b2"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "sRv63.hAMiIbaR.CoM"
+  - name: "VL-0318-02-1"
+    type: "vless"
+    server: "172.67.204.84"
+    port: 443
+    uuid: "169221de-6408-4143-9e66-6f77de385e94"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cassiusvpn-cassiusvpn-000.stat-4.workers.dev"
+    ws-opts:
+      path: "/@cassiusvpn-@cassiusvpn-@cassiusvpn-@cassiusvpn-@cassiusvpn-?ed=2048"
+      headers:
+        Host: "cassiusvpn-cassiusvpn-000.stat-4.workers.dev"
+  - name: "VL-0318-04"
+    type: "vless"
+    server: "104.18.155.229"
+    port: 443
+    uuid: "42026ed0-7d74-4585-8e46-0fe6aa4d665a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.genflix.co.id.r3xxe.eu.cc"
+    ws-opts:
+      path: "/au-do"
+      headers:
+        Host: "www.genflix.co.id.r3xxe.eu.cc"
+  - name: "VL-0318-07"
+    type: "vless"
+    server: "104.16.75.127"
+    port: 443
+    uuid: "933e8995-3b6d-4d42-8b23-e649f0e7205f"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "resources.office.com.r3xxe.eu.cc"
+    ws-opts:
+      path: "/us-gllc"
+      headers:
+        Host: "resources.office.com.r3xxe.eu.cc"
+  - name: "VL-0318-09"
+    type: "vless"
+    server: "172.64.34.119"
+    port: 80
+    uuid: "22c15b3f-e205-48e2-9b30-1a2c3480e7b2"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "sRv16.hAMiIbaR.CoM"
+  - name: "VL-0318-010"
+    type: "vless"
+    server: "104.18.155.229"
+    port: 80
+    uuid: "22c15b3f-e205-48e2-9b30-1a2c3480e7b2"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "sRv08.hAMiIbaR.CoM"
+  - name: "VL-0318-013"
+    type: "vless"
+    server: "173.245.58.75"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "VL-0318-020"
+    type: "vless"
+    server: "172.64.32.75"
+    port: 443
+    uuid: "fc965ad9-bdd7-4815-ad71-b39ec5972dc1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "octopusss4.com"
+    ws-opts:
+      path: "/tsghdws"
+      headers:
+        Host: "octopusss4.com"
+  - name: "VL-0317-016"
+    type: "vless"
+    server: "185.143.233.122"
+    port: 8880
+    uuid: "d5468e62-dfc1-4e6e-bdb5-76206ade51fc"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "azsv3.ir5ive.ir"
+  - name: "VL-0318-038"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "c7addea9-6d8a-48d6-8a00-aa99b8ece143"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ws35.adsvxpro.com"
+    ws-opts:
+      path: "/path"
+      headers:
+        Host: "ws35.adsvxpro.com"
+  - name: "VL-0318-041"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 2087
+    uuid: "4311bd3f-4f66-4538-a624-221b87690b2c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "mjtbknetmkhremge.ordak.qzz.io"
+    ws-opts:
+      path: "/fl?ed=2560"
+      headers:
+        Host: "mjtbknetmkhremge.ordak.qzz.io"
+  - name: "VM-0318-01"
+    type: "vmess"
+    server: "85.9.125.88"
+    port: 1060
+    uuid: "7974c355-1e2e-4da3-9e93-78033e0600ac"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "VM-0316-02"
+    type: "vmess"
+    server: "104.17.77.77"
+    port: 8443
+    uuid: "60441548-b68e-43b2-8191-e3b884be4b3c"
+    alterId: 0
+    cipher: "none"
+    udp: true
+  - name: "VM-0317-04"
+    type: "vmess"
+    server: "v24.hdacd.com"
+    port: 30824
+    uuid: "cbb3f877-d1fb-344c-87a9-d153bffd5484"
+    alterId: 2
+    cipher: "auto"
+    udp: true
+  - name: "VM-0317-01"
+    type: "vmess"
+    server: "v6.hdacd.com"
+    port: 30806
+    uuid: "cbb3f877-d1fb-344c-87a9-d153bffd5484"
+    alterId: 2
+    cipher: "auto"
+    udp: true
+  - name: "VM-0317-02"
+    type: "vmess"
+    server: "v9.hdacd.com"
+    port: 30809
+    uuid: "cbb3f877-d1fb-344c-87a9-d153bffd5484"
+    alterId: 2
+    cipher: "auto"
+    udp: true
+  - name: "VM-0317-03"
+    type: "vmess"
+    server: "v4.hdacd.com"
+    port: 30804
+    uuid: "cbb3f877-d1fb-344c-87a9-d153bffd5484"
+    alterId: 2
+    cipher: "auto"
+    udp: true
+  - name: "VM-0316-01"
+    type: "vmess"
+    server: "v10.hdacd.com"
+    port: 30807
+    uuid: "cbb3f877-d1fb-344c-87a9-d153bffd5484"
+    alterId: 2
+    cipher: "auto"
+    udp: true
+  - name: "TRJ-0318-03"
+    type: "trojan"
+    server: "84.234.29.189"
+    port: 1040
+    password: "Masir_Sefid"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "store.steampowered.com"
+  - name: "TRJ-0318-04"
+    type: "trojan"
+    server: "84.234.29.189"
+    port: 2053
+    password: "Masir_Sefid"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "store.steampowered.com"
+  - name: "TRJ-0318-08"
+    type: "trojan"
+    server: "188.213.130.61"
+    port: 1040
+    password: "Masir_Sefid"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "store.steampowered.com"
+  - name: "TRJ-0318-07"
+    type: "trojan"
+    server: "188.213.130.61"
+    port: 2083
+    password: "Masir_Sefid"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "store.steampowered.com"
+  - name: "TRJ-0318-05"
+    type: "trojan"
+    server: "188.213.130.61"
+    port: 443
+    password: "Masir_Sefid"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "store.steampowered.com"
+  - name: "TRJ-0318-06"
+    type: "trojan"
+    server: "188.213.130.61"
+    port: 2053
+    password: "Masir_Sefid"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "store.steampowered.com"
+  - name: "TRJ-0318-02"
+    type: "trojan"
+    server: "84.234.29.189"
+    port: 443
+    password: "Masir_Sefid"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "store.steampowered.com"
+  - name: "TRJ-0318-01"
+    type: "trojan"
+    server: "84.234.29.189"
+    port: 2083
+    password: "Masir_Sefid"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "store.steampowered.com"
+  - name: "VL-0307-07"
+    type: "trojan"
+    server: "2.144.21.112"
+    port: 40443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "VL-0307-08"
+    type: "trojan"
+    server: "185.231.112.217"
+    port: 40443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.creationlong.org"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.creationlong.org"
+  - name: "VL-0318-03-1"
+    type: "trojan"
+    server: "216.24.57.6"
+    port: 443
+    password: "3b91d95b-0478-451a-a372-4f417417f650"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "unnes.ac.id.r3xxe.eu.cc"
+    ws-opts:
+      path: "/br-orcl"
+      headers:
+        Host: "unnes.ac.id.r3xxe.eu.cc"
+  - name: "VL-0318-08"
+    type: "trojan"
+    server: "109.234.211.66"
+    port: 8443
+    password: "trojan"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "store.timimi.dpdns.org"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "store.timimi.dpdns.org"
+  - name: "VL-0318-08-1"
+    type: "trojan"
+    server: "104.16.75.127"
+    port: 443
+    password: "45c47cfa-67da-47e0-b20b-5efa674e6a9b"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "unnes.ac.id.r3xxe.eu.cc"
+    ws-opts:
+      path: "/us-gllc"
+      headers:
+        Host: "unnes.ac.id.r3xxe.eu.cc"
+  - name: "VL-0318-012"
+    type: "trojan"
+    server: "141.101.90.101"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "VL-0318-014"
+    type: "trojan"
+    server: "104.18.152.97"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "VL-0318-015"
+    type: "trojan"
+    server: "104.20.6.134"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "VL-0318-017"
+    type: "trojan"
+    server: "104.16.174.121"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "VL-0318-018"
+    type: "trojan"
+    server: "141.193.213.30"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "VL-0318-019"
+    type: "trojan"
+    server: "104.16.174.12"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "VL-0318-025"
+    type: "trojan"
+    server: "45.130.125.96"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "VL-0318-026"
+    type: "trojan"
+    server: "188.114.97.57"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "VL-0318-030"
+    type: "trojan"
+    server: "162.159.17.189"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.multiplydose.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.multiplydose.com"
+  - name: "VL-0318-042"
+    type: "trojan"
+    server: "188.114.96.3"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.gossipglove.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.gossipglove.com"
+  - name: "HY-0318-06"
+    type: "hysteria2"
+    server: "18.157.51.145"
+    port: 443
+    password: "masir_sefid"
+    sni: "content.masir-sefid.shop"
+    obfs: "salamander"
+    obfs-password: "masir_sefid"
+proxy-groups:
+  - name: "نوع انتخاب پروکسی 🔀"
+    type: "select"
+    proxies:
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+      - "قطع اینترنت ⛔"
+  - name: "دستی 🤏🏻"
+    type: "select"
+    proxies:
+      - "VL-0318-016"
+      - "VL-0318-011"
+      - "VL-0318-024"
+      - "VL-0317-050"
+      - "VL-0318-02"
+      - "VL-0318-03"
+      - "VL-0318-01"
+      - "VL-0318-01-1"
+      - "VL-0318-02-1"
+      - "VL-0318-04"
+      - "VL-0318-07"
+      - "VL-0318-09"
+      - "VL-0318-010"
+      - "VL-0318-013"
+      - "VL-0318-020"
+      - "VL-0317-016"
+      - "VL-0318-038"
+      - "VL-0318-041"
+      - "VM-0318-01"
+      - "VM-0316-02"
+      - "VM-0317-04"
+      - "VM-0317-01"
+      - "VM-0317-02"
+      - "VM-0317-03"
+      - "VM-0316-01"
+      - "TRJ-0318-03"
+      - "TRJ-0318-04"
+      - "TRJ-0318-08"
+      - "TRJ-0318-07"
+      - "TRJ-0318-05"
+      - "TRJ-0318-06"
+      - "TRJ-0318-02"
+      - "TRJ-0318-01"
+      - "VL-0307-07"
+      - "VL-0307-08"
+      - "VL-0318-03-1"
+      - "VL-0318-08"
+      - "VL-0318-08-1"
+      - "VL-0318-012"
+      - "VL-0318-014"
+      - "VL-0318-015"
+      - "VL-0318-017"
+      - "VL-0318-018"
+      - "VL-0318-019"
+      - "VL-0318-025"
+      - "VL-0318-026"
+      - "VL-0318-030"
+      - "VL-0318-042"
+      - "HY-0318-06"
+  - name: "خودکار (بهترین پینگ) 🤖"
+    type: "url-test"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+    lazy: true
+    proxies:
+      - "VL-0318-016"
+      - "VL-0318-011"
+      - "VL-0318-024"
+      - "VL-0317-050"
+      - "VL-0318-02"
+      - "VL-0318-03"
+      - "VL-0318-01"
+      - "VL-0318-01-1"
+      - "VL-0318-02-1"
+      - "VL-0318-04"
+      - "VL-0318-07"
+      - "VL-0318-09"
+      - "VL-0318-010"
+      - "VL-0318-013"
+      - "VL-0318-020"
+      - "VL-0317-016"
+      - "VL-0318-038"
+      - "VL-0318-041"
+      - "VM-0318-01"
+      - "VM-0316-02"
+      - "VM-0317-04"
+      - "VM-0317-01"
+      - "VM-0317-02"
+      - "VM-0317-03"
+      - "VM-0316-01"
+      - "TRJ-0318-03"
+      - "TRJ-0318-04"
+      - "TRJ-0318-08"
+      - "TRJ-0318-07"
+      - "TRJ-0318-05"
+      - "TRJ-0318-06"
+      - "TRJ-0318-02"
+      - "TRJ-0318-01"
+      - "VL-0307-07"
+      - "VL-0307-08"
+      - "VL-0318-03-1"
+      - "VL-0318-08"
+      - "VL-0318-08-1"
+      - "VL-0318-012"
+      - "VL-0318-014"
+      - "VL-0318-015"
+      - "VL-0318-017"
+      - "VL-0318-018"
+      - "VL-0318-019"
+      - "VL-0318-025"
+      - "VL-0318-026"
+      - "VL-0318-030"
+      - "VL-0318-042"
+      - "HY-0318-06"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تلگرام 💬"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "بدون فیلترشکن 🛡️"
+    type: "select"
+    proxies:
+      - "DIRECT"
+    hidden: true
+  - name: "قطع اینترنت ⛔"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+  - name: "اجازه ندادن 🚫"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+rules:
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
+  - "GEOIP,ir,سایتای ایرانی 🇮🇷"
+  - "MATCH,نوع انتخاب پروکسی 🔀"

@@ -1,0 +1,236 @@
+global-client-fingerprint: "chrome"
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7894
+allow-lan: true
+tcp-concurrent: true
+enable-process: true
+find-process-mode: "always"
+ipv6: true
+log-level: "info"
+geo-auto-update: true
+geo-update-interval: 168
+secret: ""
+bind-address: "*"
+unified-delay: false
+disable-keep-alive: false
+keep-alive-idle: 30
+keep-alive-interval: 30
+dns:
+  enable: true
+  ipv6: true
+  respect-rules: false
+  prefer-h3: true
+  cache-algorithm: "arc"
+  use-system-hosts: true
+  use-host: true
+  listen: "0.0.0.0:53"
+  enhanced-mode: "fake-ip"
+  fake-ip-filter-mode: "blacklist"
+  fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter:
+    - "*.lan"
+    - "*.localdomain"
+    - "*.invalid"
+    - "*.localhost"
+    - "*.test"
+    - "*.local"
+    - "*.home.arpa"
+    - "time.*.com"
+    - "ntp.*.com"
+    - "*.ir"
+  default-nameserver:
+    - "8.8.8.8"
+    - "8.8.4.4"
+    - "1.1.1.1"
+    - "9.9.9.9"
+  nameserver:
+    - "https://dns.google/dns-query"
+    - "https://cloudflare-dns.com/dns-query"
+  direct-nameserver:
+    - "78.157.42.100"
+    - "78.157.42.101"
+  proxy-server-nameserver:
+    - "1.1.1.1"
+    - "8.8.8.8"
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - 8080
+        - 8880
+        - 2052
+        - 2082
+        - 2086
+        - 2095
+    TLS:
+      ports:
+        - 443
+        - 8443
+        - 2053
+        - 2083
+        - 2087
+        - 2096
+tun:
+  enable: true
+  stack: "mixed"
+  auto-route: true
+  auto-detect-interface: true
+  auto-redir: true
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+rule-providers:
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+proxies:
+  - name: "🆔configfa 🔒 VM-WS- 🇺🇸 US down"
+    type: "vmess"
+    server: "31.56.178.83"
+    port: 59808
+    uuid: "1961697d-3b0b-41c7-b2ed-8cff1eeca55c"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🆔configfa 🔒 VM-WS- 🇩🇪 DE 104ms"
+    type: "vmess"
+    server: "de5.niekotin.de"
+    port: 80
+    uuid: "85bf5801-4658-441c-a2e5-842c6c71a521"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🆔surfboardv2ray 🔒 VM-WS-TLS ❔ XX down"
+    type: "vmess"
+    server: "77.90.60.29"
+    port: 24667
+    uuid: "fa8f8911-2e9b-494e-9a8d-f80239ee2214"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🆔surfboardv2ray 🔒 VM-WS-TLS ❔ XX down-1"
+    type: "vmess"
+    server: "77.90.60.29"
+    port: 17161
+    uuid: "f1a513d2-c32a-49dc-8e64-d4f8a2f1e001"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🆔surfboardv2ray 🔒 VM-WS-TLS ❔ XX down-2"
+    type: "vmess"
+    server: "77.90.60.29"
+    port: 47591
+    uuid: "27104fae-f047-4993-902a-9368d8a3e9bc"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🆔surfboardv2ray 🔓 VM-TCP-N/A ❔ XX 113ms"
+    type: "vmess"
+    server: "172.233.17.76"
+    port: 22324
+    uuid: "04621bae-ab36-11ec-b909-0242ac120002"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🆔spotify_porteghali 🔓 VM-TCP-N/A ❔ XX down"
+    type: "vmess"
+    server: "85.9.125.88"
+    port: 1060
+    uuid: "7974c355-1e2e-4da3-9e93-78033e0600ac"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+proxy-groups:
+  - name: "نوع انتخاب پروکسی 🔀"
+    type: "select"
+    proxies:
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+      - "قطع اینترنت ⛔"
+  - name: "دستی 🤏🏻"
+    type: "select"
+    proxies:
+      - "🆔configfa 🔒 VM-WS- 🇺🇸 US down"
+      - "🆔configfa 🔒 VM-WS- 🇩🇪 DE 104ms"
+      - "🆔surfboardv2ray 🔒 VM-WS-TLS ❔ XX down"
+      - "🆔surfboardv2ray 🔒 VM-WS-TLS ❔ XX down-1"
+      - "🆔surfboardv2ray 🔒 VM-WS-TLS ❔ XX down-2"
+      - "🆔surfboardv2ray 🔓 VM-TCP-N/A ❔ XX 113ms"
+      - "🆔spotify_porteghali 🔓 VM-TCP-N/A ❔ XX down"
+  - name: "خودکار (بهترین پینگ) 🤖"
+    type: "url-test"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+    lazy: true
+    proxies:
+      - "🆔configfa 🔒 VM-WS- 🇺🇸 US down"
+      - "🆔configfa 🔒 VM-WS- 🇩🇪 DE 104ms"
+      - "🆔surfboardv2ray 🔒 VM-WS-TLS ❔ XX down"
+      - "🆔surfboardv2ray 🔒 VM-WS-TLS ❔ XX down-1"
+      - "🆔surfboardv2ray 🔒 VM-WS-TLS ❔ XX down-2"
+      - "🆔surfboardv2ray 🔓 VM-TCP-N/A ❔ XX 113ms"
+      - "🆔spotify_porteghali 🔓 VM-TCP-N/A ❔ XX down"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تلگرام 💬"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "بدون فیلترشکن 🛡️"
+    type: "select"
+    proxies:
+      - "DIRECT"
+    hidden: true
+  - name: "قطع اینترنت ⛔"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+  - name: "اجازه ندادن 🚫"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+rules:
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
+  - "GEOIP,ir,سایتای ایرانی 🇮🇷"
+  - "MATCH,نوع انتخاب پروکسی 🔀"
