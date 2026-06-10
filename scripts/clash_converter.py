@@ -11,25 +11,25 @@ import clash_template
 CLASH_CONFIG = {
     "limit_total": 800,             # حداکثر تعداد کل کانفیگ‌های خروجی
     "priorities": [                 # اولویت‌بندی از بالا به پایین به همراه محدودیت برای هر پروتکل
-        {"type": "anytls", "limit": 300},
-        {"type": "hy2", "limit": 300},
-        {"type": "wireguard", "limit": 50},
-        {"type": "vless", "limit": 300},
-        {"type": "ss", "limit": 300},
+        {"type": "sudoku", "limit": 300},
+        {"type": "masque", "limit": 300},
+        {"type": "trusttunnel", "limit": 300},
+        {"type": "openvpn", "limit": 300},
+        {"type": "tailscale", "limit": 300},
+        {"type": "snell", "limit": 300},
         {"type": "ssr", "limit": 300},
         {"type": "ssh", "limit": 300},
+        {"type": "anytls", "limit": 300},
+        {"type": "vless", "limit": 300},
+        {"type": "ss", "limit": 300},
         {"type": "vmess", "limit": 300},
         {"type": "trojan", "limit": 300},
-        {"type": "sudoku", "limit": -1},
-        {"type": "masque", "limit": -1},
-        {"type": "trusttunnel", "limit": -1},
-        {"type": "openvpn", "limit": -1},
-        {"type": "tailscale", "limit": -1},
-        {"type": "snell", "limit": -1},
-        {"type": "tuic", "limit": 50},
-        {"type": "hysteria", "limit": 50},
-        {"type": "socks5", "limit": 50},
-        {"type": "http", "limit": 20},
+        {"type": "hy2", "limit": 300},
+        {"type": "wireguard", "limit": 300},
+        {"type": "socks5", "limit": 300},
+        {"type": "http", "limit": 300},
+        {"type": "tuic", "limit": 300},
+        {"type": "hysteria", "limit": 300},
     ],
     "default_limit_for_others": 0  # محدودیت پیش‌فرض برای پروتکل‌هایی که در لیست بالا نیستند (0 یعنی حذف)
 }
@@ -328,29 +328,77 @@ def parse_hysteria(link: str):
         return None
 
 def parse_wireguard(link: str):
+    """
+    پارس فوق هوشمند پروتکل Wireguard بدون اتکا به urlparse بومی [9].
+    این فرآیند از اختلال و خطای ناشی از وجود کاراکتر اسلش (/) در کلیدهای بیس۶۴ جلوگیری می‌کند.
+    """
     try:
-        url = urlparse(link.replace("wireguard://", "http://", 1).replace("wg://", "http://", 1))
-        qs = parse_qs(url.query)
-        raw_ip = qs.get("ip", qs.get("address", ["10.0.0.1"]))[0]
+        raw = link.replace("wireguard://", "", 1).replace("wg://", "", 1)
+        
+        fragment = ""
+        if "#" in raw:
+            raw, fragment = raw.split("#", 1)
+            fragment = safe_decode(fragment)
+            
+        query_str = ""
+        if "?" in raw:
+            raw, query_str = raw.split("?", 1)
+            
+        qs = parse_qs(query_str)
+        
+        # استخراج کلید خصوصی از بخش اصلی آدرس با ردیابی آخرین کاراکتر @
+        if "@" in raw:
+            userinfo, server_port = raw.rsplit("@", 1)
+        else:
+            userinfo = ""
+            server_port = raw
+            
+        if ":" in server_port:
+            server, port_str = server_port.rsplit(":", 1)
+            port = int(port_str) if port_str.isdigit() else 51820
+        else:
+            server = server_port
+            port = 51820
+            
+        priv_key = safe_decode(userinfo)
         pub_key = qs.get("public-key", qs.get("peer_public_key", qs.get("publicKey", qs.get("publickey", [""]))))[0]
-        priv_key = url.username or qs.get("privateKey", qs.get("private-key", qs.get("privatekey", [""])))[0]
+        
+        if not priv_key:
+            priv_key = qs.get("privateKey", qs.get("private-key", qs.get("privatekey", [""])))[0]
+            
+        # جستجوی عمیق‌تر غیرحساس به حروف بزرگ و کوچک
+        if not pub_key or not priv_key:
+            for k, v_list in qs.items():
+                lower_k = k.lower().replace("-", "").replace("_", "")
+                if not pub_key and lower_k == "publickey":
+                    pub_key = v_list[0]
+                if not priv_key and lower_k == "privatekey":
+                    priv_key = v_list[0]
+                    
         if not pub_key:
-            pub_key = "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo="
+            pub_key = "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo="  # کلید فرضی پیش‌فرض وارپ
+            
+        raw_ip = qs.get("ip", qs.get("address", ["10.0.0.1"]))[0]
+        
         proxy = {
-            "name": safe_decode(url.fragment or url.hostname),
+            "name": safe_decode(fragment or server),
             "type": "wireguard",
-            "server": url.hostname,
-            "port": int(url.port or 51820),
+            "server": server,
+            "port": port,
             "ip": raw_ip.split(",")[0].strip(),
             "private-key": safe_decode(priv_key),
             "public-key": safe_decode(pub_key),
             "allowed-ips": ["0.0.0.0/0"],
             "udp": True
         }
+        
         reserved = qs.get("reserved", [""])[0]
-        if reserved: proxy["reserved"] = [int(x) for x in reserved.split(",") if x.strip().isdigit()]
+        if reserved:
+            proxy["reserved"] = [int(x) for x in reserved.split(",") if x.strip().isdigit()]
         mtu = qs.get("mtu", [""])[0]
-        if mtu and mtu.isdigit(): proxy["mtu"] = int(mtu)
+        if mtu and mtu.isdigit():
+            proxy["mtu"] = int(mtu)
+            
         return proxy
     except Exception:
         return None
@@ -739,7 +787,6 @@ def validate_proxy(p) -> bool:
             if not validate_ss_2022_key(cipher, password):
                 return False
     elif p_type == "ssr":
-        # صحت‌سنجی فیلدهای حیاتی شادوساکس‌آر
         if not p.get("cipher") or not isinstance(p["cipher"], str) or \
            not p.get("password") or not isinstance(p["password"], str) or \
            not p.get("protocol") or not isinstance(p["protocol"], str) or \
@@ -921,7 +968,7 @@ def run_converter_for_all(sources, normal_dir, clash_dir):
         if os.path.exists(src_path):
             success = convert_single_file(src_path, dest_path)
             if success:
-                print(f"[موفقیت] کانفیگ کلش اختصاصی منبع {name} in مسیر '{dest_path}' ایجاد شد.")
+                print(f"[موفقیت] کانفیگ کلش اختصاصی منبع {name} در مسیر '{dest_path}' ایجاد شد.")
             else:
                 print(f"[اسکیپ] تبدیل منبع {name} به دلیل عدم وجود کانفیگ‌های معتبر اسکیپ شد.")
                 
