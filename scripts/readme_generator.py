@@ -38,12 +38,26 @@ def get_file_list(directory):
 
 def get_relative_time(filepath):
     """
-    محاسبه و تبدیل زمان آخرین تغییر فایل به صورت مدت زمان سپری شده فارسی.
+    محاسبه و تبدیل زمان آخرین تغییر واقعی فایل در تاریخچه گیت (Commit History) به صورت مدت زمان سپری شده فارسی [2].
+    این فرآیند مشکل نمایش مکرر "چند لحظه پیش" در رانرهای اکشن گیت‌هاب را به طور ریشه‌ای حل می‌کند [3].
     """
     if not os.path.exists(filepath):
         return "نامشخص"
     try:
+        # واکشی زمان آخرین کامیت گیت که مستقیماً این فایل را تغییر داده است [2]
+        commit_time_bytes = subprocess.check_output(
+            ["git", "log", "-1", "--format=%ct", filepath],
+            stderr=subprocess.DEVNULL
+        )
+        commit_time_str = commit_time_bytes.decode().strip()
+        if commit_time_str.isdigit():
+            mtime = int(commit_time_str)
+        else:
+            mtime = os.path.getmtime(filepath)
+    except Exception:
         mtime = os.path.getmtime(filepath)
+        
+    try:
         dt = datetime.fromtimestamp(mtime, tz=timezone.utc)
         now = datetime.now(timezone.utc)
         diff = now - dt
@@ -93,10 +107,10 @@ def generate_markdown():
 
 | نام منبع | 📝 اشتراک متنی خام (Normal) | 🔒 رمزگذاری‌شده (Base64) | 🧊 کلش میهومو (Clash YAML) | آخرین بروزرسانی |
 | :--- | :---: | :---: | :---: | :---: |
-| 🌀 **ترکیب تمام منابع (میکس)** | [📝 دریافت لینک]({base_raw_url}/normal/mix.txt) | [🔒 دریافت لینک]({base_raw_url}/base64/mix.txt) | [🧊 دریافت لینک]({base_raw_url}/clash/mix.yaml) | **{get_relative_time('sub/normal/mix.txt')}** |
+| 🌀 **ترکیب تمام منابع (میکس)** | [📝 دریافت لینک]({base_raw_url}/normal/mix.txt) | [🔒 دریافت لینک]({base_raw_url}/base64/mix.txt) | [🧊 دریافت لینک کلش]({base_raw_url}/clash/mix.yaml) | **{get_relative_time('sub/normal/mix.txt')}** |
 """
     
-    # اضافه کردن تک‌فایل‌ها به صورت سطر به سطر در قالب جدول یکپارچه
+    # اضافه کردن تک‌فایل‌ها به صورت سطر به سطر در قالب جدول یکپارچه و بهینه
     for f in normal_files:
         if f == "mix.txt":
             continue
