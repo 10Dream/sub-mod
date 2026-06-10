@@ -7,7 +7,7 @@
 ---
 
 ### 🕒 آخرین زمان اجرای کلی پایپلاین
-`2026-06-10 14:20:52 UTC`
+`2026-06-10 15:33:05 UTC`
 
 [![GitHub license](https://img.shields.io/github/license/10Dream/sub-mod?style=flat-square)](https://github.com/10Dream/sub-mod/blob/main/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/10Dream/sub-mod?style=flat-square)](https://github.com/10Dream/sub-mod/stargazers)
@@ -20,7 +20,7 @@
 
 | نام منبع | 📝 اشتراک متنی خام (Normal) | 🔒 رمزگذاری‌شده (Base64) | 🧊 کلش میهومو (Clash YAML) | آخرین بروزرسانی |
 | :--- | :---: | :---: | :---: | :---: |
-| 🌀 **ترکیب تمام منابع (میکس)** | [📝 دریافت لینک](https://raw.githubusercontent.com/10Dream/sub-mod/main/sub/normal/mix.txt) | [🔒 دریافت لینک](https://raw.githubusercontent.com/10Dream/sub-mod/main/sub/base64/mix.txt) | [🧊 دریافت لینک](https://raw.githubusercontent.com/10Dream/sub-mod/main/sub/clash/mix.yaml) | **چند لحظه پیش** |
+| 🌀 **ترکیب تمام منابع (میکس)** | [📝 دریافت لینک](https://raw.githubusercontent.com/10Dream/sub-mod/main/sub/normal/mix.txt) | [🔒 دریافت لینک](https://raw.githubusercontent.com/10Dream/sub-mod/main/sub/base64/mix.txt) | [🧊 دریافت لینک کلش](https://raw.githubusercontent.com/10Dream/sub-mod/main/sub/clash/mix.yaml) | **چند لحظه پیش** |
 | 📄 **10Dream-VpnClashFaCollector-mixed.txt** | [📝 دریافت لینک](https://raw.githubusercontent.com/10Dream/sub-mod/main/sub/normal/10Dream-VpnClashFaCollector-mixed.txt) | [🔒 دریافت لینک](https://raw.githubusercontent.com/10Dream/sub-mod/main/sub/base64/10Dream-VpnClashFaCollector-mixed.txt) | [🧊 دریافت لینک](https://raw.githubusercontent.com/10Dream/sub-mod/main/sub/clash/10Dream-VpnClashFaCollector-mixed.yaml) | چند لحظه پیش |
 | 📄 **10ium-HiN-VPN-hysteria2** | [📝 دریافت لینک](https://raw.githubusercontent.com/10Dream/sub-mod/main/sub/normal/10ium-HiN-VPN-hysteria2) | [🔒 دریافت لینک](https://raw.githubusercontent.com/10Dream/sub-mod/main/sub/base64/10ium-HiN-VPN-hysteria2) | ❌ ندارد | چند لحظه پیش |
 | 📄 **10ium-HiN-VPN-mix** | [📝 دریافت لینک](https://raw.githubusercontent.com/10Dream/sub-mod/main/sub/normal/10ium-HiN-VPN-mix) | [🔒 دریافت لینک](https://raw.githubusercontent.com/10Dream/sub-mod/main/sub/base64/10ium-HiN-VPN-mix) | [🧊 دریافت لینک](https://raw.githubusercontent.com/10Dream/sub-mod/main/sub/clash/10ium-HiN-VPN-mix.yaml) | چند لحظه پیش |
