@@ -7,7 +7,7 @@
 ---
 
 ### 🕒 آخرین زمان اجرای کلی پایپلاین
-`2026-06-12 21:24:25 UTC`
+`2026-06-12 23:08:03 UTC`
 
 [![GitHub license](https://img.shields.io/github/license/10Dream/sub-mod?style=flat-square)](https://github.com/10Dream/sub-mod/blob/main/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/10Dream/sub-mod?style=flat-square)](https://github.com/10Dream/sub-mod/stargazers)
