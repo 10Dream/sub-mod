@@ -38,13 +38,33 @@ def get_file_list(directory):
 
 def get_relative_time(filepath):
     """
-    محاسبه و تبدیل زمان آخرین تغییر واقعی فایل در تاریخچه گیت (Commit History) به صورت مدت زمان سپری شده فارسی [2].
-    این فرآیند مشکل نمایش مکرر "چند لحظه پیش" در رانرهای اکشن گیت‌هاب را به طور ریشه‌ای حل می‌کند [3].
+    محاسبه و تبدیل زمان آخرین تغییر واقعی فایل در تاریخچه گیت (Commit History) به صورت فارسی [2].
+    این فرآیند تغییرات لایو دیسک رانر را با تاریخچه ثبت شده گیت ترکیب می‌کند تا دقیق‌ترین زمان ثبت شود.
     """
     if not os.path.exists(filepath):
         return "نامشخص"
+        
+    # ۱. بررسی اینکه آیا فایل در اجرای جاری ویرایش محتوایی شده است یا خیر
     try:
-        # واکشی زمان آخرین کامیت گیت که مستقیماً این فایل را تغییر داده است [2]
+        # اگر دستور با کد صفر خارج شود یعنی فایل روی دیسک با آخرین کامیت شاخه HEAD کاملاً برابر است و تغییر نکرده
+        subprocess.check_call(
+            ["git", "diff", "--quiet", "HEAD", "--", filepath],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+        has_changed = False
+    except subprocess.CalledProcessError:
+        # تغییر محتوایی در این ران رخ داده است
+        has_changed = True
+    except Exception:
+        has_changed = True
+
+    # اگر فایل در این ران ویرایش شده باشد، زمان آن "همین الان" است
+    if has_changed:
+        return "همین الان"
+
+    # ۲. در غیر این صورت (فایل تغییری نکرده)، زمان آخرین کامیت تاریخی ثبت‌شده آن را استخراج کن [2]
+    try:
         commit_time_bytes = subprocess.check_output(
             ["git", "log", "-1", "--format=%ct", filepath],
             stderr=subprocess.DEVNULL
@@ -107,7 +127,7 @@ def generate_markdown():
 
 | نام منبع | 📝 اشتراک متنی خام (Normal) | 🔒 رمزگذاری‌شده (Base64) | 🧊 کلش میهومو (Clash YAML) | آخرین بروزرسانی |
 | :--- | :---: | :---: | :---: | :---: |
-| 🌀 **ترکیب تمام منابع (میکس)** | [📝 دریافت لینک]({base_raw_url}/normal/mix.txt) | [🔒 دریافت لینک]({base_raw_url}/base64/mix.txt) | [🧊 دریافت لینک کلش]({base_raw_url}/clash/mix.yaml) | **{get_relative_time('sub/normal/mix.txt')}** |
+| 🌀 **ترکیب تمام منابع (میکس)** | [📝 دریافت لینک]({base_raw_url}/normal/mix.txt) | [🔒 دریافت لینک]({base_raw_url}/base64/mix.txt) | [🧊 دریافت لینک]({base_raw_url}/clash/mix.yaml) | **{get_relative_time('sub/normal/mix.txt')}** |
 """
     
     # اضافه کردن تک‌فایل‌ها به صورت سطر به سطر در قالب جدول یکپارچه و بهینه
