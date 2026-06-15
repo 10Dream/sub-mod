@@ -6,8 +6,6 @@ from urllib.parse import urlparse, parse_qs, unquote
 import clash_template
 
 # تنظیمات پیش‌فرض تبدیل به کلش میهومو با اعمال فیلتر و اولویت‌ها
-# شما می‌توانید با تغییر چیدمان (ترتیب خطوط) در priorities، اولویت هر پروتکل را جابه‌جا کنید.
-# اگر مقدار limit را برابر با -1 یا None یا "unlimited" قرار دهید، آن پروتکل بدون هیچ محدودیتی (نامحدود) ایمپورت می‌شود.
 CLASH_CONFIG = {
     "limit_total": 800,             # حداکثر تعداد کل کانفیگ‌های خروجی
     "priorities": [                 # اولویت‌بندی از بالا به پایین به همراه محدودیت برای هر پروتکل
@@ -17,19 +15,19 @@ CLASH_CONFIG = {
         {"type": "openvpn", "limit": 300},
         {"type": "tailscale", "limit": 300},
         {"type": "snell", "limit": 300},
-        {"type": "ssr", "limit": 300},
         {"type": "ssh", "limit": 300},
+        {"type": "socks5", "limit": 300},
+        {"type": "ssr", "limit": 300},
         {"type": "anytls", "limit": 300},
+        {"type": "hy2", "limit": 300},
         {"type": "vless", "limit": 300},
         {"type": "ss", "limit": 300},
         {"type": "vmess", "limit": 300},
         {"type": "trojan", "limit": 300},
-        {"type": "hy2", "limit": 300},
         {"type": "wireguard", "limit": 300},
-        {"type": "socks5", "limit": 300},
-        {"type": "http", "limit": 300},
         {"type": "tuic", "limit": 300},
         {"type": "hysteria", "limit": 300},
+        {"type": "http", "limit": 300},
     ],
     "default_limit_for_others": 0  # محدودیت پیش‌فرض برای پروتکل‌هایی که در لیست بالا نیستند (0 یعنی حذف)
 }
@@ -39,6 +37,22 @@ PROTOCOL_PATTERN = re.compile(
     r'(vless://|vmess://|trojan://|ss://|ssr://|hy2://|hysteria2://|hysteria://|wg://|wireguard://|tuic://|snell://|socks5://|socks://|http://|https://|ssh://|sudoku://|tailscale://|masque://|trusttunnel://|openvpn://)',
     re.IGNORECASE
 )
+
+# لیست سایفرهای معتبر و استاندارد Shadowsocks مورد تایید میهومو [11]
+VALID_SS_CIPHERS = [
+    "aes-128-ctr", "aes-192-ctr", "aes-256-ctr",
+    "aes-128-cfb", "aes-192-cfb", "aes-256-cfb",
+    "aes-128-gcm", "aes-192-gcm", "aes-256-gcm",
+    "aes-128-ccm", "aes-192-ccm", "aes-256-ccm",
+    "aes-128-gcm-siv", "aes-256-gcm-siv",
+    "chacha20-ietf", "chacha20", "xchacha20",
+    "chacha20-ietf-poly1305", "xchacha20-ietf-poly1305",
+    "chacha8-ietf-poly1305", "xchacha8-ietf-poly1305",
+    "2022-blake3-aes-128-gcm", "2022-blake3-aes-256-gcm", "2022-blake3-chacha20-poly1305",
+    "lea-128-gcm", "lea-192-gcm", "lea-256-gcm",
+    "rabbit128-poly1305", "aegis-128l", "aegis-256", "aez-384",
+    "deoxys-ii-256-128", "rc4-md5", "none"
+]
 
 def safe_b64decode(s: str) -> str:
     """رمزگشایی ایمن رشته‌های Base64 با تنظیم پدینگ"""
@@ -50,6 +64,20 @@ def safe_b64decode(s: str) -> str:
         return base64.b64decode(s).decode('utf-8', errors='ignore')
     except Exception:
         return ""
+
+def is_valid_b64(s: str) -> bool:
+    """بررسی صحت ساختاری کلیدهای بیس۶۴ برای فیلد کلاینت‌ها"""
+    if not s or not isinstance(s, str):
+        return False
+    s_clean = s.strip().replace('-', '+').replace('_', '/')
+    padding = len(s_clean) % 4
+    if padding:
+        s_clean += '=' * (4 - padding)
+    try:
+        base64.b64decode(s_clean)
+        return True
+    except Exception:
+        return False
 
 def safe_decode(s: str) -> str:
     try:
@@ -121,8 +149,11 @@ def parse_vless(link: str):
         if fp: proxy["client-fingerprint"] = fp
         alpn = qs.get("alpn", [""])[0]
         if alpn: proxy["alpn"] = alpn.split(",")
+        
+        # در ویلس میهومو فقط جریان xtls-rprx-vision استاندارد است
         flow = qs.get("flow", [""])[0]
-        if flow: proxy["flow"] = flow
+        if flow == "xtls-rprx-vision":
+            proxy["flow"] = flow
 
         if security == "reality":
             proxy["reality-opts"] = {"public-key": qs.get("pbk", [""])[0]}
@@ -216,11 +247,19 @@ def parse_anytls(link: str):
         return None
 
 def parse_ss(link: str):
+    """پارس بومی پروتکل Shadowsocks به همراه تفکیک بهینه پلاگین‌ها طبق الگوی مستندات"""
     try:
         raw = link.replace("ss://", "", 1)
         tag = ""
         if "#" in raw:
             raw, tag = raw.split("#", 1)
+            
+        query_str = ""
+        if "?" in raw:
+            raw, query_str = raw.split("?", 1)
+            
+        qs = parse_qs(query_str)
+        
         server, port, method, password = "", 0, "", ""
         if "@" in raw:
             auth_part, server_part = raw.split("@", 1)
@@ -237,8 +276,11 @@ def parse_ss(link: str):
                 method, password = auth_part.split(":", 1)
                 server, port_str = server_part.split(":", 1)
                 port = int(port_str)
-        if not server or not port: return None
-        return {
+                
+        if not server or not port: 
+            return None
+            
+        proxy = {
             "name": safe_decode(tag or server),
             "type": "ss",
             "server": server,
@@ -247,6 +289,22 @@ def parse_ss(link: str):
             "password": password,
             "udp": True
         }
+        
+        # پارس پلاگین‌های شادوساکس در صورت وجود
+        plugin_val = qs.get("plugin", [""])[0]
+        if plugin_val:
+            parts = plugin_val.split(";")
+            plugin_name = parts[0].strip()
+            proxy["plugin"] = plugin_name
+            plugin_opts = {}
+            for part in parts[1:]:
+                if "=" in part:
+                    pk, pv = part.split("=", 1)
+                    plugin_opts[pk.strip()] = pv.strip()
+            if plugin_opts:
+                proxy["plugin-opts"] = plugin_opts
+                
+        return proxy
     except Exception:
         return None
 
@@ -379,22 +437,33 @@ def parse_wireguard(link: str):
             pub_key = "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo="  # کلید فرضی پیش‌فرض وارپ
             
         raw_ip = qs.get("ip", qs.get("address", ["10.0.0.1"]))[0]
+        # هماهنگ‌سازی IP کلاینت و حذف آدرس CIDR (پاک‌سازی اسلش ۳۲ یا ۱۲۸)
+        clean_ip = raw_ip.split("/")[0].strip()
         
         proxy = {
             "name": safe_decode(fragment or server),
             "type": "wireguard",
             "server": server,
             "port": port,
-            "ip": raw_ip.split(",")[0].strip(),
+            "ip": clean_ip,
             "private-key": safe_decode(priv_key),
             "public-key": safe_decode(pub_key),
             "allowed-ips": ["0.0.0.0/0"],
             "udp": True
         }
         
-        reserved = qs.get("reserved", [""])[0]
-        if reserved:
-            proxy["reserved"] = [int(x) for x in reserved.split(",") if x.strip().isdigit()]
+        # پارس کردن و پشتیبانی از آرایه اعداد Reserved
+        reserved_val = qs.get("reserved", [""])[0]
+        if reserved_val:
+            if "," in reserved_val:
+                proxy["reserved"] = [int(x) for x in reserved_val.split(",") if x.strip().isdigit()]
+            elif is_valid_b64(reserved_val) and len(reserved_val) == 4:
+                # تبدیل داده‌های انکود شده به بایت
+                try:
+                    proxy["reserved"] = list(base64.b64decode(reserved_val))
+                except Exception:
+                    pass
+                    
         mtu = qs.get("mtu", [""])[0]
         if mtu and mtu.isdigit():
             proxy["mtu"] = int(mtu)
@@ -746,6 +815,7 @@ def validate_ss_2022_key(cipher: str, key_b64: str) -> bool:
     return decoded_len == expected_len
 
 def validate_proxy(p) -> bool:
+    """اعتبارسنجی انطباق پروکسی با استانداردهای میهومو به همراه بررسی نوع و ساختار متغیرها"""
     if not p or not isinstance(p, dict) or not p.get("type"):
         return False
     p_type = p["type"]
@@ -768,12 +838,20 @@ def validate_proxy(p) -> bool:
     blocked = ["127.0.0.1", "0.0.0.0", "localhost", "t.me", "github.com", "raw.githubusercontent.com", "google.com"]
     if any(b in server_lower for b in blocked):
         return False
+        
+    # تطبیق سخت‌گیرانه پارامترهای فنی هر پروتکل طبق الگوهای رسمی
     if p_type in ["vless", "vmess"]:
         if not p.get("uuid") or not isinstance(p["uuid"], str): return False
     elif p_type in ["trojan", "hysteria2"]:
         if not p.get("password") or not isinstance(p["password"], str): return False
     elif p_type == "wireguard":
-        if not p.get("private-key") or not isinstance(p["private-key"], str): return False
+        if not p.get("private-key") or not isinstance(p["private-key"], str) or \
+           not p.get("public-key") or not isinstance(p["public-key"], str) or \
+           not p.get("ip") or not isinstance(p["ip"], str):
+            return False
+        # بررسی صحت فرمت بیس۶۴ کلیدها جهت تضمین سلامت وایرگارد
+        if not is_valid_b64(p["private-key"]) or not is_valid_b64(p["public-key"]):
+            return False
     elif p_type == "hysteria":
         if not p.get("auth_str") or not isinstance(p["auth_str"], str): return False
     elif p_type == "tuic":
@@ -783,6 +861,8 @@ def validate_proxy(p) -> bool:
         password = p.get("password")
         if not cipher or not isinstance(cipher, str) or not password or not isinstance(password, str):
             return False
+        if cipher.lower() not in VALID_SS_CIPHERS:
+            return False
         if cipher.lower().startswith("2022-"):
             if not validate_ss_2022_key(cipher, password):
                 return False
@@ -791,6 +871,8 @@ def validate_proxy(p) -> bool:
            not p.get("password") or not isinstance(p["password"], str) or \
            not p.get("protocol") or not isinstance(p["protocol"], str) or \
            not p.get("obfs") or not isinstance(p["obfs"], str):
+            return False
+        if p["cipher"].lower() not in VALID_SS_CIPHERS:
             return False
     elif p_type == "sudoku":
         if not p.get("key") or not isinstance(p["key"], str): return False
