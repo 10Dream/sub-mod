@@ -20,7 +20,6 @@ def log_stage(step: int, total: int, message: str):
     reset = "\033[0m"
     bold = "\033[1m"
     
-    # ساخت هدر شیک برای شروع و پایان فرآیندها
     if step == 1:
         print(f"\n{yellow}┌────────────────────────────────────────────────────────┐{reset}")
         print(f"{yellow}│       شروع فرآیند بازسازی و رندر مستندات ریدمی       │{reset}")
@@ -129,7 +128,7 @@ def get_relative_time(filepath):
         return "بروزرسانی شده"
 
 def generate_markdown():
-    total_steps = 6
+    total_steps = 7
     
     log_stage(1, total_steps, "واکشی اطلاعات و مشخصات متادیتای مخزن گیت‌هاب...")
     owner, repo = get_repo_info()
@@ -139,16 +138,24 @@ def generate_markdown():
     log_stage(2, total_steps, "پایش دایرکتوری سورس‌های خام متنی معمولی...")
     normal_files = get_file_list("sub/normal")
     
-    log_stage(3, total_steps, "پایش پوشه‌های اسپلیترهای روزانه پروتکل‌ها و متدهای ترنسپورت...")
+    log_stage(3, total_steps, "پایش پوشه‌های اسپلیترهای روزانه شبکه و ترنسپورت...")
     split_files = get_file_list("sub/split")
     
-    log_stage(4, total_steps, "واکشی پویای لیست دیتاسنترها و CDNهای تفکیک‌شده روزانه...")
+    log_stage(4, total_steps, "واکشی پویای لیست ۱۸ پروتکل اسپلیت‌شده روزانه...")
+    # ترتیب کاملاً منطبق بر خواسته شما جهت رندر در ریدمی [9]
+    protocols_order = [
+        "hy2", "vless", "ss", "vmess", "trojan", "anytls", "ssh", "ssr",
+        "snell", "tailscale", "openvpn", "trusttunnel", "masque", "sudoku",
+        "wireguard", "tuic", "hysteria", "http"
+    ]
+    
+    log_stage(5, total_steps, "واکشی لیست دیتاسنترها و CDNهای تفکیک‌شده روزانه...")
     datacenter_files = get_file_list("sub/split/datacenters")
     
-    log_stage(5, total_steps, "ردیابی موقعیت‌های مکانی و کشورهای استخراج‌شده...")
+    log_stage(6, total_steps, "ردیابی موقعیت‌های مکانی و کشورهای استخراج‌شده...")
     country_files = get_file_list("sub/split/countries")
     
-    log_stage(6, total_steps, "رندر نهایی تمپلت‌ها و بازنویسی جامع فایل README.md مخزن...")
+    log_stage(7, total_steps, "رندر نهایی تمپلت‌ها و بازنویسی جامع فایل README.md مخزن...")
     
     markdown = f"""# ⚡️ سیستم تجمیع هوشمند و خودکار کانفیگ (V2ray & Clash)
 
@@ -195,15 +202,45 @@ def generate_markdown():
     markdown += f"""
 ---
 
-## 🥞 اشتراک‌های تفکیک‌شده هوشمند (Daily Split Subscriptions)
+## 🥞 اشتراک‌های تفکیک‌شده بر اساس پروتکل (Daily Protocol Subscriptions)
 
-*این بخش روزی یک‌بار به طور خودکار دیتای منابعِ فعالِ کمتر از ۱ هفته گذشته را ترکیب کرده و به تفکیک ساختارهای فنی و بدون محدودیت تعداد کانفیگ (Unlimited) ارائه می‌دهد [9].*
+*میکس روزانه و بدون محدودیت تعداد کانفیگ (Unlimited) پروکسی‌ها به تفکیک ۱۸ پروتکل ارتباطی با رعایت کامل اولویت‌ها [9].*
+
+| پروتکل ارتباطی | 📝 متنی خام (Normal) | 🔒 رمزگذاری‌شده (Base64) | 🧊 کلش میهومو (Clash YAML) | آخرین بروزرسانی |
+| :--- | :---: | :---: | :---: | :---: |
+"""
+
+    # جدول ۲: اسپلیترهای ۱۸ پروتکل اختصاصی
+    for proto in protocols_order:
+        f = f"{proto}.txt"
+        filepath_proto = f"sub/split/protocols/{f}"
+        clash_filename = f"{proto}.yaml"
+        
+        has_normal = os.path.exists(filepath_proto)
+        has_b64 = os.path.exists(f"sub/base64/split/protocols/{f}")
+        has_clash = os.path.exists(f"sub/clash/split/protocols/{clash_filename}")
+        
+        if not has_normal:
+            continue
+            
+        normal_link = f"[📝 دریافت لینک]({base_raw_url}/split/protocols/{f})"
+        b64_link = f"[🔒 دریافت لینک]({base_raw_url}/base64/split/protocols/{f})" if has_b64 else "❌ ندارد"
+        clash_link = f"[🧊 دریافت لینک]({base_raw_url}/clash/split/protocols/{clash_filename})" if has_clash else "❌ ندارد"
+        
+        markdown += f"| 🔌 **{proto.upper()}** | {normal_link} | {b64_link} | {clash_link} | {get_relative_time(filepath_proto)} |\n"
+
+    markdown += f"""
+---
+
+## ⚙️ اشتراک‌های تفکیک‌شده بر اساس شبکه و ترنسپورت (Daily Network Subscriptions)
+
+*تفکیک بر بستر متدهای انتقال شبکه و ساختارهای رمزگذاری بدون محدودیت تعداد کانفیگ (Unlimited) [9].*
 
 | نوع دسته‌بندی | 📝 متنی خام (Normal) | 🔒 رمزگذاری‌شده (Base64) | 🧊 کلش میهومو (Clash YAML) | آخرین بروزرسانی |
 | :--- | :---: | :---: | :---: | :---: |
 """
 
-    # جدول ۲: اسپلیترهای عمومی
+    # جدول ۳: اسپلیترهای عمومی شبکه
     for f in split_files:
         filepath_split = f"sub/split/{f}"
         clash_filename = os.path.splitext(f)[0] + ".yaml"
@@ -228,7 +265,7 @@ def generate_markdown():
 | :--- | :---: | :---: | :---: | :---: |
 """
 
-    # جدول ۳: اسپلیترهای دیتاسنترها
+    # جدول ۴: اسپلیترهای دیتاسنترها
     for f in datacenter_files:
         filepath_dc = f"sub/split/datacenters/{f}"
         raw_name = os.path.splitext(f)[0]
@@ -237,7 +274,6 @@ def generate_markdown():
         has_b64 = os.path.exists(f"sub/base64/split/datacenters/{f}")
         has_clash = os.path.exists(f"sub/clash/split/datacenters/{clash_filename}")
         
-        # نمایش نام مرتب و خوانا در مستندات
         display_name = raw_name.replace("_", " ").upper()
         
         normal_link = f"[📝 دریافت لینک]({base_raw_url}/split/datacenters/{f})"
@@ -257,7 +293,7 @@ def generate_markdown():
 | :--- | :---: | :---: | :---: | :---: |
 """
 
-    # جدول ۴: اسپلیترهای کشوری
+    # جدول ۵: اسپلیترهای کشوری با پرچم‌های SVG
     for f in country_files:
         filepath_country = f"sub/split/countries/{f}"
         cc = os.path.splitext(f)[0].upper()
@@ -282,7 +318,7 @@ def generate_markdown():
 
 ### 💻 مولتی‌پلتفرم (ویندوز، اندروید، مک، لینوکس)
 * **Hiddify:** [دریافت نسخه گیت‌هاب](https://github.com/hiddify/hiddify-app) / [دریافت نسخه اپ‌استور آیفون](https://apps.apple.com/us/app/hiddify-proxy-vpn/id6596777532)
-* **Karing:** [دریافت نسخه گیت‌هاب](https://github.com/KaringX/karing) / [دریافت نسخه اپ‌استور آیفون](https://apps.apple.com/us/app/karing/id6472431552)
+* **Karing:** [دریافت نسخه گیت‌هاب](https://github.com/karingx/karing) / [دریافت نسخه اپ‌استور آیفون](https://apps.apple.com/us/app/karing/id6472431552)
 * **FlClash:** [دریافت نسخه گیت‌هاب](https://github.com/chen08209/FlClash)
 * **Clash Verge Rev:** [دریافت نسخه گیت‌هاب](https://github.com/clash-verge-rev/clash-verge-rev)
 * **Throne:** [دریافت نسخه گیت‌هاب](https://github.com/throneproj/Throne)
@@ -305,6 +341,9 @@ def generate_markdown():
     
     with open("README.md", "w", encoding="utf-8") as readme_file:
         readme_file.write(markdown)
+    
+    # اتمام موفق فرآیند رندرسازی ریدمی
+    log_stage(7, total_steps, "رندرسازی فایل نهایی ریدمی خاتمه یافت.")
 
 if __name__ == "__main__":
     generate_markdown()
