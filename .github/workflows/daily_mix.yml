@@ -42,10 +42,12 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add sub/
+          git add sub/ README.md
           if git diff --staged --quiet; then
             echo "هیچ تغییر جدیدی در میکس روزانه وجود ندارد."
           else
             git commit -m "بروزرسانی خودکار میکس و دسته‌بندی روزانه - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
-            git push
+            # کشیدن آخرین تغییرات مخزن و ری‌بیس کردن دیتای رانر جهت جلوگیری از خطای Push Rejected [12]
+            git pull --rebase origin main
+            git push origin main
           fi
