@@ -27,7 +27,7 @@ CDN_RANGES = [
     ("CloudFront", ["52.46.0.0/18","52.84.0.0/15","54.182.0.0/16","99.84.0.0/16","130.176.0.0/17", "13.32.0.0/24", "13.35.0.0/24", "54.230.0.0/24", "143.204.0.0/24", "205.251.192.0/24", "54.239.128.0/24"]),
     ("BunnyCDN", ["89.187.160.0/19","147.75.0.0/16"]),
     ("Gcore", ["92.223.0.0/16","95.85.0.0/16","185.158.0.0/16"]),
-    ("ArvanCloud", ["2.144.3.128/28","37.32.16.0/27","37.32.17.0/27","37.32.18.0/27","37.32.19.0/27","94.101.182.0/27","178.131.120.48/28","185.143.232.0/22","185.215.232.0/22","188.229.116.16/30"]),
+    ("ArvanCloud", ["2.144.3.128/28","37.32.16.0/27","37.32.17.0/27","37.32.17.0/27","37.32.18.0/27","37.32.19.0/27","94.101.182.0/27","178.131.120.48/28","185.143.232.0/22","185.215.232.0/22","188.229.116.16/30"]),
     ("DerakCloud", ["5.145.115.0/24","5.145.118.0/23","45.63.43.128/28","45.77.87.48/28","89.222.113.80/28","116.202.90.176/28","159.69.229.224/28","165.232.92.112/28","178.62.222.208/28","185.24.252.192/27","185.24.254.64/27","185.24.255.192/27","185.24.255.224/28","192.168.204.48/28","207.148.25.64/28","2a01:4f8:c0:2da6::/64","2a04:2f00:1:185f::/64","2a04:2f00:2:185f::/64","2a04:2f00:3:185f::/64","2a04:2f00:ff01::/64","2a04:2f00:ff02::/64","2a04:2f00:ff03::/64","2a04:2f00:ff06::/64","2a04:2f00:ff08::/64","2a04:2f00:ff09::/64"]),
     ("IranServer", ["5.182.45.23/32","5.182.45.37/32","45.159.114.11/32","87.98.249.55/32","93.127.182.21/32","93.127.182.24/32","94.143.229.14/32","94.182.97.44/31","94.182.97.46/32","168.119.4.117/32","185.116.162.15/32","185.116.162.19/32"]),
     ("ParsPack", ["2.144.23.191/32","5.135.72.112/28","5.160.143.64/28","31.214.248.208/28","45.32.131.160/28","45.32.154.64/28","45.76.132.16/28","45.77.211.208/28","45.77.211.240/28","45.77.223.80/28","45.139.11.240/28","46.20.41.224/28","64.176.15.176/28","64.176.64.80/28","65.20.72.128/28","65.20.113.240/28","77.237.66.128/28","79.175.148.128/28","84.17.42.224/28","87.236.161.96/28","89.36.162.32/28","89.187.169.48/28","91.228.186.48/28","94.182.153.64/28","95.179.140.112/28","95.179.164.96/28","95.179.220.128/28","95.179.254.176/28","95.211.188.240/28","95.211.219.96/28","95.211.240.112/28","95.211.250.112/28","130.185.74.48/28","130.185.79.128/28","139.84.177.16/28","139.84.236.0/28","144.202.58.96/28","144.202.78.96/28","144.202.114.128/28","155.138.162.96/28","158.51.122.240/28","158.247.223.48/28","167.179.93.112/28","171.22.26.240/28","178.22.120.192/28","185.8.173.0/28","185.8.174.144/28","185.8.175.208/28","185.110.191.240/28","185.204.197.0/28","185.208.175.144/28","194.5.188.32/28","195.88.208.176/28","195.181.174.64/28","195.248.241.160/28","195.248.242.192/28","199.247.3.16/28","207.148.69.96/28","208.85.22.32/28","213.183.48.16/28","216.238.117.0/28","217.197.97.48/28"])
@@ -196,6 +196,17 @@ def build_unlimited_clash_config(proxies_list, dest_yaml_path):
         f.write(final_yaml_content)
     return True
 
+def map_to_standard_protocol_name(p_type: str) -> str:
+    """نگاشت اسامی مختلف به پروتکل‌های استاندارد درخواستی شما"""
+    p_type = p_type.lower()
+    if p_type in ["hysteria2", "hy2"]:
+        return "hy2"
+    if p_type in ["wireguard", "wg"]:
+        return "wireguard"
+    if p_type in ["socks5", "socks"]:
+        return "socks5"
+    return p_type
+
 def main():
     normal_dir = os.path.abspath(os.path.join(current_dir, "../sub/normal"))
     
@@ -211,6 +222,10 @@ def main():
     datacenters_normal_dir = os.path.join(split_normal_dir, "datacenters")
     datacenters_base64_dir = os.path.join(split_base64_dir, "datacenters")
     datacenters_clash_dir = os.path.join(split_clash_dir, "datacenters")
+    
+    protocols_normal_dir = os.path.join(split_normal_dir, "protocols")
+    protocols_base64_dir = os.path.join(split_base64_dir, "protocols")
+    protocols_clash_dir = os.path.join(split_clash_dir, "protocols")
     
     print("=== شروع فاز تولید میکس، فیلترینگ و تبدیل اسپلیت‌های بدون محدودیت ===")
     
@@ -264,16 +279,31 @@ def main():
         "ipv4": {"links": [], "dicts": []},
         "ipv6": {"links": [], "dicts": []}
     }
+    
+    # ترتیب و ساختار دسته‌بندی ۱۸ پروتکل درخواستی شما [9]
+    protocols_order = [
+        "hy2", "vless", "ss", "vmess", "trojan", "anytls", "ssh", "ssr",
+        "snell", "tailscale", "openvpn", "trusttunnel", "masque", "sudoku",
+        "wireguard", "tuic", "hysteria", "http"
+    ]
+    
+    protocols_data = {proto: {"links": [], "dicts": []} for proto in protocols_order}
     countries_data = {}
     datacenters_data = {}
     
-    # ۴. حلقه‌ی دسته‌بندی
+    # ۴. حلقه‌ی دسته‌بندی هوشمند و همه‌جانبه
     for item in unique_proxies_list:
         p = item["dict"]
         raw = item["raw_link"]
         p_type = p["type"]
         
-        # الف. امنیت
+        # الف. دسته‌بندی بر اساس پروتکل مستقیم (همسو با لیست درخواستی شما) [9]
+        std_proto = map_to_standard_protocol_name(p_type)
+        if std_proto in protocols_data:
+            protocols_data[std_proto]["links"].append(raw)
+            protocols_data[std_proto]["dicts"].append(p)
+        
+        # ب. امنیت
         is_tls = p.get("tls", False) or p_type in ["hysteria", "hysteria2", "tuic", "trojan", "anytls", "trusttunnel"]
         is_reality = p.get("reality-opts") is not None
         
@@ -289,7 +319,7 @@ def main():
             categories["non-tls"]["links"].append(raw)
             categories["non-tls"]["dicts"].append(p)
             
-        # ب. ترنسپورت
+        # ج. ترنسپورت
         net = p.get("network", "tcp").lower()
         if net == "grpc":
             categories["grpc"]["links"].append(raw)
@@ -307,7 +337,7 @@ def main():
             categories["tcp"]["links"].append(raw)
             categories["tcp"]["dicts"].append(p)
             
-        # ج. IP و کشور
+        # د. IP و کشور
         ip, ip_ver = resolve_ip(p.get("server"))
         if ip_ver == "ipv4":
             categories["ipv4"]["links"].append(raw)
@@ -325,7 +355,7 @@ def main():
                 countries_data[cc]["links"].append(raw)
                 countries_data[cc]["dicts"].append(p)
                 
-            # تشخیص دیتاسنتر / CDN طبق لیست درخواستی شما
+            # تشخیص دیتاسنتر / CDN
             dc_name = find_datacenter(ip)
             if dc_name != "UNKNOWN":
                 if dc_name not in datacenters_data:
@@ -346,13 +376,10 @@ def main():
             continue
         content_str = "\n".join(links)
         
-        # ساب متنی معمولی
         with open(os.path.join(split_normal_dir, f"{cat_name}.txt"), 'w', encoding='utf-8') as f:
             f.write(content_str)
-        # ساب بیس۶۴
         with open(os.path.join(split_base64_dir, f"{cat_name}.txt"), 'w', encoding='utf-8') as f:
             f.write(encode_to_base64(content_str))
-        # کانفیگ نامحدود کلش با پرچم‌های کشورها
         build_unlimited_clash_config(dicts, os.path.join(split_clash_dir, f"{cat_name}.yaml"))
         
     # ذخیره و تبدیل دسته‌های کشوری
@@ -367,13 +394,10 @@ def main():
             continue
         content_str = "\n".join(links)
         
-        # ساب کشوری متنی معمولی
         with open(os.path.join(countries_normal_dir, f"{cc}.txt"), 'w', encoding='utf-8') as f:
             f.write(content_str)
-        # ساب کشوری بیس۶۴
         with open(os.path.join(countries_base64_dir, f"{cc}.txt"), 'w', encoding='utf-8') as f:
             f.write(encode_to_base64(content_str))
-        # کانفیگ کشوری نامحدود کلش با پرچم‌ها
         build_unlimited_clash_config(dicts, os.path.join(countries_clash_dir, f"{cc}.yaml"))
         
     # ذخیره و تبدیل دسته‌های دیتاسنتری / CDN
@@ -388,17 +412,34 @@ def main():
             continue
         content_str = "\n".join(links)
         
-        # فرمت استاندارد اسم فایل: حروف کوچک و جایگزینی فضاهای خالی با خط تیره
         dc_filename = dc_raw_name.lower().replace(" ", "_")
         
-        # ساب دیتاسنتر متنی معمولی
         with open(os.path.join(datacenters_normal_dir, f"{dc_filename}.txt"), 'w', encoding='utf-8') as f:
             f.write(content_str)
-        # ساب دیتاسنتر بیس۶۴
         with open(os.path.join(datacenters_base64_dir, f"{dc_filename}.txt"), 'w', encoding='utf-8') as f:
             f.write(encode_to_base64(content_str))
-        # کانفیگ دیتاسنتر نامحدود کلش با پرچم‌ها
         build_unlimited_clash_config(dicts, os.path.join(datacenters_clash_dir, f"{dc_filename}.yaml"))
+        
+    # ذخیره و تبدیل دسته‌های اختصاصی ۱۸ پروتکل درخواستی شما [9]
+    os.makedirs(protocols_normal_dir, exist_ok=True)
+    os.makedirs(protocols_base64_dir, exist_ok=True)
+    os.makedirs(protocols_clash_dir, exist_ok=True)
+    
+    for proto, data in protocols_data.items():
+        links = data["links"]
+        dicts = data["dicts"]
+        if not links:
+            continue
+        content_str = "\n".join(links)
+        
+        # ساب پروتکل متنی معمولی
+        with open(os.path.join(protocols_normal_dir, f"{proto}.txt"), 'w', encoding='utf-8') as f:
+            f.write(content_str)
+        # ساب پروتکل بیس۶۴
+        with open(os.path.join(protocols_base64_dir, f"{proto}.txt"), 'w', encoding='utf-8') as f:
+            f.write(encode_to_base64(content_str))
+        # کانفیگ نامحدود کلش با پرچم‌ها
+        build_unlimited_clash_config(dicts, os.path.join(protocols_clash_dir, f"{proto}.yaml"))
         
     print("=== فرآیند تجمیع، فیلتر و میکس اسپلیترها با موفقیت به اتمام رسید ===")
 
