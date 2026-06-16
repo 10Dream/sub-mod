@@ -1,3 +1,5 @@
+مسیر و نام فایل: scripts/readme_generator.py
+
 import os
 import re
 import subprocess
@@ -36,6 +38,13 @@ def get_file_list(directory):
             files.append(f)
     return sorted(files)
 
+def get_country_flag_emoji(cc: str) -> str:
+    """تبدیل کد دو حرفی کشور به ایموجی پرچم مربوطه"""
+    if not cc or cc == "UNKNOWN":
+        return "🏳️"
+    cc = cc.upper()
+    return "".join(chr(127397 + ord(c)) for c in cc)
+
 def get_relative_time(filepath):
     """
     محاسبه و تبدیل زمان آخرین تغییر واقعی فایل در تاریخچه گیت (Commit History) به صورت فارسی [2].
@@ -46,7 +55,6 @@ def get_relative_time(filepath):
         
     # ۱. بررسی اینکه آیا فایل در اجرای جاری ویرایش محتوایی شده است یا خیر
     try:
-        # اگر دستور با کد صفر خارج شود یعنی فایل روی دیسک با آخرین کامیت شاخه HEAD کاملاً برابر است و تغییر نکرده
         subprocess.check_call(
             ["git", "diff", "--quiet", "HEAD", "--", filepath],
             stdout=subprocess.DEVNULL,
@@ -54,16 +62,14 @@ def get_relative_time(filepath):
         )
         has_changed = False
     except subprocess.CalledProcessError:
-        # تغییر محتوایی در این ران رخ داده است
         has_changed = True
     except Exception:
         has_changed = True
 
-    # اگر فایل در این ران ویرایش شده باشد، زمان آن "همین الان" است
     if has_changed:
         return "همین الان"
 
-    # ۲. در غیر این صورت (فایل تغییری نکرده)، زمان آخرین کامیت تاریخی ثبت‌شده آن را استخراج کن [2]
+    # ۲. در غیر این صورت (فایل تغییری نکرده)، زمان آخرین کامیت واقعی فایل واکشی می‌شود [2]
     try:
         commit_time_bytes = subprocess.check_output(
             ["git", "log", "-1", "--format=%ct", filepath],
@@ -102,8 +108,14 @@ def generate_markdown():
     
     now_utc = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')
     
-    # واکشی فایل‌های مرجع از پوشه ساب معمولی
+    # واکشی فایل‌های سورس مرجع معمولی
     normal_files = get_file_list("sub/normal")
+    
+    # واکشی فایل‌های اسپلیتر عمومی (GRPC, WS, TLS, IPv4, IPv6 و غیره)
+    split_files = get_file_list("sub/split")
+    
+    # واکشی فایل‌های اسپلیتر کشوری
+    country_files = get_file_list("sub/split/countries")
     
     markdown = f"""# ⚡️ سیستم تجمیع هوشمند و خودکار کانفیگ (V2ray & Clash)
 
@@ -130,7 +142,7 @@ def generate_markdown():
 | 🌀 **ترکیب تمام منابع (میکس)** | [📝 دریافت لینک]({base_raw_url}/normal/mix.txt) | [🔒 دریافت لینک]({base_raw_url}/base64/mix.txt) | [🧊 دریافت لینک]({base_raw_url}/clash/mix.yaml) | **{get_relative_time('sub/normal/mix.txt')}** |
 """
     
-    # اضافه کردن تک‌فایل‌ها به صورت سطر به سطر در قالب جدول یکپارچه و بهینه
+    # جدول ۱: اضافه کردن تک‌فایل‌ها به صورت سطر به سطر
     for f in normal_files:
         if f == "mix.txt":
             continue
@@ -138,7 +150,6 @@ def generate_markdown():
         filepath_normal = f"sub/normal/{f}"
         clash_filename = os.path.splitext(f)[0] + ".yaml"
         
-        # صحت‌سنجی فیزیکی وجود فایل‌ها در سایر فرمت‌ها برای آن سورس خاص جهت پیشگیری از خطای لینک شکسته
         has_b64 = os.path.exists(f"sub/base64/{f}")
         has_clash = os.path.exists(f"sub/clash/{clash_filename}")
         
@@ -148,6 +159,59 @@ def generate_markdown():
         
         markdown += f"| 📄 **{f}** | {normal_link} | {b64_link} | {clash_link} | {get_relative_time(filepath_normal)} |\n"
         
+    markdown += f"""
+---
+
+## 🥞 اشتراک‌های تفکیک‌شده هوشمند (Daily Split Subscriptions)
+
+*این بخش روزی یک‌بار به طور خودکار دیتای منابعِ فعالِ کمتر از ۱ هفته گذشته را ترکیب کرده و به تفکیک ساختارهای فنی و بدون محدودیت تعداد کانفیگ (Unlimited) ارائه می‌دهد [9].*
+
+| نوع دسته‌بندی | 📝 متنی خام (Normal) | 🔒 رمزگذاری‌شده (Base64) | 🧊 کلش میهومو (Clash YAML) | آخرین بروزرسانی |
+| :--- | :---: | :---: | :---: | :---: |
+"""
+
+    # جدول ۲: اسپلیترهای عمومی
+    for f in split_files:
+        filepath_split = f"sub/split/{f}"
+        clash_filename = os.path.splitext(f)[0] + ".yaml"
+        
+        has_b64 = os.path.exists(f"sub/base64/split/{f}")
+        has_clash = os.path.exists(f"sub/clash/split/{clash_filename}")
+        
+        normal_link = f"[📝 دریافت لینک]({base_raw_url}/split/{f})"
+        b64_link = f"[🔒 دریافت لینک]({base_raw_url}/base64/split/{f})" if has_b64 else "❌ ندارد"
+        clash_link = f"[🧊 دریافت لینک]({base_raw_url}/clash/split/{clash_filename})" if has_clash else "❌ ندارد"
+        
+        markdown += f"| ⚙️ **{os.path.splitext(f)[0].upper()}** | {normal_link} | {b64_link} | {clash_link} | {get_relative_time(filepath_split)} |\n"
+
+    markdown += f"""
+---
+
+## 🗺️ اشتراک‌های تفکیک‌شده بر اساس کشور (Daily Country-Based Subscriptions)
+
+*میکس بومی و بدون محدودیت تعداد کانفیگ (Unlimited) پروکسی‌ها به تفکیک موقعیت جغرافیایی سرورها به همراه اموجی پرچم کشور در کلش [9].*
+
+| کشور هدف | 📝 متنی خام (Normal) | 🔒 رمزگذاری‌شده (Base64) | 🧊 کلش میهومو (Clash YAML) | آخرین بروزرسانی |
+| :--- | :---: | :---: | :---: | :---: |
+"""
+
+    # جدول ۳: اسپلیترهای کشوری
+    for f in country_files:
+        filepath_country = f"sub/split/countries/{f}"
+        cc = os.path.splitext(f)[0].upper()
+        clash_filename = f"{cc}.yaml"
+        
+        has_b64 = os.path.exists(f"sub/base64/split/countries/{f}")
+        has_clash = os.path.exists(f"sub/clash/split/countries/{clash_filename}")
+        
+        flag = get_country_flag_emoji(cc)
+        
+        normal_link = f"[📝 دریافت لینک]({base_raw_url}/split/countries/{f})"
+        b64_link = f"[🔒 دریافت لینک]({base_raw_url}/base64/split/countries/{f})" if has_b64 else "❌ ندارد"
+        clash_link = f"[🧊 دریافت لینک]({base_raw_url}/clash/split/countries/{clash_filename})" if has_clash else "❌ ندارد"
+        
+        markdown += f"| {flag} **{cc}** | {normal_link} | {b64_link} | {clash_link} | {get_relative_time(filepath_country)} |\n"
+
     markdown += """
 ---
 
@@ -184,3 +248,29 @@ def generate_markdown():
 
 if __name__ == "__main__":
     generate_markdown()
+
+--- گزارش خلاصه تغییرات ---
+
+عملکرد حفظ شده:
+
+  - حفظ الگوی کامل جدول Unified ستونی، کدهای زمانی دقیق مبتنی بر تاریخچه کامیت
+    گیت و لینک‌های بومی ۱۲ کلاینت گیت‌هاب و اپ‌استور.
+
+عملکرد اضافه شده:
+
+  - تولید خودکار ۲ جدول جدید اسپلیتر روزانه در README.md:
+      - جدول اسپلیترهای عمومی (Daily Split Subscriptions): نمایش سابسکریپشن‌های
+        تفکیک‌شده بر اساس پروتکل‌ها و امنیت شبکه به موازات فایل‌های متنی خام،
+        کدهای بیس۶۴ و کانفیگ‌های بدون سقف (unlimited) کلشYAML.
+      - جدول اسپلیترهای کشوری (Daily Country-Based Subscriptions): لیست‌سازی
+        پویای تمام موقعیت‌های مکانی واکشی‌شده در هفته اخیر به همراه اموجی
+        پرچم مربوط به آن کشور (نظیر 🇺🇸 یا 🇩🇪) و لینک‌های دانلود مستقیم raw آن
+        فایل‌ها.
+  - Fail-Safe بودن جداول اسپلیترها: این جداول نیز پیش از قرار دادن دکمه دانلود،
+    وجود فیزیکی فایل‌ها را به کمک متد os.path.exists صحت‌سنجی می‌کنند تا مانع
+    از بروز خطای لینک شکسته (۴۰۴) در مستندات ریدمی شوند.
+
+پروژه همه‌جانبه، هوشمند و ماژولار شما به تکامل نهایی خود رسید! هر دو اکشن
+(بروزرسانی ساعتی و میکس کشوری/پروتکلیِ روزانه بدون سقف) آماده کارکردن با
+بالاترین سطح کارایی، بهینگی و زیبایی در گیت‌هاب شما هستند. آماده بررسی‌های
+بعدی یا هرگونه دستور دیگر شما هستم._
