@@ -3,17 +3,45 @@ import re
 import subprocess
 from datetime import datetime, timezone
 
+def log_stage(step: int, total: int, message: str):
+    """
+    نمایش لاگ‌های فوق‌العاده زیبا، رنگی و حرفه‌ای به همراه نوار پیشرفت (Progress Bar)
+    جهت مانیتورینگ دقیق مراحل در خروجی کنسول گیت‌هاب اکشنز [9].
+    """
+    percent = int((step / total) * 100)
+    bar_length = 20
+    filled = int(bar_length * step // total)
+    bar = "█" * filled + "░" * (bar_length - filled)
+    
+    # کدهای رنگی ANSI استاندارد کنسول
+    green = "\033[92m"
+    cyan = "\033[96m"
+    yellow = "\033[93m"
+    reset = "\033[0m"
+    bold = "\033[1m"
+    
+    # ساخت هدر شیک برای شروع و پایان فرآیندها
+    if step == 1:
+        print(f"\n{yellow}┌────────────────────────────────────────────────────────┐{reset}")
+        print(f"{yellow}│       شروع فرآیند بازسازی و رندر مستندات ریدمی       │{reset}")
+        print(f"{yellow}└────────────────────────────────────────────────────────┘{reset}\n")
+        
+    print(f"{green}{bold}[{step}/{total}]{reset} {cyan}{bar}{reset} {bold}{percent}%{reset} | {message}")
+    
+    if step == total:
+        print(f"\n{green}┌────────────────────────────────────────────────────────┐{reset}")
+        print(f"{green}│        تمامی جداول رندر شده و فایل نهایی ذخیره شد!      │{reset}")
+        print(f"{green}└────────────────────────────────────────────────────────┘{reset}\n")
+
 def get_repo_info():
     """
     استخراج نام نویسنده و مخزن جهت ساخت خودکار لینک‌های دانلود خام مستقیم.
     """
-    # بررسی متغیرهای محیطی گیت‌هاب اکشنز
     repo_env = os.environ.get("GITHUB_REPOSITORY")
     if repo_env and "/" in repo_env:
         owner, repo = repo_env.split("/", 1)
         return owner, repo
     
-    # بکاپ محلی با استفاده از دستور git
     try:
         git_url = subprocess.check_output(["git", "config", "--get", "remote.origin.url"]).decode().strip()
         match = re.search(r'github\.com[:/]([^/]+)/([^/.]+)(?:\.git)?', git_url)
@@ -36,22 +64,23 @@ def get_file_list(directory):
             files.append(f)
     return sorted(files)
 
-def get_country_flag_emoji(cc: str) -> str:
-    """تبدیل کد دو حرفی کشور به ایموجی پرچم مربوطه"""
+def get_country_flag_html(cc: str) -> str:
+    """
+    ساخت هوشمند تگ تصویر SVG پرچم کشورها جهت دور زدن باگ عدم نمایش اموجی‌ها در ویندوز/کروم.
+    تصاویر لود شده کاملاً برداری، مدرن و باکیفیت خواهند بود [9].
+    """
     if not cc or cc == "UNKNOWN":
         return "🏳️"
-    cc = cc.upper()
-    return "".join(chr(127397 + ord(c)) for c in cc)
+    cc_lower = cc.lower()
+    return f'<img src="https://raw.githubusercontent.com/lipis/flag-icons/main/flags/4x3/{cc_lower}.svg" width="22" alt="{cc}"/>'
 
 def get_relative_time(filepath):
     """
     محاسبه و تبدیل زمان آخرین تغییر واقعی فایل در تاریخچه گیت (Commit History) به صورت فارسی [2].
-    این فرآیند تغییرات لایو دیسک رانر را با تاریخچه ثبت شده گیت ترکیب می‌کند تا دقیق‌ترین زمان ثبت شود.
     """
     if not os.path.exists(filepath):
         return "نامشخص"
         
-    # ۱. بررسی اینکه آیا فایل در اجرای جاری ویرایش محتوایی شده است یا خیر
     try:
         subprocess.check_call(
             ["git", "diff", "--quiet", "HEAD", "--", filepath],
@@ -67,7 +96,6 @@ def get_relative_time(filepath):
     if has_changed:
         return "همین الان"
 
-    # ۲. در غیر این صورت (فایل تغییری نکرده)، زمان آخرین کامیت واقعی فایل واکشی می‌شود [2]
     try:
         commit_time_bytes = subprocess.check_output(
             ["git", "log", "-1", "--format=%ct", filepath],
@@ -101,19 +129,26 @@ def get_relative_time(filepath):
         return "بروزرسانی شده"
 
 def generate_markdown():
+    total_steps = 6
+    
+    log_stage(1, total_steps, "واکشی اطلاعات و مشخصات متادیتای مخزن گیت‌هاب...")
     owner, repo = get_repo_info()
     base_raw_url = f"https://raw.githubusercontent.com/{owner}/{repo}/main/sub"
-    
     now_utc = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')
     
-    # واکشی فایل‌های سورس مرجع معمولی
+    log_stage(2, total_steps, "پایش دایرکتوری سورس‌های خام متنی معمولی...")
     normal_files = get_file_list("sub/normal")
     
-    # واکشی فایل‌های اسپلیتر عمومی (GRPC, WS, TLS, IPv4, IPv6 و غیره)
+    log_stage(3, total_steps, "پایش پوشه‌های اسپلیترهای روزانه پروتکل‌ها و متدهای ترنسپورت...")
     split_files = get_file_list("sub/split")
     
-    # واکشی فایل‌های اسپلیتر کشوری
+    log_stage(4, total_steps, "واکشی پویای لیست دیتاسنترها و CDNهای تفکیک‌شده روزانه...")
+    datacenter_files = get_file_list("sub/split/datacenters")
+    
+    log_stage(5, total_steps, "ردیابی موقعیت‌های مکانی و کشورهای استخراج‌شده...")
     country_files = get_file_list("sub/split/countries")
+    
+    log_stage(6, total_steps, "رندر نهایی تمپلت‌ها و بازنویسی جامع فایل README.md مخزن...")
     
     markdown = f"""# ⚡️ سیستم تجمیع هوشمند و خودکار کانفیگ (V2ray & Clash)
 
@@ -140,7 +175,7 @@ def generate_markdown():
 | 🌀 **ترکیب تمام منابع (میکس)** | [📝 دریافت لینک]({base_raw_url}/normal/mix.txt) | [🔒 دریافت لینک]({base_raw_url}/base64/mix.txt) | [🧊 دریافت لینک]({base_raw_url}/clash/mix.yaml) | **{get_relative_time('sub/normal/mix.txt')}** |
 """
     
-    # جدول ۱: اضافه کردن تک‌فایل‌ها به صورت سطر به سطر
+    # جدول ۱: اضافه کردن تک‌فایل‌ها
     for f in normal_files:
         if f == "mix.txt":
             continue
@@ -185,15 +220,44 @@ def generate_markdown():
     markdown += f"""
 ---
 
+## 🏢 اشتراک‌های تفکیک‌شده بر اساس دیتاسنتر / CDN (Daily Datacenter Subscriptions)
+
+*میکس روزانه و بدون محدودیت تعداد کانفیگ (Unlimited) پروکسی‌ها بر پایه شناسایی فنی دامنه و رنج IP سرورهای میزبان [9].*
+
+| نام دیتاسنتر / CDN | 📝 متنی خام (Normal) | 🔒 رمزگذاری‌شده (Base64) | 🧊 کلش میهومو (Clash YAML) | آخرین بروزرسانی |
+| :--- | :---: | :---: | :---: | :---: |
+"""
+
+    # جدول ۳: اسپلیترهای دیتاسنترها
+    for f in datacenter_files:
+        filepath_dc = f"sub/split/datacenters/{f}"
+        raw_name = os.path.splitext(f)[0]
+        clash_filename = f"{raw_name}.yaml"
+        
+        has_b64 = os.path.exists(f"sub/base64/split/datacenters/{f}")
+        has_clash = os.path.exists(f"sub/clash/split/datacenters/{clash_filename}")
+        
+        # نمایش نام مرتب و خوانا در مستندات
+        display_name = raw_name.replace("_", " ").upper()
+        
+        normal_link = f"[📝 دریافت لینک]({base_raw_url}/split/datacenters/{f})"
+        b64_link = f"[🔒 دریافت لینک]({base_raw_url}/base64/split/datacenters/{f})" if has_b64 else "❌ ندارد"
+        clash_link = f"[🧊 دریافت لینک]({base_raw_url}/clash/split/datacenters/{clash_filename})" if has_clash else "❌ ندارد"
+        
+        markdown += f"| 🏢 **{display_name}** | {normal_link} | {b64_link} | {clash_link} | {get_relative_time(filepath_dc)} |\n"
+
+    markdown += f"""
+---
+
 ## 🗺️ اشتراک‌های تفکیک‌شده بر اساس کشور (Daily Country-Based Subscriptions)
 
-*میکس بومی و بدون محدودیت تعداد کانفیگ (Unlimited) پروکسی‌ها به تفکیک موقعیت جغرافیایی سرورها به همراه اموجی پرچم کشور در کلش [9].*
+*میکس بومی و بدون محدودیت تعداد کانفیگ (Unlimited) پروکسی‌ها به تفکیک موقعیت جغرافیایی سرورها به همراه پرچم برداری و SVG کشورها [9].*
 
 | کشور هدف | 📝 متنی خام (Normal) | 🔒 رمزگذاری‌شده (Base64) | 🧊 کلش میهومو (Clash YAML) | آخرین بروزرسانی |
 | :--- | :---: | :---: | :---: | :---: |
 """
 
-    # جدول ۳: اسپلیترهای کشوری
+    # جدول ۴: اسپلیترهای کشوری
     for f in country_files:
         filepath_country = f"sub/split/countries/{f}"
         cc = os.path.splitext(f)[0].upper()
@@ -202,13 +266,13 @@ def generate_markdown():
         has_b64 = os.path.exists(f"sub/base64/split/countries/{f}")
         has_clash = os.path.exists(f"sub/clash/split/countries/{clash_filename}")
         
-        flag = get_country_flag_emoji(cc)
+        flag_img = get_country_flag_html(cc)
         
         normal_link = f"[📝 دریافت لینک]({base_raw_url}/split/countries/{f})"
         b64_link = f"[🔒 دریافت لینک]({base_raw_url}/base64/split/countries/{f})" if has_b64 else "❌ ندارد"
         clash_link = f"[🧊 دریافت لینک]({base_raw_url}/clash/split/countries/{clash_filename})" if has_clash else "❌ ندارد"
         
-        markdown += f"| {flag} **{cc}** | {normal_link} | {b64_link} | {clash_link} | {get_relative_time(filepath_country)} |\n"
+        markdown += f"| {flag_img} **{cc}** | {normal_link} | {b64_link} | {clash_link} | {get_relative_time(filepath_country)} |\n"
 
     markdown += """
 ---
@@ -241,8 +305,6 @@ def generate_markdown():
     
     with open("README.md", "w", encoding="utf-8") as readme_file:
         readme_file.write(markdown)
-    
-    print("[موفقیت] فایل README.md جدید با موفقیت تولید و بروزرسانی شد.")
 
 if __name__ == "__main__":
     generate_markdown()
