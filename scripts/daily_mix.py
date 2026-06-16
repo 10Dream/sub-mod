@@ -16,6 +16,34 @@ if current_dir not in sys.path:
 import clash_converter
 import clash_template
 
+def log_stage(step: int, total: int, message: str):
+    """
+    نمایش لاگ‌های پیشرفت فوق‌العاده شیک و رنگی به همراه Progress Bar در کنسول گیت‌هاب اکشنز [9].
+    """
+    percent = int((step / total) * 100)
+    bar_length = 20
+    filled = int(bar_length * step // total)
+    bar = "█" * filled + "░" * (bar_length - filled)
+    
+    # کدهای رنگی ANSI استاندارد کنسول
+    green = "\033[92m"
+    cyan = "\033[96m"
+    yellow = "\033[93m"
+    reset = "\033[0m"
+    bold = "\033[1m"
+    
+    if step == 1:
+        print(f"\n{yellow}┌────────────────────────────────────────────────────────┐{reset}")
+        print(f"{yellow}│     شروع فرآیند مگا-میکس، فیلترینگ و اسپلیت روزانه    │{reset}")
+        print(f"{yellow}└────────────────────────────────────────────────────────┘{reset}\n")
+        
+    print(f"{green}{bold}[{step}/{total}]{reset} {cyan}{bar}{reset} {bold}{percent}%{reset} | {message}")
+    
+    if step == total:
+        print(f"\n{green}┌────────────────────────────────────────────────────────┐{reset}")
+        print(f"{green}│        فرآیند اسپلیت روزانه با موفقیت به پایان رسید!  │{reset}")
+        print(f"{green}└────────────────────────────────────────────────────────┘{reset}\n")
+
 # محدوده رنج آی‌پی دیتاسنترها و CDNهای برتر طبق مستندات درخواستی شما
 CDN_RANGES = [
     ("Cloudflare", ["1.0.0.0/24","1.1.1.0/24","103.21.244.0/22","103.22.200.0/22","103.31.4.0/22","104.16.0.0/13","104.24.0.0/14","108.162.192.0/18","131.0.72.0/22","141.101.64.0/18","162.158.0.0/15","172.64.0.0/13","173.245.48.0/20","188.114.96.0/20","190.93.240.0/20","197.234.240.0/22","198.41.128.0/17"]),
@@ -33,7 +61,6 @@ CDN_RANGES = [
     ("ParsPack", ["2.144.23.191/32","5.135.72.112/28","5.160.143.64/28","31.214.248.208/28","45.32.131.160/28","45.32.154.64/28","45.76.132.16/28","45.77.211.208/28","45.77.211.240/28","45.77.223.80/28","45.139.11.240/28","46.20.41.224/28","64.176.15.176/28","64.176.64.80/28","65.20.72.128/28","65.20.113.240/28","77.237.66.128/28","79.175.148.128/28","84.17.42.224/28","87.236.161.96/28","89.36.162.32/28","89.187.169.48/28","91.228.186.48/28","94.182.153.64/28","95.179.140.112/28","95.179.164.96/28","95.179.220.128/28","95.179.254.176/28","95.211.188.240/28","95.211.219.96/28","95.211.240.112/28","95.211.250.112/28","130.185.74.48/28","130.185.79.128/28","139.84.177.16/28","139.84.236.0/28","144.202.58.96/28","144.202.78.96/28","144.202.114.128/28","155.138.162.96/28","158.51.122.240/28","158.247.223.48/28","167.179.93.112/28","171.22.26.240/28","178.22.120.192/28","185.8.173.0/28","185.8.174.144/28","185.8.175.208/28","185.110.191.240/28","185.204.197.0/28","185.208.175.144/28","194.5.188.32/28","195.88.208.176/28","195.181.174.64/28","195.248.241.160/28","195.248.242.192/28","199.247.3.16/28","207.148.69.96/28","208.85.22.32/28","213.183.48.16/28","216.238.117.0/28","217.197.97.48/28"])
 ]
 
-# پارس پیش‌فرض رنج‌های آی‌پی برای بهینه‌سازی سرعت و منابع [9]
 PARSED_CDN_RANGES = []
 for name, cidrs in CDN_RANGES:
     networks = []
@@ -45,7 +72,6 @@ for name, cidrs in CDN_RANGES:
     PARSED_CDN_RANGES.append((name, networks))
 
 def find_datacenter(ip_str) -> str:
-    """تشخیص بومی دیتاسنتر یا CDN برای هر آدرس آی‌پی با نهایت سرعت"""
     if not ip_str:
         return "UNKNOWN"
     try:
@@ -60,7 +86,6 @@ def find_datacenter(ip_str) -> str:
     return "UNKNOWN"
 
 def is_file_recent(filepath, days=7) -> bool:
-    """سنجش هوشمند اخیر بودن فایل با استفاده از سابقه گیت لاگ."""
     try:
         commit_time_bytes = subprocess.check_output(
             ["git", "log", "-1", "--format=%ct", filepath],
@@ -82,7 +107,6 @@ def is_file_recent(filepath, days=7) -> bool:
         return False
 
 def resolve_ip(server: str):
-    """حل آدرس DNS برای استخراج IP و تعیین نسخه IPv4 یا IPv6."""
     if not server or not isinstance(server, str):
         return None, "unknown"
         
@@ -118,7 +142,6 @@ def encode_to_base64(text: str) -> str:
     return base64.b64encode(text.encode('utf-8')).decode('utf-8')
 
 def get_country_flag_emoji(cc: str) -> str:
-    """تبدیل کد دو حرفی کشور به ایموجی پرچم مربوطه"""
     if not cc or cc == "UNKNOWN":
         return "🏳️"
     cc = cc.upper()
@@ -128,10 +151,8 @@ def get_country_flag_emoji(cc: str) -> str:
 db_path = os.path.abspath(os.path.join(current_dir, "../utils/Country.mmdb"))
 try:
     reader = geoip2.database.Reader(db_path)
-    print("[دیتابیس] ژئوای‌پی با موفقیت بارگذاری شد.")
-except Exception as e:
+except Exception:
     reader = None
-    print(f"[هشدار] دیتابیس کشورها در مسیر '{db_path}' لود نشد: {e}")
 
 def get_country_code(ip_address) -> str:
     if not reader or not ip_address:
@@ -143,10 +164,6 @@ def get_country_code(ip_address) -> str:
         return "UNKNOWN"
 
 def build_unlimited_clash_config(proxies_list, dest_yaml_path):
-    """
-    تولید فایل تنظیمات کامل کلش میهومو برای هر اسپلیت با پروکسی‌های نامحدود (بدون سقف) [9].
-    نام پروکسی‌ها همراه با اموجی پرچم کشور به اول آن‌ها و اعمال روتین رفع تکراری خواهد بود.
-    """
     if not proxies_list:
         return False
         
@@ -155,17 +172,13 @@ def build_unlimited_clash_config(proxies_list, dest_yaml_path):
     
     for p in proxies_list:
         p_copy = dict(p)
-        
-        # استخراج پرچم بر اساس IP سرور
         ip, _ = resolve_ip(p_copy.get("server"))
         cc = get_country_code(ip)
         flag = get_country_flag_emoji(cc)
         
-        # چسباندن پرچم به ابتدای نام بومی پروکسی
         orig_name = p_copy.get("name", "Proxy").strip()
         name_with_flag = f"{flag} {orig_name}"
         
-        # تضمین یکتا بودن نام پروکسی در این فایل کلش
         if name_with_flag in seen_names:
             seen_names[name_with_flag] += 1
             final_name = f"{name_with_flag}-{seen_names[name_with_flag]}"
@@ -178,7 +191,6 @@ def build_unlimited_clash_config(proxies_list, dest_yaml_path):
         
     proxy_names = [p["name"] for p in processed_proxies]
     
-    # مونتاژ سند کلش با استفاده از تمپلت ماژولار
     final_dict = {}
     final_dict.update(clash_template.GENERAL_SETTINGS)
     final_dict["dns"] = clash_template.DNS_SETTINGS
@@ -197,7 +209,6 @@ def build_unlimited_clash_config(proxies_list, dest_yaml_path):
     return True
 
 def map_to_standard_protocol_name(p_type: str) -> str:
-    """نگاشت اسامی مختلف به پروتکل‌های استاندارد درخواستی شما"""
     p_type = p_type.lower()
     if p_type in ["hysteria2", "hy2"]:
         return "hy2"
@@ -208,9 +219,11 @@ def map_to_standard_protocol_name(p_type: str) -> str:
     return p_type
 
 def main():
+    total_stages = 8
+    
+    log_stage(1, total_stages, "لود دیتابیس بومی ژئوای‌پی و تخصیص پوشه‌های اسپلیتر...")
     normal_dir = os.path.abspath(os.path.join(current_dir, "../sub/normal"))
     
-    # ایجاد ساختار مسیرهای جدید Split به موازات پروژه‌های ماژولار
     split_normal_dir = os.path.abspath(os.path.join(current_dir, "../sub/split"))
     split_base64_dir = os.path.abspath(os.path.join(current_dir, "../sub/base64/split"))
     split_clash_dir = os.path.abspath(os.path.join(current_dir, "../sub/clash/split"))
@@ -227,9 +240,7 @@ def main():
     protocols_base64_dir = os.path.join(split_base64_dir, "protocols")
     protocols_clash_dir = os.path.join(split_clash_dir, "protocols")
     
-    print("=== شروع فاز تولید میکس، فیلترینگ و تبدیل اسپلیت‌های بدون محدودیت ===")
-    
-    # ۱. اسکن و جداسازی سورس‌های فعال با قدمت کمتر از ۷ روز
+    log_stage(2, total_stages, "اسکن فایل‌های سابسکریپشن معمولی با سن زیر ۷ روز در گیت...")
     recent_sources = []
     if os.path.exists(normal_dir):
         for f in os.listdir(normal_dir):
@@ -238,12 +249,11 @@ def main():
                 if is_file_recent(filepath, days=7):
                     recent_sources.append(f)
                     
-    print(f"تعداد منابع واکشی شده در هفته اخیر: {len(recent_sources)}")
     if not recent_sources:
-        print("[پایان] هیچ سورس فعالی یافت نشد.")
+        print("[اسکیپ] هیچ منبع فعالی در ۱ هفته گذشته یافت نشد.")
         sys.exit(0)
         
-    # ۲. دکود، پارس و اعمال دی‌داپلیکیتور سراسری
+    log_stage(3, total_stages, "پارس، معتبرسازی و فیلترینگ دیتای تکراری با اثر انگشت اتصالی...")
     unique_proxies_list = []
     seen_fingerprints = set()
     
@@ -264,9 +274,7 @@ def main():
                             seen_fingerprints.add(fingerprint)
                             unique_proxies_list.append({"dict": p, "raw_link": single_link})
                             
-    print(f"در مجموع {len(unique_proxies_list)} کانفیگ یکتای فنی آماده تقسیم‌بندی است.")
-    
-    # ۳. تدارک دسته‌ها
+    log_stage(4, total_stages, "دسته‌بندی پروکسی‌های یکتا بر اساس امنیت و متدهای ترنسپورت شبکه...")
     categories = {
         "grpc": {"links": [], "dicts": []},
         "http": {"links": [], "dicts": []},
@@ -280,7 +288,6 @@ def main():
         "ipv6": {"links": [], "dicts": []}
     }
     
-    # ترتیب و ساختار دسته‌بندی ۱۸ پروتکل درخواستی شما [9]
     protocols_order = [
         "hy2", "vless", "ss", "vmess", "trojan", "anytls", "ssh", "ssr",
         "snell", "tailscale", "openvpn", "trusttunnel", "masque", "sudoku",
@@ -291,19 +298,19 @@ def main():
     countries_data = {}
     datacenters_data = {}
     
-    # ۴. حلقه‌ی دسته‌بندی هوشمند و همه‌جانبه
+    # تفکیک عمیق
     for item in unique_proxies_list:
         p = item["dict"]
         raw = item["raw_link"]
         p_type = p["type"]
         
-        # الف. دسته‌بندی بر اساس پروتکل مستقیم (همسو با لیست درخواستی شما) [9]
+        # ۱. دسته‌بندی پروتکل
         std_proto = map_to_standard_protocol_name(p_type)
         if std_proto in protocols_data:
             protocols_data[std_proto]["links"].append(raw)
             protocols_data[std_proto]["dicts"].append(p)
         
-        # ب. امنیت
+        # ۲. امنیت
         is_tls = p.get("tls", False) or p_type in ["hysteria", "hysteria2", "tuic", "trojan", "anytls", "trusttunnel"]
         is_reality = p.get("reality-opts") is not None
         
@@ -319,7 +326,7 @@ def main():
             categories["non-tls"]["links"].append(raw)
             categories["non-tls"]["dicts"].append(p)
             
-        # ج. ترنسپورت
+        # ۳. ترنسپورت
         net = p.get("network", "tcp").lower()
         if net == "grpc":
             categories["grpc"]["links"].append(raw)
@@ -337,7 +344,7 @@ def main():
             categories["tcp"]["links"].append(raw)
             categories["tcp"]["dicts"].append(p)
             
-        # د. IP و کشور
+        # ۴. نسخه آی‌پی
         ip, ip_ver = resolve_ip(p.get("server"))
         if ip_ver == "ipv4":
             categories["ipv4"]["links"].append(raw)
@@ -347,7 +354,7 @@ def main():
             categories["ipv6"]["dicts"].append(p)
             
         if ip:
-            # تشخیص کشور
+            # ۵. کشور
             cc = get_country_code(ip)
             if cc != "UNKNOWN":
                 if cc not in countries_data:
@@ -355,7 +362,7 @@ def main():
                 countries_data[cc]["links"].append(raw)
                 countries_data[cc]["dicts"].append(p)
                 
-            # تشخیص دیتاسنتر / CDN
+            # ۶. دیتاسنتر
             dc_name = find_datacenter(ip)
             if dc_name != "UNKNOWN":
                 if dc_name not in datacenters_data:
@@ -363,8 +370,12 @@ def main():
                 datacenters_data[dc_name]["links"].append(raw)
                 datacenters_data[dc_name]["dicts"].append(p)
                 
-    # ۵. نوشتن و انکود کردن خروجی‌ها (Plain text و Base64)
-    # ذخیره و تبدیل دسته‌های عمومی
+    log_stage(5, total_stages, "تفکیک اختصاصی ۱۸ پروتکل با رعایت کامل اولویت‌ها...")
+    log_stage(6, total_stages, "تطبیق رنج‌های آی‌پی و تفکیک بر پایه دیتاسنترها و CDNها...")
+    log_stage(7, total_stages, "تطبیق مکانی و تفکیک جغرافیایی بر پایه کشورهای هدف...")
+    log_stage(8, total_stages, "رندر و ذخیره همزمان فایل‌های معمولی، کدهای بیس۶۴ و کانفیگ‌های بدون مرز کلش...")
+    
+    # نوشتن دسته‌های عمومی
     os.makedirs(split_normal_dir, exist_ok=True)
     os.makedirs(split_base64_dir, exist_ok=True)
     os.makedirs(split_clash_dir, exist_ok=True)
@@ -382,7 +393,7 @@ def main():
             f.write(encode_to_base64(content_str))
         build_unlimited_clash_config(dicts, os.path.join(split_clash_dir, f"{cat_name}.yaml"))
         
-    # ذخیره و تبدیل دسته‌های کشوری
+    # نوشتن دسته‌های کشوری
     os.makedirs(countries_normal_dir, exist_ok=True)
     os.makedirs(countries_base64_dir, exist_ok=True)
     os.makedirs(countries_clash_dir, exist_ok=True)
@@ -400,7 +411,7 @@ def main():
             f.write(encode_to_base64(content_str))
         build_unlimited_clash_config(dicts, os.path.join(countries_clash_dir, f"{cc}.yaml"))
         
-    # ذخیره و تبدیل دسته‌های دیتاسنتری / CDN
+    # نوشتن دسته‌های دیتاسنتری
     os.makedirs(datacenters_normal_dir, exist_ok=True)
     os.makedirs(datacenters_base64_dir, exist_ok=True)
     os.makedirs(datacenters_clash_dir, exist_ok=True)
@@ -420,7 +431,7 @@ def main():
             f.write(encode_to_base64(content_str))
         build_unlimited_clash_config(dicts, os.path.join(datacenters_clash_dir, f"{dc_filename}.yaml"))
         
-    # ذخیره و تبدیل دسته‌های اختصاصی ۱۸ پروتکل درخواستی شما [9]
+    # نوشتن دسته‌های پروتکلی
     os.makedirs(protocols_normal_dir, exist_ok=True)
     os.makedirs(protocols_base64_dir, exist_ok=True)
     os.makedirs(protocols_clash_dir, exist_ok=True)
@@ -432,16 +443,11 @@ def main():
             continue
         content_str = "\n".join(links)
         
-        # ساب پروتکل متنی معمولی
         with open(os.path.join(protocols_normal_dir, f"{proto}.txt"), 'w', encoding='utf-8') as f:
             f.write(content_str)
-        # ساب پروتکل بیس۶۴
         with open(os.path.join(protocols_base64_dir, f"{proto}.txt"), 'w', encoding='utf-8') as f:
             f.write(encode_to_base64(content_str))
-        # کانفیگ نامحدود کلش با پرچم‌ها
         build_unlimited_clash_config(dicts, os.path.join(protocols_clash_dir, f"{proto}.yaml"))
-        
-    print("=== فرآیند تجمیع، فیلتر و میکس اسپلیترها با موفقیت به اتمام رسید ===")
 
 if __name__ == "__main__":
     main()
