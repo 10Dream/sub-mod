@@ -7,7 +7,7 @@ import clash_template
 
 # تنظیمات پیش‌فرض تبدیل به کلش میهومو با اعمال فیلتر و اولویت‌ها
 CLASH_CONFIG = {
-    "limit_total": 800,             # حداکثر تعداد کل کانفیگ‌های خروجی
+    "limit_total": 600,             # حداکثر تعداد کل کانفیگ‌های خروجی
     "priorities": [                 # اولویت‌بندی از بالا به پایین به همراه محدودیت برای هر پروتکل
         {"type": "sudoku", "limit": 300},
         {"type": "masque", "limit": 300},
@@ -180,6 +180,12 @@ def parse_vmess(link: str):
         decoded = safe_b64decode(link.replace("vmess://", "", 1))
         if not decoded: return None
         j = json.loads(decoded)
+        
+        # پیش‌گیری هوشمند از مفقود شدن فیلد اجباری سایفر در میهومو
+        scy = j.get("scy")
+        if not scy or not isinstance(scy, str) or scy.strip() == "":
+            scy = "auto"
+            
         return {
             "name": j.get("ps", j.get("add")),
             "type": "vmess",
@@ -187,7 +193,7 @@ def parse_vmess(link: str):
             "port": int(j.get("port", 443)),
             "uuid": j.get("id", ""),
             "alterId": int(j.get("aid", 0)),
-            "cipher": j.get("scy", "auto"),
+            "cipher": scy,
             "udp": True
         }
     except Exception:
@@ -458,7 +464,6 @@ def parse_wireguard(link: str):
             if "," in reserved_val:
                 proxy["reserved"] = [int(x) for x in reserved_val.split(",") if x.strip().isdigit()]
             elif is_valid_b64(reserved_val) and len(reserved_val) == 4:
-                # تبدیل داده‌های انکود شده به بایت
                 try:
                     proxy["reserved"] = list(base64.b64decode(reserved_val))
                 except Exception:
@@ -842,6 +847,20 @@ def validate_proxy(p) -> bool:
     # تطبیق سخت‌گیرانه پارامترهای فنی هر پروتکل طبق الگوهای رسمی
     if p_type in ["vless", "vmess"]:
         if not p.get("uuid") or not isinstance(p["uuid"], str): return False
+        
+        # پیش‌گیری هوشمند از ارور cipher مفقود شده در پروتکل VMess
+        if p_type == "vmess":
+            cipher = p.get("cipher")
+            if not cipher or not isinstance(cipher, str) or cipher.strip() == "":
+                p["cipher"] = "auto"
+                
+        # بررسی صحت وجود و پایداری کلید REALITY پابلیک در صورت فعال بودن
+        reality = p.get("reality-opts")
+        if reality and isinstance(reality, dict):
+            pbk = reality.get("public-key")
+            if not pbk or not isinstance(pbk, str) or pbk.strip() == "":
+                return False  # رد کردن کانفیگ‌های ریالیتی فاقد کلید معتبر
+                
     elif p_type in ["trojan", "hysteria2"]:
         if not p.get("password") or not isinstance(p["password"], str): return False
     elif p_type == "wireguard":
@@ -849,7 +868,6 @@ def validate_proxy(p) -> bool:
            not p.get("public-key") or not isinstance(p["public-key"], str) or \
            not p.get("ip") or not isinstance(p["ip"], str):
             return False
-        # بررسی صحت فرمت بیس۶۴ کلیدها جهت تضمین سلامت وایرگارد
         if not is_valid_b64(p["private-key"]) or not is_valid_b64(p["public-key"]):
             return False
     elif p_type == "hysteria":
