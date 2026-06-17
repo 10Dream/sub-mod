@@ -5,9 +5,9 @@ import base64
 from urllib.parse import urlparse, parse_qs, unquote
 import clash_template
 
-# تنظیمات پیش‌فرض تبدیل به کلش میهومو با اعمال فیلتر و اولویت‌ها
+# تنظیمات پیش‌فرض تبدیل به کلش میهومو با اعمال فیلتر و اولویت‌ها طبق کانفیگ سفارشی جدید شما
 CLASH_CONFIG = {
-    "limit_total": 600,             # حداکثر تعداد کل کانفیگ‌های خروجی
+    "limit_total": 800,             # حداکثر تعداد کل کانفیگ‌های خروجی
     "priorities": [                 # اولویت‌بندی از بالا به پایین به همراه محدودیت برای هر پروتکل
         {"type": "sudoku", "limit": 300},
         {"type": "masque", "limit": 300},
@@ -15,19 +15,19 @@ CLASH_CONFIG = {
         {"type": "openvpn", "limit": 300},
         {"type": "tailscale", "limit": 300},
         {"type": "snell", "limit": 300},
-        {"type": "ssh", "limit": 300},
-        {"type": "socks5", "limit": 300},
-        {"type": "ssr", "limit": 300},
-        {"type": "anytls", "limit": 300},
-        {"type": "hy2", "limit": 300},
-        {"type": "vless", "limit": 400},
-        {"type": "ss", "limit": 400},
-        {"type": "vmess", "limit": 400},
-        {"type": "trojan", "limit": 400},
-        {"type": "wireguard", "limit": 300},
-        {"type": "tuic", "limit": 300},
-        {"type": "hysteria", "limit": 300},
-        {"type": "http", "limit": 300},
+        {"type": "ssh", "limit": 10},
+        {"type": "ss", "limit": 100},       # shadowsocks
+        {"type": "ssr", "limit": 50},       # shadowsocksr
+        {"type": "anytls", "limit": 200},
+        {"type": "hy2", "limit": 200},      # hysteria2 به اختصار hy2
+        {"type": "vless", "limit": -1},     # -1 به معنی نامحدود برای پروتکل VLESS
+        {"type": "vmess", "limit": 50},
+        {"type": "trojan", "limit": 50},
+        {"type": "wireguard", "limit": 50},
+        {"type": "tuic", "limit": 50},
+        {"type": "hysteria", "limit": 50},
+        {"type": "socks5", "limit": 20},
+        {"type": "http", "limit": 20},
     ],
     "default_limit_for_others": 0  # محدودیت پیش‌فرض برای پروتکل‌هایی که در لیست بالا نیستند (0 یعنی حذف)
 }
@@ -205,6 +205,8 @@ def parse_vmess(link: str):
         decoded = safe_b64decode(link.replace("vmess://", "", 1))
         if not decoded: return None
         j = json.loads(decoded)
+        
+        # تضمین وجود سایفر خودکار و پورت معتبر برای جلوگیری از ارور unset fields: cipher در کلش
         return {
             "name": j.get("ps", j.get("add")),
             "type": "vmess",
@@ -272,7 +274,7 @@ def parse_anytls(link: str):
         return None
 
 def parse_ss(link: str):
-    """پارس بومی پروتکل Shadowsocks به همراه تفکیک بهینه پلاگین‌ها طبق الگوی مستندات"""
+    """پارس بومی پروتکل Shadowsocks به همراه تفکیک بهینه پلاگین‌ها طبق الگوی مستندات [8]"""
     try:
         raw = link.replace("ss://", "", 1)
         tag = ""
@@ -327,15 +329,14 @@ def parse_ss(link: str):
                     pk, pv = part.split("=", 1)
                     plugin_opts[pk.strip()] = pv.strip()
             if plugin_opts:
+                # حل باگ تبدیل نوع داده‌ی mux در v2ray-plugin به مقدار بولی معتبر [8]
+                if "mux" in plugin_opts:
+                    mux_v = str(plugin_opts["mux"]).lower().strip()
+                    if mux_v in ["0", "false", "off"]:
+                        plugin_opts["mux"] = False
+                    else:
+                        plugin_opts["mux"] = True
                 proxy["plugin-opts"] = plugin_opts
-        
-        # اصلاح مقدار mux برای سازگاری با کلش
-        if "mux" in proxy:
-            mux_val = proxy["mux"]
-            if mux_val in ["0", "false", "False"]:
-                proxy["mux"] = False
-            else:
-                proxy["mux"] = True
                 
         return proxy
     except Exception:
@@ -869,6 +870,12 @@ def validate_proxy(p) -> bool:
     # تطبیق سخت‌گیرانه پارامترهای فنی هر پروتکل طبق الگوهای رسمی
     if p_type in ["vless", "vmess"]:
         if not p.get("uuid") or not isinstance(p["uuid"], str): return False
+        if p_type == "vmess":
+            # تضمین پر شدن فیلدهای اجباری vmess جهت پیشگیری از خطای unset fields: cipher در کلش
+            if "cipher" not in p or not p["cipher"] or str(p["cipher"]).strip() == "":
+                p["cipher"] = "auto"
+            if "alterId" not in p:
+                p["alterId"] = 0
     elif p_type in ["trojan", "hysteria2"]:
         if not p.get("password") or not isinstance(p["password"], str): return False
     elif p_type == "wireguard":
