@@ -7,7 +7,7 @@ import clash_template
 
 # تنظیمات پیش‌فرض تبدیل به کلش میهومو با اعمال فیلتر و اولویت‌ها
 CLASH_CONFIG = {
-    "limit_total": 600,             # حداکثر تعداد کل کانفیگ‌های خروجی
+    "limit_total": 800,             # حداکثر تعداد کل کانفیگ‌های خروجی
     "priorities": [                 # اولویت‌بندی از بالا به پایین به همراه محدودیت برای هر پروتکل
         {"type": "sudoku", "limit": 300},
         {"type": "masque", "limit": 300},
@@ -20,10 +20,10 @@ CLASH_CONFIG = {
         {"type": "ssr", "limit": 300},
         {"type": "anytls", "limit": 300},
         {"type": "hy2", "limit": 300},
-        {"type": "vless", "limit": 300},
-        {"type": "ss", "limit": 300},
-        {"type": "vmess", "limit": 300},
-        {"type": "trojan", "limit": 300},
+        {"type": "vless", "limit": 400},
+        {"type": "ss", "limit": 400},
+        {"type": "vmess", "limit": 400},
+        {"type": "trojan", "limit": 400},
         {"type": "wireguard", "limit": 300},
         {"type": "tuic", "limit": 300},
         {"type": "hysteria", "limit": 300},
@@ -65,8 +65,11 @@ def safe_b64decode(s: str) -> str:
     except Exception:
         return ""
 
-def is_valid_b64(s: str) -> bool:
-    """بررسی صحت ساختاری کلیدهای بیس۶۴ برای فیلد کلاینت‌ها"""
+def is_valid_curve25519_key(s: str) -> bool:
+    """
+    اعتبارسنجی ریاضیاتی کلیدهای وایرگارد و فیلتر شکن های هم خانواده [12].
+    کلیدها باید با موفقیت دکود بیس۶۴ شده و طول بایتی آن‌ها دقیقاً ۳۲ بایت باشد [12].
+    """
     if not s or not isinstance(s, str):
         return False
     s_clean = s.strip().replace('-', '+').replace('_', '/')
@@ -74,8 +77,8 @@ def is_valid_b64(s: str) -> bool:
     if padding:
         s_clean += '=' * (4 - padding)
     try:
-        base64.b64decode(s_clean)
-        return True
+        decoded = base64.b64decode(s_clean)
+        return len(decoded) == 32
     except Exception:
         return False
 
@@ -180,12 +183,6 @@ def parse_vmess(link: str):
         decoded = safe_b64decode(link.replace("vmess://", "", 1))
         if not decoded: return None
         j = json.loads(decoded)
-        
-        # پیش‌گیری هوشمند از مفقود شدن فیلد اجباری سایفر در میهومو
-        scy = j.get("scy")
-        if not scy or not isinstance(scy, str) or scy.strip() == "":
-            scy = "auto"
-            
         return {
             "name": j.get("ps", j.get("add")),
             "type": "vmess",
@@ -193,7 +190,7 @@ def parse_vmess(link: str):
             "port": int(j.get("port", 443)),
             "uuid": j.get("id", ""),
             "alterId": int(j.get("aid", 0)),
-            "cipher": scy,
+            "cipher": j.get("scy", "auto"),
             "udp": True
         }
     except Exception:
@@ -430,21 +427,16 @@ def parse_wireguard(link: str):
         if not priv_key:
             priv_key = qs.get("privateKey", qs.get("private-key", qs.get("privatekey", [""])))[0]
             
-        # جستجوی عمیق‌تر غیرحساس به حروف بزرگ و کوچک
-        if not pub_key or not priv_key:
-            for k, v_list in qs.items():
-                lower_k = k.lower().replace("-", "").replace("_", "")
-                if not pub_key and lower_k == "publickey":
-                    pub_key = v_list[0]
-                if not priv_key and lower_k == "privatekey":
-                    priv_key = v_list[0]
+        # حل کردن کامل باگ عدم تحویل کلیدهای عمومی و فیلدهای دیگر به علت فرآیند فشرده و ارکستراسیون URL-Decode
+        pub_key = safe_decode(pub_key)
+        priv_key = safe_decode(priv_key)
                     
         if not pub_key:
             pub_key = "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo="  # کلید فرضی پیش‌فرض وارپ
             
         raw_ip = qs.get("ip", qs.get("address", ["10.0.0.1"]))[0]
         # هماهنگ‌سازی IP کلاینت و حذف آدرس CIDR (پاک‌سازی اسلش ۳۲ یا ۱۲۸)
-        clean_ip = raw_ip.split("/")[0].strip()
+        clean_ip = safe_decode(raw_ip).split("/")[0].strip()
         
         proxy = {
             "name": safe_decode(fragment or server),
@@ -452,14 +444,14 @@ def parse_wireguard(link: str):
             "server": server,
             "port": port,
             "ip": clean_ip,
-            "private-key": safe_decode(priv_key),
-            "public-key": safe_decode(pub_key),
+            "private-key": priv_key,
+            "public-key": pub_key,
             "allowed-ips": ["0.0.0.0/0"],
             "udp": True
         }
         
         # پارس کردن و پشتیبانی از آرایه اعداد Reserved
-        reserved_val = qs.get("reserved", [""])[0]
+        reserved_val = safe_decode(qs.get("reserved", [""])[0])
         if reserved_val:
             if "," in reserved_val:
                 proxy["reserved"] = [int(x) for x in reserved_val.split(",") if x.strip().isdigit()]
@@ -847,20 +839,6 @@ def validate_proxy(p) -> bool:
     # تطبیق سخت‌گیرانه پارامترهای فنی هر پروتکل طبق الگوهای رسمی
     if p_type in ["vless", "vmess"]:
         if not p.get("uuid") or not isinstance(p["uuid"], str): return False
-        
-        # پیش‌گیری هوشمند از ارور cipher مفقود شده در پروتکل VMess
-        if p_type == "vmess":
-            cipher = p.get("cipher")
-            if not cipher or not isinstance(cipher, str) or cipher.strip() == "":
-                p["cipher"] = "auto"
-                
-        # بررسی صحت وجود و پایداری کلید REALITY پابلیک در صورت فعال بودن
-        reality = p.get("reality-opts")
-        if reality and isinstance(reality, dict):
-            pbk = reality.get("public-key")
-            if not pbk or not isinstance(pbk, str) or pbk.strip() == "":
-                return False  # رد کردن کانفیگ‌های ریالیتی فاقد کلید معتبر
-                
     elif p_type in ["trojan", "hysteria2"]:
         if not p.get("password") or not isinstance(p["password"], str): return False
     elif p_type == "wireguard":
@@ -868,7 +846,8 @@ def validate_proxy(p) -> bool:
            not p.get("public-key") or not isinstance(p["public-key"], str) or \
            not p.get("ip") or not isinstance(p["ip"], str):
             return False
-        if not is_valid_b64(p["private-key"]) or not is_valid_b64(p["public-key"]):
+        # بررسی صحت فرمت بیس۶۴ کلیدها جهت تضمین سلامت وایرگارد
+        if not is_valid_curve25519_key(p["private-key"]) or not is_valid_curve25519_key(p["public-key"]):
             return False
     elif p_type == "hysteria":
         if not p.get("auth_str") or not isinstance(p["auth_str"], str): return False
@@ -900,6 +879,32 @@ def validate_proxy(p) -> bool:
         if not p.get("username") or not isinstance(p["username"], str) or not p.get("password") or not isinstance(p["password"], str): return False
     elif p_type == "openvpn":
         if not p.get("ca") or not isinstance(p["ca"], str): return False
+        
+    # اعتبارسنجی بسیار سخت‌گیرانه کلید عمومی و شناسه کوتاه در پروتکل REALITY [12]
+    if p.get("reality-opts"):
+        pbk = p["reality-opts"].get("public-key")
+        if not pbk or not isinstance(pbk, str):
+            return False
+            
+        pbk_clean = pbk.strip().replace('-', '+').replace('_', '/')
+        padding = len(pbk_clean) % 4
+        if padding:
+            pbk_clean += '=' * (4 - padding)
+            
+        try:
+            # کلید عمومی Curve25519 حتماً باید دقیقاً ۳۲ بایت دکود شود [12]
+            decoded_pbk = base64.b64decode(pbk_clean)
+            if len(decoded_pbk) != 32:
+                return False
+        except Exception:
+            return False
+            
+        sid = p["reality-opts"].get("short-id")
+        if sid:
+            # شناسه کوتاه حتماً باید یک رشته هگزادسیمال زوج و حداکثر ۱۶ کاراکتر باشد
+            if not isinstance(sid, str) or not re.match(r'^[0-9a-fA-F]+$', sid) or len(sid) % 2 != 0 or len(sid) > 16:
+                return False
+                
     return True
 
 # --- بخش فیلتر، مرتب‌سازی و حفظ نام اصلی به همراه رفع تکراری‌ها بر اساس اثر انگشت فنی ---
