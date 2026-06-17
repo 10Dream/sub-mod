@@ -15,19 +15,19 @@ CLASH_CONFIG = {
         {"type": "openvpn", "limit": 300},
         {"type": "tailscale", "limit": 300},
         {"type": "snell", "limit": 300},
-        {"type": "ssh", "limit": 10},
-        {"type": "ss", "limit": 100},       # shadowsocks
-        {"type": "ssr", "limit": 50},       # shadowsocksr
-        {"type": "anytls", "limit": 200},
-        {"type": "hy2", "limit": 200},      # hysteria2 به اختصار hy2
-        {"type": "vless", "limit": -1},     # -1 به معنی نامحدود برای پروتکل VLESS
-        {"type": "vmess", "limit": 50},
-        {"type": "trojan", "limit": 50},
-        {"type": "wireguard", "limit": 50},
-        {"type": "tuic", "limit": 50},
-        {"type": "hysteria", "limit": 50},
-        {"type": "socks5", "limit": 20},
-        {"type": "http", "limit": 20},
+        {"type": "ssh", "limit": 300},
+        {"type": "socks5", "limit": 300},
+        {"type": "ssr", "limit": 300},
+        {"type": "anytls", "limit": 300},
+        {"type": "hy2", "limit": 300},
+        {"type": "vless", "limit": 300},
+        {"type": "ss", "limit": 300},
+        {"type": "vmess", "limit": 300},
+        {"type": "trojan", "limit": 300},
+        {"type": "wireguard", "limit": 300},
+        {"type": "tuic", "limit": 300},
+        {"type": "hysteria", "limit": 300},
+        {"type": "http", "limit": 300},
     ],
     "default_limit_for_others": 0  # محدودیت پیش‌فرض برای پروتکل‌هایی که در لیست بالا نیستند (0 یعنی حذف)
 }
