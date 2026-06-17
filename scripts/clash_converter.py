@@ -7,7 +7,7 @@ import clash_template
 
 # تنظیمات پیش‌فرض تبدیل به کلش میهومو با اعمال فیلتر و اولویت‌ها
 CLASH_CONFIG = {
-    "limit_total": 800,             # حداکثر تعداد کل کانفیگ‌های خروجی
+    "limit_total": 600,             # حداکثر تعداد کل کانفیگ‌های خروجی
     "priorities": [                 # اولویت‌بندی از بالا به پایین به همراه محدودیت برای هر پروتکل
         {"type": "sudoku", "limit": 300},
         {"type": "masque", "limit": 300},
@@ -31,6 +31,15 @@ CLASH_CONFIG = {
     ],
     "default_limit_for_others": 0  # محدودیت پیش‌فرض برای پروتکل‌هایی که در لیست بالا نیستند (0 یعنی حذف)
 }
+
+# الگوی ریجکس برای شناسایی کاراکترهای کنترل اسکی و کاراکترهای نامرئی مخدوش یونیکد [14]
+CONTROL_CHARS_RE = re.compile(r'[\x00-\x1F\x7F-\x9F\u200B-\u200D\uFEFF\uFFFD]')
+
+def remove_control_chars(s: str) -> str:
+    """تصفیه و حذف کامل کاراکترهای نامعتبر کنترل و غیرقابل چاپ از رشته‌ها [14]"""
+    if not isinstance(s, str):
+        return s
+    return CONTROL_CHARS_RE.sub('', s)
 
 # الگوی شناسایی پروتکل‌ها جهت تفکیک خطوط به هم چسبیده
 PROTOCOL_PATTERN = re.compile(
@@ -79,6 +88,19 @@ def is_valid_curve25519_key(s: str) -> bool:
     try:
         decoded = base64.b64decode(s_clean)
         return len(decoded) == 32
+    except Exception:
+        return False
+
+def is_valid_b64(s: str) -> bool:
+    if not s or not isinstance(s, str):
+        return False
+    s_clean = s.strip().replace('-', '+').replace('_', '/')
+    padding = len(s_clean) % 4
+    if padding:
+        s_clean += '=' * (4 - padding)
+    try:
+        base64.b64decode(s_clean)
+        return True
     except Exception:
         return False
 
@@ -306,6 +328,14 @@ def parse_ss(link: str):
                     plugin_opts[pk.strip()] = pv.strip()
             if plugin_opts:
                 proxy["plugin-opts"] = plugin_opts
+        
+        # اصلاح مقدار mux برای سازگاری با کلش
+        if "mux" in proxy:
+            mux_val = proxy["mux"]
+            if mux_val in ["0", "false", "False"]:
+                proxy["mux"] = False
+            else:
+                proxy["mux"] = True
                 
         return proxy
     except Exception:
@@ -422,7 +452,7 @@ def parse_wireguard(link: str):
             port = 51820
             
         priv_key = safe_decode(userinfo)
-        pub_key = qs.get("public-key", qs.get("peer_public_key", qs.get("publicKey", qs.get("publickey", [""]))))[0]
+        pub_key = qs.get("public-key", qs.get("peer_publickey", qs.get("publicKey", qs.get("publickey", [""]))))[0]
         
         if not priv_key:
             priv_key = qs.get("privateKey", qs.get("private-key", qs.get("privatekey", [""])))[0]
@@ -916,12 +946,10 @@ def process_and_filter_proxies(proxies_list):
     for p in proxies_list:
         if not validate_proxy(p):
             continue
-            
-        # شبیه‌سازی و تولید اثر انگشت اتصالی فنی بدون در نظر گرفتن فیلد نام
-        fingerprint = get_connection_fingerprint(p)
-        if fingerprint in unique_keys:
+        ukey = get_connection_fingerprint(p)
+        if ukey in unique_keys:
             continue
-        unique_keys.add(fingerprint)
+        unique_keys.add(ukey)
         valid_proxies.append(p)
         
     grouped_proxies = {}
@@ -991,10 +1019,12 @@ def dump_yaml(data, indent=0) -> str:
                 elif isinstance(v, (int, float)):
                     val_str = str(v)
                 elif isinstance(v, str):
-                    if "\n" in v:
-                        val_str = "|\n" + "\n".join(" " * (indent + 2) + line for line in v.splitlines())
+                    # پاک‌سازی کامل مقادیر رشته‌ای از کاراکترهای کنترل در زمان تولید خروجی YAML [14]
+                    v_clean = remove_control_chars(v)
+                    if "\n" in v_clean:
+                        val_str = "|\n" + "\n".join(" " * (indent + 2) + line for line in v_clean.splitlines())
                     else:
-                        escaped_v = v.replace('\\', '\\\\').replace('"', '\\"')
+                        escaped_v = v_clean.replace('\\', '\\\\').replace('"', '\\"')
                         val_str = f'"{escaped_v}"'
                 else:
                     val_str = f'"{str(v)}"'
@@ -1010,7 +1040,9 @@ def dump_yaml(data, indent=0) -> str:
                 elif isinstance(item, (int, float)):
                     val_str = str(item)
                 elif isinstance(item, str):
-                    escaped_item = item.replace('\\', '\\\\').replace('"', '\\"')
+                    # تصفیه مقادیر لیست‌ها از کاراکترهای مخفی و غیرقابل چاپ [14]
+                    item_clean = remove_control_chars(item)
+                    escaped_item = item_clean.replace('\\', '\\\\').replace('"', '\\"')
                     val_str = f'"{escaped_item}"'
                 else:
                     val_str = f'"{str(item)}"'
@@ -1028,7 +1060,10 @@ def convert_single_file(src_txt_path, dest_yaml_path):
             if not line or line.startswith("#"):
                 continue
                 
-            split_links = split_concatenated_links(line)
+            # تصفیه کامل هر خط دیتای خام ورودی از وجود کاراکترهای مخدوش و کنترلی مخفی [14]
+            line_sanitized = remove_control_chars(line)
+            
+            split_links = split_concatenated_links(line_sanitized)
             for single_link in split_links:
                 p = parse_proxy(single_link)
                 if p:
