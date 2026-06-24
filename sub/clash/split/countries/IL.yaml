@@ -499,15 +499,6 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
-  - name: "🇮🇱 🔒 VL-TCP-TLS 🇮🇱 IL-169.150.235.74:8443"
-    type: "vless"
-    server: "169.150.235.74"
-    port: 8443
-    uuid: "394f6981-a782-4779-9a85-e6cf22935d93"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "tlv-il.fromblancwithlove.com"
   - name: "🇮🇱 🇧🇪 Misha Lan VPN"
     type: "vless"
     server: "193.203.10.86"
@@ -521,21 +512,6 @@ proxies:
     reality-opts:
       public-key: "_XwzsH6EuV-UnQbXblD4XK46wxaWQcF-0GQ-nAkj3Xo"
       short-id: "8735"
-  - name: "🇮🇱 🇺🇸 США / @Misha Lan VPN 09"
-    type: "vless"
-    server: "l6.l-itx.info"
-    port: 7443
-    uuid: "ca428a2e-7f82-4030-851b-cab731a5645a"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "colorlib.com"
-    client-fingerprint: "firefox"
-    reality-opts:
-      public-key: "F2MKDw5CCtP1oXIej2EgNxB01k3eyNu7tKCFfucgnRA"
-      short-id: "6ba85179e30d4fc3"
-    grpc-opts:
-      grpc-service-name: "xyz"
   - name: "🇮🇱 🇮🇱 Израиль | @Misha Lan VPN 16"
     type: "vless"
     server: "195.211.24.49"
@@ -549,7 +525,21 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "roCvVZ0atQ-_68OSDPuknzHchm6djGzQB4Ydl5n31Fg"
-  - name: "🇺🇸 БС [@Misha Lan VPN] 🏳️ 17"
+  - name: "🇮🇱 🇺🇸 США | @Misha Lan VPN 138"
+    type: "vless"
+    server: "l6.l-itx.info"
+    port: 2053
+    uuid: "ca428a2e-7f82-4030-851b-cab731a5645a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "itx-server.digital"
+    client-fingerprint: "firefox"
+    ws-opts:
+      path: "/ws"
+      headers:
+        Host: "itx-server.digital"
+  - name: "🇮🇱 БС [@Misha Lan VPN] 🏳️ 17"
     type: "vless"
     server: "l6.l-itx.info"
     port: 443
@@ -561,6 +551,13 @@ proxies:
     client-fingerprint: "firefox"
     reality-opts:
       public-key: "F2MKDw5CCtP1oXIej2EgNxB01k3eyNu7tKCFfucgnRA"
+  - name: "🇮🇱 🇮🇱 Israel"
+    type: "ss"
+    server: "103.240.147.113"
+    port: 14605
+    cipher: "chacha20-ietf-poly1305"
+    password: "Uk8lfmvhYnx5rJvXxKrRqGRynd9gIpJ.iY"
+    udp: true
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -575,11 +572,11 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
-      - "🇮🇱 🔒 VL-TCP-TLS 🇮🇱 IL-169.150.235.74:8443"
       - "🇮🇱 🇧🇪 Misha Lan VPN"
-      - "🇮🇱 🇺🇸 США / @Misha Lan VPN 09"
       - "🇮🇱 🇮🇱 Израиль | @Misha Lan VPN 16"
-      - "🇺🇸 БС [@Misha Lan VPN] 🏳️ 17"
+      - "🇮🇱 🇺🇸 США | @Misha Lan VPN 138"
+      - "🇮🇱 БС [@Misha Lan VPN] 🏳️ 17"
+      - "🇮🇱 🇮🇱 Israel"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
     icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
@@ -590,11 +587,11 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
-      - "🇮🇱 🔒 VL-TCP-TLS 🇮🇱 IL-169.150.235.74:8443"
       - "🇮🇱 🇧🇪 Misha Lan VPN"
-      - "🇮🇱 🇺🇸 США / @Misha Lan VPN 09"
       - "🇮🇱 🇮🇱 Израиль | @Misha Lan VPN 16"
-      - "🇺🇸 БС [@Misha Lan VPN] 🏳️ 17"
+      - "🇮🇱 🇺🇸 США | @Misha Lan VPN 138"
+      - "🇮🇱 БС [@Misha Lan VPN] 🏳️ 17"
+      - "🇮🇱 🇮🇱 Israel"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
@@ -604,11 +601,11 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
-      - "🇮🇱 🔒 VL-TCP-TLS 🇮🇱 IL-169.150.235.74:8443"
       - "🇮🇱 🇧🇪 Misha Lan VPN"
-      - "🇮🇱 🇺🇸 США / @Misha Lan VPN 09"
       - "🇮🇱 🇮🇱 Израиль | @Misha Lan VPN 16"
-      - "🇺🇸 БС [@Misha Lan VPN] 🏳️ 17"
+      - "🇮🇱 🇺🇸 США | @Misha Lan VPN 138"
+      - "🇮🇱 БС [@Misha Lan VPN] 🏳️ 17"
+      - "🇮🇱 🇮🇱 Israel"
   - name: "المنت 💬"
     type: "select"
     icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
