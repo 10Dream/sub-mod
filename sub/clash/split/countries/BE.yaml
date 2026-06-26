@@ -499,18 +499,21 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
-  - name: "🇧🇪 BE🇧🇪 | bru-be-01.fromblancwithlove.com-8443 | 129.13ms"
+  - name: "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 45.78ms"
     type: "vless"
-    server: "207.211.214.42"
-    port: 8443
-    uuid: "394f6981-a782-4779-9a85-e6cf22935d93"
+    server: "151.101.9.80"
+    port: 80
+    uuid: "5a1d2c0c-abfa-4050-918f-bfab3eaee62a"
     udp: true
-    tls: true
-    network: "tcp"
-    servername: "bru-be-01.fromblancwithlove.com"
-  - name: "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.8.151:80"
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/?ed=1049"
+      headers:
+        Host: "adspeedx23.global.ssl.fastly.net"
+  - name: "🇧🇪 US🇺🇸 | max-gb1.global.ssl.fastly.net-80 | 10.36ms"
     type: "vless"
-    server: "151.101.8.151"
+    server: "151.101.10.151"
     port: 80
     uuid: "0058c215-ab1e-400c-a403-b5b2fda7e846"
     udp: true
@@ -520,9 +523,9 @@ proxies:
       path: "/?https://t.me/WangCai2🇨🇳"
       headers:
         Host: "max-gb1.global.ssl.fastly.net"
-  - name: "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.10.151:80"
+  - name: "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.8.151:80"
     type: "vless"
-    server: "151.101.10.151"
+    server: "151.101.8.151"
     port: 80
     uuid: "0058c215-ab1e-400c-a403-b5b2fda7e846"
     udp: true
@@ -557,6 +560,41 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "08u-fNMdTjjUwYv4GPbG7VK1ep2vh4Fv-puMcmFzhz0"
+  - name: "🇧🇪 🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 147ms"
+    type: "trojan"
+    server: "151.101.9.242"
+    port: 443
+    password: "MiTiVPN"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.f6r.ir"
+    ws-opts:
+      path: "/?ed=2560&Telegram🇨🇳 @WangCai2"
+      headers:
+        Host: "www.f6r.ir"
+  - name: "🇧🇪 比利时/Belgium"
+    type: "vless"
+    server: "109.69.218.217"
+    port: 8443
+    uuid: "7d14f1cf-3740-4fbd-a31c-6f7d078f97d7"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.engage.edgedoor.ink"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "_BMcBaQjBV5AXRtl7yWxV6vYR8Jm7nfwXY6VhltMtBo"
+  - name: "🇧🇪 🔒 VL-TCP-TLS 🇧🇪 BE-207.211.214.42:8443"
+    type: "vless"
+    server: "207.211.214.42"
+    port: 8443
+    uuid: "394f6981-a782-4779-9a85-e6cf22935d93"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "bru-be-01.fromblancwithlove.com"
   - name: "🇧🇪 151.101.9.151"
     type: "vless"
     server: "151.101.9.151"
@@ -583,11 +621,14 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
-      - "🇧🇪 BE🇧🇪 | bru-be-01.fromblancwithlove.com-8443 | 129.13ms"
+      - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 45.78ms"
+      - "🇧🇪 US🇺🇸 | max-gb1.global.ssl.fastly.net-80 | 10.36ms"
       - "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.8.151:80"
-      - "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.10.151:80"
       - "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.9.151:80"
       - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.214:443"
+      - "🇧🇪 🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 147ms"
+      - "🇧🇪 比利时/Belgium"
+      - "🇧🇪 🔒 VL-TCP-TLS 🇧🇪 BE-207.211.214.42:8443"
       - "🇧🇪 151.101.9.151"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -599,11 +640,14 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
-      - "🇧🇪 BE🇧🇪 | bru-be-01.fromblancwithlove.com-8443 | 129.13ms"
+      - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 45.78ms"
+      - "🇧🇪 US🇺🇸 | max-gb1.global.ssl.fastly.net-80 | 10.36ms"
       - "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.8.151:80"
-      - "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.10.151:80"
       - "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.9.151:80"
       - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.214:443"
+      - "🇧🇪 🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 147ms"
+      - "🇧🇪 比利时/Belgium"
+      - "🇧🇪 🔒 VL-TCP-TLS 🇧🇪 BE-207.211.214.42:8443"
       - "🇧🇪 151.101.9.151"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -614,11 +658,14 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
-      - "🇧🇪 BE🇧🇪 | bru-be-01.fromblancwithlove.com-8443 | 129.13ms"
+      - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 45.78ms"
+      - "🇧🇪 US🇺🇸 | max-gb1.global.ssl.fastly.net-80 | 10.36ms"
       - "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.8.151:80"
-      - "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.10.151:80"
       - "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.9.151:80"
       - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.214:443"
+      - "🇧🇪 🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 147ms"
+      - "🇧🇪 比利时/Belgium"
+      - "🇧🇪 🔒 VL-TCP-TLS 🇧🇪 BE-207.211.214.42:8443"
       - "🇧🇪 151.101.9.151"
   - name: "المنت 💬"
     type: "select"
