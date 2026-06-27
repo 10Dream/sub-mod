@@ -499,20 +499,25 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
-  - name: "🇮🇪 IE🇮🇪+|+146.70.90.196-17454+|+121.59ms"
+  - name: "🇮🇪 IE🇮🇪+|+146.70.90.196-17454+|+90.55ms"
     type: "ss"
     server: "146.70.90.196"
     port: 17454
     cipher: "aes-128-gcm"
     password: "u8gp148iz90ddoo6ms37"
     udp: true
-  - name: "🇮🇪 IE🇮🇪+|+20.123.26.194-443+|+121.21ms"
-    type: "ss"
-    server: "20.123.26.194"
-    port: 443
-    cipher: "chacha20-ietf-poly1305"
-    password: "1Yr4AdhYVjUMMe2A"
+  - name: "🇮🇪 🔒 TR-WS-NONE 🇮🇪 IE-199.232.25.242:80"
+    type: "trojan"
+    server: "199.232.25.242"
+    port: 80
+    password: "MiTiVPN"
     udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/?https://t.me/WangCai2🇨🇳"
+      headers:
+        Host: "www.f6r.ir"
   - name: "🇮🇪 🔒 TR-TCP-NA 🇮🇪 IE-146.70.90.197:57452"
     type: "trojan"
     server: "146.70.90.197"
@@ -530,19 +535,26 @@ proxies:
     tls: true
     network: "tcp"
     servername: "146.70.90.198"
-  - name: "🇮🇪 🔒 SS-TCP-NA 🇮🇪 IE-20.123.26.194:443"
+  - name: "🇮🇪 ARISTA"
     type: "ss"
-    server: "20.123.26.194"
+    server: "20.166.126.19"
     port: 443
     cipher: "chacha20-ietf-poly1305"
-    password: "3tnHqlHWJfdVooI1"
+    password: "9G5IXPrkF0Sy3D6j"
     udp: true
-  - name: "🇮🇪 🔒 SS-TCP-NA 🇮🇪 IE-20.234.9.106:443"
+  - name: "🇮🇪 ARISTA-1"
     type: "ss"
-    server: "20.234.9.106"
+    server: "20.107.193.56"
     port: 443
     cipher: "chacha20-ietf-poly1305"
-    password: "i6qj1Qi9bKvFfIM0"
+    password: "TrU92afeT6VIneWT"
+    udp: true
+  - name: "🇮🇪 ARISTA-2"
+    type: "ss"
+    server: "20.107.208.165"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "3C1GAcIUs3gmr85y"
     udp: true
   - name: "🇮🇪 🇮🇪 Dublin, L, Ireland"
     type: "ss"
@@ -565,12 +577,13 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
-      - "🇮🇪 IE🇮🇪+|+146.70.90.196-17454+|+121.59ms"
-      - "🇮🇪 IE🇮🇪+|+20.123.26.194-443+|+121.21ms"
+      - "🇮🇪 IE🇮🇪+|+146.70.90.196-17454+|+90.55ms"
+      - "🇮🇪 🔒 TR-WS-NONE 🇮🇪 IE-199.232.25.242:80"
       - "🇮🇪 🔒 TR-TCP-NA 🇮🇪 IE-146.70.90.197:57452"
       - "🇮🇪 🔒 TR-TCP-NA 🇮🇪 IE-146.70.90.198:57452"
-      - "🇮🇪 🔒 SS-TCP-NA 🇮🇪 IE-20.123.26.194:443"
-      - "🇮🇪 🔒 SS-TCP-NA 🇮🇪 IE-20.234.9.106:443"
+      - "🇮🇪 ARISTA"
+      - "🇮🇪 ARISTA-1"
+      - "🇮🇪 ARISTA-2"
       - "🇮🇪 🇮🇪 Dublin, L, Ireland"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -582,12 +595,13 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
-      - "🇮🇪 IE🇮🇪+|+146.70.90.196-17454+|+121.59ms"
-      - "🇮🇪 IE🇮🇪+|+20.123.26.194-443+|+121.21ms"
+      - "🇮🇪 IE🇮🇪+|+146.70.90.196-17454+|+90.55ms"
+      - "🇮🇪 🔒 TR-WS-NONE 🇮🇪 IE-199.232.25.242:80"
       - "🇮🇪 🔒 TR-TCP-NA 🇮🇪 IE-146.70.90.197:57452"
       - "🇮🇪 🔒 TR-TCP-NA 🇮🇪 IE-146.70.90.198:57452"
-      - "🇮🇪 🔒 SS-TCP-NA 🇮🇪 IE-20.123.26.194:443"
-      - "🇮🇪 🔒 SS-TCP-NA 🇮🇪 IE-20.234.9.106:443"
+      - "🇮🇪 ARISTA"
+      - "🇮🇪 ARISTA-1"
+      - "🇮🇪 ARISTA-2"
       - "🇮🇪 🇮🇪 Dublin, L, Ireland"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -598,12 +612,13 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
-      - "🇮🇪 IE🇮🇪+|+146.70.90.196-17454+|+121.59ms"
-      - "🇮🇪 IE🇮🇪+|+20.123.26.194-443+|+121.21ms"
+      - "🇮🇪 IE🇮🇪+|+146.70.90.196-17454+|+90.55ms"
+      - "🇮🇪 🔒 TR-WS-NONE 🇮🇪 IE-199.232.25.242:80"
       - "🇮🇪 🔒 TR-TCP-NA 🇮🇪 IE-146.70.90.197:57452"
       - "🇮🇪 🔒 TR-TCP-NA 🇮🇪 IE-146.70.90.198:57452"
-      - "🇮🇪 🔒 SS-TCP-NA 🇮🇪 IE-20.123.26.194:443"
-      - "🇮🇪 🔒 SS-TCP-NA 🇮🇪 IE-20.234.9.106:443"
+      - "🇮🇪 ARISTA"
+      - "🇮🇪 ARISTA-1"
+      - "🇮🇪 ARISTA-2"
       - "🇮🇪 🇮🇪 Dublin, L, Ireland"
   - name: "المنت 💬"
     type: "select"
