@@ -499,17 +499,21 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
-  - name: "🇹🇭 🔒 VL-WS-TLS 🇹🇭 TH-43.164.1.152:666"
-    type: "vless"
-    server: "43.164.1.152"
-    port: 666
-    uuid: "8d5e7f2a-3c1b-4d9e-a6f8-2b5c0e7d4a19"
+  - name: "🇹🇭 🔒 SS-TCP-NA 🇹🇭 TH-119.59.127.129:990"
+    type: "ss"
+    server: "119.59.127.129"
+    port: 990
+    cipher: "chacha20-ietf-poly1305"
+    password: "ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44="
     udp: true
-    tls: true
-    network: "ws"
-    servername: "43.164.1.152"
-    ws-opts:
-      path: "/proxy"
+  - name: "🇹🇭 🔒 VL-XHTTP-NONE 🇹🇭 TH-45.144.165.11:80"
+    type: "vless"
+    server: "45.144.165.11"
+    port: 80
+    uuid: "85b62084-d81e-52cd-a016-944f261d34a0"
+    udp: true
+    tls: false
+    network: "xhttp"
   - name: "🇹🇭 ARISTA"
     type: "vless"
     server: "116.206.124.228"
@@ -522,22 +526,6 @@ proxies:
       path: "/ws"
       headers:
         Host: "aIs.SpEeDtEsT.nEt"
-  - name: "🇹🇭 🔒 VL-XHTTP-TLS 🇹🇭 TH-45.144.165.11:80"
-    type: "vless"
-    server: "45.144.165.11"
-    port: 80
-    uuid: "85b62084-d81e-52cd-a016-944f261d34a0"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "bm.xq-vpn.com"
-  - name: "🇹🇭 🔒 SS-TCP-NA 🇹🇭 TH-119.59.127.129:990"
-    type: "ss"
-    server: "119.59.127.129"
-    port: 990
-    cipher: "chacha20-ietf-poly1305"
-    password: "ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44="
-    udp: true
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -552,10 +540,9 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
-      - "🇹🇭 🔒 VL-WS-TLS 🇹🇭 TH-43.164.1.152:666"
-      - "🇹🇭 ARISTA"
-      - "🇹🇭 🔒 VL-XHTTP-TLS 🇹🇭 TH-45.144.165.11:80"
       - "🇹🇭 🔒 SS-TCP-NA 🇹🇭 TH-119.59.127.129:990"
+      - "🇹🇭 🔒 VL-XHTTP-NONE 🇹🇭 TH-45.144.165.11:80"
+      - "🇹🇭 ARISTA"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
     icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
@@ -566,10 +553,9 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
-      - "🇹🇭 🔒 VL-WS-TLS 🇹🇭 TH-43.164.1.152:666"
-      - "🇹🇭 ARISTA"
-      - "🇹🇭 🔒 VL-XHTTP-TLS 🇹🇭 TH-45.144.165.11:80"
       - "🇹🇭 🔒 SS-TCP-NA 🇹🇭 TH-119.59.127.129:990"
+      - "🇹🇭 🔒 VL-XHTTP-NONE 🇹🇭 TH-45.144.165.11:80"
+      - "🇹🇭 ARISTA"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
@@ -579,10 +565,9 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
-      - "🇹🇭 🔒 VL-WS-TLS 🇹🇭 TH-43.164.1.152:666"
-      - "🇹🇭 ARISTA"
-      - "🇹🇭 🔒 VL-XHTTP-TLS 🇹🇭 TH-45.144.165.11:80"
       - "🇹🇭 🔒 SS-TCP-NA 🇹🇭 TH-119.59.127.129:990"
+      - "🇹🇭 🔒 VL-XHTTP-NONE 🇹🇭 TH-45.144.165.11:80"
+      - "🇹🇭 ARISTA"
   - name: "المنت 💬"
     type: "select"
     icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
