@@ -499,17 +499,27 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
-  - name: "🇪🇪 RU🇷🇺 | sub.sbrf-cdn342.ru-443 | 78.03ms"
+  - name: "🇪🇪 >>@v2rayng_fast::XX"
+    type: "ss"
+    server: "45.129.96.62"
+    port: 41348
+    cipher: "chacha20-ietf-poly1305"
+    password: "6U3psR0sQuQxWXoBHB4KTD3YacwQwS21XvSEy9"
+    udp: true
+  - name: "🇪🇪 🔒 VL-WS-TLS 🇪🇪 EE-45.80.108.54:2096"
     type: "vless"
-    server: "185.215.184.95"
-    port: 443
-    uuid: "91e120bc-159a-4390-b4e1-197b19602ea0"
+    server: "45.80.108.54"
+    port: 2096
+    uuid: "12345678-1234-1234-1234-123456789123"
     udp: true
     tls: true
-    network: "tcp"
-    servername: "sub.sbrf-cdn342.ru"
-    flow: "xtls-rprx-vision"
-  - name: "🇪🇪 RELAY🚩 | vms.lifetime59.workers.dev-8880 | 21.48ms"
+    network: "ws"
+    servername: "sni.aizrf.com"
+    ws-opts:
+      path: "/snippets"
+      headers:
+        Host: "sni.aizrf.com"
+  - name: "🇪🇪 🔒 VL-WS-NA 🇪🇪 EE-185.159.247.30:8880"
     type: "vless"
     server: "185.159.247.30"
     port: 8880
@@ -521,13 +531,17 @@ proxies:
       path: "/"
       headers:
         Host: "vms.lifetime59.workers.dev"
-  - name: "🇪🇪 >>@v2rayng_fast::XX"
-    type: "ss"
-    server: "45.129.96.62"
-    port: 41348
-    cipher: "chacha20-ietf-poly1305"
-    password: "6U3psR0sQuQxWXoBHB4KTD3YacwQwS21XvSEy9"
+  - name: "🇪🇪 🔒 VL-WS-TLS 🇪🇪 EE-45.80.110.245:2053"
+    type: "vless"
+    server: "45.80.110.245"
+    port: 2053
+    uuid: "d342d11e-d424-4583-b36e-524ab1f0afa4"
     udp: true
+    tls: true
+    network: "ws"
+    servername: "a.ssll.gay"
+    ws-opts:
+      path: "twitterfreecodessecurity"
   - name: "🇪🇪 🔒 VL-WS-NONE 🇪🇪 EE-45.80.110.30:8880"
     type: "vless"
     server: "45.80.110.30"
@@ -540,31 +554,6 @@ proxies:
       path: "/"
       headers:
         Host: "vms.lifetime51.workers.dev"
-  - name: "🇪🇪 🔒 VL-WS-TLS 🇪🇪 EE-45.80.110.245:2053"
-    type: "vless"
-    server: "45.80.110.245"
-    port: 2053
-    uuid: "d342d11e-d424-4583-b36e-524ab1f0afa4"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "a.ssll.gay"
-    ws-opts:
-      path: "twitterfreecodessecurity"
-  - name: "🇪🇪 🇩🇪  Germany  [13]  MIFA"
-    type: "vless"
-    server: "ee-t3.vinnypuxtomoon.today"
-    port: 2053
-    uuid: "e513d381-9272-4854-b8dd-2b6524b0a5e5"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "ee-t3.vinnypuxtomoon.today"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "RwtMzZtTCmy9WRq3_27xeGF8-1l_qPXRVG3yIFp-6Go"
-      short-id: "c0d1d1776fed0f6d"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -579,12 +568,11 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
-      - "🇪🇪 RU🇷🇺 | sub.sbrf-cdn342.ru-443 | 78.03ms"
-      - "🇪🇪 RELAY🚩 | vms.lifetime59.workers.dev-8880 | 21.48ms"
       - "🇪🇪 >>@v2rayng_fast::XX"
-      - "🇪🇪 🔒 VL-WS-NONE 🇪🇪 EE-45.80.110.30:8880"
+      - "🇪🇪 🔒 VL-WS-TLS 🇪🇪 EE-45.80.108.54:2096"
+      - "🇪🇪 🔒 VL-WS-NA 🇪🇪 EE-185.159.247.30:8880"
       - "🇪🇪 🔒 VL-WS-TLS 🇪🇪 EE-45.80.110.245:2053"
-      - "🇪🇪 🇩🇪  Germany  [13]  MIFA"
+      - "🇪🇪 🔒 VL-WS-NONE 🇪🇪 EE-45.80.110.30:8880"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
     icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
@@ -595,12 +583,11 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
-      - "🇪🇪 RU🇷🇺 | sub.sbrf-cdn342.ru-443 | 78.03ms"
-      - "🇪🇪 RELAY🚩 | vms.lifetime59.workers.dev-8880 | 21.48ms"
       - "🇪🇪 >>@v2rayng_fast::XX"
-      - "🇪🇪 🔒 VL-WS-NONE 🇪🇪 EE-45.80.110.30:8880"
+      - "🇪🇪 🔒 VL-WS-TLS 🇪🇪 EE-45.80.108.54:2096"
+      - "🇪🇪 🔒 VL-WS-NA 🇪🇪 EE-185.159.247.30:8880"
       - "🇪🇪 🔒 VL-WS-TLS 🇪🇪 EE-45.80.110.245:2053"
-      - "🇪🇪 🇩🇪  Germany  [13]  MIFA"
+      - "🇪🇪 🔒 VL-WS-NONE 🇪🇪 EE-45.80.110.30:8880"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
@@ -610,12 +597,11 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
-      - "🇪🇪 RU🇷🇺 | sub.sbrf-cdn342.ru-443 | 78.03ms"
-      - "🇪🇪 RELAY🚩 | vms.lifetime59.workers.dev-8880 | 21.48ms"
       - "🇪🇪 >>@v2rayng_fast::XX"
-      - "🇪🇪 🔒 VL-WS-NONE 🇪🇪 EE-45.80.110.30:8880"
+      - "🇪🇪 🔒 VL-WS-TLS 🇪🇪 EE-45.80.108.54:2096"
+      - "🇪🇪 🔒 VL-WS-NA 🇪🇪 EE-185.159.247.30:8880"
       - "🇪🇪 🔒 VL-WS-TLS 🇪🇪 EE-45.80.110.245:2053"
-      - "🇪🇪 🇩🇪  Germany  [13]  MIFA"
+      - "🇪🇪 🔒 VL-WS-NONE 🇪🇪 EE-45.80.110.30:8880"
   - name: "المنت 💬"
     type: "select"
     icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
