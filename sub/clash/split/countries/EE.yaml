@@ -499,23 +499,6 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
-  - name: "🇪🇪 RU🇷🇺 | sub.sbrf-cdn342.ru-443 | 1668.88ms"
-    type: "vless"
-    server: "185.215.184.95"
-    port: 443
-    uuid: "91e120bc-159a-4390-b4e1-197b19602ea0"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "sub.sbrf-cdn342.ru"
-    flow: "xtls-rprx-vision"
-  - name: "🇪🇪 >>@v2rayng_fast::XX"
-    type: "ss"
-    server: "45.129.96.62"
-    port: 41348
-    cipher: "chacha20-ietf-poly1305"
-    password: "6U3psR0sQuQxWXoBHB4KTD3YacwQwS21XvSEy9"
-    udp: true
   - name: "🇪🇪 🔒 VL-WS-NA 🇪🇪 EE-185.159.247.30:8880"
     type: "vless"
     server: "185.159.247.30"
@@ -552,21 +535,32 @@ proxies:
       headers:
         Host: "vms.lifetime51.workers.dev"
   - name: "🇪🇪 🇪🇪  Estonia  [01]  MIFA"
-    type: "vless"
-    server: "45.12.28.95"
+    type: "hysteria2"
+    server: "h-ee.s3-rus.ru"
     port: 443
-    uuid: "ea057aa8-6c6f-44f4-d347-7a87e835c0dc"
+    password: "f0be198c-db8c-4622-8803-ba3c8c8db515"
+    sni: "h-ee.s3-rus.ru"
+  - name: "🇪🇪 🇪🇪  Estonia  [01]  MIFA-1"
+    type: "vless"
+    server: "132.243.168.76"
+    port: 5443
+    uuid: "67baa13e-d41b-4acf-ad0f-4ad35a136f85"
     udp: true
     tls: true
-    network: "ws"
-    servername: "us2.wxgqlfx.icu"
-    client-fingerprint: "chrome"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/TG@wxgqlfx"
-      headers:
-        Host: "us2.wxgqlfx.icu"
+    network: "tcp"
+    servername: "login-user1.riseads.in"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "2EI18PAo3tu5KTu2Z8uj1LhxlPy8McubZZHnLWU92k4"
+      short-id: "d3d4634931a14486"
+  - name: "🇪🇪 爱沙尼亚/Estonia"
+    type: "ss"
+    server: "45.129.96.62"
+    port: 41348
+    cipher: "chacha20-ietf-poly1305"
+    password: "6U3psR0sQuQxWXoBHB4KTD3YacwQwS21XvSEy9"
+    udp: true
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -581,12 +575,12 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
-      - "🇪🇪 RU🇷🇺 | sub.sbrf-cdn342.ru-443 | 1668.88ms"
-      - "🇪🇪 >>@v2rayng_fast::XX"
       - "🇪🇪 🔒 VL-WS-NA 🇪🇪 EE-185.159.247.30:8880"
       - "🇪🇪 🔒 VL-WS-TLS 🇪🇪 EE-45.80.110.245:2053"
       - "🇪🇪 🔒 VL-WS-NONE 🇪🇪 EE-45.80.110.30:8880"
       - "🇪🇪 🇪🇪  Estonia  [01]  MIFA"
+      - "🇪🇪 🇪🇪  Estonia  [01]  MIFA-1"
+      - "🇪🇪 爱沙尼亚/Estonia"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
     icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
@@ -597,12 +591,12 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
-      - "🇪🇪 RU🇷🇺 | sub.sbrf-cdn342.ru-443 | 1668.88ms"
-      - "🇪🇪 >>@v2rayng_fast::XX"
       - "🇪🇪 🔒 VL-WS-NA 🇪🇪 EE-185.159.247.30:8880"
       - "🇪🇪 🔒 VL-WS-TLS 🇪🇪 EE-45.80.110.245:2053"
       - "🇪🇪 🔒 VL-WS-NONE 🇪🇪 EE-45.80.110.30:8880"
       - "🇪🇪 🇪🇪  Estonia  [01]  MIFA"
+      - "🇪🇪 🇪🇪  Estonia  [01]  MIFA-1"
+      - "🇪🇪 爱沙尼亚/Estonia"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
@@ -612,12 +606,12 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
-      - "🇪🇪 RU🇷🇺 | sub.sbrf-cdn342.ru-443 | 1668.88ms"
-      - "🇪🇪 >>@v2rayng_fast::XX"
       - "🇪🇪 🔒 VL-WS-NA 🇪🇪 EE-185.159.247.30:8880"
       - "🇪🇪 🔒 VL-WS-TLS 🇪🇪 EE-45.80.110.245:2053"
       - "🇪🇪 🔒 VL-WS-NONE 🇪🇪 EE-45.80.110.30:8880"
       - "🇪🇪 🇪🇪  Estonia  [01]  MIFA"
+      - "🇪🇪 🇪🇪  Estonia  [01]  MIFA-1"
+      - "🇪🇪 爱沙尼亚/Estonia"
   - name: "المنت 💬"
     type: "select"
     icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
