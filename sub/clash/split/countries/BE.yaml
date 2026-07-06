@@ -499,7 +499,7 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
-  - name: "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.217-8443 | 146.81ms"
+  - name: "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.217-8443 | 85.34ms"
     type: "vless"
     server: "109.69.218.217"
     port: 8443
@@ -511,7 +511,7 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "_BMcBaQjBV5AXRtl7yWxV6vYR8Jm7nfwXY6VhltMtBo"
-  - name: "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 21.3ms"
+  - name: "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 20.15ms"
     type: "vless"
     server: "151.101.9.80"
     port: 80
@@ -523,19 +523,34 @@ proxies:
       path: "/?ed=1049"
       headers:
         Host: "adspeedx23.global.ssl.fastly.net"
-  - name: "🇧🇪 🔒 VL-WS-NONE 🇧🇪 BE-151.101.9.151:80"
+  - name: "🇧🇪 239. 🇧🇪 Belgium"
     type: "vless"
-    server: "151.101.9.151"
-    port: 80
-    uuid: "0058c215-ab1e-400c-a403-b5b2fda7e846"
+    server: "128.127.181.15"
+    port: 443
+    uuid: "497631c4-a1a4-45ff-a86a-f42873473bb6"
     udp: true
-    tls: false
-    network: "ws"
-    servername: "max-gb1.global.ssl.fastly.net"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "max-gb1.global.ssl.fastly.net"
+    tls: true
+    network: "tcp"
+    servername: "be.quattro-tech.ru"
+    client-fingerprint: "qq"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "10rVZPoOUP1TlQviIAsQ_jAROX0fRQxH0C92nq_zGQc"
+      short-id: "43dcff53849b81e6"
+  - name: "🇧🇪 382. 🇧🇪 Belgium"
+    type: "vless"
+    server: "128.127.181.15"
+    port: 443
+    uuid: "497631c4-a1a4-45ff-a86a-f42873473bb6"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "be.quattro-tech.ru"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "10rVZPoOUP1TlQviIAsQ_jAROX0fRQxH0C92nq_zGQc"
+      short-id: "43dcff53849b81e6"
   - name: "🇧🇪 🔒 VL-WS-NONE 🇧🇪 BE-151.101.8.151:80"
     type: "vless"
     server: "151.101.8.151"
@@ -549,6 +564,27 @@ proxies:
       path: "/"
       headers:
         Host: "max-gb1.global.ssl.fastly.net"
+  - name: "🇧🇪 🔒 VL-WS-NONE 🇧🇪 BE-151.101.9.151:80"
+    type: "vless"
+    server: "151.101.9.151"
+    port: 80
+    uuid: "0058c215-ab1e-400c-a403-b5b2fda7e846"
+    udp: true
+    tls: false
+    network: "ws"
+    servername: "max-gb1.global.ssl.fastly.net"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "max-gb1.global.ssl.fastly.net"
+  - name: "🇧🇪 ARISTA"
+    type: "vless"
+    server: "cdn1.portalcode.ir"
+    port: 2095
+    uuid: "dc589d64-0f87-4382-a739-d7841842fcee"
+    udp: true
+    tls: false
+    network: "httpupgrade"
   - name: "🇧🇪 Belgium"
     type: "vless"
     server: "109.69.218.217"
@@ -576,10 +612,13 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
-      - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.217-8443 | 146.81ms"
-      - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 21.3ms"
-      - "🇧🇪 🔒 VL-WS-NONE 🇧🇪 BE-151.101.9.151:80"
+      - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.217-8443 | 85.34ms"
+      - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 20.15ms"
+      - "🇧🇪 239. 🇧🇪 Belgium"
+      - "🇧🇪 382. 🇧🇪 Belgium"
       - "🇧🇪 🔒 VL-WS-NONE 🇧🇪 BE-151.101.8.151:80"
+      - "🇧🇪 🔒 VL-WS-NONE 🇧🇪 BE-151.101.9.151:80"
+      - "🇧🇪 ARISTA"
       - "🇧🇪 Belgium"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -591,10 +630,13 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
-      - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.217-8443 | 146.81ms"
-      - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 21.3ms"
-      - "🇧🇪 🔒 VL-WS-NONE 🇧🇪 BE-151.101.9.151:80"
+      - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.217-8443 | 85.34ms"
+      - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 20.15ms"
+      - "🇧🇪 239. 🇧🇪 Belgium"
+      - "🇧🇪 382. 🇧🇪 Belgium"
       - "🇧🇪 🔒 VL-WS-NONE 🇧🇪 BE-151.101.8.151:80"
+      - "🇧🇪 🔒 VL-WS-NONE 🇧🇪 BE-151.101.9.151:80"
+      - "🇧🇪 ARISTA"
       - "🇧🇪 Belgium"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -605,10 +647,13 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
-      - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.217-8443 | 146.81ms"
-      - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 21.3ms"
-      - "🇧🇪 🔒 VL-WS-NONE 🇧🇪 BE-151.101.9.151:80"
+      - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.217-8443 | 85.34ms"
+      - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 20.15ms"
+      - "🇧🇪 239. 🇧🇪 Belgium"
+      - "🇧🇪 382. 🇧🇪 Belgium"
       - "🇧🇪 🔒 VL-WS-NONE 🇧🇪 BE-151.101.8.151:80"
+      - "🇧🇪 🔒 VL-WS-NONE 🇧🇪 BE-151.101.9.151:80"
+      - "🇧🇪 ARISTA"
       - "🇧🇪 Belgium"
   - name: "المنت 💬"
     type: "select"
