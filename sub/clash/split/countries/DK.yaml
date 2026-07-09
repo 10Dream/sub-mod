@@ -499,20 +499,20 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
-  - name: "🇩🇰 🔒 VL-WS-TLS 🇩🇰 DK-193.181.214.98:2083"
+  - name: "🇩🇰 🔒 VL-GRPC-TLS 🇩🇰 DK-193.181.211.50:443"
     type: "vless"
-    server: "193.181.214.98"
-    port: 2083
-    uuid: "0970324b-8c61-4ae7-8c3f-385a6f1e17e4"
+    server: "193.181.211.50"
+    port: 443
+    uuid: "3f373e36-6363-4f3e-8ca3-0504612f490e"
     udp: true
     tls: true
-    network: "ws"
-    servername: "vpn47.cc.cd"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "vpn47.cc.cd"
+    network: "grpc"
+    servername: "dk2.darknet-bot.co.uk"
+    client-fingerprint: "qq"
+    alpn:
+      - "h2"
+    grpc-opts:
+      grpc-service-name: "grpc"
   - name: "🇩🇰 🇩🇰DK  ROSE—585"
     type: "ss"
     server: "193.29.107.179"
@@ -526,6 +526,13 @@ proxies:
     port: 38742
     cipher: "aes-256-gcm"
     password: "DKXfWwc4ebscpXTKpbt85rSH"
+    udp: true
+  - name: "🇩🇰 🇩🇰 Copenhagen, 84, Denmark"
+    type: "ss"
+    server: "135.136.33.134"
+    port: 1080
+    cipher: "chacha20-ietf-poly1305"
+    password: "gelwvU9mUR0orEFS5D6u7A"
     udp: true
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
@@ -541,9 +548,10 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
-      - "🇩🇰 🔒 VL-WS-TLS 🇩🇰 DK-193.181.214.98:2083"
+      - "🇩🇰 🔒 VL-GRPC-TLS 🇩🇰 DK-193.181.211.50:443"
       - "🇩🇰 🇩🇰DK  ROSE—585"
       - "🇩🇰 🇩🇰DK  ROSE—587"
+      - "🇩🇰 🇩🇰 Copenhagen, 84, Denmark"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
     icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
@@ -554,9 +562,10 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
-      - "🇩🇰 🔒 VL-WS-TLS 🇩🇰 DK-193.181.214.98:2083"
+      - "🇩🇰 🔒 VL-GRPC-TLS 🇩🇰 DK-193.181.211.50:443"
       - "🇩🇰 🇩🇰DK  ROSE—585"
       - "🇩🇰 🇩🇰DK  ROSE—587"
+      - "🇩🇰 🇩🇰 Copenhagen, 84, Denmark"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
@@ -566,9 +575,10 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
-      - "🇩🇰 🔒 VL-WS-TLS 🇩🇰 DK-193.181.214.98:2083"
+      - "🇩🇰 🔒 VL-GRPC-TLS 🇩🇰 DK-193.181.211.50:443"
       - "🇩🇰 🇩🇰DK  ROSE—585"
       - "🇩🇰 🇩🇰DK  ROSE—587"
+      - "🇩🇰 🇩🇰 Copenhagen, 84, Denmark"
   - name: "المنت 💬"
     type: "select"
     icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
