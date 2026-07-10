@@ -499,20 +499,18 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
-  - name: "🇴🇲 🔒 VL-TCP-RLT 🇴🇲 OM-130.94.81.176:8443"
+  - name: "🇴🇲 🔒 VL-WS-NONE 🇴🇲 OM-38.54.116.110:2000"
     type: "vless"
-    server: "130.94.81.176"
-    port: 8443
-    uuid: "497631c4-a1a4-0070-a86a-f42873473bb6"
+    server: "38.54.116.110"
+    port: 2000
+    uuid: "d5536e94-a523-4c40-85ec-f3a3fc444602"
     udp: true
-    tls: true
-    network: "tcp"
-    servername: "auto.quattro-tech.ru"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "10rVZPoOUP1TlQviIAsQ_jAROX0fRQxH0C92nq_zGQc"
-      short-id: "43dcff53849b81e6"
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/?ed=2560"
+      headers:
+        Host: "play.google.com"
   - name: "🇴🇲 🆔ar14n24b 🔓 VL-WS-N/A ❔ XX 439ms"
     type: "vless"
     server: "muscat.aroonsid.ir"
@@ -525,6 +523,28 @@ proxies:
       path: "/?ed=2560"
       headers:
         Host: "play.google.com"
+  - name: "🇴🇲 🔒 SS-TCP-NA 🇸🇨 SC-154.205.146.153:990"
+    type: "ss"
+    server: "154.205.146.153"
+    port: 990
+    cipher: "chacha20-ietf-poly1305"
+    password: "ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44="
+    udp: true
+  - name: "🇴🇲 🔒 SS-TCP-NA 🇸🇨 SC-154.205.150.157:990"
+    type: "ss"
+    server: "154.205.150.157"
+    port: 990
+    cipher: "chacha20-ietf-poly1305"
+    password: "ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44="
+    udp: true
+  - name: "🇴🇲 🔒 VL-HTTPUPGRADE-NONE 🇴🇲 OM-38.54.116.246:42268"
+    type: "vless"
+    server: "38.54.116.246"
+    port: 42268
+    uuid: "7d9fdfb8-829f-46c9-a0ff-cb0b8a5c1bca"
+    udp: true
+    tls: false
+    network: "httpupgrade"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -539,8 +559,11 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
-      - "🇴🇲 🔒 VL-TCP-RLT 🇴🇲 OM-130.94.81.176:8443"
+      - "🇴🇲 🔒 VL-WS-NONE 🇴🇲 OM-38.54.116.110:2000"
       - "🇴🇲 🆔ar14n24b 🔓 VL-WS-N/A ❔ XX 439ms"
+      - "🇴🇲 🔒 SS-TCP-NA 🇸🇨 SC-154.205.146.153:990"
+      - "🇴🇲 🔒 SS-TCP-NA 🇸🇨 SC-154.205.150.157:990"
+      - "🇴🇲 🔒 VL-HTTPUPGRADE-NONE 🇴🇲 OM-38.54.116.246:42268"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
     icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
@@ -551,8 +574,11 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
-      - "🇴🇲 🔒 VL-TCP-RLT 🇴🇲 OM-130.94.81.176:8443"
+      - "🇴🇲 🔒 VL-WS-NONE 🇴🇲 OM-38.54.116.110:2000"
       - "🇴🇲 🆔ar14n24b 🔓 VL-WS-N/A ❔ XX 439ms"
+      - "🇴🇲 🔒 SS-TCP-NA 🇸🇨 SC-154.205.146.153:990"
+      - "🇴🇲 🔒 SS-TCP-NA 🇸🇨 SC-154.205.150.157:990"
+      - "🇴🇲 🔒 VL-HTTPUPGRADE-NONE 🇴🇲 OM-38.54.116.246:42268"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
@@ -562,8 +588,11 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
-      - "🇴🇲 🔒 VL-TCP-RLT 🇴🇲 OM-130.94.81.176:8443"
+      - "🇴🇲 🔒 VL-WS-NONE 🇴🇲 OM-38.54.116.110:2000"
       - "🇴🇲 🆔ar14n24b 🔓 VL-WS-N/A ❔ XX 439ms"
+      - "🇴🇲 🔒 SS-TCP-NA 🇸🇨 SC-154.205.146.153:990"
+      - "🇴🇲 🔒 SS-TCP-NA 🇸🇨 SC-154.205.150.157:990"
+      - "🇴🇲 🔒 VL-HTTPUPGRADE-NONE 🇴🇲 OM-38.54.116.246:42268"
   - name: "المنت 💬"
     type: "select"
     icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
