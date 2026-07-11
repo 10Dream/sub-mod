@@ -499,7 +499,7 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
-  - name: "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 162.82ms"
+  - name: "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 153.96ms"
     type: "vless"
     server: "77.91.68.70"
     port: 55983
@@ -508,7 +508,6 @@ proxies:
     tls: true
     network: "tcp"
     servername: "yahoo.com"
-    client-fingerprint: "chrome"
     reality-opts:
       public-key: "nWQ7b9l9X6N3PrXLgIzOvMM8iSYrqjVHEb9ikWxqYSg"
       short-id: "0e"
@@ -526,29 +525,33 @@ proxies:
       path: "/snippets"
       headers:
         Host: "vless.hubp.de"
-  - name: "🇦🇲 🇺🇸  USA  [01]  MIFA"
+  - name: "🇦🇲 🔒 VL-XHTTP-RLT 🇦🇲 AM-87.121.47.237:8443"
     type: "vless"
-    server: "92.246.138.147"
-    port: 443
-    uuid: "d2e3768f-cb23-4cfc-a884-dbd6813cb70b"
+    server: "87.121.47.237"
+    port: 8443
+    uuid: "cde6db10-61db-418f-9ea1-52f7c13404a9"
     udp: true
     tls: true
-    network: "grpc"
-    servername: "www.microsoft.com"
-    client-fingerprint: "qq"
+    network: "xhttp"
+    servername: "am-1.alpha-ai-studio.com"
+    client-fingerprint: "firefox"
     reality-opts:
-      public-key: "Uwj82vGl-jAhU3VflWnTy7rISYi03slggjS32Zx8pkk"
-      short-id: "6ba85179e30d4fc2"
-    grpc-opts:
-      grpc-service-name: "wlgrpc"
-  - name: "🇦🇲 🔒 VL-TCP-NONE 🇦🇲 AM-93.115.240.146:20988"
+      public-key: "msysQ0O50UghY7hzYz14sJF3cvfolf999HsO2Iu99xc"
+      short-id: "1aa760b0"
+  - name: "🇦🇲 🔒 VL-TCP-RLT 🇦🇲 AM-87.121.47.237:443"
     type: "vless"
-    server: "93.115.240.146"
-    port: 20988
-    uuid: "195515bf-b46b-46a3-b7e4-e1969b2e7568"
+    server: "87.121.47.237"
+    port: 443
+    uuid: "cde6db10-61db-418f-9ea1-52f7c13404a9"
     udp: true
-    tls: false
+    tls: true
     network: "tcp"
+    servername: "am-1.alpha-ai-studio.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "msysQ0O50UghY7hzYz14sJF3cvfolf999HsO2Iu99xc"
+      short-id: "1aa760b0"
   - name: "🇦🇲 🔒 VL-TCP-RLT 🇦🇲 AM-77.91.68.70:55983"
     type: "vless"
     server: "77.91.68.70"
@@ -558,9 +561,19 @@ proxies:
     tls: true
     network: "tcp"
     servername: "yahoo.com"
+    client-fingerprint: "chrome"
     reality-opts:
       public-key: "nWQ7b9l9X6N3PrXLgIzOvMM8iSYrqjVHEb9ikWxqYSg"
       short-id: "0e"
+  - name: "🇦🇲 🔒 VL-XHTTP-TLS 🇦🇲 AM-5.101.37.37:443"
+    type: "vless"
+    server: "5.101.37.37"
+    port: 443
+    uuid: "1461513a-bfea-449f-b460-8fd2149f879b"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "img.ipcheak.online"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -575,11 +588,12 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
-      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 162.82ms"
+      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 153.96ms"
       - "🇦🇲 🔒 VL-WS-TLS 🇦🇲 AM-188.164.159.61:2096"
-      - "🇦🇲 🇺🇸  USA  [01]  MIFA"
-      - "🇦🇲 🔒 VL-TCP-NONE 🇦🇲 AM-93.115.240.146:20988"
+      - "🇦🇲 🔒 VL-XHTTP-RLT 🇦🇲 AM-87.121.47.237:8443"
+      - "🇦🇲 🔒 VL-TCP-RLT 🇦🇲 AM-87.121.47.237:443"
       - "🇦🇲 🔒 VL-TCP-RLT 🇦🇲 AM-77.91.68.70:55983"
+      - "🇦🇲 🔒 VL-XHTTP-TLS 🇦🇲 AM-5.101.37.37:443"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
     icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
@@ -590,11 +604,12 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
-      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 162.82ms"
+      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 153.96ms"
       - "🇦🇲 🔒 VL-WS-TLS 🇦🇲 AM-188.164.159.61:2096"
-      - "🇦🇲 🇺🇸  USA  [01]  MIFA"
-      - "🇦🇲 🔒 VL-TCP-NONE 🇦🇲 AM-93.115.240.146:20988"
+      - "🇦🇲 🔒 VL-XHTTP-RLT 🇦🇲 AM-87.121.47.237:8443"
+      - "🇦🇲 🔒 VL-TCP-RLT 🇦🇲 AM-87.121.47.237:443"
       - "🇦🇲 🔒 VL-TCP-RLT 🇦🇲 AM-77.91.68.70:55983"
+      - "🇦🇲 🔒 VL-XHTTP-TLS 🇦🇲 AM-5.101.37.37:443"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
@@ -604,11 +619,12 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
-      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 162.82ms"
+      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 153.96ms"
       - "🇦🇲 🔒 VL-WS-TLS 🇦🇲 AM-188.164.159.61:2096"
-      - "🇦🇲 🇺🇸  USA  [01]  MIFA"
-      - "🇦🇲 🔒 VL-TCP-NONE 🇦🇲 AM-93.115.240.146:20988"
+      - "🇦🇲 🔒 VL-XHTTP-RLT 🇦🇲 AM-87.121.47.237:8443"
+      - "🇦🇲 🔒 VL-TCP-RLT 🇦🇲 AM-87.121.47.237:443"
       - "🇦🇲 🔒 VL-TCP-RLT 🇦🇲 AM-77.91.68.70:55983"
+      - "🇦🇲 🔒 VL-XHTTP-TLS 🇦🇲 AM-5.101.37.37:443"
   - name: "المنت 💬"
     type: "select"
     icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
