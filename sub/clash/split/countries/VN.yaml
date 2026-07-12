@@ -499,20 +499,7 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
-  - name: "🇻🇳 🔒 VL-TCP-RLT 🇻🇳 VN-160.191.164.164:8443"
-    type: "vless"
-    server: "160.191.164.164"
-    port: 8443
-    uuid: "497631c4-a1a4-0030-a86a-f42873473bb6"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "auto.quattro-tech.ru"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "10rVZPoOUP1TlQviIAsQ_jAROX0fRQxH0C92nq_zGQc"
-      short-id: "43dcff53849b81e6"
-  - name: "🇻🇳 🇻🇳  Vietnam  [01]  MIFA"
+  - name: "🇻🇳 🔒 TR-TCP-TLS 🇻🇳 VN-38.60.252.118:443"
     type: "trojan"
     server: "38.60.252.118"
     port: 443
@@ -529,6 +516,19 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "🇻🇳 🔒 VL-XHTTP-TLS 🇻🇳 VN-160.25.74.91:443"
+    type: "vless"
+    server: "160.25.74.91"
+    port: 443
+    uuid: "9794d18f-9280-3553-a7a5-a23da75aca76"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "u691611us784.csgfw.top"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
+      - "http/1.1"
   - name: "🇻🇳 🔒 VL-TCP-TLS 🇻🇳 VN-103.173.155.212:443"
     type: "vless"
     server: "103.173.155.212"
@@ -543,19 +543,20 @@ proxies:
       - "h2"
       - "http/1.1"
     flow: "xtls-rprx-vision"
-  - name: "🇻🇳 🔒 VL-XHTTP-TLS 🇻🇳 VN-160.25.74.91:443"
+  - name: "🇻🇳 EPODONIOS"
     type: "vless"
-    server: "160.25.74.91"
-    port: 443
-    uuid: "9794d18f-9280-3553-a7a5-a23da75aca76"
+    server: "160.191.164.164"
+    port: 8443
+    uuid: "497631c4-a1a4-0030-a86a-f42873473bb6"
     udp: true
     tls: true
-    network: "xhttp"
-    servername: "u691611us784.csgfw.top"
-    client-fingerprint: "firefox"
-    alpn:
-      - "h2"
-      - "http/1.1"
+    network: "tcp"
+    servername: "auto.quattro-tech.ru"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "10rVZPoOUP1TlQviIAsQ_jAROX0fRQxH0C92nq_zGQc"
+      short-id: "43dcff53849b81e6"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -570,11 +571,11 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
-      - "🇻🇳 🔒 VL-TCP-RLT 🇻🇳 VN-160.191.164.164:8443"
-      - "🇻🇳 🇻🇳  Vietnam  [01]  MIFA"
+      - "🇻🇳 🔒 TR-TCP-TLS 🇻🇳 VN-38.60.252.118:443"
       - "🇻🇳 ARISTA"
-      - "🇻🇳 🔒 VL-TCP-TLS 🇻🇳 VN-103.173.155.212:443"
       - "🇻🇳 🔒 VL-XHTTP-TLS 🇻🇳 VN-160.25.74.91:443"
+      - "🇻🇳 🔒 VL-TCP-TLS 🇻🇳 VN-103.173.155.212:443"
+      - "🇻🇳 EPODONIOS"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
     icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
@@ -585,11 +586,11 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
-      - "🇻🇳 🔒 VL-TCP-RLT 🇻🇳 VN-160.191.164.164:8443"
-      - "🇻🇳 🇻🇳  Vietnam  [01]  MIFA"
+      - "🇻🇳 🔒 TR-TCP-TLS 🇻🇳 VN-38.60.252.118:443"
       - "🇻🇳 ARISTA"
-      - "🇻🇳 🔒 VL-TCP-TLS 🇻🇳 VN-103.173.155.212:443"
       - "🇻🇳 🔒 VL-XHTTP-TLS 🇻🇳 VN-160.25.74.91:443"
+      - "🇻🇳 🔒 VL-TCP-TLS 🇻🇳 VN-103.173.155.212:443"
+      - "🇻🇳 EPODONIOS"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
@@ -599,11 +600,11 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
-      - "🇻🇳 🔒 VL-TCP-RLT 🇻🇳 VN-160.191.164.164:8443"
-      - "🇻🇳 🇻🇳  Vietnam  [01]  MIFA"
+      - "🇻🇳 🔒 TR-TCP-TLS 🇻🇳 VN-38.60.252.118:443"
       - "🇻🇳 ARISTA"
-      - "🇻🇳 🔒 VL-TCP-TLS 🇻🇳 VN-103.173.155.212:443"
       - "🇻🇳 🔒 VL-XHTTP-TLS 🇻🇳 VN-160.25.74.91:443"
+      - "🇻🇳 🔒 VL-TCP-TLS 🇻🇳 VN-103.173.155.212:443"
+      - "🇻🇳 EPODONIOS"
   - name: "المنت 💬"
     type: "select"
     icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
