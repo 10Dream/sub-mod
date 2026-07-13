@@ -499,7 +499,19 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
-  - name: "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 7.84ms"
+  - name: "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.217-8443 | 85.48ms"
+    type: "vless"
+    server: "109.69.218.217"
+    port: 8443
+    uuid: "7d14f1cf-3740-4fbd-a31c-6f7d078f97d7"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.engage.edgedoor.ink"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "_BMcBaQjBV5AXRtl7yWxV6vYR8Jm7nfwXY6VhltMtBo"
+  - name: "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 10.43ms"
     type: "vless"
     server: "151.101.9.80"
     port: 80
@@ -511,7 +523,7 @@ proxies:
       path: "/?ed=1049"
       headers:
         Host: "adspeedx23.global.ssl.fastly.net"
-  - name: "🇧🇪 RELAY🚩 | kio.rainzone.ir-8443 | 351.53ms"
+  - name: "🇧🇪 RELAY🚩 | kio.rainzone.ir-8443 | 349.92ms"
     type: "vless"
     server: "cdn1.portalcode.ir"
     port: 8443
@@ -524,6 +536,14 @@ proxies:
     alpn:
       - "h2"
       - "http/1.1"
+  - name: "🇧🇪 RELAY🚩 | lpoz.worldcups.mom-2082 | 216.73ms"
+    type: "vless"
+    server: "cdn1.portalcode.ir"
+    port: 2082
+    uuid: "15f15332-b3a6-424c-a7de-0452ca8c80e8"
+    udp: true
+    tls: false
+    network: "httpupgrade"
   - name: "🇧🇪 🔒 VL-WS-NONE 🇧🇪 BE-151.101.8.151:80"
     type: "vless"
     server: "151.101.8.151"
@@ -554,6 +574,19 @@ proxies:
     type: "vless"
     server: "188.95.12.226"
     port: 8443
+    uuid: "9a794b73-d16d-4d20-8dfa-14985c8b97be"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "frser1.rainzone.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+  - name: "🇧🇪 🔒 VL-XHTTP-TLS 🇧🇪 BE-188.95.12.226:8443-1"
+    type: "vless"
+    server: "188.95.12.226"
+    port: 8443
     uuid: "4d1d33b2-96d9-40c7-964d-a5016ba65984"
     udp: true
     tls: true
@@ -563,14 +596,6 @@ proxies:
     alpn:
       - "h2"
       - "http/1.1"
-  - name: "🇧🇪 🔒 VL-HTTPUPGRADE-NONE 🇧🇪 BE-188.95.12.226:2082"
-    type: "vless"
-    server: "188.95.12.226"
-    port: 2082
-    uuid: "15f15332-b3a6-424c-a7de-0452ca8c80e8"
-    udp: true
-    tls: false
-    network: "httpupgrade"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -585,12 +610,14 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
-      - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 7.84ms"
-      - "🇧🇪 RELAY🚩 | kio.rainzone.ir-8443 | 351.53ms"
+      - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.217-8443 | 85.48ms"
+      - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 10.43ms"
+      - "🇧🇪 RELAY🚩 | kio.rainzone.ir-8443 | 349.92ms"
+      - "🇧🇪 RELAY🚩 | lpoz.worldcups.mom-2082 | 216.73ms"
       - "🇧🇪 🔒 VL-WS-NONE 🇧🇪 BE-151.101.8.151:80"
       - "🇧🇪 🔒 VL-WS-NONE 🇧🇪 BE-151.101.9.151:80"
       - "🇧🇪 🔒 VL-XHTTP-TLS 🇧🇪 BE-188.95.12.226:8443"
-      - "🇧🇪 🔒 VL-HTTPUPGRADE-NONE 🇧🇪 BE-188.95.12.226:2082"
+      - "🇧🇪 🔒 VL-XHTTP-TLS 🇧🇪 BE-188.95.12.226:8443-1"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
     icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
@@ -601,12 +628,14 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
-      - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 7.84ms"
-      - "🇧🇪 RELAY🚩 | kio.rainzone.ir-8443 | 351.53ms"
+      - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.217-8443 | 85.48ms"
+      - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 10.43ms"
+      - "🇧🇪 RELAY🚩 | kio.rainzone.ir-8443 | 349.92ms"
+      - "🇧🇪 RELAY🚩 | lpoz.worldcups.mom-2082 | 216.73ms"
       - "🇧🇪 🔒 VL-WS-NONE 🇧🇪 BE-151.101.8.151:80"
       - "🇧🇪 🔒 VL-WS-NONE 🇧🇪 BE-151.101.9.151:80"
       - "🇧🇪 🔒 VL-XHTTP-TLS 🇧🇪 BE-188.95.12.226:8443"
-      - "🇧🇪 🔒 VL-HTTPUPGRADE-NONE 🇧🇪 BE-188.95.12.226:2082"
+      - "🇧🇪 🔒 VL-XHTTP-TLS 🇧🇪 BE-188.95.12.226:8443-1"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
@@ -616,12 +645,14 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
-      - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 7.84ms"
-      - "🇧🇪 RELAY🚩 | kio.rainzone.ir-8443 | 351.53ms"
+      - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.217-8443 | 85.48ms"
+      - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 10.43ms"
+      - "🇧🇪 RELAY🚩 | kio.rainzone.ir-8443 | 349.92ms"
+      - "🇧🇪 RELAY🚩 | lpoz.worldcups.mom-2082 | 216.73ms"
       - "🇧🇪 🔒 VL-WS-NONE 🇧🇪 BE-151.101.8.151:80"
       - "🇧🇪 🔒 VL-WS-NONE 🇧🇪 BE-151.101.9.151:80"
       - "🇧🇪 🔒 VL-XHTTP-TLS 🇧🇪 BE-188.95.12.226:8443"
-      - "🇧🇪 🔒 VL-HTTPUPGRADE-NONE 🇧🇪 BE-188.95.12.226:2082"
+      - "🇧🇪 🔒 VL-XHTTP-TLS 🇧🇪 BE-188.95.12.226:8443-1"
   - name: "المنت 💬"
     type: "select"
     icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
