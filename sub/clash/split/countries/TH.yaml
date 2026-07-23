@@ -499,14 +499,13 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
-  - name: "🇹🇭 🔒 VL-XHTTP-NONE 🇹🇭 TH-45.144.165.11:80"
-    type: "vless"
-    server: "45.144.165.11"
-    port: 80
-    uuid: "85b62084-d81e-52cd-a016-944f261d34a0"
+  - name: "🇹🇭 @DeltaKroneckerGithub"
+    type: "ss"
+    server: "102.129.229.85"
+    port: 31700
+    cipher: "chacha20-ietf-poly1305"
+    password: "d7zh2lMrXNH5+8+8pKzlxiCU9NN022ih+uAyxj5d4qo="
     udp: true
-    tls: false
-    network: "xhttp"
   - name: "🇹🇭 🔒 VL-WS-TLS 🇹🇭 TH-43.164.0.59:666"
     type: "vless"
     server: "43.164.0.59"
@@ -518,21 +517,39 @@ proxies:
     servername: "43.164.0.59"
     ws-opts:
       path: "/proxy"
-  - name: "🇹🇭 @DeltaKroneckerGithub"
-    type: "ss"
-    server: "102.129.229.85"
-    port: 31700
-    cipher: "chacha20-ietf-poly1305"
-    password: "d7zh2lMrXNH5+8+8pKzlxiCU9NN022ih+uAyxj5d4qo="
-    udp: true
   - name: "🇹🇭 @DeltaKroneckerGithub-1"
+    type: "vless"
+    server: "43.164.1.152"
+    port: 666
+    uuid: "8d5e7f2a-3c1b-4d9e-a6f8-2b5c0e7d4a19"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "43.164.1.152"
+    ws-opts:
+      path: "/proxy"
+  - name: "🇹🇭 @DeltaKroneckerGithub-2"
     type: "vless"
     server: "43.164.0.59"
     port: 666
     uuid: "8d5e7f2a-3c1b-4d9e-a6f8-2b5c0e7d4a19"
     udp: true
+    tls: true
+    network: "ws"
+    servername: "43.164.0.59"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/proxy"
+      headers:
+        Host: "43.164.0.59"
+  - name: "🇹🇭 🔒 VL-XHTTP-NONE 🇹🇭 TH-45.144.165.11:80"
+    type: "vless"
+    server: "45.144.165.11"
+    port: 80
+    uuid: "85b62084-d81e-52cd-a016-944f261d34a0"
+    udp: true
     tls: false
-    network: "tcp"
+    network: "xhttp"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -547,10 +564,11 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
-      - "🇹🇭 🔒 VL-XHTTP-NONE 🇹🇭 TH-45.144.165.11:80"
-      - "🇹🇭 🔒 VL-WS-TLS 🇹🇭 TH-43.164.0.59:666"
       - "🇹🇭 @DeltaKroneckerGithub"
+      - "🇹🇭 🔒 VL-WS-TLS 🇹🇭 TH-43.164.0.59:666"
       - "🇹🇭 @DeltaKroneckerGithub-1"
+      - "🇹🇭 @DeltaKroneckerGithub-2"
+      - "🇹🇭 🔒 VL-XHTTP-NONE 🇹🇭 TH-45.144.165.11:80"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
     icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
@@ -561,10 +579,11 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
-      - "🇹🇭 🔒 VL-XHTTP-NONE 🇹🇭 TH-45.144.165.11:80"
-      - "🇹🇭 🔒 VL-WS-TLS 🇹🇭 TH-43.164.0.59:666"
       - "🇹🇭 @DeltaKroneckerGithub"
+      - "🇹🇭 🔒 VL-WS-TLS 🇹🇭 TH-43.164.0.59:666"
       - "🇹🇭 @DeltaKroneckerGithub-1"
+      - "🇹🇭 @DeltaKroneckerGithub-2"
+      - "🇹🇭 🔒 VL-XHTTP-NONE 🇹🇭 TH-45.144.165.11:80"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
@@ -574,10 +593,11 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
-      - "🇹🇭 🔒 VL-XHTTP-NONE 🇹🇭 TH-45.144.165.11:80"
-      - "🇹🇭 🔒 VL-WS-TLS 🇹🇭 TH-43.164.0.59:666"
       - "🇹🇭 @DeltaKroneckerGithub"
+      - "🇹🇭 🔒 VL-WS-TLS 🇹🇭 TH-43.164.0.59:666"
       - "🇹🇭 @DeltaKroneckerGithub-1"
+      - "🇹🇭 @DeltaKroneckerGithub-2"
+      - "🇹🇭 🔒 VL-XHTTP-NONE 🇹🇭 TH-45.144.165.11:80"
   - name: "المنت 💬"
     type: "select"
     icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
