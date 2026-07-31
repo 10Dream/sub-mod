@@ -499,15 +499,7 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
-  - name: "🇪🇸 ES🇪🇸 | 85.90.217.42-22324 | 103.48ms"
-    type: "vmess"
-    server: "85.90.217.42"
-    port: 22324
-    uuid: "04621bae-ab36-11ec-b909-0242ac120002"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇪🇸 ES🇪🇸 | 5.180.173.248-25198 | 111.55ms"
+  - name: "🇪🇸 ES🇪🇸 | 5.180.173.248-25198 | 140.52ms"
     type: "vless"
     server: "5.180.173.248"
     port: 25198
@@ -517,7 +509,34 @@ proxies:
     network: "ws"
     ws-opts:
       path: "/xray"
-  - name: "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.3-443 | 113.31ms"
+  - name: "🇪🇸 ES🇪🇸 | 5.180.173.248-25198 | 138.01ms"
+    type: "vless"
+    server: "5.180.173.248"
+    port: 25198
+    uuid: "deb9c015-1ffe-4e41-9d21-310eb0422a4c"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/xray"
+      headers:
+        Host: "5.180.173.248"
+  - name: "🇪🇸 REALITY|ES🇪🇸 | 2.27.26.51-443 | 150.64ms"
+    type: "vless"
+    server: "2.27.26.51"
+    port: 443
+    uuid: "7b81d175-d180-4ec8-bbc5-dfe80e8d3b68"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "draftnest-rrew.ru"
+    client-fingerprint: "qq"
+    reality-opts:
+      public-key: "CxMPFpwhcR9Ocp-Xy_1J08mo-atdHKUf58WLOy_XlgM"
+      short-id: "d9662905"
+    grpc-opts:
+      grpc-service-name: "nexusGrpc"
+  - name: "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.3-443 | 127.41ms"
     type: "vless"
     server: "170.168.97.3"
     port: 443
@@ -529,28 +548,27 @@ proxies:
     client-fingerprint: "chrome"
     reality-opts:
       public-key: "D2SXHZRRYM0WcFChGWd57XB-U73aIsGfMpe2-Gq5XSs"
-  - name: "🇪🇸 🔒 TR-WS-TLS 🇪🇸 ES-109.234.211.66:8443"
-    type: "trojan"
-    server: "109.234.211.66"
+  - name: "🇪🇸 ES🇪🇸 | fat-sp.arpozan.cloud-8443 | 308.29ms"
+    type: "vless"
+    server: "fat-sp.arpozan.cloud"
     port: 8443
-    password: "trojan"
+    uuid: "1f29762d-3f23-4207-9e39-f774de5d49ba"
     udp: true
     tls: true
-    network: "ws"
-    servername: "store.timimi.dpdns.org"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "store.timimi.dpdns.org"
-  - name: "🇪🇸 🔒 TR-TCP-NA 🇪🇸 ES-193.148.19.213:52794"
-    type: "trojan"
-    server: "193.148.19.213"
-    port: 52794
-    password: "2eutknankxtbgkwcajzt"
+    network: "grpc"
+    servername: "fat-sp.arpozan.cloud"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+    grpc-opts:
+      grpc-service-name: "grpc"
+  - name: "🇪🇸 ES🇪🇸+|+195.206.107.94-1080+|+133.63ms"
+    type: "ss"
+    server: "195.206.107.94"
+    port: 1080
+    cipher: "chacha20-ietf-poly1305"
+    password: "XF0klw7870vXn3uQIxe19Q"
     udp: true
-    tls: true
-    network: "tcp"
-    servername: "193.148.19.213"
   - name: "🇪🇸 🔒 TR-WS-TLS 🇪🇸 ES-103.45.245.208:2053"
     type: "trojan"
     server: "103.45.245.208"
@@ -576,13 +594,19 @@ proxies:
     ws-opts:
       headers:
         Host: "joss.gpj.web.id"
-  - name: "🇪🇸 Spain"
-    type: "ss"
-    server: "108.181.121.226"
-    port: 8388
-    cipher: "chacha20-ietf-poly1305"
-    password: "WSyL4XTwNsdv"
+  - name: "🇪🇸 🔒 TR-WS-TLS 🇪🇸 ES-109.234.211.66:8443"
+    type: "trojan"
+    server: "109.234.211.66"
+    port: 8443
+    password: "trojan"
     udp: true
+    tls: true
+    network: "ws"
+    servername: "store.timimi.dpdns.org"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "store.timimi.dpdns.org"
   - name: "🇪🇸 United+States"
     type: "ss"
     server: "140.174.184.5"
@@ -590,49 +614,30 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "qItG8SueYQcP"
     udp: true
-  - name: "🇪🇸 Spain-1"
+  - name: "🇪🇸 Spain"
+    type: "vmess"
+    server: "85.90.217.42"
+    port: 22324
+    uuid: "04621bae-ab36-11ec-b909-0242ac120002"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇪🇸 https://t.me/ForceRunVPN-🇪🇸-Barcelona-396ms-H2nexus LTD"
     type: "vless"
-    server: "s2058.wagahaha.xyz"
+    server: "2.27.26.51"
     port: 443
-    uuid: "5d02517f-63d5-3e9f-b467-1bcf4d4e25d3"
+    uuid: "7b81d175-d180-4ec8-bbc5-dfe80e8d3b68"
     udp: true
     tls: true
-    network: "tcp"
-    servername: "u695099uf6377524s2057.gogocs.xyz"
-    client-fingerprint: "firefox"
-    alpn:
-      - "h2"
-      - "http/1.1"
-    flow: "xtls-rprx-vision"
-  - name: "🇪🇸 Spain-2"
-    type: "vless"
-    server: "s2059.sspcccdn.xyz"
-    port: 443
-    uuid: "5d02517f-63d5-3e9f-b467-1bcf4d4e25d3"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "u695099uf6377524s2057.gogocs.xyz"
-    client-fingerprint: "firefox"
-    alpn:
-      - "h2"
-      - "http/1.1"
-    flow: "xtls-rprx-vision"
-  - name: "🇪🇸 Spain-3"
-    type: "vless"
-    server: "195.170.172.139"
-    port: 443
-    uuid: "5d02517f-63d5-3e9f-b467-1bcf4d4e25d3"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "u695099uf6377524s2057.gogocs.xyz"
-    client-fingerprint: "firefox"
-    alpn:
-      - "h2"
-      - "http/1.1"
-    flow: "xtls-rprx-vision"
-  - name: "🇪🇸 🆔v2ray1_ng 🔒 VL-GRPC- ❔ XX 114ms"
+    network: "grpc"
+    servername: "draftnest-rrew.ru"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "CxMPFpwhcR9Ocp-Xy_1J08mo-atdHKUf58WLOy_XlgM"
+      short-id: "d9662905"
+    grpc-opts:
+      grpc-service-name: "nexusGrpc"
+  - name: "🇪🇸 https://t.me/ForceRunVPN-🇹🇷-Iğdır-456ms-Fast Servers (Pty) Ltd"
     type: "vless"
     server: "170.168.97.3"
     port: 8443
@@ -646,62 +651,32 @@ proxies:
       public-key: "D2SXHZRRYM0WcFChGWd57XB-U73aIsGfMpe2-Gq5XSs"
     grpc-opts:
       grpc-service-name: "TunService"
-  - name: "🇪🇸 https://t.me/ForceRunVPN-🇪🇸-Barcelona-500ms-H2nexus LTD"
+  - name: "🇪🇸 https://t.me/ForceRunVPN-🇹🇷-Iğdır-3319ms-Fast Servers (Pty) Ltd"
     type: "vless"
-    server: "2.27.26.51"
-    port: 443
-    uuid: "7b81d175-d180-4ec8-bbc5-dfe80e8d3b68"
+    server: "170.168.97.3"
+    port: 8443
+    uuid: "5e243126-4a2a-84b6-782a-73b14797fb5f"
     udp: true
     tls: true
     network: "grpc"
-    servername: "draftnest-rrew.ru"
-    client-fingerprint: "chrome"
+    servername: "download.nvidia.com"
     reality-opts:
-      public-key: "CxMPFpwhcR9Ocp-Xy_1J08mo-atdHKUf58WLOy_XlgM"
-      short-id: "d9662905"
+      public-key: "D2SXHZRRYM0WcFChGWd57XB-U73aIsGfMpe2-Gq5XSs"
     grpc-opts:
-      grpc-service-name: "nexusGrpc"
-  - name: "🇪🇸 🔒 VL-XHTTP-RLT 🇪🇸 ES-185.236.25.24:2027"
+      grpc-service-name: "TunService"
+  - name: "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-85.90.217.120:2040"
     type: "vless"
-    server: "185.236.25.24"
-    port: 2027
-    uuid: "806b803b-7dad-4f13-b525-f3b1ab50e44e"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "sp.skysafe.online"
-    client-fingerprint: "edge"
-    reality-opts:
-      public-key: "EApxy12MeXpqt-78odxizwcXT6hX9f8XeAcbMDVRAV0"
-      short-id: "6ba7b8109dad11d1"
-  - name: "🇪🇸 🔒 VL-GRPC-RLT 🇪🇸 ES-2.27.26.51:443"
-    type: "vless"
-    server: "2.27.26.51"
-    port: 443
-    uuid: "7b81d175-d180-4ec8-bbc5-dfe80e8d3b68"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "draftnest-rrew.ru"
-    client-fingerprint: "qq"
-    reality-opts:
-      public-key: "CxMPFpwhcR9Ocp-Xy_1J08mo-atdHKUf58WLOy_XlgM"
-      short-id: "d9662905"
-    grpc-opts:
-      grpc-service-name: "nexusGrpc"
-  - name: "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-113.30.149.20:443"
-    type: "vless"
-    server: "113.30.149.20"
-    port: 443
-    uuid: "fc1b3bda-b226-452a-8c5c-b0e36a1f8f88"
+    server: "85.90.217.120"
+    port: 2040
+    uuid: "a962e5f4-4bb7-4cf9-b32a-8d4e4f2aa805"
     udp: true
     tls: true
     network: "tcp"
-    servername: "eu-west.cendora.ru"
-    flow: "xtls-rprx-vision"
+    servername: "www.yahoo.com"
+    client-fingerprint: "firefox"
     reality-opts:
-      public-key: "m6RDw1b8R4lCaRUIzhHpy6TtX2Dhk6nyby8dWzeQqA0"
-      short-id: "dd3ff38418d29d22"
+      public-key: "d00ZgCDuY5ncLM1aF9nocq5oBthFMFetgobyJ2qUTg4"
+      short-id: "9634e9421a05e65f"
   - name: "🇪🇸 🇪🇸"
     type: "trojan"
     server: "65.20.102.54"
@@ -713,6 +688,15 @@ proxies:
     servername: "www.gpt123.one"
   - name: "🇪🇸 🇪🇸-1"
     type: "trojan"
+    server: "193.148.19.213"
+    port: 52794
+    password: "2eutknankxtbgkwcajzt"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "193.148.19.213"
+  - name: "🇪🇸 🇪🇸-2"
+    type: "trojan"
     server: "193.148.19.210"
     port: 52794
     password: "2eutknankxtbgkwcajzt"
@@ -720,20 +704,27 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.vk.com"
-  - name: "🇪🇸 https://t.me/ForceRunVPN-🇪🇸-Madrid-301ms-M247 Europe SRL"
+  - name: "🇪🇸 https://t.me/ForceRunVPN-🇪🇸-Barcelona-243ms-Psychz Networks"
     type: "ss"
-    server: "195.206.107.94"
-    port: 1080
+    server: "108.181.121.226"
+    port: 8388
     cipher: "chacha20-ietf-poly1305"
-    password: "XF0klw7870vXn3uQIxe19Q"
+    password: "WSyL4XTwNsdv"
     udp: true
-  - name: "🇪🇸 https://t.me/ForceRunVPN-🇪🇸-Moaña-321ms-M247 Europe Infra"
-    type: "ss"
-    server: "146.70.128.108"
-    port: 1080
-    cipher: "chacha20-ietf-poly1305"
-    password: "XF0klw7870vXn3uQIxe19Q"
+  - name: "🇪🇸 🔒 VL-TCP-TLS 🇪🇸 ES-195.170.172.139:443"
+    type: "vless"
+    server: "195.170.172.139"
+    port: 443
+    uuid: "5d02517f-63d5-3e9f-b467-1bcf4d4e25d3"
     udp: true
+    tls: true
+    network: "tcp"
+    servername: "u695099uf6377524s2057.gogocs.xyz"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    flow: "xtls-rprx-vision"
   - name: "🇪🇸 🔒 VL-GRPC-TLS 🇪🇸 ES-138.124.62.241:8443"
     type: "vless"
     server: "138.124.62.241"
@@ -748,20 +739,13 @@ proxies:
       - "h2"
     grpc-opts:
       grpc-service-name: "grpc"
-  - name: "🇪🇸 🔒 VL-GRPC-RLT 🇪🇸 ES-2.27.26.51:443-1"
-    type: "vless"
-    server: "2.27.26.51"
-    port: 443
-    uuid: "7b81d175-d180-4ec8-bbc5-dfe80e8d3b68"
+  - name: "🇪🇸 ✅ t.me/bigAVPN ایران آزاد 👑"
+    type: "ss"
+    server: "146.70.128.108"
+    port: 1080
+    cipher: "chacha20-ietf-poly1305"
+    password: "XF0klw7870vXn3uQIxe19Q"
     udp: true
-    tls: true
-    network: "grpc"
-    servername: "draftnest-rrew.ru"
-    reality-opts:
-      public-key: "CxMPFpwhcR9Ocp-Xy_1J08mo-atdHKUf58WLOy_XlgM"
-      short-id: "d9662905"
-    grpc-opts:
-      grpc-service-name: "nexusGrpc"
   - name: "🇪🇸 🔒 SS-TCP-NA 🇪🇸 ES-194.87.45.189:443"
     type: "ss"
     server: "194.87.45.189"
@@ -769,7 +753,7 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "qbyTjrZECEWtB3IRtWr35m"
     udp: true
-  - name: "🇪🇸 🇪🇸-2"
+  - name: "🇪🇸 🇪🇸-3"
     type: "vless"
     server: "85.90.217.42"
     port: 443
@@ -778,27 +762,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "85.90.217.42"
-  - name: "🇪🇸 🇺🇸  USA  [03]  MIFA"
-    type: "hysteria2"
-    server: "194.87.2.3"
-    port: 443
-    password: "eq64TMTbpcsf5LERJoKcMwwSHEzBEm"
-    skip-cert-verify: true
-  - name: "🇪🇸 🇪🇸  Spain  [01]  MIFA"
-    type: "vless"
-    server: "es.odavpn.online"
-    port: 18020
-    uuid: "cf5b6485-654c-44cc-a9a4-05c56781c52d"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "ya.ru"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "o-AYIL_cXrgRRlT9QC-0--30JtnOFyk75sh-IBwGqFQ"
-      short-id: "aabbccdd"
-  - name: "🇪🇸 🇯🇵  Japan  [02]  MIFA"
+  - name: "🇪🇸 🇯🇵  Japan  [01]  MIFA"
     type: "vless"
     server: "2.27.26.51"
     port: 443
@@ -825,16 +789,6 @@ proxies:
       path: "/xray"
       headers:
         Host: "/?BIA_TELEGRAM@MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI"
-  - name: "🇪🇸 ARISTA-1"
-    type: "vless"
-    server: "free06.tunnely.ru"
-    port: 8080
-    uuid: "111aa362-0fbe-43a6-a2c0-94bbdbd8d980"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/ws/"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -849,36 +803,32 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
-      - "🇪🇸 ES🇪🇸 | 85.90.217.42-22324 | 103.48ms"
-      - "🇪🇸 ES🇪🇸 | 5.180.173.248-25198 | 111.55ms"
-      - "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.3-443 | 113.31ms"
-      - "🇪🇸 🔒 TR-WS-TLS 🇪🇸 ES-109.234.211.66:8443"
-      - "🇪🇸 🔒 TR-TCP-NA 🇪🇸 ES-193.148.19.213:52794"
+      - "🇪🇸 ES🇪🇸 | 5.180.173.248-25198 | 140.52ms"
+      - "🇪🇸 ES🇪🇸 | 5.180.173.248-25198 | 138.01ms"
+      - "🇪🇸 REALITY|ES🇪🇸 | 2.27.26.51-443 | 150.64ms"
+      - "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.3-443 | 127.41ms"
+      - "🇪🇸 ES🇪🇸 | fat-sp.arpozan.cloud-8443 | 308.29ms"
+      - "🇪🇸 ES🇪🇸+|+195.206.107.94-1080+|+133.63ms"
       - "🇪🇸 🔒 TR-WS-TLS 🇪🇸 ES-103.45.245.208:2053"
       - "🇪🇸 🔒 TR-WS-TLS 🇪🇸 ES-185.114.72.31:2053"
-      - "🇪🇸 Spain"
+      - "🇪🇸 🔒 TR-WS-TLS 🇪🇸 ES-109.234.211.66:8443"
       - "🇪🇸 United+States"
-      - "🇪🇸 Spain-1"
-      - "🇪🇸 Spain-2"
-      - "🇪🇸 Spain-3"
-      - "🇪🇸 🆔v2ray1_ng 🔒 VL-GRPC- ❔ XX 114ms"
-      - "🇪🇸 https://t.me/ForceRunVPN-🇪🇸-Barcelona-500ms-H2nexus LTD"
-      - "🇪🇸 🔒 VL-XHTTP-RLT 🇪🇸 ES-185.236.25.24:2027"
-      - "🇪🇸 🔒 VL-GRPC-RLT 🇪🇸 ES-2.27.26.51:443"
-      - "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-113.30.149.20:443"
+      - "🇪🇸 Spain"
+      - "🇪🇸 https://t.me/ForceRunVPN-🇪🇸-Barcelona-396ms-H2nexus LTD"
+      - "🇪🇸 https://t.me/ForceRunVPN-🇹🇷-Iğdır-456ms-Fast Servers (Pty) Ltd"
+      - "🇪🇸 https://t.me/ForceRunVPN-🇹🇷-Iğdır-3319ms-Fast Servers (Pty) Ltd"
+      - "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-85.90.217.120:2040"
       - "🇪🇸 🇪🇸"
       - "🇪🇸 🇪🇸-1"
-      - "🇪🇸 https://t.me/ForceRunVPN-🇪🇸-Madrid-301ms-M247 Europe SRL"
-      - "🇪🇸 https://t.me/ForceRunVPN-🇪🇸-Moaña-321ms-M247 Europe Infra"
-      - "🇪🇸 🔒 VL-GRPC-TLS 🇪🇸 ES-138.124.62.241:8443"
-      - "🇪🇸 🔒 VL-GRPC-RLT 🇪🇸 ES-2.27.26.51:443-1"
-      - "🇪🇸 🔒 SS-TCP-NA 🇪🇸 ES-194.87.45.189:443"
       - "🇪🇸 🇪🇸-2"
-      - "🇪🇸 🇺🇸  USA  [03]  MIFA"
-      - "🇪🇸 🇪🇸  Spain  [01]  MIFA"
-      - "🇪🇸 🇯🇵  Japan  [02]  MIFA"
+      - "🇪🇸 https://t.me/ForceRunVPN-🇪🇸-Barcelona-243ms-Psychz Networks"
+      - "🇪🇸 🔒 VL-TCP-TLS 🇪🇸 ES-195.170.172.139:443"
+      - "🇪🇸 🔒 VL-GRPC-TLS 🇪🇸 ES-138.124.62.241:8443"
+      - "🇪🇸 ✅ t.me/bigAVPN ایران آزاد 👑"
+      - "🇪🇸 🔒 SS-TCP-NA 🇪🇸 ES-194.87.45.189:443"
+      - "🇪🇸 🇪🇸-3"
+      - "🇪🇸 🇯🇵  Japan  [01]  MIFA"
       - "🇪🇸 ARISTA"
-      - "🇪🇸 ARISTA-1"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
     icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
@@ -889,36 +839,32 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
-      - "🇪🇸 ES🇪🇸 | 85.90.217.42-22324 | 103.48ms"
-      - "🇪🇸 ES🇪🇸 | 5.180.173.248-25198 | 111.55ms"
-      - "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.3-443 | 113.31ms"
-      - "🇪🇸 🔒 TR-WS-TLS 🇪🇸 ES-109.234.211.66:8443"
-      - "🇪🇸 🔒 TR-TCP-NA 🇪🇸 ES-193.148.19.213:52794"
+      - "🇪🇸 ES🇪🇸 | 5.180.173.248-25198 | 140.52ms"
+      - "🇪🇸 ES🇪🇸 | 5.180.173.248-25198 | 138.01ms"
+      - "🇪🇸 REALITY|ES🇪🇸 | 2.27.26.51-443 | 150.64ms"
+      - "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.3-443 | 127.41ms"
+      - "🇪🇸 ES🇪🇸 | fat-sp.arpozan.cloud-8443 | 308.29ms"
+      - "🇪🇸 ES🇪🇸+|+195.206.107.94-1080+|+133.63ms"
       - "🇪🇸 🔒 TR-WS-TLS 🇪🇸 ES-103.45.245.208:2053"
       - "🇪🇸 🔒 TR-WS-TLS 🇪🇸 ES-185.114.72.31:2053"
-      - "🇪🇸 Spain"
+      - "🇪🇸 🔒 TR-WS-TLS 🇪🇸 ES-109.234.211.66:8443"
       - "🇪🇸 United+States"
-      - "🇪🇸 Spain-1"
-      - "🇪🇸 Spain-2"
-      - "🇪🇸 Spain-3"
-      - "🇪🇸 🆔v2ray1_ng 🔒 VL-GRPC- ❔ XX 114ms"
-      - "🇪🇸 https://t.me/ForceRunVPN-🇪🇸-Barcelona-500ms-H2nexus LTD"
-      - "🇪🇸 🔒 VL-XHTTP-RLT 🇪🇸 ES-185.236.25.24:2027"
-      - "🇪🇸 🔒 VL-GRPC-RLT 🇪🇸 ES-2.27.26.51:443"
-      - "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-113.30.149.20:443"
+      - "🇪🇸 Spain"
+      - "🇪🇸 https://t.me/ForceRunVPN-🇪🇸-Barcelona-396ms-H2nexus LTD"
+      - "🇪🇸 https://t.me/ForceRunVPN-🇹🇷-Iğdır-456ms-Fast Servers (Pty) Ltd"
+      - "🇪🇸 https://t.me/ForceRunVPN-🇹🇷-Iğdır-3319ms-Fast Servers (Pty) Ltd"
+      - "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-85.90.217.120:2040"
       - "🇪🇸 🇪🇸"
       - "🇪🇸 🇪🇸-1"
-      - "🇪🇸 https://t.me/ForceRunVPN-🇪🇸-Madrid-301ms-M247 Europe SRL"
-      - "🇪🇸 https://t.me/ForceRunVPN-🇪🇸-Moaña-321ms-M247 Europe Infra"
-      - "🇪🇸 🔒 VL-GRPC-TLS 🇪🇸 ES-138.124.62.241:8443"
-      - "🇪🇸 🔒 VL-GRPC-RLT 🇪🇸 ES-2.27.26.51:443-1"
-      - "🇪🇸 🔒 SS-TCP-NA 🇪🇸 ES-194.87.45.189:443"
       - "🇪🇸 🇪🇸-2"
-      - "🇪🇸 🇺🇸  USA  [03]  MIFA"
-      - "🇪🇸 🇪🇸  Spain  [01]  MIFA"
-      - "🇪🇸 🇯🇵  Japan  [02]  MIFA"
+      - "🇪🇸 https://t.me/ForceRunVPN-🇪🇸-Barcelona-243ms-Psychz Networks"
+      - "🇪🇸 🔒 VL-TCP-TLS 🇪🇸 ES-195.170.172.139:443"
+      - "🇪🇸 🔒 VL-GRPC-TLS 🇪🇸 ES-138.124.62.241:8443"
+      - "🇪🇸 ✅ t.me/bigAVPN ایران آزاد 👑"
+      - "🇪🇸 🔒 SS-TCP-NA 🇪🇸 ES-194.87.45.189:443"
+      - "🇪🇸 🇪🇸-3"
+      - "🇪🇸 🇯🇵  Japan  [01]  MIFA"
       - "🇪🇸 ARISTA"
-      - "🇪🇸 ARISTA-1"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
@@ -928,36 +874,32 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
-      - "🇪🇸 ES🇪🇸 | 85.90.217.42-22324 | 103.48ms"
-      - "🇪🇸 ES🇪🇸 | 5.180.173.248-25198 | 111.55ms"
-      - "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.3-443 | 113.31ms"
-      - "🇪🇸 🔒 TR-WS-TLS 🇪🇸 ES-109.234.211.66:8443"
-      - "🇪🇸 🔒 TR-TCP-NA 🇪🇸 ES-193.148.19.213:52794"
+      - "🇪🇸 ES🇪🇸 | 5.180.173.248-25198 | 140.52ms"
+      - "🇪🇸 ES🇪🇸 | 5.180.173.248-25198 | 138.01ms"
+      - "🇪🇸 REALITY|ES🇪🇸 | 2.27.26.51-443 | 150.64ms"
+      - "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.3-443 | 127.41ms"
+      - "🇪🇸 ES🇪🇸 | fat-sp.arpozan.cloud-8443 | 308.29ms"
+      - "🇪🇸 ES🇪🇸+|+195.206.107.94-1080+|+133.63ms"
       - "🇪🇸 🔒 TR-WS-TLS 🇪🇸 ES-103.45.245.208:2053"
       - "🇪🇸 🔒 TR-WS-TLS 🇪🇸 ES-185.114.72.31:2053"
-      - "🇪🇸 Spain"
+      - "🇪🇸 🔒 TR-WS-TLS 🇪🇸 ES-109.234.211.66:8443"
       - "🇪🇸 United+States"
-      - "🇪🇸 Spain-1"
-      - "🇪🇸 Spain-2"
-      - "🇪🇸 Spain-3"
-      - "🇪🇸 🆔v2ray1_ng 🔒 VL-GRPC- ❔ XX 114ms"
-      - "🇪🇸 https://t.me/ForceRunVPN-🇪🇸-Barcelona-500ms-H2nexus LTD"
-      - "🇪🇸 🔒 VL-XHTTP-RLT 🇪🇸 ES-185.236.25.24:2027"
-      - "🇪🇸 🔒 VL-GRPC-RLT 🇪🇸 ES-2.27.26.51:443"
-      - "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-113.30.149.20:443"
+      - "🇪🇸 Spain"
+      - "🇪🇸 https://t.me/ForceRunVPN-🇪🇸-Barcelona-396ms-H2nexus LTD"
+      - "🇪🇸 https://t.me/ForceRunVPN-🇹🇷-Iğdır-456ms-Fast Servers (Pty) Ltd"
+      - "🇪🇸 https://t.me/ForceRunVPN-🇹🇷-Iğdır-3319ms-Fast Servers (Pty) Ltd"
+      - "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-85.90.217.120:2040"
       - "🇪🇸 🇪🇸"
       - "🇪🇸 🇪🇸-1"
-      - "🇪🇸 https://t.me/ForceRunVPN-🇪🇸-Madrid-301ms-M247 Europe SRL"
-      - "🇪🇸 https://t.me/ForceRunVPN-🇪🇸-Moaña-321ms-M247 Europe Infra"
-      - "🇪🇸 🔒 VL-GRPC-TLS 🇪🇸 ES-138.124.62.241:8443"
-      - "🇪🇸 🔒 VL-GRPC-RLT 🇪🇸 ES-2.27.26.51:443-1"
-      - "🇪🇸 🔒 SS-TCP-NA 🇪🇸 ES-194.87.45.189:443"
       - "🇪🇸 🇪🇸-2"
-      - "🇪🇸 🇺🇸  USA  [03]  MIFA"
-      - "🇪🇸 🇪🇸  Spain  [01]  MIFA"
-      - "🇪🇸 🇯🇵  Japan  [02]  MIFA"
+      - "🇪🇸 https://t.me/ForceRunVPN-🇪🇸-Barcelona-243ms-Psychz Networks"
+      - "🇪🇸 🔒 VL-TCP-TLS 🇪🇸 ES-195.170.172.139:443"
+      - "🇪🇸 🔒 VL-GRPC-TLS 🇪🇸 ES-138.124.62.241:8443"
+      - "🇪🇸 ✅ t.me/bigAVPN ایران آزاد 👑"
+      - "🇪🇸 🔒 SS-TCP-NA 🇪🇸 ES-194.87.45.189:443"
+      - "🇪🇸 🇪🇸-3"
+      - "🇪🇸 🇯🇵  Japan  [01]  MIFA"
       - "🇪🇸 ARISTA"
-      - "🇪🇸 ARISTA-1"
   - name: "المنت 💬"
     type: "select"
     icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
