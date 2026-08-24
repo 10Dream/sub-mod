@@ -1,0 +1,72 @@
+name: Monthly Inactive Sources Health & Revival Check
+
+on:
+  schedule:
+    - cron: '0 2 1 * *' # اجرا به صورت خودکار اول هر ماه میلادی ساعت ۲:۰۰ بامداد UTC
+  workflow_dispatch: # امکان اجرای دستی در هر زمان
+
+permissions:
+  contents: write
+
+jobs:
+  check-and-revive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+
+      - name: 🐍 Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 📦 Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            pip install pyyaml geoip2 requests urllib3
+          fi
+
+      - name: 🌐 Prepare GeoIP Database
+        run: |
+          mkdir -p utils
+          if [ ! -f utils/Country.mmdb ] || [ $(find utils/Country.mmdb -mtime +14 2>/dev/null) ]; then
+            echo "در حال دانلود دیتابیس جغرافیایی..."
+            wget -q -O utils/Country.mmdb https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-Country.mmdb || true
+          fi
+
+      - name: 🔍 Check and Revive Inactive Sources
+        run: |
+          python scripts/main.py --mode check_inactive
+
+      - name: 🚀 Commit and Push Revived Sources
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add sources.txt inactive_sources.txt sub/ README.md
+          if git diff --staged --quiet; then
+            echo "ℹ️ هیچ تغییری در وضعیت منابع راکد رخ نداد."
+          else
+            git commit -m "✨ پایش ماهانه و احیای خودکار منابع راکد - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+            pushed=false
+            for i in 1 2 3; do
+              git pull --rebase origin main || git rebase --abort
+              if git push origin main; then
+                pushed=true
+                echo "✅ تغییرات احیا با موفقیت در مخزن ثبت شد (تلاش $i)."
+                break
+              fi
+              echo "⚠️ تلاش $i ناموفق بود، ۲ ثانیه انتظار..."
+              sleep 2
+            done
+            if [ "$pushed" = false ]; then
+              echo "❌ خطا در ارسال تغییرات به گیت‌هاب."
+              exit 1
+            fi
+          fi

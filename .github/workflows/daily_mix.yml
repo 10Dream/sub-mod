@@ -1,0 +1,74 @@
+name: Daily Smart Subscription Mixer
+
+on:
+  schedule:
+    - cron: '0 4 * * *' # اجرا به صورت خودکار روزی یک‌بار ساعت ۴ صبح به وقت UTC (۷:۳۰ صبح ایران)
+  workflow_dispatch: # امکان اجرای دستی در هر زمان
+
+permissions:
+  contents: write
+
+jobs:
+  daily-mix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0 # واکشی کامل سابقه گیت جهت ارزیابی دقیق تاریخچه آپدیت فایل‌ها
+
+      - name: 🐍 Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 📦 Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            pip install pyyaml geoip2 requests urllib3
+          fi
+
+      - name: 🌐 Prepare GeoIP Database
+        run: |
+          mkdir -p utils
+          if [ ! -f utils/Country.mmdb ] || [ $(find utils/Country.mmdb -mtime +14 2>/dev/null) ]; then
+            echo "در حال دانلود پایگاه داده جغرافیایی آفلاین کشورها..."
+            wget -q -O utils/Country.mmdb https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-Country.mmdb || true
+          fi
+
+      - name: 🌀 Run Daily Smart Mixer
+        run: |
+          python scripts/daily_mix.py
+          python scripts/readme_generator.py
+
+      - name: 🚀 Commit and Push Daily Mixes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add sub/ README.md
+          if git diff --staged --quiet; then
+            echo "ℹ️ هیچ تغییر جدیدی در میکس روزانه وجود ندارد."
+          else
+            git commit -m "🌀 بروزرسانی خودکار میکس و دسته‌بندی روزانه - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+            pushed=false
+            for i in 1 2 3; do
+              git pull --rebase origin main || git rebase --abort
+              if git push origin main; then
+                pushed=true
+                echo "✅ میکس روزانه با موفقیت در مخزن منتشر شد (تلاش $i)."
+                break
+              fi
+              echo "⚠️ تلاش $i ناموفق بود، ۲ ثانیه انتظار و تلاش مجدد..."
+              sleep 2
+            done
+            if [ "$pushed" = false ]; then
+              echo "❌ خطا در ارسال تغییرات به گیت‌هاب."
+              exit 1
+            fi
+          fi
+

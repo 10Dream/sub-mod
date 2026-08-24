@@ -1,0 +1,86 @@
+name: Modular Sub Subscription Updater
+
+on:
+  schedule:
+    - cron: '0 * * * *' # اجرا به صورت خودکار سر هر ساعت (هر ۱ ساعت یک‌بار)
+  workflow_dispatch:
+    inputs:
+      run_mode:
+        description: 'حالت اجرای فرآیند (Run Mode)'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - download_only
+          - mix_only
+          - base64_only
+          - clash_only
+
+permissions:
+  contents: write
+
+jobs:
+  update-subscriptions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0 # واکشی کامل تاریخچه لاگ گیت جهت محاسبه دقیق زمان بروزرسانی فایل‌ها
+
+      - name: 🐍 Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 📦 Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            pip install pyyaml geoip2 requests urllib3
+          fi
+
+      - name: 🌐 Prepare GeoIP Database
+        run: |
+          mkdir -p utils
+          if [ ! -f utils/Country.mmdb ] || [ $(find utils/Country.mmdb -mtime +14 2>/dev/null) ]; then
+            echo "در حال دانلود پایگاه داده جغرافیایی آفلاین کشورها..."
+            wget -q -O utils/Country.mmdb https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-Country.mmdb || true
+          fi
+
+      - name: ⚡ Run Subscription Pipeline
+        run: |
+          python scripts/main.py --mode "${{ github.event.inputs.run_mode || 'all' }}"
+
+      - name: 🚀 Commit and Push Updated Subscriptions
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add sub/ README.md
+          if git diff --staged --quiet; then
+            echo "ℹ️ هیچ تغییر جدیدی برای ثبت وجود ندارد."
+          else
+            git commit -m "🔄 بروزرسانی خودکار سابسکریپشن‌ها و مستندات - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+            # مکانیزم هوشمند ۳ بار تلاش مجدد با ری‌بیس جهت پیشگیری قطعی از خطای رد شدن Push
+            pushed=false
+            for i in 1 2 3; do
+              git pull --rebase origin main || git rebase --abort
+              if git push origin main; then
+                pushed=true
+                echo "✅ تغییرات با موفقیت در مخزن ثبت و منتشر شد (تلاش $i)."
+                break
+              fi
+              echo "⚠️ تلاش $i ناموفق بود، ۲ ثانیه انتظار و تلاش مجدد..."
+              sleep 2
+            done
+            if [ "$pushed" = false ]; then
+              echo "❌ خطا در ارسال تغییرات به گیت‌هاب."
+              exit 1
+            fi
+          fi
+
