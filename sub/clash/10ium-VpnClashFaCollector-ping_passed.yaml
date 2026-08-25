@@ -1,0 +1,4285 @@
+global-client-fingerprint: "chrome"
+keep-alive-interval: 5
+keep-alive-idle: 10
+disable-keep-alive: false
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7894
+allow-lan: true
+tcp-concurrent: true
+enable-process: true
+find-process-mode: "always"
+ipv6: false
+log-level: "info"
+geo-auto-update: true
+geo-update-interval: 168
+secret: ""
+bind-address: "*"
+unified-delay: false
+dns:
+  enable: true
+  ipv6: false
+  prefer-h3: false
+  cache-algorithm: "arc"
+  use-system-hosts: true
+  use-host: true
+  listen: "0.0.0.0:53"
+  enhanced-mode: "fake-ip"
+  fake-ip-filter-mode: "blacklist"
+  fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter:
+    - "*.lan"
+    - "*.localdomain"
+    - "*.invalid"
+    - "*.localhost"
+    - "*.test"
+    - "*.local"
+    - "*.home.arpa"
+    - "time.*.com"
+    - "ntp.*.com"
+    - "*.ir"
+  default-nameserver:
+    - "1.1.1.1"
+    - "8.8.8.8"
+    - "9.9.9.9"
+  nameserver:
+    - "tcp://1.1.1.1"
+    - "tcp://1.0.0.1"
+    - "tcp://8.8.8.8"
+    - "tcp://8.8.4.4"
+    - "tcp://9.9.9.9"
+    - "tcp://149.112.112.112"
+    - "tcp://208.67.222.222"
+    - "tcp://208.67.220.222"
+  fallback:
+    - "tcp://76.76.19.19"
+    - "tcp://76.223.122.150"
+    - "tcp://185.228.168.9"
+    - "tcp://185.228.169.9"
+    - "tcp://8.26.56.26"
+    - "tcp://8.20.247.20"
+    - "tcp://76.76.2.11"
+    - "tcp://76.76.10.11"
+    - "tcp://84.200.69.80"
+    - "tcp://84.200.70.40"
+    - "tcp://45.33.97.5"
+    - "tcp://37.235.1.177"
+    - "tcp://209.244.0.3"
+    - "tcp://209.244.0.4"
+    - "tcp://156.154.70.5"
+    - "tcp://156.154.71.5"
+    - "tcp://103.86.96.100"
+    - "tcp://103.86.99.100"
+    - "tcp://199.85.126.10"
+    - "tcp://199.85.127.10"
+    - "tcp://129.250.35.250"
+    - "tcp://129.250.35.251"
+    - "tcp://94.16.114.254"
+    - "tcp://94.247.43.254"
+    - "tcp://208.67.222.20"
+    - "tcp://195.46.39.39"
+    - "tcp://195.46.39.40"
+    - "tcp://204.117.214.10"
+    - "tcp://199.2.252.10"
+    - "tcp://194.169.169.169"
+    - "tcp://156.154.70.1"
+    - "tcp://156.154.71.1"
+    - "tcp://91.239.100.100"
+    - "tcp://89.233.43.71"
+    - "tcp://64.6.64.6"
+    - "tcp://64.6.65.6"
+    - "tcp://77.88.8.8"
+    - "tcp://77.88.8.1"
+  fallback-filter:
+    geoip: true
+    geoip-code: "IR"
+    geosite:
+      - "gfw"
+    ipcidr:
+      - "240.0.0.0/4"
+    domain:
+      - "+.google.com"
+      - "+.facebook.com"
+      - "+.youtube.com"
+  proxy-server-nameserver:
+    - "tcp://1.1.1.1"
+    - "tcp://8.8.8.8"
+  direct-nameserver:
+    - "78.157.42.100"
+    - "78.157.42.101"
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - 8080
+        - 8880
+        - 2052
+        - 2082
+        - 2086
+        - 2095
+    TLS:
+      ports:
+        - 443
+        - 8443
+        - 2053
+        - 2083
+        - 2087
+        - 2096
+tun:
+  enable: true
+  stack: "mixed"
+  auto-route: true
+  auto-detect-interface: true
+  auto-redir: true
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+rule-providers:
+  category_public_tracker:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-public-tracker.yaml"
+    interval: 86400
+    path: "./ruleset/category_public_tracker.yaml"
+  iran_ads:
+    type: "http"
+    behavior: "domain"
+    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    interval: 86400
+    path: "./ruleset/iran_ads.yaml"
+  PersianBlocker:
+    type: "http"
+    behavior: "domain"
+    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    interval: 86400
+    path: "./ruleset/PersianBlocker.yaml"
+  youtube:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
+    interval: 86400
+    path: "./ruleset/youtube.yaml"
+  telegram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
+    interval: 86400
+    path: "./ruleset/telegram.yaml"
+  twitch:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
+    interval: 86400
+    path: "./ruleset/twitch.yaml"
+  censor:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
+    interval: 86400
+    path: "./ruleset/censor.yaml"
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  private:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
+    interval: 86400
+    path: "./ruleset/private.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+  steam:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
+    interval: 86400
+    path: "./ruleset/steam.yaml"
+  game:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
+    interval: 86400
+    path: "./ruleset/game.yaml"
+  category-games:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
+    interval: 86400
+    path: "./ruleset/category-games.yaml"
+  ir:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
+    interval: 86400
+    path: "./ruleset/ir.yaml"
+  apps:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
+    interval: 86400
+    path: "./ruleset/apps.yaml"
+  ircidr:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
+    interval: 86400
+    path: "./ruleset/ircidr.yaml"
+  irasn:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
+    interval: 86400
+    path: "./ruleset/irasn.yaml"
+  arvancloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
+    interval: 86400
+    path: "./ruleset/arvancloud.yaml"
+  derakcloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
+    interval: 86400
+    path: "./ruleset/derakcloud.yaml"
+  iranserver:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
+    interval: 86400
+    path: "./ruleset/iranserver.yaml"
+  parspack:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
+    interval: 86400
+    path: "./ruleset/parspack.yaml"
+  malware:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/malware.yaml"
+    interval: 86400
+    path: "./ruleset/malware.yaml"
+  phishing:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/phishing.yaml"
+    interval: 86400
+    path: "./ruleset/phishing.yaml"
+  cryptominers:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/cryptominers.yaml"
+    interval: 86400
+    path: "./ruleset/cryptominers.yaml"
+  ads:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/Chocolate4U/Iran-clash-rules/releases/download/202606060815/category-ads-all.yaml"
+    interval: 86400
+    path: "./ruleset/ads.yaml"
+  DownloadManagers:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
+    interval: 86400
+    path: "./ruleset/DownloadManagers.yaml"
+  BanProgramAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanProgramAD.yaml"
+  BanAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanAD.yaml"
+  PrivateTracker:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
+    interval: 86400
+    path: "./ruleset/PrivateTracker.yaml"
+  BanEasyList:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
+    interval: 86400
+    path: "./ruleset/BanEasyList.yaml"
+  Download:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
+    interval: 86400
+    path: "./ruleset/Download.yaml"
+  GameDownload:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
+    interval: 86400
+    path: "./ruleset/GameDownload.yaml"
+  SteamRegionCheck:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
+    interval: 86400
+    path: "./ruleset/SteamRegionCheck.yaml"
+  Xbox:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
+    interval: 86400
+    path: "./ruleset/Xbox.yaml"
+  YouTubeMusic:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
+    interval: 86400
+    path: "./ruleset/YouTubeMusic.yaml"
+  YouTube:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
+    interval: 86400
+    path: "./ruleset/YouTube.yaml"
+  Ponzi:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
+    interval: 86400
+    path: "./ruleset/Ponzi.yaml"
+  warninglist:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/warning-list.yaml"
+    interval: 86400
+    path: "./ruleset/warninglist.yaml"
+  google:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
+    interval: 86400
+    path: "./ruleset/google.yaml"
+  google-play:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
+    interval: 86400
+    path: "./ruleset/google-play.yaml"
+  xiaomi_block_list:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_block_list.yaml"
+  xiaomi_white_list:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_white_list.yaml"
+  cloudflare:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
+    interval: 86400
+    path: "./ruleset/cloudflare.yaml"
+  github:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
+    interval: 86400
+    path: "./ruleset/xgithub.yaml"
+  whatsapp:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
+    interval: 86400
+    path: "./ruleset/whatsapp.yaml"
+  LiteAds:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/LiteAds.yaml"
+    interval: 86400
+    path: "./ruleset/LiteAds.yaml"
+  discord:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
+    interval: 86400
+    path: "./ruleset/discord.yaml"
+  instagram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    interval: 86400
+    path: "./ruleset/instagram.yaml"
+  category-ai:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    interval: 86400
+    path: "./ruleset/category-ai.yaml"
+  stremio:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    interval: 86400
+    path: "./ruleset/stremio.yaml"
+  windows:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    interval: 86400
+    path: "./ruleset/windows.yaml"
+  Chotwitter:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/twitter.yaml"
+    interval: 86400
+    path: "./ruleset/Chotwitter.yaml"
+  mihTwitter:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Twitter.yaml"
+    interval: 86400
+    path: "./ruleset/mihTwitter.yaml"
+  Domtwitter:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/twitter.yaml"
+    interval: 86400
+    path: "./ruleset/Domtwitter.yaml"
+  DomainSpotify:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/spotify.yaml"
+    interval: 86400
+    path: "./ruleset/DomainSpotify.yaml"
+  mihspotify:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Spotify.yaml"
+    interval: 86400
+    path: "./ruleset/mihSpotify.yaml"
+proxies:
+  - name: "🇳🇱 | NL | 472ms | 🍑14@oneclickvpnkeys"
+    type: "hysteria2"
+    server: "201.51.24.4"
+    port: 443
+    password: "oCYFcbOo8s"
+    sni: "hys22.wba-pn.ru"
+  - name: "🇫🇷 | FR | 500ms | 🏓69@oneclickvpnkeys"
+    type: "hysteria2"
+    server: "81.168.62.17"
+    port: 8443
+    password: "95e8532b-cc69-42d4-9553-e3c23292b15b"
+    sni: "iq5ny.pleiades.codes"
+    skip-cert-verify: true
+  - name: "🇨🇭 | CH | 504ms | 🇨🇭151548 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "hysteria2"
+    server: "185.191.238.202"
+    port: 443
+    password: "8fb328f0-d8e0-4b11-a6db-3dadfc4f02a3"
+    sni: "che01plrhy01.tcp-reset-club.net"
+    skip-cert-verify: true
+  - name: "🇩🇪 | DE | 520ms | 🏓62@oneclickvpnkeys"
+    type: "hysteria2"
+    server: "144.31.221.57"
+    port: 443
+    password: "V1UQuwa-4PRIDW2paxrPe58RcxXHPGyFIGS-5QojaM8"
+    sni: "player.wwwinternetvideo.click"
+    skip-cert-verify: true
+  - name: "🇩🇪 | DE | 521ms | 🇩🇪151807 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "hysteria2"
+    server: "37.46.199.229"
+    port: 443
+    password: "8fb328f0-d8e0-4b11-a6db-3dadfc4f02a3"
+    sni: "deu0003ntrhy01.tcp-reset-club.net"
+    skip-cert-verify: true
+  - name: "🇳🇱 | NL | 538ms | ***⚡***@V2ray_official"
+    type: "hysteria2"
+    server: "130.49.161.70"
+    port: 443
+    password: "p7Q76LzlnS4hIzr1W3staBOnUe_WwSkR"
+    sni: "hy2.aspidnet.xyz"
+    obfs: "salamander"
+    obfs-password: "rG07s3COMIEvdnQipRyWzx_H_2xygNC3"
+  - name: "🇵🇱 | PL | 538ms | 🇵🇱151905 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "hysteria2"
+    server: "45.192.12.93"
+    port: 443
+    password: "YutbgyXL1mGaSlBXDoEucWvYbrDCINgUcQ6R6_At5Pjr2xCc"
+    sni: "admin.wwwinternetvideo.click"
+  - name: "🇳🇱 | NL | 576ms | 🇩🇪151846 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "hysteria2"
+    server: "91.132.160.243"
+    port: 1935
+    password: "hysteria2_fastlane_fyo5j4e7k"
+    sni: "de6.h.fastlanehosting.ru"
+  - name: "🇪🇪 | EE | 578ms | 🇺🇸151551 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "hysteria2"
+    server: "217.60.182.79"
+    port: 443
+    password: "sOiWCQ2AdIV0OWNuqQVyWp4JZnRxdyLROSjX"
+    sni: "cabinet.wwwinternetvideo.click"
+    skip-cert-verify: true
+  - name: "🇳🇱 | NL | 591ms | 🇳🇱151549 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "hysteria2"
+    server: "79.137.205.35"
+    port: 10808
+    password: "1f619326-cd93-4d6b-aebe-e0b5f8831d02"
+    sni: "nl7.unlockvpn.online"
+  - name: "🇫🇮 | FI | 616ms | 1🏓@oneclickvpnkeys"
+    type: "hysteria2"
+    server: "222.167.212.82"
+    port: 8443
+    password: "h_B9x3942fJ9x_Kpx3914KQ_nZ934HFg_rT"
+    sni: "hopp-legend-se.roxa.org"
+    skip-cert-verify: true
+  - name: "🇫🇷 | FR | 620ms | 🏓66@oneclickvpnkeys"
+    type: "hysteria2"
+    server: "62.210.124.146"
+    port: 22000
+    password: "dongtaiwang.com"
+    sni: "www.microsoft.com"
+    skip-cert-verify: true
+  - name: "🇳🇱 | NL | 646ms | 🏓77@oneclickvpnkeys"
+    type: "hysteria2"
+    server: "hys22.wba-pn.ru"
+    port: 443
+    password: "oCYFcbOo8s"
+    sni: "hys22.wba-pn.ru"
+  - name: "🇳🇱 | NL | 757ms | 🇳🇱151426 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "hysteria2"
+    server: "147.45.149.88"
+    port: 8443
+    password: "NL2026hy"
+    sni: "nl.nobelchat.ru"
+    obfs: "salamander"
+    obfs-password: "SalamanderNL2026"
+  - name: "🇩🇪 | DE | 833ms | 🇩🇪151358 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "hysteria2"
+    server: "deu0003ntrhy01.tcp-reset-club.net"
+    port: 443
+    password: "8fb328f0-d8e0-4b11-a6db-3dadfc4f02a3"
+    sni: "deu0003ntrhy01.tcp-reset-club.net"
+    skip-cert-verify: true
+  - name: "🇳🇱 | NL | 1124ms | 🇺🇸151555 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "hysteria2"
+    server: "olp.crsmaps.com"
+    port: 443
+    password: "16ab4d4a-fd81-4535-9b7b-346677226ce8"
+    sni: "olp.crsmaps.com"
+    skip-cert-verify: true
+  - name: "🇩🇪 | DE | 1327ms | Telegram channel : @proxy_kafee"
+    type: "hysteria2"
+    server: "45.128.99.14"
+    port: 8443
+    password: "Germany2026hy"
+    sni: "de.nobelchat.ru"
+    skip-cert-verify: true
+    obfs: "salamander"
+    obfs-password: "SalamanderDE2026"
+  - name: "🇫🇮 | FI | 1376ms | @filembad`"
+    type: "hysteria2"
+    server: "31.76.80.69"
+    port: 443
+    password: "6aab8efdf13945829ae3699c342be406"
+    sni: "fiproxy1.lockdwn.com"
+    obfs: "salamander"
+    obfs-password: "uw9b2qq5rx"
+  - name: "🇺🇸 | US | 150ms | ***✅***@AR14N24b"
+    type: "vless"
+    server: "167.17.69.171"
+    port: 443
+    uuid: "00144519-7e0d-476b-8d28-435576af9262"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "ALT8hIGeZEhi0sQFbXP_ntBg8Xo-v7i0YCLrqTnBxRk"
+      short-id: "0990d22f"
+  - name: "🇺🇸 | US | 160ms | @IranProxyPlus`"
+    type: "vless"
+    server: "159.89.87.21"
+    port: 28190
+    uuid: "14c80e0e-f7ce-4991-94fc-99a1db4a9b1e"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "aws.amazon.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "ZJRnFU-1s1JOnO8E9uZ7b00l1fPEh63fGRbdBANFRno"
+  - name: "🇨🇦 | CA | 204ms | 🇨🇦151897 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "158.69.112.254"
+    port: 443
+    uuid: "661f395d-b153-4199-a04b-693f5fe7f261"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.speedtest.net"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "wo417FrFdjy7ZhccQ-VWGZEKcoCHSEfyWcJT1pIVc1Y"
+      short-id: "3d3c1e645f763ee3"
+  - name: "🇺🇸 | US | 235ms | 🇺🇸151850 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "169.40.42.16"
+    port: 443
+    uuid: "d65cc14c-f53f-4fe2-b262-97856601319c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yahoo.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
+      short-id: "c39cc7310a"
+  - name: "🇺🇸 | US | 268ms | configraygan_16"
+    type: "vless"
+    server: "192.220.15.222"
+    port: 8443
+    uuid: "ad192c6d-c5ee-4a21-a6bf-85218caa4ef9"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "www.amd.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "lfOSEE80tv3mvi9fSBcj-oLKDJm2lmdj1PIMLvKwxRc"
+      short-id: "69"
+  - name: "🇺🇸 | US | 282ms | 🇨🇦151427 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "1078d418-b4e0-4668-9018-dc90c2042d61"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "workspace.evan00.dpdns.org"
+    client-fingerprint: "unsafe"
+    ws-opts:
+      path: "/%2F"
+      headers:
+        Host: "workspace.evan00.dpdns.org"
+  - name: "🇳🇱 | NL | 340ms | 6885"
+    type: "vless"
+    server: "ezaccess1-slv-ezaccess1-fb0a.up.railway.app"
+    port: 443
+    uuid: "F35"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ezaccess1-slv-ezaccess1-fb0a.up.railway.app"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/ws/vless/F35?ed=2048"
+      headers:
+        Host: "ezaccess1-slv-ezaccess1-fb0a.up.railway.app"
+  - name: "🇺🇸 | US | 355ms | 6881"
+    type: "vless"
+    server: "hello-production-b540.up.railway.app"
+    port: 443
+    uuid: "7d8c7960-88e8-4c19-a4fc-17ebd25235c5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "hello-production-b540.up.railway.app"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/ws/7d8c7960-88e8-4c19-a4fc-17ebd25235c5"
+      headers:
+        Host: "hello-production-b540.up.railway.app"
+  - name: "🇩🇪 | DE | 361ms | Germany 🇩🇪"
+    type: "vless"
+    server: "139.28.241.77"
+    port: 443
+    uuid: "5d5c40b1-102c-4343-94cc-d5b794dbd0c6"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇳🇱 | NL | 426ms | 🇳🇱151538 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "51.158.206.97"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "🇬🇧 | GB | 440ms | 🇬🇧151270 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "87.117.234.19"
+    port: 443
+    uuid: "4d583b2c-2f5a-47d0-8181-e95217fe8cd9"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "strapi.io"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "SiSky02wHz-S0TDHKFTdYhnrlT8Y3CfRsekZlcdLXDY"
+      short-id: "fd55b698ee8c3629"
+  - name: "🇩🇪 | DE | 440ms | 🇩🇪151464 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "45.155.70.123"
+    port: 8443
+    uuid: "f82332b2-dc8c-eac4-ac12-f276e37e278a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "s1.test.anti-zapret.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "0AVsyS7udTbxKRdSyQ2rtFC63icDQOVWq8FvAhhU-WY"
+      short-id: "58fbcddfaae3ade9"
+  - name: "🇬🇧 | GB | 447ms | ***⚡***@V2ray_official"
+    type: "vless"
+    server: "78.129.150.216"
+    port: 443
+    uuid: "7ec31525-7ac3-4597-8f39-a2d4edc46342"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "strapi.io"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "SiSky02wHz-S0TDHKFTdYhnrlT8Y3CfRsekZlcdLXDY"
+      short-id: "fd55b698ee8c3629"
+  - name: "🇳🇱 | NL | 450ms |"
+    type: "vless"
+    server: "51.158.206.34"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "🇳🇱 | NL | 454ms | configraygan_24"
+    type: "vless"
+    server: "85.155.226.140"
+    port: 443
+    uuid: "39c42b0a-b823-4c93-bb99-74b4183e518d"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "getsavesafe.net"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "5Z6PwoPSNBLPIsX8lZtHM7-Y-psMMR1vz5Pit0EVISs"
+      short-id: "82f5d3a1e9c0b661"
+  - name: "🇳🇱 | NL | 455ms | 🏓9@oneclickvpnkeys"
+    type: "vless"
+    server: "51.158.206.93"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "🇩🇪 | DE | 460ms | 🇩🇪151824 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "bla-bla-bla-de.anti-zapret.com"
+    port: 8443
+    uuid: "d11613a1-2e1f-eac4-a275-aabd986b7ad1"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "bla-bla-bla-de.anti-zapret.com"
+    reality-opts:
+      public-key: "0AVsyS7udTbxKRdSyQ2rtFC63icDQOVWq8FvAhhU-WY"
+      short-id: "17faf32cb516c9cb"
+  - name: "🇬🇧 | GB | 461ms | 🏓49@oneclickvpnkeys"
+    type: "vless"
+    server: "78.129.150.216"
+    port: 443
+    uuid: "7ec31525-7ac3-4597-8f39-a2d4edc46342"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "strapi.io"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "SiSky02wHz-S0TDHKFTdYhnrlT8Y3CfRsekZlcdLXDY"
+      short-id: "fd55b698ee8c3629"
+  - name: "🇫🇷 | FR | 462ms | 🏓58@oneclickvpnkeys"
+    type: "vless"
+    server: "62.210.24.143"
+    port: 32202
+    uuid: "28148be2-61a7-4f36-8adb-030cc9f82bd0"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "www.amazon.com"
+    reality-opts:
+      public-key: "bGe_-nAtOq6_w_2mv6pcmD8RzJP65Tti-vyMP2hAwDc"
+      short-id: "f57d8f26"
+  - name: "🇩🇪 | DE | 463ms | @meliproxyy"
+    type: "vless"
+    server: "45.155.70.123"
+    port: 8443
+    uuid: "f82332b2-dc8c-eac4-ac12-f276e37e278a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "s1.test.anti-zapret.com"
+    reality-opts:
+      public-key: "0AVsyS7udTbxKRdSyQ2rtFC63icDQOVWq8FvAhhU-WY"
+      short-id: "58fbcddfaae3ade9"
+  - name: "🇬🇧 | GB | 466ms | 🇸🇨151929 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "45.130.125.207"
+    port: 443
+    uuid: "b2f6aa3a-2550-4a1c-b2c0-1c94b1207217"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "terazhediii.info"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/hdgrbws#TELEGRAM-MARAMBASHI_MARAMBASHI?ed=512"
+      headers:
+        Host: "terazhediii.info"
+  - name: "🇳🇱 | NL | 468ms | 🍑26@oneclickvpnkeys"
+    type: "vless"
+    server: "45.82.67.183"
+    port: 443
+    uuid: "437ebf3c-a92c-4f40-9fc5-9af78c28802d"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "northwaleswildlifetrust.org.uk"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "daiJkQwpAcBk7oH1iZzRthMj-jAlqovX7vAiwVqfjTU"
+      short-id: "8880a9f75eb46d91"
+  - name: "🇬🇧 | GB | 469ms | 🏓70@oneclickvpnkeys"
+    type: "vless"
+    server: "5.152.223.193"
+    port: 443
+    uuid: "9e6b8db1-da80-494f-bad7-7a0451f801a1"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "strapi.io"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "SiSky02wHz-S0TDHKFTdYhnrlT8Y3CfRsekZlcdLXDY"
+      short-id: "fd55b698ee8c3629"
+  - name: "🇫🇷 | FR | 469ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+    type: "vless"
+    server: "194.55.189.249"
+    port: 40443
+    uuid: "8212a50b-25bf-4739-bba1-aaffb5ffc84c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "deepl.com"
+    reality-opts:
+      public-key: "KCbW84C8h2Ja01LS0Ro8EpLLfzMTjs11t1ldDWLd5zo"
+      short-id: "aae8"
+  - name: "🇳🇱 | NL | 469ms | @meliproxyy"
+    type: "vless"
+    server: "85.155.226.133"
+    port: 443
+    uuid: "39c42b0a-b823-4c93-bb99-74b4183e518d"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "getsavesafe.net"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "5Z6PwoPSNBLPIsX8lZtHM7-Y-psMMR1vz5Pit0EVISs"
+      short-id: "82f5d3a1e9c0b661"
+  - name: "🇩🇪 | DE | 470ms | @meliproxyy"
+    type: "vless"
+    server: "45.155.70.123"
+    port: 8443
+    uuid: "f82332b2-dc8c-eac4-ac12-f276e37e278a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "s1.test.anti-zapret.com"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "0AVsyS7udTbxKRdSyQ2rtFC63icDQOVWq8FvAhhU-WY"
+      short-id: "58fbcddfaae3ade9"
+  - name: "🇳🇱 | NL | 472ms | @filembad`"
+    type: "vless"
+    server: "45.82.67.183"
+    port: 443
+    uuid: "437ebf3c-a92c-4f40-9fc5-9af78c28802d"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "northwaleswildlifetrust.org.uk"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "daiJkQwpAcBk7oH1iZzRthMj-jAlqovX7vAiwVqfjTU"
+      short-id: "8880a9f75eb46d91"
+  - name: "🇫🇷 | FR | 473ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+    type: "vless"
+    server: "62.210.91.2"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "🇺🇸 | US | 474ms | 🇺🇸151922 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "mainline.proxy.rlwy.net"
+    port: 47169
+    uuid: "4a2d276f-94eb-4a51-a247-7a89e1b4820d"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "is1-ssl.mzstatic.com"
+    client-fingerprint: "ios"
+    reality-opts:
+      public-key: "1XwIBKNPP_W38KDiQkrC7tYmo8ebldvZaDf_85fudSI"
+      short-id: "86181bd63f"
+  - name: "🇳🇱 | NL | 476ms | @meliproxyy"
+    type: "vless"
+    server: "85.155.226.140"
+    port: 443
+    uuid: "39c42b0a-b823-4c93-bb99-74b4183e518d"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "getsavesafe.net"
+    client-fingerprint: "qq"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "5Z6PwoPSNBLPIsX8lZtHM7-Y-psMMR1vz5Pit0EVISs"
+      short-id: "82f5d3a1e9c0b661"
+  - name: "🇬🇧 | GB | 477ms | 🇩🇪151390 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "162.35.231.143"
+    port: 443
+    uuid: "b5ca5ab3-8cbc-4ac3-89da-9cd360589ecb"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "savesafe.co"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "6z3YcVP0f2pK3iANKIkBUZOgNeErDjxY83mHZG5jrnI"
+      short-id: "f63805c3ecc7a483"
+  - name: "🇳🇱 | NL | 478ms | 🏓17@oneclickvpnkeys"
+    type: "vless"
+    server: "154.83.246.2"
+    port: 443
+    uuid: "19b64e79-73b4-4478-bbfc-fb57737b94f8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "storage.yandex.net"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "pPi-WO8qQFFZ9UJWNLW9YClbjcoAAZWJQ2_FM3Kjhz8"
+      short-id: "d3ee47fc2f553c44"
+  - name: "🇩🇪 | DE | 478ms | 🇩🇪151652 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "45.155.70.124"
+    port: 8443
+    uuid: "f82332b2-dc8c-eac4-ac12-f276e37e278a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "s1.test.anti-zapret.com"
+    reality-opts:
+      public-key: "0AVsyS7udTbxKRdSyQ2rtFC63icDQOVWq8FvAhhU-WY"
+      short-id: "58fbcddfaae3ade9"
+  - name: "🇫🇷 | FR | 484ms | 🇫🇷151594 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "62.210.91.2"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "🇳🇱 | NL | 487ms | 🇺🇸151972 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "web-production-402d8.up.railway.app"
+    port: 443
+    uuid: "6a3b74be-eb71-43c8-98af-07799f2a88f4"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "web-production-402d8.up.railway.app"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/ws/6a3b74be-eb71-43c8-98af-07799f2a88f4"
+      headers:
+        Host: "web-production-402d8.up.railway.app"
+  - name: "🇳🇱 | NL | 489ms | 🇷🇺151808 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "178.248.236.138"
+    port: 18443
+    uuid: "c7a30b74-560c-4561-8f0b-7d70e85c9b5e"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "rutube.ru"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "VUc_2yzS6cjaq_MB8TScaCftgT3oJtP6zpotM5yM_Xg"
+      short-id: "dde21fff"
+  - name: "🇳🇱 | NL | 489ms | @Capoit`"
+    type: "vless"
+    server: "72.56.92.177"
+    port: 40443
+    uuid: "4480161e-2c59-4d37-8736-675c9af32bf1"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "deepl.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "fWzCKXwvMXaacsl1DdFb1vKQ9l9cTK1G7udqmaYHL0Y"
+      short-id: "01d1bf2d4755d40c"
+  - name: "🇩🇪 | DE | 493ms | 🇩🇪151552 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "23.251.47.71"
+    port: 443
+    uuid: "86930779-64ec-46a5-97d9-55e3107f3ce3"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.apple.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "E6TSsyOKiYD_V3m3-4BTZVJBbHDgn2dEDg6cCDpASxU"
+      short-id: "dde3c2dca27ae6e7"
+  - name: "🇳🇴 | NO | 496ms | 🇳🇴151675 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "46.29.238.136"
+    port: 40443
+    uuid: "374181b9-44bf-44f1-a227-1184f3e9e47b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "deepl.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "Ic-S89gGVGw1RnKJHOi3CzAmdU8fIdlMZOd4DBV7A3M"
+      short-id: "bbb1"
+  - name: "🇩🇪 | DE | 500ms | 🍑17@oneclickvpnkeys"
+    type: "vless"
+    server: "45.134.38.204"
+    port: 8053
+    uuid: "a88e2744-3555-4a0a-9635-0aae23e038f8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.amd.com"
+    reality-opts:
+      public-key: "hjJ1VN2xwcl1n7vrwvOspB2NFWrXNySUNPexutOVvAM"
+      short-id: "109754c5259066d1"
+  - name: "🇬🇧 | GB | 501ms | 🏓44@oneclickvpnkeys"
+    type: "vless"
+    server: "195.184.247.229"
+    port: 443
+    uuid: "b5ca5ab3-8cbc-4ac3-89da-9cd360589ecb"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "savesafe.co"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "6z3YcVP0f2pK3iANKIkBUZOgNeErDjxY83mHZG5jrnI"
+      short-id: "f63805c3ecc7a483"
+  - name: "🇳🇱 | NL | 503ms | 🍑38@oneclickvpnkeys"
+    type: "vless"
+    server: "144.31.237.215"
+    port: 443
+    uuid: "9500cf8b-020a-4a70-906c-e14bb5375875"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.sciencedirect.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "cNWgfJHerzIEb0RXxncP8R9Ex8-FkALOtbhneEIHpR0"
+      short-id: "a1b2c4d4a1b2c5d5"
+  - name: "🇫🇷 | FR | 504ms | 🇫🇷151834 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "45.192.2.72"
+    port: 443
+    uuid: "219762a7-b918-4e2b-8a3d-d309ef98bb61"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "storage.yandex.net"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1oUeBtHH4DskTM_jCh-6enWRkFMDX9l1OU5kWYl4kxA"
+      short-id: "364994a6f61fc955"
+  - name: "🇳🇱 | NL | 504ms | @meliproxyy"
+    type: "vless"
+    server: "178.248.236.138"
+    port: 18443
+    uuid: "c7a30b74-560c-4561-8f0b-7d70e85c9b5e"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "rutube.ru"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "VUc_2yzS6cjaq_MB8TScaCftgT3oJtP6zpotM5yM_Xg"
+      short-id: "dde21fff"
+  - name: "🇳🇱 | NL | 509ms | 🇺🇸151848 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "hamishevaslbashconfig-production-0f32.up.railway.app"
+    port: 443
+    uuid: "efd1a32b-fa0d-e08c-e046-e68ea9537098"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "hamishevaslbashconfig-production-0f32.up.railway.app"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/ws/efd1a32b-fa0d-e08c-e046-e68ea9537098"
+      headers:
+        Host: "hamishevaslbashconfig-production-0f32.up.railway.app"
+  - name: "🇭🇺 | HU | 513ms | @filembad`"
+    type: "vless"
+    server: "45.195.111.108"
+    port: 443
+    uuid: "219762a7-b918-4e2b-8a3d-d309ef98bb61"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "storage.yandex.net"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "7zd9mJilgjOrg_ohtw23Vmio-pdnYqeP_r-kiWt87Cg"
+      short-id: "f4b4a6365558ea2e"
+  - name: "🇳🇱 | NL | 518ms | 🇳🇱151833 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "87.121.221.253"
+    port: 443
+    uuid: "423b1d79-08c4-403f-9d5e-c541f791b55f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "eu-west.cendora.ru"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "m6RDw1b8R4lCaRUIzhHpy6TtX2Dhk6nyby8dWzeQqA0"
+      short-id: "dd3ff38418d29d22"
+  - name: "🇩🇪 | DE | 519ms | 🏓88@oneclickvpnkeys"
+    type: "vless"
+    server: "150.241.73.177"
+    port: 13443
+    uuid: "b80b392c-0cf4-42f9-ae54-9f862e3ba276"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "auto.cendora.ru"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "gc9oXe37KCCm3J1dJ03wdGsnxPBdeEkRPOvl_t-vfVM"
+      short-id: "a7f3c91b2e6d84c0"
+  - name: "🇵🇱 | PL | 520ms | 🍑58@oneclickvpnkeys"
+    type: "vless"
+    server: "94.183.157.209"
+    port: 443
+    uuid: "d11613a1-2e1f-4209-a275-aabd986b7ad1"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "s7.objcache.anti-zapret.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "0AVsyS7udTbxKRdSyQ2rtFC63icDQOVWq8FvAhhU-WY"
+      short-id: "58fbcddfaae3ade9"
+  - name: "🇫🇷 | FR | 522ms | 🇫🇷151348 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "89.208.97.226"
+    port: 443
+    uuid: "0772109c-a680-4896-b005-d86513194f96"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "node21.mxvpn.dev"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "TlpXTLz1Y-v8B6q9MX55U6eypjfL0LCSNE5zQP4yRHw"
+      short-id: "bbc68cec8bb8d2e3"
+  - name: "🇨🇿 | CZ | 524ms | 🇨🇿151817 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "5.39.202.111"
+    port: 443
+    uuid: "ae8e0f7d-b661-41ca-b55d-d8c383adb2f8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cz.helper-internet.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "W-zf_ncm9sYALF5EqvUsxqTkYGdAw-tQczT2SqwVMGE"
+      short-id: "ff776ff77be48b88"
+  - name: "🇩🇪 | DE | 528ms | @meliproxyy"
+    type: "vless"
+    server: "157.173.7.200"
+    port: 443
+    uuid: "64774bd8-3116-4eaa-a046-5ea4fc230b81"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "node-fra02.rkitman.ru"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "8C7evg_SSrJbxMTaUqJoylqB9HSNsmBvmUlgs_c5EiU"
+      short-id: "88d9dc52ef39c8bd"
+  - name: "🇵🇱 | PL | 529ms | @filembad`"
+    type: "vless"
+    server: "45.198.96.210"
+    port: 443
+    uuid: "19b64e79-73b4-4478-bbfc-fb57737b94f8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "storage.yandex.net"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "9Y-_jCI3Z1x6SXK2tHdZ6V1CN9IJPNPnoxSW0cbXxD8"
+      short-id: "764f497dda21c4fc"
+  - name: "🇳🇱 | NL | 530ms | 🇳🇱151278 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "free-amsterdam-node-1.cloudwidecdn.com"
+    port: 443
+    uuid: "44ae52b9-76fc-444d-8e43-186b4384b80a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.apple.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "PryGoq51ilG0eLUPl9i0xCvmk1xpwkyFSr_tG4GNLlU"
+      short-id: "1d86d17709852910"
+  - name: "🇳🇱 | NL | 533ms | 🍑13@oneclickvpnkeys"
+    type: "vless"
+    server: "193.23.194.167"
+    port: 8443
+    uuid: "32349ee8-8551-45fa-a265-8704cec72936"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "neth.lckdwn.ru"
+  - name: "🇵🇱 | PL | 538ms | 🏓87@oneclickvpnkeys"
+    type: "vless"
+    server: "45.198.96.210"
+    port: 443
+    uuid: "19b64e79-73b4-4478-bbfc-fb57737b94f8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "storage.yandex.net"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "9Y-_jCI3Z1x6SXK2tHdZ6V1CN9IJPNPnoxSW0cbXxD8"
+      short-id: "764f497dda21c4fc"
+  - name: "🇵🇱 | PL | 538ms | 🏓86@oneclickvpnkeys"
+    type: "vless"
+    server: "54.37.136.194"
+    port: 2053
+    uuid: "7061b26c-0f6c-49b5-be42-af2c011c04bc"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.apple.com"
+    reality-opts:
+      public-key: "TtGgrgk1OLMjWBaomJ1JkUOvmtMx7sLJdvvN0bxmZF8"
+      short-id: "bdc1efeb01044e93"
+  - name: "🇫🇷 | FR | 540ms | برای اتصال دائمی جوین شو🫟 TelegramID ⌲Express_freevpn"
+    type: "vless"
+    server: "162.19.10.99"
+    port: 443
+    uuid: "e8b1500b-e9e8-5492-8312-f4eadf7d0767"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "nasnet-162191099-direct.mbghalibaf.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+    flow: "xtls-rprx-vision"
+  - name: "🇨🇭 | CH | 543ms | 🇨🇭151639 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "45.196.193.100"
+    port: 443
+    uuid: "219762a7-b918-4e2b-8a3d-d309ef98bb61"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "storage.yandex.net"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "IdqrygjwHBEMCOamBl7a504TVk6uMAtTRj0xLWcFcxY"
+      short-id: "40ce08cf20c67003"
+  - name: "🇩🇪 | DE | 548ms | 🍑4@oneclickvpnkeys"
+    type: "vless"
+    server: "157.173.7.55"
+    port: 443
+    uuid: "64774bd8-3116-4eaa-a046-5ea4fc230b81"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "node-fra01.rkitman.ru"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "8C7evg_SSrJbxMTaUqJoylqB9HSNsmBvmUlgs_c5EiU"
+      short-id: "88d9dc52ef39c8bd"
+  - name: "🇮🇹 | IT | 551ms | 🍑51@oneclickvpnkeys"
+    type: "vless"
+    server: "itproxy3.lockdwn.com"
+    port: 443
+    uuid: "699ce9a1-abbb-4525-988e-b940381352e8"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+  - name: "🇳🇱 | NL | 557ms | 🇳🇱151875 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "nlb.mythos-wargame.fun"
+    port: 443
+    uuid: "2dd48980-5c2a-4f3b-bc8f-e20a8ae24ab1"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "nlb.mythos-wargame.fun"
+    client-fingerprint: "chrome"
+    grpc-opts:
+      grpc-service-name: "edge.sync.v1"
+  - name: "🇸🇪 | SE | 558ms | 🇸🇪151907 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "193.148.59.178"
+    port: 443
+    uuid: "20d7c485-5d24-49b5-a5cc-bb7a7daf9908"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.apple.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "-GMpCber8qtrKzJbwvpLcwlIhOy-5zS66u_x9lLvIjE"
+      short-id: "e3daad69"
+  - name: "🇩🇪 | DE | 562ms | 🇩🇪151525 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "ha0o-6njhon.uniora.top"
+    port: 443
+    uuid: "86930779-64ec-46a5-97d9-55e3107f3ce3"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.apple.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "E6TSsyOKiYD_V3m3-4BTZVJBbHDgn2dEDg6cCDpASxU"
+      short-id: "dde3c2dca27ae6e7"
+  - name: "🇺🇸 | US | 563ms | 🇺🇸151281 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "br1.levikogjgfdd.ir"
+    port: 443
+    uuid: "d65cc14c-f53f-4fe2-b262-97856601319c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yahoo.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
+      short-id: "c39cc7310a"
+  - name: "🇩🇪 | DE | 565ms | 🏓52@oneclickvpnkeys"
+    type: "vless"
+    server: "194.31.223.87"
+    port: 5443
+    uuid: "8fe31772-a4b7-4a70-9fa2-34124c7284ca"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "de.wlrus.cfd"
+  - name: "🇨🇭 | CH | 567ms | 🍑18@oneclickvpnkeys"
+    type: "vless"
+    server: "45.196.193.100"
+    port: 443
+    uuid: "219762a7-b918-4e2b-8a3d-d309ef98bb61"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "storage.yandex.net"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "IdqrygjwHBEMCOamBl7a504TVk6uMAtTRj0xLWcFcxY"
+      short-id: "40ce08cf20c67003"
+  - name: "🇳🇱 | NL | 577ms | 🇳🇱151900 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "95.85.248.50"
+    port: 443
+    uuid: "423b1d79-08c4-403f-9d5e-c541f791b55f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "eu-west.cendora.ru"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "m6RDw1b8R4lCaRUIzhHpy6TtX2Dhk6nyby8dWzeQqA0"
+      short-id: "dd3ff38418d29d22"
+  - name: "🇩🇪 | DE | 579ms | 🏓76@oneclickvpnkeys"
+    type: "vless"
+    server: "188.137.235.179"
+    port: 8444
+    uuid: "1f619326-cd93-4d6b-aebe-e0b5f8831d02"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "nl3.meshbeat.online"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/api/v1/devices/7c05e2fb91/telemetry"
+      headers:
+        Host: "nl3.meshbeat.online"
+  - name: "🇳🇱 | NL | 580ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+    type: "vless"
+    server: "67.159.43.202"
+    port: 443
+    uuid: "023bde30-574f-424e-9b8a-937b9dca924e"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cli-q.bosx.net"
+    client-fingerprint: "firefox"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/api/connect"
+  - name: "🇹🇷 | TR | 586ms | 🇹🇷151892 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "93.114.98.84"
+    port: 53147
+    uuid: "6110baf2-241e-4ba6-a2e1-6ffbacd903f9"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇪🇪 | EE | 597ms | 🇪🇪151553 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "94.183.170.231"
+    port: 443
+    uuid: "19f54e37-5fae-47f6-bc10-e71ccbc58389"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+  - name: "🇵🇱 | PL | 622ms | configraygan_3"
+    type: "vless"
+    server: "83.168.71.216"
+    port: 443
+    uuid: "a18f7c2d-9e45-4b8a-af3c-1d5e7f9c8b2a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ads.x5.ru"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "8h8t5eBWL9oERK7xWHQLFJE5j6sZdgNDQAs3EGnNbho"
+      short-id: "2f49bccf11150ef2"
+  - name: "🇩🇪 | DE | 625ms | 🍑41@oneclickvpnkeys"
+    type: "vless"
+    server: "45.130.125.126"
+    port: 443
+    uuid: "b69b43d1-091d-4d7c-90b2-7a8bbad9d6a9"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "BItter-CreDIT-61b8.b76EbA0aBb.wORkerS.dEv"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/eyJqdW5rIjoiY0U2T212Y21yeEhUZHRKYSIsInByb3RvY29sIjoidmwiLCJtb2RlIjoicHJveHlpcCIsInBhbmVsSVBzIjpbXX0"
+      headers:
+        Host: "BItter-CreDIT-61b8.b76EbA0aBb.wORkerS.dEv"
+  - name: "🇩🇪 | DE | 629ms | 🇩🇪151650 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "node-fra02.rkitman.ru"
+    port: 443
+    uuid: "64774bd8-3116-4eaa-a046-5ea4fc230b81"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "node-fra02.rkitman.ru"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "8C7evg_SSrJbxMTaUqJoylqB9HSNsmBvmUlgs_c5EiU"
+      short-id: "88d9dc52ef39c8bd"
+  - name: "🇭🇰 | HK | 632ms | ***⚡***@V2ray_official"
+    type: "vless"
+    server: "134.122.202.244"
+    port: 44915
+    uuid: "0ca45842-71e2-47fe-889f-9e75f93ea459"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇳🇱 | NL | 644ms | 🏓100@oneclickvpnkeys"
+    type: "vless"
+    server: "31.76.79.118"
+    port: 2444
+    uuid: "fc1ee51e-72ec-4af0-ab0f-540c9e22427b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "JsSTmS0VKNaHF-_QKYS-_utnS-LJuPOBrWcMbVE2RDA"
+      short-id: "0809f782a29a2030"
+  - name: "🇪🇪 | EE | 652ms | 3🏓@oneclickvpnkeys"
+    type: "vless"
+    server: "94.183.170.135"
+    port: 8443
+    uuid: "06c4e938-2954-478f-a870-ca1b163e30e9"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "estproxy4.lockdwn.com"
+    client-fingerprint: "firefox"
+  - name: "🇳🇱 | NL | 655ms | 🥥 - @configraygan-46"
+    type: "vless"
+    server: "217.69.167.135"
+    port: 15392
+    uuid: "9e998501-eaae-4d7e-bbe5-6cecfaef8334"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "google.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "O8yFUnhj9NOtJ2eUVQTwrGk8HrkHq94QAO090azV428"
+      short-id: "6a326909"
+    grpc-opts:
+      grpc-service-name: "grpc"
+  - name: "🇷🇺 | RU | 656ms | @filembad`"
+    type: "vless"
+    server: "217.149.30.225"
+    port: 2053
+    uuid: "246bf902-1b08-4bc4-b851-c4987d804bac"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.rumedia-cdn.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "CmkWD75j7txo_SEUQ7XzKI2b0_Odd0jc7cv_HqaTTAc"
+      short-id: "688c54e7b1ebddec"
+  - name: "🇵🇱 | PL | 659ms | 🇵🇱151316 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "meow-warsaw.nethcloud.top"
+    port: 443
+    uuid: "a34b5e88-cf0d-4c01-8199-2d1002d3c787"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.wikihow.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "HKpd1sbrhBds8SJSL0d22MAq_QyTR6EP6y5b5DYol3U"
+  - name: "🇸🇪 | SE | 660ms | 🇸🇪151659 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "swa.mythos-wargame.fun"
+    port: 443
+    uuid: "2dd48980-5c2a-4f3b-bc8f-e20a8ae24ab1"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "swa.mythos-wargame.fun"
+    client-fingerprint: "qq"
+    grpc-opts:
+      grpc-service-name: "edge.sync.v1"
+  - name: "🇩🇪 | DE | 661ms | 🏓63@oneclickvpnkeys"
+    type: "vless"
+    server: "link.meshbeat.online"
+    port: 8444
+    uuid: "1f619326-cd93-4d6b-aebe-e0b5f8831d02"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "link.meshbeat.online"
+    client-fingerprint: "firefox"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/api/v1/devices/ff3c56308c/telemetry"
+      headers:
+        Host: "link.meshbeat.online"
+  - name: "🇩🇪 | DE | 675ms | 🏓90@oneclickvpnkeys`"
+    type: "vless"
+    server: "194.31.223.87"
+    port: 3443
+    uuid: "8fe31772-a4b7-4a70-9fa2-34124c7284ca"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "de.wlrus.cfd"
+  - name: "🇷🇺 | RU | 684ms | @meliproxyy"
+    type: "vless"
+    server: "s4.arch.anti-zapret.com"
+    port: 443
+    uuid: "d11613a1-2e1f-4209-a275-aabd986b7ad1"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ru.srv.anti-zapret.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "0AVsyS7udTbxKRdSyQ2rtFC63icDQOVWq8FvAhhU-WY"
+      short-id: "17faf32cb516c9cb"
+  - name: "🇹🇷 | TR | 687ms | @filembad`"
+    type: "vless"
+    server: "93.114.98.84"
+    port: 32855
+    uuid: "6110baf2-241e-4ba6-a2e1-6ffbacd903f9"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "amp-api-edge.apps.apple.com"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "fRtTW1zQqje-Yh1DqPAHA8nWOMsX983pZUxy58FaY10"
+      short-id: "deb7a9e5a6e1d41a"
+  - name: "🇺🇸 | US | 693ms | 🇨🇦151515 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "104.18.43.174"
+    port: 2095
+    uuid: "86c50e3a-5b87-49dd-bd20-03c7f2735e40"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "fuckingfangbinxing.pusytroller.cf"
+  - name: "🇩🇪 | DE | 696ms | 🇩🇪151662 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "node-fra01.rkitman.ru"
+    port: 443
+    uuid: "64774bd8-3116-4eaa-a046-5ea4fc230b81"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "node-fra01.rkitman.ru"
+    client-fingerprint: "safari"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "8C7evg_SSrJbxMTaUqJoylqB9HSNsmBvmUlgs_c5EiU"
+      short-id: "88d9dc52ef39c8bd"
+  - name: "🇯🇵 | JP | 703ms | 🇯🇵151692 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "31.76.91.138"
+    port: 2087
+    uuid: "309b0ce3-09a8-4883-bfe4-bd56e215be44"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "ads.x5.ru"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "JfuItzJ81sJehx1PbxyliWSJvuBMKoa9ahNgPO3R7R4"
+      short-id: "c226283c4de5b1ad"
+    grpc-opts:
+      grpc-service-name: "grpc"
+  - name: "🇹🇖 | T1 | 734ms |"
+    type: "vless"
+    server: "45.134.38.204"
+    port: 8064
+    uuid: "a88e2744-3555-4a0a-9635-0aae23e038f8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.amd.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "hjJ1VN2xwcl1n7vrwvOspB2NFWrXNySUNPexutOVvAM"
+      short-id: "d3aea86e1949"
+  - name: "🇯🇵 | JP | 743ms | 🇯🇵151620 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "rm-jp-01.409648.xyz"
+    port: 20725
+    uuid: "6dcb725e-947e-4bbe-bb35-903374d57179"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "buylite.tv.apple.com"
+    client-fingerprint: "qq"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "hceZHd9X9FSbWGXGgm3OWN-4Au26rrsriTcyHw5M3VU"
+      short-id: "0102ac4e"
+  - name: "🇫🇷 | FR | 756ms | 4🏓@oneclickvpnkeys"
+    type: "vless"
+    server: "usejh2.neobo-tooth.ru"
+    port: 2096
+    uuid: "70e20b2e-3b1f-4c25-9a3d-9240570391bb"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "usejh2.neobo-tooth.ru"
+  - name: "🇸🇪 | SE | 757ms |"
+    type: "vless"
+    server: "swa.mythos-wargame.fun"
+    port: 443
+    uuid: "2dd48980-5c2a-4f3b-bc8f-e20a8ae24ab1"
+    udp: true
+    tls: true
+    network: "grpc"
+    client-fingerprint: "qq"
+    grpc-opts:
+      grpc-service-name: "edge.sync.v1"
+  - name: "🇷🇺 | RU | 778ms | 🇷🇺151672 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "s4.arch.anti-zapret.com"
+    port: 443
+    uuid: "d11613a1-2e1f-4209-a275-aabd986b7ad1"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ru.srv.anti-zapret.com"
+    client-fingerprint: "edge"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "0AVsyS7udTbxKRdSyQ2rtFC63icDQOVWq8FvAhhU-WY"
+      short-id: "17faf32cb516c9cb"
+  - name: "🇹🇖 | T1 | 780ms | @filembad`"
+    type: "vless"
+    server: "45.134.38.204"
+    port: 8052
+    uuid: "a88e2744-3555-4a0a-9635-0aae23e038f8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.amd.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "hjJ1VN2xwcl1n7vrwvOspB2NFWrXNySUNPexutOVvAM"
+      short-id: "84c94774c54ba6"
+  - name: "🇳🇱 | NL | 780ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+    type: "vless"
+    server: "netraidly.ru"
+    port: 40443
+    uuid: "4480161e-2c59-4d37-8736-675c9af32bf1"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "deepl.com"
+    client-fingerprint: "qq"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "fWzCKXwvMXaacsl1DdFb1vKQ9l9cTK1G7udqmaYHL0Y"
+      short-id: "01d1bf2d4755d40c"
+  - name: "🇹🇖 | T1 | 795ms | @filembad`"
+    type: "vless"
+    server: "45.134.38.204"
+    port: 8051
+    uuid: "a88e2744-3555-4a0a-9635-0aae23e038f8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.amd.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "hjJ1VN2xwcl1n7vrwvOspB2NFWrXNySUNPexutOVvAM"
+      short-id: "109754c5259066d1"
+  - name: "🇫🇷 | FR | 831ms | 🇫🇷151902 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "77.221.152.100"
+    port: 443
+    uuid: "0772109c-a680-4896-b005-d86513194f96"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "node14.mxvpn.dev"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "TlpXTLz1Y-v8B6q9MX55U6eypjfL0LCSNE5zQP4yRHw"
+      short-id: "bbc68cec8bb8d2e3"
+  - name: "🇩🇪 | DE | 833ms | 🍑9@oneclickvpnkeys"
+    type: "vless"
+    server: "node-fra01.rkitman.ru"
+    port: 443
+    uuid: "64774bd8-3116-4eaa-a046-5ea4fc230b81"
+    udp: true
+    tls: true
+    network: "tcp"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "8C7evg_SSrJbxMTaUqJoylqB9HSNsmBvmUlgs_c5EiU"
+      short-id: "88d9dc52ef39c8bd"
+  - name: "🇺🇸 | US | 842ms | 🇩🇪151663 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "eeb.mythos-wargame.fun"
+    port: 443
+    uuid: "2dd48980-5c2a-4f3b-bc8f-e20a8ae24ab1"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "eeb.mythos-wargame.fun"
+    client-fingerprint: "qq"
+    grpc-opts:
+      grpc-service-name: "edge.sync.v1"
+  - name: "🇱🇻 | LV | 845ms | 🇱🇻151261 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "let2.orangesms.ir"
+    port: 61169
+    uuid: "7b396080-d995-406f-947e-6abd709064dd"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇹🇷 | TR | 845ms | @filembad`"
+    type: "vless"
+    server: "we-soscj-wr.iramssnew2.ir"
+    port: 443
+    uuid: "a318d2b3-2cc6-434a-859b-425a6fa902e6"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "us.demonware.net"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "pfPkmGdr3k9jKAov3mjdc_DXROO9fl4jK1FpBsJqujk"
+      short-id: "51b12813d2583b5c"
+  - name: "🇫🇷 | FR | 876ms | 🇫🇷151524 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "node14.mxvpn.dev"
+    port: 443
+    uuid: "0772109c-a680-4896-b005-d86513194f96"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "node14.mxvpn.dev"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "TlpXTLz1Y-v8B6q9MX55U6eypjfL0LCSNE5zQP4yRHw"
+      short-id: "bbc68cec8bb8d2e3"
+  - name: "🇩🇪 | DE | 877ms | 🇩🇪151317 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "de-193-58.neobo-tooth.ru"
+    port: 2053
+    uuid: "b6c29ae7-4748-4049-b642-b695c0d2c776"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "vk.ru"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "6RshLCSAs31qGRa_tWi63KClbh2Kzj9ooXpdaPJKbjs"
+      short-id: "a6bbc4aecf5d961f"
+  - name: "🇳🇴 | NO | 905ms | ***⚡***@V2ray_official"
+    type: "vless"
+    server: "194.110.207.48"
+    port: 443
+    uuid: "d551dc1e-a0d3-4d52-a8bb-756cb9dac0b2"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "kibi-institut.de"
+    client-fingerprint: "qq"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "SiSky02wHz-S0TDHKFTdYhnrlT8Y3CfRsekZlcdLXDY"
+      short-id: "fd55b698ee8c3629"
+  - name: "🇱🇻 | LV | 996ms | 🇱🇻151318 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "89.36.161.222"
+    port: 2053
+    uuid: "70e20b2e-3b1f-4c25-9a3d-9240570391bb"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "vk.ru"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "cGVu5j95KoeHBkWXveyTKolORbdvZm9g1T6yyo64ZBg"
+      short-id: "d26f4703cdd30f4e"
+  - name: "🇹🇷 | TR | 1018ms | @filembad`"
+    type: "vless"
+    server: "melia.meliadrenalin.alireza.casa"
+    port: 43979
+    uuid: "5a44345f-66be-41d3-a004-e3faa649f2c1"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇸🇬 | SG | 1020ms | 🇨🇦151429 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "6680846a-8a57-4dfd-9a0e-63209cfc8535"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "support.zoom.us.yxls.eu.cc"
+    client-fingerprint: "unsafe"
+    ws-opts:
+      path: "/sg-amz"
+      headers:
+        Host: "support.zoom.us.yxls.eu.cc"
+  - name: "🇸🇬 | SG | 1023ms | 🏓53@oneclickvpnkeys"
+    type: "vless"
+    server: "45.130.125.207"
+    port: 443
+    uuid: "6680846a-8a57-4dfd-9a0e-63209cfc8535"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "support.zoom.us.yxls.eu.cc"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/sg-amz"
+      headers:
+        Host: "support.zoom.us.yxls.eu.cc"
+  - name: "🇩🇪 | DE | 1099ms | 🇩🇪151904 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "2.26.48.130"
+    port: 443
+    uuid: "423b1d79-08c4-403f-9d5e-c541f791b55f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "eu-central.cendora.ru"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "b-Cm9hX-3UHsS1L_lnUB6AMjuKhlN1IDdBbZ506itjI"
+      short-id: "00bca5982f82d083"
+  - name: "🇩🇪 | DE | 1107ms | @filembad`"
+    type: "vless"
+    server: "31.76.111.113"
+    port: 7777
+    uuid: "9e09f1ce-45d4-466d-b077-81b0dae00db2"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "console.cloud.yandex.ru"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "4iWZChsH0rnqtn89xiB1evDLkFjmgh-3WYjx8cknZC0"
+      short-id: "a8b9c0d1e2f34567"
+  - name: "🇮🇹 | IT | 1113ms | Free x39 @Outline_Vpn"
+    type: "vless"
+    server: "it2ws.wba-pn.ru"
+    port: 443
+    uuid: "2b622609-bb92-49e8-9631-4ada00324f47"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "it2ws.wba-pn.ru"
+    ws-opts:
+      path: "/"
+  - name: "🇩🇪 | DE | 1160ms | 🇩🇪151934 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "185.204.169.32"
+    port: 8080
+    uuid: "c7dcddff-ef42-4c58-a36f-8d6c6ea1ac59"
+    udp: true
+    tls: true
+    network: "tcp"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+  - name: "🇯🇵 | JP | 1173ms | 🇨🇦151379 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "www.gov.ua"
+    port: 8880
+    uuid: "48c20f0a-c2a4-453f-8a61-ec73ea7829c5"
+    udp: true
+    tls: false
+    network: "ws"
+    servername: "www.gov.ua"
+    ws-opts:
+      path: "/pyip=ProxyIP.JP.CMLiussss.net"
+      headers:
+        Host: "morning-brook-d78e.347.workers.dev"
+  - name: "🇸🇬 | SG | 1184ms | Channel : @proxy_kafee"
+    type: "vless"
+    server: "188.114.99.0"
+    port: 443
+    uuid: "e5cc16a6-ea42-46b2-82ae-ad2157e1641b"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "hhlfy.twiladaphne.ndjp.net"
+    ws-opts:
+      path: "/sg-melbi"
+      headers:
+        Host: "hhlfy.twiladaphne.ndjp.net"
+  - name: "🇸🇬 | SG | 1196ms | 🇨🇦151734 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "172.64.150.28"
+    port: 2082
+    uuid: "e5cc16a6-ea42-46b2-82ae-ad2157e1641b"
+    udp: true
+    tls: false
+    network: "ws"
+    servername: "hhlfy.twiladaphne.ndjp.net"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/fp"
+      headers:
+        Host: "hhlfy.twiladaphne.ndjp.net"
+  - name: "🇸🇬 | SG | 1207ms | 🏓68@oneclickvpnkeys"
+    type: "vless"
+    server: "104.24.152.211"
+    port: 8880
+    uuid: "a7b8b48e-1000-46f5-a974-f6606d94f3b4"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/pyip=ProxyIP.SG.CMLiussss.net"
+      headers:
+        Host: "misty-hill-4b94.146-c18.workers.dev"
+  - name: "🇩🇪 | DE | 1375ms | 🇩🇪151852 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "derman.neobo-tooth.ru"
+    port: 2096
+    uuid: "70e20b2e-3b1f-4c25-9a3d-9240570391bb"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "derman.neobo-tooth.ru"
+  - name: "🇳🇱 | NL | 1383ms | @filembad`"
+    type: "vless"
+    server: "194.93.61.97"
+    port: 443
+    uuid: "d11613a1-2e1f-4209-a275-aabd986b7ad1"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdnjs.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "0AVsyS7udTbxKRdSyQ2rtFC63icDQOVWq8FvAhhU-WY"
+      short-id: "58fbcddfaae3ade9"
+  - name: "🇸🇬 | SG | 1415ms | 🇨🇦151449 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "172.64.150.28"
+    port: 443
+    uuid: "e5cc16a6-ea42-46b2-82ae-ad2157e1641b"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "hhlfy.twiladaphne.ndjp.net"
+    ws-opts:
+      path: "/fp"
+      headers:
+        Host: "hhlfy.twiladaphne.ndjp.net"
+  - name: "🇸🇬 | SG | 1426ms | @filembad`"
+    type: "vless"
+    server: "172.64.150.28"
+    port: 2082
+    uuid: "e5cc16a6-ea42-46b2-82ae-ad2157e1641b"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/fp"
+      headers:
+        Host: "hhlfy.twiladaphne.ndjp.net"
+  - name: "🇵🇱 | PL | 1483ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+    type: "vless"
+    server: "www.speedtest.net"
+    port: 2053
+    uuid: "da4747a6-be0d-4c1b-90f4-d82ec3012be2"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "music1000.melobitmusic1.ir"
+    client-fingerprint: "ios"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "music1000.melobitmusic1.ir"
+  - name: "🇳🇱 | NL | 1548ms | 🇳🇱151657 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "neth2.nihaovpn.ru"
+    port: 443
+    uuid: "00506574-3b10-4f7d-9b2f-8afdc5919b93"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "stackoverflow.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "qNCzfY_ga5_n3NCD0g1XoiBWcnofF4SHUM27jvoBAyw"
+      short-id: "0ea83f18e6b2"
+    grpc-opts:
+      grpc-service-name: "grpc"
+  - name: "🇩🇪 | DE | 1674ms | 🇨🇦151854 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 80
+    uuid: "dc8eccdb-ecfa-435f-9ac1-5dc4882e7b51"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/http"
+      headers:
+        Host: "de.vpnbase.net"
+  - name: "🇸🇬 | SG | 1680ms | Channel : @proxy_kafee"
+    type: "vless"
+    server: "chat.openai.com"
+    port: 443
+    uuid: "e5cc16a6-ea42-46b2-82ae-ad2157e1641b"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "hhlfy.twiladaphne.ndjp.net"
+    ws-opts:
+      path: "/fp"
+      headers:
+        Host: "hhlfy.twiladaphne.ndjp.net"
+  - name: "🇩🇪 | DE | 1755ms | @meliproxyy"
+    type: "vless"
+    server: "162.19.228.119"
+    port: 80
+    uuid: "dc8eccdb-ecfa-435f-9ac1-5dc4882e7b51"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/http#telegram@freeonlinevpn/?ed"
+      headers:
+        Host: "google.com"
+  - name: "🇫🇮 | FI | 1760ms | @filembad`"
+    type: "vless"
+    server: "79.174.92.85"
+    port: 6443
+    uuid: "d34a3c99-5ea8-488b-8df4-a20af43b740b"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "iv.kommersant.ru"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "lU1yF2A1b0lM9DZbXWPpLfoU7_KQpXOYX0NFrPEIJy8"
+      short-id: "bad5722c72a0"
+    grpc-opts:
+      grpc-service-name: "grpc"
+  - name: "🇩🇪 | DE | 1973ms | @filembad`"
+    type: "vless"
+    server: "104.16.72.41"
+    port: 80
+    uuid: "dc8eccdb-ecfa-435f-9ac1-5dc4882e7b51"
+    udp: true
+    tls: false
+    network: "ws"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/http"
+      headers:
+        Host: "de.vpnbase.net"
+  - name: "🇩🇪 | DE | 2118ms | ***⚡***@V2ray_official"
+    type: "vless"
+    server: "104.16.72.41"
+    port: 80
+    uuid: "dc8eccdb-ecfa-435f-9ac1-5dc4882e7b51"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/http"
+      headers:
+        Host: "de.vpnbase.net"
+  - name: "🇮🇹 | IT | 2303ms | برای اتصال دائمی جوین شو🫟 TelegramID ⌲Express_freevpn"
+    type: "vless"
+    server: "45.155.68.9"
+    port: 443
+    uuid: "2b622609-bb92-49e8-9631-4ada00324f47"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "it2ws.wba-pn.ru"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+  - name: "🇬🇧 | GB | 2307ms | Channel : @proxy_kafee"
+    type: "vless"
+    server: "109.169.85.141"
+    port: 443
+    uuid: "bbc164a1-b246-456b-aefd-95c5e5f877d4"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "slashdot.org"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "djzfpNmvwYjCaOUUOHU_k0kl92HXIGIurq2i0p5UyDo"
+      short-id: "1dc6d8a2045a7c9d"
+  - name: "🇨🇭 | CH | 2345ms | 🏓56@oneclickvpnkeys"
+    type: "vless"
+    server: "45.195.2.133"
+    port: 8443
+    uuid: "19b64e79-73b4-4478-bbfc-fb57737b94f8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "storage.yandex.net"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "8qHRGcCezzSu4S-Cz9l19BNRLWm4MkaSwZV3dNrLEwc"
+      short-id: "445ab326fc7c90ac"
+  - name: "🇺🇸 | US | 2495ms | 🇺🇸151725 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "ux.miladux.ir"
+    port: 2087
+    uuid: "b3545d57-348b-454a-8aba-9f16fb018274"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "stauden-probst.de"
+  - name: "🇬🇧 | GB | 2735ms | @meliproxyy"
+    type: "vless"
+    server: "45.150.66.31"
+    port: 443
+    uuid: "4bc8ff7a-20b4-41b2-9751-dfca869f0553"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "gb1.wba-pn.ru"
+    ws-opts:
+      path: "/"
+  - name: "🇩🇪 | DE | 3007ms | @filembad`"
+    type: "vless"
+    server: "57.131.138.129"
+    port: 2096
+    uuid: "16569657-116c-46ed-8920-758ab8abaac4"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yahoo.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "jqDgERbgQ5DVnJvw4p_j8XnM4GXUSXvPEn2t0TOtMms"
+      short-id: "c2b19b0e0e625d01"
+  - name: "🇧🇪 | BE | 3104ms | 🇧🇪151474 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "113.30.152.6"
+    port: 443
+    uuid: "08f84d53-e262-459c-a15a-26213e7a07c9"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "be2.wba-pn.ru"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+  - name: "🇧🇪 | BE | 3151ms | Telegram channel : @proxy_kafee`"
+    type: "vless"
+    server: "be2.wba-pn.ru"
+    port: 443
+    uuid: "08f84d53-e262-459c-a15a-26213e7a07c9"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "be2.wba-pn.ru"
+    ws-opts:
+      path: "/"
+  - name: "🇫🇷 | FR | 3278ms | 𝗝𝗼𝗶𝗻➠@PlanB_net"
+    type: "vless"
+    server: "cf.levikogjgfdd.ir"
+    port: 2053
+    uuid: "d361072e-9e0e-4e2d-8ec7-2a4189b5b23a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ov.iran-servers.shop"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/J5aLQOY1R9ONWYCM"
+      headers:
+        Host: "ov.iran-servers.shop"
+  - name: "🇬🇧 | GB | 3426ms | 🇬🇧151547 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "95.154.196.63"
+    port: 443
+    uuid: "bae47c97-9bc1-48f6-a133-a383ee71c12e"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "foodnetwork.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "o3OWFYnKad6q2C-eo6-rA74OCbjQoZfaUFYZsNqJJz0"
+      short-id: "1e977d0b52eab755"
+  - name: "🇳🇱 | NL | 3443ms | @V2ray_confiig"
+    type: "vless"
+    server: "31.77.131.154"
+    port: 443
+    uuid: "14da77da-4fb3-4e49-ac4f-7881ea19b267"
+    udp: true
+    tls: false
+    network: "ws"
+  - name: "🇳🇱 | NL | 3456ms | 🇺🇸151924 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "199.232.78.159"
+    port: 443
+    uuid: "27315937-5479-49fd-867d-6b2f17246708"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ssl.fastly.com"
+    ws-opts:
+      path: "/TELEGRAM_NUFiLTER,TELEGRAM_NUFiLTER,TELEGRAM_NUFiLTER,TELEGRAM_NUFiLTER,TELEGRAM_NUFiLTER,TELEGRAM_NUFiLTER,TELEGRAM_NUFiLTER?ed=2053"
+      headers:
+        Host: "pan1.global.ssl.fastly.net"
+  - name: "🇮🇳 | IN | 3518ms | ***⚡***@V2ray_official"
+    type: "vless"
+    server: "5.253.28.213"
+    port: 13443
+    uuid: "423b1d79-08c4-403f-9d5e-c541f791b55f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "auto.cendora.ru"
+    client-fingerprint: "qq"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "gc9oXe37KCCm3J1dJ03wdGsnxPBdeEkRPOvl_t-vfVM"
+      short-id: "a7f3c91b2e6d84c0"
+  - name: "🇬🇧 | GB | 3520ms | Free x42 @Outline_Vpn"
+    type: "vless"
+    server: "gb1.wba-pn.ru"
+    port: 443
+    uuid: "4bc8ff7a-20b4-41b2-9751-dfca869f0553"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/"
+  - name: "🇳🇱 | NL | 3632ms | 🇳🇱151751 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "31.76.109.7"
+    port: 80
+    uuid: "9e09f1ce-45d4-0920-b077-81b0dae00db2"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "console.cloud.yandex.ru"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "4iWZChsH0rnqtn89xiB1evDLkFjmgh-3WYjx8cknZC0"
+      short-id: "a8b9c0d1e2f34567"
+  - name: "🇫🇷 | FR | 3989ms | 🏓65@oneclickvpnkeys"
+    type: "vless"
+    server: "89.208.113.16"
+    port: 443
+    uuid: "adce7c2a-3191-49ae-b61c-9b8258ea1b0e"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇳🇱 | NL | 4199ms | @filembad`"
+    type: "vless"
+    server: "194.93.61.95"
+    port: 443
+    uuid: "d11613a1-2e1f-4209-a275-aabd986b7ad1"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdnjs.com"
+    client-fingerprint: "qq"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "0AVsyS7udTbxKRdSyQ2rtFC63icDQOVWq8FvAhhU-WY"
+      short-id: "58fbcddfaae3ade9"
+  - name: "🇪🇪 | EE | 4442ms | 🇪🇪151950 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "ee.cdn-global.pro"
+    port: 443
+    uuid: "d96e05a1-18bb-45da-9e9f-ab7caab6952a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ee.cdn-global.pro"
+    client-fingerprint: "edge"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "RO5YMxxtJmZo2w370qG-seJ41toowHPbz6i2uXJ2gG0"
+      short-id: "7a3f9e2b1c8d4f6a"
+  - name: "🇬🇧 | GB | 4460ms | @filembad`"
+    type: "vless"
+    server: "109.169.84.146"
+    port: 443
+    uuid: "88212d38-f112-4a35-8ac2-eb3a1923e413"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "strapi.io"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "vvpu_ljhBuTWmM9w5Hl6jj8ZTiE_JYq29S77zNDeCjQ"
+      short-id: "ff6975658b6cefce"
+  - name: "🇬🇧 | GB | 4519ms | 🇬🇧151637 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "109.169.84.146"
+    port: 443
+    uuid: "88212d38-f112-4a35-8ac2-eb3a1923e413"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "strapi.io"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "vvpu_ljhBuTWmM9w5Hl6jj8ZTiE_JYq29S77zNDeCjQ"
+      short-id: "ff6975658b6cefce"
+  - name: "🇬🇧 | GB | 4709ms | @filembad`"
+    type: "vless"
+    server: "46.8.41.42"
+    port: 443
+    uuid: "9aff0732-7ce4-4b34-ba20-e67c6df64fdd"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "uk1.panel11.ru"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "L5qLDM9pWlBV6gU9yCT4_yc7jz982FiLi2CZWLo3Ki0"
+      short-id: "dcbf3f13ce2dbe37"
+  - name: "🇮🇹 | IT | 4709ms | 🍑42@oneclickvpnkeys"
+    type: "vless"
+    server: "204.216.216.23"
+    port: 10086
+    uuid: "9f0285ee-20ca-4953-bcdb-86a920652923"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇳🇱 | NL | 4975ms | @filembad`"
+    type: "vless"
+    server: "194.93.61.91"
+    port: 443
+    uuid: "1b627e4d-4ea4-4dce-8bd8-fc2d3ffbeaba"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdnjs.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "0AVsyS7udTbxKRdSyQ2rtFC63icDQOVWq8FvAhhU-WY"
+      short-id: "cbb0a5c1dc905505"
+  - name: "🇺🇸 | US | 148ms | 🇺🇸151575 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "ss"
+    server: "94.72.127.55"
+    port: 443
+    cipher: "aes-256-gcm"
+    password: "kRKZE3ZhECwawy1N"
+    udp: true
+  - name: "🇺🇸 | US | 162ms | @meliproxyy"
+    type: "ss"
+    server: "94.72.127.55"
+    port: 80
+    cipher: "aes-256-gcm"
+    password: "kRKZE3ZhECwawy1N"
+    udp: true
+  - name: "🇺🇸 | US | 168ms | @meliproxyy"
+    type: "ss"
+    server: "108.181.0.177"
+    port: 8388
+    cipher: "chacha20-ietf-poly1305"
+    password: "G5p6ww4o67HB"
+    udp: true
+  - name: "🇺🇸 | US | 200ms | ***✅***@AR14N24b"
+    type: "ss"
+    server: "154.12.242.150"
+    port: 80
+    cipher: "aes-256-gcm"
+    password: "Hi9wk14VntzGq7kq"
+    udp: true
+  - name: "🇺🇸 | US | 282ms | ***✅***@AR14N24b"
+    type: "ss"
+    server: "154.53.63.33"
+    port: 80
+    cipher: "aes-256-gcm"
+    password: "sFS341eceaIiSm2d"
+    udp: true
+  - name: "🇺🇸 | US | 286ms | @meliproxyy"
+    type: "ss"
+    server: "154.53.63.33"
+    port: 443
+    cipher: "aes-256-gcm"
+    password: "sFS341eceaIiSm2d"
+    udp: true
+  - name: "🇮🇪 | IE | 300ms | ***✅***@AR14N24b"
+    type: "ss"
+    server: "20.234.20.89"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "2OPuSlR6h3ZHql3h"
+    udp: true
+  - name: "🇳🇱 | NL | 332ms | ***✅***@AR14N24b"
+    type: "ss"
+    server: "141.148.232.116"
+    port: 45819
+    cipher: "2022-blake3-chacha20-poly1305"
+    password: "j9c/ewZTyaH+6TY/yszYS+Qv4yljvnYafWAhQSrFfT0="
+    udp: true
+  - name: "🇬🇧 | GB | 332ms | 🏓13@oneclickvpnkeys"
+    type: "ss"
+    server: "149.102.152.25"
+    port: 80
+    cipher: "aes-256-gcm"
+    password: "XrpA8hNjQ67ODdau"
+    udp: true
+  - name: "🇬🇧 | GB | 334ms | 🏓18@oneclickvpnkeys"
+    type: "ss"
+    server: "149.102.132.180"
+    port: 80
+    cipher: "aes-256-gcm"
+    password: "CzDWICt1DOi8F5jq"
+    udp: true
+  - name: "🇬🇧 | GB | 335ms | 🏓23@oneclickvpnkeys"
+    type: "ss"
+    server: "149.102.132.184"
+    port: 443
+    cipher: "aes-256-gcm"
+    password: "g5h5jleTRSyO3Rk4"
+    udp: true
+  - name: "🇬🇧 | GB | 340ms | 🏓14@oneclickvpnkeys"
+    type: "ss"
+    server: "149.102.132.180"
+    port: 443
+    cipher: "aes-256-gcm"
+    password: "CzDWICt1DOi8F5jq"
+    udp: true
+  - name: "🇩🇪 | DE | 352ms | ***✅***@AR14N24b"
+    type: "ss"
+    server: "130.61.181.160"
+    port: 59924
+    cipher: "2022-blake3-chacha20-poly1305"
+    password: "YcT6iuVCKCYvkw0fsGRejYCD7YGTurrWJH46rOo+XE0="
+    udp: true
+  - name: "🇩🇪 | DE | 361ms | 🏓31@oneclickvpnkeys"
+    type: "ss"
+    server: "144.31.168.176"
+    port: 45640
+    cipher: "chacha20-ietf-poly1305"
+    password: "eQvKkykBEbCky5p4BVghO0"
+    udp: true
+  - name: "🇨🇦 | CA | 366ms | @filembad`"
+    type: "ss"
+    server: "142.4.216.225"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "ytw2awn"
+    udp: true
+  - name: "🇨🇭 | CH | 367ms | 🍑11@oneclickvpnkeys"
+    type: "ss"
+    server: "140.238.175.124"
+    port: 33345
+    cipher: "chacha20-ietf-poly1305"
+    password: "5d79906d-89ab-430b-acbc-3327568a5be3"
+    udp: true
+  - name: "🇩🇪 | DE | 368ms | 🇩🇪151877 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "ss"
+    server: "130.61.40.89"
+    port: 59924
+    cipher: "2022-blake3-chacha20-poly1305"
+    password: "cM/OL503qOs/DrR3UpOTaW/Dm3PCnnD2T9/ozu5j0nk="
+    udp: true
+  - name: "🇬🇧 | GB | 370ms | 🇬🇧 @goololgoo 🔐 ویپیان رایگان | Free Proxy💥"
+    type: "ss"
+    server: "129.151.75.231"
+    port: 61312
+    cipher: "2022-blake3-chacha20-poly1305"
+    password: "Zgnzl2S6ae8VJygD6VyKAT7t/mX5afzPwvEOH2Ekrvg="
+    udp: true
+  - name: "🇳🇱 | NL | 370ms | ***✅***@AR14N24b"
+    type: "ss"
+    server: "193.29.139.225"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇳🇱 | NL | 371ms | 🏓37@oneclickvpnkeys"
+    type: "ss"
+    server: "82.38.31.26"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇳🇱 | NL | 372ms | ***✅***@AR14N24b"
+    type: "ss"
+    server: "193.29.139.230"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇳🇱 | NL | 375ms | 🇳🇱151269 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "ss"
+    server: "82.38.31.15"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧 | GB | 378ms | 🇬🇧 @goololgoo 🔐 ویپیان رایگان | Free Proxy💥"
+    type: "ss"
+    server: "144.24.231.79"
+    port: 61312
+    cipher: "2022-blake3-chacha20-poly1305"
+    password: "9mVZMzz1Adzern7psYj8M7pNJP/RPWF4nXl639XFOp0="
+    udp: true
+  - name: "🇳🇱 | NL | 378ms | ***✅***@AR14N24b"
+    type: "ss"
+    server: "82.38.31.42"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇳🇱 | NL | 383ms | 🍑31@oneclickvpnkeys"
+    type: "ss"
+    server: "193.29.139.129"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇳🇱 | NL | 385ms | 🇳🇱151280 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "ss"
+    server: "82.38.31.11"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇳🇱 | NL | 386ms | 🇳🇱151536 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "ss"
+    server: "82.38.31.35"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇳🇱 | NL | 388ms | 🍑27@oneclickvpnkeys"
+    type: "ss"
+    server: "82.38.31.164"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇳🇱 | NL | 390ms | 🇳🇱151273 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "ss"
+    server: "82.38.31.201"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇵🇱 | PL | 392ms | ***✅***@AR14N24b"
+    type: "ss"
+    server: "54.36.174.140"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "ytw2awn"
+    udp: true
+  - name: "🇵🇱 | PL | 393ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+    type: "ss"
+    server: "51.83.192.80"
+    port: 8388
+    cipher: "aes-256-gcm"
+    password: "itzvpn@321"
+    udp: true
+  - name: "🇳🇱 | NL | 396ms | 🇳🇱151925 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "ss"
+    server: "193.29.139.198"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇮🇹 | IT | 402ms | ***✅***@AR14N24b"
+    type: "ss"
+    server: "57.131.48.45"
+    port: 8388
+    cipher: "aes-256-gcm"
+    password: "itzvpn@321"
+    udp: true
+  - name: "🇯🇵 | JP | 419ms | @meliproxyy"
+    type: "ss"
+    server: "84.247.155.196"
+    port: 80
+    cipher: "aes-256-gcm"
+    password: "3eOFeNssde7PYYMv"
+    udp: true
+  - name: "🇮🇹 | IT | 482ms | 🇮🇹151562 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "ss"
+    server: "62.76.234.92"
+    port: 10901
+    cipher: "aes-256-gcm"
+    password: "d1fa2f4b98a38bc8"
+    udp: true
+  - name: "🇩🇪 | DE | 485ms | ***✅***@AR14N24b"
+    type: "ss"
+    server: "31.76.82.131"
+    port: 34260
+    cipher: "chacha20-ietf-poly1305"
+    password: "cTAObwg4OWWXkZJQs0ZdgC"
+    udp: true
+  - name: "🇬🇧 | GB | 487ms | 🏓83@oneclickvpnkeys"
+    type: "ss"
+    server: "fr4.levikogjgfdd.ir"
+    port: 8388
+    cipher: "chacha20-ietf-poly1305"
+    password: "zRZNBszYyWo5"
+    udp: true
+  - name: "🇪🇸 | ES | 513ms | @meliproxyy"
+    type: "ss"
+    server: "140.174.184.5"
+    port: 8388
+    cipher: "chacha20-ietf-poly1305"
+    password: "qItG8SueYQcP"
+    udp: true
+  - name: "🇫🇷 | FR | 550ms | ***✅***@AR14N24b"
+    type: "ss"
+    server: "51.255.13.232"
+    port: 8388
+    cipher: "chacha20-ietf-poly1305"
+    password: "BqnqToih0PbU"
+    udp: true
+  - name: "🇱🇹 | LT | 778ms | 5🏓@oneclickvpnkeys`"
+    type: "ss"
+    server: "144.31.243.2"
+    port: 16015
+    cipher: "chacha20-ietf-poly1305"
+    password: "J1InuU6QRT5JOh1mQfkjU2"
+    udp: true
+  - name: "🇵🇱 | PL | 851ms | configraygan_29"
+    type: "ss"
+    server: "194.61.121.93"
+    port: 7538
+    cipher: "chacha20-ietf-poly1305"
+    password: "U9YAoqBgg5VyGBc6vQv1sN"
+    udp: true
+  - name: "🇳🇱 | NL | 1233ms | ***✅***@AR14N24b"
+    type: "ss"
+    server: "82.38.31.185"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇳🇱 | NL | 1677ms | @meliproxyy"
+    type: "ss"
+    server: "switcher-nick-croquet.freesocks.work"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "wwzVn2ZnHfqYa6l8EWh3eY"
+    udp: true
+  - name: "🇵🇱 | PL | 1739ms | ***✅***@AR14N24b"
+    type: "ss"
+    server: "iran.tonanimalia.com"
+    port: 10117
+    cipher: "aes-256-gcm"
+    password: "MTVlNGFkYjZlODAwZjNkMWUxMDc1NDlmMTk5MmM5"
+    udp: true
+  - name: "🇳🇱 | NL | 1997ms | @meliproxyy"
+    type: "ss"
+    server: "switcher-nick-croquet.freesocks.work"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "RFK38Cg7APneSB5cWDcpbm"
+    udp: true
+  - name: "🇭🇰 | HK | 2367ms | ***⚡***@V2ray_official"
+    type: "ss"
+    server: "95.40.120.162"
+    port: 8316
+    cipher: "chacha20-ietf-poly1305"
+    password: "ljqdalu13.."
+    udp: true
+  - name: "🇺🇸 | US | 2717ms | @meliproxyy"
+    type: "ss"
+    server: "154.12.242.150"
+    port: 443
+    cipher: "aes-256-gcm"
+    password: "Hi9wk14VntzGq7kq"
+    udp: true
+  - name: "🇳🇱 | NL | 3155ms | ***✅***@AR14N24b"
+    type: "ss"
+    server: "switcher-nick-croquet.freesocks.work"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "9tqhMdIrTkgQ46PvhyAtMH"
+    udp: true
+  - name: "🇨🇦 | CA | 4283ms | ***✅***@AR14N24b"
+    type: "ss"
+    server: "51.222.155.113"
+    port: 5601
+    cipher: "aes-256-gcm"
+    password: "Y6R9pAtvxxzmGC"
+    udp: true
+  - name: "🇺🇸 | US | 128ms | 🇺🇸151756 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vmess"
+    server: "82.198.246.233"
+    port: 180
+    uuid: "d13fc2f5-3e05-4795-81eb-44143a09e552"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇩🇪 | DE | 439ms | 🇩🇪151733 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vmess"
+    server: "newrelax.relaxedboy.online"
+    port: 110
+    uuid: "8e9687fc-a3a7-414a-8676-8e2136797cfe"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇳🇱 | NL | 475ms | 🇳🇱151878 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vmess"
+    server: "176.120.17.21"
+    port: 1015
+    uuid: "4294d991-9369-468a-af1d-799e8e12bf74"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇫🇷 | FR | 1557ms | 🇫🇷[openproxylist.com] vmess-FR"
+    type: "vmess"
+    server: "62.210.127.120"
+    port: 23388
+    uuid: "3a966d20-7b9d-48cc-ba2c-8d38161b6d3a"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇬🇧 | GB | 4259ms | @meliproxyy"
+    type: "vmess"
+    server: "66.163.117.58"
+    port: 22324
+    uuid: "04621bae-ab36-11ec-b909-0242ac120002"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇺🇸 | US | 232ms |"
+    type: "trojan"
+    server: "kuso30.pacemakere.com"
+    port: 101
+    password: "5e89314202a8405f"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "🇺🇸 | US | 380ms | ***✅***@AR14N24b"
+    type: "trojan"
+    server: "kuso153.pacemakere.com"
+    port: 101
+    password: "3b9deff947c74dde"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "🇨🇭 | CH | 639ms | 🏓71@oneclickvpnkeys"
+    type: "trojan"
+    server: "tr-switzerlandgopota.unlimited-access.ru"
+    port: 443
+    password: "kxHw-Dk-e9dffgzYszMlEqLJ92AnY3Pi"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "🇯🇵 | JP | 718ms | ***✅***@AR14N24b"
+    type: "trojan"
+    server: "jcnp178.pacemakere.com"
+    port: 101
+    password: "6519a715da174466"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "🇹🇼 | TW | 752ms |"
+    type: "trojan"
+    server: "wti11.pacemakere.com"
+    port: 20062
+    password: "88b3dd32347d4ffa"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "🇫🇷 | FR | 769ms | 3"
+    type: "trojan"
+    server: "104.16.174.12"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "🇫🇷 | FR | 799ms | @FarazV2ray"
+    type: "trojan"
+    server: "188.114.97.7"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "🇩🇪 | DE | 896ms | 🇺🇸151593 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "trojan"
+    server: "151.101.56.7"
+    port: 443
+    password: "MITIVPN"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "speedtest.net"
+    ws-opts:
+      path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/D-e2@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
+      headers:
+        Host: "2x-mitivpn--mitivpn--mitivpn-mitivpn---mitivpn.global.ssl.fastly.net"
+  - name: "🇷🇺 | RU | 936ms | 🇷🇺151836 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "trojan"
+    server: "ru.techdatacloud.org"
+    port: 8443
+    password: "5e19b3c8-c1dc-4163-95e2-895319c15d6c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cloud.mail.ru"
+  - name: "🇸🇪 | SE | 1010ms | @meliproxyy"
+    type: "trojan"
+    server: "140.248.185.253"
+    port: 443
+    password: "MiTiVPN"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ssl.fastly.com"
+    ws-opts:
+      path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/s-w@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
+      headers:
+        Host: "4x-mitivpn--mitivpn------mitivpn.global.ssl.fastly.net"
+  - name: "🇫🇷 | FR | 1687ms | 2"
+    type: "trojan"
+    server: "104.19.229.21"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "🇫🇷 | FR | 1744ms | 1"
+    type: "trojan"
+    server: "104.18.152.246"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.ignitelimit.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.ignitelimit.com"
+  - name: "🇺🇸 | US | 59ms | 🇨🇦151520 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "wireguard"
+    server: "162.159.192.6"
+    port: 908
+    ip: "172.16.0.2"
+    private-key: "uOnUsltE1rsHdVjbb5oLNCRAm/04nzWc4sZtMO0xoH8="
+    public-key: "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo="
+    allowed-ips:
+      - "0.0.0.0/0"
+    udp: true
+    remote-dns-resolve: true
+    reserved:
+      - 36
+      - 26
+      - 162
+    mtu: 1280
+    persistent-keepalive: 5
+    amnezia-wg-option:
+      jc: 5
+      jmin: 5
+      jmax: 10
+  - name: "🇺🇸 | US | 179ms | زن زندگی آزادی"
+    type: "wireguard"
+    server: "8.6.112.116"
+    port: 4500
+    ip: "172.16.0.2"
+    private-key: "0CbikiHkdExpO/QkDXxHHAYQ6hB9a0QREObe5SKHJlI="
+    public-key: "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo="
+    allowed-ips:
+      - "0.0.0.0/0"
+    udp: true
+    remote-dns-resolve: true
+    reserved:
+      - 232
+      - 135
+      - 83
+    mtu: 1280
+    persistent-keepalive: 5
+    amnezia-wg-option:
+      jc: 5
+      jmin: 5
+      jmax: 10
+  - name: "🇺🇸 | US | 200ms | MTB"
+    type: "wireguard"
+    server: "162.159.195.9"
+    port: 4500
+    ip: "172.16.0.2"
+    private-key: "8ACz48orlX2sJH7FTE2T3W0sw8wVUejvFBAB/lzmYnc="
+    public-key: "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo="
+    allowed-ips:
+      - "0.0.0.0/0"
+    udp: true
+    remote-dns-resolve: true
+    reserved:
+      - 110
+      - 122
+      - 107
+    mtu: 1280
+    persistent-keepalive: 5
+    amnezia-wg-option:
+      jc: 5
+      jmin: 5
+      jmax: 10
+  - name: "🇺🇸 | US | 213ms | MTB"
+    type: "wireguard"
+    server: "162.159.192.14"
+    port: 4500
+    ip: "172.16.0.2"
+    private-key: "oDSS9NP7B3/tM8590334fkaTptsHXqyXcsScWjgBlmI="
+    public-key: "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo="
+    allowed-ips:
+      - "0.0.0.0/0"
+    udp: true
+    remote-dns-resolve: true
+    reserved:
+      - 141
+      - 96
+      - 203
+    mtu: 1280
+    persistent-keepalive: 5
+    amnezia-wg-option:
+      jc: 5
+      jmin: 5
+      jmax: 10
+proxy-groups:
+  - name: "نوع انتخاب پروکسی 🔀"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/412721/choose.svg"
+    proxies:
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "توزیع بار چرخشی ⚖️"
+      - "قطع اینترنت ⛔"
+      - "بدون فیلترشکن 🛡️"
+  - name: "دستی 🤏🏻"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
+    proxies:
+      - "🇳🇱 | NL | 472ms | 🍑14@oneclickvpnkeys"
+      - "🇫🇷 | FR | 500ms | 🏓69@oneclickvpnkeys"
+      - "🇨🇭 | CH | 504ms | 🇨🇭151548 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 520ms | 🏓62@oneclickvpnkeys"
+      - "🇩🇪 | DE | 521ms | 🇩🇪151807 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 538ms | ***⚡***@V2ray_official"
+      - "🇵🇱 | PL | 538ms | 🇵🇱151905 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 576ms | 🇩🇪151846 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇪🇪 | EE | 578ms | 🇺🇸151551 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 591ms | 🇳🇱151549 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇮 | FI | 616ms | 1🏓@oneclickvpnkeys"
+      - "🇫🇷 | FR | 620ms | 🏓66@oneclickvpnkeys"
+      - "🇳🇱 | NL | 646ms | 🏓77@oneclickvpnkeys"
+      - "🇳🇱 | NL | 757ms | 🇳🇱151426 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 833ms | 🇩🇪151358 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 1124ms | 🇺🇸151555 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 1327ms | Telegram channel : @proxy_kafee"
+      - "🇫🇮 | FI | 1376ms | @filembad`"
+      - "🇺🇸 | US | 150ms | ***✅***@AR14N24b"
+      - "🇺🇸 | US | 160ms | @IranProxyPlus`"
+      - "🇨🇦 | CA | 204ms | 🇨🇦151897 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸 | US | 235ms | 🇺🇸151850 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸 | US | 268ms | configraygan_16"
+      - "🇺🇸 | US | 282ms | 🇨🇦151427 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 340ms | 6885"
+      - "🇺🇸 | US | 355ms | 6881"
+      - "🇩🇪 | DE | 361ms | Germany 🇩🇪"
+      - "🇳🇱 | NL | 426ms | 🇳🇱151538 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 440ms | 🇬🇧151270 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 440ms | 🇩🇪151464 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 447ms | ***⚡***@V2ray_official"
+      - "🇳🇱 | NL | 450ms |"
+      - "🇳🇱 | NL | 454ms | configraygan_24"
+      - "🇳🇱 | NL | 455ms | 🏓9@oneclickvpnkeys"
+      - "🇩🇪 | DE | 460ms | 🇩🇪151824 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 461ms | 🏓49@oneclickvpnkeys"
+      - "🇫🇷 | FR | 462ms | 🏓58@oneclickvpnkeys"
+      - "🇩🇪 | DE | 463ms | @meliproxyy"
+      - "🇬🇧 | GB | 466ms | 🇸🇨151929 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 468ms | 🍑26@oneclickvpnkeys"
+      - "🇬🇧 | GB | 469ms | 🏓70@oneclickvpnkeys"
+      - "🇫🇷 | FR | 469ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+      - "🇳🇱 | NL | 469ms | @meliproxyy"
+      - "🇩🇪 | DE | 470ms | @meliproxyy"
+      - "🇳🇱 | NL | 472ms | @filembad`"
+      - "🇫🇷 | FR | 473ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+      - "🇺🇸 | US | 474ms | 🇺🇸151922 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 476ms | @meliproxyy"
+      - "🇬🇧 | GB | 477ms | 🇩🇪151390 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 478ms | 🏓17@oneclickvpnkeys"
+      - "🇩🇪 | DE | 478ms | 🇩🇪151652 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇷 | FR | 484ms | 🇫🇷151594 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 487ms | 🇺🇸151972 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 489ms | 🇷🇺151808 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 489ms | @Capoit`"
+      - "🇩🇪 | DE | 493ms | 🇩🇪151552 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇴 | NO | 496ms | 🇳🇴151675 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 500ms | 🍑17@oneclickvpnkeys"
+      - "🇬🇧 | GB | 501ms | 🏓44@oneclickvpnkeys"
+      - "🇳🇱 | NL | 503ms | 🍑38@oneclickvpnkeys"
+      - "🇫🇷 | FR | 504ms | 🇫🇷151834 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 504ms | @meliproxyy"
+      - "🇳🇱 | NL | 509ms | 🇺🇸151848 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇭🇺 | HU | 513ms | @filembad`"
+      - "🇳🇱 | NL | 518ms | 🇳🇱151833 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 519ms | 🏓88@oneclickvpnkeys"
+      - "🇵🇱 | PL | 520ms | 🍑58@oneclickvpnkeys"
+      - "🇫🇷 | FR | 522ms | 🇫🇷151348 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇿 | CZ | 524ms | 🇨🇿151817 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 528ms | @meliproxyy"
+      - "🇵🇱 | PL | 529ms | @filembad`"
+      - "🇳🇱 | NL | 530ms | 🇳🇱151278 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 533ms | 🍑13@oneclickvpnkeys"
+      - "🇵🇱 | PL | 538ms | 🏓87@oneclickvpnkeys"
+      - "🇵🇱 | PL | 538ms | 🏓86@oneclickvpnkeys"
+      - "🇫🇷 | FR | 540ms | برای اتصال دائمی جوین شو🫟 TelegramID ⌲Express_freevpn"
+      - "🇨🇭 | CH | 543ms | 🇨🇭151639 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 548ms | 🍑4@oneclickvpnkeys"
+      - "🇮🇹 | IT | 551ms | 🍑51@oneclickvpnkeys"
+      - "🇳🇱 | NL | 557ms | 🇳🇱151875 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇪 | SE | 558ms | 🇸🇪151907 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 562ms | 🇩🇪151525 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸 | US | 563ms | 🇺🇸151281 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 565ms | 🏓52@oneclickvpnkeys"
+      - "🇨🇭 | CH | 567ms | 🍑18@oneclickvpnkeys"
+      - "🇳🇱 | NL | 577ms | 🇳🇱151900 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 579ms | 🏓76@oneclickvpnkeys"
+      - "🇳🇱 | NL | 580ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+      - "🇹🇷 | TR | 586ms | 🇹🇷151892 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇪🇪 | EE | 597ms | 🇪🇪151553 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇵🇱 | PL | 622ms | configraygan_3"
+      - "🇩🇪 | DE | 625ms | 🍑41@oneclickvpnkeys"
+      - "🇩🇪 | DE | 629ms | 🇩🇪151650 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇭🇰 | HK | 632ms | ***⚡***@V2ray_official"
+      - "🇳🇱 | NL | 644ms | 🏓100@oneclickvpnkeys"
+      - "🇪🇪 | EE | 652ms | 3🏓@oneclickvpnkeys"
+      - "🇳🇱 | NL | 655ms | 🥥 - @configraygan-46"
+      - "🇷🇺 | RU | 656ms | @filembad`"
+      - "🇵🇱 | PL | 659ms | 🇵🇱151316 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇪 | SE | 660ms | 🇸🇪151659 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 661ms | 🏓63@oneclickvpnkeys"
+      - "🇩🇪 | DE | 675ms | 🏓90@oneclickvpnkeys`"
+      - "🇷🇺 | RU | 684ms | @meliproxyy"
+      - "🇹🇷 | TR | 687ms | @filembad`"
+      - "🇺🇸 | US | 693ms | 🇨🇦151515 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 696ms | 🇩🇪151662 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇯🇵 | JP | 703ms | 🇯🇵151692 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇹🇖 | T1 | 734ms |"
+      - "🇯🇵 | JP | 743ms | 🇯🇵151620 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇷 | FR | 756ms | 4🏓@oneclickvpnkeys"
+      - "🇸🇪 | SE | 757ms |"
+      - "🇷🇺 | RU | 778ms | 🇷🇺151672 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇹🇖 | T1 | 780ms | @filembad`"
+      - "🇳🇱 | NL | 780ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+      - "🇹🇖 | T1 | 795ms | @filembad`"
+      - "🇫🇷 | FR | 831ms | 🇫🇷151902 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 833ms | 🍑9@oneclickvpnkeys"
+      - "🇺🇸 | US | 842ms | 🇩🇪151663 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇱🇻 | LV | 845ms | 🇱🇻151261 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇹🇷 | TR | 845ms | @filembad`"
+      - "🇫🇷 | FR | 876ms | 🇫🇷151524 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 877ms | 🇩🇪151317 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇴 | NO | 905ms | ***⚡***@V2ray_official"
+      - "🇱🇻 | LV | 996ms | 🇱🇻151318 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇹🇷 | TR | 1018ms | @filembad`"
+      - "🇸🇬 | SG | 1020ms | 🇨🇦151429 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇬 | SG | 1023ms | 🏓53@oneclickvpnkeys"
+      - "🇩🇪 | DE | 1099ms | 🇩🇪151904 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 1107ms | @filembad`"
+      - "🇮🇹 | IT | 1113ms | Free x39 @Outline_Vpn"
+      - "🇩🇪 | DE | 1160ms | 🇩🇪151934 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇯🇵 | JP | 1173ms | 🇨🇦151379 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇬 | SG | 1184ms | Channel : @proxy_kafee"
+      - "🇸🇬 | SG | 1196ms | 🇨🇦151734 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇬 | SG | 1207ms | 🏓68@oneclickvpnkeys"
+      - "🇩🇪 | DE | 1375ms | 🇩🇪151852 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 1383ms | @filembad`"
+      - "🇸🇬 | SG | 1415ms | 🇨🇦151449 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇬 | SG | 1426ms | @filembad`"
+      - "🇵🇱 | PL | 1483ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+      - "🇳🇱 | NL | 1548ms | 🇳🇱151657 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 1674ms | 🇨🇦151854 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇬 | SG | 1680ms | Channel : @proxy_kafee"
+      - "🇩🇪 | DE | 1755ms | @meliproxyy"
+      - "🇫🇮 | FI | 1760ms | @filembad`"
+      - "🇩🇪 | DE | 1973ms | @filembad`"
+      - "🇩🇪 | DE | 2118ms | ***⚡***@V2ray_official"
+      - "🇮🇹 | IT | 2303ms | برای اتصال دائمی جوین شو🫟 TelegramID ⌲Express_freevpn"
+      - "🇬🇧 | GB | 2307ms | Channel : @proxy_kafee"
+      - "🇨🇭 | CH | 2345ms | 🏓56@oneclickvpnkeys"
+      - "🇺🇸 | US | 2495ms | 🇺🇸151725 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 2735ms | @meliproxyy"
+      - "🇩🇪 | DE | 3007ms | @filembad`"
+      - "🇧🇪 | BE | 3104ms | 🇧🇪151474 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇧🇪 | BE | 3151ms | Telegram channel : @proxy_kafee`"
+      - "🇫🇷 | FR | 3278ms | 𝗝𝗼𝗶𝗻➠@PlanB_net"
+      - "🇬🇧 | GB | 3426ms | 🇬🇧151547 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 3443ms | @V2ray_confiig"
+      - "🇳🇱 | NL | 3456ms | 🇺🇸151924 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇮🇳 | IN | 3518ms | ***⚡***@V2ray_official"
+      - "🇬🇧 | GB | 3520ms | Free x42 @Outline_Vpn"
+      - "🇳🇱 | NL | 3632ms | 🇳🇱151751 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇷 | FR | 3989ms | 🏓65@oneclickvpnkeys"
+      - "🇳🇱 | NL | 4199ms | @filembad`"
+      - "🇪🇪 | EE | 4442ms | 🇪🇪151950 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 4460ms | @filembad`"
+      - "🇬🇧 | GB | 4519ms | 🇬🇧151637 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 4709ms | @filembad`"
+      - "🇮🇹 | IT | 4709ms | 🍑42@oneclickvpnkeys"
+      - "🇳🇱 | NL | 4975ms | @filembad`"
+      - "🇺🇸 | US | 148ms | 🇺🇸151575 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸 | US | 162ms | @meliproxyy"
+      - "🇺🇸 | US | 168ms | @meliproxyy"
+      - "🇺🇸 | US | 200ms | ***✅***@AR14N24b"
+      - "🇺🇸 | US | 282ms | ***✅***@AR14N24b"
+      - "🇺🇸 | US | 286ms | @meliproxyy"
+      - "🇮🇪 | IE | 300ms | ***✅***@AR14N24b"
+      - "🇳🇱 | NL | 332ms | ***✅***@AR14N24b"
+      - "🇬🇧 | GB | 332ms | 🏓13@oneclickvpnkeys"
+      - "🇬🇧 | GB | 334ms | 🏓18@oneclickvpnkeys"
+      - "🇬🇧 | GB | 335ms | 🏓23@oneclickvpnkeys"
+      - "🇬🇧 | GB | 340ms | 🏓14@oneclickvpnkeys"
+      - "🇩🇪 | DE | 352ms | ***✅***@AR14N24b"
+      - "🇩🇪 | DE | 361ms | 🏓31@oneclickvpnkeys"
+      - "🇨🇦 | CA | 366ms | @filembad`"
+      - "🇨🇭 | CH | 367ms | 🍑11@oneclickvpnkeys"
+      - "🇩🇪 | DE | 368ms | 🇩🇪151877 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 370ms | 🇬🇧 @goololgoo 🔐 ویپیان رایگان | Free Proxy💥"
+      - "🇳🇱 | NL | 370ms | ***✅***@AR14N24b"
+      - "🇳🇱 | NL | 371ms | 🏓37@oneclickvpnkeys"
+      - "🇳🇱 | NL | 372ms | ***✅***@AR14N24b"
+      - "🇳🇱 | NL | 375ms | 🇳🇱151269 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 378ms | 🇬🇧 @goololgoo 🔐 ویپیان رایگان | Free Proxy💥"
+      - "🇳🇱 | NL | 378ms | ***✅***@AR14N24b"
+      - "🇳🇱 | NL | 383ms | 🍑31@oneclickvpnkeys"
+      - "🇳🇱 | NL | 385ms | 🇳🇱151280 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 386ms | 🇳🇱151536 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 388ms | 🍑27@oneclickvpnkeys"
+      - "🇳🇱 | NL | 390ms | 🇳🇱151273 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇵🇱 | PL | 392ms | ***✅***@AR14N24b"
+      - "🇵🇱 | PL | 393ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+      - "🇳🇱 | NL | 396ms | 🇳🇱151925 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇮🇹 | IT | 402ms | ***✅***@AR14N24b"
+      - "🇯🇵 | JP | 419ms | @meliproxyy"
+      - "🇮🇹 | IT | 482ms | 🇮🇹151562 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 485ms | ***✅***@AR14N24b"
+      - "🇬🇧 | GB | 487ms | 🏓83@oneclickvpnkeys"
+      - "🇪🇸 | ES | 513ms | @meliproxyy"
+      - "🇫🇷 | FR | 550ms | ***✅***@AR14N24b"
+      - "🇱🇹 | LT | 778ms | 5🏓@oneclickvpnkeys`"
+      - "🇵🇱 | PL | 851ms | configraygan_29"
+      - "🇳🇱 | NL | 1233ms | ***✅***@AR14N24b"
+      - "🇳🇱 | NL | 1677ms | @meliproxyy"
+      - "🇵🇱 | PL | 1739ms | ***✅***@AR14N24b"
+      - "🇳🇱 | NL | 1997ms | @meliproxyy"
+      - "🇭🇰 | HK | 2367ms | ***⚡***@V2ray_official"
+      - "🇺🇸 | US | 2717ms | @meliproxyy"
+      - "🇳🇱 | NL | 3155ms | ***✅***@AR14N24b"
+      - "🇨🇦 | CA | 4283ms | ***✅***@AR14N24b"
+      - "🇺🇸 | US | 128ms | 🇺🇸151756 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 439ms | 🇩🇪151733 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 475ms | 🇳🇱151878 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇷 | FR | 1557ms | 🇫🇷[openproxylist.com] vmess-FR"
+      - "🇬🇧 | GB | 4259ms | @meliproxyy"
+      - "🇺🇸 | US | 232ms |"
+      - "🇺🇸 | US | 380ms | ***✅***@AR14N24b"
+      - "🇨🇭 | CH | 639ms | 🏓71@oneclickvpnkeys"
+      - "🇯🇵 | JP | 718ms | ***✅***@AR14N24b"
+      - "🇹🇼 | TW | 752ms |"
+      - "🇫🇷 | FR | 769ms | 3"
+      - "🇫🇷 | FR | 799ms | @FarazV2ray"
+      - "🇩🇪 | DE | 896ms | 🇺🇸151593 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇷🇺 | RU | 936ms | 🇷🇺151836 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇪 | SE | 1010ms | @meliproxyy"
+      - "🇫🇷 | FR | 1687ms | 2"
+      - "🇫🇷 | FR | 1744ms | 1"
+      - "🇺🇸 | US | 59ms | 🇨🇦151520 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸 | US | 179ms | زن زندگی آزادی"
+      - "🇺🇸 | US | 200ms | MTB"
+      - "🇺🇸 | US | 213ms | MTB"
+  - name: "خودکار (بهترین پینگ) 🤖"
+    type: "url-test"
+    icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 600
+    tolerance: 50
+    timeout: 3200
+    lazy: false
+    max-failed-times: 2
+    proxies:
+      - "🇳🇱 | NL | 472ms | 🍑14@oneclickvpnkeys"
+      - "🇫🇷 | FR | 500ms | 🏓69@oneclickvpnkeys"
+      - "🇨🇭 | CH | 504ms | 🇨🇭151548 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 520ms | 🏓62@oneclickvpnkeys"
+      - "🇩🇪 | DE | 521ms | 🇩🇪151807 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 538ms | ***⚡***@V2ray_official"
+      - "🇵🇱 | PL | 538ms | 🇵🇱151905 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 576ms | 🇩🇪151846 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇪🇪 | EE | 578ms | 🇺🇸151551 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 591ms | 🇳🇱151549 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇮 | FI | 616ms | 1🏓@oneclickvpnkeys"
+      - "🇫🇷 | FR | 620ms | 🏓66@oneclickvpnkeys"
+      - "🇳🇱 | NL | 646ms | 🏓77@oneclickvpnkeys"
+      - "🇳🇱 | NL | 757ms | 🇳🇱151426 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 833ms | 🇩🇪151358 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 1124ms | 🇺🇸151555 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 1327ms | Telegram channel : @proxy_kafee"
+      - "🇫🇮 | FI | 1376ms | @filembad`"
+      - "🇺🇸 | US | 150ms | ***✅***@AR14N24b"
+      - "🇺🇸 | US | 160ms | @IranProxyPlus`"
+      - "🇨🇦 | CA | 204ms | 🇨🇦151897 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸 | US | 235ms | 🇺🇸151850 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸 | US | 268ms | configraygan_16"
+      - "🇺🇸 | US | 282ms | 🇨🇦151427 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 340ms | 6885"
+      - "🇺🇸 | US | 355ms | 6881"
+      - "🇩🇪 | DE | 361ms | Germany 🇩🇪"
+      - "🇳🇱 | NL | 426ms | 🇳🇱151538 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 440ms | 🇬🇧151270 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 440ms | 🇩🇪151464 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 447ms | ***⚡***@V2ray_official"
+      - "🇳🇱 | NL | 450ms |"
+      - "🇳🇱 | NL | 454ms | configraygan_24"
+      - "🇳🇱 | NL | 455ms | 🏓9@oneclickvpnkeys"
+      - "🇩🇪 | DE | 460ms | 🇩🇪151824 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 461ms | 🏓49@oneclickvpnkeys"
+      - "🇫🇷 | FR | 462ms | 🏓58@oneclickvpnkeys"
+      - "🇩🇪 | DE | 463ms | @meliproxyy"
+      - "🇬🇧 | GB | 466ms | 🇸🇨151929 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 468ms | 🍑26@oneclickvpnkeys"
+      - "🇬🇧 | GB | 469ms | 🏓70@oneclickvpnkeys"
+      - "🇫🇷 | FR | 469ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+      - "🇳🇱 | NL | 469ms | @meliproxyy"
+      - "🇩🇪 | DE | 470ms | @meliproxyy"
+      - "🇳🇱 | NL | 472ms | @filembad`"
+      - "🇫🇷 | FR | 473ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+      - "🇺🇸 | US | 474ms | 🇺🇸151922 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 476ms | @meliproxyy"
+      - "🇬🇧 | GB | 477ms | 🇩🇪151390 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 478ms | 🏓17@oneclickvpnkeys"
+      - "🇩🇪 | DE | 478ms | 🇩🇪151652 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇷 | FR | 484ms | 🇫🇷151594 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 487ms | 🇺🇸151972 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 489ms | 🇷🇺151808 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 489ms | @Capoit`"
+      - "🇩🇪 | DE | 493ms | 🇩🇪151552 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇴 | NO | 496ms | 🇳🇴151675 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 500ms | 🍑17@oneclickvpnkeys"
+      - "🇬🇧 | GB | 501ms | 🏓44@oneclickvpnkeys"
+      - "🇳🇱 | NL | 503ms | 🍑38@oneclickvpnkeys"
+      - "🇫🇷 | FR | 504ms | 🇫🇷151834 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 504ms | @meliproxyy"
+      - "🇳🇱 | NL | 509ms | 🇺🇸151848 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇭🇺 | HU | 513ms | @filembad`"
+      - "🇳🇱 | NL | 518ms | 🇳🇱151833 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 519ms | 🏓88@oneclickvpnkeys"
+      - "🇵🇱 | PL | 520ms | 🍑58@oneclickvpnkeys"
+      - "🇫🇷 | FR | 522ms | 🇫🇷151348 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇿 | CZ | 524ms | 🇨🇿151817 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 528ms | @meliproxyy"
+      - "🇵🇱 | PL | 529ms | @filembad`"
+      - "🇳🇱 | NL | 530ms | 🇳🇱151278 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 533ms | 🍑13@oneclickvpnkeys"
+      - "🇵🇱 | PL | 538ms | 🏓87@oneclickvpnkeys"
+      - "🇵🇱 | PL | 538ms | 🏓86@oneclickvpnkeys"
+      - "🇫🇷 | FR | 540ms | برای اتصال دائمی جوین شو🫟 TelegramID ⌲Express_freevpn"
+      - "🇨🇭 | CH | 543ms | 🇨🇭151639 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 548ms | 🍑4@oneclickvpnkeys"
+      - "🇮🇹 | IT | 551ms | 🍑51@oneclickvpnkeys"
+      - "🇳🇱 | NL | 557ms | 🇳🇱151875 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇪 | SE | 558ms | 🇸🇪151907 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 562ms | 🇩🇪151525 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸 | US | 563ms | 🇺🇸151281 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 565ms | 🏓52@oneclickvpnkeys"
+      - "🇨🇭 | CH | 567ms | 🍑18@oneclickvpnkeys"
+      - "🇳🇱 | NL | 577ms | 🇳🇱151900 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 579ms | 🏓76@oneclickvpnkeys"
+      - "🇳🇱 | NL | 580ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+      - "🇹🇷 | TR | 586ms | 🇹🇷151892 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇪🇪 | EE | 597ms | 🇪🇪151553 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇵🇱 | PL | 622ms | configraygan_3"
+      - "🇩🇪 | DE | 625ms | 🍑41@oneclickvpnkeys"
+      - "🇩🇪 | DE | 629ms | 🇩🇪151650 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇭🇰 | HK | 632ms | ***⚡***@V2ray_official"
+      - "🇳🇱 | NL | 644ms | 🏓100@oneclickvpnkeys"
+      - "🇪🇪 | EE | 652ms | 3🏓@oneclickvpnkeys"
+      - "🇳🇱 | NL | 655ms | 🥥 - @configraygan-46"
+      - "🇷🇺 | RU | 656ms | @filembad`"
+      - "🇵🇱 | PL | 659ms | 🇵🇱151316 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇪 | SE | 660ms | 🇸🇪151659 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 661ms | 🏓63@oneclickvpnkeys"
+      - "🇩🇪 | DE | 675ms | 🏓90@oneclickvpnkeys`"
+      - "🇷🇺 | RU | 684ms | @meliproxyy"
+      - "🇹🇷 | TR | 687ms | @filembad`"
+      - "🇺🇸 | US | 693ms | 🇨🇦151515 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 696ms | 🇩🇪151662 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇯🇵 | JP | 703ms | 🇯🇵151692 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇹🇖 | T1 | 734ms |"
+      - "🇯🇵 | JP | 743ms | 🇯🇵151620 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇷 | FR | 756ms | 4🏓@oneclickvpnkeys"
+      - "🇸🇪 | SE | 757ms |"
+      - "🇷🇺 | RU | 778ms | 🇷🇺151672 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇹🇖 | T1 | 780ms | @filembad`"
+      - "🇳🇱 | NL | 780ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+      - "🇹🇖 | T1 | 795ms | @filembad`"
+      - "🇫🇷 | FR | 831ms | 🇫🇷151902 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 833ms | 🍑9@oneclickvpnkeys"
+      - "🇺🇸 | US | 842ms | 🇩🇪151663 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇱🇻 | LV | 845ms | 🇱🇻151261 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇹🇷 | TR | 845ms | @filembad`"
+      - "🇫🇷 | FR | 876ms | 🇫🇷151524 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 877ms | 🇩🇪151317 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇴 | NO | 905ms | ***⚡***@V2ray_official"
+      - "🇱🇻 | LV | 996ms | 🇱🇻151318 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇹🇷 | TR | 1018ms | @filembad`"
+      - "🇸🇬 | SG | 1020ms | 🇨🇦151429 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇬 | SG | 1023ms | 🏓53@oneclickvpnkeys"
+      - "🇩🇪 | DE | 1099ms | 🇩🇪151904 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 1107ms | @filembad`"
+      - "🇮🇹 | IT | 1113ms | Free x39 @Outline_Vpn"
+      - "🇩🇪 | DE | 1160ms | 🇩🇪151934 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇯🇵 | JP | 1173ms | 🇨🇦151379 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇬 | SG | 1184ms | Channel : @proxy_kafee"
+      - "🇸🇬 | SG | 1196ms | 🇨🇦151734 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇬 | SG | 1207ms | 🏓68@oneclickvpnkeys"
+      - "🇩🇪 | DE | 1375ms | 🇩🇪151852 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 1383ms | @filembad`"
+      - "🇸🇬 | SG | 1415ms | 🇨🇦151449 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇬 | SG | 1426ms | @filembad`"
+      - "🇵🇱 | PL | 1483ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+      - "🇳🇱 | NL | 1548ms | 🇳🇱151657 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 1674ms | 🇨🇦151854 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇬 | SG | 1680ms | Channel : @proxy_kafee"
+      - "🇩🇪 | DE | 1755ms | @meliproxyy"
+      - "🇫🇮 | FI | 1760ms | @filembad`"
+      - "🇩🇪 | DE | 1973ms | @filembad`"
+      - "🇩🇪 | DE | 2118ms | ***⚡***@V2ray_official"
+      - "🇮🇹 | IT | 2303ms | برای اتصال دائمی جوین شو🫟 TelegramID ⌲Express_freevpn"
+      - "🇬🇧 | GB | 2307ms | Channel : @proxy_kafee"
+      - "🇨🇭 | CH | 2345ms | 🏓56@oneclickvpnkeys"
+      - "🇺🇸 | US | 2495ms | 🇺🇸151725 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 2735ms | @meliproxyy"
+      - "🇩🇪 | DE | 3007ms | @filembad`"
+      - "🇧🇪 | BE | 3104ms | 🇧🇪151474 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇧🇪 | BE | 3151ms | Telegram channel : @proxy_kafee`"
+      - "🇫🇷 | FR | 3278ms | 𝗝𝗼𝗶𝗻➠@PlanB_net"
+      - "🇬🇧 | GB | 3426ms | 🇬🇧151547 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 3443ms | @V2ray_confiig"
+      - "🇳🇱 | NL | 3456ms | 🇺🇸151924 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇮🇳 | IN | 3518ms | ***⚡***@V2ray_official"
+      - "🇬🇧 | GB | 3520ms | Free x42 @Outline_Vpn"
+      - "🇳🇱 | NL | 3632ms | 🇳🇱151751 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇷 | FR | 3989ms | 🏓65@oneclickvpnkeys"
+      - "🇳🇱 | NL | 4199ms | @filembad`"
+      - "🇪🇪 | EE | 4442ms | 🇪🇪151950 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 4460ms | @filembad`"
+      - "🇬🇧 | GB | 4519ms | 🇬🇧151637 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 4709ms | @filembad`"
+      - "🇮🇹 | IT | 4709ms | 🍑42@oneclickvpnkeys"
+      - "🇳🇱 | NL | 4975ms | @filembad`"
+      - "🇺🇸 | US | 148ms | 🇺🇸151575 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸 | US | 162ms | @meliproxyy"
+      - "🇺🇸 | US | 168ms | @meliproxyy"
+      - "🇺🇸 | US | 200ms | ***✅***@AR14N24b"
+      - "🇺🇸 | US | 282ms | ***✅***@AR14N24b"
+      - "🇺🇸 | US | 286ms | @meliproxyy"
+      - "🇮🇪 | IE | 300ms | ***✅***@AR14N24b"
+      - "🇳🇱 | NL | 332ms | ***✅***@AR14N24b"
+      - "🇬🇧 | GB | 332ms | 🏓13@oneclickvpnkeys"
+      - "🇬🇧 | GB | 334ms | 🏓18@oneclickvpnkeys"
+      - "🇬🇧 | GB | 335ms | 🏓23@oneclickvpnkeys"
+      - "🇬🇧 | GB | 340ms | 🏓14@oneclickvpnkeys"
+      - "🇩🇪 | DE | 352ms | ***✅***@AR14N24b"
+      - "🇩🇪 | DE | 361ms | 🏓31@oneclickvpnkeys"
+      - "🇨🇦 | CA | 366ms | @filembad`"
+      - "🇨🇭 | CH | 367ms | 🍑11@oneclickvpnkeys"
+      - "🇩🇪 | DE | 368ms | 🇩🇪151877 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 370ms | 🇬🇧 @goololgoo 🔐 ویپیان رایگان | Free Proxy💥"
+      - "🇳🇱 | NL | 370ms | ***✅***@AR14N24b"
+      - "🇳🇱 | NL | 371ms | 🏓37@oneclickvpnkeys"
+      - "🇳🇱 | NL | 372ms | ***✅***@AR14N24b"
+      - "🇳🇱 | NL | 375ms | 🇳🇱151269 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 378ms | 🇬🇧 @goololgoo 🔐 ویپیان رایگان | Free Proxy💥"
+      - "🇳🇱 | NL | 378ms | ***✅***@AR14N24b"
+      - "🇳🇱 | NL | 383ms | 🍑31@oneclickvpnkeys"
+      - "🇳🇱 | NL | 385ms | 🇳🇱151280 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 386ms | 🇳🇱151536 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 388ms | 🍑27@oneclickvpnkeys"
+      - "🇳🇱 | NL | 390ms | 🇳🇱151273 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇵🇱 | PL | 392ms | ***✅***@AR14N24b"
+      - "🇵🇱 | PL | 393ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+      - "🇳🇱 | NL | 396ms | 🇳🇱151925 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇮🇹 | IT | 402ms | ***✅***@AR14N24b"
+      - "🇯🇵 | JP | 419ms | @meliproxyy"
+      - "🇮🇹 | IT | 482ms | 🇮🇹151562 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 485ms | ***✅***@AR14N24b"
+      - "🇬🇧 | GB | 487ms | 🏓83@oneclickvpnkeys"
+      - "🇪🇸 | ES | 513ms | @meliproxyy"
+      - "🇫🇷 | FR | 550ms | ***✅***@AR14N24b"
+      - "🇱🇹 | LT | 778ms | 5🏓@oneclickvpnkeys`"
+      - "🇵🇱 | PL | 851ms | configraygan_29"
+      - "🇳🇱 | NL | 1233ms | ***✅***@AR14N24b"
+      - "🇳🇱 | NL | 1677ms | @meliproxyy"
+      - "🇵🇱 | PL | 1739ms | ***✅***@AR14N24b"
+      - "🇳🇱 | NL | 1997ms | @meliproxyy"
+      - "🇭🇰 | HK | 2367ms | ***⚡***@V2ray_official"
+      - "🇺🇸 | US | 2717ms | @meliproxyy"
+      - "🇳🇱 | NL | 3155ms | ***✅***@AR14N24b"
+      - "🇨🇦 | CA | 4283ms | ***✅***@AR14N24b"
+      - "🇺🇸 | US | 128ms | 🇺🇸151756 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 439ms | 🇩🇪151733 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 475ms | 🇳🇱151878 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇷 | FR | 1557ms | 🇫🇷[openproxylist.com] vmess-FR"
+      - "🇬🇧 | GB | 4259ms | @meliproxyy"
+      - "🇺🇸 | US | 232ms |"
+      - "🇺🇸 | US | 380ms | ***✅***@AR14N24b"
+      - "🇨🇭 | CH | 639ms | 🏓71@oneclickvpnkeys"
+      - "🇯🇵 | JP | 718ms | ***✅***@AR14N24b"
+      - "🇹🇼 | TW | 752ms |"
+      - "🇫🇷 | FR | 769ms | 3"
+      - "🇫🇷 | FR | 799ms | @FarazV2ray"
+      - "🇩🇪 | DE | 896ms | 🇺🇸151593 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇷🇺 | RU | 936ms | 🇷🇺151836 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇪 | SE | 1010ms | @meliproxyy"
+      - "🇫🇷 | FR | 1687ms | 2"
+      - "🇫🇷 | FR | 1744ms | 1"
+      - "🇺🇸 | US | 59ms | 🇨🇦151520 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸 | US | 179ms | زن زندگی آزادی"
+      - "🇺🇸 | US | 200ms | MTB"
+      - "🇺🇸 | US | 213ms | MTB"
+  - name: "توزیع بار چرخشی ⚖️"
+    type: "load-balance"
+    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
+    strategy: "round-robin"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 30
+    timeout: 1500
+    lazy: false
+    proxies:
+      - "🇳🇱 | NL | 472ms | 🍑14@oneclickvpnkeys"
+      - "🇫🇷 | FR | 500ms | 🏓69@oneclickvpnkeys"
+      - "🇨🇭 | CH | 504ms | 🇨🇭151548 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 520ms | 🏓62@oneclickvpnkeys"
+      - "🇩🇪 | DE | 521ms | 🇩🇪151807 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 538ms | ***⚡***@V2ray_official"
+      - "🇵🇱 | PL | 538ms | 🇵🇱151905 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 576ms | 🇩🇪151846 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇪🇪 | EE | 578ms | 🇺🇸151551 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 591ms | 🇳🇱151549 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇮 | FI | 616ms | 1🏓@oneclickvpnkeys"
+      - "🇫🇷 | FR | 620ms | 🏓66@oneclickvpnkeys"
+      - "🇳🇱 | NL | 646ms | 🏓77@oneclickvpnkeys"
+      - "🇳🇱 | NL | 757ms | 🇳🇱151426 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 833ms | 🇩🇪151358 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 1124ms | 🇺🇸151555 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 1327ms | Telegram channel : @proxy_kafee"
+      - "🇫🇮 | FI | 1376ms | @filembad`"
+      - "🇺🇸 | US | 150ms | ***✅***@AR14N24b"
+      - "🇺🇸 | US | 160ms | @IranProxyPlus`"
+      - "🇨🇦 | CA | 204ms | 🇨🇦151897 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸 | US | 235ms | 🇺🇸151850 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸 | US | 268ms | configraygan_16"
+      - "🇺🇸 | US | 282ms | 🇨🇦151427 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 340ms | 6885"
+      - "🇺🇸 | US | 355ms | 6881"
+      - "🇩🇪 | DE | 361ms | Germany 🇩🇪"
+      - "🇳🇱 | NL | 426ms | 🇳🇱151538 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 440ms | 🇬🇧151270 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 440ms | 🇩🇪151464 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 447ms | ***⚡***@V2ray_official"
+      - "🇳🇱 | NL | 450ms |"
+      - "🇳🇱 | NL | 454ms | configraygan_24"
+      - "🇳🇱 | NL | 455ms | 🏓9@oneclickvpnkeys"
+      - "🇩🇪 | DE | 460ms | 🇩🇪151824 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 461ms | 🏓49@oneclickvpnkeys"
+      - "🇫🇷 | FR | 462ms | 🏓58@oneclickvpnkeys"
+      - "🇩🇪 | DE | 463ms | @meliproxyy"
+      - "🇬🇧 | GB | 466ms | 🇸🇨151929 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 468ms | 🍑26@oneclickvpnkeys"
+      - "🇬🇧 | GB | 469ms | 🏓70@oneclickvpnkeys"
+      - "🇫🇷 | FR | 469ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+      - "🇳🇱 | NL | 469ms | @meliproxyy"
+      - "🇩🇪 | DE | 470ms | @meliproxyy"
+      - "🇳🇱 | NL | 472ms | @filembad`"
+      - "🇫🇷 | FR | 473ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+      - "🇺🇸 | US | 474ms | 🇺🇸151922 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 476ms | @meliproxyy"
+      - "🇬🇧 | GB | 477ms | 🇩🇪151390 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 478ms | 🏓17@oneclickvpnkeys"
+      - "🇩🇪 | DE | 478ms | 🇩🇪151652 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇷 | FR | 484ms | 🇫🇷151594 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 487ms | 🇺🇸151972 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 489ms | 🇷🇺151808 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 489ms | @Capoit`"
+      - "🇩🇪 | DE | 493ms | 🇩🇪151552 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇴 | NO | 496ms | 🇳🇴151675 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 500ms | 🍑17@oneclickvpnkeys"
+      - "🇬🇧 | GB | 501ms | 🏓44@oneclickvpnkeys"
+      - "🇳🇱 | NL | 503ms | 🍑38@oneclickvpnkeys"
+      - "🇫🇷 | FR | 504ms | 🇫🇷151834 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 504ms | @meliproxyy"
+      - "🇳🇱 | NL | 509ms | 🇺🇸151848 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇭🇺 | HU | 513ms | @filembad`"
+      - "🇳🇱 | NL | 518ms | 🇳🇱151833 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 519ms | 🏓88@oneclickvpnkeys"
+      - "🇵🇱 | PL | 520ms | 🍑58@oneclickvpnkeys"
+      - "🇫🇷 | FR | 522ms | 🇫🇷151348 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇿 | CZ | 524ms | 🇨🇿151817 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 528ms | @meliproxyy"
+      - "🇵🇱 | PL | 529ms | @filembad`"
+      - "🇳🇱 | NL | 530ms | 🇳🇱151278 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 533ms | 🍑13@oneclickvpnkeys"
+      - "🇵🇱 | PL | 538ms | 🏓87@oneclickvpnkeys"
+      - "🇵🇱 | PL | 538ms | 🏓86@oneclickvpnkeys"
+      - "🇫🇷 | FR | 540ms | برای اتصال دائمی جوین شو🫟 TelegramID ⌲Express_freevpn"
+      - "🇨🇭 | CH | 543ms | 🇨🇭151639 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 548ms | 🍑4@oneclickvpnkeys"
+      - "🇮🇹 | IT | 551ms | 🍑51@oneclickvpnkeys"
+      - "🇳🇱 | NL | 557ms | 🇳🇱151875 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇪 | SE | 558ms | 🇸🇪151907 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 562ms | 🇩🇪151525 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸 | US | 563ms | 🇺🇸151281 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 565ms | 🏓52@oneclickvpnkeys"
+      - "🇨🇭 | CH | 567ms | 🍑18@oneclickvpnkeys"
+      - "🇳🇱 | NL | 577ms | 🇳🇱151900 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 579ms | 🏓76@oneclickvpnkeys"
+      - "🇳🇱 | NL | 580ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+      - "🇹🇷 | TR | 586ms | 🇹🇷151892 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇪🇪 | EE | 597ms | 🇪🇪151553 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇵🇱 | PL | 622ms | configraygan_3"
+      - "🇩🇪 | DE | 625ms | 🍑41@oneclickvpnkeys"
+      - "🇩🇪 | DE | 629ms | 🇩🇪151650 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇭🇰 | HK | 632ms | ***⚡***@V2ray_official"
+      - "🇳🇱 | NL | 644ms | 🏓100@oneclickvpnkeys"
+      - "🇪🇪 | EE | 652ms | 3🏓@oneclickvpnkeys"
+      - "🇳🇱 | NL | 655ms | 🥥 - @configraygan-46"
+      - "🇷🇺 | RU | 656ms | @filembad`"
+      - "🇵🇱 | PL | 659ms | 🇵🇱151316 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇪 | SE | 660ms | 🇸🇪151659 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 661ms | 🏓63@oneclickvpnkeys"
+      - "🇩🇪 | DE | 675ms | 🏓90@oneclickvpnkeys`"
+      - "🇷🇺 | RU | 684ms | @meliproxyy"
+      - "🇹🇷 | TR | 687ms | @filembad`"
+      - "🇺🇸 | US | 693ms | 🇨🇦151515 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 696ms | 🇩🇪151662 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇯🇵 | JP | 703ms | 🇯🇵151692 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇹🇖 | T1 | 734ms |"
+      - "🇯🇵 | JP | 743ms | 🇯🇵151620 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇷 | FR | 756ms | 4🏓@oneclickvpnkeys"
+      - "🇸🇪 | SE | 757ms |"
+      - "🇷🇺 | RU | 778ms | 🇷🇺151672 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇹🇖 | T1 | 780ms | @filembad`"
+      - "🇳🇱 | NL | 780ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+      - "🇹🇖 | T1 | 795ms | @filembad`"
+      - "🇫🇷 | FR | 831ms | 🇫🇷151902 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 833ms | 🍑9@oneclickvpnkeys"
+      - "🇺🇸 | US | 842ms | 🇩🇪151663 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇱🇻 | LV | 845ms | 🇱🇻151261 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇹🇷 | TR | 845ms | @filembad`"
+      - "🇫🇷 | FR | 876ms | 🇫🇷151524 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 877ms | 🇩🇪151317 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇴 | NO | 905ms | ***⚡***@V2ray_official"
+      - "🇱🇻 | LV | 996ms | 🇱🇻151318 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇹🇷 | TR | 1018ms | @filembad`"
+      - "🇸🇬 | SG | 1020ms | 🇨🇦151429 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇬 | SG | 1023ms | 🏓53@oneclickvpnkeys"
+      - "🇩🇪 | DE | 1099ms | 🇩🇪151904 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 1107ms | @filembad`"
+      - "🇮🇹 | IT | 1113ms | Free x39 @Outline_Vpn"
+      - "🇩🇪 | DE | 1160ms | 🇩🇪151934 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇯🇵 | JP | 1173ms | 🇨🇦151379 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇬 | SG | 1184ms | Channel : @proxy_kafee"
+      - "🇸🇬 | SG | 1196ms | 🇨🇦151734 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇬 | SG | 1207ms | 🏓68@oneclickvpnkeys"
+      - "🇩🇪 | DE | 1375ms | 🇩🇪151852 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 1383ms | @filembad`"
+      - "🇸🇬 | SG | 1415ms | 🇨🇦151449 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇬 | SG | 1426ms | @filembad`"
+      - "🇵🇱 | PL | 1483ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+      - "🇳🇱 | NL | 1548ms | 🇳🇱151657 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 1674ms | 🇨🇦151854 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇬 | SG | 1680ms | Channel : @proxy_kafee"
+      - "🇩🇪 | DE | 1755ms | @meliproxyy"
+      - "🇫🇮 | FI | 1760ms | @filembad`"
+      - "🇩🇪 | DE | 1973ms | @filembad`"
+      - "🇩🇪 | DE | 2118ms | ***⚡***@V2ray_official"
+      - "🇮🇹 | IT | 2303ms | برای اتصال دائمی جوین شو🫟 TelegramID ⌲Express_freevpn"
+      - "🇬🇧 | GB | 2307ms | Channel : @proxy_kafee"
+      - "🇨🇭 | CH | 2345ms | 🏓56@oneclickvpnkeys"
+      - "🇺🇸 | US | 2495ms | 🇺🇸151725 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 2735ms | @meliproxyy"
+      - "🇩🇪 | DE | 3007ms | @filembad`"
+      - "🇧🇪 | BE | 3104ms | 🇧🇪151474 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇧🇪 | BE | 3151ms | Telegram channel : @proxy_kafee`"
+      - "🇫🇷 | FR | 3278ms | 𝗝𝗼𝗶𝗻➠@PlanB_net"
+      - "🇬🇧 | GB | 3426ms | 🇬🇧151547 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 3443ms | @V2ray_confiig"
+      - "🇳🇱 | NL | 3456ms | 🇺🇸151924 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇮🇳 | IN | 3518ms | ***⚡***@V2ray_official"
+      - "🇬🇧 | GB | 3520ms | Free x42 @Outline_Vpn"
+      - "🇳🇱 | NL | 3632ms | 🇳🇱151751 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇷 | FR | 3989ms | 🏓65@oneclickvpnkeys"
+      - "🇳🇱 | NL | 4199ms | @filembad`"
+      - "🇪🇪 | EE | 4442ms | 🇪🇪151950 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 4460ms | @filembad`"
+      - "🇬🇧 | GB | 4519ms | 🇬🇧151637 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 4709ms | @filembad`"
+      - "🇮🇹 | IT | 4709ms | 🍑42@oneclickvpnkeys"
+      - "🇳🇱 | NL | 4975ms | @filembad`"
+      - "🇺🇸 | US | 148ms | 🇺🇸151575 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸 | US | 162ms | @meliproxyy"
+      - "🇺🇸 | US | 168ms | @meliproxyy"
+      - "🇺🇸 | US | 200ms | ***✅***@AR14N24b"
+      - "🇺🇸 | US | 282ms | ***✅***@AR14N24b"
+      - "🇺🇸 | US | 286ms | @meliproxyy"
+      - "🇮🇪 | IE | 300ms | ***✅***@AR14N24b"
+      - "🇳🇱 | NL | 332ms | ***✅***@AR14N24b"
+      - "🇬🇧 | GB | 332ms | 🏓13@oneclickvpnkeys"
+      - "🇬🇧 | GB | 334ms | 🏓18@oneclickvpnkeys"
+      - "🇬🇧 | GB | 335ms | 🏓23@oneclickvpnkeys"
+      - "🇬🇧 | GB | 340ms | 🏓14@oneclickvpnkeys"
+      - "🇩🇪 | DE | 352ms | ***✅***@AR14N24b"
+      - "🇩🇪 | DE | 361ms | 🏓31@oneclickvpnkeys"
+      - "🇨🇦 | CA | 366ms | @filembad`"
+      - "🇨🇭 | CH | 367ms | 🍑11@oneclickvpnkeys"
+      - "🇩🇪 | DE | 368ms | 🇩🇪151877 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 370ms | 🇬🇧 @goololgoo 🔐 ویپیان رایگان | Free Proxy💥"
+      - "🇳🇱 | NL | 370ms | ***✅***@AR14N24b"
+      - "🇳🇱 | NL | 371ms | 🏓37@oneclickvpnkeys"
+      - "🇳🇱 | NL | 372ms | ***✅***@AR14N24b"
+      - "🇳🇱 | NL | 375ms | 🇳🇱151269 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧 | GB | 378ms | 🇬🇧 @goololgoo 🔐 ویپیان رایگان | Free Proxy💥"
+      - "🇳🇱 | NL | 378ms | ***✅***@AR14N24b"
+      - "🇳🇱 | NL | 383ms | 🍑31@oneclickvpnkeys"
+      - "🇳🇱 | NL | 385ms | 🇳🇱151280 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 386ms | 🇳🇱151536 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 388ms | 🍑27@oneclickvpnkeys"
+      - "🇳🇱 | NL | 390ms | 🇳🇱151273 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇵🇱 | PL | 392ms | ***✅***@AR14N24b"
+      - "🇵🇱 | PL | 393ms | اگه میخوای قطع نشی جوین شو : @farsiproxy"
+      - "🇳🇱 | NL | 396ms | 🇳🇱151925 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇮🇹 | IT | 402ms | ***✅***@AR14N24b"
+      - "🇯🇵 | JP | 419ms | @meliproxyy"
+      - "🇮🇹 | IT | 482ms | 🇮🇹151562 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 485ms | ***✅***@AR14N24b"
+      - "🇬🇧 | GB | 487ms | 🏓83@oneclickvpnkeys"
+      - "🇪🇸 | ES | 513ms | @meliproxyy"
+      - "🇫🇷 | FR | 550ms | ***✅***@AR14N24b"
+      - "🇱🇹 | LT | 778ms | 5🏓@oneclickvpnkeys`"
+      - "🇵🇱 | PL | 851ms | configraygan_29"
+      - "🇳🇱 | NL | 1233ms | ***✅***@AR14N24b"
+      - "🇳🇱 | NL | 1677ms | @meliproxyy"
+      - "🇵🇱 | PL | 1739ms | ***✅***@AR14N24b"
+      - "🇳🇱 | NL | 1997ms | @meliproxyy"
+      - "🇭🇰 | HK | 2367ms | ***⚡***@V2ray_official"
+      - "🇺🇸 | US | 2717ms | @meliproxyy"
+      - "🇳🇱 | NL | 3155ms | ***✅***@AR14N24b"
+      - "🇨🇦 | CA | 4283ms | ***✅***@AR14N24b"
+      - "🇺🇸 | US | 128ms | 🇺🇸151756 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪 | DE | 439ms | 🇩🇪151733 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱 | NL | 475ms | 🇳🇱151878 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇷 | FR | 1557ms | 🇫🇷[openproxylist.com] vmess-FR"
+      - "🇬🇧 | GB | 4259ms | @meliproxyy"
+      - "🇺🇸 | US | 232ms |"
+      - "🇺🇸 | US | 380ms | ***✅***@AR14N24b"
+      - "🇨🇭 | CH | 639ms | 🏓71@oneclickvpnkeys"
+      - "🇯🇵 | JP | 718ms | ***✅***@AR14N24b"
+      - "🇹🇼 | TW | 752ms |"
+      - "🇫🇷 | FR | 769ms | 3"
+      - "🇫🇷 | FR | 799ms | @FarazV2ray"
+      - "🇩🇪 | DE | 896ms | 🇺🇸151593 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇷🇺 | RU | 936ms | 🇷🇺151836 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇪 | SE | 1010ms | @meliproxyy"
+      - "🇫🇷 | FR | 1687ms | 2"
+      - "🇫🇷 | FR | 1744ms | 1"
+      - "🇺🇸 | US | 59ms | 🇨🇦151520 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸 | US | 179ms | زن زندگی آزادی"
+      - "🇺🇸 | US | 200ms | MTB"
+      - "🇺🇸 | US | 213ms | MTB"
+  - name: "المنت 💬"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تیماسپیک 🎧"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/331567/teamspeak.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دلتاچت ✉️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/373771/mail.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دانلود منیجر 📥"
+    type: "select"
+    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "تلگرام 💬"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "یوتیوب ▶️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "گوگل 🌍"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475656/google-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "واتس آپ 🟢"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "هوش مصنوعی 🤖"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/306500/openai.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "توییتر 🐦"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475689/twitter-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "اسپاتیفای 🎵"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "اینستاگرام 📸"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/452229/instagram-1.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+  - name: "تبلیغات 🆎"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/336358/ad.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "تبلیغات اپ ها 🍃"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "رهگیری جهانی 🛑"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "سایتای مخرب ⚠️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "استیم 🖥️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/452107/steam.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "گیم 🎮"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "توییچ 📡"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/343527/twitch-network-communication-interaction-connection.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "ویندوز 🧊"
+    type: "select"
+    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "اجازه ندادن 🚫"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+  - name: "کلودفلر ☁️"
+    type: "select"
+    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "گیتهاب 🐙"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/355033/github.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "دیسکورد 🗣️"
+    type: "select"
+    icon: "https://automatorplugin.com/wp-content/uploads/2024/10/discord-icon.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "استریمیو 🎬"
+    type: "select"
+    icon: "https://stremio.github.io/stremio-addon-guide/img/stremio.svg"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "انیدسک 🔴"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+  - name: "سایتای سانسوری 🤬"
+    type: "select"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Censorship.svg/300px-Censorship.svg.png"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+  - name: "بدون فیلترشکن 🛡️"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/6318/connection.svg"
+    proxies:
+      - "DIRECT"
+    hidden: true
+  - name: "قطع اینترنت ⛔"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
+    proxies:
+      - "REJECT"
+    hidden: true
+  - name: "اجازه ندادن 🚫"
+    type: "select"
+    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
+    proxies:
+      - "REJECT"
+    hidden: true
+rules:
+  - "RULE-SET,DownloadManagers,دانلود منیجر 📥"
+  - "RULE-SET,Download,دانلود منیجر 📥"
+  - "RULE-SET,stremio,استریمیو 🎬"
+  - "PROCESS-NAME,im.vector.app,المنت 💬"
+  - "PROCESS-NAME,io.element.android.x,المنت 💬"
+  - "PROCESS-NAME,Element.exe,المنت 💬"
+  - "DOMAIN-SUFFIX,aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,chat.aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,site.aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,electonet.xyz,المنت 💬"
+  - "DOMAIN-SUFFIX,chat.electonet.xyz,المنت 💬"
+  - "DOMAIN-SUFFIX,rainbuwu.ir,المنت 💬"
+  - "DOMAIN-SUFFIX,cinny.rainbuwu.ir,المنت 💬"
+  - "PROCESS-NAME,chat.delta,دلتاچت ✉️"
+  - "PROCESS-NAME,DeltaChat.exe,دلتاچت ✉️"
+  - "DOMAIN-SUFFIX,arsalandalvand.ir,دلتاچت ✉️"
+  - "DST-PORT,993,دلتاچت ✉️"
+  - "DST-PORT,465,دلتاچت ✉️"
+  - "DST-PORT,587,دلتاچت ✉️"
+  - "PROCESS-NAME,com.teamspeak.ts3client,تیماسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win64.exe,تیماسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win32.exe,تیماسپیک 🎧"
+  - "DOMAIN-SUFFIX,ag.tssq.ir,تیماسپیک 🎧"
+  - "DST-PORT,9987,تیماسپیک 🎧"
+  - "RULE-SET,BanProgramAD,تبلیغات اپ ها 🍃"
+  - "RULE-SET,BanAD,رهگیری جهانی 🛑"
+  - "RULE-SET,PrivateTracker,رهگیری جهانی 🛑"
+  - "RULE-SET,category_public_tracker,رهگیری جهانی 🛑"
+  - "RULE-SET,malware,سایتای مخرب ⚠️"
+  - "RULE-SET,phishing,سایتای مخرب ⚠️"
+  - "RULE-SET,cryptominers,سایتای مخرب ⚠️"
+  - "RULE-SET,warninglist,سایتای مخرب ⚠️"
+  - "RULE-SET,Ponzi,سایتای مخرب ⚠️"
+  - "RULE-SET,LiteAds,تبلیغات 🆎"
+  - "RULE-SET,iran_ads,تبلیغات 🆎"
+  - "RULE-SET,PersianBlocker,تبلیغات 🆎"
+  - "RULE-SET,ads,تبلیغات 🆎"
+  - "RULE-SET,BanEasyList,تبلیغات 🆎"
+  - "RULE-SET,twitch,توییچ 📡"
+  - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger.web,تلگرام 💬"
+  - "RULE-SET,telegram,تلگرام 💬"
+  - "RULE-SET,YouTube,یوتیوب ▶️"
+  - "RULE-SET,youtube,یوتیوب ▶️"
+  - "RULE-SET,YouTubeMusic,یوتیوب ▶️"
+  - "PROCESS-NAME,com.anydesk.anydeskandroid,انیدسک 🔴"
+  - "PROCESS-NAME,AnyDesk.exe,انیدسک 🔴"
+  - "DOMAIN-SUFFIX,anydesk.com,انیدسک 🔴"
+  - "PROCESS-NAME,Twitter.exe,توییتر 🐦"
+  - "PROCESS-NAME,com.twitter.android,توییتر 🐦"
+  - "RULE-SET,Chotwitter,توییتر 🐦"
+  - "RULE-SET,mihTwitter,توییتر 🐦"
+  - "RULE-SET,Domtwitter,توییتر 🐦"
+  - "PROCESS-NAME,com.spotify.music,اسپاتیفای 🎵"
+  - "PROCESS-NAME,Spotify.exe,اسپاتیفای 🎵"
+  - "RULE-SET,DomainSpotify,اسپاتیفای 🎵"
+  - "RULE-SET,mihspotify,اسپاتیفای 🎵"
+  - "PROCESS-NAME,com.instagram.android,اینستاگرام 📸"
+  - "RULE-SET,instagram,اینستاگرام 📸"
+  - "DOMAIN-SUFFIX,deepseek.com,هوش مصنوعی 🤖"
+  - "DOMAIN-SUFFIX,qwen.ai,هوش مصنوعی 🤖"
+  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
+  - "RULE-SET,censor,سایتای سانسوری 🤬"
+  - "RULE-SET,apps,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,arvancloud,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,derakcloud,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,iranserver,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,parspack,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,irasn,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,ircidr,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,ir,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
+  - "DOMAIN-SUFFIX,unimics.com,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,whatsapp,واتس آپ 🟢"
+  - "RULE-SET,steam,استیم 🖥️"
+  - "RULE-SET,SteamRegionCheck,استیم 🖥️"
+  - "RULE-SET,game,گیم 🎮"
+  - "RULE-SET,GameDownload,گیم 🎮"
+  - "RULE-SET,category-games,گیم 🎮"
+  - "RULE-SET,Xbox,گیم 🎮"
+  - "RULE-SET,discord,دیسکورد 🗣️"
+  - "RULE-SET,xiaomi_white_list,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,xiaomi_block_list,تبلیغات اپ ها 🍃"
+  - "RULE-SET,windows,ویندوز 🧊"
+  - "RULE-SET,cloudflare,کلودفلر ☁️"
+  - "RULE-SET,github,گیتهاب 🐙"
+  - "PROCESS-NAME,com.android.vending,نوع انتخاب پروکسی 🔀"
+  - "PROCESS-NAME,com.google.android.gms,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google,گوگل 🌍"
+  - "IP-CIDR,10.10.34.0/24,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,private,بدون فیلترشکن 🛡️"
+  - "MATCH,نوع انتخاب پروکسی 🔀"
