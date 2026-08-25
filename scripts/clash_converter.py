@@ -343,29 +343,99 @@ def parse_ss(link: str):
         return None
 
 def parse_ssr(link: str):
+    """
+    پارس جامع پروتکل ShadowsocksR (SSR) منطبق بر هسته میهومو (Mihomo/Meta).
+    پشتیبانی از هر دو ساختار رایج: لینک‌های خام متنی و لینک‌های کاملاً رمزگذاری‌شده Base64.
+    """
     try:
-        decoded = safe_b64decode(link.replace("ssr://", "", 1))
-        if not decoded: return None
-        parts = decoded.split("/")
-        server, port, protocol, method, obfs, b64pass = parts[0].split(":")
+        raw = link.replace("ssr://", "", 1).strip()
+        if not raw:
+            return None
+            
+        fragment = ""
+        if "#" in raw:
+            raw, fragment = raw.split("#", 1)
+            fragment = safe_decode(fragment).strip()
+            
+        # اگر کل رشته با Base64 رمزگذاری شده باشد
+        if "/" not in raw and ":" not in raw:
+            decoded = safe_b64decode(raw)
+            if decoded:
+                raw = decoded
+        elif not (raw.count(":") >= 5):
+            decoded = safe_b64decode(raw)
+            if decoded and decoded.count(":") >= 5:
+                raw = decoded
+
+        # جداسازی بخش اصلی از کوئری پارامترها
+        if "/?" in raw:
+            main_part, query_part = raw.split("/?", 1)
+        elif "?" in raw:
+            main_part, query_part = raw.split("?", 1)
+        elif "/" in raw:
+            main_part, query_part = raw.split("/", 1)
+        else:
+            main_part = raw
+            query_part = ""
+            
+        parts = main_part.split(":")
+        if len(parts) < 6:
+            return None
+            
+        server = parts[0]
+        port_str = parts[1]
+        protocol = parts[2]
+        method = parts[3]
+        obfs = parts[4]
+        b64pass = parts[5]
+        
+        if not port_str.isdigit():
+            return None
+        port = int(port_str)
+        
+        # رمزگشایی پسورد در صورت Base64 بودن
+        password = safe_b64decode(b64pass) if b64pass else ""
+        if not password:
+            password = b64pass
+            
+        name = fragment if fragment else f"SSR-{server}:{port}"
+        
         proxy = {
-            "name": "SSR",
+            "name": name,
             "type": "ssr",
             "server": server,
-            "port": int(port),
+            "port": port,
             "cipher": method,
-            "password": safe_b64decode(b64pass) or b64pass,
+            "password": password,
             "protocol": protocol,
-            "obfs": obfs
+            "obfs": obfs,
+            "udp": True
         }
-        if len(parts) > 1:
-            qs = parse_qs(parts[1].replace("?", "", 1))
-            remarks = qs.get("remarks", [""])[0]
-            if remarks: proxy["name"] = safe_decode(safe_b64decode(remarks) or remarks)
-            obfsparam = qs.get("obfsparam", [""])[0]
-            if obfsparam: proxy["obfs-param"] = safe_decode(safe_b64decode(obfsparam) or obfsparam)
-            protoparam = qs.get("protoparam", [""])[0]
-            if protoparam: proxy["protocol-param"] = safe_decode(safe_b64decode(protoparam) or protoparam)
+        
+        if query_part:
+            qs = parse_qs(query_part)
+            
+            # استخراج و دیکود remarks (نام نود / پرچم و کشور)
+            remarks_raw = qs.get("remarks", [""])[0]
+            if remarks_raw:
+                dec_remarks = safe_b64decode(unquote(remarks_raw))
+                if dec_remarks:
+                    proxy["name"] = dec_remarks.strip()
+                else:
+                    proxy["name"] = safe_decode(remarks_raw).strip()
+                    
+            # استخراج obfsparam
+            obfsparam_raw = qs.get("obfsparam", [""])[0]
+            if obfsparam_raw:
+                dec_obfs = safe_b64decode(unquote(obfsparam_raw))
+                proxy["obfs-param"] = dec_obfs if dec_obfs else unquote(obfsparam_raw)
+                
+            # استخراج protoparam
+            protoparam_raw = qs.get("protoparam", [""])[0]
+            if protoparam_raw:
+                dec_proto = safe_b64decode(unquote(protoparam_raw))
+                proxy["protocol-param"] = dec_proto if dec_proto else unquote(protoparam_raw)
+                
         return proxy
     except Exception:
         return None
