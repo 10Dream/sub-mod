@@ -499,32 +499,18 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
-  - name: "🇲🇹 🔒 VL-HTTPUPGRADE-NONE 🇲🇹 MT-193.227.99.253:80"
+  - name: "🇲🇹 🔒 VL-WS-TLS 🇲🇹 MT-193.227.99.90:443"
     type: "vless"
-    server: "193.227.99.253"
-    port: 80
-    uuid: "625bc320-a51c-446b-a006-ac1c1d8d507e"
-    udp: true
-    tls: false
-    network: "httpupgrade"
-  - name: "🇲🇹 🔒 VL-XHTTP-TLS 🇲🇹 MT-193.227.99.253:8443"
-    type: "vless"
-    server: "193.227.99.253"
-    port: 8443
-    uuid: "f9a8edf6-9dda-4f5c-9268-03fb883fc6b2"
+    server: "193.227.99.90"
+    port: 443
+    uuid: "2cd6ed0f-636e-4e6c-9449-5a263d7a0fa5"
     udp: true
     tls: true
-    network: "xhttp"
-    servername: "cdvn.jorgotr.ir"
-  - name: "🇲🇹 ARISTA"
-    type: "vless"
-    server: "cdn.devmixa.ir"
-    port: 8880
-    uuid: "6d4cce6a-dbc6-43af-9146-067847483fce"
-    udp: true
-    tls: false
-    network: "httpupgrade"
-  - name: "🇲🇹 ARISTA-1"
+    network: "ws"
+    servername: "cfed.tgzdyz2.top"
+    ws-opts:
+      path: "tg@zdyz2"
+  - name: "🇲🇹 🔒 VL-XHTTP-TLS 🇲🇹 MT-193.227.99.253:2096"
     type: "vless"
     server: "193.227.99.253"
     port: 2096
@@ -538,7 +524,15 @@ proxies:
       - "h3"
       - "h2"
       - "http/1.1"
-  - name: "🇲🇹 ARISTA-2"
+  - name: "🇲🇹 ARISTA"
+    type: "vless"
+    server: "cdn.devmixa.ir"
+    port: 8880
+    uuid: "6d4cce6a-dbc6-43af-9146-067847483fce"
+    udp: true
+    tls: false
+    network: "httpupgrade"
+  - name: "🇲🇹 ARISTA-1"
     type: "vless"
     server: "193.227.99.253"
     port: 2096
@@ -566,11 +560,10 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
-      - "🇲🇹 🔒 VL-HTTPUPGRADE-NONE 🇲🇹 MT-193.227.99.253:80"
-      - "🇲🇹 🔒 VL-XHTTP-TLS 🇲🇹 MT-193.227.99.253:8443"
+      - "🇲🇹 🔒 VL-WS-TLS 🇲🇹 MT-193.227.99.90:443"
+      - "🇲🇹 🔒 VL-XHTTP-TLS 🇲🇹 MT-193.227.99.253:2096"
       - "🇲🇹 ARISTA"
       - "🇲🇹 ARISTA-1"
-      - "🇲🇹 ARISTA-2"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
     icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
@@ -581,11 +574,10 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
-      - "🇲🇹 🔒 VL-HTTPUPGRADE-NONE 🇲🇹 MT-193.227.99.253:80"
-      - "🇲🇹 🔒 VL-XHTTP-TLS 🇲🇹 MT-193.227.99.253:8443"
+      - "🇲🇹 🔒 VL-WS-TLS 🇲🇹 MT-193.227.99.90:443"
+      - "🇲🇹 🔒 VL-XHTTP-TLS 🇲🇹 MT-193.227.99.253:2096"
       - "🇲🇹 ARISTA"
       - "🇲🇹 ARISTA-1"
-      - "🇲🇹 ARISTA-2"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
@@ -595,11 +587,10 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
-      - "🇲🇹 🔒 VL-HTTPUPGRADE-NONE 🇲🇹 MT-193.227.99.253:80"
-      - "🇲🇹 🔒 VL-XHTTP-TLS 🇲🇹 MT-193.227.99.253:8443"
+      - "🇲🇹 🔒 VL-WS-TLS 🇲🇹 MT-193.227.99.90:443"
+      - "🇲🇹 🔒 VL-XHTTP-TLS 🇲🇹 MT-193.227.99.253:2096"
       - "🇲🇹 ARISTA"
       - "🇲🇹 ARISTA-1"
-      - "🇲🇹 ARISTA-2"
   - name: "المنت 💬"
     type: "select"
     icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
