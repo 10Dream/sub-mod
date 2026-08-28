@@ -41,9 +41,16 @@ def remove_control_chars(s: str) -> str:
         return s
     return CONTROL_CHARS_RE.sub('', s)
 
-# الگوی شناسایی پروتکل‌ها جهت تفکیک خطوط به هم چسبیده
+# لیست پروتکل‌های پروکسی استاندارد
+PROXY_PROTOCOLS = [
+    "vless", "vmess", "trojan", "ss", "ssr", "hy2", "hysteria2", "hysteria",
+    "wireguard", "wg", "tuic", "snell", "socks5", "socks", "http", "https",
+    "ssh", "sudoku", "tailscale", "masque", "trusttunnel", "openvpn"
+]
+
+# الگوی شناسایی پروتکل‌ها جهت تفکیک خطوط به هم چسبیده (پشتیبانی از هر نوع انکودینگ و اتصال به کاراکترهای دیگر)
 PROTOCOL_PATTERN = re.compile(
-    r'(vless://|vmess://|trojan://|ss://|ssr://|hy2://|hysteria2://|hysteria://|wg://|wireguard://|tuic://|snell://|socks5://|socks://|http://|https://|ssh://|sudoku://|tailscale://|masque://|trusttunnel://|openvpn://)',
+    r'(' + '|'.join(PROXY_PROTOCOLS) + r')(?::\/\/|%3a\/\/%3A\/\/|%3a%2f%2f|%3A%2F%2F|%3a\/\/|%3A\/\/)',
     re.IGNORECASE
 )
 
@@ -110,6 +117,38 @@ def safe_decode(s: str) -> str:
     except Exception:
         return s
 
+def clean_proxy_name(name: str) -> str:
+    """تصفیه نام پروکسی و تفکیک هرگونه پیشوند یا لینک پروتکل چسبیده به نام نود"""
+    if not name:
+        return ""
+    name_dec = unquote(str(name))
+    m = PROTOCOL_PATTERN.search(name_dec)
+    if m:
+        name_dec = name_dec[:m.start()].strip(" \t\r\n#|;,-_")
+    return name_dec.strip()
+
+def normalize_single_link(link: str) -> str:
+    """نرمال‌سازی لینک پروکسی و تصحیح انکودینگ‌های کاراکترهای ساختاری URL"""
+    if not link:
+        return ""
+    link = link.strip()
+    for proto in PROXY_PROTOCOLS:
+        pattern = re.compile(rf'^{proto}(?:%3a\/\/|%3A\/\/|%3a%2f%2f|%3A%2F%2F)', re.IGNORECASE)
+        if pattern.match(link):
+            link = pattern.sub(f"{proto}://", link)
+            break
+            
+    if not link.startswith("vmess://") and not (link.startswith("ssr://") and "/" not in link):
+        if "%40" in link or "%3A" in link or "%3a" in link or "%3F" in link or "%3f" in link or "%23" in link:
+            link = (link.replace("%40", "@")
+                        .replace("%3A", ":").replace("%3a", ":")
+                        .replace("%3F", "?").replace("%3f", "?")
+                        .replace("%23", "#")
+                        .replace("%26", "&")
+                        .replace("%3D", "=").replace("%3d", "=")
+                        .replace("%2F", "/").replace("%2f", "/"))
+    return link
+
 def get_display_type(t: str) -> str:
     t = t.lower()
     if t in ["hysteria2", "hy2"]: return "hy2"
@@ -124,17 +163,42 @@ def split_concatenated_links(line: str) -> list:
     هرگاه در حین خواندن رشته به الگوی یکی از پروتکل‌های اشتراک برسد،
     درک می‌کند کانفیگ قبلی خاتمه یافته و اتصال جدید آغاز شده است.
     """
+    if not line or not isinstance(line, str):
+        return []
+    line = line.strip()
+    if not line or line.startswith("#"):
+        return []
+
     matches = list(PROTOCOL_PATTERN.finditer(line))
     if not matches:
-        return [line]
+        return [normalize_single_link(line)]
         
     links = []
     for i in range(len(matches)):
-        start = matches[i].start()
+        m = matches[i]
+        start = m.start()
         end = matches[i+1].start() if i + 1 < len(matches) else len(line)
-        link = line[start:end].strip()
-        if link:
-            links.append(link)
+        chunk = line[start:end].strip()
+        
+        # اگر درون تگ انتهای chunk، به صورت unquote شده پروتکل دیگری چسبیده باشد
+        if "#" in chunk:
+            main_url, frag = chunk.split("#", 1)
+            frag_decoded = unquote(frag)
+            frag_matches = list(PROTOCOL_PATTERN.finditer(frag_decoded))
+            if frag_matches:
+                first_frag = frag_decoded[:frag_matches[0].start()].strip(" \t\r\n#|;,")
+                links.append(normalize_single_link(f"{main_url}#{first_frag}"))
+                
+                for j in range(len(frag_matches)):
+                    s_f = frag_matches[j].start()
+                    e_f = frag_matches[j+1].start() if j + 1 < len(frag_matches) else len(frag_decoded)
+                    sub_link = frag_decoded[s_f:e_f].strip(" \t\r\n#|;,")
+                    if sub_link:
+                        links.append(normalize_single_link(sub_link))
+                continue
+
+        links.append(normalize_single_link(chunk))
+        
     return links
 
 def get_connection_fingerprint(p: dict) -> str:
@@ -290,9 +354,13 @@ def parse_ss(link: str):
         server, port, method, password = "", 0, "", ""
         if "@" in raw:
             auth_part, server_part = raw.split("@", 1)
-            decoded_auth = safe_b64decode(auth_part) or auth_part
-            if ":" in decoded_auth:
-                method, password = decoded_auth.split(":", 1)
+            auth_part = unquote(auth_part)
+            if ":" in auth_part:
+                method, password = auth_part.split(":", 1)
+            else:
+                decoded_auth = safe_b64decode(auth_part) or auth_part
+                if ":" in decoded_auth:
+                    method, password = decoded_auth.split(":", 1)
             if ":" in server_part:
                 server, port_str = server_part.split(":", 1)
                 port = int(port_str)
@@ -300,7 +368,9 @@ def parse_ss(link: str):
             decoded_full = safe_b64decode(raw)
             if decoded_full and "@" in decoded_full:
                 auth_part, server_part = decoded_full.split("@", 1)
-                method, password = auth_part.split(":", 1)
+                auth_part = unquote(auth_part)
+                if ":" in auth_part:
+                    method, password = auth_part.split(":", 1)
                 server, port_str = server_part.split(":", 1)
                 port = int(port_str)
                 
@@ -308,7 +378,7 @@ def parse_ss(link: str):
             return None
             
         proxy = {
-            "name": safe_decode(tag or server),
+            "name": clean_proxy_name(safe_decode(tag or server)) or f"ss-{server}:{port}",
             "type": "ss",
             "server": server,
             "port": port,
@@ -948,6 +1018,9 @@ def parse_openvpn(link: str):
         return None
 
 def parse_proxy(line: str):
+    if not line or not isinstance(line, str):
+        return None
+    line = normalize_single_link(line.strip())
     prefix = line[:15].lower()
     if prefix.startswith("vless://"): return parse_vless(line)
     if prefix.startswith("vmess://"): return parse_vmess(line)
@@ -1012,6 +1085,9 @@ def validate_proxy(p) -> bool:
     p_type = p["type"]
     if not p.get("name") or not isinstance(p["name"], str):
         return False
+    p["name"] = clean_proxy_name(p["name"])
+    if not p["name"]:
+        p["name"] = f"{p_type}-{p.get('server', 'node')}:{p.get('port', 443)}"
     if p_type == "tailscale":
         return bool(p.get("auth-key") or p.get("hostname"))
     server = p.get("server")

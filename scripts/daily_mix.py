@@ -204,7 +204,9 @@ def build_clash_config(proxies_list, dest_yaml_path, limit=800):
         cc = get_country_code(ip)
         flag = get_country_flag_emoji(cc)
         
-        orig_name = p_copy.get("name", "Proxy").strip()
+        orig_name = clash_converter.clean_proxy_name(p_copy.get("name", "Proxy")).strip()
+        if not orig_name:
+            orig_name = f"{p_copy.get('type', 'proxy')}-{p_copy.get('server')}:{p_copy.get('port')}"
         name_with_flag = f"{flag} {orig_name}"
         
         if name_with_flag in seen_names:
