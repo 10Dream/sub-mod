@@ -499,6 +499,25 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
+  - name: "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
+    type: "ss"
+    server: "185.210.217.94"
+    port: 1080
+    cipher: "chacha20-ietf-poly1305"
+    password: "XF0klw7870vXn3uQIxe19Q"
+    udp: true
+  - name: "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.206:443"
+    type: "vless"
+    server: "109.69.218.206"
+    port: 443
+    uuid: "2a12bb81-f3a3-41bb-99ab-36febf676b4a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "kind-wolf.cdn.cachefleet.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "8hse7wRRL-F66rQ-aAeetKTw0MSeJC7Rr6EaDeLzdCU"
   - name: "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.168:443"
     type: "vless"
     server: "109.69.218.168"
@@ -511,13 +530,6 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "cv_KJnMzQUZruACPbH-BCgLWrYqPm2dbUymg-gW_sVc"
-  - name: "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
-    type: "ss"
-    server: "185.210.217.94"
-    port: 1080
-    cipher: "chacha20-ietf-poly1305"
-    password: "XF0klw7870vXn3uQIxe19Q"
-    udp: true
   - name: "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.164:443"
     type: "vless"
     server: "109.69.218.164"
@@ -542,21 +554,17 @@ proxies:
       path: "/?ed=1049"
       headers:
         Host: "adspeedx23.global.ssl.fastly.net"
-  - name: "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.206-443 | 125.33ms"
-    type: "vless"
-    server: "109.69.218.206"
-    port: 443
-    uuid: "2a12bb81-f3a3-41bb-99ab-36febf676b4a"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "kind-wolf.cdn.cachefleet.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "8hse7wRRL-F66rQ-aAeetKTw0MSeJC7Rr6EaDeLzdCU"
   - name: "🇧🇪 🆔ar14n24b 🔓 VL-HTTPUPGRADE-N/A ❔ XX 116ms"
     type: "vless"
     server: "cdn2.portalcode.ir"
+    port: 2095
+    uuid: "681314c5-b3ee-41f1-a959-fa42841f5383"
+    udp: true
+    tls: false
+    network: "httpupgrade"
+  - name: "🇧🇪 🔒 VL-HTTPUPGRADE-NA 🇧🇪 BE-188.95.12.226:2095"
+    type: "vless"
+    server: "188.95.12.226"
     port: 2095
     uuid: "681314c5-b3ee-41f1-a959-fa42841f5383"
     udp: true
@@ -604,12 +612,13 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
-      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.168:443"
       - "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
+      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.206:443"
+      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.168:443"
       - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.164:443"
       - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 58.04ms"
-      - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.206-443 | 125.33ms"
       - "🇧🇪 🆔ar14n24b 🔓 VL-HTTPUPGRADE-N/A ❔ XX 116ms"
+      - "🇧🇪 🔒 VL-HTTPUPGRADE-NA 🇧🇪 BE-188.95.12.226:2095"
       - "🇧🇪 @DeltaKroneckerGithub"
       - "🇧🇪 ARISTA"
       - "🇧🇪 ARISTA-1"
@@ -623,12 +632,13 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
-      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.168:443"
       - "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
+      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.206:443"
+      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.168:443"
       - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.164:443"
       - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 58.04ms"
-      - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.206-443 | 125.33ms"
       - "🇧🇪 🆔ar14n24b 🔓 VL-HTTPUPGRADE-N/A ❔ XX 116ms"
+      - "🇧🇪 🔒 VL-HTTPUPGRADE-NA 🇧🇪 BE-188.95.12.226:2095"
       - "🇧🇪 @DeltaKroneckerGithub"
       - "🇧🇪 ARISTA"
       - "🇧🇪 ARISTA-1"
@@ -641,12 +651,13 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
-      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.168:443"
       - "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
+      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.206:443"
+      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.168:443"
       - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.164:443"
       - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 58.04ms"
-      - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.206-443 | 125.33ms"
       - "🇧🇪 🆔ar14n24b 🔓 VL-HTTPUPGRADE-N/A ❔ XX 116ms"
+      - "🇧🇪 🔒 VL-HTTPUPGRADE-NA 🇧🇪 BE-188.95.12.226:2095"
       - "🇧🇪 @DeltaKroneckerGithub"
       - "🇧🇪 ARISTA"
       - "🇧🇪 ARISTA-1"
