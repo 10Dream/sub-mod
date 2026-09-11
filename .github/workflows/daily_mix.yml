@@ -50,20 +50,22 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add sub/ README.md
+          git add sources.txt inactive_sources.txt sub/ README.md
           if git diff --staged --quiet; then
             echo "ℹ️ هیچ تغییر جدیدی در میکس روزانه وجود ندارد."
           else
+            git checkout -- . 2>/dev/null || true
+            git clean -fd 2>/dev/null || true
             git commit -m "🌀 بروزرسانی خودکار میکس و دسته‌بندی روزانه - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
             pushed=false
-            for i in 1 2 3; do
-              git pull --rebase origin main || git rebase --abort
+            for i in 1 2 3 4 5; do
               if git push origin main; then
                 pushed=true
                 echo "✅ میکس روزانه با موفقیت در مخزن منتشر شد (تلاش $i)."
                 break
               fi
-              echo "⚠️ تلاش $i ناموفق بود، ۲ ثانیه انتظار و تلاش مجدد..."
+              echo "⚠️ تلاش $i ناموفق بود، دریافت آخرین تغییرات و ری‌بیس..."
+              git pull --rebase origin main || (git rebase --abort 2>/dev/null || true)
               sleep 2
             done
             if [ "$pushed" = false ]; then

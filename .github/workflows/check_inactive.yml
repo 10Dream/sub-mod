@@ -53,16 +53,18 @@ jobs:
           if git diff --staged --quiet; then
             echo "ℹ️ هیچ تغییری در وضعیت منابع راکد رخ نداد."
           else
+            git checkout -- . 2>/dev/null || true
+            git clean -fd 2>/dev/null || true
             git commit -m "✨ پایش ماهانه و احیای خودکار منابع راکد - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
             pushed=false
-            for i in 1 2 3; do
-              git pull --rebase origin main || git rebase --abort
+            for i in 1 2 3 4 5; do
               if git push origin main; then
                 pushed=true
                 echo "✅ تغییرات احیا با موفقیت در مخزن ثبت شد (تلاش $i)."
                 break
               fi
-              echo "⚠️ تلاش $i ناموفق بود، ۲ ثانیه انتظار..."
+              echo "⚠️ تلاش $i ناموفق بود، دریافت آخرین تغییرات و ری‌بیس..."
+              git pull --rebase origin main || (git rebase --abort 2>/dev/null || true)
               sleep 2
             done
             if [ "$pushed" = false ]; then

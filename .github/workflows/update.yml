@@ -61,21 +61,24 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add sub/ README.md
+          git add sources.txt inactive_sources.txt sub/ README.md
           if git diff --staged --quiet; then
             echo "ℹ️ هیچ تغییر جدیدی برای ثبت وجود ندارد."
           else
+            # تمیزکاری هرگونه تغییرات جانبی یا فایل‌های موقت قبل از کامیت
+            git checkout -- . 2>/dev/null || true
+            git clean -fd 2>/dev/null || true
             git commit -m "🔄 بروزرسانی خودکار سابسکریپشن‌ها و مستندات - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
-            # مکانیزم هوشمند ۳ بار تلاش مجدد با ری‌بیس جهت پیشگیری قطعی از خطای رد شدن Push
+            # مکانیزم هوشمند ۵ بار تلاش مجدد جهت پیشگیری قطعی از تداخل همزمانی
             pushed=false
-            for i in 1 2 3; do
-              git pull --rebase origin main || git rebase --abort
+            for i in 1 2 3 4 5; do
               if git push origin main; then
                 pushed=true
                 echo "✅ تغییرات با موفقیت در مخزن ثبت و منتشر شد (تلاش $i)."
                 break
               fi
-              echo "⚠️ تلاش $i ناموفق بود، ۲ ثانیه انتظار و تلاش مجدد..."
+              echo "⚠️ تلاش $i ناموفق بود، دریافت آخرین تغییرات و ری‌بیس..."
+              git pull --rebase origin main || (git rebase --abort 2>/dev/null || true)
               sleep 2
             done
             if [ "$pushed" = false ]; then
