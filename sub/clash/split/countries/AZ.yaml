@@ -499,19 +499,16 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
-  - name: "🇦🇿 🔒 VL-TCP-RLT 🇦🇿 AZ-180.149.44.189:1400"
+  - name: "🇦🇿 🔒 VL-GRPC-NONE 🇦🇿 AZ-180.149.44.178:7293"
     type: "vless"
-    server: "180.149.44.189"
-    port: 1400
-    uuid: "f79462e3-d519-44cd-bd1e-3b468dd66878"
+    server: "180.149.44.178"
+    port: 7293
+    uuid: "3ab633de-99ed-4566-9749-c75c7f352106"
     udp: true
-    tls: true
-    network: "tcp"
-    servername: "gitlab.io"
-    client-fingerprint: "firefox"
-    reality-opts:
-      public-key: "yttTg1YSCbhJpKC0Q4c_TpzAS38wtnidOJ42wwi9TGU"
-      short-id: "587e34aa4f966262"
+    tls: false
+    network: "grpc"
+    grpc-opts:
+      grpc-service-name: "www.google.com:443"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -526,7 +523,7 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
-      - "🇦🇿 🔒 VL-TCP-RLT 🇦🇿 AZ-180.149.44.189:1400"
+      - "🇦🇿 🔒 VL-GRPC-NONE 🇦🇿 AZ-180.149.44.178:7293"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
     icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
@@ -537,7 +534,7 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
-      - "🇦🇿 🔒 VL-TCP-RLT 🇦🇿 AZ-180.149.44.189:1400"
+      - "🇦🇿 🔒 VL-GRPC-NONE 🇦🇿 AZ-180.149.44.178:7293"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
@@ -547,7 +544,7 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
-      - "🇦🇿 🔒 VL-TCP-RLT 🇦🇿 AZ-180.149.44.189:1400"
+      - "🇦🇿 🔒 VL-GRPC-NONE 🇦🇿 AZ-180.149.44.178:7293"
   - name: "المنت 💬"
     type: "select"
     icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
