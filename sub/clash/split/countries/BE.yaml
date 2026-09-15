@@ -499,26 +499,7 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
-  - name: "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
-    type: "ss"
-    server: "185.210.217.94"
-    port: 1080
-    cipher: "chacha20-ietf-poly1305"
-    password: "XF0klw7870vXn3uQIxe19Q"
-    udp: true
-  - name: "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.168:443"
-    type: "vless"
-    server: "109.69.218.168"
-    port: 443
-    uuid: "c28ee61d-0d43-4e69-8e6a-6397ed0ffc03"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "agile-raptor.cdn.cachefleet.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "cv_KJnMzQUZruACPbH-BCgLWrYqPm2dbUymg-gW_sVc"
-  - name: "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.164-443 | 144.11ms"
+  - name: "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.164:443"
     type: "vless"
     server: "109.69.218.164"
     port: 443
@@ -530,19 +511,14 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "cv_KJnMzQUZruACPbH-BCgLWrYqPm2dbUymg-gW_sVc"
-  - name: "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 5.88ms"
-    type: "vless"
-    server: "151.101.9.80"
-    port: 80
-    uuid: "5a1d2c0c-abfa-4050-918f-bfab3eaee62a"
+  - name: "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
+    type: "ss"
+    server: "185.210.217.94"
+    port: 1080
+    cipher: "chacha20-ietf-poly1305"
+    password: "XF0klw7870vXn3uQIxe19Q"
     udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/?ed=1049"
-      headers:
-        Host: "adspeedx23.global.ssl.fastly.net"
-  - name: "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.206-443 | 144.82ms"
+  - name: "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.206:443"
     type: "vless"
     server: "109.69.218.206"
     port: 443
@@ -554,14 +530,18 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "8hse7wRRL-F66rQ-aAeetKTw0MSeJC7Rr6EaDeLzdCU"
-  - name: "🇧🇪 🔒 VL-HTTPUPGRADE-NA 🇧🇪 BE-188.95.12.226:2095"
+  - name: "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.9.80:80"
     type: "vless"
-    server: "188.95.12.226"
-    port: 2095
-    uuid: "681314c5-b3ee-41f1-a959-fa42841f5383"
+    server: "151.101.9.80"
+    port: 80
+    uuid: "5a1d2c0c-abfa-4050-918f-bfab3eaee62a"
     udp: true
     tls: false
-    network: "httpupgrade"
+    network: "ws"
+    ws-opts:
+      path: "/?ed=1049"
+      headers:
+        Host: "adspeedx23.global.ssl.fastly.net"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -576,12 +556,10 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
+      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.164:443"
       - "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
-      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.168:443"
-      - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.164-443 | 144.11ms"
-      - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 5.88ms"
-      - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.206-443 | 144.82ms"
-      - "🇧🇪 🔒 VL-HTTPUPGRADE-NA 🇧🇪 BE-188.95.12.226:2095"
+      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.206:443"
+      - "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.9.80:80"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
     icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
@@ -592,12 +570,10 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
+      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.164:443"
       - "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
-      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.168:443"
-      - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.164-443 | 144.11ms"
-      - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 5.88ms"
-      - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.206-443 | 144.82ms"
-      - "🇧🇪 🔒 VL-HTTPUPGRADE-NA 🇧🇪 BE-188.95.12.226:2095"
+      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.206:443"
+      - "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.9.80:80"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
@@ -607,12 +583,10 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
+      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.164:443"
       - "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
-      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.168:443"
-      - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.164-443 | 144.11ms"
-      - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 5.88ms"
-      - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.206-443 | 144.82ms"
-      - "🇧🇪 🔒 VL-HTTPUPGRADE-NA 🇧🇪 BE-188.95.12.226:2095"
+      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.206:443"
+      - "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.9.80:80"
   - name: "المنت 💬"
     type: "select"
     icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
