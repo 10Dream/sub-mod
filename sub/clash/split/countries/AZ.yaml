@@ -499,13 +499,27 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
-  - name: "🇦🇿 [059000] - 🇦🇿 Azerbaijan | @freenettir"
-    type: "ss"
-    server: "94.20.154.38"
-    port: 50006
-    cipher: "aes-256-cfb"
-    password: "9344665077"
+  - name: "🇦🇿 🔒 VL-TCP-NONE 🇦🇿 AZ-180.149.44.189:1300"
+    type: "vless"
+    server: "180.149.44.189"
+    port: 1300
+    uuid: "6f97389a-b42a-4a05-9890-87646eecce48"
     udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇦🇿 🔒 VL-TCP-RLT 🇦🇿 AZ-180.149.44.189:1400"
+    type: "vless"
+    server: "180.149.44.189"
+    port: 1400
+    uuid: "6f97389a-b42a-4a05-9890-87646eecce48"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "gitlab.io"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "yttTg1YSCbhJpKC0Q4c_TpzAS38wtnidOJ42wwi9TGU"
+      short-id: "587e34aa4f966262"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -520,7 +534,8 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
-      - "🇦🇿 [059000] - 🇦🇿 Azerbaijan | @freenettir"
+      - "🇦🇿 🔒 VL-TCP-NONE 🇦🇿 AZ-180.149.44.189:1300"
+      - "🇦🇿 🔒 VL-TCP-RLT 🇦🇿 AZ-180.149.44.189:1400"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
     icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
@@ -531,7 +546,8 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
-      - "🇦🇿 [059000] - 🇦🇿 Azerbaijan | @freenettir"
+      - "🇦🇿 🔒 VL-TCP-NONE 🇦🇿 AZ-180.149.44.189:1300"
+      - "🇦🇿 🔒 VL-TCP-RLT 🇦🇿 AZ-180.149.44.189:1400"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
@@ -541,7 +557,8 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
-      - "🇦🇿 [059000] - 🇦🇿 Azerbaijan | @freenettir"
+      - "🇦🇿 🔒 VL-TCP-NONE 🇦🇿 AZ-180.149.44.189:1300"
+      - "🇦🇿 🔒 VL-TCP-RLT 🇦🇿 AZ-180.149.44.189:1400"
   - name: "المنت 💬"
     type: "select"
     icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
