@@ -499,18 +499,20 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
-  - name: "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.9.80:80"
+  - name: "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-141.98.233.6:443"
     type: "vless"
-    server: "151.101.9.80"
-    port: 80
-    uuid: "5a1d2c0c-abfa-4050-918f-bfab3eaee62a"
+    server: "141.98.233.6"
+    port: 443
+    uuid: "b2593749-691c-428c-9481-14979cba3446"
     udp: true
-    tls: false
+    tls: true
     network: "ws"
+    servername: "xi.tbv.ccwu.cc"
+    client-fingerprint: "chrome"
     ws-opts:
-      path: "/?ed=1049"
+      path: "/proxyip=us.xiabibi.cf"
       headers:
-        Host: "adspeedx23.global.ssl.fastly.net"
+        Host: "xi.tbv.ccwu.cc"
   - name: "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
     type: "vless"
     server: "194.71.227.213"
@@ -525,20 +527,27 @@ proxies:
       path: "/"
       headers:
         Host: "shuma.ccwu.cc"
-  - name: "🇧🇪 RELAY🚩 | xi.tbv.ccwu.cc-443 | 3.5ms"
+  - name: "🇧🇪 🔒 VL-HTTPUPGRADE-NA 🇧🇪 BE-188.95.12.226:2095"
     type: "vless"
-    server: "141.98.233.6"
+    server: "188.95.12.226"
+    port: 2095
+    uuid: "681314c5-b3ee-41f1-a959-fa42841f5383"
+    udp: true
+    tls: false
+    network: "httpupgrade"
+  - name: "🇧🇪 @DeltaKroneckerGithub"
+    type: "vless"
+    server: "34.79.178.1"
     port: 443
-    uuid: "b2593749-691c-428c-9481-14979cba3446"
+    uuid: "51e493d4-b275-45e0-a714-e014f40b3c32"
     udp: true
     tls: true
-    network: "ws"
-    servername: "xi.tbv.ccwu.cc"
+    network: "tcp"
+    servername: "www.cloudflare.com"
     client-fingerprint: "chrome"
-    ws-opts:
-      path: "/proxyip=us.xiabibi.cf"
-      headers:
-        Host: "xi.tbv.ccwu.cc"
+    reality-opts:
+      public-key: "nTLhc6e5HMgO-hpD8RUMp0cd2t6p2_RqHLHM0P39_xA"
+      short-id: "95ae4a39d3933191"
   - name: "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
     type: "ss"
     server: "185.210.217.94"
@@ -560,9 +569,10 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
-      - "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.9.80:80"
+      - "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-141.98.233.6:443"
       - "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
-      - "🇧🇪 RELAY🚩 | xi.tbv.ccwu.cc-443 | 3.5ms"
+      - "🇧🇪 🔒 VL-HTTPUPGRADE-NA 🇧🇪 BE-188.95.12.226:2095"
+      - "🇧🇪 @DeltaKroneckerGithub"
       - "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -574,9 +584,10 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
-      - "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.9.80:80"
+      - "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-141.98.233.6:443"
       - "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
-      - "🇧🇪 RELAY🚩 | xi.tbv.ccwu.cc-443 | 3.5ms"
+      - "🇧🇪 🔒 VL-HTTPUPGRADE-NA 🇧🇪 BE-188.95.12.226:2095"
+      - "🇧🇪 @DeltaKroneckerGithub"
       - "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -587,9 +598,10 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
-      - "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.9.80:80"
+      - "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-141.98.233.6:443"
       - "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
-      - "🇧🇪 RELAY🚩 | xi.tbv.ccwu.cc-443 | 3.5ms"
+      - "🇧🇪 🔒 VL-HTTPUPGRADE-NA 🇧🇪 BE-188.95.12.226:2095"
+      - "🇧🇪 @DeltaKroneckerGithub"
       - "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
   - name: "المنت 💬"
     type: "select"
