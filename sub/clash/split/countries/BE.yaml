@@ -499,6 +499,26 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
+  - name: "🇧🇪 🔒 VL-HTTPUPGRADE-NA 🇧🇪 BE-188.95.12.226:2095"
+    type: "vless"
+    server: "188.95.12.226"
+    port: 2095
+    uuid: "681314c5-b3ee-41f1-a959-fa42841f5383"
+    udp: true
+    tls: false
+    network: "httpupgrade"
+  - name: "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.9.80:80"
+    type: "vless"
+    server: "151.101.9.80"
+    port: 80
+    uuid: "5a1d2c0c-abfa-4050-918f-bfab3eaee62a"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/?ed=1049"
+      headers:
+        Host: "adspeedx23.global.ssl.fastly.net"
   - name: "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
     type: "vless"
     server: "194.71.227.213"
@@ -513,14 +533,6 @@ proxies:
       path: "/"
       headers:
         Host: "shuma.ccwu.cc"
-  - name: "🇧🇪 🔒 VL-HTTPUPGRADE-NA 🇧🇪 BE-188.95.12.226:2095"
-    type: "vless"
-    server: "188.95.12.226"
-    port: 2095
-    uuid: "681314c5-b3ee-41f1-a959-fa42841f5383"
-    udp: true
-    tls: false
-    network: "httpupgrade"
   - name: "🇧🇪 022-🇧🇪 BE tcp-reality ✂️@GheychiAmoozesh"
     type: "vless"
     server: "34.38.82.200"
@@ -534,18 +546,18 @@ proxies:
     reality-opts:
       public-key: "v6QpErcVOVKIYLm53R3bAP8zIKCFr4HAJWW0VwBKtws"
       short-id: "31f187650d9530bb"
-  - name: "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 11.69ms"
+  - name: "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.164-443 | 131.16ms"
     type: "vless"
-    server: "151.101.9.80"
-    port: 80
-    uuid: "5a1d2c0c-abfa-4050-918f-bfab3eaee62a"
+    server: "109.69.218.164"
+    port: 443
+    uuid: "c28ee61d-0d43-4e69-8e6a-6397ed0ffc03"
     udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/?ed=1049"
-      headers:
-        Host: "adspeedx23.global.ssl.fastly.net"
+    tls: true
+    network: "tcp"
+    servername: "zealous-vortex.cdn.cachefleet.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "cv_KJnMzQUZruACPbH-BCgLWrYqPm2dbUymg-gW_sVc"
   - name: "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
     type: "ss"
     server: "185.210.217.94"
@@ -567,10 +579,11 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
-      - "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
       - "🇧🇪 🔒 VL-HTTPUPGRADE-NA 🇧🇪 BE-188.95.12.226:2095"
+      - "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.9.80:80"
+      - "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
       - "🇧🇪 022-🇧🇪 BE tcp-reality ✂️@GheychiAmoozesh"
-      - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 11.69ms"
+      - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.164-443 | 131.16ms"
       - "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -582,10 +595,11 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
-      - "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
       - "🇧🇪 🔒 VL-HTTPUPGRADE-NA 🇧🇪 BE-188.95.12.226:2095"
+      - "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.9.80:80"
+      - "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
       - "🇧🇪 022-🇧🇪 BE tcp-reality ✂️@GheychiAmoozesh"
-      - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 11.69ms"
+      - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.164-443 | 131.16ms"
       - "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -596,10 +610,11 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
-      - "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
       - "🇧🇪 🔒 VL-HTTPUPGRADE-NA 🇧🇪 BE-188.95.12.226:2095"
+      - "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.9.80:80"
+      - "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
       - "🇧🇪 022-🇧🇪 BE tcp-reality ✂️@GheychiAmoozesh"
-      - "🇧🇪 US🇺🇸 | adspeedx23.global.ssl.fastly.net-80 | 11.69ms"
+      - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.164-443 | 131.16ms"
       - "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
   - name: "المنت 💬"
     type: "select"
