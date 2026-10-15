@@ -499,21 +499,15 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
-  - name: "🇮🇱 @DeltaKroneckerGithub"
+  - name: "🇮🇱 🔒 VL-TCP-NONE 🇮🇱 IL-185.95.231.233:443"
     type: "vless"
-    server: "185.95.231.156"
+    server: "185.95.231.233"
     port: 443
-    uuid: "1f8cf47a-b66a-4916-979f-26edfcf44eea"
+    uuid: "1ffa8e68-3378-4cf4-b8f6-44bf3d46d106"
     udp: true
-    tls: true
+    tls: false
     network: "tcp"
-    servername: "www.apple.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "8eXftARun6KH38UZhuqIfPR1VF2DLS9RMBZEnF5k6To"
-      short-id: "a3a578ab"
-  - name: "🇮🇱 @DeltaKroneckerGithub-1"
+  - name: "🇮🇱 @DeltaKroneckerGithub"
     type: "vless"
     server: "185.253.75.119"
     port: 443
@@ -527,14 +521,45 @@ proxies:
       path: "/"
       headers:
         Host: "ccc.010304.xyz"
-  - name: "🇮🇱 IL🇮🇱 | 185.95.231.233-443 | 46ms"
+  - name: "🇮🇱 @DeltaKroneckerGithub-1"
     type: "vless"
-    server: "185.95.231.233"
+    server: "185.95.231.156"
     port: 443
-    uuid: "1ffa8e68-3378-4cf4-b8f6-44bf3d46d106"
+    uuid: "1f8cf47a-b66a-4916-979f-26edfcf44eea"
     udp: true
-    tls: false
+    tls: true
     network: "tcp"
+    servername: "www.apple.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "8eXftARun6KH38UZhuqIfPR1VF2DLS9RMBZEnF5k6To"
+      short-id: "a3a578ab"
+  - name: "🇮🇱 REALITY|IL🇮🇱 | 83.143.106.7-443 | 92.03ms"
+    type: "vless"
+    server: "83.143.106.7"
+    port: 443
+    uuid: "d977e7ec-ff45-d4a9-5b52-9c1cc5c04c43"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "res.cdn.office.net"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "4g8R0-Acc1LjppgvUopldH0Wg3JA2tPXvYB96aJnigo"
+  - name: "🇮🇱 RELAY🚩 | ccc.010304.xyz-443 | 3.1ms"
+    type: "vless"
+    server: "185.253.75.119"
+    port: 443
+    uuid: "d342d11e-d224-4463-b982-532309285094"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ccc.010304.xyz"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "ccc.010304.xyz"
   - name: "🇮🇱 🔒 TR-WS-TLS 🇮🇱 IL-185.239.48.207:443"
     type: "trojan"
     server: "185.239.48.207"
@@ -547,18 +572,6 @@ proxies:
     ws-opts:
       headers:
         Host: "joss.gpj.web.id"
-  - name: "🇮🇱 🔒 VL-XHTTP-RLT 🇮🇱 IL-83.143.106.7:443"
-    type: "vless"
-    server: "83.143.106.7"
-    port: 443
-    uuid: "d977e7ec-ff45-d4a9-5b52-9c1cc5c04c43"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "res.cdn.office.net"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "4g8R0-Acc1LjppgvUopldH0Wg3JA2tPXvYB96aJnigo"
   - name: "🇮🇱 🔒 VL-XHTTP-RLT 🇮🇱 IL-83.143.106.4:443"
     type: "vless"
     server: "83.143.106.4"
@@ -599,11 +612,12 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
+      - "🇮🇱 🔒 VL-TCP-NONE 🇮🇱 IL-185.95.231.233:443"
       - "🇮🇱 @DeltaKroneckerGithub"
       - "🇮🇱 @DeltaKroneckerGithub-1"
-      - "🇮🇱 IL🇮🇱 | 185.95.231.233-443 | 46ms"
+      - "🇮🇱 REALITY|IL🇮🇱 | 83.143.106.7-443 | 92.03ms"
+      - "🇮🇱 RELAY🚩 | ccc.010304.xyz-443 | 3.1ms"
       - "🇮🇱 🔒 TR-WS-TLS 🇮🇱 IL-185.239.48.207:443"
-      - "🇮🇱 🔒 VL-XHTTP-RLT 🇮🇱 IL-83.143.106.7:443"
       - "🇮🇱 🔒 VL-XHTTP-RLT 🇮🇱 IL-83.143.106.4:443"
       - "🇮🇱 🔒 VL-RAW-RLT 🇮🇱 IL-185.95.231.156:443"
   - name: "خودکار (بهترین پینگ) 🤖"
@@ -616,11 +630,12 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
+      - "🇮🇱 🔒 VL-TCP-NONE 🇮🇱 IL-185.95.231.233:443"
       - "🇮🇱 @DeltaKroneckerGithub"
       - "🇮🇱 @DeltaKroneckerGithub-1"
-      - "🇮🇱 IL🇮🇱 | 185.95.231.233-443 | 46ms"
+      - "🇮🇱 REALITY|IL🇮🇱 | 83.143.106.7-443 | 92.03ms"
+      - "🇮🇱 RELAY🚩 | ccc.010304.xyz-443 | 3.1ms"
       - "🇮🇱 🔒 TR-WS-TLS 🇮🇱 IL-185.239.48.207:443"
-      - "🇮🇱 🔒 VL-XHTTP-RLT 🇮🇱 IL-83.143.106.7:443"
       - "🇮🇱 🔒 VL-XHTTP-RLT 🇮🇱 IL-83.143.106.4:443"
       - "🇮🇱 🔒 VL-RAW-RLT 🇮🇱 IL-185.95.231.156:443"
   - name: "توزیع بار چرخشی ⚖️"
@@ -632,11 +647,12 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
+      - "🇮🇱 🔒 VL-TCP-NONE 🇮🇱 IL-185.95.231.233:443"
       - "🇮🇱 @DeltaKroneckerGithub"
       - "🇮🇱 @DeltaKroneckerGithub-1"
-      - "🇮🇱 IL🇮🇱 | 185.95.231.233-443 | 46ms"
+      - "🇮🇱 REALITY|IL🇮🇱 | 83.143.106.7-443 | 92.03ms"
+      - "🇮🇱 RELAY🚩 | ccc.010304.xyz-443 | 3.1ms"
       - "🇮🇱 🔒 TR-WS-TLS 🇮🇱 IL-185.239.48.207:443"
-      - "🇮🇱 🔒 VL-XHTTP-RLT 🇮🇱 IL-83.143.106.7:443"
       - "🇮🇱 🔒 VL-XHTTP-RLT 🇮🇱 IL-83.143.106.4:443"
       - "🇮🇱 🔒 VL-RAW-RLT 🇮🇱 IL-185.95.231.156:443"
   - name: "المنت 💬"
