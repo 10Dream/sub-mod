@@ -499,6 +499,13 @@ rule-providers:
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
 proxies:
+  - name: "🇩🇰 🔒 SS-TCP-NA 🇩🇰 DK-37.120.131.62:1080"
+    type: "ss"
+    server: "37.120.131.62"
+    port: 1080
+    cipher: "chacha20-ietf-poly1305"
+    password: "XF0klw7870vXn3uQIxe19Q"
+    udp: true
   - name: "🇩🇰 🔒 VL-XHTTP-TLS 🇩🇰 DK-140.248.69.254:443"
     type: "vless"
     server: "140.248.69.254"
@@ -509,6 +516,14 @@ proxies:
     network: "xhttp"
     servername: "cdn.akamai.steamstatic.com"
     client-fingerprint: "firefox"
+  - name: "🇩🇰 🔒 VL-XHTTP-NONE 🇩🇰 DK-140.248.69.254:80"
+    type: "vless"
+    server: "140.248.69.254"
+    port: 80
+    uuid: "0873316d-539b-498f-bba2-04d37dfb1cb5"
+    udp: true
+    tls: false
+    network: "xhttp"
   - name: "🇩🇰 🔒 VL-XHTTP-TLS 🇩🇰 DK-140.248.69.254:443-1"
     type: "vless"
     server: "140.248.69.254"
@@ -521,21 +536,18 @@ proxies:
     client-fingerprint: "chrome"
     alpn:
       - "h2"
-  - name: "🇩🇰 🔒 SS-TCP-NA 🇩🇰 DK-37.120.131.62:1080"
-    type: "ss"
-    server: "37.120.131.62"
-    port: 1080
-    cipher: "chacha20-ietf-poly1305"
-    password: "XF0klw7870vXn3uQIxe19Q"
-    udp: true
-  - name: "🇩🇰 🔒 VL-XHTTP-NONE 🇩🇰 DK-140.248.69.254:80"
+  - name: "🇩🇰 US🇺🇸 | google.com-443 | 37.24ms"
     type: "vless"
-    server: "140.248.69.254"
-    port: 80
-    uuid: "0873316d-539b-498f-bba2-04d37dfb1cb5"
+    server: "3873e70a3b17.salzivo.ir"
+    port: 443
+    uuid: "410bc842-c3df-4fc5-9e11-0feab5c97d64"
     udp: true
-    tls: false
+    tls: true
     network: "xhttp"
+    servername: "google.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -550,10 +562,11 @@ proxy-groups:
     type: "select"
     icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
     proxies:
-      - "🇩🇰 🔒 VL-XHTTP-TLS 🇩🇰 DK-140.248.69.254:443"
-      - "🇩🇰 🔒 VL-XHTTP-TLS 🇩🇰 DK-140.248.69.254:443-1"
       - "🇩🇰 🔒 SS-TCP-NA 🇩🇰 DK-37.120.131.62:1080"
+      - "🇩🇰 🔒 VL-XHTTP-TLS 🇩🇰 DK-140.248.69.254:443"
       - "🇩🇰 🔒 VL-XHTTP-NONE 🇩🇰 DK-140.248.69.254:80"
+      - "🇩🇰 🔒 VL-XHTTP-TLS 🇩🇰 DK-140.248.69.254:443-1"
+      - "🇩🇰 US🇺🇸 | google.com-443 | 37.24ms"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
     icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
@@ -564,10 +577,11 @@ proxy-groups:
     lazy: false
     max-failed-times: 2
     proxies:
-      - "🇩🇰 🔒 VL-XHTTP-TLS 🇩🇰 DK-140.248.69.254:443"
-      - "🇩🇰 🔒 VL-XHTTP-TLS 🇩🇰 DK-140.248.69.254:443-1"
       - "🇩🇰 🔒 SS-TCP-NA 🇩🇰 DK-37.120.131.62:1080"
+      - "🇩🇰 🔒 VL-XHTTP-TLS 🇩🇰 DK-140.248.69.254:443"
       - "🇩🇰 🔒 VL-XHTTP-NONE 🇩🇰 DK-140.248.69.254:80"
+      - "🇩🇰 🔒 VL-XHTTP-TLS 🇩🇰 DK-140.248.69.254:443-1"
+      - "🇩🇰 US🇺🇸 | google.com-443 | 37.24ms"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
@@ -577,10 +591,11 @@ proxy-groups:
     timeout: 1500
     lazy: false
     proxies:
-      - "🇩🇰 🔒 VL-XHTTP-TLS 🇩🇰 DK-140.248.69.254:443"
-      - "🇩🇰 🔒 VL-XHTTP-TLS 🇩🇰 DK-140.248.69.254:443-1"
       - "🇩🇰 🔒 SS-TCP-NA 🇩🇰 DK-37.120.131.62:1080"
+      - "🇩🇰 🔒 VL-XHTTP-TLS 🇩🇰 DK-140.248.69.254:443"
       - "🇩🇰 🔒 VL-XHTTP-NONE 🇩🇰 DK-140.248.69.254:80"
+      - "🇩🇰 🔒 VL-XHTTP-TLS 🇩🇰 DK-140.248.69.254:443-1"
+      - "🇩🇰 US🇺🇸 | google.com-443 | 37.24ms"
   - name: "المنت 💬"
     type: "select"
     icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
