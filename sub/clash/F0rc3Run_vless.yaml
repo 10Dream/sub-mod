@@ -1,287 +1,177 @@
-global-client-fingerprint: "chrome"
-keep-alive-interval: 5
-keep-alive-idle: 10
-disable-keep-alive: false
-port: 7890
+port: 7892
 socks-port: 7891
-redir-port: 7892
-mixed-port: 7893
-tproxy-port: 7894
+mixed-port: 7890
 allow-lan: true
-tcp-concurrent: true
-enable-process: true
-find-process-mode: "always"
-ipv6: false
+mode: "rule"
 log-level: "info"
-geo-auto-update: true
-geo-update-interval: 168
+external-controller: "0.0.0.0:9090"
 secret: ""
-bind-address: "*"
-unified-delay: false
+ipv6: false
 dns:
   enable: true
+  listen: "0.0.0.0:53"
   ipv6: false
   prefer-h3: false
   cache-algorithm: "arc"
+  use-hosts: true
   use-system-hosts: true
-  use-host: true
-  listen: "0.0.0.0:53"
+  respect-rules: false
   enhanced-mode: "fake-ip"
-  fake-ip-filter-mode: "blacklist"
   fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter-mode: "blacklist"
   fake-ip-filter:
-    - "*.lan"
-    - "*.localdomain"
-    - "*.invalid"
-    - "*.localhost"
-    - "*.test"
-    - "*.local"
-    - "*.home.arpa"
+    - "geosite:private"
+    - "+.lan"
+    - "+.localdomain"
+    - "+.invalid"
+    - "+.localhost"
+    - "+.test"
+    - "+.local"
+    - "+.home.arpa"
+    - "+.arpa"
+    - "+.ir"
     - "time.*.com"
+    - "time.*.gov"
+    - "time.*.apple.com"
     - "ntp.*.com"
-    - "*.ir"
+    - "+.pool.ntp.org"
+    - "+.ntp.org"
+    - "time.asis.io"
+    - "time.windows.com"
+    - "time.apple.com"
+    - "connectivitycheck.gstatic.com"
+    - "connectivitycheck.android.com"
+    - "clients3.google.com"
+    - "captive.apple.com"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "router.asus.com"
+    - "tplinkwifi.net"
+    - "tplinkrepeater.net"
+    - "tplinkap.net"
+    - "routerlogin.net"
+    - "routerlogin.com"
+    - "melogin.cn"
+    - "falogin.cn"
+    - "tendawifi.com"
+    - "leike.cc"
+    - "miwifi.com"
+    - "goforward.link"
+    - "+.plex.direct"
+  nameserver-policy:
+    geosite:private: "system"
+    +.arpa: "system"
+    +.lan: "system"
+    +.local: "system"
+    +.home.arpa: "system"
+    router.asus.com: "system"
+    tplinkwifi.net: "system"
+    tplinkrepeater.net: "system"
+    tplinkap.net: "system"
+    routerlogin.net: "system"
+    routerlogin.com: "system"
+    melogin.cn: "system"
+    falogin.cn: "system"
+    tendawifi.com: "system"
+    leike.cc: "system"
+    miwifi.com: "system"
+    goforward.link: "system"
   default-nameserver:
+    - "tcp://1.1.1.1"
+    - "tcp://8.8.8.8"
     - "1.1.1.1"
     - "8.8.8.8"
     - "9.9.9.9"
-  nameserver:
-    - "tcp://1.1.1.1"
     - "tcp://1.0.0.1"
-    - "tcp://8.8.8.8"
     - "tcp://8.8.4.4"
     - "tcp://9.9.9.9"
     - "tcp://149.112.112.112"
     - "tcp://208.67.222.222"
-    - "tcp://208.67.220.222"
+    - "tcp://208.67.220.220"
+  nameserver:
+    - "https://freedns.controld.com/p2#نوع انتخاب پروکسی 🔀"
   fallback:
-    - "tcp://76.76.19.19"
-    - "tcp://76.223.122.150"
-    - "tcp://185.228.168.9"
-    - "tcp://185.228.169.9"
-    - "tcp://8.26.56.26"
-    - "tcp://8.20.247.20"
-    - "tcp://76.76.2.11"
-    - "tcp://76.76.10.11"
-    - "tcp://84.200.69.80"
-    - "tcp://84.200.70.40"
-    - "tcp://45.33.97.5"
-    - "tcp://37.235.1.177"
-    - "tcp://209.244.0.3"
-    - "tcp://209.244.0.4"
-    - "tcp://156.154.70.5"
-    - "tcp://156.154.71.5"
-    - "tcp://103.86.96.100"
-    - "tcp://103.86.99.100"
-    - "tcp://199.85.126.10"
-    - "tcp://199.85.127.10"
-    - "tcp://129.250.35.250"
-    - "tcp://129.250.35.251"
-    - "tcp://94.16.114.254"
-    - "tcp://94.247.43.254"
-    - "tcp://208.67.222.20"
-    - "tcp://195.46.39.39"
-    - "tcp://195.46.39.40"
-    - "tcp://204.117.214.10"
-    - "tcp://199.2.252.10"
-    - "tcp://194.169.169.169"
-    - "tcp://156.154.70.1"
-    - "tcp://156.154.71.1"
-    - "tcp://91.239.100.100"
-    - "tcp://89.233.43.71"
-    - "tcp://64.6.64.6"
-    - "tcp://64.6.65.6"
-    - "tcp://77.88.8.8"
-    - "tcp://77.88.8.1"
+    - "https://dns.adguard-dns.com/dns-query#نوع انتخاب پروکسی 🔀"
+  fallback-lazy-query: true
   fallback-filter:
-    geoip: true
-    geoip-code: "IR"
-    geosite:
-      - "gfw"
+    geoip: false
     ipcidr:
+      - "10.10.34.34/32"
+      - "10.10.34.35/32"
+      - "10.10.34.36/32"
+      - "127.0.0.1/32"
       - "240.0.0.0/4"
-    domain:
-      - "+.google.com"
-      - "+.facebook.com"
-      - "+.youtube.com"
   proxy-server-nameserver:
     - "tcp://1.1.1.1"
     - "tcp://8.8.8.8"
+    - "tcp://9.9.9.9"
+    - "1.1.1.1"
+    - "8.8.8.8"
+    - "9.9.9.9"
+    - "tcp://1.0.0.1"
+    - "tcp://8.8.4.4"
+    - "tcp://149.112.112.112"
+    - "tcp://208.67.222.222"
+    - "tcp://208.67.220.220"
   direct-nameserver:
     - "78.157.42.100"
     - "78.157.42.101"
+    - "tcp://78.157.42.100"
+    - "tcp://78.157.42.101"
+  direct-nameserver-follow-policy: true
 sniffer:
   enable: true
   force-dns-mapping: true
   parse-pure-ip: true
-  override-destination: false
-  sniff:
-    HTTP:
-      ports:
-        - 80
-        - 8080
-        - 8880
-        - 2052
-        - 2082
-        - 2086
-        - 2095
-    TLS:
-      ports:
-        - 443
-        - 8443
-        - 2053
-        - 2083
-        - 2087
-        - 2096
+  override-destination: true
 tun:
   enable: true
   stack: "mixed"
   auto-route: true
   auto-detect-interface: true
-  auto-redir: true
-  dns-hijack:
-    - "any:53"
-    - "tcp://any:53"
 rule-providers:
+  DownloadManagers:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
+    interval: 86400
+    path: "./ruleset/DownloadManagers.yaml"
+  Download:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
+    interval: 86400
+    path: "./ruleset/Download.yaml"
+  stremio:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    interval: 86400
+    path: "./ruleset/stremio.yaml"
+  BanProgramAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanProgramAD.yaml"
+  BanAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanAD.yaml"
+  PrivateTracker:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
+    interval: 86400
+    path: "./ruleset/PrivateTracker.yaml"
   category_public_tracker:
     type: "http"
     behavior: "domain"
     url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-public-tracker.yaml"
     interval: 86400
     path: "./ruleset/category_public_tracker.yaml"
-  iran_ads:
-    type: "http"
-    behavior: "domain"
-    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
-    interval: 86400
-    path: "./ruleset/iran_ads.yaml"
-  PersianBlocker:
-    type: "http"
-    behavior: "domain"
-    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
-    interval: 86400
-    path: "./ruleset/PersianBlocker.yaml"
-  youtube:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
-    interval: 86400
-    path: "./ruleset/youtube.yaml"
-  telegram:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
-    interval: 86400
-    path: "./ruleset/telegram.yaml"
-  twitch:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
-    interval: 86400
-    path: "./ruleset/twitch.yaml"
-  censor:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
-    interval: 86400
-    path: "./ruleset/censor.yaml"
-  local_ips:
-    type: "http"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
-    interval: 86400
-    path: "./ruleset/local_ips.yaml"
-  private:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
-    interval: 86400
-    path: "./ruleset/private.yaml"
-  category_ir:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
-    interval: 86400
-    path: "./ruleset/category_ir.yaml"
-  iran:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
-    interval: 86400
-    path: "./ruleset/iran.yaml"
-  steam:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
-    interval: 86400
-    path: "./ruleset/steam.yaml"
-  game:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
-    interval: 86400
-    path: "./ruleset/game.yaml"
-  category-games:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
-    interval: 86400
-    path: "./ruleset/category-games.yaml"
-  ir:
-    type: "http"
-    format: "yaml"
-    behavior: "domain"
-    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
-    interval: 86400
-    path: "./ruleset/ir.yaml"
-  apps:
-    type: "http"
-    format: "yaml"
-    behavior: "classical"
-    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
-    interval: 86400
-    path: "./ruleset/apps.yaml"
-  ircidr:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
-    interval: 86400
-    path: "./ruleset/ircidr.yaml"
-  irasn:
-    type: "http"
-    format: "yaml"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
-    interval: 86400
-    path: "./ruleset/irasn.yaml"
-  arvancloud:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
-    interval: 86400
-    path: "./ruleset/arvancloud.yaml"
-  derakcloud:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
-    interval: 86400
-    path: "./ruleset/derakcloud.yaml"
-  iranserver:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
-    interval: 86400
-    path: "./ruleset/iranserver.yaml"
-  parspack:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
-    interval: 86400
-    path: "./ruleset/parspack.yaml"
   malware:
     type: "http"
     format: "yaml"
@@ -303,170 +193,79 @@ rule-providers:
     url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/cryptominers.yaml"
     interval: 86400
     path: "./ruleset/cryptominers.yaml"
-  ads:
-    type: "http"
-    format: "yaml"
-    behavior: "domain"
-    url: "https://github.com/Chocolate4U/Iran-clash-rules/releases/download/202606060815/category-ads-all.yaml"
-    interval: 86400
-    path: "./ruleset/ads.yaml"
-  DownloadManagers:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
-    interval: 86400
-    path: "./ruleset/DownloadManagers.yaml"
-  BanProgramAD:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
-    interval: 86400
-    path: "./ruleset/BanProgramAD.yaml"
-  BanAD:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
-    interval: 86400
-    path: "./ruleset/BanAD.yaml"
-  PrivateTracker:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
-    interval: 86400
-    path: "./ruleset/PrivateTracker.yaml"
-  BanEasyList:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
-    interval: 86400
-    path: "./ruleset/BanEasyList.yaml"
-  Download:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
-    interval: 86400
-    path: "./ruleset/Download.yaml"
-  GameDownload:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
-    interval: 86400
-    path: "./ruleset/GameDownload.yaml"
-  SteamRegionCheck:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
-    interval: 86400
-    path: "./ruleset/SteamRegionCheck.yaml"
-  Xbox:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
-    interval: 86400
-    path: "./ruleset/Xbox.yaml"
-  YouTubeMusic:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
-    interval: 86400
-    path: "./ruleset/YouTubeMusic.yaml"
-  YouTube:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
-    interval: 86400
-    path: "./ruleset/YouTube.yaml"
-  Ponzi:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
-    interval: 86400
-    path: "./ruleset/Ponzi.yaml"
   warninglist:
     type: "http"
     behavior: "classical"
     url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/warning-list.yaml"
     interval: 86400
     path: "./ruleset/warninglist.yaml"
-  google:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
-    interval: 86400
-    path: "./ruleset/google.yaml"
-  google-play:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
-    interval: 86400
-    path: "./ruleset/google-play.yaml"
-  xiaomi_block_list:
-    type: "http"
-    format: "yaml"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
-    interval: 86400
-    path: "./ruleset/xiaomi_block_list.yaml"
-  xiaomi_white_list:
+  Ponzi:
     type: "http"
     behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
     interval: 86400
-    path: "./ruleset/xiaomi_white_list.yaml"
-  cloudflare:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
-    interval: 86400
-    path: "./ruleset/cloudflare.yaml"
-  github:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
-    interval: 86400
-    path: "./ruleset/xgithub.yaml"
-  whatsapp:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
-    interval: 86400
-    path: "./ruleset/whatsapp.yaml"
+    path: "./ruleset/Ponzi.yaml"
   LiteAds:
     type: "http"
     behavior: "classical"
     url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/LiteAds.yaml"
     interval: 86400
     path: "./ruleset/LiteAds.yaml"
-  discord:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
-    interval: 86400
-    path: "./ruleset/discord.yaml"
-  instagram:
+  iran_ads:
     type: "http"
     behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
     interval: 86400
-    path: "./ruleset/instagram.yaml"
-  category-ai:
+    path: "./ruleset/iran_ads.yaml"
+  PersianBlocker:
     type: "http"
     behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
     interval: 86400
-    path: "./ruleset/category-ai.yaml"
-  stremio:
+    path: "./ruleset/PersianBlocker.yaml"
+  ads:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/category-ads-all.yaml"
+    interval: 86400
+    path: "./ruleset/ads.yaml"
+  BanEasyList:
     type: "http"
     behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
     interval: 86400
-    path: "./ruleset/stremio.yaml"
-  windows:
+    path: "./ruleset/BanEasyList.yaml"
+  twitch:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
+    interval: 86400
+    path: "./ruleset/twitch.yaml"
+  telegram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
+    interval: 86400
+    path: "./ruleset/telegram.yaml"
+  YouTube:
     type: "http"
     behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
     interval: 86400
-    path: "./ruleset/windows.yaml"
+    path: "./ruleset/YouTube.yaml"
+  youtube:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
+    interval: 86400
+    path: "./ruleset/youtube.yaml"
+  YouTubeMusic:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
+    interval: 86400
+    path: "./ruleset/YouTubeMusic.yaml"
   Chotwitter:
     type: "http"
     format: "yaml"
@@ -498,6 +297,201 @@ rule-providers:
     url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Spotify.yaml"
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
+  instagram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    interval: 86400
+    path: "./ruleset/instagram.yaml"
+  Ai:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/Ai.yaml"
+    interval: 86400
+    path: "./ruleset/Ai.yaml"
+  category-ai:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    interval: 86400
+    path: "./ruleset/category-ai.yaml"
+  censor:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
+    interval: 86400
+    path: "./ruleset/censor.yaml"
+  apps:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
+    interval: 86400
+    path: "./ruleset/apps.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+  arvancloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
+    interval: 86400
+    path: "./ruleset/arvancloud.yaml"
+  derakcloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
+    interval: 86400
+    path: "./ruleset/derakcloud.yaml"
+  iranserver:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
+    interval: 86400
+    path: "./ruleset/iranserver.yaml"
+  parspack:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
+    interval: 86400
+    path: "./ruleset/parspack.yaml"
+  irasn:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
+    interval: 86400
+    path: "./ruleset/irasn.yaml"
+  ircidr:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
+    interval: 86400
+    path: "./ruleset/ircidr.yaml"
+  ir:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
+    interval: 86400
+    path: "./ruleset/ir.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  whatsapp:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
+    interval: 86400
+    path: "./ruleset/whatsapp.yaml"
+  steam:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
+    interval: 86400
+    path: "./ruleset/steam.yaml"
+  SteamRegionCheck:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
+    interval: 86400
+    path: "./ruleset/SteamRegionCheck.yaml"
+  game:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
+    interval: 86400
+    path: "./ruleset/game.yaml"
+  GameDownload:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
+    interval: 86400
+    path: "./ruleset/GameDownload.yaml"
+  category-games:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
+    interval: 86400
+    path: "./ruleset/category-games.yaml"
+  Xbox:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
+    interval: 86400
+    path: "./ruleset/Xbox.yaml"
+  discord:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
+    interval: 86400
+    path: "./ruleset/discord.yaml"
+  xiaomi_white_list:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_white_list.yaml"
+  xiaomi_block_list:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_block_list.yaml"
+  windows:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    interval: 86400
+    path: "./ruleset/windows.yaml"
+  cloudflare:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
+    interval: 86400
+    path: "./ruleset/cloudflare.yaml"
+  github:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
+    interval: 86400
+    path: "./ruleset/xgithub.yaml"
+  google-play:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
+    interval: 86400
+    path: "./ruleset/google-play.yaml"
+  google:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
+    interval: 86400
+    path: "./ruleset/google.yaml"
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  private:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
+    interval: 86400
+    path: "./ruleset/private.yaml"
 proxies:
   - name: "172.64.154.211"
     type: "vless"
@@ -514,6 +508,82 @@ proxies:
       - "h2"
     ws-opts:
       path: "/"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "104.18.33.97"
+    type: "vless"
+    server: "104.18.33.97"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    client-fingerprint: "unsafe"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NETfp=chrome"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "172.64.158.170"
+    type: "vless"
+    server: "172.64.158.170"
+    port: 443
+    uuid: "d342d11e-d224-4463-b982-532309285094"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ccc.010304.xyz"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2560"
+      headers:
+        Host: "ccc.010304.xyz"
+  - name: "188.114.98.0"
+    type: "vless"
+    server: "188.114.98.0"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/fdip=sstp://vpn:vpn@vpn771984099.opengw.net:1770?ed=2560"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "172.64.152.241"
+    type: "vless"
+    server: "172.64.152.241"
+    port: 443
+    uuid: "d342d11e-d224-4463-b982-532309285094"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ccc.010304.xyz"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "ccc.010304.xyz"
+  - name: "104.18.37.127"
+    type: "vless"
+    server: "104.18.37.127"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/?Telegram---mehrosaboran"
       headers:
         Host: "snip.edgeoneai.cc.cd"
   - name: "162.159.135.234"
@@ -533,89 +603,18 @@ proxies:
       path: "/"
       headers:
         Host: "snip.edgeoneai.cc.cd"
-  - name: "47.253.226.114"
+  - name: "172.64.150.43"
     type: "vless"
-    server: "47.253.226.114"
-    port: 443
-    uuid: "055a1ce8-2a16-4a0d-a2c2-22826c9b2413"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "Svl81isn16RPAFnjtmYw7A6TPnsEPLHuYYaJht65Rzc"
-  - name: "188.114.98.0"
-    type: "vless"
-    server: "188.114.98.0"
+    server: "172.64.150.43"
     port: 443
     uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
     udp: true
     tls: true
     network: "ws"
     servername: "snip.edgeoneai.cc.cd"
-    client-fingerprint: "chrome"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2560"
-      headers:
-        Host: "snip.edgeoneai.cc.cd"
-  - name: "172.66.0.162"
-    type: "vless"
-    server: "172.66.0.162"
-    port: 443
-    uuid: "d342d11e-d224-4463-b982-532309285094"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "ccc.010304.xyz"
+    client-fingerprint: "unsafe"
     ws-opts:
       path: "/"
-  - name: "172.64.152.241"
-    type: "vless"
-    server: "172.64.152.241"
-    port: 443
-    uuid: "d342d11e-d224-4463-b982-532309285094"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "ccc.010304.xyz"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/fp=chrome"
-      headers:
-        Host: "ccc.010304.xyz"
-  - name: "188.114.98.0-1"
-    type: "vless"
-    server: "188.114.98.0"
-    port: 443
-    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "snip.edgeoneai.cc.cd"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/?TELEGRAM-TOOTFFARANGI"
-      headers:
-        Host: "snip.edgeoneai.cc.cd"
-  - name: "188.114.98.0-2"
-    type: "vless"
-    server: "188.114.98.0"
-    port: 443
-    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "snip.edgeoneai.cc.cd"
-    client-fingerprint: "chrome"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "%"
       headers:
         Host: "snip.edgeoneai.cc.cd"
   - name: "195.123.235.177"
@@ -631,35 +630,33 @@ proxies:
     reality-opts:
       public-key: "5B83otQ5ZQwtBFhR7xzsGJRXflkFKRJpQguYbE5JWGI"
       short-id: "c85d029f5e8eb393"
-  - name: "47.253.226.114-1"
+  - name: "169.40.42.90"
     type: "vless"
-    server: "47.253.226.114"
+    server: "169.40.42.90"
     port: 443
-    uuid: "055a1ce8-2a16-4a0d-a2c2-22826c9b2413"
+    uuid: "d65cc14c-f53f-4fe2-b262-97856601319c"
     udp: true
     tls: true
     network: "tcp"
-    servername: "www.cloudflare.com"
+    servername: "yahoo.com"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "Svl81isn16RPAFnjtmYw7A6TPnsEPLHuYYaJht65Rzc"
-  - name: "172.64.150.43"
+      public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
+      short-id: "c39cc7310a"
+  - name: "172.66.0.162"
     type: "vless"
-    server: "172.64.150.43"
+    server: "172.66.0.162"
     port: 443
-    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    uuid: "d342d11e-d224-4463-b982-532309285094"
     udp: true
     tls: true
     network: "ws"
-    servername: "snip.edgeoneai.cc.cd"
-    client-fingerprint: "unsafe"
+    servername: "ccc.010304.xyz"
     ws-opts:
       path: "/"
-      headers:
-        Host: "snip.edgeoneai.cc.cd"
-  - name: "104.18.37.127"
+  - name: "188.114.98.0-1"
     type: "vless"
-    server: "104.18.37.127"
+    server: "188.114.98.0"
     port: 443
     uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
     udp: true
@@ -670,23 +667,69 @@ proxies:
     alpn:
       - "http/1.1"
     ws-opts:
-      path: "/?Telegram---mehrosaboran"
+      path: "/fdip"
       headers:
         Host: "snip.edgeoneai.cc.cd"
-  - name: "172.64.158.170"
+  - name: "www.speedtest.net"
     type: "vless"
-    server: "172.64.158.170"
+    server: "www.speedtest.net"
     port: 443
-    uuid: "d342d11e-d224-4463-b982-532309285094"
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
     udp: true
     tls: true
     network: "ws"
-    servername: "ccc.010304.xyz"
+    servername: "snip.edgeoneai.cc.cd"
     client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
     ws-opts:
       path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2560"
       headers:
-        Host: "ccc.010304.xyz"
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "169.40.42.224"
+    type: "vless"
+    server: "169.40.42.224"
+    port: 443
+    uuid: "d65cc14c-f53f-4fe2-b262-97856601319c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yahoo.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
+      short-id: "c39cc7310a"
+  - name: "169.40.42.89"
+    type: "vless"
+    server: "169.40.42.89"
+    port: 443
+    uuid: "d65cc14c-f53f-4fe2-b262-97856601319c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yahoo.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
+      short-id: "c39cc7310a"
+  - name: "188.114.98.0-2"
+    type: "vless"
+    server: "188.114.98.0"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2048"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
   - name: "169.40.42.231"
     type: "vless"
     server: "169.40.42.231"
@@ -714,7 +757,7 @@ proxies:
     alpn:
       - "http/1.1"
     ws-opts:
-      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2560"
+      path: "/?Telegram---@MTMVPN---@MTMVPN---@MTMVPN---@MTMVPN"
       headers:
         Host: "snip.edgeoneai.cc.cd"
   - name: "188.114.97.6-1"
@@ -730,43 +773,25 @@ proxies:
     alpn:
       - "http/1.1"
     ws-opts:
-      path: "/?Telegram---@MTMVPN---@MTMVPN---@MTMVPN---@MTMVPN"
+      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2560"
       headers:
         Host: "snip.edgeoneai.cc.cd"
-  - name: "104.18.33.97"
+  - name: "159.89.87.21"
     type: "vless"
-    server: "104.18.33.97"
-    port: 443
-    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    server: "159.89.87.21"
+    port: 28190
+    uuid: "14c80e0e-f7ce-4991-94fc-99a1db4a9b1e"
     udp: true
     tls: true
-    network: "ws"
-    servername: "snip.edgeoneai.cc.cd"
-    client-fingerprint: "unsafe"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NETfp=chrome"
-      headers:
-        Host: "snip.edgeoneai.cc.cd"
-  - name: "188.114.97.6-2"
-    type: "vless"
-    server: "188.114.97.6"
-    port: 443
-    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "snip.edgeoneai.cc.cd"
+    network: "tcp"
+    servername: "aws.amazon.com"
     client-fingerprint: "chrome"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      headers:
-        Host: "snip.edgeoneai.cc.cd"
-  - name: "15.204.97.219"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "ZJRnFU-1s1JOnO8E9uZ7b00l1fPEh63fGRbdBANFRno"
+  - name: "15.204.97.198"
     type: "vless"
-    server: "15.204.97.219"
+    server: "15.204.97.198"
     port: 23576
     uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
     udp: true
@@ -777,20 +802,7 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-  - name: "169.40.42.235"
-    type: "vless"
-    server: "169.40.42.235"
-    port: 443
-    uuid: "d65cc14c-f53f-4fe2-b262-97856601319c"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "yahoo.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
-      short-id: "c39cc7310a"
+      short-id: "01"
   - name: "15.204.97.216"
     type: "vless"
     server: "15.204.97.216"
@@ -805,9 +817,9 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "15.204.97.214"
+  - name: "15.204.97.206"
     type: "vless"
-    server: "15.204.97.214"
+    server: "15.204.97.206"
     port: 23576
     uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
     udp: true
@@ -815,33 +827,6 @@ proxies:
     network: "tcp"
     servername: "fuck.rkn"
     client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-      short-id: "01"
-  - name: "169.40.42.90"
-    type: "vless"
-    server: "169.40.42.90"
-    port: 443
-    uuid: "d65cc14c-f53f-4fe2-b262-97856601319c"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "yahoo.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
-      short-id: "c39cc7310a"
-  - name: "ww13.levikogjgfdd.ir"
-    type: "vless"
-    server: "ww13.levikogjgfdd.ir"
-    port: 23576
-    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "fuck.rkn"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
@@ -860,37 +845,9 @@ proxies:
     reality-opts:
       public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
       short-id: "c39cc7310a"
-  - name: "15.204.97.195"
+  - name: "169.40.42.235"
     type: "vless"
-    server: "15.204.97.195"
-    port: 23576
-    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "fuck.rkn"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-      short-id: "01"
-  - name: "15.204.97.197"
-    type: "vless"
-    server: "15.204.97.197"
-    port: 23576
-    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "fuck.rkn"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-      short-id: "01"
-  - name: "169.40.42.74"
-    type: "vless"
-    server: "169.40.42.74"
+    server: "169.40.42.235"
     port: 443
     uuid: "d65cc14c-f53f-4fe2-b262-97856601319c"
     udp: true
@@ -902,48 +859,23 @@ proxies:
     reality-opts:
       public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
       short-id: "c39cc7310a"
-  - name: "15.204.97.206"
+  - name: "188.114.96.6"
     type: "vless"
-    server: "15.204.97.206"
-    port: 23576
-    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "fuck.rkn"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-      short-id: "01"
-  - name: "169.40.42.168"
-    type: "vless"
-    server: "169.40.42.168"
+    server: "188.114.96.6"
     port: 443
-    uuid: "d65cc14c-f53f-4fe2-b262-97856601319c"
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
     udp: true
     tls: true
-    network: "tcp"
-    servername: "yahoo.com"
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
     client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
-      short-id: "c39cc7310a"
-  - name: "15.204.97.198"
-    type: "vless"
-    server: "15.204.97.198"
-    port: 23576
-    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "fuck.rkn"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-      short-id: "01"
+    alpn:
+      - "h3"
+      - "h2"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
   - name: "15.204.97.209"
     type: "vless"
     server: "15.204.97.209"
@@ -957,20 +889,34 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "ww13.levikogjgfdd.ir-1"
+  - name: "169.40.42.35"
     type: "vless"
-    server: "ww13.levikogjgfdd.ir"
-    port: 23576
-    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    server: "169.40.42.35"
+    port: 443
+    uuid: "d65cc14c-f53f-4fe2-b262-97856601319c"
     udp: true
     tls: true
     network: "tcp"
-    servername: "fuck.rkn"
-    client-fingerprint: "chrome"
+    servername: "yahoo.com"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-      short-id: "01"
+      public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
+      short-id: "c39cc7310a"
+  - name: "188.114.97.6-2"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
   - name: "169.40.42.229"
     type: "vless"
     server: "169.40.42.229"
@@ -985,48 +931,116 @@ proxies:
     reality-opts:
       public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
       short-id: "c39cc7310a"
-  - name: "169.40.42.168-1"
+  - name: "15.204.97.197"
     type: "vless"
-    server: "169.40.42.168"
-    port: 443
-    uuid: "d65cc14c-f53f-4fe2-b262-97856601319c"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "yahoo.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
-      short-id: "c39cc7310a"
-  - name: "www.speedtest.net"
-    type: "vless"
-    server: "www.speedtest.net"
-    port: 443
-    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "snip.edgeoneai.cc.cd"
-    client-fingerprint: "chrome"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2560"
-      headers:
-        Host: "snip.edgeoneai.cc.cd"
-  - name: "62.210.91.2"
-    type: "vless"
-    server: "62.210.91.2"
+    server: "15.204.97.197"
     port: 23576
     uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
     udp: true
     tls: true
     network: "tcp"
     servername: "fuck.rkn"
+    client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
+  - name: "15.204.97.219"
+    type: "vless"
+    server: "15.204.97.219"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+  - name: "15.204.97.214"
+    type: "vless"
+    server: "15.204.97.214"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "15.204.97.195"
+    type: "vless"
+    server: "15.204.97.195"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "169.40.42.90-1"
+    type: "vless"
+    server: "169.40.42.90"
+    port: 443
+    uuid: "d65cc14c-f53f-4fe2-b262-97856601319c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yahoo.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
+      short-id: "c39cc7310a"
+  - name: "169.40.42.74"
+    type: "vless"
+    server: "169.40.42.74"
+    port: 443
+    uuid: "d65cc14c-f53f-4fe2-b262-97856601319c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yahoo.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
+      short-id: "c39cc7310a"
+  - name: "169.40.42.225"
+    type: "vless"
+    server: "169.40.42.225"
+    port: 443
+    uuid: "d65cc14c-f53f-4fe2-b262-97856601319c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yahoo.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
+      short-id: "c39cc7310a"
+  - name: "51.89.194.151"
+    type: "vless"
+    server: "51.89.194.151"
+    port: 2053
+    uuid: "8e790f25-1d71-4601-9fb0-d503931dcfca"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.apple.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "xPEBx4wUmwAAv4ikUALNBf5wH6TRhyeQ0Q2pcNELsV0"
+      short-id: "d051f678212f9d54"
   - name: "62.210.91.10"
     type: "vless"
     server: "62.210.91.10"
@@ -1068,19 +1082,6 @@ proxies:
     reality-opts:
       public-key: "HyVSZ2OyySwXT-xRhTAqoiuYflIaj_b0Jxm7S1Iq9hs"
       short-id: "7a76f3c4b9dd"
-  - name: "152.53.236.22"
-    type: "vless"
-    server: "152.53.236.22"
-    port: 443
-    uuid: "711c018e-2692-4aa8-93f3-544d83fcd16c"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "HyVSZ2OyySwXT-xRhTAqoiuYflIaj_b0Jxm7S1Iq9hs"
-      short-id: "7a76f3c4b9dd"
   - name: "137.74.16.237"
     type: "vless"
     server: "137.74.16.237"
@@ -1095,72 +1096,6 @@ proxies:
     reality-opts:
       public-key: "7LSzvilTVKGMtBDuKGeMrLtlhY7tQf5YcG566dEgO0I"
       short-id: "b390e0a721d242b0"
-  - name: "163.245.42.48"
-    type: "vless"
-    server: "163.245.42.48"
-    port: 443
-    uuid: "b9bfa54d-bc44-4592-a6d6-89a9665d286f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "mother-earth.fyi"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
-  - name: "jdwacdi.cvewfjg.shop"
-    type: "vless"
-    server: "jdwacdi.cvewfjg.shop"
-    port: 443
-    uuid: "711c018e-2692-4aa8-93f3-544d83fcd16c"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "HyVSZ2OyySwXT-xRhTAqoiuYflIaj_b0Jxm7S1Iq9hs"
-      short-id: "7a76f3c4b9dd"
-  - name: "ticket.bestsellersd.site"
-    type: "vless"
-    server: "ticket.bestsellersd.site"
-    port: 443
-    uuid: "682feb0b-87c5-45f1-bc58-0a5895e0b867"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "ticket.bestsellersd.site"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-  - name: "142.91.108.25"
-    type: "vless"
-    server: "142.91.108.25"
-    port: 443
-    uuid: "ee18d188-14cc-417e-beb1-70e4add6d023"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "jp3.nztvpn.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "9ZCYjybxMQ7JpE39B8u_Bo-alI1LIbt5ER0E-4yMjiM"
-      short-id: "ea36c03d86f91287"
-  - name: "31.70.111.146"
-    type: "vless"
-    server: "31.70.111.146"
-    port: 443
-    uuid: "84ed0e09-6803-4ef9-a977-74b657d971e5"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.apple.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "ZNmuzIn-zyJi2C0sWRpL9fsMYCgYauXpJElXTqY_LEE"
-      short-id: "d7de3a6ff4018957"
   - name: "31.77.126.2"
     type: "vless"
     server: "31.77.126.2"
@@ -1176,18 +1111,121 @@ proxies:
       path: "/fdip=sstp://vpn:vpn@vpn748359672.opengw.net:1458?ed=2560"
       headers:
         Host: "snip.edgeoneai.cc.cd"
-  - name: "ai.smrtai.top"
+  - name: "198.202.146.51"
     type: "vless"
-    server: "ai.smrtai.top"
+    server: "198.202.146.51"
     port: 443
-    uuid: "086bf957-9cd0-4e55-8280-bbef10435b41"
+    uuid: "afbd410e-1663-4f40-9d3b-df5117aa23ca"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "198.202.146.51.sslip.io"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "B5DMtKe8wjH_WeM8M8IEuKwPqJ6-Ku98JH_LifwehEY"
+      short-id: "6fe2994a0e208408"
+  - name: "31.77.10.167"
+    type: "vless"
+    server: "31.77.10.167"
+    port: 24503
+    uuid: "fafc7c16-f890-45ee-a856-02df225172dd"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "nl3-gkv6mb.vpvr4ib84nuv6hdkt.ru"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "iiApJD_tVRzp1t8EfIpG7T4dnx-O0ai5nkzD9GUV9Fc"
+      short-id: "02ea11017a1c951f"
+  - name: "62.210.91.2"
+    type: "vless"
+    server: "62.210.91.2"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "91.107.191.188"
+    type: "vless"
+    server: "91.107.191.188"
+    port: 8443
+    uuid: "90c08c98-7ec8-4fab-da36-cf140d18c708"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "host.taghvimtime.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+  - name: "152.53.236.22"
+    type: "vless"
+    server: "152.53.236.22"
+    port: 443
+    uuid: "711c018e-2692-4aa8-93f3-544d83fcd16c"
     udp: true
     tls: true
     network: "tcp"
     servername: "www.cloudflare.com"
+    flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "R-w7BpNgtryZRBMyRoHx81OnjzAwrKhVtV1EUKLFJzc"
-      short-id: "086bf957"
+      public-key: "HyVSZ2OyySwXT-xRhTAqoiuYflIaj_b0Jxm7S1Iq9hs"
+      short-id: "7a76f3c4b9dd"
+  - name: "84.32.184.219"
+    type: "vless"
+    server: "84.32.184.219"
+    port: 443
+    uuid: "7d1a74fd-8a38-4a29-863f-5da53a9e557e"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "7d1a74fd.ferrin.uk"
+    client-fingerprint: "chrome"
+  - name: "31.70.111.146"
+    type: "vless"
+    server: "31.70.111.146"
+    port: 443
+    uuid: "84ed0e09-6803-4ef9-a977-74b657d971e5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.apple.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "ZNmuzIn-zyJi2C0sWRpL9fsMYCgYauXpJElXTqY_LEE"
+      short-id: "d7de3a6ff4018957"
+  - name: "ticket.bestsellersd.site"
+    type: "vless"
+    server: "ticket.bestsellersd.site"
+    port: 443
+    uuid: "682feb0b-87c5-45f1-bc58-0a5895e0b867"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "ticket.bestsellersd.site"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+  - name: "jdwacdi.cvewfjg.shop"
+    type: "vless"
+    server: "jdwacdi.cvewfjg.shop"
+    port: 443
+    uuid: "711c018e-2692-4aa8-93f3-544d83fcd16c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "HyVSZ2OyySwXT-xRhTAqoiuYflIaj_b0Jxm7S1Iq9hs"
+      short-id: "7a76f3c4b9dd"
   - name: "50.7.216.174"
     type: "vless"
     server: "50.7.216.174"
@@ -1198,32 +1236,61 @@ proxies:
     network: "xhttp"
     servername: "7d1a74fd.ferrin.uk"
     client-fingerprint: "chrome"
-  - name: "3.114.220.22"
+  - name: "142.91.108.25"
     type: "vless"
-    server: "3.114.220.22"
-    port: 10583
-    uuid: "814bd064-544d-4255-a070-5705c03f6da9"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.apple.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "k2hPp0tTW0Da-HK94wYpSCLbuK44LfGqC2MSJIM1Ti0"
-      short-id: "48050fab"
-  - name: "31.77.18.220"
-    type: "vless"
-    server: "31.77.18.220"
+    server: "142.91.108.25"
     port: 443
-    uuid: "4f51ca84-43ea-4087-b8a2-938e0ccbe27a"
+    uuid: "ee18d188-14cc-417e-beb1-70e4add6d023"
     udp: true
     tls: true
     network: "tcp"
-    servername: "google.com"
+    servername: "jp3.nztvpn.com"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "mDDDyruO33nuqcTS7pZOjd9oOpDHUf0aEv2TQ1DFGV4"
+      public-key: "9ZCYjybxMQ7JpE39B8u_Bo-alI1LIbt5ER0E-4yMjiM"
+      short-id: "ea36c03d86f91287"
+  - name: "cf.090227.xyz"
+    type: "vless"
+    server: "cf.090227.xyz"
+    port: 443
+    uuid: "d342d11e-d224-4463-b982-532309285094"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ccc.010304.xyz"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "ccc.010304.xyz"
+  - name: "cf.130519.xyz"
+    type: "vless"
+    server: "cf.130519.xyz"
+    port: 443
+    uuid: "d342d11e-d224-4463-b982-532309285094"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ccc.010304.xyz"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "ccc.010304.xyz"
+  - name: "edge.bookmai.com"
+    type: "vless"
+    server: "edge.bookmai.com"
+    port: 443
+    uuid: "b9bfa54d-bc44-4592-a6d6-89a9665d286f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "mother-earth.fyi"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
   - name: "46.105.38.220"
     type: "vless"
     server: "46.105.38.220"
@@ -1249,33 +1316,20 @@ proxies:
     network: "xhttp"
     servername: "api-v3-0af34045.vmagnum.win"
     client-fingerprint: "chrome"
+  - name: "163.245.42.48"
+    type: "vless"
+    server: "163.245.42.48"
+    port: 443
+    uuid: "b9bfa54d-bc44-4592-a6d6-89a9665d286f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "mother-earth.fyi"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
   - name: "159.65.51.189"
-    type: "vless"
-    server: "159.65.51.189"
-    port: 443
-    uuid: "d342d11e-d224-4463-b982-532309285094"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "ccc.010304.xyz"
-    ws-opts:
-      path: "/fp=chrome"
-      headers:
-        Host: "ccc.010304.xyz"
-  - name: "159.65.51.189-1"
-    type: "vless"
-    server: "159.65.51.189"
-    port: 443
-    uuid: "d342d11e-d224-4463-b982-532309285094"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "ccc.010304.xyz"
-    ws-opts:
-      path: "/fp"
-      headers:
-        Host: "ccc.010304.xyz"
-  - name: "159.65.51.189-2"
     type: "vless"
     server: "159.65.51.189"
     port: 443
@@ -1289,16 +1343,32 @@ proxies:
       path: "/"
       headers:
         Host: "ccc.010304.xyz"
-  - name: "84.32.184.219"
+  - name: "3.114.220.22"
     type: "vless"
-    server: "84.32.184.219"
-    port: 443
-    uuid: "7d1a74fd-8a38-4a29-863f-5da53a9e557e"
+    server: "3.114.220.22"
+    port: 10583
+    uuid: "814bd064-544d-4255-a070-5705c03f6da9"
     udp: true
     tls: true
-    network: "xhttp"
-    servername: "7d1a74fd.ferrin.uk"
-    client-fingerprint: "chrome"
+    network: "tcp"
+    servername: "www.apple.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "k2hPp0tTW0Da-HK94wYpSCLbuK44LfGqC2MSJIM1Ti0"
+      short-id: "48050fab"
+  - name: "159.65.51.189-1"
+    type: "vless"
+    server: "159.65.51.189"
+    port: 443
+    uuid: "d342d11e-d224-4463-b982-532309285094"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ccc.010304.xyz"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "ccc.010304.xyz"
   - name: "31.77.126.2-1"
     type: "vless"
     server: "31.77.126.2"
@@ -1308,24 +1378,23 @@ proxies:
     tls: true
     network: "ws"
     servername: "ccc.010304.xyz"
-    client-fingerprint: "chrome"
     ws-opts:
-      path: "/fp=chrome"
+      path: "/fp"
       headers:
         Host: "ccc.010304.xyz"
-  - name: "89.169.53.176"
+  - name: "lite.3apes.online"
     type: "vless"
-    server: "89.169.53.176"
-    port: 4443
-    uuid: "20dd9433-389e-4573-ba7b-689619cf13da"
+    server: "lite.3apes.online"
+    port: 443
+    uuid: "c31dc85a-747e-4dac-94b9-2d5ca7791367"
     udp: true
     tls: true
     network: "tcp"
-    servername: "de.wvpn.one"
+    servername: "lite.3apes.online"
+    client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "YIyohkkCU5kw6J5iZYZkhILyDwlfftFPDTkbITlrAUw"
-      short-id: "df3aff719526dc5a"
+      public-key: "q4_o7NvD6vQg4hYsyO29Q6PVufjTJHDUbQTqstre9EQ"
   - name: "31.77.126.2-2"
     type: "vless"
     server: "31.77.126.2"
@@ -1340,19 +1409,31 @@ proxies:
       path: "/"
       headers:
         Host: "ccc.010304.xyz"
-  - name: "51.89.194.151"
+  - name: "83.219.97.18"
     type: "vless"
-    server: "51.89.194.151"
-    port: 2053
-    uuid: "8e790f25-1d71-4601-9fb0-d503931dcfca"
+    server: "83.219.97.18"
+    port: 443
+    uuid: "fe551942-d6e5-4361-ae5c-1f2e9077cd79"
     udp: true
     tls: true
     network: "tcp"
-    servername: "www.apple.com"
-    client-fingerprint: "chrome"
+    servername: "fi5.silalink.sbs"
+    flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "xPEBx4wUmwAAv4ikUALNBf5wH6TRhyeQ0Q2pcNELsV0"
-      short-id: "d051f678212f9d54"
+      public-key: "32XFmS-ifqooBFY89KNP3ZrqgSBOd3vel9GlNinL6yw"
+      short-id: "03"
+  - name: "ai.smrtai.top"
+    type: "vless"
+    server: "ai.smrtai.top"
+    port: 443
+    uuid: "086bf957-9cd0-4e55-8280-bbef10435b41"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    reality-opts:
+      public-key: "R-w7BpNgtryZRBMyRoHx81OnjzAwrKhVtV1EUKLFJzc"
+      short-id: "086bf957"
   - name: "31.57.190.89"
     type: "vless"
     server: "31.57.190.89"
@@ -1364,6 +1445,57 @@ proxies:
     servername: "ccc.010304.xyz"
     ws-opts:
       path: "/"
+      headers:
+        Host: "ccc.010304.xyz"
+  - name: "104.171.133.209"
+    type: "vless"
+    server: "104.171.133.209"
+    port: 443
+    uuid: "ebd1c0d6-7ff4-4b9f-8692-237517a27a64"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "anyfile2file.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "mza5Hn1aolSz65qu-UwvBP3oesxMe25r11o4nxvikF0"
+      short-id: "64c1fe36c7846400"
+  - name: "host.taghvimtime.ir"
+    type: "vless"
+    server: "host.taghvimtime.ir"
+    port: 8443
+    uuid: "90c08c98-7ec8-4fab-da36-cf140d18c708"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "host.taghvimtime.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+  - name: "31.57.190.89-1"
+    type: "vless"
+    server: "31.57.190.89"
+    port: 443
+    uuid: "d342d11e-d224-4463-b982-532309285094"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ccc.010304.xyz"
+    ws-opts:
+      path: "/fp=chromefp=chrome"
+      headers:
+        Host: "ccc.010304.xyz"
+  - name: "31.57.190.89-2"
+    type: "vless"
+    server: "31.57.190.89"
+    port: 443
+    uuid: "d342d11e-d224-4463-b982-532309285094"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ccc.010304.xyz"
+    ws-opts:
+      path: "/fp=chrome"
       headers:
         Host: "ccc.010304.xyz"
   - name: "138.124.36.67"
@@ -1380,110 +1512,6 @@ proxies:
       path: "/"
       headers:
         Host: "snip.edgeoneai.cc.cd"
-  - name: "sino.bestsellers1.site"
-    type: "vless"
-    server: "sino.bestsellers1.site"
-    port: 2083
-    uuid: "7858128a-6b5e-4f86-9bff-52c1f1e6439d"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "sino.bestsellers1.site"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/"
-  - name: "104.171.133.209"
-    type: "vless"
-    server: "104.171.133.209"
-    port: 443
-    uuid: "ebd1c0d6-7ff4-4b9f-8692-237517a27a64"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "anyfile2file.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "mza5Hn1aolSz65qu-UwvBP3oesxMe25r11o4nxvikF0"
-      short-id: "64c1fe36c7846400"
-  - name: "151.241.226.201"
-    type: "vless"
-    server: "151.241.226.201"
-    port: 2053
-    uuid: "0eed6293-8cf1-4e77-ac10-9c3d50d0b2f8"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.apple.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "bYW_MmB_CUHrsyoCAUKviI2LZdHf63yY2yOPXbih104"
-      short-id: "9e419c0759b54d6f"
-  - name: "31.57.190.89-1"
-    type: "vless"
-    server: "31.57.190.89"
-    port: 443
-    uuid: "d342d11e-d224-4463-b982-532309285094"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "ccc.010304.xyz"
-    ws-opts:
-      path: "/fp=chrome"
-      headers:
-        Host: "ccc.010304.xyz"
-  - name: "198.202.146.51"
-    type: "vless"
-    server: "198.202.146.51"
-    port: 443
-    uuid: "afbd410e-1663-4f40-9d3b-df5117aa23ca"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "198.202.146.51.sslip.io"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "B5DMtKe8wjH_WeM8M8IEuKwPqJ6-Ku98JH_LifwehEY"
-      short-id: "6fe2994a0e208408"
-  - name: "31.57.190.89-2"
-    type: "vless"
-    server: "31.57.190.89"
-    port: 443
-    uuid: "d342d11e-d224-4463-b982-532309285094"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "ccc.010304.xyz"
-    ws-opts:
-      path: "/fp=chromefp=chrome"
-      headers:
-        Host: "ccc.010304.xyz"
-  - name: "208.69.78.217"
-    type: "vless"
-    server: "208.69.78.217"
-    port: 2053
-    uuid: "c0dd6d59-1573-43af-8b70-1470b2632a6d"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.apple.com"
-    reality-opts:
-      public-key: "A49ue7zXSusJZdErPAewg3jqGdUFIO1a9xOunEKJfC0"
-      short-id: "ad86e2d52ff40ebd"
-  - name: "78.159.250.214"
-    type: "vless"
-    server: "78.159.250.214"
-    port: 443
-    uuid: "4054fdc2-ee80-4419-8a8e-d937df4719e2"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "qq.utiltools.site"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "drY21DHNOr6ezJLA2B10mzTExeJ9-gVBfTBNLwVBtWI"
-      short-id: "00000000"
   - name: "tgfree.rush-server.com"
     type: "vless"
     server: "tgfree.rush-server.com"
@@ -1498,32 +1526,72 @@ proxies:
     reality-opts:
       public-key: "mza5Hn1aolSz65qu-UwvBP3oesxMe25r11o4nxvikF0"
       short-id: "64c1fe36c7846400"
-  - name: "206.206.76.75"
+  - name: "sino.bestsellers1.site"
     type: "vless"
-    server: "206.206.76.75"
+    server: "sino.bestsellers1.site"
+    port: 2083
+    uuid: "7858128a-6b5e-4f86-9bff-52c1f1e6439d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sino.bestsellers1.site"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+  - name: "static.86.39.13.49.clients.your-server.de"
+    type: "vless"
+    server: "static.86.39.13.49.clients.your-server.de"
     port: 443
-    uuid: "1e3d3634-36ac-43ac-a439-9665d885238f"
+    uuid: "6c688f63-fad4-45d8-a6a1-1e978ed26b8b"
     udp: true
     tls: true
     network: "tcp"
-    servername: "www.cloudflare.com"
+    servername: "static.75.209.109.65.clients.your-server.de"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
     flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "TqIFzUEEI1pIOR8BEpkNKEXcJ6cPfE5EzHb5joIivig"
-      short-id: "9930177816ab09da"
-  - name: "edge.bookmai.com"
+  - name: "158.247.241.102"
     type: "vless"
-    server: "edge.bookmai.com"
+    server: "158.247.241.102"
     port: 443
-    uuid: "b9bfa54d-bc44-4592-a6d6-89a9665d286f"
+    uuid: "583cc910-b57c-4dd0-a4a7-cea51a30b032"
     udp: true
     tls: true
     network: "tcp"
-    servername: "mother-earth.fyi"
+    servername: "www.apple.com"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
+      public-key: "GR_zPAgxF9PZ70Z9UpSmMlcd2STyoAC0fZTSHkTTCGE"
+      short-id: "ca193e889d958f81"
+  - name: "fitindoor.net"
+    type: "vless"
+    server: "fitindoor.net"
+    port: 2053
+    uuid: "95a608b6-bff1-4e10-bb61-0a39f221bb7d"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "fitindoor.net"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+  - name: "89.169.53.176"
+    type: "vless"
+    server: "89.169.53.176"
+    port: 4443
+    uuid: "20dd9433-389e-4573-ba7b-689619cf13da"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "de.wvpn.one"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "YIyohkkCU5kw6J5iZYZkhILyDwlfftFPDTkbITlrAUw"
+      short-id: "df3aff719526dc5a"
   - name: "43.174.193.1"
     type: "vless"
     server: "43.174.193.1"
@@ -1538,50 +1606,39 @@ proxies:
       path: "/"
       headers:
         Host: "ccc.010304.xyz"
-  - name: "213.226.127.71"
+  - name: "185.126.93.227"
     type: "vless"
-    server: "213.226.127.71"
-    port: 2066
-    uuid: "5ad13ef8-ced8-43b5-9d8c-f046a3ce9ddc"
+    server: "185.126.93.227"
+    port: 443
+    uuid: "f04cc810-aaf2-4a7b-8cad-356cdd30d394"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "tg1.cdnphotos.org"
+    client-fingerprint: "chrome"
+  - name: "185.126.93.225"
+    type: "vless"
+    server: "185.126.93.225"
+    port: 443
+    uuid: "f04cc810-aaf2-4a7b-8cad-356cdd30d394"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "tg1.cdnphotos.org"
+    client-fingerprint: "chrome"
+  - name: "206.206.76.75"
+    type: "vless"
+    server: "206.206.76.75"
+    port: 443
+    uuid: "1e3d3634-36ac-43ac-a439-9665d885238f"
     udp: true
     tls: true
     network: "tcp"
-    servername: "tiktok.com"
-    client-fingerprint: "chrome"
+    servername: "www.cloudflare.com"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "kLCwYNBhCg68BQah9El1lNg6GQ7-7Y7xfTtIs6MiTEg"
-      short-id: "d18f4e"
-  - name: "45.9.156.28"
-    type: "vless"
-    server: "45.9.156.28"
-    port: 443
-    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "bg4.univesalsrv.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "k-vH6pkyAv26L1_dXKOFhp0Kesur9-FCUDoj-IIpVhc"
-      short-id: "51f45d4fd58cc319"
-    grpc-opts:
-      grpc-service-name: "cloud.v1.RelayService"
-  - name: "201.7.25.100"
-    type: "vless"
-    server: "201.7.25.100"
-    port: 24446
-    uuid: "88281d02-b387-4fe3-918e-26ed331e6d08"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "willow.cdn.cachefleet.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "w9JCByLSU3NGciCv2iceOz4TRL4swv8jfIAYoaKSyEw"
-      short-id: "a0938b702257f780"
-    grpc-opts:
-      grpc-service-name: "telegram-bridge"
+      public-key: "TqIFzUEEI1pIOR8BEpkNKEXcJ6cPfE5EzHb5joIivig"
+      short-id: "9930177816ab09da"
   - name: "150.40.126.18"
     type: "vless"
     server: "150.40.126.18"
@@ -1597,61 +1654,96 @@ proxies:
       short-id: "ed0cd5cc2e26e6e7"
     grpc-opts:
       grpc-service-name: "node.v2.ObjectService"
-  - name: "91.210.169.181"
+  - name: "rs2.univesalsrv.com"
     type: "vless"
-    server: "91.210.169.181"
+    server: "rs2.univesalsrv.com"
     port: 443
-    uuid: "ff0b6ba8-bed0-4c4d-bbc9-23af47582615"
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
     udp: true
     tls: true
-    network: "ws"
-    ws-opts:
-      path: "/api/connect"
-      headers:
-        Host: "wstg.datasynctrue.online"
-  - name: "54.251.9.130"
+    network: "grpc"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "tL16MVY08r-7YDXb1_gxuBBWInpSFp97ZLJ_ax3R2iE"
+      short-id: "1469af2040b7c323"
+    grpc-opts:
+      grpc-service-name: "media.v1.ObjectService"
+  - name: "185.126.93.226"
     type: "vless"
-    server: "54.251.9.130"
-    port: 24146
-    uuid: "9d9a048b-3aea-4b3e-b106-1106bf301feb"
+    server: "185.126.93.226"
+    port: 443
+    uuid: "f04cc810-aaf2-4a7b-8cad-356cdd30d394"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "tg1.cdnphotos.org"
+    client-fingerprint: "chrome"
+  - name: "151.241.226.201"
+    type: "vless"
+    server: "151.241.226.201"
+    port: 2053
+    uuid: "0eed6293-8cf1-4e77-ac10-9c3d50d0b2f8"
     udp: true
     tls: true
     network: "tcp"
-    servername: "www.intel.com"
+    servername: "www.apple.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "bYW_MmB_CUHrsyoCAUKviI2LZdHf63yY2yOPXbih104"
+      short-id: "9e419c0759b54d6f"
+  - name: "78.159.250.214"
+    type: "vless"
+    server: "78.159.250.214"
+    port: 443
+    uuid: "4054fdc2-ee80-4419-8a8e-d937df4719e2"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "qq.utiltools.site"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "VeluC9A7XDurAWQNgXKShS2SJSgoK79QHFgiAMYrvGo"
-      short-id: "7205d9079521832c"
-  - name: "bg4.univesalsrv.com"
+      public-key: "drY21DHNOr6ezJLA2B10mzTExeJ9-gVBfTBNLwVBtWI"
+      short-id: "00000000"
+  - name: "mci1.amir12.ir"
     type: "vless"
-    server: "bg4.univesalsrv.com"
-    port: 443
-    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    server: "mci1.amir12.ir"
+    port: 1222
+    uuid: "36c3dcc2-17b6-4478-b8a7-3978e6d5afe9"
     udp: true
     tls: true
-    network: "grpc"
-    client-fingerprint: "chrome"
+    network: "tcp"
+    servername: "play.google.com"
     reality-opts:
-      public-key: "k-vH6pkyAv26L1_dXKOFhp0Kesur9-FCUDoj-IIpVhc"
-      short-id: "51f45d4fd58cc319"
-    grpc-opts:
-      grpc-service-name: "cloud.v1.RelayService"
-  - name: "bg4.univesalsrv.com-1"
+      public-key: "zpLKK8HuwXJDH9D0O3t5Z_tO3ajkj7VRtXdr6UGy1zE"
+      short-id: "a25d0f"
+  - name: "146.235.16.130"
     type: "vless"
-    server: "bg4.univesalsrv.com"
-    port: 443
-    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    server: "146.235.16.130"
+    port: 19825
+    uuid: "2d1ad594-80a4-4bfb-87a6-038e39701f51"
     udp: true
     tls: true
-    network: "grpc"
-    servername: "bg4.univesalsrv.com"
-    client-fingerprint: "chrome"
+    network: "tcp"
+    servername: "sg2-8sb.6121999.dpdns.org"
+    flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "k-vH6pkyAv26L1_dXKOFhp0Kesur9-FCUDoj-IIpVhc"
-      short-id: "51f45d4fd58cc319"
-    grpc-opts:
-      grpc-service-name: "cloud.v1.RelayService"
+      public-key: "GvvkY8xYb9QjvwvzYq_uNC4tOGd0DCxRnz6770-xgkI"
+      short-id: "6ba85179e30d4fc2"
+  - name: "213.226.127.71"
+    type: "vless"
+    server: "213.226.127.71"
+    port: 2066
+    uuid: "5ad13ef8-ced8-43b5-9d8c-f046a3ce9ddc"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "tiktok.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "kLCwYNBhCg68BQah9El1lNg6GQ7-7Y7xfTtIs6MiTEg"
+      short-id: "d18f4e"
   - name: "82.202.182.41"
     type: "vless"
     server: "82.202.182.41"
@@ -1666,62 +1758,6 @@ proxies:
     reality-opts:
       public-key: "7VEbBMpg2DyUHU53a76muNrCES-g12FyRUvThr4lvy4"
       short-id: "b208"
-  - name: "rs1.univesalsrv.com"
-    type: "vless"
-    server: "rs1.univesalsrv.com"
-    port: 443
-    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
-    udp: true
-    tls: true
-    network: "grpc"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "upIzyaSbVz2ZK6KfGtXmPl_-sCwn8XLDyFDH5CsL9iY"
-      short-id: "ed0cd5cc2e26e6e7"
-    grpc-opts:
-      grpc-service-name: "node.v2.ObjectService"
-  - name: "lite.3apes.online"
-    type: "vless"
-    server: "lite.3apes.online"
-    port: 443
-    uuid: "c31dc85a-747e-4dac-94b9-2d5ca7791367"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "lite.3apes.online"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "q4_o7NvD6vQg4hYsyO29Q6PVufjTJHDUbQTqstre9EQ"
-  - name: "89.35.14.32"
-    type: "vless"
-    server: "89.35.14.32"
-    port: 443
-    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "md3.univesalsrv.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "q38CddDj2g-XNDc0uW1m6S6b8iGY_Bne2RwX7C_FYCQ"
-      short-id: "9a72d40f1ff882b3"
-    grpc-opts:
-      grpc-service-name: "stats.v2.PushService"
-  - name: "139.100.226.187"
-    type: "vless"
-    server: "139.100.226.187"
-    port: 8443
-    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "snip.edgeoneai.cc.cd"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/fdip=sstp://vpn:vpn@public-vpn-200.opengw.net:443"
-      headers:
-        Host: "snip.edgeoneai.cc.cd"
   - name: "194.61.31.126"
     type: "vless"
     server: "194.61.31.126"
@@ -1735,21 +1771,34 @@ proxies:
     reality-opts:
       public-key: "PuAGLfJy6cu1TNoHuKIKSxPetCbZI41fc8hQDjWPIAU"
       short-id: "9980e0609b0d3891"
-  - name: "62.133.63.45"
+  - name: "rs4.univesalsrv.com"
     type: "vless"
-    server: "62.133.63.45"
-    port: 8444
-    uuid: "a346c521-7a7f-452b-9356-a4893feb5982"
+    server: "rs4.univesalsrv.com"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
     udp: true
     tls: true
     network: "grpc"
-    servername: "github.com"
+    servername: "rs4.univesalsrv.com"
     client-fingerprint: "chrome"
     reality-opts:
-      public-key: "FWitre1jinQR7qz5HQ0q2Q4Gg9xA9B0SyizCziN7Ch0"
-      short-id: "457fab2ac885dbe0"
+      public-key: "sXsJ4ET-50TYqlhKZf03nPQr2JIy1F0D4m6lOsI0cAs"
+      short-id: "861ac7d66953e55f"
     grpc-opts:
-      grpc-service-name: "GunService"
+      grpc-service-name: "media.v1.StreamService"
+  - name: "144.48.11.97"
+    type: "vless"
+    server: "144.48.11.97"
+    port: 43000
+    uuid: "4799abf0-d0d9-4a46-9c31-b1f76ae00e1e"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "144.48.11.97"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "lmT0SFJL1A8_ariRWL65dhShaqFbpitjGanv7EFnoR0"
+      short-id: "725e6ea0"
   - name: "3.0.111.82"
     type: "vless"
     server: "3.0.111.82"
@@ -1764,389 +1813,20 @@ proxies:
     reality-opts:
       public-key: "k2hPp0tTW0Da-HK94wYpSCLbuK44LfGqC2MSJIM1Ti0"
       short-id: "48050fab"
-  - name: "139.162.27.96"
+  - name: "rs4.univesalsrv.com-1"
     type: "vless"
-    server: "139.162.27.96"
-    port: 2096
-    uuid: "6e59d5c5-7aa3-4c36-a4c4-e3b899525ed2"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "free-server.techsonic.dev"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/free-server.techsonic.dev"
-      headers:
-        Host: "free-server.techsonic.dev"
-  - name: "200.165.231.209"
-    type: "vless"
-    server: "200.165.231.209"
-    port: 443
-    uuid: "ff0b6ba8-bed0-4c4d-bbc9-23af47582615"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "wstg.datasynctrue.online"
-    ws-opts:
-      path: "/api/connect"
-      headers:
-        Host: "wstg.datasynctrue.online"
-  - name: "72.56.241.230"
-    type: "vless"
-    server: "72.56.241.230"
-    port: 443
-    uuid: "88b744bb-8ac7-484e-a376-136193452a2c"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "max.ru"
-    reality-opts:
-      public-key: "SCQ-mhDUvmeQzJvctQYDDSha1R_rggGFkWK_9IRuvH4"
-      short-id: "aabbccdd"
-    grpc-opts:
-      grpc-service-name: "api.v1.StreamService"
-  - name: "161.118.198.68"
-    type: "vless"
-    server: "161.118.198.68"
-    port: 443
-    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "snip.edgeoneai.cc.cd"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=512"
-      headers:
-        Host: "snip.edgeoneai.cc.cd"
-  - name: "165.245.182.116"
-    type: "vless"
-    server: "165.245.182.116"
-    port: 443
-    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "snip.edgeoneai.cc.cd"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2560"
-      headers:
-        Host: "snip.edgeoneai.cc.cd"
-  - name: "144.31.50.236"
-    type: "vless"
-    server: "144.31.50.236"
-    port: 443
-    uuid: "1c332eae-7e02-4acd-996d-4eb3e652401c"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "yandex.ru"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "uitO4Z8t9TplwwYaqwLqh5rfxDh_X8bOBiNuPbzvaEM"
-      short-id: "bbe46bd8f6b96839"
-  - name: "158.247.241.102"
-    type: "vless"
-    server: "158.247.241.102"
-    port: 443
-    uuid: "583cc910-b57c-4dd0-a4a7-cea51a30b032"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.apple.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "GR_zPAgxF9PZ70Z9UpSmMlcd2STyoAC0fZTSHkTTCGE"
-      short-id: "ca193e889d958f81"
-  - name: "165.245.182.116-1"
-    type: "vless"
-    server: "165.245.182.116"
-    port: 443
-    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "snip.edgeoneai.cc.cd"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/fdip=sstp://vpn:vpn@public-vpn-200.opengw.net:443"
-      headers:
-        Host: "snip.edgeoneai.cc.cd"
-  - name: "45.9.156.24"
-    type: "vless"
-    server: "45.9.156.24"
+    server: "rs4.univesalsrv.com"
     port: 443
     uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
     udp: true
     tls: true
     network: "grpc"
-    servername: "bg2.univesalsrv.com"
     client-fingerprint: "chrome"
     reality-opts:
-      public-key: "0f0dh_FUju5cHgQcIwUjHvxQb9aIZ00p0kZRHeE7Ey4"
-      short-id: "501ab3325b77e1ca"
+      public-key: "sXsJ4ET-50TYqlhKZf03nPQr2JIy1F0D4m6lOsI0cAs"
+      short-id: "861ac7d66953e55f"
     grpc-opts:
-      grpc-service-name: "api.v2.PushService"
-  - name: "bg3.univesalsrv.com"
-    type: "vless"
-    server: "bg3.univesalsrv.com"
-    port: 443
-    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "bg3.univesalsrv.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "XBfCioniAKXgKYBUVnvBXu80AIaIa4SpAB3w8qeF7Gk"
-      short-id: "1be1bd931c98c84a"
-    grpc-opts:
-      grpc-service-name: "home.v1.ApiService"
-  - name: "89.35.14.34"
-    type: "vless"
-    server: "89.35.14.34"
-    port: 443
-    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "md5.univesalsrv.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "99MRki6b93wC-hhDHe9yq3IXE3KtPGw4RkFAnpI-8gg"
-      short-id: "aa9884f2982b7d3c"
-    grpc-opts:
-      grpc-service-name: "app.v1.PushService"
-  - name: "165.99.222.161"
-    type: "vless"
-    server: "165.99.222.161"
-    port: 443
-    uuid: "30572b57-f5ab-4eb8-82d4-a24d399b99f6"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "in1.vkusnews.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "SC6AnZ_BlvDruiGFpDRno9b1V3wMmq9gjB-KEHHUlE4"
-  - name: "200.180.163.38"
-    type: "vless"
-    server: "200.180.163.38"
-    port: 443
-    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "snip.edgeoneai.cc.cd"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=512"
-      headers:
-        Host: "snip.edgeoneai.cc.cd"
-  - name: "89.35.14.31"
-    type: "vless"
-    server: "89.35.14.31"
-    port: 443
-    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "md2.univesalsrv.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "JXFsWHYjhAcR-7yz9tuCTMdcfuiyC9a-C9ewA55Z63o"
-      short-id: "d36a38659ce106cb"
-    grpc-opts:
-      grpc-service-name: "hub.v1.SyncService"
-  - name: "146.235.16.130"
-    type: "vless"
-    server: "146.235.16.130"
-    port: 19825
-    uuid: "2d1ad594-80a4-4bfb-87a6-038e39701f51"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "sg2-8sb.6121999.dpdns.org"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "GvvkY8xYb9QjvwvzYq_uNC4tOGd0DCxRnz6770-xgkI"
-      short-id: "6ba85179e30d4fc2"
-  - name: "rs5.univesalsrv.com"
-    type: "vless"
-    server: "rs5.univesalsrv.com"
-    port: 443
-    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "rs5.univesalsrv.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "X8mPYnsoTd8QCnvFZKSy7VvpSn_nrt_NWJkCUJhFCyE"
-      short-id: "4872856d5489c37d"
-    grpc-opts:
-      grpc-service-name: "gw.v1.ObjectService"
-  - name: "193.238.154.78"
-    type: "vless"
-    server: "193.238.154.78"
-    port: 443
-    uuid: "897d47f8-4dd5-42a1-bcd0-bef19caff55a"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "gateway.icloud.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "4eE3K8Eac-ELze-LwRyJolqmhPqgCVqwQM1DKu6i0Ts"
-      short-id: "e93d46ee3735069e"
-  - name: "assets.halyvanedorogo.ru"
-    type: "vless"
-    server: "assets.halyvanedorogo.ru"
-    port: 11515
-    uuid: "cb8fbad5-4f14-55bc-a24a-3510f47f4b1b"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.sony.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "A826RSu-yeVM_t6v7kwHKasHSdfI9KOzUw3WaIa9SWc"
-      short-id: "65149fc5ba"
-  - name: "144.48.11.97"
-    type: "vless"
-    server: "144.48.11.97"
-    port: 43000
-    uuid: "4799abf0-d0d9-4a46-9c31-b1f76ae00e1e"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "144.48.11.97"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "lmT0SFJL1A8_ariRWL65dhShaqFbpitjGanv7EFnoR0"
-      short-id: "725e6ea0"
-  - name: "83.219.97.18"
-    type: "vless"
-    server: "83.219.97.18"
-    port: 443
-    uuid: "fe551942-d6e5-4361-ae5c-1f2e9077cd79"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "fi5.silalink.sbs"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "32XFmS-ifqooBFY89KNP3ZrqgSBOd3vel9GlNinL6yw"
-      short-id: "03"
-  - name: "xsru2.freeddns.org"
-    type: "vless"
-    server: "xsru2.freeddns.org"
-    port: 443
-    uuid: "c90395e6-2140-47ad-a54d-9b166729d3ef"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "xsru2.freeddns.org"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/wsru"
-      headers:
-        Host: "xsru2.freeddns.org"
-  - name: "510.150333.xyz"
-    type: "vless"
-    server: "510.150333.xyz"
-    port: 21003
-    uuid: "67952583-8572-42e1-943d-0602794f885b"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    reality-opts:
-      public-key: "IRaSB0ImgMO7fsrIbh9i3Pz-bgo5F1jKeC51Fpfs9AA"
-      short-id: "f3602a3a1cf928b7"
-  - name: "funagfrdfs.alixxplay.com"
-    type: "vless"
-    server: "funagfrdfs.alixxplay.com"
-    port: 30892
-    uuid: "57beeeb0-03fc-4fc9-94da-7604488a7134"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "us1p1.xn--ghq880n3na965a.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "YinI5MijeZpRatg6QNDvP0qXEif-6VHC6gV5yoji4i4"
-      short-id: "3d31326f95"
-  - name: "185.126.93.225"
-    type: "vless"
-    server: "185.126.93.225"
-    port: 443
-    uuid: "f04cc810-aaf2-4a7b-8cad-356cdd30d394"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "tg1.cdnphotos.org"
-    client-fingerprint: "chrome"
-  - name: "45.9.156.42"
-    type: "vless"
-    server: "45.9.156.42"
-    port: 443
-    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "bg5.univesalsrv.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "RDWvDEygSk1eyAQhIK95H9EteFbrS2d9JEjBrco54Bw"
-      short-id: "1a3102bb8e51399e"
-    grpc-opts:
-      grpc-service-name: "gw.v2.RelayService"
-  - name: "205.237.110.254"
-    type: "vless"
-    server: "205.237.110.254"
-    port: 443
-    uuid: "e75ad2eb-6c1f-45ce-8023-f5f10875df66"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "zsit.eu-cdn294.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "IG6lxrx_xkGOoBuo3DC8sgQoIFmqVgznIr0qOuNO0w4"
-      short-id: "cd2d53510b4df2a8"
-  - name: "94.156.79.93"
-    type: "vless"
-    server: "94.156.79.93"
-    port: 443
-    uuid: "d6752c6b-80ae-4a91-b446-bb330f7f8177"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.foxsports.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "_0fpFqEEuCso3B8K7AAcMjctwG_xfCxO2PdKzGd_-hg"
-      short-id: "88a13cf2655c"
-  - name: "93.89.220.37"
-    type: "vless"
-    server: "93.89.220.37"
-    port: 443
-    uuid: "185e2bb3-2934-48d0-bbd5-dd20d16e83ee"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "ibm.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "lwKaUQ81wJUJRsqAPsfTPj5V_f9N50UYEwzRI_nuq2g"
-      short-id: "e88cb983f3c97528"
+      grpc-service-name: "media.v1.StreamService"
   - name: "150.40.126.24"
     type: "vless"
     server: "150.40.126.24"
@@ -2162,7 +1842,7 @@ proxies:
       short-id: "4872856d5489c37d"
     grpc-opts:
       grpc-service-name: "gw.v1.ObjectService"
-  - name: "rs2.univesalsrv.com"
+  - name: "rs2.univesalsrv.com-1"
     type: "vless"
     server: "rs2.univesalsrv.com"
     port: 443
@@ -2177,239 +1857,9 @@ proxies:
       short-id: "1469af2040b7c323"
     grpc-opts:
       grpc-service-name: "media.v1.ObjectService"
-  - name: "46.101.252.80"
+  - name: "159.65.51.189-2"
     type: "vless"
-    server: "46.101.252.80"
-    port: 443
-    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "snip.edgeoneai.cc.cd"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/fdip=sstp://vpn:vpn@public-vpn-200.opengw.net:443fp=chrome"
-      headers:
-        Host: "snip.edgeoneai.cc.cd"
-  - name: "94.156.79.93-1"
-    type: "vless"
-    server: "94.156.79.93"
-    port: 443
-    uuid: "1a5e7720-abf3-4b9b-bc9b-9a900a04b434"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.microsoft.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "_0fpFqEEuCso3B8K7AAcMjctwG_xfCxO2PdKzGd_-hg"
-      short-id: "f129dcdbf64f"
-  - name: "82.29.36.250"
-    type: "vless"
-    server: "82.29.36.250"
-    port: 443
-    uuid: "41a7af38-0bb1-4493-aa8d-634af0c2548b"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "aws.amazon.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "09XPceP705hC-5sEDXDSLeL2eMOrF-mFISK8JaJ7q2g"
-      short-id: "09353d6dc5b789"
-  - name: "87.239.249.137"
-    type: "vless"
-    server: "87.239.249.137"
-    port: 443
-    uuid: "67eb6b17-7797-4ded-bf52-423c4c5f6cbd"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.foxsports.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "G7bpUPFSW28-oE6ff8qZac1_apU6PiJ-GHmi7tAPDSY"
-      short-id: "91af08b1ce1f"
-  - name: "77.91.68.70"
-    type: "vless"
-    server: "77.91.68.70"
-    port: 55983
-    uuid: "f667a096-5231-4cfb-8759-92bb32473139"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "yahoo.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "nWQ7b9l9X6N3PrXLgIzOvMM8iSYrqjVHEb9ikWxqYSg"
-      short-id: "0e"
-  - name: "tg1.cdnphotos.org"
-    type: "vless"
-    server: "tg1.cdnphotos.org"
-    port: 443
-    uuid: "f04cc810-aaf2-4a7b-8cad-356cdd30d394"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "tg1.cdnphotos.org"
-    client-fingerprint: "chrome"
-  - name: "93.89.220.37-1"
-    type: "vless"
-    server: "93.89.220.37"
-    port: 443
-    uuid: "185e2bb3-2934-48d0-bbd5-dd20d16e83ee"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "ibm.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "lwKaUQ81wJUJRsqAPsfTPj5V_f9N50UYEwzRI_nuq2g"
-      short-id: "e88cb983f3c97528"
-  - name: "md5.univesalsrv.com"
-    type: "vless"
-    server: "md5.univesalsrv.com"
-    port: 443
-    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "md5.univesalsrv.com"
-    client-fingerprint: "firefox"
-    reality-opts:
-      public-key: "99MRki6b93wC-hhDHe9yq3IXE3KtPGw4RkFAnpI-8gg"
-      short-id: "aa9884f2982b7d3c"
-    grpc-opts:
-      grpc-service-name: "app.v1.PushService"
-  - name: "staging.lastilhame.monster"
-    type: "vless"
-    server: "staging.lastilhame.monster"
-    port: 443
-    uuid: "ee39fb11-56a3-4ee7-9e7c-35a4235bd30e"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.tradingview.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "FjcEZNQ8t5E4R04_11T6ghsOutdqwKKrelkuadakoQg"
-      short-id: "b27ba098687b"
-  - name: "193.36.95.34"
-    type: "vless"
-    server: "193.36.95.34"
-    port: 443
-    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "snip.edgeoneai.cc.cd"
-    ws-opts:
-      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2560"
-      headers:
-        Host: "snip.edgeoneai.cc.cd"
-  - name: "md2.univesalsrv.com"
-    type: "vless"
-    server: "md2.univesalsrv.com"
-    port: 443
-    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "md2.univesalsrv.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "JXFsWHYjhAcR-7yz9tuCTMdcfuiyC9a-C9ewA55Z63o"
-      short-id: "d36a38659ce106cb"
-    grpc-opts:
-      grpc-service-name: "hub.v1.SyncService"
-  - name: "23.81.36.148"
-    type: "vless"
-    server: "23.81.36.148"
-    port: 1222
-    uuid: "36c3dcc2-17b6-4478-b8a7-3978e6d5afe9"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "play.google.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "zpLKK8HuwXJDH9D0O3t5Z_tO3ajkj7VRtXdr6UGy1zE"
-      short-id: "a25d0f"
-  - name: "bg5.univesalsrv.com"
-    type: "vless"
-    server: "bg5.univesalsrv.com"
-    port: 443
-    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
-    udp: true
-    tls: true
-    network: "grpc"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "RDWvDEygSk1eyAQhIK95H9EteFbrS2d9JEjBrco54Bw"
-      short-id: "1a3102bb8e51399e"
-    grpc-opts:
-      grpc-service-name: "gw.v2.RelayService"
-  - name: "185.126.93.227"
-    type: "vless"
-    server: "185.126.93.227"
-    port: 443
-    uuid: "f04cc810-aaf2-4a7b-8cad-356cdd30d394"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "tg1.cdnphotos.org"
-    client-fingerprint: "chrome"
-  - name: "rs2.univesalsrv.com-1"
-    type: "vless"
-    server: "rs2.univesalsrv.com"
-    port: 443
-    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
-    udp: true
-    tls: true
-    network: "grpc"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "tL16MVY08r-7YDXb1_gxuBBWInpSFp97ZLJ_ax3R2iE"
-      short-id: "1469af2040b7c323"
-    grpc-opts:
-      grpc-service-name: "media.v1.ObjectService"
-  - name: "rs5.univesalsrv.com-1"
-    type: "vless"
-    server: "rs5.univesalsrv.com"
-    port: 443
-    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
-    udp: true
-    tls: true
-    network: "grpc"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "X8mPYnsoTd8QCnvFZKSy7VvpSn_nrt_NWJkCUJhFCyE"
-      short-id: "4872856d5489c37d"
-    grpc-opts:
-      grpc-service-name: "gw.v1.ObjectService"
-  - name: "45.9.156.27"
-    type: "vless"
-    server: "45.9.156.27"
-    port: 443
-    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "bg3.univesalsrv.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "XBfCioniAKXgKYBUVnvBXu80AIaIa4SpAB3w8qeF7Gk"
-      short-id: "1be1bd931c98c84a"
-    grpc-opts:
-      grpc-service-name: "home.v1.ApiService"
-  - name: "77.110.97.245"
-    type: "vless"
-    server: "77.110.97.245"
+    server: "159.65.51.189"
     port: 443
     uuid: "d342d11e-d224-4463-b982-532309285094"
     udp: true
@@ -2417,60 +1867,81 @@ proxies:
     network: "ws"
     servername: "ccc.010304.xyz"
     ws-opts:
-      path: "/fp=chrome"
+      path: "/fp"
       headers:
         Host: "ccc.010304.xyz"
-  - name: "31.77.10.167"
+  - name: "rs5.univesalsrv.com"
     type: "vless"
-    server: "31.77.10.167"
-    port: 24503
-    uuid: "fafc7c16-f890-45ee-a856-02df225172dd"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "nl3-gkv6mb.vpvr4ib84nuv6hdkt.ru"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "iiApJD_tVRzp1t8EfIpG7T4dnx-O0ai5nkzD9GUV9Fc"
-      short-id: "02ea11017a1c951f"
-  - name: "185.126.93.226"
-    type: "vless"
-    server: "185.126.93.226"
+    server: "rs5.univesalsrv.com"
     port: 443
-    uuid: "f04cc810-aaf2-4a7b-8cad-356cdd30d394"
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
     udp: true
     tls: true
-    network: "xhttp"
-    servername: "tg1.cdnphotos.org"
+    network: "grpc"
+    servername: "rs5.univesalsrv.com"
     client-fingerprint: "chrome"
-  - name: "150.241.101.80"
-    type: "vless"
-    server: "150.241.101.80"
-    port: 8443
-    uuid: "47d9b534-8a0a-4bd2-90f1-1d6ade14427e"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "yandex.net"
-    flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
-      short-id: "6ba85179e30d4fc2"
-  - name: "150.241.101.80-1"
+      public-key: "X8mPYnsoTd8QCnvFZKSy7VvpSn_nrt_NWJkCUJhFCyE"
+      short-id: "4872856d5489c37d"
+    grpc-opts:
+      grpc-service-name: "gw.v1.ObjectService"
+  - name: "62.133.63.45"
     type: "vless"
-    server: "150.241.101.80"
-    port: 8443
-    uuid: "47d9b534-8a0a-4bd2-90f1-1d6ade14427e"
+    server: "62.133.63.45"
+    port: 8444
+    uuid: "a346c521-7a7f-452b-9356-a4893feb5982"
     udp: true
     tls: true
-    network: "tcp"
-    servername: "yandex.net"
+    network: "grpc"
+    servername: "github.com"
     client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
-      short-id: "6ba85179e30d4fc2"
+      public-key: "FWitre1jinQR7qz5HQ0q2Q4Gg9xA9B0SyizCziN7Ch0"
+      short-id: "457fab2ac885dbe0"
+    grpc-opts:
+      grpc-service-name: "GunService"
+  - name: "89.35.14.32"
+    type: "vless"
+    server: "89.35.14.32"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "md3.univesalsrv.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "q38CddDj2g-XNDc0uW1m6S6b8iGY_Bne2RwX7C_FYCQ"
+      short-id: "9a72d40f1ff882b3"
+    grpc-opts:
+      grpc-service-name: "stats.v2.PushService"
+  - name: "201.7.25.100"
+    type: "vless"
+    server: "201.7.25.100"
+    port: 24446
+    uuid: "88281d02-b387-4fe3-918e-26ed331e6d08"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "willow.cdn.cachefleet.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "w9JCByLSU3NGciCv2iceOz4TRL4swv8jfIAYoaKSyEw"
+      short-id: "a0938b702257f780"
+    grpc-opts:
+      grpc-service-name: "telegram-bridge"
+  - name: "91.210.169.181"
+    type: "vless"
+    server: "91.210.169.181"
+    port: 443
+    uuid: "ff0b6ba8-bed0-4c4d-bbc9-23af47582615"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/api/connect"
+      headers:
+        Host: "wstg.datasynctrue.online"
   - name: "150.40.126.22"
     type: "vless"
     server: "150.40.126.22"
@@ -2486,57 +1957,74 @@ proxies:
       short-id: "861ac7d66953e55f"
     grpc-opts:
       grpc-service-name: "media.v1.StreamService"
-  - name: "46.137.202.178"
+  - name: "150.40.126.21"
     type: "vless"
-    server: "46.137.202.178"
-    port: 12512
-    uuid: "2a6c617d-98e4-49c3-95ab-76f02fcf0150"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.intel.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "sO0RBMr_l8TLtZaYBX8n3NdI9AtaugUqJpCR1szNsyA"
-      short-id: "e692a8250d2e2fd0"
-  - name: "5.253.42.164"
-    type: "vless"
-    server: "5.253.42.164"
-    port: 40443
-    uuid: "e99ba96d-dec8-42eb-be53-19e71eef7cab"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "deepl.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "g77ZJbm18JEotapmVRjaXi133MzkbhkU2lxhVeXx8zw"
-      short-id: "68a8"
-  - name: "bg2.univesalsrv.com"
-    type: "vless"
-    server: "bg2.univesalsrv.com"
+    server: "150.40.126.21"
     port: 443
     uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
     udp: true
     tls: true
     network: "grpc"
+    servername: "rs3.univesalsrv.com"
     client-fingerprint: "chrome"
     reality-opts:
-      public-key: "0f0dh_FUju5cHgQcIwUjHvxQb9aIZ00p0kZRHeE7Ey4"
-      short-id: "501ab3325b77e1ca"
+      public-key: "gHDoSWGWMVZKWNKONWHw-Cpl0-bdI6GaKusgJIQ-vWQ"
+      short-id: "35d05b666e2c6cdf"
     grpc-opts:
-      grpc-service-name: "api.v2.PushService"
-  - name: "node-uk.connectsuite.org"
+      grpc-service-name: "edge.v2.FeedService"
+  - name: "144.31.50.236"
     type: "vless"
-    server: "node-uk.connectsuite.org"
-    port: 8443
-    uuid: "c08f0056-7a6d-4931-813b-aaa3cdd00aed"
+    server: "144.31.50.236"
+    port: 443
+    uuid: "1c332eae-7e02-4acd-996d-4eb3e652401c"
     udp: true
     tls: true
     network: "tcp"
+    servername: "yandex.ru"
     client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "uitO4Z8t9TplwwYaqwLqh5rfxDh_X8bOBiNuPbzvaEM"
+      short-id: "bbe46bd8f6b96839"
+  - name: "tg1.cdnphotos.org"
+    type: "vless"
+    server: "tg1.cdnphotos.org"
+    port: 443
+    uuid: "f04cc810-aaf2-4a7b-8cad-356cdd30d394"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "tg1.cdnphotos.org"
+    client-fingerprint: "chrome"
+  - name: "150.40.126.19"
+    type: "vless"
+    server: "150.40.126.19"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "rs2.univesalsrv.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "tL16MVY08r-7YDXb1_gxuBBWInpSFp97ZLJ_ax3R2iE"
+      short-id: "1469af2040b7c323"
+    grpc-opts:
+      grpc-service-name: "media.v1.ObjectService"
+  - name: "200.180.163.38"
+    type: "vless"
+    server: "200.180.163.38"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=512"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
   - name: "du-rov.secureservice.top"
     type: "vless"
     server: "du-rov.secureservice.top"
@@ -2551,6 +2039,229 @@ proxies:
     reality-opts:
       public-key: "fSVfR9NB-6J6smrZlavi0GWd8JfDh0aXuEkKbtuFzUI"
       short-id: "3cbc3d737fb9c4af"
+  - name: "200.165.231.209"
+    type: "vless"
+    server: "200.165.231.209"
+    port: 443
+    uuid: "ff0b6ba8-bed0-4c4d-bbc9-23af47582615"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "wstg.datasynctrue.online"
+    ws-opts:
+      path: "/api/connect"
+      headers:
+        Host: "wstg.datasynctrue.online"
+  - name: "139.100.226.187"
+    type: "vless"
+    server: "139.100.226.187"
+    port: 8443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/fdip=sstp://vpn:vpn@public-vpn-200.opengw.net:443"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "rs5.univesalsrv.com-1"
+    type: "vless"
+    server: "rs5.univesalsrv.com"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "X8mPYnsoTd8QCnvFZKSy7VvpSn_nrt_NWJkCUJhFCyE"
+      short-id: "4872856d5489c37d"
+    grpc-opts:
+      grpc-service-name: "gw.v1.ObjectService"
+  - name: "139.162.27.96"
+    type: "vless"
+    server: "139.162.27.96"
+    port: 2096
+    uuid: "6e59d5c5-7aa3-4c36-a4c4-e3b899525ed2"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "free-server.techsonic.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/free-server.techsonic.dev"
+      headers:
+        Host: "free-server.techsonic.dev"
+  - name: "bg4.univesalsrv.com"
+    type: "vless"
+    server: "bg4.univesalsrv.com"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "k-vH6pkyAv26L1_dXKOFhp0Kesur9-FCUDoj-IIpVhc"
+      short-id: "51f45d4fd58cc319"
+    grpc-opts:
+      grpc-service-name: "cloud.v1.RelayService"
+  - name: "204.216.216.23"
+    type: "vless"
+    server: "204.216.216.23"
+    port: 1114
+    uuid: "6ba2eac6-0ec9-44ca-a42b-a8e23aafb530"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yahoo.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "WfkCF0eEuIoO0MyJsKOddU89QrTzCZ4y2dzCJbH99CQ"
+      short-id: "79a1e14b"
+  - name: "bg4.univesalsrv.com-1"
+    type: "vless"
+    server: "bg4.univesalsrv.com"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "bg4.univesalsrv.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "k-vH6pkyAv26L1_dXKOFhp0Kesur9-FCUDoj-IIpVhc"
+      short-id: "51f45d4fd58cc319"
+    grpc-opts:
+      grpc-service-name: "cloud.v1.RelayService"
+  - name: "72.56.241.230"
+    type: "vless"
+    server: "72.56.241.230"
+    port: 443
+    uuid: "88b744bb-8ac7-484e-a376-136193452a2c"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "max.ru"
+    reality-opts:
+      public-key: "SCQ-mhDUvmeQzJvctQYDDSha1R_rggGFkWK_9IRuvH4"
+      short-id: "aabbccdd"
+    grpc-opts:
+      grpc-service-name: "api.v1.StreamService"
+  - name: "77.110.97.245"
+    type: "vless"
+    server: "77.110.97.245"
+    port: 443
+    uuid: "d342d11e-d224-4463-b982-532309285094"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ccc.010304.xyz"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "ccc.010304.xyz"
+  - name: "205.237.110.254"
+    type: "vless"
+    server: "205.237.110.254"
+    port: 443
+    uuid: "e75ad2eb-6c1f-45ce-8023-f5f10875df66"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "zsit.eu-cdn294.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "IG6lxrx_xkGOoBuo3DC8sgQoIFmqVgznIr0qOuNO0w4"
+      short-id: "cd2d53510b4df2a8"
+  - name: "165.245.182.116"
+    type: "vless"
+    server: "165.245.182.116"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/fdip=sstp://vpn:vpn@public-vpn-200.opengw.net:443"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "161.118.198.68"
+    type: "vless"
+    server: "161.118.198.68"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=512"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "45.9.156.28"
+    type: "vless"
+    server: "45.9.156.28"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "bg4.univesalsrv.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "k-vH6pkyAv26L1_dXKOFhp0Kesur9-FCUDoj-IIpVhc"
+      short-id: "51f45d4fd58cc319"
+    grpc-opts:
+      grpc-service-name: "cloud.v1.RelayService"
+  - name: "165.245.182.116-1"
+    type: "vless"
+    server: "165.245.182.116"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2560"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "assets.halyvanedorogo.ru"
+    type: "vless"
+    server: "assets.halyvanedorogo.ru"
+    port: 11515
+    uuid: "cb8fbad5-4f14-55bc-a24a-3510f47f4b1b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.sony.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "A826RSu-yeVM_t6v7kwHKasHSdfI9KOzUw3WaIa9SWc"
+      short-id: "65149fc5ba"
+  - name: "bg2.univesalsrv.com"
+    type: "vless"
+    server: "bg2.univesalsrv.com"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "0f0dh_FUju5cHgQcIwUjHvxQb9aIZ00p0kZRHeE7Ey4"
+      short-id: "501ab3325b77e1ca"
+    grpc-opts:
+      grpc-service-name: "api.v2.PushService"
   - name: "bg2.univesalsrv.com-1"
     type: "vless"
     server: "bg2.univesalsrv.com"
@@ -2566,20 +2277,456 @@ proxies:
       short-id: "501ab3325b77e1ca"
     grpc-opts:
       grpc-service-name: "api.v2.PushService"
-  - name: "mci.amir12.ir"
+  - name: "rs1.univesalsrv.com"
     type: "vless"
-    server: "mci.amir12.ir"
-    port: 2112
-    uuid: "36c3dcc2-17b6-4478-b8a7-3978e6d5afe9"
+    server: "rs1.univesalsrv.com"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "upIzyaSbVz2ZK6KfGtXmPl_-sCwn8XLDyFDH5CsL9iY"
+      short-id: "ed0cd5cc2e26e6e7"
+    grpc-opts:
+      grpc-service-name: "node.v2.ObjectService"
+  - name: "193.238.154.78"
+    type: "vless"
+    server: "193.238.154.78"
+    port: 443
+    uuid: "897d47f8-4dd5-42a1-bcd0-bef19caff55a"
     udp: true
     tls: true
     network: "tcp"
-    servername: "play.google.com"
+    servername: "gateway.icloud.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "4eE3K8Eac-ELze-LwRyJolqmhPqgCVqwQM1DKu6i0Ts"
+      short-id: "e93d46ee3735069e"
+  - name: "193.36.95.34"
+    type: "vless"
+    server: "193.36.95.34"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    ws-opts:
+      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2560"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "208.69.78.217"
+    type: "vless"
+    server: "208.69.78.217"
+    port: 2053
+    uuid: "c0dd6d59-1573-43af-8b70-1470b2632a6d"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.apple.com"
+    reality-opts:
+      public-key: "A49ue7zXSusJZdErPAewg3jqGdUFIO1a9xOunEKJfC0"
+      short-id: "ad86e2d52ff40ebd"
+  - name: "54.251.9.130"
+    type: "vless"
+    server: "54.251.9.130"
+    port: 24146
+    uuid: "9d9a048b-3aea-4b3e-b106-1106bf301feb"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.intel.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "VeluC9A7XDurAWQNgXKShS2SJSgoK79QHFgiAMYrvGo"
+      short-id: "7205d9079521832c"
+  - name: "xsru2.freeddns.org"
+    type: "vless"
+    server: "xsru2.freeddns.org"
+    port: 443
+    uuid: "c90395e6-2140-47ad-a54d-9b166729d3ef"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "xsru2.freeddns.org"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/wsru"
+      headers:
+        Host: "xsru2.freeddns.org"
+  - name: "rs3.univesalsrv.com"
+    type: "vless"
+    server: "rs3.univesalsrv.com"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
     client-fingerprint: "chrome"
     reality-opts:
-      public-key: "p8pUe3hwND5rhAti-yRQ5qMaIkNdhxOV1K1jpbtJlEQ"
-      short-id: "125ba3"
-  - name: "node-uk.connectsuite.org-1"
+      public-key: "gHDoSWGWMVZKWNKONWHw-Cpl0-bdI6GaKusgJIQ-vWQ"
+      short-id: "35d05b666e2c6cdf"
+    grpc-opts:
+      grpc-service-name: "edge.v2.FeedService"
+  - name: "rs3.univesalsrv.com-1"
+    type: "vless"
+    server: "rs3.univesalsrv.com"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "rs3.univesalsrv.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "gHDoSWGWMVZKWNKONWHw-Cpl0-bdI6GaKusgJIQ-vWQ"
+      short-id: "35d05b666e2c6cdf"
+    grpc-opts:
+      grpc-service-name: "edge.v2.FeedService"
+  - name: "510.150333.xyz"
+    type: "vless"
+    server: "510.150333.xyz"
+    port: 21003
+    uuid: "67952583-8572-42e1-943d-0602794f885b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    reality-opts:
+      public-key: "IRaSB0ImgMO7fsrIbh9i3Pz-bgo5F1jKeC51Fpfs9AA"
+      short-id: "f3602a3a1cf928b7"
+  - name: "bg3.univesalsrv.com"
+    type: "vless"
+    server: "bg3.univesalsrv.com"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "bg3.univesalsrv.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "XBfCioniAKXgKYBUVnvBXu80AIaIa4SpAB3w8qeF7Gk"
+      short-id: "1be1bd931c98c84a"
+    grpc-opts:
+      grpc-service-name: "home.v1.ApiService"
+  - name: "45.9.156.42"
+    type: "vless"
+    server: "45.9.156.42"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "bg5.univesalsrv.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "RDWvDEygSk1eyAQhIK95H9EteFbrS2d9JEjBrco54Bw"
+      short-id: "1a3102bb8e51399e"
+    grpc-opts:
+      grpc-service-name: "gw.v2.RelayService"
+  - name: "93.89.220.37"
+    type: "vless"
+    server: "93.89.220.37"
+    port: 443
+    uuid: "185e2bb3-2934-48d0-bbd5-dd20d16e83ee"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ibm.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "lwKaUQ81wJUJRsqAPsfTPj5V_f9N50UYEwzRI_nuq2g"
+      short-id: "e88cb983f3c97528"
+  - name: "93.89.220.37-1"
+    type: "vless"
+    server: "93.89.220.37"
+    port: 443
+    uuid: "185e2bb3-2934-48d0-bbd5-dd20d16e83ee"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ibm.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "lwKaUQ81wJUJRsqAPsfTPj5V_f9N50UYEwzRI_nuq2g"
+      short-id: "e88cb983f3c97528"
+  - name: "94.156.79.93"
+    type: "vless"
+    server: "94.156.79.93"
+    port: 443
+    uuid: "d6752c6b-80ae-4a91-b446-bb330f7f8177"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.foxsports.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "_0fpFqEEuCso3B8K7AAcMjctwG_xfCxO2PdKzGd_-hg"
+      short-id: "88a13cf2655c"
+  - name: "89.35.14.34"
+    type: "vless"
+    server: "89.35.14.34"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "md5.univesalsrv.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "99MRki6b93wC-hhDHe9yq3IXE3KtPGw4RkFAnpI-8gg"
+      short-id: "aa9884f2982b7d3c"
+    grpc-opts:
+      grpc-service-name: "app.v1.PushService"
+  - name: "md2.univesalsrv.com"
+    type: "vless"
+    server: "md2.univesalsrv.com"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "md2.univesalsrv.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "JXFsWHYjhAcR-7yz9tuCTMdcfuiyC9a-C9ewA55Z63o"
+      short-id: "d36a38659ce106cb"
+    grpc-opts:
+      grpc-service-name: "hub.v1.SyncService"
+  - name: "94.156.79.93-1"
+    type: "vless"
+    server: "94.156.79.93"
+    port: 443
+    uuid: "1a5e7720-abf3-4b9b-bc9b-9a900a04b434"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.microsoft.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "_0fpFqEEuCso3B8K7AAcMjctwG_xfCxO2PdKzGd_-hg"
+      short-id: "f129dcdbf64f"
+  - name: "77.91.68.70"
+    type: "vless"
+    server: "77.91.68.70"
+    port: 55983
+    uuid: "f667a096-5231-4cfb-8759-92bb32473139"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yahoo.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "nWQ7b9l9X6N3PrXLgIzOvMM8iSYrqjVHEb9ikWxqYSg"
+      short-id: "0e"
+  - name: "87.239.249.137"
+    type: "vless"
+    server: "87.239.249.137"
+    port: 443
+    uuid: "67eb6b17-7797-4ded-bf52-423c4c5f6cbd"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.foxsports.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "G7bpUPFSW28-oE6ff8qZac1_apU6PiJ-GHmi7tAPDSY"
+      short-id: "91af08b1ce1f"
+  - name: "82.29.36.250"
+    type: "vless"
+    server: "82.29.36.250"
+    port: 443
+    uuid: "41a7af38-0bb1-4493-aa8d-634af0c2548b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "aws.amazon.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "09XPceP705hC-5sEDXDSLeL2eMOrF-mFISK8JaJ7q2g"
+      short-id: "09353d6dc5b789"
+  - name: "md1.univesalsrv.com"
+    type: "vless"
+    server: "md1.univesalsrv.com"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "md1.univesalsrv.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "xWejOQUn2koOUorUPSrHMLM-lyHlZ441KzxKc9bLmkY"
+      short-id: "221ba6174224ca5b"
+    grpc-opts:
+      grpc-service-name: "hub.v1.RelayService"
+  - name: "5.253.30.99"
+    type: "vless"
+    server: "5.253.30.99"
+    port: 40443
+    uuid: "511c1563-2cb6-4064-abc6-a59ee49818a8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "deepl.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "v2rayNplus--v2rayNplus--v2rayNplus--v2rayNplus--v2rayNplus--v2rayNplus--v2rayNplus--v2rayNplus"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "cwmcqsfS7klQlkcoUNuATEk0NiPY-NnRb9z8rCJDQw0"
+      short-id: "88b6"
+  - name: "bg5.univesalsrv.com"
+    type: "vless"
+    server: "bg5.univesalsrv.com"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "RDWvDEygSk1eyAQhIK95H9EteFbrS2d9JEjBrco54Bw"
+      short-id: "1a3102bb8e51399e"
+    grpc-opts:
+      grpc-service-name: "gw.v2.RelayService"
+  - name: "107.181.151.128"
+    type: "vless"
+    server: "107.181.151.128"
+    port: 443
+    uuid: "88742d38-3f5c-4b9c-b256-7df5db8257ec"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.mozilla.org"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "zfsjt2A8ur0qHWIuCG7F9W4wZN3VTuL6fkTljC-9R0s"
+      short-id: "8f79726c5002"
+  - name: "staging.lastilhame.monster"
+    type: "vless"
+    server: "staging.lastilhame.monster"
+    port: 443
+    uuid: "ee39fb11-56a3-4ee7-9e7c-35a4235bd30e"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.tradingview.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "FjcEZNQ8t5E4R04_11T6ghsOutdqwKKrelkuadakoQg"
+      short-id: "b27ba098687b"
+  - name: "webdisk.jaggyslawa.org"
+    type: "vless"
+    server: "webdisk.jaggyslawa.org"
+    port: 443
+    uuid: "75113671-63e3-452d-87d3-261a37e8b472"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.mozilla.org"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "zfsjt2A8ur0qHWIuCG7F9W4wZN3VTuL6fkTljC-9R0s"
+      short-id: "baf023e1026a"
+  - name: "51.38.71.147"
+    type: "vless"
+    server: "51.38.71.147"
+    port: 8443
+    uuid: "c08f0056-7a6d-4931-813b-aaa3cdd00aed"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "node-uk.connectsuite.org"
+    client-fingerprint: "chrome"
+  - name: "89.35.14.31"
+    type: "vless"
+    server: "89.35.14.31"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "md2.univesalsrv.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "JXFsWHYjhAcR-7yz9tuCTMdcfuiyC9a-C9ewA55Z63o"
+      short-id: "d36a38659ce106cb"
+    grpc-opts:
+      grpc-service-name: "hub.v1.SyncService"
+  - name: "bg5.univesalsrv.com-1"
+    type: "vless"
+    server: "bg5.univesalsrv.com"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "bg5.univesalsrv.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "RDWvDEygSk1eyAQhIK95H9EteFbrS2d9JEjBrco54Bw"
+      short-id: "1a3102bb8e51399e"
+    grpc-opts:
+      grpc-service-name: "gw.v2.RelayService"
+  - name: "45.9.156.27"
+    type: "vless"
+    server: "45.9.156.27"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "bg3.univesalsrv.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "XBfCioniAKXgKYBUVnvBXu80AIaIa4SpAB3w8qeF7Gk"
+      short-id: "1be1bd931c98c84a"
+    grpc-opts:
+      grpc-service-name: "home.v1.ApiService"
+  - name: "89.35.14.30"
+    type: "vless"
+    server: "89.35.14.30"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "md1.univesalsrv.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "xWejOQUn2koOUorUPSrHMLM-lyHlZ441KzxKc9bLmkY"
+      short-id: "221ba6174224ca5b"
+    grpc-opts:
+      grpc-service-name: "hub.v1.RelayService"
+  - name: "45.9.156.24"
+    type: "vless"
+    server: "45.9.156.24"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "bg2.univesalsrv.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "0f0dh_FUju5cHgQcIwUjHvxQb9aIZ00p0kZRHeE7Ey4"
+      short-id: "501ab3325b77e1ca"
+    grpc-opts:
+      grpc-service-name: "api.v2.PushService"
+  - name: "node-uk.connectsuite.org"
     type: "vless"
     server: "node-uk.connectsuite.org"
     port: 8443
@@ -2592,773 +2739,856 @@ proxies:
     alpn:
       - "h2"
       - "http/1.1"
-  - name: "51.38.71.147"
+  - name: "node-uk.connectsuite.org-1"
     type: "vless"
-    server: "51.38.71.147"
+    server: "node-uk.connectsuite.org"
     port: 8443
     uuid: "c08f0056-7a6d-4931-813b-aaa3cdd00aed"
     udp: true
     tls: true
     network: "tcp"
-    servername: "node-uk.connectsuite.org"
     client-fingerprint: "chrome"
+  - name: "89.35.14.33"
+    type: "vless"
+    server: "89.35.14.33"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "md4.univesalsrv.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "TZVMqglhHzteJ6t34mtku75LKzXNq0CB6glKYMAH6zg"
+      short-id: "8e07337954f9823f"
+    grpc-opts:
+      grpc-service-name: "hub.v1.ApiService"
+  - name: "5.253.30.99-1"
+    type: "vless"
+    server: "5.253.30.99"
+    port: 40443
+    uuid: "511c1563-2cb6-4064-abc6-a59ee49818a8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "deepl.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "cwmcqsfS7klQlkcoUNuATEk0NiPY-NnRb9z8rCJDQw0"
+      short-id: "88b6"
+  - name: "23.81.36.148"
+    type: "vless"
+    server: "23.81.36.148"
+    port: 1222
+    uuid: "36c3dcc2-17b6-4478-b8a7-3978e6d5afe9"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "play.google.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "zpLKK8HuwXJDH9D0O3t5Z_tO3ajkj7VRtXdr6UGy1zE"
+      short-id: "a25d0f"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
-    icon: "https://www.svgrepo.com/show/412721/choose.svg"
     proxies:
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "توزیع بار چرخشی ⚖️"
       - "قطع اینترنت ⛔"
       - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/412721/choose.svg"
   - name: "دستی 🤏🏻"
     type: "select"
-    icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
+    lazy: true
     proxies:
       - "172.64.154.211"
-      - "162.159.135.234"
-      - "47.253.226.114"
-      - "188.114.98.0"
-      - "172.66.0.162"
-      - "172.64.152.241"
-      - "188.114.98.0-1"
-      - "188.114.98.0-2"
-      - "195.123.235.177"
-      - "47.253.226.114-1"
-      - "172.64.150.43"
-      - "104.18.37.127"
+      - "104.18.33.97"
       - "172.64.158.170"
+      - "188.114.98.0"
+      - "172.64.152.241"
+      - "104.18.37.127"
+      - "162.159.135.234"
+      - "172.64.150.43"
+      - "195.123.235.177"
+      - "169.40.42.90"
+      - "172.66.0.162"
+      - "188.114.98.0-1"
+      - "www.speedtest.net"
+      - "169.40.42.224"
+      - "169.40.42.89"
+      - "188.114.98.0-2"
       - "169.40.42.231"
       - "188.114.97.6"
       - "188.114.97.6-1"
-      - "104.18.33.97"
-      - "188.114.97.6-2"
-      - "15.204.97.219"
-      - "169.40.42.235"
-      - "15.204.97.216"
-      - "15.204.97.214"
-      - "169.40.42.90"
-      - "ww13.levikogjgfdd.ir"
-      - "169.40.42.104"
-      - "15.204.97.195"
-      - "15.204.97.197"
-      - "169.40.42.74"
-      - "15.204.97.206"
-      - "169.40.42.168"
+      - "159.89.87.21"
       - "15.204.97.198"
+      - "15.204.97.216"
+      - "15.204.97.206"
+      - "169.40.42.104"
+      - "169.40.42.235"
+      - "188.114.96.6"
       - "15.204.97.209"
-      - "ww13.levikogjgfdd.ir-1"
+      - "169.40.42.35"
+      - "188.114.97.6-2"
       - "169.40.42.229"
-      - "169.40.42.168-1"
-      - "www.speedtest.net"
-      - "62.210.91.2"
+      - "15.204.97.197"
+      - "15.204.97.219"
+      - "15.204.97.214"
+      - "15.204.97.195"
+      - "169.40.42.90-1"
+      - "169.40.42.74"
+      - "169.40.42.225"
+      - "51.89.194.151"
       - "62.210.91.10"
       - "185.121.179.122"
       - "152.53.239.182"
-      - "152.53.236.22"
       - "137.74.16.237"
-      - "163.245.42.48"
-      - "jdwacdi.cvewfjg.shop"
-      - "ticket.bestsellersd.site"
-      - "142.91.108.25"
-      - "31.70.111.146"
       - "31.77.126.2"
-      - "ai.smrtai.top"
+      - "198.202.146.51"
+      - "31.77.10.167"
+      - "62.210.91.2"
+      - "91.107.191.188"
+      - "152.53.236.22"
+      - "84.32.184.219"
+      - "31.70.111.146"
+      - "ticket.bestsellersd.site"
+      - "jdwacdi.cvewfjg.shop"
       - "50.7.216.174"
-      - "3.114.220.22"
-      - "31.77.18.220"
+      - "142.91.108.25"
+      - "cf.090227.xyz"
+      - "cf.130519.xyz"
+      - "edge.bookmai.com"
       - "46.105.38.220"
       - "de.vmagnum.win"
+      - "163.245.42.48"
       - "159.65.51.189"
+      - "3.114.220.22"
       - "159.65.51.189-1"
-      - "159.65.51.189-2"
-      - "84.32.184.219"
       - "31.77.126.2-1"
-      - "89.169.53.176"
-      - "31.77.126.2-2"
-      - "51.89.194.151"
-      - "31.57.190.89"
-      - "138.124.36.67"
-      - "sino.bestsellers1.site"
-      - "104.171.133.209"
-      - "151.241.226.201"
-      - "31.57.190.89-1"
-      - "198.202.146.51"
-      - "31.57.190.89-2"
-      - "208.69.78.217"
-      - "78.159.250.214"
-      - "tgfree.rush-server.com"
-      - "206.206.76.75"
-      - "edge.bookmai.com"
-      - "43.174.193.1"
-      - "213.226.127.71"
-      - "45.9.156.28"
-      - "201.7.25.100"
-      - "150.40.126.18"
-      - "91.210.169.181"
-      - "54.251.9.130"
-      - "bg4.univesalsrv.com"
-      - "bg4.univesalsrv.com-1"
-      - "82.202.182.41"
-      - "rs1.univesalsrv.com"
       - "lite.3apes.online"
-      - "89.35.14.32"
-      - "139.100.226.187"
-      - "194.61.31.126"
-      - "62.133.63.45"
-      - "3.0.111.82"
-      - "139.162.27.96"
-      - "200.165.231.209"
-      - "72.56.241.230"
-      - "161.118.198.68"
-      - "165.245.182.116"
-      - "144.31.50.236"
-      - "158.247.241.102"
-      - "165.245.182.116-1"
-      - "45.9.156.24"
-      - "bg3.univesalsrv.com"
-      - "89.35.14.34"
-      - "165.99.222.161"
-      - "200.180.163.38"
-      - "89.35.14.31"
-      - "146.235.16.130"
-      - "rs5.univesalsrv.com"
-      - "193.238.154.78"
-      - "assets.halyvanedorogo.ru"
-      - "144.48.11.97"
+      - "31.77.126.2-2"
       - "83.219.97.18"
-      - "xsru2.freeddns.org"
-      - "510.150333.xyz"
-      - "funagfrdfs.alixxplay.com"
-      - "185.126.93.225"
-      - "45.9.156.42"
-      - "205.237.110.254"
-      - "94.156.79.93"
-      - "93.89.220.37"
-      - "150.40.126.24"
-      - "rs2.univesalsrv.com"
-      - "46.101.252.80"
-      - "94.156.79.93-1"
-      - "82.29.36.250"
-      - "87.239.249.137"
-      - "77.91.68.70"
-      - "tg1.cdnphotos.org"
-      - "93.89.220.37-1"
-      - "md5.univesalsrv.com"
-      - "staging.lastilhame.monster"
-      - "193.36.95.34"
-      - "md2.univesalsrv.com"
-      - "23.81.36.148"
-      - "bg5.univesalsrv.com"
+      - "ai.smrtai.top"
+      - "31.57.190.89"
+      - "104.171.133.209"
+      - "host.taghvimtime.ir"
+      - "31.57.190.89-1"
+      - "31.57.190.89-2"
+      - "138.124.36.67"
+      - "tgfree.rush-server.com"
+      - "sino.bestsellers1.site"
+      - "static.86.39.13.49.clients.your-server.de"
+      - "158.247.241.102"
+      - "fitindoor.net"
+      - "89.169.53.176"
+      - "43.174.193.1"
       - "185.126.93.227"
-      - "rs2.univesalsrv.com-1"
-      - "rs5.univesalsrv.com-1"
-      - "45.9.156.27"
-      - "77.110.97.245"
-      - "31.77.10.167"
+      - "185.126.93.225"
+      - "206.206.76.75"
+      - "150.40.126.18"
+      - "rs2.univesalsrv.com"
       - "185.126.93.226"
-      - "150.241.101.80"
-      - "150.241.101.80-1"
+      - "151.241.226.201"
+      - "78.159.250.214"
+      - "mci1.amir12.ir"
+      - "146.235.16.130"
+      - "213.226.127.71"
+      - "82.202.182.41"
+      - "194.61.31.126"
+      - "rs4.univesalsrv.com"
+      - "144.48.11.97"
+      - "3.0.111.82"
+      - "rs4.univesalsrv.com-1"
+      - "150.40.126.24"
+      - "rs2.univesalsrv.com-1"
+      - "159.65.51.189-2"
+      - "rs5.univesalsrv.com"
+      - "62.133.63.45"
+      - "89.35.14.32"
+      - "201.7.25.100"
+      - "91.210.169.181"
       - "150.40.126.22"
-      - "46.137.202.178"
-      - "5.253.42.164"
-      - "bg2.univesalsrv.com"
-      - "node-uk.connectsuite.org"
+      - "150.40.126.21"
+      - "144.31.50.236"
+      - "tg1.cdnphotos.org"
+      - "150.40.126.19"
+      - "200.180.163.38"
       - "du-rov.secureservice.top"
+      - "200.165.231.209"
+      - "139.100.226.187"
+      - "rs5.univesalsrv.com-1"
+      - "139.162.27.96"
+      - "bg4.univesalsrv.com"
+      - "204.216.216.23"
+      - "bg4.univesalsrv.com-1"
+      - "72.56.241.230"
+      - "77.110.97.245"
+      - "205.237.110.254"
+      - "165.245.182.116"
+      - "161.118.198.68"
+      - "45.9.156.28"
+      - "165.245.182.116-1"
+      - "assets.halyvanedorogo.ru"
+      - "bg2.univesalsrv.com"
       - "bg2.univesalsrv.com-1"
-      - "mci.amir12.ir"
-      - "node-uk.connectsuite.org-1"
+      - "rs1.univesalsrv.com"
+      - "193.238.154.78"
+      - "193.36.95.34"
+      - "208.69.78.217"
+      - "54.251.9.130"
+      - "xsru2.freeddns.org"
+      - "rs3.univesalsrv.com"
+      - "rs3.univesalsrv.com-1"
+      - "510.150333.xyz"
+      - "bg3.univesalsrv.com"
+      - "45.9.156.42"
+      - "93.89.220.37"
+      - "93.89.220.37-1"
+      - "94.156.79.93"
+      - "89.35.14.34"
+      - "md2.univesalsrv.com"
+      - "94.156.79.93-1"
+      - "77.91.68.70"
+      - "87.239.249.137"
+      - "82.29.36.250"
+      - "md1.univesalsrv.com"
+      - "5.253.30.99"
+      - "bg5.univesalsrv.com"
+      - "107.181.151.128"
+      - "staging.lastilhame.monster"
+      - "webdisk.jaggyslawa.org"
       - "51.38.71.147"
+      - "89.35.14.31"
+      - "bg5.univesalsrv.com-1"
+      - "45.9.156.27"
+      - "89.35.14.30"
+      - "45.9.156.24"
+      - "node-uk.connectsuite.org"
+      - "node-uk.connectsuite.org-1"
+      - "89.35.14.33"
+      - "5.253.30.99-1"
+      - "23.81.36.148"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
-    icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
     url: "https://www.gstatic.com/generate_204"
-    interval: 600
+    interval: 30
     tolerance: 50
-    timeout: 3200
-    lazy: false
-    max-failed-times: 2
+    lazy: true
     proxies:
       - "172.64.154.211"
-      - "162.159.135.234"
-      - "47.253.226.114"
-      - "188.114.98.0"
-      - "172.66.0.162"
-      - "172.64.152.241"
-      - "188.114.98.0-1"
-      - "188.114.98.0-2"
-      - "195.123.235.177"
-      - "47.253.226.114-1"
-      - "172.64.150.43"
-      - "104.18.37.127"
+      - "104.18.33.97"
       - "172.64.158.170"
+      - "188.114.98.0"
+      - "172.64.152.241"
+      - "104.18.37.127"
+      - "162.159.135.234"
+      - "172.64.150.43"
+      - "195.123.235.177"
+      - "169.40.42.90"
+      - "172.66.0.162"
+      - "188.114.98.0-1"
+      - "www.speedtest.net"
+      - "169.40.42.224"
+      - "169.40.42.89"
+      - "188.114.98.0-2"
       - "169.40.42.231"
       - "188.114.97.6"
       - "188.114.97.6-1"
-      - "104.18.33.97"
-      - "188.114.97.6-2"
-      - "15.204.97.219"
-      - "169.40.42.235"
-      - "15.204.97.216"
-      - "15.204.97.214"
-      - "169.40.42.90"
-      - "ww13.levikogjgfdd.ir"
-      - "169.40.42.104"
-      - "15.204.97.195"
-      - "15.204.97.197"
-      - "169.40.42.74"
-      - "15.204.97.206"
-      - "169.40.42.168"
+      - "159.89.87.21"
       - "15.204.97.198"
+      - "15.204.97.216"
+      - "15.204.97.206"
+      - "169.40.42.104"
+      - "169.40.42.235"
+      - "188.114.96.6"
       - "15.204.97.209"
-      - "ww13.levikogjgfdd.ir-1"
+      - "169.40.42.35"
+      - "188.114.97.6-2"
       - "169.40.42.229"
-      - "169.40.42.168-1"
-      - "www.speedtest.net"
-      - "62.210.91.2"
+      - "15.204.97.197"
+      - "15.204.97.219"
+      - "15.204.97.214"
+      - "15.204.97.195"
+      - "169.40.42.90-1"
+      - "169.40.42.74"
+      - "169.40.42.225"
+      - "51.89.194.151"
       - "62.210.91.10"
       - "185.121.179.122"
       - "152.53.239.182"
-      - "152.53.236.22"
       - "137.74.16.237"
-      - "163.245.42.48"
-      - "jdwacdi.cvewfjg.shop"
-      - "ticket.bestsellersd.site"
-      - "142.91.108.25"
-      - "31.70.111.146"
       - "31.77.126.2"
-      - "ai.smrtai.top"
+      - "198.202.146.51"
+      - "31.77.10.167"
+      - "62.210.91.2"
+      - "91.107.191.188"
+      - "152.53.236.22"
+      - "84.32.184.219"
+      - "31.70.111.146"
+      - "ticket.bestsellersd.site"
+      - "jdwacdi.cvewfjg.shop"
       - "50.7.216.174"
-      - "3.114.220.22"
-      - "31.77.18.220"
+      - "142.91.108.25"
+      - "cf.090227.xyz"
+      - "cf.130519.xyz"
+      - "edge.bookmai.com"
       - "46.105.38.220"
       - "de.vmagnum.win"
+      - "163.245.42.48"
       - "159.65.51.189"
+      - "3.114.220.22"
       - "159.65.51.189-1"
-      - "159.65.51.189-2"
-      - "84.32.184.219"
       - "31.77.126.2-1"
-      - "89.169.53.176"
-      - "31.77.126.2-2"
-      - "51.89.194.151"
-      - "31.57.190.89"
-      - "138.124.36.67"
-      - "sino.bestsellers1.site"
-      - "104.171.133.209"
-      - "151.241.226.201"
-      - "31.57.190.89-1"
-      - "198.202.146.51"
-      - "31.57.190.89-2"
-      - "208.69.78.217"
-      - "78.159.250.214"
-      - "tgfree.rush-server.com"
-      - "206.206.76.75"
-      - "edge.bookmai.com"
-      - "43.174.193.1"
-      - "213.226.127.71"
-      - "45.9.156.28"
-      - "201.7.25.100"
-      - "150.40.126.18"
-      - "91.210.169.181"
-      - "54.251.9.130"
-      - "bg4.univesalsrv.com"
-      - "bg4.univesalsrv.com-1"
-      - "82.202.182.41"
-      - "rs1.univesalsrv.com"
       - "lite.3apes.online"
-      - "89.35.14.32"
-      - "139.100.226.187"
-      - "194.61.31.126"
-      - "62.133.63.45"
-      - "3.0.111.82"
-      - "139.162.27.96"
-      - "200.165.231.209"
-      - "72.56.241.230"
-      - "161.118.198.68"
-      - "165.245.182.116"
-      - "144.31.50.236"
-      - "158.247.241.102"
-      - "165.245.182.116-1"
-      - "45.9.156.24"
-      - "bg3.univesalsrv.com"
-      - "89.35.14.34"
-      - "165.99.222.161"
-      - "200.180.163.38"
-      - "89.35.14.31"
-      - "146.235.16.130"
-      - "rs5.univesalsrv.com"
-      - "193.238.154.78"
-      - "assets.halyvanedorogo.ru"
-      - "144.48.11.97"
+      - "31.77.126.2-2"
       - "83.219.97.18"
-      - "xsru2.freeddns.org"
-      - "510.150333.xyz"
-      - "funagfrdfs.alixxplay.com"
-      - "185.126.93.225"
-      - "45.9.156.42"
-      - "205.237.110.254"
-      - "94.156.79.93"
-      - "93.89.220.37"
-      - "150.40.126.24"
-      - "rs2.univesalsrv.com"
-      - "46.101.252.80"
-      - "94.156.79.93-1"
-      - "82.29.36.250"
-      - "87.239.249.137"
-      - "77.91.68.70"
-      - "tg1.cdnphotos.org"
-      - "93.89.220.37-1"
-      - "md5.univesalsrv.com"
-      - "staging.lastilhame.monster"
-      - "193.36.95.34"
-      - "md2.univesalsrv.com"
-      - "23.81.36.148"
-      - "bg5.univesalsrv.com"
+      - "ai.smrtai.top"
+      - "31.57.190.89"
+      - "104.171.133.209"
+      - "host.taghvimtime.ir"
+      - "31.57.190.89-1"
+      - "31.57.190.89-2"
+      - "138.124.36.67"
+      - "tgfree.rush-server.com"
+      - "sino.bestsellers1.site"
+      - "static.86.39.13.49.clients.your-server.de"
+      - "158.247.241.102"
+      - "fitindoor.net"
+      - "89.169.53.176"
+      - "43.174.193.1"
       - "185.126.93.227"
-      - "rs2.univesalsrv.com-1"
-      - "rs5.univesalsrv.com-1"
-      - "45.9.156.27"
-      - "77.110.97.245"
-      - "31.77.10.167"
+      - "185.126.93.225"
+      - "206.206.76.75"
+      - "150.40.126.18"
+      - "rs2.univesalsrv.com"
       - "185.126.93.226"
-      - "150.241.101.80"
-      - "150.241.101.80-1"
+      - "151.241.226.201"
+      - "78.159.250.214"
+      - "mci1.amir12.ir"
+      - "146.235.16.130"
+      - "213.226.127.71"
+      - "82.202.182.41"
+      - "194.61.31.126"
+      - "rs4.univesalsrv.com"
+      - "144.48.11.97"
+      - "3.0.111.82"
+      - "rs4.univesalsrv.com-1"
+      - "150.40.126.24"
+      - "rs2.univesalsrv.com-1"
+      - "159.65.51.189-2"
+      - "rs5.univesalsrv.com"
+      - "62.133.63.45"
+      - "89.35.14.32"
+      - "201.7.25.100"
+      - "91.210.169.181"
       - "150.40.126.22"
-      - "46.137.202.178"
-      - "5.253.42.164"
-      - "bg2.univesalsrv.com"
-      - "node-uk.connectsuite.org"
+      - "150.40.126.21"
+      - "144.31.50.236"
+      - "tg1.cdnphotos.org"
+      - "150.40.126.19"
+      - "200.180.163.38"
       - "du-rov.secureservice.top"
+      - "200.165.231.209"
+      - "139.100.226.187"
+      - "rs5.univesalsrv.com-1"
+      - "139.162.27.96"
+      - "bg4.univesalsrv.com"
+      - "204.216.216.23"
+      - "bg4.univesalsrv.com-1"
+      - "72.56.241.230"
+      - "77.110.97.245"
+      - "205.237.110.254"
+      - "165.245.182.116"
+      - "161.118.198.68"
+      - "45.9.156.28"
+      - "165.245.182.116-1"
+      - "assets.halyvanedorogo.ru"
+      - "bg2.univesalsrv.com"
       - "bg2.univesalsrv.com-1"
-      - "mci.amir12.ir"
-      - "node-uk.connectsuite.org-1"
+      - "rs1.univesalsrv.com"
+      - "193.238.154.78"
+      - "193.36.95.34"
+      - "208.69.78.217"
+      - "54.251.9.130"
+      - "xsru2.freeddns.org"
+      - "rs3.univesalsrv.com"
+      - "rs3.univesalsrv.com-1"
+      - "510.150333.xyz"
+      - "bg3.univesalsrv.com"
+      - "45.9.156.42"
+      - "93.89.220.37"
+      - "93.89.220.37-1"
+      - "94.156.79.93"
+      - "89.35.14.34"
+      - "md2.univesalsrv.com"
+      - "94.156.79.93-1"
+      - "77.91.68.70"
+      - "87.239.249.137"
+      - "82.29.36.250"
+      - "md1.univesalsrv.com"
+      - "5.253.30.99"
+      - "bg5.univesalsrv.com"
+      - "107.181.151.128"
+      - "staging.lastilhame.monster"
+      - "webdisk.jaggyslawa.org"
       - "51.38.71.147"
+      - "89.35.14.31"
+      - "bg5.univesalsrv.com-1"
+      - "45.9.156.27"
+      - "89.35.14.30"
+      - "45.9.156.24"
+      - "node-uk.connectsuite.org"
+      - "node-uk.connectsuite.org-1"
+      - "89.35.14.33"
+      - "5.253.30.99-1"
+      - "23.81.36.148"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
-    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
     strategy: "round-robin"
     url: "https://www.gstatic.com/generate_204"
     interval: 30
+    lazy: true
     timeout: 1500
-    lazy: false
     proxies:
       - "172.64.154.211"
-      - "162.159.135.234"
-      - "47.253.226.114"
-      - "188.114.98.0"
-      - "172.66.0.162"
-      - "172.64.152.241"
-      - "188.114.98.0-1"
-      - "188.114.98.0-2"
-      - "195.123.235.177"
-      - "47.253.226.114-1"
-      - "172.64.150.43"
-      - "104.18.37.127"
+      - "104.18.33.97"
       - "172.64.158.170"
+      - "188.114.98.0"
+      - "172.64.152.241"
+      - "104.18.37.127"
+      - "162.159.135.234"
+      - "172.64.150.43"
+      - "195.123.235.177"
+      - "169.40.42.90"
+      - "172.66.0.162"
+      - "188.114.98.0-1"
+      - "www.speedtest.net"
+      - "169.40.42.224"
+      - "169.40.42.89"
+      - "188.114.98.0-2"
       - "169.40.42.231"
       - "188.114.97.6"
       - "188.114.97.6-1"
-      - "104.18.33.97"
-      - "188.114.97.6-2"
-      - "15.204.97.219"
-      - "169.40.42.235"
-      - "15.204.97.216"
-      - "15.204.97.214"
-      - "169.40.42.90"
-      - "ww13.levikogjgfdd.ir"
-      - "169.40.42.104"
-      - "15.204.97.195"
-      - "15.204.97.197"
-      - "169.40.42.74"
-      - "15.204.97.206"
-      - "169.40.42.168"
+      - "159.89.87.21"
       - "15.204.97.198"
+      - "15.204.97.216"
+      - "15.204.97.206"
+      - "169.40.42.104"
+      - "169.40.42.235"
+      - "188.114.96.6"
       - "15.204.97.209"
-      - "ww13.levikogjgfdd.ir-1"
+      - "169.40.42.35"
+      - "188.114.97.6-2"
       - "169.40.42.229"
-      - "169.40.42.168-1"
-      - "www.speedtest.net"
-      - "62.210.91.2"
+      - "15.204.97.197"
+      - "15.204.97.219"
+      - "15.204.97.214"
+      - "15.204.97.195"
+      - "169.40.42.90-1"
+      - "169.40.42.74"
+      - "169.40.42.225"
+      - "51.89.194.151"
       - "62.210.91.10"
       - "185.121.179.122"
       - "152.53.239.182"
-      - "152.53.236.22"
       - "137.74.16.237"
-      - "163.245.42.48"
-      - "jdwacdi.cvewfjg.shop"
-      - "ticket.bestsellersd.site"
-      - "142.91.108.25"
-      - "31.70.111.146"
       - "31.77.126.2"
-      - "ai.smrtai.top"
+      - "198.202.146.51"
+      - "31.77.10.167"
+      - "62.210.91.2"
+      - "91.107.191.188"
+      - "152.53.236.22"
+      - "84.32.184.219"
+      - "31.70.111.146"
+      - "ticket.bestsellersd.site"
+      - "jdwacdi.cvewfjg.shop"
       - "50.7.216.174"
-      - "3.114.220.22"
-      - "31.77.18.220"
+      - "142.91.108.25"
+      - "cf.090227.xyz"
+      - "cf.130519.xyz"
+      - "edge.bookmai.com"
       - "46.105.38.220"
       - "de.vmagnum.win"
+      - "163.245.42.48"
       - "159.65.51.189"
+      - "3.114.220.22"
       - "159.65.51.189-1"
-      - "159.65.51.189-2"
-      - "84.32.184.219"
       - "31.77.126.2-1"
-      - "89.169.53.176"
-      - "31.77.126.2-2"
-      - "51.89.194.151"
-      - "31.57.190.89"
-      - "138.124.36.67"
-      - "sino.bestsellers1.site"
-      - "104.171.133.209"
-      - "151.241.226.201"
-      - "31.57.190.89-1"
-      - "198.202.146.51"
-      - "31.57.190.89-2"
-      - "208.69.78.217"
-      - "78.159.250.214"
-      - "tgfree.rush-server.com"
-      - "206.206.76.75"
-      - "edge.bookmai.com"
-      - "43.174.193.1"
-      - "213.226.127.71"
-      - "45.9.156.28"
-      - "201.7.25.100"
-      - "150.40.126.18"
-      - "91.210.169.181"
-      - "54.251.9.130"
-      - "bg4.univesalsrv.com"
-      - "bg4.univesalsrv.com-1"
-      - "82.202.182.41"
-      - "rs1.univesalsrv.com"
       - "lite.3apes.online"
-      - "89.35.14.32"
-      - "139.100.226.187"
-      - "194.61.31.126"
-      - "62.133.63.45"
-      - "3.0.111.82"
-      - "139.162.27.96"
-      - "200.165.231.209"
-      - "72.56.241.230"
-      - "161.118.198.68"
-      - "165.245.182.116"
-      - "144.31.50.236"
-      - "158.247.241.102"
-      - "165.245.182.116-1"
-      - "45.9.156.24"
-      - "bg3.univesalsrv.com"
-      - "89.35.14.34"
-      - "165.99.222.161"
-      - "200.180.163.38"
-      - "89.35.14.31"
-      - "146.235.16.130"
-      - "rs5.univesalsrv.com"
-      - "193.238.154.78"
-      - "assets.halyvanedorogo.ru"
-      - "144.48.11.97"
+      - "31.77.126.2-2"
       - "83.219.97.18"
-      - "xsru2.freeddns.org"
-      - "510.150333.xyz"
-      - "funagfrdfs.alixxplay.com"
-      - "185.126.93.225"
-      - "45.9.156.42"
-      - "205.237.110.254"
-      - "94.156.79.93"
-      - "93.89.220.37"
-      - "150.40.126.24"
-      - "rs2.univesalsrv.com"
-      - "46.101.252.80"
-      - "94.156.79.93-1"
-      - "82.29.36.250"
-      - "87.239.249.137"
-      - "77.91.68.70"
-      - "tg1.cdnphotos.org"
-      - "93.89.220.37-1"
-      - "md5.univesalsrv.com"
-      - "staging.lastilhame.monster"
-      - "193.36.95.34"
-      - "md2.univesalsrv.com"
-      - "23.81.36.148"
-      - "bg5.univesalsrv.com"
+      - "ai.smrtai.top"
+      - "31.57.190.89"
+      - "104.171.133.209"
+      - "host.taghvimtime.ir"
+      - "31.57.190.89-1"
+      - "31.57.190.89-2"
+      - "138.124.36.67"
+      - "tgfree.rush-server.com"
+      - "sino.bestsellers1.site"
+      - "static.86.39.13.49.clients.your-server.de"
+      - "158.247.241.102"
+      - "fitindoor.net"
+      - "89.169.53.176"
+      - "43.174.193.1"
       - "185.126.93.227"
-      - "rs2.univesalsrv.com-1"
-      - "rs5.univesalsrv.com-1"
-      - "45.9.156.27"
-      - "77.110.97.245"
-      - "31.77.10.167"
+      - "185.126.93.225"
+      - "206.206.76.75"
+      - "150.40.126.18"
+      - "rs2.univesalsrv.com"
       - "185.126.93.226"
-      - "150.241.101.80"
-      - "150.241.101.80-1"
+      - "151.241.226.201"
+      - "78.159.250.214"
+      - "mci1.amir12.ir"
+      - "146.235.16.130"
+      - "213.226.127.71"
+      - "82.202.182.41"
+      - "194.61.31.126"
+      - "rs4.univesalsrv.com"
+      - "144.48.11.97"
+      - "3.0.111.82"
+      - "rs4.univesalsrv.com-1"
+      - "150.40.126.24"
+      - "rs2.univesalsrv.com-1"
+      - "159.65.51.189-2"
+      - "rs5.univesalsrv.com"
+      - "62.133.63.45"
+      - "89.35.14.32"
+      - "201.7.25.100"
+      - "91.210.169.181"
       - "150.40.126.22"
-      - "46.137.202.178"
-      - "5.253.42.164"
-      - "bg2.univesalsrv.com"
-      - "node-uk.connectsuite.org"
+      - "150.40.126.21"
+      - "144.31.50.236"
+      - "tg1.cdnphotos.org"
+      - "150.40.126.19"
+      - "200.180.163.38"
       - "du-rov.secureservice.top"
+      - "200.165.231.209"
+      - "139.100.226.187"
+      - "rs5.univesalsrv.com-1"
+      - "139.162.27.96"
+      - "bg4.univesalsrv.com"
+      - "204.216.216.23"
+      - "bg4.univesalsrv.com-1"
+      - "72.56.241.230"
+      - "77.110.97.245"
+      - "205.237.110.254"
+      - "165.245.182.116"
+      - "161.118.198.68"
+      - "45.9.156.28"
+      - "165.245.182.116-1"
+      - "assets.halyvanedorogo.ru"
+      - "bg2.univesalsrv.com"
       - "bg2.univesalsrv.com-1"
-      - "mci.amir12.ir"
-      - "node-uk.connectsuite.org-1"
+      - "rs1.univesalsrv.com"
+      - "193.238.154.78"
+      - "193.36.95.34"
+      - "208.69.78.217"
+      - "54.251.9.130"
+      - "xsru2.freeddns.org"
+      - "rs3.univesalsrv.com"
+      - "rs3.univesalsrv.com-1"
+      - "510.150333.xyz"
+      - "bg3.univesalsrv.com"
+      - "45.9.156.42"
+      - "93.89.220.37"
+      - "93.89.220.37-1"
+      - "94.156.79.93"
+      - "89.35.14.34"
+      - "md2.univesalsrv.com"
+      - "94.156.79.93-1"
+      - "77.91.68.70"
+      - "87.239.249.137"
+      - "82.29.36.250"
+      - "md1.univesalsrv.com"
+      - "5.253.30.99"
+      - "bg5.univesalsrv.com"
+      - "107.181.151.128"
+      - "staging.lastilhame.monster"
+      - "webdisk.jaggyslawa.org"
       - "51.38.71.147"
-  - name: "المنت 💬"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "تیماسپیک 🎧"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/331567/teamspeak.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "دلتاچت ✉️"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/373771/mail.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
+      - "89.35.14.31"
+      - "bg5.univesalsrv.com-1"
+      - "45.9.156.27"
+      - "89.35.14.30"
+      - "45.9.156.24"
+      - "node-uk.connectsuite.org"
+      - "node-uk.connectsuite.org-1"
+      - "89.35.14.33"
+      - "5.253.30.99-1"
+      - "23.81.36.148"
+    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"
-    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
     proxies:
       - "بدون فیلترشکن 🛡️"
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
   - name: "تلگرام 💬"
     type: "select"
-    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
   - name: "یوتیوب ▶️"
     type: "select"
-    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
       - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
   - name: "گوگل 🌍"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
     icon: "https://www.svgrepo.com/show/475656/google-color.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "واتس آپ 🟢"
-    type: "select"
-    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-      - "بدون فیلترشکن 🛡️"
   - name: "هوش مصنوعی 🤖"
     type: "select"
-    icon: "https://www.svgrepo.com/show/306500/openai.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/306500/openai.svg"
   - name: "توییتر 🐦"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
     icon: "https://www.svgrepo.com/show/475689/twitter-color.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "اسپاتیفای 🎵"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
   - name: "اینستاگرام 📸"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
     icon: "https://www.svgrepo.com/show/452229/instagram-1.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-      - "بدون فیلترشکن 🛡️"
-  - name: "تبلیغات 🆎"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/336358/ad.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "تبلیغات اپ ها 🍃"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "رهگیری جهانی 🛑"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "سایتای مخرب ⚠️"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "استیم 🖥️"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/452107/steam.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "گیم 🎮"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "توییچ 📡"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/343527/twitch-network-communication-interaction-connection.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "سایتای ایرانی 🇮🇷"
-    type: "select"
-    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "ویندوز 🧊"
-    type: "select"
-    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "اجازه ندادن 🚫"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
   - name: "کلودفلر ☁️"
     type: "select"
-    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
   - name: "گیتهاب 🐙"
     type: "select"
-    icon: "https://www.svgrepo.com/show/355033/github.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/355033/github.svg"
+  - name: "اسپاتیفای 🎵"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
+  - name: "واتس آپ 🟢"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
+  - name: "تبلیغات 🆎"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/336358/ad.svg"
+  - name: "تبلیغات اپ ها 🍃"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
+  - name: "رهگیری جهانی 🛑"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
+  - name: "المنت 💬"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Element_(software)_logo_(2020).svg"
+  - name: "تیم اسپیک 🎧"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/teamspeak/default.svg"
+  - name: "دلتاچت ✉️"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Delta_chat_(Instant_Messenger)_logo.svg"
+  - name: "سایتای مخرب ⚠️"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
+  - name: "استیم 🖥️"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/452107/steam.svg"
+  - name: "گیم 🎮"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
+  - name: "توییچ 📡"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@develop/icons/twitch.svg"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
+  - name: "ویندوز 🧊"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "اجازه ندادن 🚫"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
   - name: "دیسکورد 🗣️"
     type: "select"
-    icon: "https://automatorplugin.com/wp-content/uploads/2024/10/discord-icon.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/brands/discord.svg"
   - name: "استریمیو 🎬"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
     icon: "https://stremio.github.io/stremio-addon-guide/img/stremio.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "انیدسک 🔴"
+  - name: "انی دسک 🔴"
     type: "select"
-    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
     proxies:
       - "بدون فیلترشکن 🛡️"
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
   - name: "سایتای سانسوری 🤬"
     type: "select"
-    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Censorship.svg/300px-Censorship.svg.png"
     proxies:
       - "اجازه ندادن 🚫"
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "بدون فیلترشکن 🛡️"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/clapperboard.svg"
   - name: "بدون فیلترشکن 🛡️"
     type: "select"
-    icon: "https://www.svgrepo.com/show/6318/connection.svg"
     proxies:
       - "DIRECT"
     hidden: true
+    icon: "https://www.svgrepo.com/show/6318/connection.svg"
   - name: "قطع اینترنت ⛔"
     type: "select"
-    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
     proxies:
       - "REJECT"
     hidden: true
+    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
   - name: "اجازه ندادن 🚫"
     type: "select"
-    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
     proxies:
       - "REJECT"
     hidden: true
+    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
 rules:
+  - "IP-CIDR,127.0.0.0/8,بدون فیلترشکن 🛡️,no-resolve"
+  - "DOMAIN,localhost,بدون فیلترشکن 🛡️"
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,private,بدون فیلترشکن 🛡️"
   - "RULE-SET,DownloadManagers,دانلود منیجر 📥"
   - "RULE-SET,Download,دانلود منیجر 📥"
   - "RULE-SET,stremio,استریمیو 🎬"
@@ -3378,11 +3608,12 @@ rules:
   - "DST-PORT,993,دلتاچت ✉️"
   - "DST-PORT,465,دلتاچت ✉️"
   - "DST-PORT,587,دلتاچت ✉️"
-  - "PROCESS-NAME,com.teamspeak.ts3client,تیماسپیک 🎧"
-  - "PROCESS-NAME,ts3client_win64.exe,تیماسپیک 🎧"
-  - "PROCESS-NAME,ts3client_win32.exe,تیماسپیک 🎧"
-  - "DOMAIN-SUFFIX,ag.tssq.ir,تیماسپیک 🎧"
-  - "DST-PORT,9987,تیماسپیک 🎧"
+  - "PROCESS-NAME,com.teamspeak.ts3client,تیم اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win64.exe,تیم اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win32.exe,تیم اسپیک 🎧"
+  - "PROCESS-NAME,TeamSpeak.exe,تیم اسپیک 🎧"
+  - "DOMAIN-SUFFIX,ag.tssq.ir,تیم اسپیک 🎧"
+  - "DST-PORT,9987,تیم اسپیک 🎧"
   - "RULE-SET,BanProgramAD,تبلیغات اپ ها 🍃"
   - "RULE-SET,BanAD,رهگیری جهانی 🛑"
   - "RULE-SET,PrivateTracker,رهگیری جهانی 🛑"
@@ -3405,9 +3636,12 @@ rules:
   - "RULE-SET,YouTube,یوتیوب ▶️"
   - "RULE-SET,youtube,یوتیوب ▶️"
   - "RULE-SET,YouTubeMusic,یوتیوب ▶️"
-  - "PROCESS-NAME,com.anydesk.anydeskandroid,انیدسک 🔴"
-  - "PROCESS-NAME,AnyDesk.exe,انیدسک 🔴"
-  - "DOMAIN-SUFFIX,anydesk.com,انیدسک 🔴"
+  - "PROCESS-NAME,com.anydesk.anydeskandroid,انی دسک 🔴"
+  - "PROCESS-NAME,AnyDesk.exe,انی دسک 🔴"
+  - "DOMAIN-SUFFIX,anydesk.com,انی دسک 🔴"
+  - "PROCESS-NAME,rustdesk.exe,انی دسک 🔴"
+  - "PROCESS-NAME,com.carriez.flutter_hbb,انی دسک 🔴"
+  - "PROCESS-NAME,dorsandesk.exe,انی دسک 🔴"
   - "PROCESS-NAME,Twitter.exe,توییتر 🐦"
   - "PROCESS-NAME,com.twitter.android,توییتر 🐦"
   - "RULE-SET,Chotwitter,توییتر 🐦"
@@ -3419,9 +3653,6 @@ rules:
   - "RULE-SET,mihspotify,اسپاتیفای 🎵"
   - "PROCESS-NAME,com.instagram.android,اینستاگرام 📸"
   - "RULE-SET,instagram,اینستاگرام 📸"
-  - "DOMAIN-SUFFIX,deepseek.com,هوش مصنوعی 🤖"
-  - "DOMAIN-SUFFIX,qwen.ai,هوش مصنوعی 🤖"
-  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
   - "RULE-SET,censor,سایتای سانسوری 🤬"
   - "RULE-SET,apps,سایتای ایرانی 🇮🇷"
   - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
@@ -3435,6 +3666,10 @@ rules:
   - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
   - "DOMAIN-SUFFIX,unimics.com,سایتای ایرانی 🇮🇷"
   - "RULE-SET,whatsapp,واتس آپ 🟢"
+  - "RULE-SET,Ai,هوش مصنوعی 🤖"
+  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
+  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google,گوگل 🌍"
   - "RULE-SET,steam,استیم 🖥️"
   - "RULE-SET,SteamRegionCheck,استیم 🖥️"
   - "RULE-SET,game,گیم 🎮"
@@ -3449,9 +3684,5 @@ rules:
   - "RULE-SET,github,گیتهاب 🐙"
   - "PROCESS-NAME,com.android.vending,نوع انتخاب پروکسی 🔀"
   - "PROCESS-NAME,com.google.android.gms,نوع انتخاب پروکسی 🔀"
-  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
-  - "RULE-SET,google,گوگل 🌍"
   - "IP-CIDR,10.10.34.0/24,نوع انتخاب پروکسی 🔀"
-  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
-  - "RULE-SET,private,بدون فیلترشکن 🛡️"
   - "MATCH,نوع انتخاب پروکسی 🔀"

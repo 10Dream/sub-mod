@@ -1,287 +1,177 @@
-global-client-fingerprint: "chrome"
-keep-alive-interval: 5
-keep-alive-idle: 10
-disable-keep-alive: false
-port: 7890
+port: 7892
 socks-port: 7891
-redir-port: 7892
-mixed-port: 7893
-tproxy-port: 7894
+mixed-port: 7890
 allow-lan: true
-tcp-concurrent: true
-enable-process: true
-find-process-mode: "always"
-ipv6: false
+mode: "rule"
 log-level: "info"
-geo-auto-update: true
-geo-update-interval: 168
+external-controller: "0.0.0.0:9090"
 secret: ""
-bind-address: "*"
-unified-delay: false
+ipv6: false
 dns:
   enable: true
+  listen: "0.0.0.0:53"
   ipv6: false
   prefer-h3: false
   cache-algorithm: "arc"
+  use-hosts: true
   use-system-hosts: true
-  use-host: true
-  listen: "0.0.0.0:53"
+  respect-rules: false
   enhanced-mode: "fake-ip"
-  fake-ip-filter-mode: "blacklist"
   fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter-mode: "blacklist"
   fake-ip-filter:
-    - "*.lan"
-    - "*.localdomain"
-    - "*.invalid"
-    - "*.localhost"
-    - "*.test"
-    - "*.local"
-    - "*.home.arpa"
+    - "geosite:private"
+    - "+.lan"
+    - "+.localdomain"
+    - "+.invalid"
+    - "+.localhost"
+    - "+.test"
+    - "+.local"
+    - "+.home.arpa"
+    - "+.arpa"
+    - "+.ir"
     - "time.*.com"
+    - "time.*.gov"
+    - "time.*.apple.com"
     - "ntp.*.com"
-    - "*.ir"
+    - "+.pool.ntp.org"
+    - "+.ntp.org"
+    - "time.asis.io"
+    - "time.windows.com"
+    - "time.apple.com"
+    - "connectivitycheck.gstatic.com"
+    - "connectivitycheck.android.com"
+    - "clients3.google.com"
+    - "captive.apple.com"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "router.asus.com"
+    - "tplinkwifi.net"
+    - "tplinkrepeater.net"
+    - "tplinkap.net"
+    - "routerlogin.net"
+    - "routerlogin.com"
+    - "melogin.cn"
+    - "falogin.cn"
+    - "tendawifi.com"
+    - "leike.cc"
+    - "miwifi.com"
+    - "goforward.link"
+    - "+.plex.direct"
+  nameserver-policy:
+    geosite:private: "system"
+    +.arpa: "system"
+    +.lan: "system"
+    +.local: "system"
+    +.home.arpa: "system"
+    router.asus.com: "system"
+    tplinkwifi.net: "system"
+    tplinkrepeater.net: "system"
+    tplinkap.net: "system"
+    routerlogin.net: "system"
+    routerlogin.com: "system"
+    melogin.cn: "system"
+    falogin.cn: "system"
+    tendawifi.com: "system"
+    leike.cc: "system"
+    miwifi.com: "system"
+    goforward.link: "system"
   default-nameserver:
+    - "tcp://1.1.1.1"
+    - "tcp://8.8.8.8"
     - "1.1.1.1"
     - "8.8.8.8"
     - "9.9.9.9"
-  nameserver:
-    - "tcp://1.1.1.1"
     - "tcp://1.0.0.1"
-    - "tcp://8.8.8.8"
     - "tcp://8.8.4.4"
     - "tcp://9.9.9.9"
     - "tcp://149.112.112.112"
     - "tcp://208.67.222.222"
-    - "tcp://208.67.220.222"
+    - "tcp://208.67.220.220"
+  nameserver:
+    - "https://freedns.controld.com/p2#نوع انتخاب پروکسی 🔀"
   fallback:
-    - "tcp://76.76.19.19"
-    - "tcp://76.223.122.150"
-    - "tcp://185.228.168.9"
-    - "tcp://185.228.169.9"
-    - "tcp://8.26.56.26"
-    - "tcp://8.20.247.20"
-    - "tcp://76.76.2.11"
-    - "tcp://76.76.10.11"
-    - "tcp://84.200.69.80"
-    - "tcp://84.200.70.40"
-    - "tcp://45.33.97.5"
-    - "tcp://37.235.1.177"
-    - "tcp://209.244.0.3"
-    - "tcp://209.244.0.4"
-    - "tcp://156.154.70.5"
-    - "tcp://156.154.71.5"
-    - "tcp://103.86.96.100"
-    - "tcp://103.86.99.100"
-    - "tcp://199.85.126.10"
-    - "tcp://199.85.127.10"
-    - "tcp://129.250.35.250"
-    - "tcp://129.250.35.251"
-    - "tcp://94.16.114.254"
-    - "tcp://94.247.43.254"
-    - "tcp://208.67.222.20"
-    - "tcp://195.46.39.39"
-    - "tcp://195.46.39.40"
-    - "tcp://204.117.214.10"
-    - "tcp://199.2.252.10"
-    - "tcp://194.169.169.169"
-    - "tcp://156.154.70.1"
-    - "tcp://156.154.71.1"
-    - "tcp://91.239.100.100"
-    - "tcp://89.233.43.71"
-    - "tcp://64.6.64.6"
-    - "tcp://64.6.65.6"
-    - "tcp://77.88.8.8"
-    - "tcp://77.88.8.1"
+    - "https://dns.adguard-dns.com/dns-query#نوع انتخاب پروکسی 🔀"
+  fallback-lazy-query: true
   fallback-filter:
-    geoip: true
-    geoip-code: "IR"
-    geosite:
-      - "gfw"
+    geoip: false
     ipcidr:
+      - "10.10.34.34/32"
+      - "10.10.34.35/32"
+      - "10.10.34.36/32"
+      - "127.0.0.1/32"
       - "240.0.0.0/4"
-    domain:
-      - "+.google.com"
-      - "+.facebook.com"
-      - "+.youtube.com"
   proxy-server-nameserver:
     - "tcp://1.1.1.1"
     - "tcp://8.8.8.8"
+    - "tcp://9.9.9.9"
+    - "1.1.1.1"
+    - "8.8.8.8"
+    - "9.9.9.9"
+    - "tcp://1.0.0.1"
+    - "tcp://8.8.4.4"
+    - "tcp://149.112.112.112"
+    - "tcp://208.67.222.222"
+    - "tcp://208.67.220.220"
   direct-nameserver:
     - "78.157.42.100"
     - "78.157.42.101"
+    - "tcp://78.157.42.100"
+    - "tcp://78.157.42.101"
+  direct-nameserver-follow-policy: true
 sniffer:
   enable: true
   force-dns-mapping: true
   parse-pure-ip: true
-  override-destination: false
-  sniff:
-    HTTP:
-      ports:
-        - 80
-        - 8080
-        - 8880
-        - 2052
-        - 2082
-        - 2086
-        - 2095
-    TLS:
-      ports:
-        - 443
-        - 8443
-        - 2053
-        - 2083
-        - 2087
-        - 2096
+  override-destination: true
 tun:
   enable: true
   stack: "mixed"
   auto-route: true
   auto-detect-interface: true
-  auto-redir: true
-  dns-hijack:
-    - "any:53"
-    - "tcp://any:53"
 rule-providers:
+  DownloadManagers:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
+    interval: 86400
+    path: "./ruleset/DownloadManagers.yaml"
+  Download:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
+    interval: 86400
+    path: "./ruleset/Download.yaml"
+  stremio:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    interval: 86400
+    path: "./ruleset/stremio.yaml"
+  BanProgramAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanProgramAD.yaml"
+  BanAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanAD.yaml"
+  PrivateTracker:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
+    interval: 86400
+    path: "./ruleset/PrivateTracker.yaml"
   category_public_tracker:
     type: "http"
     behavior: "domain"
     url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-public-tracker.yaml"
     interval: 86400
     path: "./ruleset/category_public_tracker.yaml"
-  iran_ads:
-    type: "http"
-    behavior: "domain"
-    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
-    interval: 86400
-    path: "./ruleset/iran_ads.yaml"
-  PersianBlocker:
-    type: "http"
-    behavior: "domain"
-    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
-    interval: 86400
-    path: "./ruleset/PersianBlocker.yaml"
-  youtube:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
-    interval: 86400
-    path: "./ruleset/youtube.yaml"
-  telegram:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
-    interval: 86400
-    path: "./ruleset/telegram.yaml"
-  twitch:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
-    interval: 86400
-    path: "./ruleset/twitch.yaml"
-  censor:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
-    interval: 86400
-    path: "./ruleset/censor.yaml"
-  local_ips:
-    type: "http"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
-    interval: 86400
-    path: "./ruleset/local_ips.yaml"
-  private:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
-    interval: 86400
-    path: "./ruleset/private.yaml"
-  category_ir:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
-    interval: 86400
-    path: "./ruleset/category_ir.yaml"
-  iran:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
-    interval: 86400
-    path: "./ruleset/iran.yaml"
-  steam:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
-    interval: 86400
-    path: "./ruleset/steam.yaml"
-  game:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
-    interval: 86400
-    path: "./ruleset/game.yaml"
-  category-games:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
-    interval: 86400
-    path: "./ruleset/category-games.yaml"
-  ir:
-    type: "http"
-    format: "yaml"
-    behavior: "domain"
-    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
-    interval: 86400
-    path: "./ruleset/ir.yaml"
-  apps:
-    type: "http"
-    format: "yaml"
-    behavior: "classical"
-    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
-    interval: 86400
-    path: "./ruleset/apps.yaml"
-  ircidr:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
-    interval: 86400
-    path: "./ruleset/ircidr.yaml"
-  irasn:
-    type: "http"
-    format: "yaml"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
-    interval: 86400
-    path: "./ruleset/irasn.yaml"
-  arvancloud:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
-    interval: 86400
-    path: "./ruleset/arvancloud.yaml"
-  derakcloud:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
-    interval: 86400
-    path: "./ruleset/derakcloud.yaml"
-  iranserver:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
-    interval: 86400
-    path: "./ruleset/iranserver.yaml"
-  parspack:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
-    interval: 86400
-    path: "./ruleset/parspack.yaml"
   malware:
     type: "http"
     format: "yaml"
@@ -303,170 +193,79 @@ rule-providers:
     url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/cryptominers.yaml"
     interval: 86400
     path: "./ruleset/cryptominers.yaml"
-  ads:
-    type: "http"
-    format: "yaml"
-    behavior: "domain"
-    url: "https://github.com/Chocolate4U/Iran-clash-rules/releases/download/202606060815/category-ads-all.yaml"
-    interval: 86400
-    path: "./ruleset/ads.yaml"
-  DownloadManagers:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
-    interval: 86400
-    path: "./ruleset/DownloadManagers.yaml"
-  BanProgramAD:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
-    interval: 86400
-    path: "./ruleset/BanProgramAD.yaml"
-  BanAD:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
-    interval: 86400
-    path: "./ruleset/BanAD.yaml"
-  PrivateTracker:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
-    interval: 86400
-    path: "./ruleset/PrivateTracker.yaml"
-  BanEasyList:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
-    interval: 86400
-    path: "./ruleset/BanEasyList.yaml"
-  Download:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
-    interval: 86400
-    path: "./ruleset/Download.yaml"
-  GameDownload:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
-    interval: 86400
-    path: "./ruleset/GameDownload.yaml"
-  SteamRegionCheck:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
-    interval: 86400
-    path: "./ruleset/SteamRegionCheck.yaml"
-  Xbox:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
-    interval: 86400
-    path: "./ruleset/Xbox.yaml"
-  YouTubeMusic:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
-    interval: 86400
-    path: "./ruleset/YouTubeMusic.yaml"
-  YouTube:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
-    interval: 86400
-    path: "./ruleset/YouTube.yaml"
-  Ponzi:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
-    interval: 86400
-    path: "./ruleset/Ponzi.yaml"
   warninglist:
     type: "http"
     behavior: "classical"
     url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/warning-list.yaml"
     interval: 86400
     path: "./ruleset/warninglist.yaml"
-  google:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
-    interval: 86400
-    path: "./ruleset/google.yaml"
-  google-play:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
-    interval: 86400
-    path: "./ruleset/google-play.yaml"
-  xiaomi_block_list:
-    type: "http"
-    format: "yaml"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
-    interval: 86400
-    path: "./ruleset/xiaomi_block_list.yaml"
-  xiaomi_white_list:
+  Ponzi:
     type: "http"
     behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
     interval: 86400
-    path: "./ruleset/xiaomi_white_list.yaml"
-  cloudflare:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
-    interval: 86400
-    path: "./ruleset/cloudflare.yaml"
-  github:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
-    interval: 86400
-    path: "./ruleset/xgithub.yaml"
-  whatsapp:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
-    interval: 86400
-    path: "./ruleset/whatsapp.yaml"
+    path: "./ruleset/Ponzi.yaml"
   LiteAds:
     type: "http"
     behavior: "classical"
     url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/LiteAds.yaml"
     interval: 86400
     path: "./ruleset/LiteAds.yaml"
-  discord:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
-    interval: 86400
-    path: "./ruleset/discord.yaml"
-  instagram:
+  iran_ads:
     type: "http"
     behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
     interval: 86400
-    path: "./ruleset/instagram.yaml"
-  category-ai:
+    path: "./ruleset/iran_ads.yaml"
+  PersianBlocker:
     type: "http"
     behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
     interval: 86400
-    path: "./ruleset/category-ai.yaml"
-  stremio:
+    path: "./ruleset/PersianBlocker.yaml"
+  ads:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/category-ads-all.yaml"
+    interval: 86400
+    path: "./ruleset/ads.yaml"
+  BanEasyList:
     type: "http"
     behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
     interval: 86400
-    path: "./ruleset/stremio.yaml"
-  windows:
+    path: "./ruleset/BanEasyList.yaml"
+  twitch:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
+    interval: 86400
+    path: "./ruleset/twitch.yaml"
+  telegram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
+    interval: 86400
+    path: "./ruleset/telegram.yaml"
+  YouTube:
     type: "http"
     behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
     interval: 86400
-    path: "./ruleset/windows.yaml"
+    path: "./ruleset/YouTube.yaml"
+  youtube:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
+    interval: 86400
+    path: "./ruleset/youtube.yaml"
+  YouTubeMusic:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
+    interval: 86400
+    path: "./ruleset/YouTubeMusic.yaml"
   Chotwitter:
     type: "http"
     format: "yaml"
@@ -498,6 +297,201 @@ rule-providers:
     url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Spotify.yaml"
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
+  instagram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    interval: 86400
+    path: "./ruleset/instagram.yaml"
+  Ai:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/Ai.yaml"
+    interval: 86400
+    path: "./ruleset/Ai.yaml"
+  category-ai:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    interval: 86400
+    path: "./ruleset/category-ai.yaml"
+  censor:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
+    interval: 86400
+    path: "./ruleset/censor.yaml"
+  apps:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
+    interval: 86400
+    path: "./ruleset/apps.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+  arvancloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
+    interval: 86400
+    path: "./ruleset/arvancloud.yaml"
+  derakcloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
+    interval: 86400
+    path: "./ruleset/derakcloud.yaml"
+  iranserver:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
+    interval: 86400
+    path: "./ruleset/iranserver.yaml"
+  parspack:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
+    interval: 86400
+    path: "./ruleset/parspack.yaml"
+  irasn:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
+    interval: 86400
+    path: "./ruleset/irasn.yaml"
+  ircidr:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
+    interval: 86400
+    path: "./ruleset/ircidr.yaml"
+  ir:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
+    interval: 86400
+    path: "./ruleset/ir.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  whatsapp:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
+    interval: 86400
+    path: "./ruleset/whatsapp.yaml"
+  steam:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
+    interval: 86400
+    path: "./ruleset/steam.yaml"
+  SteamRegionCheck:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
+    interval: 86400
+    path: "./ruleset/SteamRegionCheck.yaml"
+  game:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
+    interval: 86400
+    path: "./ruleset/game.yaml"
+  GameDownload:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
+    interval: 86400
+    path: "./ruleset/GameDownload.yaml"
+  category-games:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
+    interval: 86400
+    path: "./ruleset/category-games.yaml"
+  Xbox:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
+    interval: 86400
+    path: "./ruleset/Xbox.yaml"
+  discord:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
+    interval: 86400
+    path: "./ruleset/discord.yaml"
+  xiaomi_white_list:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_white_list.yaml"
+  xiaomi_block_list:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_block_list.yaml"
+  windows:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    interval: 86400
+    path: "./ruleset/windows.yaml"
+  cloudflare:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
+    interval: 86400
+    path: "./ruleset/cloudflare.yaml"
+  github:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
+    interval: 86400
+    path: "./ruleset/xgithub.yaml"
+  google-play:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
+    interval: 86400
+    path: "./ruleset/google-play.yaml"
+  google:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
+    interval: 86400
+    path: "./ruleset/google.yaml"
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  private:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
+    interval: 86400
+    path: "./ruleset/private.yaml"
 proxies:
   - name: "🏳️ @DeltaKroneckerGithub"
     type: "trojan"
@@ -24380,9 +24374,25 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🏳️ 🇱🇰 | @WhiteDNS | LK9|1.4MB/s|DNSOK|GPT⁺-SG"
+  - name: "🏳️ 🇺🇸 | @WhiteDNS | US569|3.2MB/s|DNSOK|GPT⁺-US"
     type: "vless"
-    server: "centurylink.es"
+    server: "188.114.98.0"
+    port: 443
+    uuid: "8be461cb-a0df-47cf-bc0d-4d9e6a22fa74"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ccs2g.pai50288.uk"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/pai50288"
+      headers:
+        Host: "ccs2g.pai50288.uk"
+  - name: "🏳️ 🇱🇰 | @WhiteDNS | LK14|2.6MB/s|DNSOK|GPT⁺-SG"
+    type: "vless"
+    server: "104.17.74.206"
     port: 8443
     uuid: "c136a12c-4260-48a7-a1e6-fbda83a11045"
     udp: true
@@ -24394,9 +24404,51 @@ proxies:
       path: "/"
       headers:
         Host: "free.sahanwickramasinghe.me"
-  - name: "🏳️ 🇱🇰 | @WhiteDNS | LK13|677KB/s|DNSOK|GPT⁺-SG"
+  - name: "🏳️ 🇱🇰 | @WhiteDNS | LK16|2.6MB/s|DNSOK|GPT⁺-SG"
     type: "vless"
     server: "104.17.73.206"
+    port: 8443
+    uuid: "c136a12c-4260-48a7-a1e6-fbda83a11045"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "free.sahanwickramasinghe.me"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "free.sahanwickramasinghe.me"
+  - name: "🏳️ 🇱🇰 | @WhiteDNS | LK17|2.5MB/s|DNSOK|GPT⁺-SG"
+    type: "vless"
+    server: "104.17.70.206"
+    port: 8443
+    uuid: "c136a12c-4260-48a7-a1e6-fbda83a11045"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "free.sahanwickramasinghe.me"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "free.sahanwickramasinghe.me"
+  - name: "🏳️ 🇱🇰 | @WhiteDNS | LK20|1.7MB/s|DNSOK|GPT⁺-SG"
+    type: "vless"
+    server: "104.17.71.206"
+    port: 8443
+    uuid: "c136a12c-4260-48a7-a1e6-fbda83a11045"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "free.sahanwickramasinghe.me"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "free.sahanwickramasinghe.me"
+  - name: "🏳️ 🇱🇰 | @WhiteDNS | LK22|1.4MB/s|DNSOK|GPT⁺-SG"
+    type: "vless"
+    server: "centurylink.es"
     port: 8443
     uuid: "c136a12c-4260-48a7-a1e6-fbda83a11045"
     udp: true
@@ -25421,34 +25473,6 @@ proxies:
       path: "/?ed=2560"
       headers:
         Host: "bpb-worker-panel3.pages.dev"
-  - name: "🏳️ DE🇩🇪 | free.sahanwickramasinghe.me-8443 | 166.37ms"
-    type: "vless"
-    server: "104.17.71.206"
-    port: 8443
-    uuid: "c136a12c-4260-48a7-a1e6-fbda83a11045"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "free.sahanwickramasinghe.me"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "free.sahanwickramasinghe.me"
-  - name: "🏳️ DE🇩🇪 | free.sahanwickramasinghe.me-8443 | 360.69ms"
-    type: "vless"
-    server: "104.17.70.206"
-    port: 8443
-    uuid: "c136a12c-4260-48a7-a1e6-fbda83a11045"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "free.sahanwickramasinghe.me"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "free.sahanwickramasinghe.me"
   - name: "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&encryption=none&insecure=0&host=cdn.skyvora.app&fp=chrome&type=ws&allowInsecure=0&sni=cdn.skyvora.app#RELAY🚩 | cdn.skyvora.app-2096 | 65.72ms"
     type: "vless"
     server: "172.67.130.159"
@@ -26540,6 +26564,34 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-1.0.0.1:80"
+    type: "ss"
+    server: "1.0.0.1"
+    port: 80
+    cipher: "aes-128-gcm"
+    password: "password"
+    udp: true
+  - name: "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-1.1.1.1:443"
+    type: "ss"
+    server: "1.1.1.1"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "00000000000000000000000000000000"
+    udp: true
+  - name: "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-172.67.172.224:443"
+    type: "ss"
+    server: "172.67.172.224"
+    port: 443
+    cipher: "aes-256-gcm"
+    password: "password"
+    udp: true
+  - name: "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-104.21.30.115:443"
+    type: "ss"
+    server: "104.21.30.115"
+    port: 443
+    cipher: "aes-256-gcm"
+    password: "password"
+    udp: true
   - name: "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.21.33.59:443"
     type: "trojan"
     server: "104.21.33.59"
@@ -28613,6 +28665,14 @@ proxies:
     servername: "www.ignitelimit.com"
     ws-opts:
       path: "/assignment"
+  - name: "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-172.67.213.218:2095"
+    type: "vmess"
+    server: "172.67.213.218"
+    port: 2095
+    uuid: "a55cdc40-5af5-4f02-9a46-41685120fe6f"
+    alterId: 0
+    cipher: "auto"
+    udp: true
   - name: "🏳️ 🔒 VL-WS-TLS 🏴☠️ NA-104.18.43.174:8443-1"
     type: "vless"
     server: "104.18.43.174"
@@ -30913,82 +30973,6 @@ proxies:
       path: "/"
       headers:
         Host: "snip.edgeoneai.cc.cd"
-  - name: "🏳️ 188.114.98.0"
-    type: "vless"
-    server: "188.114.98.0"
-    port: 443
-    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "snip.edgeoneai.cc.cd"
-    client-fingerprint: "chrome"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2560"
-      headers:
-        Host: "snip.edgeoneai.cc.cd"
-  - name: "🏳️ 172.64.152.241"
-    type: "vless"
-    server: "172.64.152.241"
-    port: 443
-    uuid: "d342d11e-d224-4463-b982-532309285094"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "ccc.010304.xyz"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/fp=chrome"
-      headers:
-        Host: "ccc.010304.xyz"
-  - name: "🏳️ 188.114.98.0-1"
-    type: "vless"
-    server: "188.114.98.0"
-    port: 443
-    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "snip.edgeoneai.cc.cd"
-    client-fingerprint: "chrome"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "%"
-      headers:
-        Host: "snip.edgeoneai.cc.cd"
-  - name: "🏳️ 104.18.37.127"
-    type: "vless"
-    server: "104.18.37.127"
-    port: 443
-    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "snip.edgeoneai.cc.cd"
-    client-fingerprint: "chrome"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/?Telegram---mehrosaboran"
-      headers:
-        Host: "snip.edgeoneai.cc.cd"
-  - name: "🏳️ 172.64.158.170"
-    type: "vless"
-    server: "172.64.158.170"
-    port: 443
-    uuid: "d342d11e-d224-4463-b982-532309285094"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "ccc.010304.xyz"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2560"
-      headers:
-        Host: "ccc.010304.xyz"
   - name: "🏳️ 104.18.33.97"
     type: "vless"
     server: "104.18.33.97"
@@ -31005,6 +30989,66 @@ proxies:
       path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NETfp=chrome"
       headers:
         Host: "snip.edgeoneai.cc.cd"
+  - name: "🏳️ 172.64.158.170"
+    type: "vless"
+    server: "172.64.158.170"
+    port: 443
+    uuid: "d342d11e-d224-4463-b982-532309285094"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ccc.010304.xyz"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2560"
+      headers:
+        Host: "ccc.010304.xyz"
+  - name: "🏳️ 188.114.98.0"
+    type: "vless"
+    server: "188.114.98.0"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/fdip=sstp://vpn:vpn@vpn771984099.opengw.net:1770?ed=2560"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "🏳️ 172.64.152.241"
+    type: "vless"
+    server: "172.64.152.241"
+    port: 443
+    uuid: "d342d11e-d224-4463-b982-532309285094"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ccc.010304.xyz"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "ccc.010304.xyz"
+  - name: "🏳️ 104.18.37.127"
+    type: "vless"
+    server: "104.18.37.127"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/?Telegram---mehrosaboran"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
   - name: "🏳️ www.speedtest.net"
     type: "vless"
     server: "www.speedtest.net"
@@ -31019,6 +31063,23 @@ proxies:
       - "http/1.1"
     ws-opts:
       path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2560"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "🏳️ 188.114.96.6"
+    type: "vless"
+    server: "188.114.96.6"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+    ws-opts:
+      path: "/"
       headers:
         Host: "snip.edgeoneai.cc.cd"
   - name: "🏳️ RELAY🚩 | de.mitivpn.in.net-443 | 67.89ms"
@@ -31405,13 +31466,6 @@ proxies:
     tls: true
     network: "ws"
     servername: "30F67SBQ8jJWMT7gytfc14.0m68-qZ3hqYFNlaR6n3Iq.WorKerS.Dev"
-  - name: "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-1.0.0.1:80"
-    type: "ss"
-    server: "1.0.0.1"
-    port: 80
-    cipher: "aes-128-gcm"
-    password: "password"
-    udp: true
   - name: "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.21.88.77:443-1"
     type: "trojan"
     server: "104.21.88.77"
@@ -31473,13 +31527,6 @@ proxies:
     tls: true
     network: "ws"
     servername: "tO6r63-kkChIGHQM2.VxZ0dDUq7To7su0cdqf.wORKeRS.dEV"
-  - name: "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-1.1.1.1:443"
-    type: "ss"
-    server: "1.1.1.1"
-    port: 443
-    cipher: "aes-128-gcm"
-    password: "00000000000000000000000000000000"
-    udp: true
   - name: "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-172.67.177.105:443-1"
     type: "trojan"
     server: "172.67.177.105"
@@ -31547,13 +31594,6 @@ proxies:
       path: "/angles"
       headers:
         Host: "server41.9966338.xyz"
-  - name: "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-172.67.172.224:443"
-    type: "ss"
-    server: "172.67.172.224"
-    port: 443
-    cipher: "aes-256-gcm"
-    password: "password"
-    udp: true
   - name: "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-172.64.152.241:443"
     type: "trojan"
     server: "172.64.152.241"
@@ -31565,21 +31605,6 @@ proxies:
     servername: "_acme-challenge.sb.cloudns.biz"
     ws-opts:
       path: "/"
-  - name: "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-104.21.30.115:443"
-    type: "ss"
-    server: "104.21.30.115"
-    port: 443
-    cipher: "aes-256-gcm"
-    password: "password"
-    udp: true
-  - name: "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-172.67.213.218:2095"
-    type: "vmess"
-    server: "172.67.213.218"
-    port: 2095
-    uuid: "a55cdc40-5af5-4f02-9a46-41685120fe6f"
-    alterId: 0
-    cipher: "auto"
-    udp: true
   - name: "🏳️ RELAY🚩 | server40.9966338.xyz-443 | 47.31ms"
     type: "vmess"
     server: "eu3.998998.best"
@@ -32614,6 +32639,155 @@ proxies:
       path: "/fp"
       headers:
         Host: "hhlfy.twiladaphne.ndjp.net"
+  - name: "🏳️ 36. 🇺🇸 United States"
+    type: "vless"
+    server: "103.31.4.127"
+    port: 443
+    uuid: "b1c31d36-c6b5-414b-88d2-9e24e7bfcca3"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.nihaoyun.top"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "www.nihaoyun.top"
+  - name: "🏳️ 37. 🇺🇸 United States"
+    type: "vless"
+    server: "103.31.4.189"
+    port: 443
+    uuid: "b1c31d36-c6b5-414b-88d2-9e24e7bfcca3"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.nihaoyun.top"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "www.nihaoyun.top"
+  - name: "🏳️ 44. 🇬🇧 United Kingdom"
+    type: "vless"
+    server: "afrcloud22.mmv.kr"
+    port: 443
+    uuid: "61066a16-78fc-4446-8013-6646bc3f27ba"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "afrcloud22.mmv.kr"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "afrcloud22.mmv.kr"
+  - name: "🏳️ 94. 🇭🇰 Hong Kong"
+    type: "vmess"
+    server: "yg1.ygkkk.dpdns.org"
+    port: 443
+    uuid: "b2ba4a73-3123-479e-aa96-5973a9ecd0c0"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🏳️ 119. 🇬🇧 United Kingdom"
+    type: "vmess"
+    server: "188.114.96.19"
+    port: 80
+    uuid: "af4be52a-aab3-4db1-a6bb-c23700dcb9c2"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🏳️ 122. 🇩🇪 Germany"
+    type: "vless"
+    server: "site.check-looks.space"
+    port: 2083
+    uuid: "ca608afb-55ff-4f36-9d00-606fedbb30e1"
+    udp: true
+    tls: true
+    network: "ws"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/"
+  - name: "🏳️ 130. 🇩🇪 Germany"
+    type: "vless"
+    server: "site.check-looks.space"
+    port: 2083
+    uuid: "ca608afb-55ff-4f36-9d00-606fedbb30e1"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "site.check-looks.space"
+  - name: "🏳️ 131. 🇫🇷 France"
+    type: "vless"
+    server: "fr.api-music-fa.com"
+    port: 2053
+    uuid: "9d672694-c146-422e-b3b5-3717a38a0fcc"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "fr.api-music-fa.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/api/voip/updates/static/fr2035"
+      headers:
+        Host: "fr.api-music-fa.com"
+  - name: "🏳️ 132. 🇩🇪 Germany"
+    type: "vless"
+    server: "site.check-looks.space"
+    port: 2083
+    uuid: "ca608afb-55ff-4f36-9d00-606fedbb30e1"
+    udp: true
+    tls: true
+    network: "ws"
+  - name: "🏳️ 133. 🇩🇪 Germany"
+    type: "vless"
+    server: "site.check-looks.space"
+    port: 2083
+    uuid: "ca608afb-55ff-4f36-9d00-606fedbb30e1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "site.check-looks.space"
+    client-fingerprint: "chrome"
+  - name: "🏳️ 135. 🇩🇪 Germany"
+    type: "vless"
+    server: "site.check-looks.space"
+    port: 2083
+    uuid: "ca608afb-55ff-4f36-9d00-606fedbb30e1"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "Site.check-looks.space"
+  - name: "🏳️ TELEGRAM--MARAMBASHI--MARAMBASHI?ed=512&security=tls&encryption=none&fm={\"tcp\":[{\"type\":\"fragment\",\"settings\":{\"packets\":\"tlshello\",\"lengths\":[\"0\",\"104\",\"1\"],\"delays\":[\"0\"],\"maxSplit\":\"0\"}},{\"type\":\"fragment\",\"settings\":{\"packets\":\"1-1\",\"lengths\":[\"114\",\"1\"],\"delays\":[\"1\"],\"maxSplit\":\"11\"}}]}&insecure=0&host=a.cwvps.eu.org&type=ws&allowInsecure=0&sni=a.cwvps.eu.org#139. 🇺🇸 United States"
+    type: "vless"
+    server: "104.16.10.2"
+    port: 443
+    uuid: "c4edb87e-8544-4fa4-bd1c-b0cda9a34b46"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🏳️ 142. 🇺🇸 United States"
+    type: "vless"
+    server: "104.16.10.21"
+    port: 443
+    uuid: "c4edb87e-8544-4fa4-bd1c-b0cda9a34b46"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "a.cwvps.eu.org"
+    client-fingerprint: "unsafe"
+    ws-opts:
+      path: "/ws"
+      headers:
+        Host: "a.cwvps.eu.org"
   - name: "🏳️ 104.18.9.83"
     type: "trojan"
     server: "104.18.9.83"
@@ -32644,19 +32818,6 @@ proxies:
         Host: "snip.edgeoneai.cc.cd"
   - name: "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』"
     type: "vless"
-    server: "cf.090227.xyz"
-    port: 443
-    uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "lucasjow.us.ci"
-    client-fingerprint: "qq"
-    ws-opts:
-      headers:
-        Host: "lucasjow.us.ci"
-  - name: "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-1"
-    type: "vless"
     server: "188.114.97.6"
     port: 443
     uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
@@ -32679,7 +32840,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-2"
+  - name: "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-1"
     type: "vless"
     server: "188.114.97.6"
     port: 443
@@ -32695,22 +32856,6 @@ proxies:
       path: "/fdip"
       headers:
         Host: "snip.edgeoneai.cc.cd"
-  - name: "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-3"
-    type: "vless"
-    server: "188.114.97.6"
-    port: 443
-    uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "lucasjow.us.ci"
-    client-fingerprint: "chrome"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/?@EVAY_VPN"
-      headers:
-        Host: "lucasjow.us.ci"
   - name: "🏳️ 🆔️ | @Eag1e_YT『🇨🇦』"
     type: "vless"
     server: "188.114.97.6"
@@ -32744,7 +32889,7 @@ proxies:
       path: "/fdip"
       headers:
         Host: "snip.edgeoneai.cc.cd"
-  - name: "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-4"
+  - name: "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-2"
     type: "vless"
     server: "172.64.152.241"
     port: 443
@@ -32757,52 +32902,6 @@ proxies:
       path: "/fp"
       headers:
         Host: "ccc.010304.xyz"
-  - name: "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-5"
-    type: "vless"
-    server: "188.114.97.6"
-    port: 443
-    uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "lucasjow.us.ci"
-    client-fingerprint: "chrome"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/?SAFEWEBS_SAFEWEBS_SAFEWEBS_SAFEWEBS"
-      headers:
-        Host: "lucasjow.us.ci"
-  - name: "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-6"
-    type: "vless"
-    server: "104.18.43.174"
-    port: 443
-    uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "lucasjow.us.ci"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed"
-      headers:
-        Host: "lucasjow.us.ci"
-  - name: "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-7"
-    type: "vless"
-    server: "undef.network"
-    port: 2053
-    uuid: "26769ac3-b34c-430a-87f8-e1de14619d25"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "uwu.blueknightnet.qzz.io"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-    ws-opts:
-      path: "/@BlueKnight_net--@BlueKnight_net--@BlueKnight_net--@BlueKnight_net--@BlueKnight_net--@BlueKnight_net"
-      headers:
-        Host: "uwu.blueknightnet.qzz.io"
   - name: "🏳️ 🔒 VL-WS-NONE 🏴☠️ NA-172.64.153.11:8880-1"
     type: "vless"
     server: "172.64.153.11"
@@ -33442,16 +33541,16 @@ proxies:
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
-    icon: "https://www.svgrepo.com/show/412721/choose.svg"
     proxies:
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "توزیع بار چرخشی ⚖️"
       - "قطع اینترنت ⛔"
       - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/412721/choose.svg"
   - name: "دستی 🤏🏻"
     type: "select"
-    icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
+    lazy: true
     proxies:
       - "🏳️ @DeltaKroneckerGithub"
       - "🏳️ @DeltaKroneckerGithub-1"
@@ -35270,8 +35369,12 @@ proxy-groups:
       - "🏳️ @DeltaKroneckerGithub-450"
       - "🏳️ @DeltaKroneckerGithub-451"
       - "🏳️ @DeltaKroneckerGithub-452"
-      - "🏳️ 🇱🇰 | @WhiteDNS | LK9|1.4MB/s|DNSOK|GPT⁺-SG"
-      - "🏳️ 🇱🇰 | @WhiteDNS | LK13|677KB/s|DNSOK|GPT⁺-SG"
+      - "🏳️ 🇺🇸 | @WhiteDNS | US569|3.2MB/s|DNSOK|GPT⁺-US"
+      - "🏳️ 🇱🇰 | @WhiteDNS | LK14|2.6MB/s|DNSOK|GPT⁺-SG"
+      - "🏳️ 🇱🇰 | @WhiteDNS | LK16|2.6MB/s|DNSOK|GPT⁺-SG"
+      - "🏳️ 🇱🇰 | @WhiteDNS | LK17|2.5MB/s|DNSOK|GPT⁺-SG"
+      - "🏳️ 🇱🇰 | @WhiteDNS | LK20|1.7MB/s|DNSOK|GPT⁺-SG"
+      - "🏳️ 🇱🇰 | @WhiteDNS | LK22|1.4MB/s|DNSOK|GPT⁺-SG"
       - "🏳️ RELAY🚩 | se-sto.862400.xyz-443 | 74.08ms"
       - "🏳️ AU🇦🇺 | dev.twistsparrow.xyz-443 | 148.32ms"
       - "🏳️ AU🇦🇺 | dev.twistsparrow.xyz-443 | 131.97ms"
@@ -35346,8 +35449,6 @@ proxy-groups:
       - "🏳️ RELAY🚩 | kakoolnews.kakoolnews8.workers.dev-443 | 46.86ms"
       - "🇺🇸 RELAY🚩 | fuchsia.qzz.io-443 | 229.36ms"
       - "🏳️ RELAY🚩 | bpb-worker-panel3.pages.dev-443 | 33.25ms"
-      - "🏳️ DE🇩🇪 | free.sahanwickramasinghe.me-8443 | 166.37ms"
-      - "🏳️ DE🇩🇪 | free.sahanwickramasinghe.me-8443 | 360.69ms"
       - "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&encryption=none&insecure=0&host=cdn.skyvora.app&fp=chrome&type=ws&allowInsecure=0&sni=cdn.skyvora.app#RELAY🚩 | cdn.skyvora.app-2096 | 65.72ms"
       - "🏳️ RELAY🚩 | blue-water-924c.174-235.workers.dev-8880 | 39.5ms"
       - "🏳️ RELAY🚩 | pages.dev.-443 | 12.73ms"
@@ -35429,6 +35530,10 @@ proxy-groups:
       - "🏳️ RELAY🚩 | AZaDnEt-sTm-uSa.PagES.dev-443 | 43.21ms"
       - "🏳️ RELAY🚩 | vfuhf4iqn9b0-pyqr62d.qfem579emmb5z6ne0ejfcb.workers.dev-443 | 42ms"
       - "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET?ed&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=f2au50vwmige9oftda.netizo14.workers.dev&fp=chrome&type=ws&allowInsecure=0&sni=F2aU50vwmIGE9oFtda.netIZO14.WOrkErs.Dev#RELAY🚩 | F2aU50vwmIGE9oFtda.netIZO14.WOrkErs.Dev-443 | 39.86ms"
+      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-1.0.0.1:80"
+      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-1.1.1.1:443"
+      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-172.67.172.224:443"
+      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-104.21.30.115:443"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.21.33.59:443"
       - "🏳️ 🔒 TR-WS-TLS 🏴☠️ NA-104.18.22.63:443"
       - "🏳️ 🔒 TR-WS-TLS 🏴☠️ NA-104.16.174.12:443"
@@ -35615,6 +35720,7 @@ proxy-groups:
       - "🏳️ 🔒 TR-WS-TLS 🏴☠️ NA-104.21.46.3:443"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-172.67.221.159:443"
       - "🏳️ 🔒 TR-WS-TLS 🏴☠️ NA-104.16.174.143:443"
+      - "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-172.67.213.218:2095"
       - "🏳️ 🔒 VL-WS-TLS 🏴☠️ NA-104.18.43.174:8443-1"
       - "🏳️ 🔒 VL-WS-TLS 🏴☠️ NA-104.19.214.97:2087-1"
       - "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET#🔒 VL-WS-TLS 🏴☠️ NA-104.21.91.244:443"
@@ -35781,13 +35887,13 @@ proxy-groups:
       - "🏳️ 🔒 TR-WS-TLS 🏴☠️ NA-104.17.148.22:443-2"
       - "🏳️ 🔒 VL-WS-TLS 🏴☠️ NA-172.64.147.104:2087-1"
       - "🏳️ 172.64.154.211"
+      - "🏳️ 104.18.33.97"
+      - "🏳️ 172.64.158.170"
       - "🏳️ 188.114.98.0"
       - "🏳️ 172.64.152.241"
-      - "🏳️ 188.114.98.0-1"
       - "🏳️ 104.18.37.127"
-      - "🏳️ 172.64.158.170"
-      - "🏳️ 104.18.33.97"
       - "🏳️ www.speedtest.net"
+      - "🏳️ 188.114.96.6"
       - "🏳️ RELAY🚩 | de.mitivpn.in.net-443 | 67.89ms"
       - "🏳️ RELAY🚩 | de.mitivpn.in.net-443 | 15.34ms"
       - "🏳️ RELAY🚩 | d-e.mitivpn.in.net-443 | 46.36ms"
@@ -35820,24 +35926,19 @@ proxy-groups:
       - "🏳️ RELAY🚩 | de.mitivpn.in.net-443 | 7.26ms"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.18.22.63:443"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-172.67.176.194:443-1"
-      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-1.0.0.1:80"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.21.88.77:443-1"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-172.67.156.87:443-1"
       - "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-104.21.50.237:2095"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.18.35.15:443-1"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.21.17.125:443-1"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.21.89.41:443-1"
-      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-1.1.1.1:443"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-172.67.177.105:443-1"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.21.4.176:443-1"
       - "🏳️ 🔒 VL-WS-NA 🏴☠️ NA-104.21.227.134:80"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.18.23.63:443"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-172.67.205.222:2087-1"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.18.35.15:443-2"
-      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-172.67.172.224:443"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-172.64.152.241:443"
-      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-104.21.30.115:443"
-      - "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-172.67.213.218:2095"
       - "🏳️ RELAY🚩 | server40.9966338.xyz-443 | 47.31ms"
       - "🏳️ US🇺🇸 | jahfkjha.cfd-443 | 140.79ms"
       - "🏳️ US🇺🇸 | glweidf.cfd-443 | 192.92ms"
@@ -35922,19 +36023,27 @@ proxy-groups:
       - "🏳️ 🆔ar14n24b 🔒 VL-WS-N/A 🇺🇸 US 6ms"
       - "🏳️ United States/San Francisco [TG] #5"
       - "🏳️ United States/San Francisco [TG] #7"
+      - "🏳️ 36. 🇺🇸 United States"
+      - "🏳️ 37. 🇺🇸 United States"
+      - "🏳️ 44. 🇬🇧 United Kingdom"
+      - "🏳️ 94. 🇭🇰 Hong Kong"
+      - "🏳️ 119. 🇬🇧 United Kingdom"
+      - "🏳️ 122. 🇩🇪 Germany"
+      - "🏳️ 130. 🇩🇪 Germany"
+      - "🏳️ 131. 🇫🇷 France"
+      - "🏳️ 132. 🇩🇪 Germany"
+      - "🏳️ 133. 🇩🇪 Germany"
+      - "🏳️ 135. 🇩🇪 Germany"
+      - "🏳️ TELEGRAM--MARAMBASHI--MARAMBASHI?ed=512&security=tls&encryption=none&fm={\"tcp\":[{\"type\":\"fragment\",\"settings\":{\"packets\":\"tlshello\",\"lengths\":[\"0\",\"104\",\"1\"],\"delays\":[\"0\"],\"maxSplit\":\"0\"}},{\"type\":\"fragment\",\"settings\":{\"packets\":\"1-1\",\"lengths\":[\"114\",\"1\"],\"delays\":[\"1\"],\"maxSplit\":\"11\"}}]}&insecure=0&host=a.cwvps.eu.org&type=ws&allowInsecure=0&sni=a.cwvps.eu.org#139. 🇺🇸 United States"
+      - "🏳️ 142. 🇺🇸 United States"
       - "🏳️ 104.18.9.83"
       - "🇺🇸 🆔️ | @Eag1e_YT『🇩🇪』"
       - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』"
-      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-1"
       - "🏳️ TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=snip.edgeoneai.cc.cd&fp=chrome&type=ws&allowInsecure=0&sni=snip.edgeoneai.cc.cd#🆔️ | @Eag1e_YT『🇩🇪』"
-      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-2"
-      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-3"
+      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-1"
       - "🏳️ 🆔️ | @Eag1e_YT『🇨🇦』"
       - "🇺🇸 🆔️ | @Eag1e_YT『🇩🇪』-1"
-      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-4"
-      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-5"
-      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-6"
-      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-7"
+      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-2"
       - "🏳️ 🔒 VL-WS-NONE 🏴☠️ NA-172.64.153.11:8880-1"
       - "🏳️ 🔒 VL-WS-NONE 🏴☠️ NA-104.18.42.163:8880-1"
       - "🏳️ 🔒 VL-WS-NONE 🏴☠️ NA-172.64.151.134:8880-1"
@@ -35990,15 +36099,13 @@ proxy-groups:
       - "🏳️ 🔒 VL-WS-NONE 🏴☠️ NA-172.64.145.202:8880-1"
       - "🏳️ 🔒 VL-WS-NONE 🏴☠️ NA-172.67.174.37:8880-1"
       - "🏳️ 🔒 VL-WS-NONE 🏴☠️ NA-172.64.145.93:8880-3"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
-    icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
     url: "https://www.gstatic.com/generate_204"
-    interval: 600
+    interval: 30
     tolerance: 50
-    timeout: 3200
-    lazy: false
-    max-failed-times: 2
+    lazy: true
     proxies:
       - "🏳️ @DeltaKroneckerGithub"
       - "🏳️ @DeltaKroneckerGithub-1"
@@ -37817,8 +37924,12 @@ proxy-groups:
       - "🏳️ @DeltaKroneckerGithub-450"
       - "🏳️ @DeltaKroneckerGithub-451"
       - "🏳️ @DeltaKroneckerGithub-452"
-      - "🏳️ 🇱🇰 | @WhiteDNS | LK9|1.4MB/s|DNSOK|GPT⁺-SG"
-      - "🏳️ 🇱🇰 | @WhiteDNS | LK13|677KB/s|DNSOK|GPT⁺-SG"
+      - "🏳️ 🇺🇸 | @WhiteDNS | US569|3.2MB/s|DNSOK|GPT⁺-US"
+      - "🏳️ 🇱🇰 | @WhiteDNS | LK14|2.6MB/s|DNSOK|GPT⁺-SG"
+      - "🏳️ 🇱🇰 | @WhiteDNS | LK16|2.6MB/s|DNSOK|GPT⁺-SG"
+      - "🏳️ 🇱🇰 | @WhiteDNS | LK17|2.5MB/s|DNSOK|GPT⁺-SG"
+      - "🏳️ 🇱🇰 | @WhiteDNS | LK20|1.7MB/s|DNSOK|GPT⁺-SG"
+      - "🏳️ 🇱🇰 | @WhiteDNS | LK22|1.4MB/s|DNSOK|GPT⁺-SG"
       - "🏳️ RELAY🚩 | se-sto.862400.xyz-443 | 74.08ms"
       - "🏳️ AU🇦🇺 | dev.twistsparrow.xyz-443 | 148.32ms"
       - "🏳️ AU🇦🇺 | dev.twistsparrow.xyz-443 | 131.97ms"
@@ -37893,8 +38004,6 @@ proxy-groups:
       - "🏳️ RELAY🚩 | kakoolnews.kakoolnews8.workers.dev-443 | 46.86ms"
       - "🇺🇸 RELAY🚩 | fuchsia.qzz.io-443 | 229.36ms"
       - "🏳️ RELAY🚩 | bpb-worker-panel3.pages.dev-443 | 33.25ms"
-      - "🏳️ DE🇩🇪 | free.sahanwickramasinghe.me-8443 | 166.37ms"
-      - "🏳️ DE🇩🇪 | free.sahanwickramasinghe.me-8443 | 360.69ms"
       - "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&encryption=none&insecure=0&host=cdn.skyvora.app&fp=chrome&type=ws&allowInsecure=0&sni=cdn.skyvora.app#RELAY🚩 | cdn.skyvora.app-2096 | 65.72ms"
       - "🏳️ RELAY🚩 | blue-water-924c.174-235.workers.dev-8880 | 39.5ms"
       - "🏳️ RELAY🚩 | pages.dev.-443 | 12.73ms"
@@ -37976,6 +38085,10 @@ proxy-groups:
       - "🏳️ RELAY🚩 | AZaDnEt-sTm-uSa.PagES.dev-443 | 43.21ms"
       - "🏳️ RELAY🚩 | vfuhf4iqn9b0-pyqr62d.qfem579emmb5z6ne0ejfcb.workers.dev-443 | 42ms"
       - "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET?ed&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=f2au50vwmige9oftda.netizo14.workers.dev&fp=chrome&type=ws&allowInsecure=0&sni=F2aU50vwmIGE9oFtda.netIZO14.WOrkErs.Dev#RELAY🚩 | F2aU50vwmIGE9oFtda.netIZO14.WOrkErs.Dev-443 | 39.86ms"
+      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-1.0.0.1:80"
+      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-1.1.1.1:443"
+      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-172.67.172.224:443"
+      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-104.21.30.115:443"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.21.33.59:443"
       - "🏳️ 🔒 TR-WS-TLS 🏴☠️ NA-104.18.22.63:443"
       - "🏳️ 🔒 TR-WS-TLS 🏴☠️ NA-104.16.174.12:443"
@@ -38162,6 +38275,7 @@ proxy-groups:
       - "🏳️ 🔒 TR-WS-TLS 🏴☠️ NA-104.21.46.3:443"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-172.67.221.159:443"
       - "🏳️ 🔒 TR-WS-TLS 🏴☠️ NA-104.16.174.143:443"
+      - "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-172.67.213.218:2095"
       - "🏳️ 🔒 VL-WS-TLS 🏴☠️ NA-104.18.43.174:8443-1"
       - "🏳️ 🔒 VL-WS-TLS 🏴☠️ NA-104.19.214.97:2087-1"
       - "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET#🔒 VL-WS-TLS 🏴☠️ NA-104.21.91.244:443"
@@ -38328,13 +38442,13 @@ proxy-groups:
       - "🏳️ 🔒 TR-WS-TLS 🏴☠️ NA-104.17.148.22:443-2"
       - "🏳️ 🔒 VL-WS-TLS 🏴☠️ NA-172.64.147.104:2087-1"
       - "🏳️ 172.64.154.211"
+      - "🏳️ 104.18.33.97"
+      - "🏳️ 172.64.158.170"
       - "🏳️ 188.114.98.0"
       - "🏳️ 172.64.152.241"
-      - "🏳️ 188.114.98.0-1"
       - "🏳️ 104.18.37.127"
-      - "🏳️ 172.64.158.170"
-      - "🏳️ 104.18.33.97"
       - "🏳️ www.speedtest.net"
+      - "🏳️ 188.114.96.6"
       - "🏳️ RELAY🚩 | de.mitivpn.in.net-443 | 67.89ms"
       - "🏳️ RELAY🚩 | de.mitivpn.in.net-443 | 15.34ms"
       - "🏳️ RELAY🚩 | d-e.mitivpn.in.net-443 | 46.36ms"
@@ -38367,24 +38481,19 @@ proxy-groups:
       - "🏳️ RELAY🚩 | de.mitivpn.in.net-443 | 7.26ms"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.18.22.63:443"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-172.67.176.194:443-1"
-      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-1.0.0.1:80"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.21.88.77:443-1"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-172.67.156.87:443-1"
       - "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-104.21.50.237:2095"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.18.35.15:443-1"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.21.17.125:443-1"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.21.89.41:443-1"
-      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-1.1.1.1:443"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-172.67.177.105:443-1"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.21.4.176:443-1"
       - "🏳️ 🔒 VL-WS-NA 🏴☠️ NA-104.21.227.134:80"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.18.23.63:443"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-172.67.205.222:2087-1"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.18.35.15:443-2"
-      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-172.67.172.224:443"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-172.64.152.241:443"
-      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-104.21.30.115:443"
-      - "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-172.67.213.218:2095"
       - "🏳️ RELAY🚩 | server40.9966338.xyz-443 | 47.31ms"
       - "🏳️ US🇺🇸 | jahfkjha.cfd-443 | 140.79ms"
       - "🏳️ US🇺🇸 | glweidf.cfd-443 | 192.92ms"
@@ -38469,19 +38578,27 @@ proxy-groups:
       - "🏳️ 🆔ar14n24b 🔒 VL-WS-N/A 🇺🇸 US 6ms"
       - "🏳️ United States/San Francisco [TG] #5"
       - "🏳️ United States/San Francisco [TG] #7"
+      - "🏳️ 36. 🇺🇸 United States"
+      - "🏳️ 37. 🇺🇸 United States"
+      - "🏳️ 44. 🇬🇧 United Kingdom"
+      - "🏳️ 94. 🇭🇰 Hong Kong"
+      - "🏳️ 119. 🇬🇧 United Kingdom"
+      - "🏳️ 122. 🇩🇪 Germany"
+      - "🏳️ 130. 🇩🇪 Germany"
+      - "🏳️ 131. 🇫🇷 France"
+      - "🏳️ 132. 🇩🇪 Germany"
+      - "🏳️ 133. 🇩🇪 Germany"
+      - "🏳️ 135. 🇩🇪 Germany"
+      - "🏳️ TELEGRAM--MARAMBASHI--MARAMBASHI?ed=512&security=tls&encryption=none&fm={\"tcp\":[{\"type\":\"fragment\",\"settings\":{\"packets\":\"tlshello\",\"lengths\":[\"0\",\"104\",\"1\"],\"delays\":[\"0\"],\"maxSplit\":\"0\"}},{\"type\":\"fragment\",\"settings\":{\"packets\":\"1-1\",\"lengths\":[\"114\",\"1\"],\"delays\":[\"1\"],\"maxSplit\":\"11\"}}]}&insecure=0&host=a.cwvps.eu.org&type=ws&allowInsecure=0&sni=a.cwvps.eu.org#139. 🇺🇸 United States"
+      - "🏳️ 142. 🇺🇸 United States"
       - "🏳️ 104.18.9.83"
       - "🇺🇸 🆔️ | @Eag1e_YT『🇩🇪』"
       - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』"
-      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-1"
       - "🏳️ TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=snip.edgeoneai.cc.cd&fp=chrome&type=ws&allowInsecure=0&sni=snip.edgeoneai.cc.cd#🆔️ | @Eag1e_YT『🇩🇪』"
-      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-2"
-      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-3"
+      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-1"
       - "🏳️ 🆔️ | @Eag1e_YT『🇨🇦』"
       - "🇺🇸 🆔️ | @Eag1e_YT『🇩🇪』-1"
-      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-4"
-      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-5"
-      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-6"
-      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-7"
+      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-2"
       - "🏳️ 🔒 VL-WS-NONE 🏴☠️ NA-172.64.153.11:8880-1"
       - "🏳️ 🔒 VL-WS-NONE 🏴☠️ NA-104.18.42.163:8880-1"
       - "🏳️ 🔒 VL-WS-NONE 🏴☠️ NA-172.64.151.134:8880-1"
@@ -38537,14 +38654,14 @@ proxy-groups:
       - "🏳️ 🔒 VL-WS-NONE 🏴☠️ NA-172.64.145.202:8880-1"
       - "🏳️ 🔒 VL-WS-NONE 🏴☠️ NA-172.67.174.37:8880-1"
       - "🏳️ 🔒 VL-WS-NONE 🏴☠️ NA-172.64.145.93:8880-3"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
-    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
     strategy: "round-robin"
     url: "https://www.gstatic.com/generate_204"
     interval: 30
+    lazy: true
     timeout: 1500
-    lazy: false
     proxies:
       - "🏳️ @DeltaKroneckerGithub"
       - "🏳️ @DeltaKroneckerGithub-1"
@@ -40363,8 +40480,12 @@ proxy-groups:
       - "🏳️ @DeltaKroneckerGithub-450"
       - "🏳️ @DeltaKroneckerGithub-451"
       - "🏳️ @DeltaKroneckerGithub-452"
-      - "🏳️ 🇱🇰 | @WhiteDNS | LK9|1.4MB/s|DNSOK|GPT⁺-SG"
-      - "🏳️ 🇱🇰 | @WhiteDNS | LK13|677KB/s|DNSOK|GPT⁺-SG"
+      - "🏳️ 🇺🇸 | @WhiteDNS | US569|3.2MB/s|DNSOK|GPT⁺-US"
+      - "🏳️ 🇱🇰 | @WhiteDNS | LK14|2.6MB/s|DNSOK|GPT⁺-SG"
+      - "🏳️ 🇱🇰 | @WhiteDNS | LK16|2.6MB/s|DNSOK|GPT⁺-SG"
+      - "🏳️ 🇱🇰 | @WhiteDNS | LK17|2.5MB/s|DNSOK|GPT⁺-SG"
+      - "🏳️ 🇱🇰 | @WhiteDNS | LK20|1.7MB/s|DNSOK|GPT⁺-SG"
+      - "🏳️ 🇱🇰 | @WhiteDNS | LK22|1.4MB/s|DNSOK|GPT⁺-SG"
       - "🏳️ RELAY🚩 | se-sto.862400.xyz-443 | 74.08ms"
       - "🏳️ AU🇦🇺 | dev.twistsparrow.xyz-443 | 148.32ms"
       - "🏳️ AU🇦🇺 | dev.twistsparrow.xyz-443 | 131.97ms"
@@ -40439,8 +40560,6 @@ proxy-groups:
       - "🏳️ RELAY🚩 | kakoolnews.kakoolnews8.workers.dev-443 | 46.86ms"
       - "🇺🇸 RELAY🚩 | fuchsia.qzz.io-443 | 229.36ms"
       - "🏳️ RELAY🚩 | bpb-worker-panel3.pages.dev-443 | 33.25ms"
-      - "🏳️ DE🇩🇪 | free.sahanwickramasinghe.me-8443 | 166.37ms"
-      - "🏳️ DE🇩🇪 | free.sahanwickramasinghe.me-8443 | 360.69ms"
       - "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&encryption=none&insecure=0&host=cdn.skyvora.app&fp=chrome&type=ws&allowInsecure=0&sni=cdn.skyvora.app#RELAY🚩 | cdn.skyvora.app-2096 | 65.72ms"
       - "🏳️ RELAY🚩 | blue-water-924c.174-235.workers.dev-8880 | 39.5ms"
       - "🏳️ RELAY🚩 | pages.dev.-443 | 12.73ms"
@@ -40522,6 +40641,10 @@ proxy-groups:
       - "🏳️ RELAY🚩 | AZaDnEt-sTm-uSa.PagES.dev-443 | 43.21ms"
       - "🏳️ RELAY🚩 | vfuhf4iqn9b0-pyqr62d.qfem579emmb5z6ne0ejfcb.workers.dev-443 | 42ms"
       - "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET?ed&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=f2au50vwmige9oftda.netizo14.workers.dev&fp=chrome&type=ws&allowInsecure=0&sni=F2aU50vwmIGE9oFtda.netIZO14.WOrkErs.Dev#RELAY🚩 | F2aU50vwmIGE9oFtda.netIZO14.WOrkErs.Dev-443 | 39.86ms"
+      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-1.0.0.1:80"
+      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-1.1.1.1:443"
+      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-172.67.172.224:443"
+      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-104.21.30.115:443"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.21.33.59:443"
       - "🏳️ 🔒 TR-WS-TLS 🏴☠️ NA-104.18.22.63:443"
       - "🏳️ 🔒 TR-WS-TLS 🏴☠️ NA-104.16.174.12:443"
@@ -40708,6 +40831,7 @@ proxy-groups:
       - "🏳️ 🔒 TR-WS-TLS 🏴☠️ NA-104.21.46.3:443"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-172.67.221.159:443"
       - "🏳️ 🔒 TR-WS-TLS 🏴☠️ NA-104.16.174.143:443"
+      - "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-172.67.213.218:2095"
       - "🏳️ 🔒 VL-WS-TLS 🏴☠️ NA-104.18.43.174:8443-1"
       - "🏳️ 🔒 VL-WS-TLS 🏴☠️ NA-104.19.214.97:2087-1"
       - "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET#🔒 VL-WS-TLS 🏴☠️ NA-104.21.91.244:443"
@@ -40874,13 +40998,13 @@ proxy-groups:
       - "🏳️ 🔒 TR-WS-TLS 🏴☠️ NA-104.17.148.22:443-2"
       - "🏳️ 🔒 VL-WS-TLS 🏴☠️ NA-172.64.147.104:2087-1"
       - "🏳️ 172.64.154.211"
+      - "🏳️ 104.18.33.97"
+      - "🏳️ 172.64.158.170"
       - "🏳️ 188.114.98.0"
       - "🏳️ 172.64.152.241"
-      - "🏳️ 188.114.98.0-1"
       - "🏳️ 104.18.37.127"
-      - "🏳️ 172.64.158.170"
-      - "🏳️ 104.18.33.97"
       - "🏳️ www.speedtest.net"
+      - "🏳️ 188.114.96.6"
       - "🏳️ RELAY🚩 | de.mitivpn.in.net-443 | 67.89ms"
       - "🏳️ RELAY🚩 | de.mitivpn.in.net-443 | 15.34ms"
       - "🏳️ RELAY🚩 | d-e.mitivpn.in.net-443 | 46.36ms"
@@ -40913,24 +41037,19 @@ proxy-groups:
       - "🏳️ RELAY🚩 | de.mitivpn.in.net-443 | 7.26ms"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.18.22.63:443"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-172.67.176.194:443-1"
-      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-1.0.0.1:80"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.21.88.77:443-1"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-172.67.156.87:443-1"
       - "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-104.21.50.237:2095"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.18.35.15:443-1"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.21.17.125:443-1"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.21.89.41:443-1"
-      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-1.1.1.1:443"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-172.67.177.105:443-1"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.21.4.176:443-1"
       - "🏳️ 🔒 VL-WS-NA 🏴☠️ NA-104.21.227.134:80"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.18.23.63:443"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-172.67.205.222:2087-1"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-104.18.35.15:443-2"
-      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-172.67.172.224:443"
       - "🏳️ 🔒 TR-WS-NA 🏴☠️ NA-172.64.152.241:443"
-      - "🏳️ 🔒 SS-TCP-NA 🏴☠️ NA-104.21.30.115:443"
-      - "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-172.67.213.218:2095"
       - "🏳️ RELAY🚩 | server40.9966338.xyz-443 | 47.31ms"
       - "🏳️ US🇺🇸 | jahfkjha.cfd-443 | 140.79ms"
       - "🏳️ US🇺🇸 | glweidf.cfd-443 | 192.92ms"
@@ -41015,19 +41134,27 @@ proxy-groups:
       - "🏳️ 🆔ar14n24b 🔒 VL-WS-N/A 🇺🇸 US 6ms"
       - "🏳️ United States/San Francisco [TG] #5"
       - "🏳️ United States/San Francisco [TG] #7"
+      - "🏳️ 36. 🇺🇸 United States"
+      - "🏳️ 37. 🇺🇸 United States"
+      - "🏳️ 44. 🇬🇧 United Kingdom"
+      - "🏳️ 94. 🇭🇰 Hong Kong"
+      - "🏳️ 119. 🇬🇧 United Kingdom"
+      - "🏳️ 122. 🇩🇪 Germany"
+      - "🏳️ 130. 🇩🇪 Germany"
+      - "🏳️ 131. 🇫🇷 France"
+      - "🏳️ 132. 🇩🇪 Germany"
+      - "🏳️ 133. 🇩🇪 Germany"
+      - "🏳️ 135. 🇩🇪 Germany"
+      - "🏳️ TELEGRAM--MARAMBASHI--MARAMBASHI?ed=512&security=tls&encryption=none&fm={\"tcp\":[{\"type\":\"fragment\",\"settings\":{\"packets\":\"tlshello\",\"lengths\":[\"0\",\"104\",\"1\"],\"delays\":[\"0\"],\"maxSplit\":\"0\"}},{\"type\":\"fragment\",\"settings\":{\"packets\":\"1-1\",\"lengths\":[\"114\",\"1\"],\"delays\":[\"1\"],\"maxSplit\":\"11\"}}]}&insecure=0&host=a.cwvps.eu.org&type=ws&allowInsecure=0&sni=a.cwvps.eu.org#139. 🇺🇸 United States"
+      - "🏳️ 142. 🇺🇸 United States"
       - "🏳️ 104.18.9.83"
       - "🇺🇸 🆔️ | @Eag1e_YT『🇩🇪』"
       - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』"
-      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-1"
       - "🏳️ TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=snip.edgeoneai.cc.cd&fp=chrome&type=ws&allowInsecure=0&sni=snip.edgeoneai.cc.cd#🆔️ | @Eag1e_YT『🇩🇪』"
-      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-2"
-      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-3"
+      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-1"
       - "🏳️ 🆔️ | @Eag1e_YT『🇨🇦』"
       - "🇺🇸 🆔️ | @Eag1e_YT『🇩🇪』-1"
-      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-4"
-      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-5"
-      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-6"
-      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-7"
+      - "🏳️ 🆔️ | @Eag1e_YT『🇩🇪』-2"
       - "🏳️ 🔒 VL-WS-NONE 🏴☠️ NA-172.64.153.11:8880-1"
       - "🏳️ 🔒 VL-WS-NONE 🏴☠️ NA-104.18.42.163:8880-1"
       - "🏳️ 🔒 VL-WS-NONE 🏴☠️ NA-172.64.151.134:8880-1"
@@ -41083,268 +41210,273 @@ proxy-groups:
       - "🏳️ 🔒 VL-WS-NONE 🏴☠️ NA-172.64.145.202:8880-1"
       - "🏳️ 🔒 VL-WS-NONE 🏴☠️ NA-172.67.174.37:8880-1"
       - "🏳️ 🔒 VL-WS-NONE 🏴☠️ NA-172.64.145.93:8880-3"
-  - name: "المنت 💬"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "تیماسپیک 🎧"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/331567/teamspeak.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "دلتاچت ✉️"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/373771/mail.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"
-    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
     proxies:
       - "بدون فیلترشکن 🛡️"
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
   - name: "تلگرام 💬"
     type: "select"
-    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
   - name: "یوتیوب ▶️"
     type: "select"
-    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
       - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
   - name: "گوگل 🌍"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
     icon: "https://www.svgrepo.com/show/475656/google-color.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "واتس آپ 🟢"
-    type: "select"
-    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-      - "بدون فیلترشکن 🛡️"
   - name: "هوش مصنوعی 🤖"
     type: "select"
-    icon: "https://www.svgrepo.com/show/306500/openai.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/306500/openai.svg"
   - name: "توییتر 🐦"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
     icon: "https://www.svgrepo.com/show/475689/twitter-color.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "اسپاتیفای 🎵"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
   - name: "اینستاگرام 📸"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
     icon: "https://www.svgrepo.com/show/452229/instagram-1.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-      - "بدون فیلترشکن 🛡️"
-  - name: "تبلیغات 🆎"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/336358/ad.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "تبلیغات اپ ها 🍃"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "رهگیری جهانی 🛑"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "سایتای مخرب ⚠️"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "استیم 🖥️"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/452107/steam.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "گیم 🎮"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "توییچ 📡"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/343527/twitch-network-communication-interaction-connection.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "سایتای ایرانی 🇮🇷"
-    type: "select"
-    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "ویندوز 🧊"
-    type: "select"
-    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "اجازه ندادن 🚫"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
   - name: "کلودفلر ☁️"
     type: "select"
-    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
   - name: "گیتهاب 🐙"
     type: "select"
-    icon: "https://www.svgrepo.com/show/355033/github.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/355033/github.svg"
+  - name: "اسپاتیفای 🎵"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
+  - name: "واتس آپ 🟢"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
+  - name: "تبلیغات 🆎"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/336358/ad.svg"
+  - name: "تبلیغات اپ ها 🍃"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
+  - name: "رهگیری جهانی 🛑"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
+  - name: "المنت 💬"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Element_(software)_logo_(2020).svg"
+  - name: "تیم اسپیک 🎧"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/teamspeak/default.svg"
+  - name: "دلتاچت ✉️"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Delta_chat_(Instant_Messenger)_logo.svg"
+  - name: "سایتای مخرب ⚠️"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
+  - name: "استیم 🖥️"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/452107/steam.svg"
+  - name: "گیم 🎮"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
+  - name: "توییچ 📡"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@develop/icons/twitch.svg"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
+  - name: "ویندوز 🧊"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "اجازه ندادن 🚫"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
   - name: "دیسکورد 🗣️"
     type: "select"
-    icon: "https://automatorplugin.com/wp-content/uploads/2024/10/discord-icon.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/brands/discord.svg"
   - name: "استریمیو 🎬"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
     icon: "https://stremio.github.io/stremio-addon-guide/img/stremio.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "انیدسک 🔴"
+  - name: "انی دسک 🔴"
     type: "select"
-    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
     proxies:
       - "بدون فیلترشکن 🛡️"
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
   - name: "سایتای سانسوری 🤬"
     type: "select"
-    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Censorship.svg/300px-Censorship.svg.png"
     proxies:
       - "اجازه ندادن 🚫"
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "بدون فیلترشکن 🛡️"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/clapperboard.svg"
   - name: "بدون فیلترشکن 🛡️"
     type: "select"
-    icon: "https://www.svgrepo.com/show/6318/connection.svg"
     proxies:
       - "DIRECT"
     hidden: true
+    icon: "https://www.svgrepo.com/show/6318/connection.svg"
   - name: "قطع اینترنت ⛔"
     type: "select"
-    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
     proxies:
       - "REJECT"
     hidden: true
+    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
   - name: "اجازه ندادن 🚫"
     type: "select"
-    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
     proxies:
       - "REJECT"
     hidden: true
+    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
 rules:
+  - "IP-CIDR,127.0.0.0/8,بدون فیلترشکن 🛡️,no-resolve"
+  - "DOMAIN,localhost,بدون فیلترشکن 🛡️"
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,private,بدون فیلترشکن 🛡️"
   - "RULE-SET,DownloadManagers,دانلود منیجر 📥"
   - "RULE-SET,Download,دانلود منیجر 📥"
   - "RULE-SET,stremio,استریمیو 🎬"
@@ -41364,11 +41496,12 @@ rules:
   - "DST-PORT,993,دلتاچت ✉️"
   - "DST-PORT,465,دلتاچت ✉️"
   - "DST-PORT,587,دلتاچت ✉️"
-  - "PROCESS-NAME,com.teamspeak.ts3client,تیماسپیک 🎧"
-  - "PROCESS-NAME,ts3client_win64.exe,تیماسپیک 🎧"
-  - "PROCESS-NAME,ts3client_win32.exe,تیماسپیک 🎧"
-  - "DOMAIN-SUFFIX,ag.tssq.ir,تیماسپیک 🎧"
-  - "DST-PORT,9987,تیماسپیک 🎧"
+  - "PROCESS-NAME,com.teamspeak.ts3client,تیم اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win64.exe,تیم اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win32.exe,تیم اسپیک 🎧"
+  - "PROCESS-NAME,TeamSpeak.exe,تیم اسپیک 🎧"
+  - "DOMAIN-SUFFIX,ag.tssq.ir,تیم اسپیک 🎧"
+  - "DST-PORT,9987,تیم اسپیک 🎧"
   - "RULE-SET,BanProgramAD,تبلیغات اپ ها 🍃"
   - "RULE-SET,BanAD,رهگیری جهانی 🛑"
   - "RULE-SET,PrivateTracker,رهگیری جهانی 🛑"
@@ -41391,9 +41524,12 @@ rules:
   - "RULE-SET,YouTube,یوتیوب ▶️"
   - "RULE-SET,youtube,یوتیوب ▶️"
   - "RULE-SET,YouTubeMusic,یوتیوب ▶️"
-  - "PROCESS-NAME,com.anydesk.anydeskandroid,انیدسک 🔴"
-  - "PROCESS-NAME,AnyDesk.exe,انیدسک 🔴"
-  - "DOMAIN-SUFFIX,anydesk.com,انیدسک 🔴"
+  - "PROCESS-NAME,com.anydesk.anydeskandroid,انی دسک 🔴"
+  - "PROCESS-NAME,AnyDesk.exe,انی دسک 🔴"
+  - "DOMAIN-SUFFIX,anydesk.com,انی دسک 🔴"
+  - "PROCESS-NAME,rustdesk.exe,انی دسک 🔴"
+  - "PROCESS-NAME,com.carriez.flutter_hbb,انی دسک 🔴"
+  - "PROCESS-NAME,dorsandesk.exe,انی دسک 🔴"
   - "PROCESS-NAME,Twitter.exe,توییتر 🐦"
   - "PROCESS-NAME,com.twitter.android,توییتر 🐦"
   - "RULE-SET,Chotwitter,توییتر 🐦"
@@ -41405,9 +41541,6 @@ rules:
   - "RULE-SET,mihspotify,اسپاتیفای 🎵"
   - "PROCESS-NAME,com.instagram.android,اینستاگرام 📸"
   - "RULE-SET,instagram,اینستاگرام 📸"
-  - "DOMAIN-SUFFIX,deepseek.com,هوش مصنوعی 🤖"
-  - "DOMAIN-SUFFIX,qwen.ai,هوش مصنوعی 🤖"
-  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
   - "RULE-SET,censor,سایتای سانسوری 🤬"
   - "RULE-SET,apps,سایتای ایرانی 🇮🇷"
   - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
@@ -41421,6 +41554,10 @@ rules:
   - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
   - "DOMAIN-SUFFIX,unimics.com,سایتای ایرانی 🇮🇷"
   - "RULE-SET,whatsapp,واتس آپ 🟢"
+  - "RULE-SET,Ai,هوش مصنوعی 🤖"
+  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
+  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google,گوگل 🌍"
   - "RULE-SET,steam,استیم 🖥️"
   - "RULE-SET,SteamRegionCheck,استیم 🖥️"
   - "RULE-SET,game,گیم 🎮"
@@ -41435,9 +41572,5 @@ rules:
   - "RULE-SET,github,گیتهاب 🐙"
   - "PROCESS-NAME,com.android.vending,نوع انتخاب پروکسی 🔀"
   - "PROCESS-NAME,com.google.android.gms,نوع انتخاب پروکسی 🔀"
-  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
-  - "RULE-SET,google,گوگل 🌍"
   - "IP-CIDR,10.10.34.0/24,نوع انتخاب پروکسی 🔀"
-  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
-  - "RULE-SET,private,بدون فیلترشکن 🛡️"
   - "MATCH,نوع انتخاب پروکسی 🔀"

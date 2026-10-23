@@ -1,287 +1,177 @@
-global-client-fingerprint: "chrome"
-keep-alive-interval: 5
-keep-alive-idle: 10
-disable-keep-alive: false
-port: 7890
+port: 7892
 socks-port: 7891
-redir-port: 7892
-mixed-port: 7893
-tproxy-port: 7894
+mixed-port: 7890
 allow-lan: true
-tcp-concurrent: true
-enable-process: true
-find-process-mode: "always"
-ipv6: false
+mode: "rule"
 log-level: "info"
-geo-auto-update: true
-geo-update-interval: 168
+external-controller: "0.0.0.0:9090"
 secret: ""
-bind-address: "*"
-unified-delay: false
+ipv6: false
 dns:
   enable: true
+  listen: "0.0.0.0:53"
   ipv6: false
   prefer-h3: false
   cache-algorithm: "arc"
+  use-hosts: true
   use-system-hosts: true
-  use-host: true
-  listen: "0.0.0.0:53"
+  respect-rules: false
   enhanced-mode: "fake-ip"
-  fake-ip-filter-mode: "blacklist"
   fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter-mode: "blacklist"
   fake-ip-filter:
-    - "*.lan"
-    - "*.localdomain"
-    - "*.invalid"
-    - "*.localhost"
-    - "*.test"
-    - "*.local"
-    - "*.home.arpa"
+    - "geosite:private"
+    - "+.lan"
+    - "+.localdomain"
+    - "+.invalid"
+    - "+.localhost"
+    - "+.test"
+    - "+.local"
+    - "+.home.arpa"
+    - "+.arpa"
+    - "+.ir"
     - "time.*.com"
+    - "time.*.gov"
+    - "time.*.apple.com"
     - "ntp.*.com"
-    - "*.ir"
+    - "+.pool.ntp.org"
+    - "+.ntp.org"
+    - "time.asis.io"
+    - "time.windows.com"
+    - "time.apple.com"
+    - "connectivitycheck.gstatic.com"
+    - "connectivitycheck.android.com"
+    - "clients3.google.com"
+    - "captive.apple.com"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "router.asus.com"
+    - "tplinkwifi.net"
+    - "tplinkrepeater.net"
+    - "tplinkap.net"
+    - "routerlogin.net"
+    - "routerlogin.com"
+    - "melogin.cn"
+    - "falogin.cn"
+    - "tendawifi.com"
+    - "leike.cc"
+    - "miwifi.com"
+    - "goforward.link"
+    - "+.plex.direct"
+  nameserver-policy:
+    geosite:private: "system"
+    +.arpa: "system"
+    +.lan: "system"
+    +.local: "system"
+    +.home.arpa: "system"
+    router.asus.com: "system"
+    tplinkwifi.net: "system"
+    tplinkrepeater.net: "system"
+    tplinkap.net: "system"
+    routerlogin.net: "system"
+    routerlogin.com: "system"
+    melogin.cn: "system"
+    falogin.cn: "system"
+    tendawifi.com: "system"
+    leike.cc: "system"
+    miwifi.com: "system"
+    goforward.link: "system"
   default-nameserver:
+    - "tcp://1.1.1.1"
+    - "tcp://8.8.8.8"
     - "1.1.1.1"
     - "8.8.8.8"
     - "9.9.9.9"
-  nameserver:
-    - "tcp://1.1.1.1"
     - "tcp://1.0.0.1"
-    - "tcp://8.8.8.8"
     - "tcp://8.8.4.4"
     - "tcp://9.9.9.9"
     - "tcp://149.112.112.112"
     - "tcp://208.67.222.222"
-    - "tcp://208.67.220.222"
+    - "tcp://208.67.220.220"
+  nameserver:
+    - "https://freedns.controld.com/p2#نوع انتخاب پروکسی 🔀"
   fallback:
-    - "tcp://76.76.19.19"
-    - "tcp://76.223.122.150"
-    - "tcp://185.228.168.9"
-    - "tcp://185.228.169.9"
-    - "tcp://8.26.56.26"
-    - "tcp://8.20.247.20"
-    - "tcp://76.76.2.11"
-    - "tcp://76.76.10.11"
-    - "tcp://84.200.69.80"
-    - "tcp://84.200.70.40"
-    - "tcp://45.33.97.5"
-    - "tcp://37.235.1.177"
-    - "tcp://209.244.0.3"
-    - "tcp://209.244.0.4"
-    - "tcp://156.154.70.5"
-    - "tcp://156.154.71.5"
-    - "tcp://103.86.96.100"
-    - "tcp://103.86.99.100"
-    - "tcp://199.85.126.10"
-    - "tcp://199.85.127.10"
-    - "tcp://129.250.35.250"
-    - "tcp://129.250.35.251"
-    - "tcp://94.16.114.254"
-    - "tcp://94.247.43.254"
-    - "tcp://208.67.222.20"
-    - "tcp://195.46.39.39"
-    - "tcp://195.46.39.40"
-    - "tcp://204.117.214.10"
-    - "tcp://199.2.252.10"
-    - "tcp://194.169.169.169"
-    - "tcp://156.154.70.1"
-    - "tcp://156.154.71.1"
-    - "tcp://91.239.100.100"
-    - "tcp://89.233.43.71"
-    - "tcp://64.6.64.6"
-    - "tcp://64.6.65.6"
-    - "tcp://77.88.8.8"
-    - "tcp://77.88.8.1"
+    - "https://dns.adguard-dns.com/dns-query#نوع انتخاب پروکسی 🔀"
+  fallback-lazy-query: true
   fallback-filter:
-    geoip: true
-    geoip-code: "IR"
-    geosite:
-      - "gfw"
+    geoip: false
     ipcidr:
+      - "10.10.34.34/32"
+      - "10.10.34.35/32"
+      - "10.10.34.36/32"
+      - "127.0.0.1/32"
       - "240.0.0.0/4"
-    domain:
-      - "+.google.com"
-      - "+.facebook.com"
-      - "+.youtube.com"
   proxy-server-nameserver:
     - "tcp://1.1.1.1"
     - "tcp://8.8.8.8"
+    - "tcp://9.9.9.9"
+    - "1.1.1.1"
+    - "8.8.8.8"
+    - "9.9.9.9"
+    - "tcp://1.0.0.1"
+    - "tcp://8.8.4.4"
+    - "tcp://149.112.112.112"
+    - "tcp://208.67.222.222"
+    - "tcp://208.67.220.220"
   direct-nameserver:
     - "78.157.42.100"
     - "78.157.42.101"
+    - "tcp://78.157.42.100"
+    - "tcp://78.157.42.101"
+  direct-nameserver-follow-policy: true
 sniffer:
   enable: true
   force-dns-mapping: true
   parse-pure-ip: true
-  override-destination: false
-  sniff:
-    HTTP:
-      ports:
-        - 80
-        - 8080
-        - 8880
-        - 2052
-        - 2082
-        - 2086
-        - 2095
-    TLS:
-      ports:
-        - 443
-        - 8443
-        - 2053
-        - 2083
-        - 2087
-        - 2096
+  override-destination: true
 tun:
   enable: true
   stack: "mixed"
   auto-route: true
   auto-detect-interface: true
-  auto-redir: true
-  dns-hijack:
-    - "any:53"
-    - "tcp://any:53"
 rule-providers:
+  DownloadManagers:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
+    interval: 86400
+    path: "./ruleset/DownloadManagers.yaml"
+  Download:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
+    interval: 86400
+    path: "./ruleset/Download.yaml"
+  stremio:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    interval: 86400
+    path: "./ruleset/stremio.yaml"
+  BanProgramAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanProgramAD.yaml"
+  BanAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanAD.yaml"
+  PrivateTracker:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
+    interval: 86400
+    path: "./ruleset/PrivateTracker.yaml"
   category_public_tracker:
     type: "http"
     behavior: "domain"
     url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-public-tracker.yaml"
     interval: 86400
     path: "./ruleset/category_public_tracker.yaml"
-  iran_ads:
-    type: "http"
-    behavior: "domain"
-    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
-    interval: 86400
-    path: "./ruleset/iran_ads.yaml"
-  PersianBlocker:
-    type: "http"
-    behavior: "domain"
-    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
-    interval: 86400
-    path: "./ruleset/PersianBlocker.yaml"
-  youtube:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
-    interval: 86400
-    path: "./ruleset/youtube.yaml"
-  telegram:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
-    interval: 86400
-    path: "./ruleset/telegram.yaml"
-  twitch:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
-    interval: 86400
-    path: "./ruleset/twitch.yaml"
-  censor:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
-    interval: 86400
-    path: "./ruleset/censor.yaml"
-  local_ips:
-    type: "http"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
-    interval: 86400
-    path: "./ruleset/local_ips.yaml"
-  private:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
-    interval: 86400
-    path: "./ruleset/private.yaml"
-  category_ir:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
-    interval: 86400
-    path: "./ruleset/category_ir.yaml"
-  iran:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
-    interval: 86400
-    path: "./ruleset/iran.yaml"
-  steam:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
-    interval: 86400
-    path: "./ruleset/steam.yaml"
-  game:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
-    interval: 86400
-    path: "./ruleset/game.yaml"
-  category-games:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
-    interval: 86400
-    path: "./ruleset/category-games.yaml"
-  ir:
-    type: "http"
-    format: "yaml"
-    behavior: "domain"
-    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
-    interval: 86400
-    path: "./ruleset/ir.yaml"
-  apps:
-    type: "http"
-    format: "yaml"
-    behavior: "classical"
-    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
-    interval: 86400
-    path: "./ruleset/apps.yaml"
-  ircidr:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
-    interval: 86400
-    path: "./ruleset/ircidr.yaml"
-  irasn:
-    type: "http"
-    format: "yaml"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
-    interval: 86400
-    path: "./ruleset/irasn.yaml"
-  arvancloud:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
-    interval: 86400
-    path: "./ruleset/arvancloud.yaml"
-  derakcloud:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
-    interval: 86400
-    path: "./ruleset/derakcloud.yaml"
-  iranserver:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
-    interval: 86400
-    path: "./ruleset/iranserver.yaml"
-  parspack:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
-    interval: 86400
-    path: "./ruleset/parspack.yaml"
   malware:
     type: "http"
     format: "yaml"
@@ -303,170 +193,79 @@ rule-providers:
     url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/cryptominers.yaml"
     interval: 86400
     path: "./ruleset/cryptominers.yaml"
-  ads:
-    type: "http"
-    format: "yaml"
-    behavior: "domain"
-    url: "https://github.com/Chocolate4U/Iran-clash-rules/releases/download/202606060815/category-ads-all.yaml"
-    interval: 86400
-    path: "./ruleset/ads.yaml"
-  DownloadManagers:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
-    interval: 86400
-    path: "./ruleset/DownloadManagers.yaml"
-  BanProgramAD:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
-    interval: 86400
-    path: "./ruleset/BanProgramAD.yaml"
-  BanAD:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
-    interval: 86400
-    path: "./ruleset/BanAD.yaml"
-  PrivateTracker:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
-    interval: 86400
-    path: "./ruleset/PrivateTracker.yaml"
-  BanEasyList:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
-    interval: 86400
-    path: "./ruleset/BanEasyList.yaml"
-  Download:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
-    interval: 86400
-    path: "./ruleset/Download.yaml"
-  GameDownload:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
-    interval: 86400
-    path: "./ruleset/GameDownload.yaml"
-  SteamRegionCheck:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
-    interval: 86400
-    path: "./ruleset/SteamRegionCheck.yaml"
-  Xbox:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
-    interval: 86400
-    path: "./ruleset/Xbox.yaml"
-  YouTubeMusic:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
-    interval: 86400
-    path: "./ruleset/YouTubeMusic.yaml"
-  YouTube:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
-    interval: 86400
-    path: "./ruleset/YouTube.yaml"
-  Ponzi:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
-    interval: 86400
-    path: "./ruleset/Ponzi.yaml"
   warninglist:
     type: "http"
     behavior: "classical"
     url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/warning-list.yaml"
     interval: 86400
     path: "./ruleset/warninglist.yaml"
-  google:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
-    interval: 86400
-    path: "./ruleset/google.yaml"
-  google-play:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
-    interval: 86400
-    path: "./ruleset/google-play.yaml"
-  xiaomi_block_list:
-    type: "http"
-    format: "yaml"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
-    interval: 86400
-    path: "./ruleset/xiaomi_block_list.yaml"
-  xiaomi_white_list:
+  Ponzi:
     type: "http"
     behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
     interval: 86400
-    path: "./ruleset/xiaomi_white_list.yaml"
-  cloudflare:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
-    interval: 86400
-    path: "./ruleset/cloudflare.yaml"
-  github:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
-    interval: 86400
-    path: "./ruleset/xgithub.yaml"
-  whatsapp:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
-    interval: 86400
-    path: "./ruleset/whatsapp.yaml"
+    path: "./ruleset/Ponzi.yaml"
   LiteAds:
     type: "http"
     behavior: "classical"
     url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/LiteAds.yaml"
     interval: 86400
     path: "./ruleset/LiteAds.yaml"
-  discord:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
-    interval: 86400
-    path: "./ruleset/discord.yaml"
-  instagram:
+  iran_ads:
     type: "http"
     behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
     interval: 86400
-    path: "./ruleset/instagram.yaml"
-  category-ai:
+    path: "./ruleset/iran_ads.yaml"
+  PersianBlocker:
     type: "http"
     behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
     interval: 86400
-    path: "./ruleset/category-ai.yaml"
-  stremio:
+    path: "./ruleset/PersianBlocker.yaml"
+  ads:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/category-ads-all.yaml"
+    interval: 86400
+    path: "./ruleset/ads.yaml"
+  BanEasyList:
     type: "http"
     behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
     interval: 86400
-    path: "./ruleset/stremio.yaml"
-  windows:
+    path: "./ruleset/BanEasyList.yaml"
+  twitch:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
+    interval: 86400
+    path: "./ruleset/twitch.yaml"
+  telegram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
+    interval: 86400
+    path: "./ruleset/telegram.yaml"
+  YouTube:
     type: "http"
     behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
     interval: 86400
-    path: "./ruleset/windows.yaml"
+    path: "./ruleset/YouTube.yaml"
+  youtube:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
+    interval: 86400
+    path: "./ruleset/youtube.yaml"
+  YouTubeMusic:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
+    interval: 86400
+    path: "./ruleset/YouTubeMusic.yaml"
   Chotwitter:
     type: "http"
     format: "yaml"
@@ -498,20 +297,202 @@ rule-providers:
     url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Spotify.yaml"
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
+  instagram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    interval: 86400
+    path: "./ruleset/instagram.yaml"
+  Ai:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/Ai.yaml"
+    interval: 86400
+    path: "./ruleset/Ai.yaml"
+  category-ai:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    interval: 86400
+    path: "./ruleset/category-ai.yaml"
+  censor:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
+    interval: 86400
+    path: "./ruleset/censor.yaml"
+  apps:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
+    interval: 86400
+    path: "./ruleset/apps.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+  arvancloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
+    interval: 86400
+    path: "./ruleset/arvancloud.yaml"
+  derakcloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
+    interval: 86400
+    path: "./ruleset/derakcloud.yaml"
+  iranserver:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
+    interval: 86400
+    path: "./ruleset/iranserver.yaml"
+  parspack:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
+    interval: 86400
+    path: "./ruleset/parspack.yaml"
+  irasn:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
+    interval: 86400
+    path: "./ruleset/irasn.yaml"
+  ircidr:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
+    interval: 86400
+    path: "./ruleset/ircidr.yaml"
+  ir:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
+    interval: 86400
+    path: "./ruleset/ir.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  whatsapp:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
+    interval: 86400
+    path: "./ruleset/whatsapp.yaml"
+  steam:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
+    interval: 86400
+    path: "./ruleset/steam.yaml"
+  SteamRegionCheck:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
+    interval: 86400
+    path: "./ruleset/SteamRegionCheck.yaml"
+  game:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
+    interval: 86400
+    path: "./ruleset/game.yaml"
+  GameDownload:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
+    interval: 86400
+    path: "./ruleset/GameDownload.yaml"
+  category-games:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
+    interval: 86400
+    path: "./ruleset/category-games.yaml"
+  Xbox:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
+    interval: 86400
+    path: "./ruleset/Xbox.yaml"
+  discord:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
+    interval: 86400
+    path: "./ruleset/discord.yaml"
+  xiaomi_white_list:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_white_list.yaml"
+  xiaomi_block_list:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_block_list.yaml"
+  windows:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    interval: 86400
+    path: "./ruleset/windows.yaml"
+  cloudflare:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
+    interval: 86400
+    path: "./ruleset/cloudflare.yaml"
+  github:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
+    interval: 86400
+    path: "./ruleset/xgithub.yaml"
+  google-play:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
+    interval: 86400
+    path: "./ruleset/google-play.yaml"
+  google:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
+    interval: 86400
+    path: "./ruleset/google.yaml"
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  private:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
+    interval: 86400
+    path: "./ruleset/private.yaml"
 proxies:
-  - name: "🇺🇸198475 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "hysteria2"
-    server: "clash2.deep-links.com"
-    port: 443
-    password: "4c858cccff331e64c711a199a6cb256a"
-    sni: "clash2.deep-links.com"
-  - name: "🇺🇸198479 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "hysteria2"
-    server: "198.46.146.118"
-    port: 36720
-    password: "4fUg3KH31LpMhko6o0Ka9Q"
-    sni: "bing.com"
-    skip-cert-verify: true
   - name: "🇺🇸198599 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "hysteria2"
     server: "155.117.19.17"
@@ -544,21 +525,6 @@ proxies:
     sni: "de2.jey.cc.cd"
     obfs: "salamander"
     obfs-password: "Telegram@vpnjey"
-  - name: "🇸🇪198477 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "hysteria2"
-    server: "77.110.96.201"
-    port: 36264
-    password: "Telegram-vpnjey"
-    sni: "se.vpnjey2.dpdns.org"
-    skip-cert-verify: true
-    obfs: "salamander"
-    obfs-password: "Telegram@vpnjey"
-  - name: "🇺🇸198484 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "hysteria2"
-    server: "hy2.123266.xyz"
-    port: 33333
-    password: "bce6c821-200d-421f-bf3d-7159e5246ea0"
-    sni: "hy2.123266.xyz"
   - name: "199.232.78.170"
     type: "vless"
     server: "199.232.78.170"
@@ -577,6 +543,32 @@ proxies:
     server: "199.232.78.160"
     port: 443
     uuid: "%58pnTeam-38"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cdn.akamai.steamstatic.com"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "Appxdn.global.ssl.fastly.net"
+  - name: "199.232.78.160-1"
+    type: "vless"
+    server: "199.232.78.160"
+    port: 443
+    uuid: "%58pnTeam-39"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cdn.akamai.steamstatic.com"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "Appxdn.global.ssl.fastly.net"
+  - name: "199.232.78.160-2"
+    type: "vless"
+    server: "199.232.78.160"
+    port: 443
+    uuid: "%58pnTeam-40"
     udp: true
     tls: true
     network: "ws"
@@ -624,7 +616,7 @@ proxies:
     reality-opts:
       public-key: "xxiG2WSrcSN4ZSy_BC4Vjhbe2bGMQuqnLr4mMIuP93w"
       short-id: "6cd5baa2ddaf9fd4"
-  - name: "🇨🇦198437 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "YFZ 148 @Outline_Vpn"
     type: "vless"
     server: "188.114.97.0"
     port: 2087
@@ -636,32 +628,6 @@ proxies:
     client-fingerprint: "chrome"
     alpn:
       - "h2"
-  - name: "🇨🇦198438 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "www.speedtest.net"
-    port: 2087
-    uuid: "0075be7a-1f52-407b-81c1-7a0cb109e814"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "smart-hetzner-ed5b25.airpressoini31.com"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-  - name: "77.110.105.122"
-    type: "vless"
-    server: "77.110.105.122"
-    port: 443
-    uuid: "019fbe0f-2d9f-4b89-9f81-e1e36129892a"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "co-de.speedtec.ru"
-    client-fingerprint: "random"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "EBISh6QAVskJ_nvet-Qio9jS2yqxe9de6GMScYlbjhI"
-      short-id: "226509f017e4c36d"
   - name: "ziroxvnet.xyz"
     type: "vless"
     server: "ziroxvnet.xyz"
@@ -683,16 +649,6 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "7j3hmlHrEDk3Kjx-dFG3E3jf0c6PZF45trIPFsuKWmI"
-  - name: "🇺🇸198476 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "69.48.201.136"
-    port: 30016
-    uuid: "03dc60cb-a8d4-4226-93fe-0e6cbf77fe5a"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/usserver"
   - name: "104.16.63.239"
     type: "vless"
     server: "104.16.63.239"
@@ -721,21 +677,6 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇺🇸198453 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "199.232.239.239"
-    port: 443
-    uuid: "05355ffb-a8f3-473b-cb9c-c8401897b03f"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-    ws-opts:
-      headers:
-        Host: "mpkoe7ypcibr80p102020123.global.ssl.fastly.net"
   - name: "13.36.242.117"
     type: "vless"
     server: "13.36.242.117"
@@ -914,6 +855,19 @@ proxies:
     reality-opts:
       public-key: "5-9YzvyXcZ4J5Z4OaVTUbxUU2InvnwT17m0XY-Jse1E"
       short-id: "257420d9d430152a"
+  - name: "@meliproxyy"
+    type: "vless"
+    server: "pl1.h1cloud.net"
+    port: 27591
+    uuid: "056405e8-de9f-4d0d-8145-956f13cc34da"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.samsung.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "LY0H47MWx87_L_JBzxFAuTzKZB53U7MrZQK8-dNnMxM"
+      short-id: "6c5c7900406a1ae7"
   - name: "simcard.parhamm1.ir"
     type: "vless"
     server: "simcard.parhamm1.ir"
@@ -935,18 +889,6 @@ proxies:
     reality-opts:
       public-key: "R-w7BpNgtryZRBMyRoHx81OnjzAwrKhVtV1EUKLFJzc"
       short-id: "086bf957"
-  - name: "🇩🇰198458 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "140.248.69.254"
-    port: 443
-    uuid: "08a8298f-1c76-476b-ae87-7c94a9dd5e80"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "firefox.com"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
   - name: "172.64.32.133"
     type: "vless"
     server: "172.64.32.133"
@@ -960,6 +902,20 @@ proxies:
       path: "/resgdws"
       headers:
         Host: "rivvers.info"
+  - name: "🇮🇹198922 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "57.131.21.102"
+    port: 8080
+    uuid: "09c10f40-6992-4b33-8d4a-6d8feb01323e"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "icloud.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "Lew0Y0hNzQyEeLxBpBxC2QnshUrtPvSdkLykPZcqLHs"
+      short-id: "b10dd5"
   - name: "kvm.iranhosting.mom"
     type: "vless"
     server: "kvm.iranhosting.mom"
@@ -1025,20 +981,19 @@ proxies:
     network: "xhttp"
     servername: "api-v3-0af34045.vmagnum.win"
     client-fingerprint: "firefox"
-  - name: "🇷🇺198404 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "🇫🇷198913 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
-    server: "87.239.104.232"
-    port: 8643
-    uuid: "0d55ea1d-5587-4c17-9e85-3ee9b279aa8f"
+    server: "50.7.245.205"
+    port: 2093
+    uuid: "0b418782-e023-447e-ba99-e66b84ff118d"
     udp: true
     tls: true
     network: "tcp"
-    servername: "travel.yandex.ru"
-    client-fingerprint: "qq"
+    servername: "www.apple.com"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "kmLlM6u12bptp7icPOL3fkUJucwvYTRVMkXz2AGAN2A"
-      short-id: "ca6703afd42cadcd"
+      public-key: "C_GA8wVjeLmyqLK6em5OHn4WPlsbndA-RyvyNU1aGFM"
+      short-id: "8a9725533854a7e8"
   - name: "Tel@MARAMBASHI 💟"
     type: "vless"
     server: "177.1.194.5"
@@ -1104,18 +1059,19 @@ proxies:
       path: "/vless"
       headers:
         Host: "g.sandesh.qzz.io"
-  - name: "🇺🇸198414 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "🇮🇷198970 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
-    server: "199.232.78.159"
-    port: 80
-    uuid: "11137b4f-c2b7-467c-9252-5b8d12584aae"
+    server: "t41.piponline.ir"
+    port: 2024
+    uuid: "1206a28d-d20b-4741-a40b-97cf6e58cdc0"
     udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "ws/?ed=2048/@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN@GHOFLSHCAN/?2048"
-      headers:
-        Host: "rb24.ir"
+    tls: true
+    network: "xhttp"
+    servername: "intel.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "elaD9of1f4gWplaRVUR-TTs0xzhLLqCSd2fyV4OkVFM"
+      short-id: "a8b0e3"
   - name: "shop.webchipro2.ir"
     type: "vless"
     server: "shop.webchipro2.ir"
@@ -1235,16 +1191,19 @@ proxies:
       path: "/Telegram@V2ray_Alpha/?ed=2560"
       headers:
         Host: "entezar.loseyourself.dpdns.org"
-  - name: "🇪🇸198405 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "@meliproxyy-1"
     type: "vless"
-    server: "213.182.201.18"
-    port: 3090
-    uuid: "151a35f8-de3a-42a1-bb21-e6b24e544976"
+    server: "159.89.87.21"
+    port: 28190
+    uuid: "14c80e0e-f7ce-4991-94fc-99a1db4a9b1e"
     udp: true
-    tls: false
-    network: "grpc"
-    grpc-opts:
-      grpc-service-name: "vless"
+    tls: true
+    network: "tcp"
+    servername: "aws.amazon.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "ZJRnFU-1s1JOnO8E9uZ7b00l1fPEh63fGRbdBANFRno"
   - name: "🇺🇸198601 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "45.32.69.110"
@@ -1317,19 +1276,6 @@ proxies:
     reality-opts:
       public-key: "lwKaUQ81wJUJRsqAPsfTPj5V_f9N50UYEwzRI_nuq2g"
       short-id: "e88cb983f3c97528"
-  - name: "🇺🇸198446 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "47.251.25.74"
-    port: 443
-    uuid: "18805ff3-b420-45de-af18-93be14024ae8"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.amazon.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "H56cOJhw0xw76lDEpt7IuJJmVGemK6_CK34KtHwDMX8"
   - name: "khaneh.berozsho.click"
     type: "vless"
     server: "khaneh.berozsho.click"
@@ -1338,7 +1284,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "configraygan-4"
+  - name: "38.107.232.36"
     type: "vless"
     server: "38.107.232.36"
     port: 80
@@ -1420,6 +1366,19 @@ proxies:
     reality-opts:
       public-key: "VnhQoB3uqFXcnnv8pgb44T7XD9BYoZQs3MnutC0900c"
       short-id: "3ef8cdbc"
+  - name: "🇷🇺198917 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "144.31.50.236"
+    port: 443
+    uuid: "1c332eae-7e02-4acd-996d-4eb3e652401c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yandex.ru"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "uitO4Z8t9TplwwYaqwLqh5rfxDh_X8bOBiNuPbzvaEM"
+      short-id: "bbe46bd8f6b96839"
   - name: "5.182.38.91"
     type: "vless"
     server: "5.182.38.91"
@@ -1514,6 +1473,19 @@ proxies:
     reality-opts:
       public-key: "0eUOkHYO_iijd1ZZd95qSmPuhXPKgevrcwbfPxnmj1g"
       short-id: "a891cd8147"
+  - name: "🇨🇦198914 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "54.39.96.233"
+    port: 8080
+    uuid: "20b98028-53c9-4f76-9bc9-b6b16b8a9152"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "icloud.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "sQ_YHzotqhVJoUDAZl5kTzUqVN6ksh-MTikz_ixsZWc"
+      short-id: "2b30"
   - name: "***⚡***@V2ray_official"
     type: "vless"
     server: "2607:5300:205:200::8aeb"
@@ -1564,17 +1536,6 @@ proxies:
     reality-opts:
       public-key: "1HeKf_8KDjfzXfUi9P7WBaGStMvr96TKdUbofpkwBzQ"
       short-id: "8bd29483ded126b4"
-  - name: "🇷🇺198469 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "188.225.38.216"
-    port: 443
-    uuid: "21ffcccd-8fbe-43fb-9dd1-24452fdfa8ad"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "lalibobi.online"
-    grpc-opts:
-      grpc-service-name: "lalibobi.orbit.v3.Connect"
   - name: "user11.ionosio.ir"
     type: "vless"
     server: "user11.ionosio.ir"
@@ -1734,7 +1695,7 @@ proxies:
       path: "/vless/"
       headers:
         Host: "Join---i10VPN---Join---i10VPN---Join---i10VPN---Join---i10VPN"
-  - name: "@meliproxyy"
+  - name: "@meliproxyy-2"
     type: "vless"
     server: "103.91.147.212"
     port: 443
@@ -1760,7 +1721,7 @@ proxies:
     reality-opts:
       public-key: "vKnJBC8MN4hGDqu7_C6luBwjVnhq9Wjb6BWkuK_8_z0"
       short-id: "dee5ab9e"
-  - name: "v.dianawmoon.dpdns.org"
+  - name: "***⚡***@V2ray_official-1"
     type: "vless"
     server: "v.dianawmoon.dpdns.org"
     port: 8443
@@ -1784,18 +1745,6 @@ proxies:
       path: "/DL?ed=2053"
       headers:
         Host: "m4.articler.ir"
-  - name: "38.47.97.90"
-    type: "vless"
-    server: "38.47.97.90"
-    port: 443
-    uuid: "26e3125d-9cc3-4f8a-816f-55c7806692ee"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.apple.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "oM8fSNZoxUPYolfcA-trXnlHCbeG7402OQTGOfokaVY"
   - name: "95.129.234.165"
     type: "vless"
     server: "95.129.234.165"
@@ -1829,18 +1778,6 @@ proxies:
       path: "/"
       headers:
         Host: "fragrant-recipe-09f4.wopecuyubak61.workers.dev"
-  - name: "mpokwi.goalir.co.uk"
-    type: "vless"
-    server: "mpokwi.goalir.co.uk"
-    port: 443
-    uuid: "2bfe3ff4-6c91-488a-a0c6-2bdc52c2ea49"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "www.firefox.com"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
   - name: "85.133.207.94"
     type: "vless"
     server: "85.133.207.94"
@@ -1853,6 +1790,32 @@ proxies:
       path: "/"
       headers:
         Host: "back.unknownservice.top"
+  - name: "🇳🇱198891 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "81.94.148.232"
+    port: 2053
+    uuid: "2c634977-584e-4e1f-b501-1b70c77a6743"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "windytrout.net"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
+      - "http/1.1"
+  - name: "🇳🇱198890 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "81.94.148.232"
+    port: 8443
+    uuid: "2c634977-584e-4e1f-b501-1b70c77a6743"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "windytrout.net"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
+      - "http/1.1"
   - name: "🇷🇺198670 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "45.93.201.119"
@@ -1990,6 +1953,34 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "🇩🇪198974 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "170.101.111.27"
+    port: 443
+    uuid: "2ed71363-5fd3-4859-9254-0003e395848c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "filesconvert.org"
+    client-fingerprint: "qq"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "U_E3xSI6QY_Mj-3zjkB4esvMj0aVvYH6W6oHOR50XBs"
+      short-id: "10debbdf94767541"
+  - name: "🇷🇺198950 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "45.9.14.15"
+    port: 443
+    uuid: "2ed71363-5fd3-4859-9254-0003e395848c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ru.filesconvert.org"
+    client-fingerprint: "qq"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "uRkXxWMtTOSo8dfWho1D9-M6um6xSjXp0y6MgpWy8yc"
+      short-id: "aedba77e595128a6"
   - name: "151.101.65.57"
     type: "vless"
     server: "151.101.65.57"
@@ -2070,21 +2061,6 @@ proxies:
       short-id: "501ab3325b77e1ca"
     grpc-opts:
       grpc-service-name: "api.v2.PushService"
-  - name: "🇲🇩198513 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "md5.univesalsrv.com"
-    port: 443
-    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "md5.univesalsrv.com"
-    client-fingerprint: "firefox"
-    reality-opts:
-      public-key: "99MRki6b93wC-hhDHe9yq3IXE3KtPGw4RkFAnpI-8gg"
-      short-id: "aa9884f2982b7d3c"
-    grpc-opts:
-      grpc-service-name: "app.v1.PushService"
   - name: "🇷🇸198809 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "rs3.univesalsrv.com"
@@ -2100,20 +2076,6 @@ proxies:
       short-id: "35d05b666e2c6cdf"
     grpc-opts:
       grpc-service-name: "edge.v2.FeedService"
-  - name: "🇷🇺198456 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "87.228.71.195"
-    port: 443
-    uuid: "2f9107cb-9af0-4c94-a89d-50437218e5fa"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "ap2.directly.chat"
-    client-fingerprint: "qq"
-    ws-opts:
-      path: "/md/1"
-      headers:
-        Host: "ap2.directly.chat"
   - name: "🇲🇾198814 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "111.90.143.184"
@@ -2139,84 +2101,32 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "SC6AnZ_BlvDruiGFpDRno9b1V3wMmq9gjB-KEHHUlE4"
-  - name: "🇷🇺198515 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "🇷🇺198893 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
-    server: "185.179.190.170"
-    port: 59222
+    server: "46.254.17.88"
+    port: 30065
+    uuid: "30572b57-f5ab-4eb8-82d4-a24d399b99f6"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "a3.eosapp.net"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "Buy9pirx5Ih_LHwc6R3BCmvRL4g4Ljx6B3MEsZfIZhU"
+  - name: "🇵🇱198947 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "83.168.69.15"
+    port: 56229
     uuid: "30572b57-f5ab-4eb8-82d4-a24d399b99f6"
     udp: true
     tls: true
     network: "grpc"
-    servername: "tbank.ru"
+    servername: "github.com"
     client-fingerprint: "firefox"
     reality-opts:
-      public-key: "riOqDvO6CI06_GP7aJEtDH27zPWu6BiFwGrUESatk1I"
-      short-id: "e03d3096bebd"
-  - name: "🇷🇺198474 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "185.91.52.13"
-    port: 30066
-    uuid: "30572b57-f5ab-4eb8-82d4-a24d399b99f6"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "a1.eosapp.net"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "Buy9pirx5Ih_LHwc6R3BCmvRL4g4Ljx6B3MEsZfIZhU"
-  - name: "🇷🇺198454 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "201.51.30.47"
-    port: 443
-    uuid: "30572b57-f5ab-4eb8-82d4-a24d399b99f6"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "quest.eos-shop.ru"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "Buy9pirx5Ih_LHwc6R3BCmvRL4g4Ljx6B3MEsZfIZhU"
-  - name: "🇷🇺198466 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "45.12.114.90"
-    port: 443
-    uuid: "30572b57-f5ab-4eb8-82d4-a24d399b99f6"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "wow.eos-shop.online"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "Buy9pirx5Ih_LHwc6R3BCmvRL4g4Ljx6B3MEsZfIZhU"
-  - name: "🇷🇺198468 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "45.144.30.138"
-    port: 443
-    uuid: "30572b57-f5ab-4eb8-82d4-a24d399b99f6"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "siri.russiaai.space"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "Buy9pirx5Ih_LHwc6R3BCmvRL4g4Ljx6B3MEsZfIZhU"
-  - name: "🇷🇺198467 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "45.84.1.110"
-    port: 443
-    uuid: "30572b57-f5ab-4eb8-82d4-a24d399b99f6"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "a5.eosapp.net"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "SC6AnZ_BlvDruiGFpDRno9b1V3wMmq9gjB-KEHHUlE4"
+      public-key: "PQLbmvCHSAwuq_Ka1W-6gQxQA_vIjItozo3Jbqkg9Xk"
+      short-id: "a411cc"
   - name: "iraclud.falnexa.ir"
     type: "vless"
     server: "iraclud.falnexa.ir"
@@ -2257,14 +2167,6 @@ proxies:
     network: "ws"
     servername: "site.check-looks.space"
     client-fingerprint: "firefox"
-  - name: "🇳🇱198485 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "185.4.113.186"
-    port: 8030
-    uuid: "3661f782-96ab-43f1-ba97-847195fc2ecb"
-    udp: true
-    tls: false
-    network: "tcp"
   - name: "🇺🇸198616 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "185.243.99.100"
@@ -2412,18 +2314,6 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
-  - name: "🇦🇪198483 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "84.235.244.108"
-    port: 22573
-    uuid: "39947382-3212-41c9-bc3a-589574ac8b23"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "uae.unixzone.us"
   - name: "193.105.234.79"
     type: "vless"
     server: "193.105.234.79"
@@ -2495,6 +2385,48 @@ proxies:
     reality-opts:
       public-key: "Jps_lXkq4doz-qvvikPlMevcR1CG3ZFRPHyAadj3Fhc"
       short-id: "ca358c46a3e9d52a"
+  - name: "🇺🇸198939 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "146.75.59.186"
+    port: 443
+    uuid: "3e8200d8-a793-4999-b211-a37f93f13922"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    client-fingerprint: "ios"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "netheri.global.ssl.fastly.net."
+  - name: "🇺🇸198938 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "199.232.78.159"
+    port: 443
+    uuid: "3e8200d8-a793-4999-b211-a37f93f13922"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "italyma.global.ssl.fastly.net."
+  - name: "🇺🇸198937 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "wwww.qarvian.ir"
+    port: 443
+    uuid: "3e8200d8-a793-4999-b211-a37f93f13922"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    alpn:
+      - "h2"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "albaniji.global.ssl.fastly.net."
   - name: "🇩🇪198626 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "ir.wufpel.ir"
@@ -2724,7 +2656,7 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "@Vpn_Tehran ❤️ کانال تلگرام-1"
+  - name: "🇺🇸198883 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "15.204.97.206"
     port: 23576
@@ -2738,15 +2670,28 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "🇺🇸198482 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "🇺🇸198918 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
-    server: "15.204.97.209"
+    server: "15.204.97.214"
     port: 23576
     uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
     udp: true
     tls: true
     network: "tcp"
     servername: "fuck.rkn"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+  - name: "🇺🇸198882 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "15.204.97.216"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
@@ -2788,6 +2733,19 @@ proxies:
     network: "tcp"
     servername: "fuck.rkn"
     client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "🇺🇸198884 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "ww13.levikogjgfdd.ir"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
@@ -2997,19 +2955,6 @@ proxies:
       path: "/fp=chrome"
       headers:
         Host: "snip.edgeoneai.cc.cd"
-  - name: "🇸🇬198520 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "161.118.198.68"
-    port: 443
-    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "snip.edgeoneai.cc.cd"
-    client-fingerprint: "chrome"
-    ws-opts:
-      headers:
-        Host: "snip.edgeoneai.cc.cd"
   - name: "165.245.182.116"
     type: "vless"
     server: "165.245.182.116"
@@ -3084,23 +3029,6 @@ proxies:
       path: "/"
       headers:
         Host: "snip.edgeoneai.cc.cd"
-  - name: "🇨🇦198436 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "172.64.155.209"
-    port: 443
-    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "snip.edgeoneai.cc.cd"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h3"
-      - "h2"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "snip.edgeoneai.cc.cd"
   - name: "Tel@MARAMBASHI 🇩🇪"
     type: "vless"
     server: "188.114.96.6"
@@ -3161,31 +3089,6 @@ proxies:
       - "h2"
     ws-opts:
       path: "/"
-      headers:
-        Host: "snip.edgeoneai.cc.cd"
-  - name: "🇰🇬198521 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "193.36.95.34"
-    port: 443
-    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "snip.edgeoneai.cc.cd"
-    ws-opts:
-      headers:
-        Host: "snip.edgeoneai.cc.cd"
-  - name: "🇯🇵198519 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "200.180.163.38"
-    port: 443
-    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "snip.edgeoneai.cc.cd"
-    client-fingerprint: "chrome"
-    ws-opts:
       headers:
         Host: "snip.edgeoneai.cc.cd"
   - name: "🇸🇬198573 | ⚡️Telegram = t.me/SOSkeyNET"
@@ -3273,6 +3176,22 @@ proxies:
       path: "/"
       headers:
         Host: "shop2.plusself.ir"
+  - name: "🇺🇸198958 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "69.46.46.91"
+    port: 443
+    uuid: "4c0ddde3-c7d1-4589-a0ac-f08a535516b0"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "marzbanupdate-production-306a.up.railway.app"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/cdn/c7fd66fb-a1cb-4d9d-b12a-3379555fdcee?ed=2560"
+      headers:
+        Host: "marzbanupdate-production-306a.up.railway.app"
   - name: "snapp.ir-2"
     type: "vless"
     server: "snapp.ir"
@@ -3320,7 +3239,93 @@ proxies:
     reality-opts:
       public-key: "GUykK5D2mcYcPS6SDQdzNYFE3EtKIMoYbSlcjij5yA0"
       short-id: "e8"
-  - name: "a7a0b15b3c94bb24.tunvi.w-ert.org"
+  - name: "🇩🇪199013 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "xn-d-2.mozcnf.ir"
+    port: 8080
+    uuid: "4dc8c1e9-8c6f-4174-877c-260cee7042f6"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇩🇪199014 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "xn-d-2.mozcnf.ir"
+    port: 8443
+    uuid: "4dc8c1e9-8c6f-4174-877c-260cee7042f6"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ftp.heanet.ie"
+    client-fingerprint: "edge"
+    reality-opts:
+      public-key: "RnBiECdMxkOljd8SzxecxsbVkp2Po4xkmkBmX0fomRg"
+      short-id: "08"
+  - name: "🇩🇪199015 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "xn-d-2.mozcnf.ir"
+    port: 8880
+    uuid: "4dc8c1e9-8c6f-4174-877c-260cee7042f6"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "nobitex.ir"
+    client-fingerprint: "ios"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "oLThg5Y7UmkfsxSHg1J4YzMSGnaR78YKQgIke3mBQzE"
+      short-id: "08"
+  - name: "🌍199016 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "xn-de-v6-z.mahysamy.ir"
+    port: 8080
+    uuid: "4dc8c1e9-8c6f-4174-877c-260cee7042f6"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇫🇮199017 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "xn-f-1.mozcnf.ir"
+    port: 8080
+    uuid: "4dc8c1e9-8c6f-4174-877c-260cee7042f6"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇫🇮199018 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "xn-f-1.mozcnf.ir"
+    port: 8443
+    uuid: "4dc8c1e9-8c6f-4174-877c-260cee7042f6"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ftp.heanet.ie"
+    client-fingerprint: "edge"
+    reality-opts:
+      public-key: "RnBiECdMxkOljd8SzxecxsbVkp2Po4xkmkBmX0fomRg"
+      short-id: "377d"
+  - name: "🇫🇮199019 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "xn-f-2.mozcnf.ir"
+    port: 8880
+    uuid: "4dc8c1e9-8c6f-4174-877c-260cee7042f6"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "nobitex.ir"
+    client-fingerprint: "ios"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "oLThg5Y7UmkfsxSHg1J4YzMSGnaR78YKQgIke3mBQzE"
+      short-id: "377d"
+  - name: "🌍199020 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "xn-fn-v6-m.mahysamy.ir"
+    port: 8080
+    uuid: "4dc8c1e9-8c6f-4174-877c-260cee7042f6"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "***⚡***@V2ray_official-2"
     type: "vless"
     server: "a7a0b15b3c94bb24.tunvi.w-ert.org"
     port: 32093
@@ -3333,19 +3338,6 @@ proxies:
     alpn:
       - "h2"
       - "http/1.1"
-    reality-opts:
-      public-key: "Jps_lXkq4doz-qvvikPlMevcR1CG3ZFRPHyAadj3Fhc"
-      short-id: "ca358c46a3e9d52a"
-  - name: "a7a0b15b3c94bb24.tunvi.w-ert.org-1"
-    type: "vless"
-    server: "a7a0b15b3c94bb24.tunvi.w-ert.org"
-    port: 32093
-    uuid: "4dd86f78-8202-42c2-89b6-801fd29daf45"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "amp-api-edge.apps.apple.com"
-    client-fingerprint: "chrome"
     reality-opts:
       public-key: "Jps_lXkq4doz-qvvikPlMevcR1CG3ZFRPHyAadj3Fhc"
       short-id: "ca358c46a3e9d52a"
@@ -3362,32 +3354,6 @@ proxies:
     alpn:
       - "h2"
       - "http/1.1"
-    reality-opts:
-      public-key: "Jps_lXkq4doz-qvvikPlMevcR1CG3ZFRPHyAadj3Fhc"
-      short-id: "ca358c46a3e9d52a"
-  - name: "af14ee75949b3b21.tunvi.w-ert.org-1"
-    type: "vless"
-    server: "af14ee75949b3b21.tunvi.w-ert.org"
-    port: 42924
-    uuid: "4dd86f78-8202-42c2-89b6-801fd29daf45"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "amp-api-edge.apps.apple.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "Jps_lXkq4doz-qvvikPlMevcR1CG3ZFRPHyAadj3Fhc"
-      short-id: "ca358c46a3e9d52a"
-  - name: "e29181f3ebfce73d.tunvi.w-ert.org"
-    type: "vless"
-    server: "e29181f3ebfce73d.tunvi.w-ert.org"
-    port: 42924
-    uuid: "4dd86f78-8202-42c2-89b6-801fd29daf45"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "amp-api-edge.apps.apple.com"
-    client-fingerprint: "chrome"
     reality-opts:
       public-key: "Jps_lXkq4doz-qvvikPlMevcR1CG3ZFRPHyAadj3Fhc"
       short-id: "ca358c46a3e9d52a"
@@ -3477,32 +3443,19 @@ proxies:
       path: "/stream/PANEL_ZEUS/71957a15d4e5/loc-0"
       headers:
         Host: "oizs5zecux0s.pouriayy1.workers.dev"
-  - name: "🇻🇬198460 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "🇩🇪198912 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
-    server: "104.234.239.92"
+    server: "31.76.15.24"
     port: 443
-    uuid: "50414e45-4c5f-5a45-5553-eb719e39bd09"
+    uuid: "50a98bb9-8680-44b3-9962-902fff4631cf"
     udp: true
     tls: true
-    network: "ws"
-    servername: "hqzxcaeyukms.z2zptsequlds.workers.dev"
-    client-fingerprint: "unsafe"
-    ws-opts:
-      path: "/stream/PANEL_ZEUS/eb719e39bd09"
-      headers:
-        Host: "hqzxcaeyukms.z2zptsequlds.workers.dev"
-  - name: "🇻🇬198461 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "104.234.239.92"
-    port: 80
-    uuid: "50414e45-4c5f-5a45-5553-eb719e39bd09"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/stream/PANEL_ZEUS/eb719e39bd09"
-      headers:
-        Host: "hqzxcaeyukms.z2zptsequlds.workers.dev"
+    network: "tcp"
+    servername: "www.apple.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "YM1SjW-RyGtPYs_SgjtfaIxJpw2m-TZ8qnNFxkDxHV0"
+      short-id: "a5543a67f52ea8ab"
   - name: "S3"
     type: "vless"
     server: "xray2-direct-mci1-fs-ce.freesocks.work"
@@ -3528,6 +3481,20 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
+  - name: "🇳🇱198973 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "31.77.131.246"
+    port: 443
+    uuid: "5131b5e9-2c3c-44a0-8f18-0641f3f21cac"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "nl5.himoy.space"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1cnb_l4zv5exEEuv_cYoglyW_Tk4yGl9mjzHoHzvUXA"
+      short-id: "15f39a6a8150126e"
   - name: "🇺🇸198816 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "budulai.himoy.space"
@@ -3542,6 +3509,19 @@ proxies:
     reality-opts:
       public-key: "mk-wqC8YgfjMc89oFsT2HSpBMYB23kMURVBiXkeFHzg"
       short-id: "98c76776ef3d1f71"
+  - name: "🇩🇪198897 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "de1.wrenandroad.space"
+    port: 443
+    uuid: "5131b5e9-2c3c-44a0-8f18-0641f3f21cac"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "de1.wrenandroad.space"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "QzaWRXDK3h5CoqkUDMUV0ArgDjIldBnqbFJj_BG1FhE"
+      short-id: "7e97c038d0255f36"
   - name: "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=reality&encryption=none&pbk=t4k236yDGdnUbfJSBl3KR7JzyLReVVRWEiVHMaE72XI&host=de2.wrenandroad.space&fp=chrome&type=xhttp&sni=de2.wrenandroad.space&sid=9b2e8eb7fea9860b#configraygan-18"
     type: "vless"
     server: "de2.wrenandroad.space"
@@ -3563,6 +3543,48 @@ proxies:
     reality-opts:
       public-key: "t4k236yDGdnUbfJSBl3KR7JzyLReVVRWEiVHMaE72XI"
       short-id: "9b2e8eb7fea9860b"
+  - name: "🇺🇸198951 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "fin3.himoy.space"
+    port: 443
+    uuid: "5131b5e9-2c3c-44a0-8f18-0641f3f21cac"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fin3.himoy.space"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "2aGY0cy7IEqurjq5XBPv9gaZHhuod0RDBJUToyTSrws"
+      short-id: "2764053a11bdeec7"
+  - name: "🇺🇸198953 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "fin4.himoy.space"
+    port: 443
+    uuid: "5131b5e9-2c3c-44a0-8f18-0641f3f21cac"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fin4.himoy.space"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "36MwbI8-ScG1RGaNp7jGe-NMOm9HfvmdMP5vfY4_P3k"
+      short-id: "0c3c7a686e566de2"
+  - name: "🇫🇮198972 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "i3m2o0cf.himoy.space"
+    port: 443
+    uuid: "5131b5e9-2c3c-44a0-8f18-0641f3f21cac"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "i3m2o0cf.himoy.space"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "A9rT--Kugc8WElZSjNmq6K3oOD9BC7vTrIKK7E3scj4"
+      short-id: "a40f97141bda09f0"
   - name: "🇪🇪198812 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "l415ng0o.himoy.space"
@@ -3577,6 +3599,62 @@ proxies:
     reality-opts:
       public-key: "JOoD5ze_pwrMnQoAIRVieQM8SPJjiLJEw1fwx57iYgk"
       short-id: "bbd20b213341644c"
+  - name: "🇱🇻198962 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "lv1.himoy.space"
+    port: 443
+    uuid: "5131b5e9-2c3c-44a0-8f18-0641f3f21cac"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "lv1.himoy.space"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "aow1gjMhnsFXqOuIulX3HBWiGI7m488euLPH6G5fcFA"
+      short-id: "3446a8095e1788b4"
+  - name: "🇱🇻198954 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "lv2.himoy.space"
+    port: 443
+    uuid: "5131b5e9-2c3c-44a0-8f18-0641f3f21cac"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "lv2.himoy.space"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "AoPku9i0xSD2cCzJdPcUSSft8c_RkIZbsbP888VO938"
+      short-id: "287b3d62899669d7"
+  - name: "🇱🇻198963 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "lv5.himoy.space"
+    port: 443
+    uuid: "5131b5e9-2c3c-44a0-8f18-0641f3f21cac"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "lv5.himoy.space"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "S8fcWoOddbw_d-s7yrgi6Udb69A2XnW2xfJ-Xk6ubko"
+      short-id: "5ff4fb909a3dfebf"
+  - name: "🇳🇱198952 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "nl2.himoy.space"
+    port: 443
+    uuid: "5131b5e9-2c3c-44a0-8f18-0641f3f21cac"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "nl2.himoy.space"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "vWFi5WROH6RUA3U7MiULYSOBc9h1ZbXyYVUjwvvJn0E"
+      short-id: "3bf45f37318782a0"
   - name: "🇳🇱198811 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "nl5.himoy.space"
@@ -3591,6 +3669,20 @@ proxies:
     reality-opts:
       public-key: "1cnb_l4zv5exEEuv_cYoglyW_Tk4yGl9mjzHoHzvUXA"
       short-id: "15f39a6a8150126e"
+  - name: "🇵🇱198949 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "pl3.himoy.space"
+    port: 443
+    uuid: "5131b5e9-2c3c-44a0-8f18-0641f3f21cac"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "pl3.himoy.space"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "Smu2KKOBtbIEX1mL4t6_-aRTM-bAnjxTuMtWI_hwdBo"
+      short-id: "9f986e5d07683c45"
   - name: "🇩🇪198727 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "164.92.239.67"
@@ -3604,6 +3696,19 @@ proxies:
       path: "/proxyip=ProxyIP.CMLiussss.netfp=chrome"
       headers:
         Host: "cf3.schzyc.cc.cd"
+  - name: "🇳🇱198983 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "165.231.99.45"
+    port: 8443
+    uuid: "51f43f39-bb49-4be2-9ab1-9dd1ef9968e6"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "file-6ac21b76.adhil.uk"
+    client-fingerprint: "safari"
+    alpn:
+      - "h2"
+    flow: "xtls-rprx-vision"
   - name: "104.17.147.22"
     type: "vless"
     server: "104.17.147.22"
@@ -3630,7 +3735,7 @@ proxies:
     reality-opts:
       public-key: "EXU8eOS1kf_ROqC68NO-zbzRFGx7U5zE6WvjxRzYeTo"
       short-id: "eb9539689690d35c"
-  - name: "16.59.172.93"
+  - name: "🇺🇸198999 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "16.59.172.93"
     port: 8443
@@ -3644,6 +3749,21 @@ proxies:
     reality-opts:
       public-key: "a9eS3KWCxXpZZb_6Y-o28ocVea-xR0pqNa-_1Ag2Cng"
       short-id: "94d4096a3cad3a09"
+  - name: "🇨🇦198971 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "188.114.98.0"
+    port: 443
+    uuid: "5504eaa8-1395-402f-8e0e-75ecd762e627"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "server8.9966338.xyz"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/fdtiouasopeiyre0r95y8"
+      headers:
+        Host: "server8.9966338.xyz"
   - name: "user11.ionosio.ir-1"
     type: "vless"
     server: "user11.ionosio.ir"
@@ -3654,18 +3774,6 @@ proxies:
     network: "ws"
     ws-opts:
       path: "/"
-  - name: "Tel@MARAMBASHI 🇸🇪"
-    type: "vless"
-    server: "wwww.qarvian.ir"
-    port: 443
-    uuid: "5545d204-13f5-4e3e-af5c-4ded2b945743"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      headers:
-        Host: "albaniaoijji.global.ssl.fastly.net"
   - name: "V2raybazi-V2raybazi"
     type: "vless"
     server: "3.76.217.186"
@@ -3692,6 +3800,19 @@ proxies:
       path: "/"
       headers:
         Host: "app-core-01.secoxi.site"
+  - name: "🇩🇪198919 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "144.31.215.196"
+    port: 443
+    uuid: "558b26f6-061b-4079-9b84-ca13b3e90ae3"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "c2.qwyak.ru"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "jwLEnDwGROadL1ax-SrVC50sE5slaP7TbGQtBxkcTws"
+      short-id: "8c9ab0f7b293f9ef"
   - name: "🇷🇺198714 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "37.9.15.129"
@@ -3766,7 +3887,7 @@ proxies:
     servername: "ovhwuxian.pai50288.uk"
     ws-opts:
       path: "/57ba2ab1"
-  - name: "***⚡***@V2ray_official-1"
+  - name: "***⚡***@V2ray_official-3"
     type: "vless"
     server: "funagfrdfs.alixxplay.com"
     port: 30892
@@ -3815,7 +3936,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "us1p1.xn--ghq880n3na965a.com"
-    client-fingerprint: "random"
+    client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "KfOrtENkHAXDFlsCluw6fv62Q-WuJXCKI98XZihtemA"
@@ -3829,12 +3950,12 @@ proxies:
     tls: true
     network: "tcp"
     servername: "us1p1.xn--ghq880n3na965a.com"
-    client-fingerprint: "chrome"
+    client-fingerprint: "ios"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "KfOrtENkHAXDFlsCluw6fv62Q-WuJXCKI98XZihtemA"
       short-id: "e51285e3"
-  - name: "funagfrdfs.alixxplay.com-3"
+  - name: "***⚡***@V2ray_official-4"
     type: "vless"
     server: "funagfrdfs.alixxplay.com"
     port: 34379
@@ -3843,12 +3964,12 @@ proxies:
     tls: true
     network: "tcp"
     servername: "us1p1.xn--ghq880n3na965a.com"
-    client-fingerprint: "ios"
+    client-fingerprint: "random"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "KfOrtENkHAXDFlsCluw6fv62Q-WuJXCKI98XZihtemA"
       short-id: "e51285e3"
-  - name: "funagfrdfs.alixxplay.com-4"
+  - name: "funagfrdfs.alixxplay.com-3"
     type: "vless"
     server: "funagfrdfs.alixxplay.com"
     port: 35544
@@ -3858,6 +3979,20 @@ proxies:
     network: "tcp"
     servername: "iosapps.itunes.apple.com"
     client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "HrcXRHtsitc_AVlN-_8fZuRgaP-Mqa_9JJotI9OnkVc"
+      short-id: "25c79e5856c7"
+  - name: "funagfrdfs.alixxplay.com-4"
+    type: "vless"
+    server: "funagfrdfs.alixxplay.com"
+    port: 35544
+    uuid: "57beeeb0-03fc-4fc9-94da-7604488a7134"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "iosapps.itunes.apple.com"
+    client-fingerprint: "ios"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "HrcXRHtsitc_AVlN-_8fZuRgaP-Mqa_9JJotI9OnkVc"
@@ -3871,25 +4006,11 @@ proxies:
     tls: true
     network: "tcp"
     servername: "iosapps.itunes.apple.com"
-    client-fingerprint: "ios"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "HrcXRHtsitc_AVlN-_8fZuRgaP-Mqa_9JJotI9OnkVc"
       short-id: "25c79e5856c7"
-  - name: "funagfrdfs.alixxplay.com-6"
-    type: "vless"
-    server: "funagfrdfs.alixxplay.com"
-    port: 35544
-    uuid: "57beeeb0-03fc-4fc9-94da-7604488a7134"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "iosapps.itunes.apple.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "HrcXRHtsitc_AVlN-_8fZuRgaP-Mqa_9JJotI9OnkVc"
-      short-id: "25c79e5856c7"
-  - name: "***⚡***@V2ray_official-2"
+  - name: "***⚡***@V2ray_official-5"
     type: "vless"
     server: "funagfrdfs.alixxplay.com"
     port: 46105
@@ -3898,6 +4019,20 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.lamer.com.sg"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "Lk5nwDxC2tr3J7hT8emhUUiMX8cHyKX9TiRj_EnAiik"
+      short-id: "28f5c1f8f98a"
+  - name: "funagfrdfs.alixxplay.com-6"
+    type: "vless"
+    server: "funagfrdfs.alixxplay.com"
+    port: 46105
+    uuid: "57beeeb0-03fc-4fc9-94da-7604488a7134"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.lamer.com.sg"
+    client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "Lk5nwDxC2tr3J7hT8emhUUiMX8cHyKX9TiRj_EnAiik"
@@ -3911,53 +4046,39 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.lamer.com.sg"
-    client-fingerprint: "chrome"
+    client-fingerprint: "safari"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "Lk5nwDxC2tr3J7hT8emhUUiMX8cHyKX9TiRj_EnAiik"
       short-id: "28f5c1f8f98a"
+  - name: "***⚡***@V2ray_official-6"
+    type: "vless"
+    server: "funagfrdfs.alixxplay.com"
+    port: 47691
+    uuid: "57beeeb0-03fc-4fc9-94da-7604488a7134"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "m.media-amazon.com"
+    client-fingerprint: "safari"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "6PbC7GxOg_YdXya-53llPReUzoU_yknQbkDvI4uorBg"
+      short-id: "2905326a"
   - name: "funagfrdfs.alixxplay.com-8"
     type: "vless"
     server: "funagfrdfs.alixxplay.com"
-    port: 46105
+    port: 47691
     uuid: "57beeeb0-03fc-4fc9-94da-7604488a7134"
     udp: true
     tls: true
     network: "tcp"
-    servername: "www.lamer.com.sg"
-    client-fingerprint: "safari"
+    servername: "m.media-amazon.com"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "Lk5nwDxC2tr3J7hT8emhUUiMX8cHyKX9TiRj_EnAiik"
-      short-id: "28f5c1f8f98a"
+      public-key: "6PbC7GxOg_YdXya-53llPReUzoU_yknQbkDvI4uorBg"
+      short-id: "2905326a"
   - name: "funagfrdfs.alixxplay.com-9"
-    type: "vless"
-    server: "funagfrdfs.alixxplay.com"
-    port: 47691
-    uuid: "57beeeb0-03fc-4fc9-94da-7604488a7134"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "m.media-amazon.com"
-    client-fingerprint: "safari"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "6PbC7GxOg_YdXya-53llPReUzoU_yknQbkDvI4uorBg"
-      short-id: "2905326a"
-  - name: "funagfrdfs.alixxplay.com-10"
-    type: "vless"
-    server: "funagfrdfs.alixxplay.com"
-    port: 47691
-    uuid: "57beeeb0-03fc-4fc9-94da-7604488a7134"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "m.media-amazon.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "6PbC7GxOg_YdXya-53llPReUzoU_yknQbkDvI4uorBg"
-      short-id: "2905326a"
-  - name: "funagfrdfs.alixxplay.com-11"
     type: "vless"
     server: "funagfrdfs.alixxplay.com"
     port: 54528
@@ -3971,21 +4092,7 @@ proxies:
     reality-opts:
       public-key: "7GvJVbR6BRhtrc8-rcZvB8qTFUF1LPeM_MmoZ04mBxo"
       short-id: "54cca3c1c1c7"
-  - name: "🇸🇬198462 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "funagfrdfs.alixxplay.com"
-    port: 54528
-    uuid: "57beeeb0-03fc-4fc9-94da-7604488a7134"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.apple.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "7GvJVbR6BRhtrc8-rcZvB8qTFUF1LPeM_MmoZ04mBxo"
-      short-id: "54cca3c1c1c7"
-  - name: "funagfrdfs.alixxplay.com-12"
+  - name: "funagfrdfs.alixxplay.com-10"
     type: "vless"
     server: "funagfrdfs.alixxplay.com"
     port: 54528
@@ -3999,7 +4106,7 @@ proxies:
     reality-opts:
       public-key: "7GvJVbR6BRhtrc8-rcZvB8qTFUF1LPeM_MmoZ04mBxo"
       short-id: "54cca3c1c1c7"
-  - name: "***⚡***@V2ray_official-3"
+  - name: "***⚡***@V2ray_official-7"
     type: "vless"
     server: "funagfrdfs.alixxplay.com"
     port: 54528
@@ -4012,7 +4119,7 @@ proxies:
     reality-opts:
       public-key: "7GvJVbR6BRhtrc8-rcZvB8qTFUF1LPeM_MmoZ04mBxo"
       short-id: "54cca3c1c1c7"
-  - name: "funagfrdfs.alixxplay.com-13"
+  - name: "funagfrdfs.alixxplay.com-11"
     type: "vless"
     server: "funagfrdfs.alixxplay.com"
     port: 54528
@@ -4040,7 +4147,7 @@ proxies:
     reality-opts:
       public-key: "KeV1nArisy7FO5DjqTSmn0hBnlNd38rzhbIMMpe-MBw"
       short-id: "a46bb5972cf50671"
-  - name: "funagfrdfs.alixxplay.com-14"
+  - name: "funagfrdfs.alixxplay.com-12"
     type: "vless"
     server: "funagfrdfs.alixxplay.com"
     port: 55688
@@ -4054,7 +4161,7 @@ proxies:
     reality-opts:
       public-key: "KeV1nArisy7FO5DjqTSmn0hBnlNd38rzhbIMMpe-MBw"
       short-id: "a46bb5972cf50671"
-  - name: "funagfrdfs.alixxplay.com-15"
+  - name: "funagfrdfs.alixxplay.com-13"
     type: "vless"
     server: "funagfrdfs.alixxplay.com"
     port: 56415
@@ -4116,21 +4223,18 @@ proxies:
     reality-opts:
       public-key: "-l1xlrYsq1pzXuuwR-cD-N4rbW7Ey1RGp5Tv3jPgVRk"
       short-id: "f2a6f2b79ee4829a"
-  - name: "🇨🇦198518 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "🇫🇮198911 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
-    server: "www.speedtest.net"
-    port: 443
-    uuid: "5a4abb78-ecd7-4d68-ab2a-c11a3842f261"
+    server: "finland02.azotvpn.xyz"
+    port: 8443
+    uuid: "5a96c1fc-f167-44b9-9020-8f6867537d14"
     udp: true
     tls: true
-    network: "ws"
-    servername: "ZfHtKkTu21.dAnGeRiUs.cOm"
-    client-fingerprint: "firefox"
-    alpn:
-      - "h2"
-    ws-opts:
-      headers:
-        Host: "ZfHtKkTu21.dAnGeRiUs.cOm"
+    network: "grpc"
+    servername: "finland02.azotvpn.xyz"
+    reality-opts:
+      public-key: "fQ1M2sO50w5A3oM55Hfs8vmZ320I8VaKdzRqeXOMMnQ"
+      short-id: "07f508fe5d2355d3"
   - name: "🇷🇺198627 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "213.226.127.71"
@@ -4197,18 +4301,6 @@ proxies:
       path: "/"
       headers:
         Host: "dl.bale.lovlytehran.ir"
-  - name: "🇫🇷198443 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "152.228.162.19"
-    port: 80
-    uuid: "5ce84688-f535-46ad-a512-37b17becf6ea"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/vless/"
-      headers:
-        Host: "akamaized.net"
   - name: "13.143.162.138"
     type: "vless"
     server: "13.143.162.138"
@@ -4271,134 +4363,6 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "84.21.189.25"
-    type: "vless"
-    server: "84.21.189.25"
-    port: 443
-    uuid: "6053689d-39d6-4005-b1bd-c0dce854f429"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "de-fast.chunkyvpn.shop"
-    alpn:
-      - "h2"
-    flow: "xtls-rprx-vision"
-  - name: "003342c6746b9754.tunvi.w-ert.org"
-    type: "vless"
-    server: "003342c6746b9754.tunvi.w-ert.org"
-    port: 56841
-    uuid: "61747651-8a4c-40de-becd-174dc32e7495"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "amp-api-edge.apps.apple.com"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-      - "http/1.1"
-    reality-opts:
-      public-key: "Jps_lXkq4doz-qvvikPlMevcR1CG3ZFRPHyAadj3Fhc"
-      short-id: "ca358c46a3e9d52a"
-  - name: "003342c6746b9754.tunvi.w-ert.org-1"
-    type: "vless"
-    server: "003342c6746b9754.tunvi.w-ert.org"
-    port: 56841
-    uuid: "61747651-8a4c-40de-becd-174dc32e7495"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "amp-api-edge.apps.apple.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "Jps_lXkq4doz-qvvikPlMevcR1CG3ZFRPHyAadj3Fhc"
-      short-id: "ca358c46a3e9d52a"
-  - name: "2acbb93545de216c.tunvi.w-ert.org"
-    type: "vless"
-    server: "2acbb93545de216c.tunvi.w-ert.org"
-    port: 56841
-    uuid: "61747651-8a4c-40de-becd-174dc32e7495"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "amp-api-edge.apps.apple.com"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-      - "http/1.1"
-    reality-opts:
-      public-key: "Jps_lXkq4doz-qvvikPlMevcR1CG3ZFRPHyAadj3Fhc"
-      short-id: "ca358c46a3e9d52a"
-  - name: "3d98be61142753f3.tunvi.w-ert.org"
-    type: "vless"
-    server: "3d98be61142753f3.tunvi.w-ert.org"
-    port: 50855
-    uuid: "61747651-8a4c-40de-becd-174dc32e7495"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "amp-api-edge.apps.apple.com"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-      - "http/1.1"
-    reality-opts:
-      public-key: "Jps_lXkq4doz-qvvikPlMevcR1CG3ZFRPHyAadj3Fhc"
-      short-id: "ca358c46a3e9d52a"
-  - name: "tun2.w-ert.org-1"
-    type: "vless"
-    server: "tun2.w-ert.org"
-    port: 448
-    uuid: "61747651-8a4c-40de-becd-174dc32e7495"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "amp-api-edge.apps.apple.com"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-      - "http/1.1"
-    reality-opts:
-      public-key: "Jps_lXkq4doz-qvvikPlMevcR1CG3ZFRPHyAadj3Fhc"
-      short-id: "ca358c46a3e9d52a"
-  - name: "104.129.166.138"
-    type: "vless"
-    server: "104.129.166.138"
-    port: 2096
-    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "sni.111000.indevs.in"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "sni.111000.indevs.in"
-  - name: "135.125.123.246"
-    type: "vless"
-    server: "135.125.123.246"
-    port: 5432
-    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "sni.111000.v6.navy"
-    ws-opts:
-      path: "/?ed=2560"
-      headers:
-        Host: "sni.111000.v6.navy"
-  - name: "141.193.213.238"
-    type: "vless"
-    server: "141.193.213.238"
-    port: 2096
-    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "sni.jpmj.dev"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "sni.jpmj.dev"
   - name: "🇮🇷198817 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "ss"
     server: "81.12.35.246"
@@ -4497,19 +4461,26 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "7e731ec3-f8e1-43f6-92cf-3978d14705c4"
     udp: true
-  - name: "🇮🇷198471 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "🇺🇸198936 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "ss"
-    server: "srv-f1.matinnetworkz.com"
-    port: 52124
+    server: "104.192.227.162"
+    port: 443
     cipher: "chacha20-ietf-poly1305"
-    password: "8713452729c34b91"
+    password: "91LFVJhY6a7f8KeJPeuYln"
     udp: true
-  - name: "🇮🇷198472 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "🇮🇷198894 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "ss"
-    server: "srv-k0.matinnetworkz.com"
-    port: 53124
+    server: "87.107.114.100"
+    port: 902
     cipher: "chacha20-ietf-poly1305"
-    password: "8713452729c34b91"
+    password: "9LHLa1Ck2eRIOmJOWp2XRRACgFGAY_3g"
+    udp: true
+  - name: "🇮🇷198895 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "ss"
+    server: "87.107.114.102"
+    port: 904
+    cipher: "chacha20-ietf-poly1305"
+    password: "9LHLa1Ck2eRIOmJOWp2XRRACgFGAY_3g"
     udp: true
   - name: "119.159.245.24"
     type: "ss"
@@ -4525,12 +4496,19 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "2b195d916cb84007"
     udp: true
-  - name: "🇦🇱198435 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "🇺🇸198980 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "ss"
-    server: "130.49.189.158"
-    port: 10792
+    server: "dns3.m3hrzd.ir"
+    port: 8044
     cipher: "chacha20-ietf-poly1305"
-    password: "ywnqwonyK1LRGwJibFQ0aM"
+    password: "zEvlHLIwH5rZW_v2c6D5Lz92t_jrWhQJ"
+    udp: true
+  - name: "🇳🇱198979 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "ss"
+    server: "dns8.m3hrzd.ir"
+    port: 8044
+    cipher: "chacha20-ietf-poly1305"
+    password: "zEvlHLIwH5rZW_v2c6D5Lz92t_jrWhQJ"
     udp: true
   - name: "🇮🇪198763 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "ss"
@@ -4546,21 +4524,14 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "GlMm3noTNN5rX_LVT56U8g"
     udp: true
-  - name: "20.166.51.228"
-    type: "ss"
-    server: "20.166.51.228"
-    port: 443
-    cipher: "chacha20-ietf-poly1305"
-    password: "LVMlhvK82To1FGsy"
-    udp: true
-  - name: "@meliproxyy-1"
+  - name: "@meliproxyy-3"
     type: "ss"
     server: "57.129.113.16"
     port: 8388
     cipher: "chacha20-ietf-poly1305"
     password: "NcAXc0UZI6yQJE1p8QmOv8"
     udp: true
-  - name: "🇳🇱198419 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "configraygan-6"
     type: "ss"
     server: "193.29.139.168"
     port: 8080
@@ -4574,9 +4545,23 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "QCXDxuDlTTMD7jtgHUjIoj"
     udp: true
-  - name: "🇺🇸198840 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "🇷🇴198901 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "ss"
+    server: "154.46.31.106"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "QFWzCw2uX9B9i6qAYeFBIE"
+    udp: true
+  - name: "dns3.m3hrzd.ir"
     type: "ss"
     server: "dns3.m3hrzd.ir"
+    port: 8044
+    cipher: "chacha20-ietf-poly1305"
+    password: "W8wg-Pb6xj9NOOwriOXIBLulDFNNt5Jt"
+    udp: true
+  - name: "🇳🇱198957 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "ss"
+    server: "dns8.m3hrzd.ir"
     port: 8044
     cipher: "chacha20-ietf-poly1305"
     password: "W8wg-Pb6xj9NOOwriOXIBLulDFNNt5Jt"
@@ -4595,7 +4580,7 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "d954bd6dd74a7f48"
     udp: true
-  - name: "🇺🇸198512 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "@meliproxyy-4"
     type: "ss"
     server: "198.98.53.130"
     port: 443
@@ -4623,7 +4608,7 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
     udp: true
-  - name: "🇳🇱198447 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "configraygan-21"
     type: "ss"
     server: "82.38.31.184"
     port: 8080
@@ -4633,6 +4618,13 @@ proxies:
   - name: "🇳🇱198637 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "ss"
     server: "82.38.31.191"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇳🇱198960 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "ss"
+    server: "82.38.31.202"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
@@ -4651,9 +4643,16 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
     udp: true
-  - name: "🇳🇱198429 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "🇳🇱198932 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "ss"
-    server: "82.38.31.217"
+    server: "82.38.31.210"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇳🇱198961 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "ss"
+    server: "82.38.31.211"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
@@ -4672,7 +4671,7 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "k1v5g9FefdoO"
     udp: true
-  - name: "🇳🇱198440 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "YFZ 132 @Outline_Vpn"
     type: "ss"
     server: "dns2.m3hrzd.ir"
     port: 8044
@@ -4707,24 +4706,10 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "oZIoA69Q8yhcQV8ka3Pa3A"
     udp: true
-  - name: "🇳🇱198642 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "193.29.139.225"
     type: "ss"
     server: "193.29.139.225"
     port: 8080
-    cipher: "chacha20-ietf-poly1305"
-    password: "oZIoA69Q8yhcQV8ka3Pa3A"
-    udp: true
-  - name: "🇳🇱198448 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "ss"
-    server: "82.38.31.149"
-    port: 8080
-    cipher: "chacha20-ietf-poly1305"
-    password: "oZIoA69Q8yhcQV8ka3Pa3A"
-    udp: true
-  - name: "🇳🇱198427 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "ss"
-    server: "82.38.31.159"
-    port: 443
     cipher: "chacha20-ietf-poly1305"
     password: "oZIoA69Q8yhcQV8ka3Pa3A"
     udp: true
@@ -4742,10 +4727,17 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "oZIoA69Q8yhcQV8ka3Pa3A"
     udp: true
-  - name: "@prrofile_purple | ViP ⚡***🐧***"
+  - name: "82.38.31.169"
     type: "ss"
     server: "82.38.31.169"
     port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇳🇱198959 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "ss"
+    server: "82.38.31.16"
+    port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "oZIoA69Q8yhcQV8ka3Pa3A"
     udp: true
@@ -4763,14 +4755,14 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "oZIoA69Q8yhcQV8ka3Pa3A"
     udp: true
-  - name: "🇺🇸198509 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "🇳🇱198904 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "ss"
-    server: "167.160.90.50"
-    port: 11474
-    cipher: "aes-128-gcm"
-    password: "36f398a022881b99884755030b81d507"
+    server: "82.38.31.28"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
     udp: true
-  - name: "***⚡***@V2ray_official-4"
+  - name: "***⚡***@V2ray_official-8"
     type: "ss"
     server: "87.107.114.105"
     port: 900
@@ -4798,76 +4790,6 @@ proxies:
     cipher: "aes-128-gcm"
     password: "shadowsocks"
     udp: true
-  - name: "🇯🇵198544 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "ss"
-    server: "149.22.87.241"
-    port: 443
-    cipher: "aes-128-gcm"
-    password: "shadowsocks"
-    udp: true
-  - name: "🇨🇦198541 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "ss"
-    server: "149.22.95.183"
-    port: 443
-    cipher: "aes-128-gcm"
-    password: "shadowsocks"
-    udp: true
-  - name: "🇺🇸198538 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "ss"
-    server: "156.146.38.167"
-    port: 443
-    cipher: "aes-128-gcm"
-    password: "shadowsocks"
-    udp: true
-  - name: "🇺🇸198539 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "ss"
-    server: "156.146.38.168"
-    port: 443
-    cipher: "aes-128-gcm"
-    password: "shadowsocks"
-    udp: true
-  - name: "🇺🇸198445 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "ss"
-    server: "156.146.38.169"
-    port: 443
-    cipher: "aes-128-gcm"
-    password: "shadowsocks"
-    udp: true
-  - name: "🇺🇸198540 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "ss"
-    server: "156.146.38.170"
-    port: 443
-    cipher: "aes-128-gcm"
-    password: "shadowsocks"
-    udp: true
-  - name: "🇺🇸198537 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "ss"
-    server: "173.244.56.6"
-    port: 443
-    cipher: "aes-128-gcm"
-    password: "shadowsocks"
-    udp: true
-  - name: "🇺🇸198536 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "ss"
-    server: "173.244.56.9"
-    port: 443
-    cipher: "aes-128-gcm"
-    password: "shadowsocks"
-    udp: true
-  - name: "🇺🇸198543 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "ss"
-    server: "37.19.198.160"
-    port: 443
-    cipher: "aes-128-gcm"
-    password: "shadowsocks"
-    udp: true
-  - name: "🇺🇸198542 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "ss"
-    server: "37.19.198.236"
-    port: 443
-    cipher: "aes-128-gcm"
-    password: "shadowsocks"
-    udp: true
   - name: "🇺🇸198545 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "ss"
     server: "37.19.198.243"
@@ -4875,26 +4797,19 @@ proxies:
     cipher: "aes-128-gcm"
     password: "shadowsocks"
     udp: true
-  - name: "🇺🇸198525 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "🇬🇧198902 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "ss"
-    server: "37.19.198.244"
+    server: "141.98.101.181"
     port: 443
     cipher: "aes-128-gcm"
     password: "shadowsocks"
     udp: true
-  - name: "🇸🇪198527 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "🇯🇵198886 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "ss"
-    server: "70.34.212.124"
-    port: 8388
+    server: "84.247.155.196"
+    port: 443
     cipher: "aes-256-gcm"
-    password: "AxIYWtskJWIIaefW"
-    udp: true
-  - name: "🇯🇵198528 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "ss"
-    server: "154.36.158.197"
-    port: 8388
-    cipher: "aes-256-gcm"
-    password: "BeaUf9c0AEWH40Pu"
+    password: "3eOFeNssde7PYYMv"
     udp: true
   - name: "38.180.216.114"
     type: "ss"
@@ -4902,13 +4817,6 @@ proxies:
     port: 7307
     cipher: "aes-256-gcm"
     password: "FoOiGlkAA9yPEGP"
-    udp: true
-  - name: "🇨🇿198410 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "ss"
-    server: "67.159.18.34"
-    port: 17001
-    cipher: "aes-256-gcm"
-    password: "I6o9NnialYLMEjVt28RF4dpjmr9wMvNL"
     udp: true
   - name: "🇷🇺198634 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "ss"
@@ -4924,6 +4832,13 @@ proxies:
     cipher: "aes-256-gcm"
     password: "NTiHBg64fsY8u8DbGrtypD9gPGSL386p"
     udp: true
+  - name: "🇬🇧198900 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "ss"
+    server: "94.156.250.148"
+    port: 7001
+    cipher: "aes-256-gcm"
+    password: "RexnBgU7EV5ADxG"
+    udp: true
   - name: "🇰🇷198696 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "ss"
     server: "141.164.45.187"
@@ -4931,12 +4846,12 @@ proxies:
     cipher: "aes-256-gcm"
     password: "TEzjfAYq2IjtuoS"
     udp: true
-  - name: "🇮🇷198432 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "🇺🇸198887 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "ss"
-    server: "188.121.123.142"
-    port: 9142
+    server: "15.204.247.175"
+    port: 8008
     cipher: "aes-256-gcm"
-    password: "ZDgzMjZlMTA2NTNhNjNkNGU0ZTJiMDgwOWVlZDVi"
+    password: "XKFKl2rULjIp74"
     udp: true
   - name: "@i10VPN¹"
     type: "ss"
@@ -4980,28 +4895,35 @@ proxies:
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
-  - name: "@Vpn_Tehran ❤️ کانال تلگرام-2"
+  - name: "@Vpn_Tehran ❤️ کانال تلگرام-1"
     type: "ss"
     server: "45.86.51.18"
     port: 19999
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
-  - name: "🇺🇸198417 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "🇷🇺198975 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "ss"
-    server: "95.215.201.18"
-    port: 19999
+    server: "176.32.33.153"
+    port: 18443
     cipher: "aes-256-gcm"
-    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
+    password: "cCMJgJTA3BA489YUYrFq7XHXSiSpWlLa"
     udp: true
-  - name: "🇬🇧198526 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "🇨🇦198888 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "ss"
-    server: "149.102.132.184"
-    port: 80
+    server: "51.79.49.116"
+    port: 8882
     cipher: "aes-256-gcm"
-    password: "g5h5jleTRSyO3Rk4"
+    password: "kDWvXYZoTBcGkC4"
     udp: true
-  - name: "YFZ 147 @Outline_Vpn"
+  - name: "🇺🇸198885 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "ss"
+    server: "15.204.247.244"
+    port: 4444
+    cipher: "aes-256-gcm"
+    password: "pKEW8JPByTVTLtM"
+    udp: true
+  - name: "🇨🇦198889 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "ss"
     server: "51.222.141.125"
     port: 445
@@ -5014,30 +4936,6 @@ proxies:
     port: 8445
     cipher: "xchacha20-ietf-poly1305"
     password: "jhh6ykfa2z9v63kf"
-    udp: true
-  - name: "198444 | @SOSkeyNET"
-    type: "vmess"
-    server: "169.197.142.22"
-    port: 18000
-    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "198441 | @SOSkeyNET"
-    type: "vmess"
-    server: "38.91.107.49"
-    port: 18000
-    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "198442 | @SOSkeyNET"
-    type: "vmess"
-    server: "67.220.85.46"
-    port: 18000
-    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
-    alterId: 0
-    cipher: "auto"
     udp: true
   - name: "🔵@chillguy_vpn"
     type: "vmess"
@@ -5055,7 +4953,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "@Vpn_Tehran ❤️ کانال تلگرام-3"
+  - name: "@Vpn_Tehran ❤️ کانال تلگرام-2"
     type: "vmess"
     server: "145.239.55.210"
     port: 80
@@ -5063,27 +4961,11 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "198464 | @SOSkeyNET"
+  - name: "198955 | @SOSkeyNET"
     type: "vmess"
-    server: "185.19.33.15"
-    port: 53842
-    uuid: "013ae83f-0b5e-40d0-916e-28983948bf78"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "198463 | @SOSkeyNET"
-    type: "vmess"
-    server: "185.19.33.15"
-    port: 58818
-    uuid: "013ae83f-0b5e-40d0-916e-28983948bf78"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "198490 | @SOSkeyNET"
-    type: "vmess"
-    server: "185.19.33.15"
-    port: 58818
-    uuid: "fbd399a0-ab9d-4405-b84c-92a06044cc83"
+    server: "156.245.232.239"
+    port: 35043
+    uuid: "b15e481d-17e4-41a8-84c2-23d4f0514d9a"
     alterId: 0
     cipher: "auto"
     udp: true
@@ -5092,6 +4974,14 @@ proxies:
     server: "185.19.33.99"
     port: 16755
     uuid: "8e6d6c95-c9f7-4c10-a12e-306fa5fbd992"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "198898 | @SOSkeyNET"
+    type: "vmess"
+    server: "185.19.33.99"
+    port: 58741
+    uuid: "b560ca16-d73b-47f4-a9c4-9dd5fe3a0069"
     alterId: 0
     cipher: "auto"
     udp: true
@@ -5123,6 +5013,14 @@ proxies:
     type: "vmess"
     server: "206.1.100.161"
     port: 22369
+    uuid: "b7feba46-9b15-4e99-935a-10093baf6739"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "198878 | @SOSkeyNET"
+    type: "vmess"
+    server: "206.1.100.161"
+    port: 24976
     uuid: "b7feba46-9b15-4e99-935a-10093baf6739"
     alterId: 0
     cipher: "auto"
@@ -5167,19 +5065,19 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
+  - name: "198945 | @SOSkeyNET"
+    type: "vmess"
+    server: "206.1.99.36"
+    port: 58202
+    uuid: "482e7f58-e8e8-418d-accd-0a94bdf090ae"
+    alterId: 0
+    cipher: "auto"
+    udp: true
   - name: "198570 | @SOSkeyNET"
     type: "vmess"
     server: "2001:bc8:32d7:1a9::3"
     port: 18901
     uuid: "3a966d20-7b9d-48cc-ba2c-8d38161b6d3a"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "198534 | @SOSkeyNET"
-    type: "vmess"
-    server: "38.107.234.57"
-    port: 80
-    uuid: "567f4be5-12ab-42e1-b8d9-db6fd1fdd31c"
     alterId: 0
     cipher: "auto"
     udp: true
@@ -5191,22 +5089,6 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "198584 | @LonUp_M"
-    type: "vmess"
-    server: "47.244.120.197"
-    port: 44867
-    uuid: "845e6b08-2919-4290-ade0-5dc7dcea59ca"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "198580 | @LonUp_M"
-    type: "vmess"
-    server: "47.243.194.125"
-    port: 443
-    uuid: "f23bb427-c1f9-4373-876c-2f43e9f790f3"
-    alterId: 0
-    cipher: "auto"
-    udp: true
   - name: "@Vpn_Tehran 🩵 کانال تلگرام-1"
     type: "vmess"
     server: "54.37.131.126"
@@ -5215,7 +5097,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "@Vpn_Tehran ❤️ کانال تلگرام-4"
+  - name: "@Vpn_Tehran ❤️ کانال تلگرام-3"
     type: "vmess"
     server: "57.128.164.21"
     port: 80
@@ -5239,14 +5121,6 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "198530 | @SOSkeyNET"
-    type: "vmess"
-    server: "8.218.195.61"
-    port: 443
-    uuid: "f23bb427-c1f9-4373-876c-2f43e9f790f3"
-    alterId: 0
-    cipher: "auto"
-    udp: true
   - name: "198851 | @SOSkeyNET"
     type: "vmess"
     server: "89.42.196.211"
@@ -5263,67 +5137,27 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "198532 | @SOSkeyNET"
-    type: "vmess"
-    server: "guanwang.awsno.com"
-    port: 443
-    uuid: "6a89a215-22bf-4bd7-9642-b95b2e09583a"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "198507 | @SOSkeyNET"
+  - name: "199011 | @SOSkeyNET"
     type: "vmess"
     server: "dashboard.ojedata.top"
     port: 5382
-    uuid: "fdd6805d-c19d-47b0-911d-b042314c9f42"
+    uuid: "e387c0f5-4192-490d-ac86-7e17163e694c"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "198554 | @LonUp_M"
+  - name: "199058 | @LonUp_M"
     type: "vmess"
     server: "dashboard.ojestore.top"
     port: 5381
-    uuid: "fdd6805d-c19d-47b0-911d-b042314c9f42"
+    uuid: "e387c0f5-4192-490d-ac86-7e17163e694c"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "198506 | @SOSkeyNET"
+  - name: "199010 | @SOSkeyNET"
     type: "vmess"
     server: "dashboard.ojeshop.top"
     port: 5380
-    uuid: "fdd6805d-c19d-47b0-911d-b042314c9f42"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "198422 | @SOSkeyNET"
-    type: "vmess"
-    server: "defe.sync-bridge.ir"
-    port: 443
-    uuid: "e9f12253-bc99-4ea6-8ad0-00e407abe269"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "198533 | @SOSkeyNET"
-    type: "vmess"
-    server: "i2psm3knof5qjjix.v.3dns.vip"
-    port: 443
-    uuid: "f23bb427-c1f9-4373-876c-2f43e9f790f3"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "Türkiye - 10/22 @Config724"
-    type: "vmess"
-    server: "octpus1.gsmonline.ir"
-    port: 8080
-    uuid: "43bd6027-1a36-41d7-ac07-93d56e3aa39b"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "198451 | @SOSkeyNET"
-    type: "vmess"
-    server: "octpus1.gsmonline.ir"
-    port: 8080
-    uuid: "dc3a637e-c490-4ab2-a56d-294bc4f59c83"
+    uuid: "e387c0f5-4192-490d-ac86-7e17163e694c"
     alterId: 0
     cipher: "auto"
     udp: true
@@ -5335,14 +5169,22 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "198474 | @LonUp_M"
-    type: "vmess"
-    server: "nl3.downbala.com"
+  - name: "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&alpn=http/1.1&insecure=0&host=mitivpn.ac.ir&fp=chrome&type=ws&allowInsecure=0&sni=firefox.com#🇺🇸198998 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "trojan"
+    server: "167.82.64.46"
     port: 443
-    uuid: "536006da-15d2-432d-b18b-307f2230dc82"
-    alterId: 0
-    cipher: "auto"
+    password: "mitivpn"
     udp: true
+    tls: true
+    network: "tcp"
+  - name: "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&alpn=http/1.1&insecure=0&host=mitivpn.ac.ir&fp=chrome&type=ws&allowInsecure=0&sni=firefox.com#🇺🇸198997 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "trojan"
+    server: "199.232.78.160"
+    port: 443
+    password: "mitivpn"
+    udp: true
+    tls: true
+    network: "tcp"
   - name: "tjhg.m2k699.com"
     type: "trojan"
     server: "tjhg.m2k699.com"
@@ -5352,15 +5194,6 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.itunes.com"
-  - name: "🇩🇪198403 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "trojan"
-    server: "188.241.241.200"
-    port: 443
-    password: "4_VfP9fKaM-3LpSVvoZuc_WUzLoCdHaA"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "de7.dedushka.top"
   - name: "YFZ 156 @Outline_Vpn"
     type: "trojan"
     server: "188.241.241.236"
@@ -5378,24 +5211,6 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
-  - name: "configraygan-20"
-    type: "trojan"
-    server: "de10.dedushka.top"
-    port: 443
-    password: "4_VfP9fKaM-3LpSVvoZuc_WUzLoCdHaA"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "de10.dedushka.top"
-  - name: "configraygan-10-1"
-    type: "trojan"
-    server: "de12.dedushka.top"
-    port: 443
-    password: "4_VfP9fKaM-3LpSVvoZuc_WUzLoCdHaA"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "de12.dedushka.top"
   - name: "🇩🇪198848 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "trojan"
     server: "de3.dedushka.top"
@@ -5404,7 +5219,7 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
-  - name: "🇩🇪198849 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "de5.dedushka.top"
     type: "trojan"
     server: "de5.dedushka.top"
     port: 443
@@ -5440,15 +5255,6 @@ proxies:
     tls: true
     network: "tcp"
     servername: "de9.dedushka.top"
-  - name: "configraygan-14-1"
-    type: "trojan"
-    server: "pl1.dedushka.top"
-    port: 443
-    password: "4_VfP9fKaM-3LpSVvoZuc_WUzLoCdHaA"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "pl1.dedushka.top"
   - name: "🇵🇱198761 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "trojan"
     server: "pl2.dedushka.top"
@@ -5458,15 +5264,6 @@ proxies:
     tls: true
     network: "tcp"
     servername: "pl2.dedushka.top"
-  - name: "🇲🇾198529 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "trojan"
-    server: "47.250.84.25"
-    port: 443
-    password: "5931134d1cde66bf83a54acdfebe7ab2"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "moltbot.doctoroyy.net"
   - name: "🇨🇦198739 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "trojan"
     server: "db-proxy-40d94f.staging-api-c21164.workers.dev"
@@ -5623,14 +5420,19 @@ proxies:
     tls: true
     network: "tcp"
     servername: "mydigipay.com"
-  - name: "🇸🇬198478 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "🇨🇦198956 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "trojan"
-    server: "139.180.146.200"
-    port: 8886
-    password: "e26a229d-e8f2-4ff9-8c7d-58a9d83ee437"
+    server: "104.16.6.70"
+    port: 443
+    password: "humanity"
     udp: true
     tls: true
-    network: "tcp"
+    network: "ws"
+    servername: "www.pleadcourt.org"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.pleadcourt.org"
   - name: "🇨🇦198831 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "trojan"
     server: "108.162.194.134"
@@ -5657,6 +5459,32 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.pleadcourt.org"
+  - name: "🇩🇪198905 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "trojan"
+    server: "161.35.192.122"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.pleadcourt.org"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.pleadcourt.org"
+  - name: "🇨🇦198948 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "trojan"
+    server: "172.66.40.99"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.trusteeforward.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.trusteeforward.com"
   - name: "🇨🇦198813 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "trojan"
     server: "188.114.97.2"
@@ -5683,7 +5511,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.pleadcourt.org"
-  - name: "🇨🇦198449 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "YFZ 133 @Outline_Vpn"
     type: "trojan"
     server: "188.114.98.0"
     port: 443
@@ -5696,30 +5524,6 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.pleadcourt.org"
-  - name: "🇲🇪198428 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "trojan"
-    server: "31.57.190.40"
-    port: 443
-    password: "humanity"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "www.pleadcourt.org"
-    ws-opts:
-      path: "/assignment"
-      headers:
-        Host: "www.pleadcourt.org"
-  - name: "🇲🇪198452 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "trojan"
-    server: "31.57.190.71"
-    port: 443
-    password: "humanity"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "www.pleadcourt.org"
-    ws-opts:
-      path: "/assignment"
   - name: "🇩🇪198746 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "trojan"
     server: "45.80.111.7"
@@ -5731,20 +5535,7 @@ proxies:
     servername: "www.calmlunch.com"
     ws-opts:
       path: "/assignment"
-  - name: "🇫🇮198430 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "trojan"
-    server: "46.62.204.134"
-    port: 443
-    password: "humanity"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "www.pleadcourt.org"
-    ws-opts:
-      path: "/assignment"
-      headers:
-        Host: "www.pleadcourt.org"
-  - name: "YFZ 140 @Outline_Vpn"
+  - name: "🇺🇸198976 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "trojan"
     server: "8.47.69.0"
     port: 443
@@ -5807,7 +5598,19 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSus---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn.ac.ir"
-  - name: "configraygan-8-1"
+  - name: "🇨🇦198977 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "trojan"
+    server: "188.114.98.0"
+    port: 443
+    password: "mitivpn"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "de.mitivpn.in.net"
+    ws-opts:
+      headers:
+        Host: "de.mitivpn.in.net"
+  - name: "configraygan-8"
     type: "trojan"
     server: "199.232.78.160"
     port: 443
@@ -6111,35 +5914,6 @@ proxies:
     tls: true
     network: "tcp"
     servername: "trojan.burgerip.co.uk"
-  - name: "🇫🇮198409 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "trojan"
-    server: "65.109.209.239"
-    port: 43586
-    password: "vyn7irc6gzdo78ds"
-    udp: true
-    tls: true
-    network: "tcp"
-  - name: "🇨🇦198517 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "wireguard"
-    server: "162.159.195.12"
-    port: 942
-    ip: "172.16.0.2"
-    private-key: "2Bf8kG/XEGEaU9zFVFo+3ycmRXDfF4tzmrX1zCWNFGc="
-    public-key: "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo="
-    allowed-ips:
-      - "0.0.0.0/0"
-    udp: true
-    remote-dns-resolve: true
-    reserved:
-      - 184
-      - 196
-      - 25
-    mtu: 1280
-    persistent-keepalive: 5
-    amnezia-wg-option:
-      jc: 5
-      jmin: 5
-      jmax: 10
   - name: "🇺🇸198827 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "wireguard"
     server: "8.6.112.38"
@@ -6182,27 +5956,6 @@ proxies:
       jc: 5
       jmin: 5
       jmax: 10
-  - name: "🇨🇦198426 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "wireguard"
-    server: "162.159.192.2"
-    port: 4500
-    ip: "172.16.0.2"
-    private-key: "gAEHONKlx/DuJKP2pTq2dFJ2R7/faCAFU05LaM9GvVM="
-    public-key: "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo="
-    allowed-ips:
-      - "0.0.0.0/0"
-    udp: true
-    remote-dns-resolve: true
-    reserved:
-      - 122
-      - 219
-      - 172
-    mtu: 1280
-    persistent-keepalive: 5
-    amnezia-wg-option:
-      jc: 5
-      jmin: 5
-      jmax: 10
   - name: "🇮🇷198625 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "wireguard"
     server: "ir1.wufpel.ir"
@@ -6220,43 +5973,79 @@ proxies:
       - 0
       - 0
     mtu: 1420
+  - name: "🇨🇦198906 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "wireguard"
+    server: "162.159.195.12"
+    port: 942
+    ip: "172.16.0.2"
+    private-key: "qI0EmwOsLmY+K6PN2dOdPxR13RJROQK8qmPef2dzz2w="
+    public-key: "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo="
+    allowed-ips:
+      - "0.0.0.0/0"
+    udp: true
+    remote-dns-resolve: true
+    reserved:
+      - 146
+      - 229
+      - 19
+    mtu: 1280
+    persistent-keepalive: 5
+    amnezia-wg-option:
+      jc: 5
+      jmin: 5
+      jmax: 10
+  - name: "🇨🇦198996 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "wireguard"
+    server: "162.159.192.18"
+    port: 908
+    ip: "172.16.0.2"
+    private-key: "wNAECMfDaO44OaxS43W1zslEY+hZcCGjW/BlJfElVUg="
+    public-key: "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo="
+    allowed-ips:
+      - "0.0.0.0/0"
+    udp: true
+    remote-dns-resolve: true
+    reserved:
+      - 126
+      - 231
+      - 126
+    mtu: 1280
+    persistent-keepalive: 5
+    amnezia-wg-option:
+      jc: 5
+      jmin: 5
+      jmax: 10
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
-    icon: "https://www.svgrepo.com/show/412721/choose.svg"
     proxies:
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "توزیع بار چرخشی ⚖️"
       - "قطع اینترنت ⛔"
       - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/412721/choose.svg"
   - name: "دستی 🤏🏻"
     type: "select"
-    icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
+    lazy: true
     proxies:
-      - "🇺🇸198475 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198479 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198599 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇹🇼198602 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198624 | ⚡️Telegram = t.me/SOSkeyNET"
       - "@Vpn_Tehran 🤍 کانال تلگرام"
-      - "🇸🇪198477 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198484 | ⚡️Telegram = t.me/SOSkeyNET"
       - "199.232.78.170"
       - "199.232.78.160"
+      - "199.232.78.160-1"
+      - "199.232.78.160-2"
       - "185.94.29.156"
       - "84.247.129.205"
       - "🇮🇷198834 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇨🇦198437 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇨🇦198438 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "77.110.105.122"
+      - "YFZ 148 @Outline_Vpn"
       - "ziroxvnet.xyz"
       - "S2"
-      - "🇺🇸198476 | ⚡️Telegram = t.me/SOSkeyNET"
       - "104.16.63.239"
       - "ilya.itissia.shop"
       - "45.82.137.42"
-      - "🇺🇸198453 | ⚡️Telegram = t.me/SOSkeyNET"
       - "13.36.242.117"
       - "13.37.130.107"
       - "13.37.210.125"
@@ -6273,23 +6062,24 @@ proxy-groups:
       - "52.47.80.167"
       - "63.183.59.137"
       - "🇺🇸198629 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@meliproxyy"
       - "simcard.parhamm1.ir"
       - "🇫🇷198628 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇩🇰198458 | ⚡️Telegram = t.me/SOSkeyNET"
       - "172.64.32.133"
+      - "🇮🇹198922 | ⚡️Telegram = t.me/SOSkeyNET"
       - "kvm.iranhosting.mom"
       - "157.254.27.41"
       - "vix.nsa03.com"
       - "S1"
       - "xray1-direct-mci1-fs-ce.freesocks.work"
       - "🇩🇪198729 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198404 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇷198913 | ⚡️Telegram = t.me/SOSkeyNET"
       - "Tel@MARAMBASHI 💟"
       - "152.53.135.159"
       - "104.18.32.47"
       - "144.24.126.26"
       - "172.64.155.209"
-      - "🇺🇸198414 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇮🇷198970 | ⚡️Telegram = t.me/SOSkeyNET"
       - "shop.webchipro2.ir"
       - "104.18.12.229"
       - "104.18.13.229"
@@ -6300,21 +6090,21 @@ proxy-groups:
       - "185.143.233.200"
       - "game.celvixo.ir"
       - "172.67.132.185"
-      - "🇪🇸198405 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@meliproxyy-1"
       - "🇺🇸198601 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇳198560 | ⚡️Telegram = t.me/SOSkeyNET"
       - "sr4.laptopstock7.com"
       - "188.121.118.233"
       - "@Vpn_Tehran ❤️ کانال تلگرام"
-      - "🇺🇸198446 | ⚡️Telegram = t.me/SOSkeyNET"
       - "khaneh.berozsho.click"
-      - "configraygan-4"
+      - "38.107.232.36"
       - "snapp.ir"
       - "mellliiiii.dfgghhtrryuoknvc467ugdddfghjjgssfjhspeeeeeeedtest.net"
       - "🇬🇧198859 | ⚡️Telegram = t.me/SOSkeyNET"
       - "t11.iranwiki.mom"
       - "172.64.146.1"
       - "185.153.182.225"
+      - "🇷🇺198917 | ⚡️Telegram = t.me/SOSkeyNET"
       - "5.182.38.91"
       - "arvancloud.ir"
       - "🇸🇬198597 | ⚡️Telegram = t.me/SOSkeyNET"
@@ -6322,11 +6112,11 @@ proxy-groups:
       - "fi-h2-01.com"
       - "shop.webchipro2.ir-1"
       - "104.105.21.164"
+      - "🇨🇦198914 | ⚡️Telegram = t.me/SOSkeyNET"
       - "***⚡***@V2ray_official"
       - "2607:5300:205:200::8aeb"
       - "🇩🇪198732 | ⚡️Telegram = t.me/SOSkeyNET"
       - "185.125.103.147"
-      - "🇷🇺198469 | ⚡️Telegram = t.me/SOSkeyNET"
       - "user11.ionosio.ir"
       - "ir.gafe-lorbad.ir"
       - "146.75.57.238"
@@ -6340,16 +6130,16 @@ proxy-groups:
       - "🇮🇷198709 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198708 | ⚡️Telegram = t.me/SOSkeyNET"
       - "152.228.162.19"
-      - "@meliproxyy"
+      - "@meliproxyy-2"
       - "🇩🇪198638 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "v.dianawmoon.dpdns.org"
+      - "***⚡***@V2ray_official-1"
       - "snapp.ir-1"
-      - "38.47.97.90"
       - "95.129.234.165"
       - "2.188.227.168"
       - "104.16.9.24"
-      - "mpokwi.goalir.co.uk"
       - "85.133.207.94"
+      - "🇳🇱198891 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱198890 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198670 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇵🇱198666 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇬🇧198665 | ⚡️Telegram = t.me/SOSkeyNET"
@@ -6360,6 +6150,8 @@ proxy-groups:
       - "🇳🇱198662 | ⚡️Telegram = t.me/SOSkeyNET"
       - "104.24.45.247"
       - "91.99.207.135"
+      - "🇩🇪198974 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇷🇺198950 | ⚡️Telegram = t.me/SOSkeyNET"
       - "151.101.65.57"
       - "🇮🇷198786 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198787 | ⚡️Telegram = t.me/SOSkeyNET"
@@ -6367,22 +6159,15 @@ proxy-groups:
       - "150.40.126.22"
       - "@vpnbaz 🍭"
       - "@vpnbaz 🌊"
-      - "🇲🇩198513 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇸198809 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198456 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇲🇾198814 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇳198844 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198515 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198474 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198454 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198466 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198468 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198467 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇷🇺198893 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇵🇱198947 | ⚡️Telegram = t.me/SOSkeyNET"
       - "iraclud.falnexa.ir"
       - "iran.vokral.ir"
       - "185.93.3.39"
       - "🇩🇪198847 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇳🇱198485 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198616 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198596 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198673 | ⚡️Telegram = t.me/SOSkeyNET"
@@ -6395,12 +6180,14 @@ proxy-groups:
       - "152.233.28.198"
       - "152.233.28.198-1"
       - "uk1.fromblancwithlove.com"
-      - "🇦🇪198483 | ⚡️Telegram = t.me/SOSkeyNET"
       - "193.105.234.79"
       - "Tel@MARAMBASHI 💟-1"
       - "🇺🇸198615 | ⚡️Telegram = t.me/SOSkeyNET"
       - "YFZ 130 @Outline_Vpn"
       - "🇮🇷198644 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198939 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198938 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198937 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇩🇪198626 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇩🇪198622 | ⚡️Telegram = t.me/SOSkeyNET"
       - "pl1.song69.fun"
@@ -6419,11 +6206,13 @@ proxy-groups:
       - "🇨🇭198728 | ⚡️Telegram = t.me/SOSkeyNET"
       - "139.59.3.70"
       - "15.204.97.197"
-      - "@Vpn_Tehran ❤️ کانال تلگرام-1"
-      - "🇺🇸198482 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198883 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198918 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198882 | ⚡️Telegram = t.me/SOSkeyNET"
       - "@Vpn_Tehran 🩵 کانال تلگرام"
       - "51.158.206.87"
       - "51.158.206.8"
+      - "🇺🇸198884 | ⚡️Telegram = t.me/SOSkeyNET"
       - "@V2_MOD_SHOP-🇨🇭 🔥"
       - "@V2_MOD_SHOP-🇨🇭"
       - "@V2_MOD_SHOP-🇸🇪 🔥"
@@ -6438,33 +6227,35 @@ proxy-groups:
       - "🇪🇪198574 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198646 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198572 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇸🇬198520 | ⚡️Telegram = t.me/SOSkeyNET"
       - "165.245.182.116"
       - "Tel@MARAMBASHI 💟-2"
       - "🇮🇸198577 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198798 | ⚡️Telegram = t.me/SOSkeyNET"
       - "YFZ 137 @Outline_Vpn"
-      - "🇨🇦198436 | ⚡️Telegram = t.me/SOSkeyNET"
       - "Tel@MARAMBASHI 🇩🇪"
       - "Tel@MARAMBASHI 🇩🇪-1"
       - "Tel@MARAMBASHI 💟-3"
       - "🇺🇸198567 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇰🇬198521 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇯🇵198519 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇸🇬198573 | ⚡️Telegram = t.me/SOSkeyNET"
       - "@vpnbaz ☂️"
       - "🇨🇦198712 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198791 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇩🇪198866 | ⚡️Telegram = t.me/SOSkeyNET"
       - "snapp.doctor"
+      - "🇺🇸198958 | ⚡️Telegram = t.me/SOSkeyNET"
       - "snapp.ir-2"
       - "snapp.ir-3"
       - "141.98.24.151"
-      - "a7a0b15b3c94bb24.tunvi.w-ert.org"
-      - "a7a0b15b3c94bb24.tunvi.w-ert.org-1"
+      - "🇩🇪199013 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪199014 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪199015 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🌍199016 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇮199017 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇮199018 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇮199019 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🌍199020 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "***⚡***@V2ray_official-2"
       - "af14ee75949b3b21.tunvi.w-ert.org"
-      - "af14ee75949b3b21.tunvi.w-ert.org-1"
-      - "e29181f3ebfce73d.tunvi.w-ert.org"
       - "tun2.w-ert.org"
       - "138.124.105.75"
       - "f1.msljha8844.site"
@@ -6472,76 +6263,76 @@ proxy-groups:
       - "Tel@MARAMBASHI 💟-4"
       - "Tel@MARAMBASHI 💟-5"
       - "🇺🇸198867 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇻🇬198460 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇻🇬198461 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪198912 | ⚡️Telegram = t.me/SOSkeyNET"
       - "S3"
       - "193.223.107.102"
+      - "🇳🇱198973 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198816 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪198897 | ⚡️Telegram = t.me/SOSkeyNET"
       - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=reality&encryption=none&pbk=t4k236yDGdnUbfJSBl3KR7JzyLReVVRWEiVHMaE72XI&host=de2.wrenandroad.space&fp=chrome&type=xhttp&sni=de2.wrenandroad.space&sid=9b2e8eb7fea9860b#configraygan-18"
       - "de2.wrenandroad.space"
+      - "🇺🇸198951 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198953 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇮198972 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇪🇪198812 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇱🇻198962 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇱🇻198954 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇱🇻198963 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱198952 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇳🇱198811 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇵🇱198949 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇩🇪198727 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱198983 | ⚡️Telegram = t.me/SOSkeyNET"
       - "104.17.147.22"
       - "🇭🇰198815 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "16.59.172.93"
+      - "🇺🇸198999 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇦198971 | ⚡️Telegram = t.me/SOSkeyNET"
       - "user11.ionosio.ir-1"
-      - "Tel@MARAMBASHI 🇸🇪"
       - "V2raybazi-V2raybazi"
       - "f1.hamrahconf.ir"
+      - "🇩🇪198919 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198714 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198713 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇹🇷198868 | ⚡️Telegram = t.me/SOSkeyNET"
       - "84.200.33.52"
       - "104.21.3.219"
       - "ovhwuxian.pai50288.uk"
-      - "***⚡***@V2ray_official-1"
+      - "***⚡***@V2ray_official-3"
       - "funagfrdfs.alixxplay.com"
       - "🇯🇵198620 | ⚡️Telegram = t.me/SOSkeyNET"
       - "funagfrdfs.alixxplay.com-1"
       - "funagfrdfs.alixxplay.com-2"
+      - "***⚡***@V2ray_official-4"
       - "funagfrdfs.alixxplay.com-3"
       - "funagfrdfs.alixxplay.com-4"
       - "funagfrdfs.alixxplay.com-5"
+      - "***⚡***@V2ray_official-5"
       - "funagfrdfs.alixxplay.com-6"
-      - "***⚡***@V2ray_official-2"
       - "funagfrdfs.alixxplay.com-7"
+      - "***⚡***@V2ray_official-6"
       - "funagfrdfs.alixxplay.com-8"
       - "funagfrdfs.alixxplay.com-9"
       - "funagfrdfs.alixxplay.com-10"
+      - "***⚡***@V2ray_official-7"
       - "funagfrdfs.alixxplay.com-11"
-      - "🇸🇬198462 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "funagfrdfs.alixxplay.com-12"
-      - "***⚡***@V2ray_official-3"
-      - "funagfrdfs.alixxplay.com-13"
       - "🇯🇵198645 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "funagfrdfs.alixxplay.com-14"
-      - "funagfrdfs.alixxplay.com-15"
+      - "funagfrdfs.alixxplay.com-12"
+      - "funagfrdfs.alixxplay.com-13"
       - "🇰🇷198693 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇦🇪198689 | ⚡️Telegram = t.me/SOSkeyNET"
       - "51.77.144.182"
       - "94.139.180.178"
-      - "🇨🇦198518 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇮198911 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198627 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198702 | ⚡️Telegram = t.me/SOSkeyNET"
       - "104.18.4.46"
       - "185.143.234.120"
       - "netsecureteam.ir"
-      - "🇫🇷198443 | ⚡️Telegram = t.me/SOSkeyNET"
       - "13.143.162.138"
       - "cf.008500.xyz"
       - "94.183.165.146"
       - "45.131.4.192"
       - "ilya.itissia.shop-1"
-      - "84.21.189.25"
-      - "003342c6746b9754.tunvi.w-ert.org"
-      - "003342c6746b9754.tunvi.w-ert.org-1"
-      - "2acbb93545de216c.tunvi.w-ert.org"
-      - "3d98be61142753f3.tunvi.w-ert.org"
-      - "tun2.w-ert.org-1"
-      - "104.129.166.138"
-      - "135.125.123.246"
-      - "141.193.213.238"
       - "🇮🇷198817 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198819 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198821 | ⚡️Telegram = t.me/SOSkeyNET"
@@ -6556,135 +6347,114 @@ proxy-groups:
       - "r3mrcg007116sfa.cybervena.com"
       - "r3mrcg007150y7y.cybervena.com"
       - "r3mrcg007175dsk.cybervena.com"
-      - "🇮🇷198471 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇮🇷198472 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198936 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇮🇷198894 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇮🇷198895 | ⚡️Telegram = t.me/SOSkeyNET"
       - "119.159.245.24"
       - "185.163.1.90"
-      - "🇦🇱198435 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198980 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱198979 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇪198763 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198723 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "20.166.51.228"
-      - "@meliproxyy-1"
-      - "🇳🇱198419 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@meliproxyy-3"
+      - "configraygan-6"
       - "@i10VPN²"
-      - "🇺🇸198840 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇷🇴198901 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "dns3.m3hrzd.ir"
+      - "🇳🇱198957 | ⚡️Telegram = t.me/SOSkeyNET"
       - "102.37.156.224"
       - "54.37.78.130"
-      - "🇺🇸198512 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@meliproxyy-4"
       - "🇳🇱198861 | ⚡️Telegram = t.me/SOSkeyNET"
       - "configraygan-14"
       - "configraygan-27"
-      - "🇳🇱198447 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "configraygan-21"
       - "🇳🇱198637 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱198960 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇳🇱198641 | ⚡️Telegram = t.me/SOSkeyNET"
       - "82.38.31.208"
-      - "🇳🇱198429 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱198932 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱198961 | ⚡️Telegram = t.me/SOSkeyNET"
       - "82.38.31.218"
       - "57.129.140.88"
-      - "🇳🇱198440 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "YFZ 132 @Outline_Vpn"
       - "🇦🇱198700 | ⚡️Telegram = t.me/SOSkeyNET"
       - "configraygan-3"
       - "@vpnbaz ⭐"
       - "🇳🇱198686 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇳🇱198642 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇳🇱198448 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇳🇱198427 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "193.29.139.225"
       - "🇳🇱198639 | ⚡️Telegram = t.me/SOSkeyNET"
       - "configraygan-11"
-      - "@prrofile_purple | ViP ⚡***🐧***"
+      - "82.38.31.169"
+      - "🇳🇱198959 | ⚡️Telegram = t.me/SOSkeyNET"
       - "YFZ 153 @Outline_Vpn"
       - "🇳🇱198640 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198509 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "***⚡***@V2ray_official-4"
+      - "🇳🇱198904 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "***⚡***@V2ray_official-8"
       - "🇮🇷198869 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇯🇵198547 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇯🇵198546 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇯🇵198544 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇨🇦198541 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198538 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198539 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198445 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198540 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198537 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198536 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198543 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198542 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198545 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198525 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇸🇪198527 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇯🇵198528 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧198902 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇯🇵198886 | ⚡️Telegram = t.me/SOSkeyNET"
       - "38.180.216.114"
-      - "🇨🇿198410 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198634 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198857 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧198900 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇰🇷198696 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇮🇷198432 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198887 | ⚡️Telegram = t.me/SOSkeyNET"
       - "@i10VPN¹"
       - "YFZ 158 @Outline_Vpn"
       - "YFZ 142 @Outline_Vpn"
       - "@i10VPN⁶"
       - "@i10VPN⁵"
       - "@i10VPN⁴"
-      - "@Vpn_Tehran ❤️ کانال تلگرام-2"
-      - "🇺🇸198417 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇬🇧198526 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "YFZ 147 @Outline_Vpn"
+      - "@Vpn_Tehran ❤️ کانال تلگرام-1"
+      - "🇷🇺198975 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇦198888 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198885 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇦198889 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198578 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "198444 | @SOSkeyNET"
-      - "198441 | @SOSkeyNET"
-      - "198442 | @SOSkeyNET"
       - "🔵@chillguy_vpn"
       - "198677 | @SOSkeyNET"
-      - "@Vpn_Tehran ❤️ کانال تلگرام-3"
-      - "198464 | @SOSkeyNET"
-      - "198463 | @SOSkeyNET"
-      - "198490 | @SOSkeyNET"
+      - "@Vpn_Tehran ❤️ کانال تلگرام-2"
+      - "198955 | @SOSkeyNET"
       - "198800 | @SOSkeyNET"
+      - "198898 | @SOSkeyNET"
       - "198690 | @SOSkeyNET"
       - "198876 | @SOSkeyNET"
       - "198871 | @SOSkeyNET"
       - "198877 | @SOSkeyNET"
+      - "198878 | @SOSkeyNET"
       - "198870 | @SOSkeyNET"
       - "198873 | @SOSkeyNET"
       - "198875 | @SOSkeyNET"
       - "198680 | @SOSkeyNET"
       - "198681 | @SOSkeyNET"
+      - "198945 | @SOSkeyNET"
       - "198570 | @SOSkeyNET"
-      - "198534 | @SOSkeyNET"
       - "198764 | @SOSkeyNET"
-      - "198584 | @LonUp_M"
-      - "198580 | @LonUp_M"
       - "@Vpn_Tehran 🩵 کانال تلگرام-1"
-      - "@Vpn_Tehran ❤️ کانال تلگرام-4"
+      - "@Vpn_Tehran ❤️ کانال تلگرام-3"
       - "198695 | @SOSkeyNET"
       - "198765 | @SOSkeyNET"
-      - "198530 | @SOSkeyNET"
       - "198851 | @SOSkeyNET"
       - "198684 | @SOSkeyNET"
-      - "198532 | @SOSkeyNET"
-      - "198507 | @SOSkeyNET"
-      - "198554 | @LonUp_M"
-      - "198506 | @SOSkeyNET"
-      - "198422 | @SOSkeyNET"
-      - "198533 | @SOSkeyNET"
-      - "Türkiye - 10/22 @Config724"
-      - "198451 | @SOSkeyNET"
+      - "199011 | @SOSkeyNET"
+      - "199058 | @LonUp_M"
+      - "199010 | @SOSkeyNET"
       - "⚡️Telegram = @SOSkeyNET"
-      - "198474 | @LonUp_M"
+      - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&alpn=http/1.1&insecure=0&host=mitivpn.ac.ir&fp=chrome&type=ws&allowInsecure=0&sni=firefox.com#🇺🇸198998 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&alpn=http/1.1&insecure=0&host=mitivpn.ac.ir&fp=chrome&type=ws&allowInsecure=0&sni=firefox.com#🇺🇸198997 | ⚡️Telegram = t.me/SOSkeyNET"
       - "tjhg.m2k699.com"
-      - "🇩🇪198403 | ⚡️Telegram = t.me/SOSkeyNET"
       - "YFZ 156 @Outline_Vpn"
       - "🇵🇱198744 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "configraygan-20"
-      - "configraygan-10-1"
       - "🇩🇪198848 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇩🇪198849 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "de5.dedushka.top"
       - "configraygan-25"
       - "configraygan-22"
       - "configraygan-26-1"
-      - "configraygan-14-1"
       - "🇵🇱198761 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇲🇾198529 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198739 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198736 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198737 | ⚡️Telegram = t.me/SOSkeyNET"
@@ -6699,22 +6469,22 @@ proxy-groups:
       - "45.85.118.0"
       - "65.109.129.120"
       - "185.143.235.5"
-      - "🇸🇬198478 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇦198956 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198831 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇩🇪198557 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪198905 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇦198948 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198813 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198653 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇨🇦198449 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇲🇪198428 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇲🇪198452 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "YFZ 133 @Outline_Vpn"
       - "🇩🇪198746 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇫🇮198430 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "YFZ 140 @Outline_Vpn"
+      - "🇺🇸198976 | ⚡️Telegram = t.me/SOSkeyNET"
       - "v1.dabache.top"
       - "www.gossipglove.com"
       - "🇺🇸198854 | ⚡️Telegram = t.me/SOSkeyNET"
       - "configraygan-3-1"
-      - "configraygan-8-1"
+      - "🇨🇦198977 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "configraygan-8"
       - "configraygan-2"
       - "84.32.9.60"
       - "13.36.242.117-1"
@@ -6747,45 +6517,36 @@ proxy-groups:
       - "51.44.121.226-2"
       - "52.47.80.167-2"
       - "63.183.59.137-2"
-      - "🇫🇮198409 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇨🇦198517 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198827 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198719 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇨🇦198426 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198625 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇦198906 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇦198996 | ⚡️Telegram = t.me/SOSkeyNET"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
-    icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
     url: "https://www.gstatic.com/generate_204"
-    interval: 600
+    interval: 30
     tolerance: 50
-    timeout: 3200
-    lazy: false
-    max-failed-times: 2
+    lazy: true
     proxies:
-      - "🇺🇸198475 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198479 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198599 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇹🇼198602 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198624 | ⚡️Telegram = t.me/SOSkeyNET"
       - "@Vpn_Tehran 🤍 کانال تلگرام"
-      - "🇸🇪198477 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198484 | ⚡️Telegram = t.me/SOSkeyNET"
       - "199.232.78.170"
       - "199.232.78.160"
+      - "199.232.78.160-1"
+      - "199.232.78.160-2"
       - "185.94.29.156"
       - "84.247.129.205"
       - "🇮🇷198834 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇨🇦198437 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇨🇦198438 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "77.110.105.122"
+      - "YFZ 148 @Outline_Vpn"
       - "ziroxvnet.xyz"
       - "S2"
-      - "🇺🇸198476 | ⚡️Telegram = t.me/SOSkeyNET"
       - "104.16.63.239"
       - "ilya.itissia.shop"
       - "45.82.137.42"
-      - "🇺🇸198453 | ⚡️Telegram = t.me/SOSkeyNET"
       - "13.36.242.117"
       - "13.37.130.107"
       - "13.37.210.125"
@@ -6802,23 +6563,24 @@ proxy-groups:
       - "52.47.80.167"
       - "63.183.59.137"
       - "🇺🇸198629 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@meliproxyy"
       - "simcard.parhamm1.ir"
       - "🇫🇷198628 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇩🇰198458 | ⚡️Telegram = t.me/SOSkeyNET"
       - "172.64.32.133"
+      - "🇮🇹198922 | ⚡️Telegram = t.me/SOSkeyNET"
       - "kvm.iranhosting.mom"
       - "157.254.27.41"
       - "vix.nsa03.com"
       - "S1"
       - "xray1-direct-mci1-fs-ce.freesocks.work"
       - "🇩🇪198729 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198404 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇷198913 | ⚡️Telegram = t.me/SOSkeyNET"
       - "Tel@MARAMBASHI 💟"
       - "152.53.135.159"
       - "104.18.32.47"
       - "144.24.126.26"
       - "172.64.155.209"
-      - "🇺🇸198414 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇮🇷198970 | ⚡️Telegram = t.me/SOSkeyNET"
       - "shop.webchipro2.ir"
       - "104.18.12.229"
       - "104.18.13.229"
@@ -6829,21 +6591,21 @@ proxy-groups:
       - "185.143.233.200"
       - "game.celvixo.ir"
       - "172.67.132.185"
-      - "🇪🇸198405 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@meliproxyy-1"
       - "🇺🇸198601 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇳198560 | ⚡️Telegram = t.me/SOSkeyNET"
       - "sr4.laptopstock7.com"
       - "188.121.118.233"
       - "@Vpn_Tehran ❤️ کانال تلگرام"
-      - "🇺🇸198446 | ⚡️Telegram = t.me/SOSkeyNET"
       - "khaneh.berozsho.click"
-      - "configraygan-4"
+      - "38.107.232.36"
       - "snapp.ir"
       - "mellliiiii.dfgghhtrryuoknvc467ugdddfghjjgssfjhspeeeeeeedtest.net"
       - "🇬🇧198859 | ⚡️Telegram = t.me/SOSkeyNET"
       - "t11.iranwiki.mom"
       - "172.64.146.1"
       - "185.153.182.225"
+      - "🇷🇺198917 | ⚡️Telegram = t.me/SOSkeyNET"
       - "5.182.38.91"
       - "arvancloud.ir"
       - "🇸🇬198597 | ⚡️Telegram = t.me/SOSkeyNET"
@@ -6851,11 +6613,11 @@ proxy-groups:
       - "fi-h2-01.com"
       - "shop.webchipro2.ir-1"
       - "104.105.21.164"
+      - "🇨🇦198914 | ⚡️Telegram = t.me/SOSkeyNET"
       - "***⚡***@V2ray_official"
       - "2607:5300:205:200::8aeb"
       - "🇩🇪198732 | ⚡️Telegram = t.me/SOSkeyNET"
       - "185.125.103.147"
-      - "🇷🇺198469 | ⚡️Telegram = t.me/SOSkeyNET"
       - "user11.ionosio.ir"
       - "ir.gafe-lorbad.ir"
       - "146.75.57.238"
@@ -6869,16 +6631,16 @@ proxy-groups:
       - "🇮🇷198709 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198708 | ⚡️Telegram = t.me/SOSkeyNET"
       - "152.228.162.19"
-      - "@meliproxyy"
+      - "@meliproxyy-2"
       - "🇩🇪198638 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "v.dianawmoon.dpdns.org"
+      - "***⚡***@V2ray_official-1"
       - "snapp.ir-1"
-      - "38.47.97.90"
       - "95.129.234.165"
       - "2.188.227.168"
       - "104.16.9.24"
-      - "mpokwi.goalir.co.uk"
       - "85.133.207.94"
+      - "🇳🇱198891 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱198890 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198670 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇵🇱198666 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇬🇧198665 | ⚡️Telegram = t.me/SOSkeyNET"
@@ -6889,6 +6651,8 @@ proxy-groups:
       - "🇳🇱198662 | ⚡️Telegram = t.me/SOSkeyNET"
       - "104.24.45.247"
       - "91.99.207.135"
+      - "🇩🇪198974 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇷🇺198950 | ⚡️Telegram = t.me/SOSkeyNET"
       - "151.101.65.57"
       - "🇮🇷198786 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198787 | ⚡️Telegram = t.me/SOSkeyNET"
@@ -6896,22 +6660,15 @@ proxy-groups:
       - "150.40.126.22"
       - "@vpnbaz 🍭"
       - "@vpnbaz 🌊"
-      - "🇲🇩198513 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇸198809 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198456 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇲🇾198814 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇳198844 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198515 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198474 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198454 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198466 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198468 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198467 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇷🇺198893 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇵🇱198947 | ⚡️Telegram = t.me/SOSkeyNET"
       - "iraclud.falnexa.ir"
       - "iran.vokral.ir"
       - "185.93.3.39"
       - "🇩🇪198847 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇳🇱198485 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198616 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198596 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198673 | ⚡️Telegram = t.me/SOSkeyNET"
@@ -6924,12 +6681,14 @@ proxy-groups:
       - "152.233.28.198"
       - "152.233.28.198-1"
       - "uk1.fromblancwithlove.com"
-      - "🇦🇪198483 | ⚡️Telegram = t.me/SOSkeyNET"
       - "193.105.234.79"
       - "Tel@MARAMBASHI 💟-1"
       - "🇺🇸198615 | ⚡️Telegram = t.me/SOSkeyNET"
       - "YFZ 130 @Outline_Vpn"
       - "🇮🇷198644 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198939 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198938 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198937 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇩🇪198626 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇩🇪198622 | ⚡️Telegram = t.me/SOSkeyNET"
       - "pl1.song69.fun"
@@ -6948,11 +6707,13 @@ proxy-groups:
       - "🇨🇭198728 | ⚡️Telegram = t.me/SOSkeyNET"
       - "139.59.3.70"
       - "15.204.97.197"
-      - "@Vpn_Tehran ❤️ کانال تلگرام-1"
-      - "🇺🇸198482 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198883 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198918 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198882 | ⚡️Telegram = t.me/SOSkeyNET"
       - "@Vpn_Tehran 🩵 کانال تلگرام"
       - "51.158.206.87"
       - "51.158.206.8"
+      - "🇺🇸198884 | ⚡️Telegram = t.me/SOSkeyNET"
       - "@V2_MOD_SHOP-🇨🇭 🔥"
       - "@V2_MOD_SHOP-🇨🇭"
       - "@V2_MOD_SHOP-🇸🇪 🔥"
@@ -6967,33 +6728,35 @@ proxy-groups:
       - "🇪🇪198574 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198646 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198572 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇸🇬198520 | ⚡️Telegram = t.me/SOSkeyNET"
       - "165.245.182.116"
       - "Tel@MARAMBASHI 💟-2"
       - "🇮🇸198577 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198798 | ⚡️Telegram = t.me/SOSkeyNET"
       - "YFZ 137 @Outline_Vpn"
-      - "🇨🇦198436 | ⚡️Telegram = t.me/SOSkeyNET"
       - "Tel@MARAMBASHI 🇩🇪"
       - "Tel@MARAMBASHI 🇩🇪-1"
       - "Tel@MARAMBASHI 💟-3"
       - "🇺🇸198567 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇰🇬198521 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇯🇵198519 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇸🇬198573 | ⚡️Telegram = t.me/SOSkeyNET"
       - "@vpnbaz ☂️"
       - "🇨🇦198712 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198791 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇩🇪198866 | ⚡️Telegram = t.me/SOSkeyNET"
       - "snapp.doctor"
+      - "🇺🇸198958 | ⚡️Telegram = t.me/SOSkeyNET"
       - "snapp.ir-2"
       - "snapp.ir-3"
       - "141.98.24.151"
-      - "a7a0b15b3c94bb24.tunvi.w-ert.org"
-      - "a7a0b15b3c94bb24.tunvi.w-ert.org-1"
+      - "🇩🇪199013 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪199014 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪199015 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🌍199016 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇮199017 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇮199018 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇮199019 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🌍199020 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "***⚡***@V2ray_official-2"
       - "af14ee75949b3b21.tunvi.w-ert.org"
-      - "af14ee75949b3b21.tunvi.w-ert.org-1"
-      - "e29181f3ebfce73d.tunvi.w-ert.org"
       - "tun2.w-ert.org"
       - "138.124.105.75"
       - "f1.msljha8844.site"
@@ -7001,76 +6764,76 @@ proxy-groups:
       - "Tel@MARAMBASHI 💟-4"
       - "Tel@MARAMBASHI 💟-5"
       - "🇺🇸198867 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇻🇬198460 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇻🇬198461 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪198912 | ⚡️Telegram = t.me/SOSkeyNET"
       - "S3"
       - "193.223.107.102"
+      - "🇳🇱198973 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198816 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪198897 | ⚡️Telegram = t.me/SOSkeyNET"
       - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=reality&encryption=none&pbk=t4k236yDGdnUbfJSBl3KR7JzyLReVVRWEiVHMaE72XI&host=de2.wrenandroad.space&fp=chrome&type=xhttp&sni=de2.wrenandroad.space&sid=9b2e8eb7fea9860b#configraygan-18"
       - "de2.wrenandroad.space"
+      - "🇺🇸198951 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198953 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇮198972 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇪🇪198812 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇱🇻198962 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇱🇻198954 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇱🇻198963 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱198952 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇳🇱198811 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇵🇱198949 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇩🇪198727 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱198983 | ⚡️Telegram = t.me/SOSkeyNET"
       - "104.17.147.22"
       - "🇭🇰198815 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "16.59.172.93"
+      - "🇺🇸198999 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇦198971 | ⚡️Telegram = t.me/SOSkeyNET"
       - "user11.ionosio.ir-1"
-      - "Tel@MARAMBASHI 🇸🇪"
       - "V2raybazi-V2raybazi"
       - "f1.hamrahconf.ir"
+      - "🇩🇪198919 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198714 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198713 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇹🇷198868 | ⚡️Telegram = t.me/SOSkeyNET"
       - "84.200.33.52"
       - "104.21.3.219"
       - "ovhwuxian.pai50288.uk"
-      - "***⚡***@V2ray_official-1"
+      - "***⚡***@V2ray_official-3"
       - "funagfrdfs.alixxplay.com"
       - "🇯🇵198620 | ⚡️Telegram = t.me/SOSkeyNET"
       - "funagfrdfs.alixxplay.com-1"
       - "funagfrdfs.alixxplay.com-2"
+      - "***⚡***@V2ray_official-4"
       - "funagfrdfs.alixxplay.com-3"
       - "funagfrdfs.alixxplay.com-4"
       - "funagfrdfs.alixxplay.com-5"
+      - "***⚡***@V2ray_official-5"
       - "funagfrdfs.alixxplay.com-6"
-      - "***⚡***@V2ray_official-2"
       - "funagfrdfs.alixxplay.com-7"
+      - "***⚡***@V2ray_official-6"
       - "funagfrdfs.alixxplay.com-8"
       - "funagfrdfs.alixxplay.com-9"
       - "funagfrdfs.alixxplay.com-10"
+      - "***⚡***@V2ray_official-7"
       - "funagfrdfs.alixxplay.com-11"
-      - "🇸🇬198462 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "funagfrdfs.alixxplay.com-12"
-      - "***⚡***@V2ray_official-3"
-      - "funagfrdfs.alixxplay.com-13"
       - "🇯🇵198645 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "funagfrdfs.alixxplay.com-14"
-      - "funagfrdfs.alixxplay.com-15"
+      - "funagfrdfs.alixxplay.com-12"
+      - "funagfrdfs.alixxplay.com-13"
       - "🇰🇷198693 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇦🇪198689 | ⚡️Telegram = t.me/SOSkeyNET"
       - "51.77.144.182"
       - "94.139.180.178"
-      - "🇨🇦198518 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇮198911 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198627 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198702 | ⚡️Telegram = t.me/SOSkeyNET"
       - "104.18.4.46"
       - "185.143.234.120"
       - "netsecureteam.ir"
-      - "🇫🇷198443 | ⚡️Telegram = t.me/SOSkeyNET"
       - "13.143.162.138"
       - "cf.008500.xyz"
       - "94.183.165.146"
       - "45.131.4.192"
       - "ilya.itissia.shop-1"
-      - "84.21.189.25"
-      - "003342c6746b9754.tunvi.w-ert.org"
-      - "003342c6746b9754.tunvi.w-ert.org-1"
-      - "2acbb93545de216c.tunvi.w-ert.org"
-      - "3d98be61142753f3.tunvi.w-ert.org"
-      - "tun2.w-ert.org-1"
-      - "104.129.166.138"
-      - "135.125.123.246"
-      - "141.193.213.238"
       - "🇮🇷198817 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198819 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198821 | ⚡️Telegram = t.me/SOSkeyNET"
@@ -7085,135 +6848,114 @@ proxy-groups:
       - "r3mrcg007116sfa.cybervena.com"
       - "r3mrcg007150y7y.cybervena.com"
       - "r3mrcg007175dsk.cybervena.com"
-      - "🇮🇷198471 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇮🇷198472 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198936 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇮🇷198894 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇮🇷198895 | ⚡️Telegram = t.me/SOSkeyNET"
       - "119.159.245.24"
       - "185.163.1.90"
-      - "🇦🇱198435 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198980 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱198979 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇪198763 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198723 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "20.166.51.228"
-      - "@meliproxyy-1"
-      - "🇳🇱198419 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@meliproxyy-3"
+      - "configraygan-6"
       - "@i10VPN²"
-      - "🇺🇸198840 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇷🇴198901 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "dns3.m3hrzd.ir"
+      - "🇳🇱198957 | ⚡️Telegram = t.me/SOSkeyNET"
       - "102.37.156.224"
       - "54.37.78.130"
-      - "🇺🇸198512 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@meliproxyy-4"
       - "🇳🇱198861 | ⚡️Telegram = t.me/SOSkeyNET"
       - "configraygan-14"
       - "configraygan-27"
-      - "🇳🇱198447 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "configraygan-21"
       - "🇳🇱198637 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱198960 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇳🇱198641 | ⚡️Telegram = t.me/SOSkeyNET"
       - "82.38.31.208"
-      - "🇳🇱198429 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱198932 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱198961 | ⚡️Telegram = t.me/SOSkeyNET"
       - "82.38.31.218"
       - "57.129.140.88"
-      - "🇳🇱198440 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "YFZ 132 @Outline_Vpn"
       - "🇦🇱198700 | ⚡️Telegram = t.me/SOSkeyNET"
       - "configraygan-3"
       - "@vpnbaz ⭐"
       - "🇳🇱198686 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇳🇱198642 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇳🇱198448 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇳🇱198427 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "193.29.139.225"
       - "🇳🇱198639 | ⚡️Telegram = t.me/SOSkeyNET"
       - "configraygan-11"
-      - "@prrofile_purple | ViP ⚡***🐧***"
+      - "82.38.31.169"
+      - "🇳🇱198959 | ⚡️Telegram = t.me/SOSkeyNET"
       - "YFZ 153 @Outline_Vpn"
       - "🇳🇱198640 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198509 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "***⚡***@V2ray_official-4"
+      - "🇳🇱198904 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "***⚡***@V2ray_official-8"
       - "🇮🇷198869 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇯🇵198547 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇯🇵198546 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇯🇵198544 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇨🇦198541 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198538 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198539 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198445 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198540 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198537 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198536 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198543 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198542 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198545 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198525 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇸🇪198527 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇯🇵198528 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧198902 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇯🇵198886 | ⚡️Telegram = t.me/SOSkeyNET"
       - "38.180.216.114"
-      - "🇨🇿198410 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198634 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198857 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧198900 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇰🇷198696 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇮🇷198432 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198887 | ⚡️Telegram = t.me/SOSkeyNET"
       - "@i10VPN¹"
       - "YFZ 158 @Outline_Vpn"
       - "YFZ 142 @Outline_Vpn"
       - "@i10VPN⁶"
       - "@i10VPN⁵"
       - "@i10VPN⁴"
-      - "@Vpn_Tehran ❤️ کانال تلگرام-2"
-      - "🇺🇸198417 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇬🇧198526 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "YFZ 147 @Outline_Vpn"
+      - "@Vpn_Tehran ❤️ کانال تلگرام-1"
+      - "🇷🇺198975 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇦198888 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198885 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇦198889 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198578 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "198444 | @SOSkeyNET"
-      - "198441 | @SOSkeyNET"
-      - "198442 | @SOSkeyNET"
       - "🔵@chillguy_vpn"
       - "198677 | @SOSkeyNET"
-      - "@Vpn_Tehran ❤️ کانال تلگرام-3"
-      - "198464 | @SOSkeyNET"
-      - "198463 | @SOSkeyNET"
-      - "198490 | @SOSkeyNET"
+      - "@Vpn_Tehran ❤️ کانال تلگرام-2"
+      - "198955 | @SOSkeyNET"
       - "198800 | @SOSkeyNET"
+      - "198898 | @SOSkeyNET"
       - "198690 | @SOSkeyNET"
       - "198876 | @SOSkeyNET"
       - "198871 | @SOSkeyNET"
       - "198877 | @SOSkeyNET"
+      - "198878 | @SOSkeyNET"
       - "198870 | @SOSkeyNET"
       - "198873 | @SOSkeyNET"
       - "198875 | @SOSkeyNET"
       - "198680 | @SOSkeyNET"
       - "198681 | @SOSkeyNET"
+      - "198945 | @SOSkeyNET"
       - "198570 | @SOSkeyNET"
-      - "198534 | @SOSkeyNET"
       - "198764 | @SOSkeyNET"
-      - "198584 | @LonUp_M"
-      - "198580 | @LonUp_M"
       - "@Vpn_Tehran 🩵 کانال تلگرام-1"
-      - "@Vpn_Tehran ❤️ کانال تلگرام-4"
+      - "@Vpn_Tehran ❤️ کانال تلگرام-3"
       - "198695 | @SOSkeyNET"
       - "198765 | @SOSkeyNET"
-      - "198530 | @SOSkeyNET"
       - "198851 | @SOSkeyNET"
       - "198684 | @SOSkeyNET"
-      - "198532 | @SOSkeyNET"
-      - "198507 | @SOSkeyNET"
-      - "198554 | @LonUp_M"
-      - "198506 | @SOSkeyNET"
-      - "198422 | @SOSkeyNET"
-      - "198533 | @SOSkeyNET"
-      - "Türkiye - 10/22 @Config724"
-      - "198451 | @SOSkeyNET"
+      - "199011 | @SOSkeyNET"
+      - "199058 | @LonUp_M"
+      - "199010 | @SOSkeyNET"
       - "⚡️Telegram = @SOSkeyNET"
-      - "198474 | @LonUp_M"
+      - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&alpn=http/1.1&insecure=0&host=mitivpn.ac.ir&fp=chrome&type=ws&allowInsecure=0&sni=firefox.com#🇺🇸198998 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&alpn=http/1.1&insecure=0&host=mitivpn.ac.ir&fp=chrome&type=ws&allowInsecure=0&sni=firefox.com#🇺🇸198997 | ⚡️Telegram = t.me/SOSkeyNET"
       - "tjhg.m2k699.com"
-      - "🇩🇪198403 | ⚡️Telegram = t.me/SOSkeyNET"
       - "YFZ 156 @Outline_Vpn"
       - "🇵🇱198744 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "configraygan-20"
-      - "configraygan-10-1"
       - "🇩🇪198848 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇩🇪198849 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "de5.dedushka.top"
       - "configraygan-25"
       - "configraygan-22"
       - "configraygan-26-1"
-      - "configraygan-14-1"
       - "🇵🇱198761 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇲🇾198529 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198739 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198736 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198737 | ⚡️Telegram = t.me/SOSkeyNET"
@@ -7228,22 +6970,22 @@ proxy-groups:
       - "45.85.118.0"
       - "65.109.129.120"
       - "185.143.235.5"
-      - "🇸🇬198478 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇦198956 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198831 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇩🇪198557 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪198905 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇦198948 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198813 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198653 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇨🇦198449 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇲🇪198428 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇲🇪198452 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "YFZ 133 @Outline_Vpn"
       - "🇩🇪198746 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇫🇮198430 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "YFZ 140 @Outline_Vpn"
+      - "🇺🇸198976 | ⚡️Telegram = t.me/SOSkeyNET"
       - "v1.dabache.top"
       - "www.gossipglove.com"
       - "🇺🇸198854 | ⚡️Telegram = t.me/SOSkeyNET"
       - "configraygan-3-1"
-      - "configraygan-8-1"
+      - "🇨🇦198977 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "configraygan-8"
       - "configraygan-2"
       - "84.32.9.60"
       - "13.36.242.117-1"
@@ -7276,44 +7018,37 @@ proxy-groups:
       - "51.44.121.226-2"
       - "52.47.80.167-2"
       - "63.183.59.137-2"
-      - "🇫🇮198409 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇨🇦198517 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198827 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198719 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇨🇦198426 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198625 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇦198906 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇦198996 | ⚡️Telegram = t.me/SOSkeyNET"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
-    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
     strategy: "round-robin"
     url: "https://www.gstatic.com/generate_204"
     interval: 30
+    lazy: true
     timeout: 1500
-    lazy: false
     proxies:
-      - "🇺🇸198475 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198479 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198599 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇹🇼198602 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198624 | ⚡️Telegram = t.me/SOSkeyNET"
       - "@Vpn_Tehran 🤍 کانال تلگرام"
-      - "🇸🇪198477 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198484 | ⚡️Telegram = t.me/SOSkeyNET"
       - "199.232.78.170"
       - "199.232.78.160"
+      - "199.232.78.160-1"
+      - "199.232.78.160-2"
       - "185.94.29.156"
       - "84.247.129.205"
       - "🇮🇷198834 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇨🇦198437 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇨🇦198438 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "77.110.105.122"
+      - "YFZ 148 @Outline_Vpn"
       - "ziroxvnet.xyz"
       - "S2"
-      - "🇺🇸198476 | ⚡️Telegram = t.me/SOSkeyNET"
       - "104.16.63.239"
       - "ilya.itissia.shop"
       - "45.82.137.42"
-      - "🇺🇸198453 | ⚡️Telegram = t.me/SOSkeyNET"
       - "13.36.242.117"
       - "13.37.130.107"
       - "13.37.210.125"
@@ -7330,23 +7065,24 @@ proxy-groups:
       - "52.47.80.167"
       - "63.183.59.137"
       - "🇺🇸198629 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@meliproxyy"
       - "simcard.parhamm1.ir"
       - "🇫🇷198628 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇩🇰198458 | ⚡️Telegram = t.me/SOSkeyNET"
       - "172.64.32.133"
+      - "🇮🇹198922 | ⚡️Telegram = t.me/SOSkeyNET"
       - "kvm.iranhosting.mom"
       - "157.254.27.41"
       - "vix.nsa03.com"
       - "S1"
       - "xray1-direct-mci1-fs-ce.freesocks.work"
       - "🇩🇪198729 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198404 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇷198913 | ⚡️Telegram = t.me/SOSkeyNET"
       - "Tel@MARAMBASHI 💟"
       - "152.53.135.159"
       - "104.18.32.47"
       - "144.24.126.26"
       - "172.64.155.209"
-      - "🇺🇸198414 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇮🇷198970 | ⚡️Telegram = t.me/SOSkeyNET"
       - "shop.webchipro2.ir"
       - "104.18.12.229"
       - "104.18.13.229"
@@ -7357,21 +7093,21 @@ proxy-groups:
       - "185.143.233.200"
       - "game.celvixo.ir"
       - "172.67.132.185"
-      - "🇪🇸198405 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@meliproxyy-1"
       - "🇺🇸198601 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇳198560 | ⚡️Telegram = t.me/SOSkeyNET"
       - "sr4.laptopstock7.com"
       - "188.121.118.233"
       - "@Vpn_Tehran ❤️ کانال تلگرام"
-      - "🇺🇸198446 | ⚡️Telegram = t.me/SOSkeyNET"
       - "khaneh.berozsho.click"
-      - "configraygan-4"
+      - "38.107.232.36"
       - "snapp.ir"
       - "mellliiiii.dfgghhtrryuoknvc467ugdddfghjjgssfjhspeeeeeeedtest.net"
       - "🇬🇧198859 | ⚡️Telegram = t.me/SOSkeyNET"
       - "t11.iranwiki.mom"
       - "172.64.146.1"
       - "185.153.182.225"
+      - "🇷🇺198917 | ⚡️Telegram = t.me/SOSkeyNET"
       - "5.182.38.91"
       - "arvancloud.ir"
       - "🇸🇬198597 | ⚡️Telegram = t.me/SOSkeyNET"
@@ -7379,11 +7115,11 @@ proxy-groups:
       - "fi-h2-01.com"
       - "shop.webchipro2.ir-1"
       - "104.105.21.164"
+      - "🇨🇦198914 | ⚡️Telegram = t.me/SOSkeyNET"
       - "***⚡***@V2ray_official"
       - "2607:5300:205:200::8aeb"
       - "🇩🇪198732 | ⚡️Telegram = t.me/SOSkeyNET"
       - "185.125.103.147"
-      - "🇷🇺198469 | ⚡️Telegram = t.me/SOSkeyNET"
       - "user11.ionosio.ir"
       - "ir.gafe-lorbad.ir"
       - "146.75.57.238"
@@ -7397,16 +7133,16 @@ proxy-groups:
       - "🇮🇷198709 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198708 | ⚡️Telegram = t.me/SOSkeyNET"
       - "152.228.162.19"
-      - "@meliproxyy"
+      - "@meliproxyy-2"
       - "🇩🇪198638 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "v.dianawmoon.dpdns.org"
+      - "***⚡***@V2ray_official-1"
       - "snapp.ir-1"
-      - "38.47.97.90"
       - "95.129.234.165"
       - "2.188.227.168"
       - "104.16.9.24"
-      - "mpokwi.goalir.co.uk"
       - "85.133.207.94"
+      - "🇳🇱198891 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱198890 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198670 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇵🇱198666 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇬🇧198665 | ⚡️Telegram = t.me/SOSkeyNET"
@@ -7417,6 +7153,8 @@ proxy-groups:
       - "🇳🇱198662 | ⚡️Telegram = t.me/SOSkeyNET"
       - "104.24.45.247"
       - "91.99.207.135"
+      - "🇩🇪198974 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇷🇺198950 | ⚡️Telegram = t.me/SOSkeyNET"
       - "151.101.65.57"
       - "🇮🇷198786 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198787 | ⚡️Telegram = t.me/SOSkeyNET"
@@ -7424,22 +7162,15 @@ proxy-groups:
       - "150.40.126.22"
       - "@vpnbaz 🍭"
       - "@vpnbaz 🌊"
-      - "🇲🇩198513 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇸198809 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198456 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇲🇾198814 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇳198844 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198515 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198474 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198454 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198466 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198468 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇷🇺198467 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇷🇺198893 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇵🇱198947 | ⚡️Telegram = t.me/SOSkeyNET"
       - "iraclud.falnexa.ir"
       - "iran.vokral.ir"
       - "185.93.3.39"
       - "🇩🇪198847 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇳🇱198485 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198616 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198596 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198673 | ⚡️Telegram = t.me/SOSkeyNET"
@@ -7452,12 +7183,14 @@ proxy-groups:
       - "152.233.28.198"
       - "152.233.28.198-1"
       - "uk1.fromblancwithlove.com"
-      - "🇦🇪198483 | ⚡️Telegram = t.me/SOSkeyNET"
       - "193.105.234.79"
       - "Tel@MARAMBASHI 💟-1"
       - "🇺🇸198615 | ⚡️Telegram = t.me/SOSkeyNET"
       - "YFZ 130 @Outline_Vpn"
       - "🇮🇷198644 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198939 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198938 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198937 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇩🇪198626 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇩🇪198622 | ⚡️Telegram = t.me/SOSkeyNET"
       - "pl1.song69.fun"
@@ -7476,11 +7209,13 @@ proxy-groups:
       - "🇨🇭198728 | ⚡️Telegram = t.me/SOSkeyNET"
       - "139.59.3.70"
       - "15.204.97.197"
-      - "@Vpn_Tehran ❤️ کانال تلگرام-1"
-      - "🇺🇸198482 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198883 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198918 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198882 | ⚡️Telegram = t.me/SOSkeyNET"
       - "@Vpn_Tehran 🩵 کانال تلگرام"
       - "51.158.206.87"
       - "51.158.206.8"
+      - "🇺🇸198884 | ⚡️Telegram = t.me/SOSkeyNET"
       - "@V2_MOD_SHOP-🇨🇭 🔥"
       - "@V2_MOD_SHOP-🇨🇭"
       - "@V2_MOD_SHOP-🇸🇪 🔥"
@@ -7495,33 +7230,35 @@ proxy-groups:
       - "🇪🇪198574 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198646 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198572 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇸🇬198520 | ⚡️Telegram = t.me/SOSkeyNET"
       - "165.245.182.116"
       - "Tel@MARAMBASHI 💟-2"
       - "🇮🇸198577 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198798 | ⚡️Telegram = t.me/SOSkeyNET"
       - "YFZ 137 @Outline_Vpn"
-      - "🇨🇦198436 | ⚡️Telegram = t.me/SOSkeyNET"
       - "Tel@MARAMBASHI 🇩🇪"
       - "Tel@MARAMBASHI 🇩🇪-1"
       - "Tel@MARAMBASHI 💟-3"
       - "🇺🇸198567 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇰🇬198521 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇯🇵198519 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇸🇬198573 | ⚡️Telegram = t.me/SOSkeyNET"
       - "@vpnbaz ☂️"
       - "🇨🇦198712 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198791 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇩🇪198866 | ⚡️Telegram = t.me/SOSkeyNET"
       - "snapp.doctor"
+      - "🇺🇸198958 | ⚡️Telegram = t.me/SOSkeyNET"
       - "snapp.ir-2"
       - "snapp.ir-3"
       - "141.98.24.151"
-      - "a7a0b15b3c94bb24.tunvi.w-ert.org"
-      - "a7a0b15b3c94bb24.tunvi.w-ert.org-1"
+      - "🇩🇪199013 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪199014 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪199015 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🌍199016 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇮199017 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇮199018 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇮199019 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🌍199020 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "***⚡***@V2ray_official-2"
       - "af14ee75949b3b21.tunvi.w-ert.org"
-      - "af14ee75949b3b21.tunvi.w-ert.org-1"
-      - "e29181f3ebfce73d.tunvi.w-ert.org"
       - "tun2.w-ert.org"
       - "138.124.105.75"
       - "f1.msljha8844.site"
@@ -7529,76 +7266,76 @@ proxy-groups:
       - "Tel@MARAMBASHI 💟-4"
       - "Tel@MARAMBASHI 💟-5"
       - "🇺🇸198867 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇻🇬198460 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇻🇬198461 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪198912 | ⚡️Telegram = t.me/SOSkeyNET"
       - "S3"
       - "193.223.107.102"
+      - "🇳🇱198973 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198816 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪198897 | ⚡️Telegram = t.me/SOSkeyNET"
       - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=reality&encryption=none&pbk=t4k236yDGdnUbfJSBl3KR7JzyLReVVRWEiVHMaE72XI&host=de2.wrenandroad.space&fp=chrome&type=xhttp&sni=de2.wrenandroad.space&sid=9b2e8eb7fea9860b#configraygan-18"
       - "de2.wrenandroad.space"
+      - "🇺🇸198951 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198953 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇮198972 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇪🇪198812 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇱🇻198962 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇱🇻198954 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇱🇻198963 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱198952 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇳🇱198811 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇵🇱198949 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇩🇪198727 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱198983 | ⚡️Telegram = t.me/SOSkeyNET"
       - "104.17.147.22"
       - "🇭🇰198815 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "16.59.172.93"
+      - "🇺🇸198999 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇦198971 | ⚡️Telegram = t.me/SOSkeyNET"
       - "user11.ionosio.ir-1"
-      - "Tel@MARAMBASHI 🇸🇪"
       - "V2raybazi-V2raybazi"
       - "f1.hamrahconf.ir"
+      - "🇩🇪198919 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198714 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198713 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇹🇷198868 | ⚡️Telegram = t.me/SOSkeyNET"
       - "84.200.33.52"
       - "104.21.3.219"
       - "ovhwuxian.pai50288.uk"
-      - "***⚡***@V2ray_official-1"
+      - "***⚡***@V2ray_official-3"
       - "funagfrdfs.alixxplay.com"
       - "🇯🇵198620 | ⚡️Telegram = t.me/SOSkeyNET"
       - "funagfrdfs.alixxplay.com-1"
       - "funagfrdfs.alixxplay.com-2"
+      - "***⚡***@V2ray_official-4"
       - "funagfrdfs.alixxplay.com-3"
       - "funagfrdfs.alixxplay.com-4"
       - "funagfrdfs.alixxplay.com-5"
+      - "***⚡***@V2ray_official-5"
       - "funagfrdfs.alixxplay.com-6"
-      - "***⚡***@V2ray_official-2"
       - "funagfrdfs.alixxplay.com-7"
+      - "***⚡***@V2ray_official-6"
       - "funagfrdfs.alixxplay.com-8"
       - "funagfrdfs.alixxplay.com-9"
       - "funagfrdfs.alixxplay.com-10"
+      - "***⚡***@V2ray_official-7"
       - "funagfrdfs.alixxplay.com-11"
-      - "🇸🇬198462 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "funagfrdfs.alixxplay.com-12"
-      - "***⚡***@V2ray_official-3"
-      - "funagfrdfs.alixxplay.com-13"
       - "🇯🇵198645 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "funagfrdfs.alixxplay.com-14"
-      - "funagfrdfs.alixxplay.com-15"
+      - "funagfrdfs.alixxplay.com-12"
+      - "funagfrdfs.alixxplay.com-13"
       - "🇰🇷198693 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇦🇪198689 | ⚡️Telegram = t.me/SOSkeyNET"
       - "51.77.144.182"
       - "94.139.180.178"
-      - "🇨🇦198518 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇮198911 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198627 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198702 | ⚡️Telegram = t.me/SOSkeyNET"
       - "104.18.4.46"
       - "185.143.234.120"
       - "netsecureteam.ir"
-      - "🇫🇷198443 | ⚡️Telegram = t.me/SOSkeyNET"
       - "13.143.162.138"
       - "cf.008500.xyz"
       - "94.183.165.146"
       - "45.131.4.192"
       - "ilya.itissia.shop-1"
-      - "84.21.189.25"
-      - "003342c6746b9754.tunvi.w-ert.org"
-      - "003342c6746b9754.tunvi.w-ert.org-1"
-      - "2acbb93545de216c.tunvi.w-ert.org"
-      - "3d98be61142753f3.tunvi.w-ert.org"
-      - "tun2.w-ert.org-1"
-      - "104.129.166.138"
-      - "135.125.123.246"
-      - "141.193.213.238"
       - "🇮🇷198817 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198819 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198821 | ⚡️Telegram = t.me/SOSkeyNET"
@@ -7613,135 +7350,114 @@ proxy-groups:
       - "r3mrcg007116sfa.cybervena.com"
       - "r3mrcg007150y7y.cybervena.com"
       - "r3mrcg007175dsk.cybervena.com"
-      - "🇮🇷198471 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇮🇷198472 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198936 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇮🇷198894 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇮🇷198895 | ⚡️Telegram = t.me/SOSkeyNET"
       - "119.159.245.24"
       - "185.163.1.90"
-      - "🇦🇱198435 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198980 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱198979 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇪198763 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198723 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "20.166.51.228"
-      - "@meliproxyy-1"
-      - "🇳🇱198419 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@meliproxyy-3"
+      - "configraygan-6"
       - "@i10VPN²"
-      - "🇺🇸198840 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇷🇴198901 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "dns3.m3hrzd.ir"
+      - "🇳🇱198957 | ⚡️Telegram = t.me/SOSkeyNET"
       - "102.37.156.224"
       - "54.37.78.130"
-      - "🇺🇸198512 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@meliproxyy-4"
       - "🇳🇱198861 | ⚡️Telegram = t.me/SOSkeyNET"
       - "configraygan-14"
       - "configraygan-27"
-      - "🇳🇱198447 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "configraygan-21"
       - "🇳🇱198637 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱198960 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇳🇱198641 | ⚡️Telegram = t.me/SOSkeyNET"
       - "82.38.31.208"
-      - "🇳🇱198429 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱198932 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱198961 | ⚡️Telegram = t.me/SOSkeyNET"
       - "82.38.31.218"
       - "57.129.140.88"
-      - "🇳🇱198440 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "YFZ 132 @Outline_Vpn"
       - "🇦🇱198700 | ⚡️Telegram = t.me/SOSkeyNET"
       - "configraygan-3"
       - "@vpnbaz ⭐"
       - "🇳🇱198686 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇳🇱198642 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇳🇱198448 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇳🇱198427 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "193.29.139.225"
       - "🇳🇱198639 | ⚡️Telegram = t.me/SOSkeyNET"
       - "configraygan-11"
-      - "@prrofile_purple | ViP ⚡***🐧***"
+      - "82.38.31.169"
+      - "🇳🇱198959 | ⚡️Telegram = t.me/SOSkeyNET"
       - "YFZ 153 @Outline_Vpn"
       - "🇳🇱198640 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198509 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "***⚡***@V2ray_official-4"
+      - "🇳🇱198904 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "***⚡***@V2ray_official-8"
       - "🇮🇷198869 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇯🇵198547 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇯🇵198546 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇯🇵198544 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇨🇦198541 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198538 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198539 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198445 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198540 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198537 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198536 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198543 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198542 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198545 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸198525 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇸🇪198527 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇯🇵198528 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧198902 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇯🇵198886 | ⚡️Telegram = t.me/SOSkeyNET"
       - "38.180.216.114"
-      - "🇨🇿198410 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198634 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇷🇺198857 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇬🇧198900 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇰🇷198696 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇮🇷198432 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198887 | ⚡️Telegram = t.me/SOSkeyNET"
       - "@i10VPN¹"
       - "YFZ 158 @Outline_Vpn"
       - "YFZ 142 @Outline_Vpn"
       - "@i10VPN⁶"
       - "@i10VPN⁵"
       - "@i10VPN⁴"
-      - "@Vpn_Tehran ❤️ کانال تلگرام-2"
-      - "🇺🇸198417 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇬🇧198526 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "YFZ 147 @Outline_Vpn"
+      - "@Vpn_Tehran ❤️ کانال تلگرام-1"
+      - "🇷🇺198975 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇦198888 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸198885 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇦198889 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198578 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "198444 | @SOSkeyNET"
-      - "198441 | @SOSkeyNET"
-      - "198442 | @SOSkeyNET"
       - "🔵@chillguy_vpn"
       - "198677 | @SOSkeyNET"
-      - "@Vpn_Tehran ❤️ کانال تلگرام-3"
-      - "198464 | @SOSkeyNET"
-      - "198463 | @SOSkeyNET"
-      - "198490 | @SOSkeyNET"
+      - "@Vpn_Tehran ❤️ کانال تلگرام-2"
+      - "198955 | @SOSkeyNET"
       - "198800 | @SOSkeyNET"
+      - "198898 | @SOSkeyNET"
       - "198690 | @SOSkeyNET"
       - "198876 | @SOSkeyNET"
       - "198871 | @SOSkeyNET"
       - "198877 | @SOSkeyNET"
+      - "198878 | @SOSkeyNET"
       - "198870 | @SOSkeyNET"
       - "198873 | @SOSkeyNET"
       - "198875 | @SOSkeyNET"
       - "198680 | @SOSkeyNET"
       - "198681 | @SOSkeyNET"
+      - "198945 | @SOSkeyNET"
       - "198570 | @SOSkeyNET"
-      - "198534 | @SOSkeyNET"
       - "198764 | @SOSkeyNET"
-      - "198584 | @LonUp_M"
-      - "198580 | @LonUp_M"
       - "@Vpn_Tehran 🩵 کانال تلگرام-1"
-      - "@Vpn_Tehran ❤️ کانال تلگرام-4"
+      - "@Vpn_Tehran ❤️ کانال تلگرام-3"
       - "198695 | @SOSkeyNET"
       - "198765 | @SOSkeyNET"
-      - "198530 | @SOSkeyNET"
       - "198851 | @SOSkeyNET"
       - "198684 | @SOSkeyNET"
-      - "198532 | @SOSkeyNET"
-      - "198507 | @SOSkeyNET"
-      - "198554 | @LonUp_M"
-      - "198506 | @SOSkeyNET"
-      - "198422 | @SOSkeyNET"
-      - "198533 | @SOSkeyNET"
-      - "Türkiye - 10/22 @Config724"
-      - "198451 | @SOSkeyNET"
+      - "199011 | @SOSkeyNET"
+      - "199058 | @LonUp_M"
+      - "199010 | @SOSkeyNET"
       - "⚡️Telegram = @SOSkeyNET"
-      - "198474 | @LonUp_M"
+      - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&alpn=http/1.1&insecure=0&host=mitivpn.ac.ir&fp=chrome&type=ws&allowInsecure=0&sni=firefox.com#🇺🇸198998 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&alpn=http/1.1&insecure=0&host=mitivpn.ac.ir&fp=chrome&type=ws&allowInsecure=0&sni=firefox.com#🇺🇸198997 | ⚡️Telegram = t.me/SOSkeyNET"
       - "tjhg.m2k699.com"
-      - "🇩🇪198403 | ⚡️Telegram = t.me/SOSkeyNET"
       - "YFZ 156 @Outline_Vpn"
       - "🇵🇱198744 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "configraygan-20"
-      - "configraygan-10-1"
       - "🇩🇪198848 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇩🇪198849 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "de5.dedushka.top"
       - "configraygan-25"
       - "configraygan-22"
       - "configraygan-26-1"
-      - "configraygan-14-1"
       - "🇵🇱198761 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇲🇾198529 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198739 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198736 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198737 | ⚡️Telegram = t.me/SOSkeyNET"
@@ -7756,22 +7472,22 @@ proxy-groups:
       - "45.85.118.0"
       - "65.109.129.120"
       - "185.143.235.5"
-      - "🇸🇬198478 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇦198956 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198831 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇩🇪198557 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪198905 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇦198948 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198813 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198653 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇨🇦198449 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇲🇪198428 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇲🇪198452 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "YFZ 133 @Outline_Vpn"
       - "🇩🇪198746 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇫🇮198430 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "YFZ 140 @Outline_Vpn"
+      - "🇺🇸198976 | ⚡️Telegram = t.me/SOSkeyNET"
       - "v1.dabache.top"
       - "www.gossipglove.com"
       - "🇺🇸198854 | ⚡️Telegram = t.me/SOSkeyNET"
       - "configraygan-3-1"
-      - "configraygan-8-1"
+      - "🇨🇦198977 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "configraygan-8"
       - "configraygan-2"
       - "84.32.9.60"
       - "13.36.242.117-1"
@@ -7804,274 +7520,278 @@ proxy-groups:
       - "51.44.121.226-2"
       - "52.47.80.167-2"
       - "63.183.59.137-2"
-      - "🇫🇮198409 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇨🇦198517 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇺🇸198827 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦198719 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇨🇦198426 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇮🇷198625 | ⚡️Telegram = t.me/SOSkeyNET"
-  - name: "المنت 💬"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "تیماسپیک 🎧"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/331567/teamspeak.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "دلتاچت ✉️"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/373771/mail.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
+      - "🇨🇦198906 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇨🇦198996 | ⚡️Telegram = t.me/SOSkeyNET"
+    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"
-    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
     proxies:
       - "بدون فیلترشکن 🛡️"
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
   - name: "تلگرام 💬"
     type: "select"
-    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
   - name: "یوتیوب ▶️"
     type: "select"
-    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
       - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
   - name: "گوگل 🌍"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
     icon: "https://www.svgrepo.com/show/475656/google-color.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "واتس آپ 🟢"
-    type: "select"
-    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-      - "بدون فیلترشکن 🛡️"
   - name: "هوش مصنوعی 🤖"
     type: "select"
-    icon: "https://www.svgrepo.com/show/306500/openai.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/306500/openai.svg"
   - name: "توییتر 🐦"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
     icon: "https://www.svgrepo.com/show/475689/twitter-color.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "اسپاتیفای 🎵"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
   - name: "اینستاگرام 📸"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
     icon: "https://www.svgrepo.com/show/452229/instagram-1.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-      - "بدون فیلترشکن 🛡️"
-  - name: "تبلیغات 🆎"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/336358/ad.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "تبلیغات اپ ها 🍃"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "رهگیری جهانی 🛑"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "سایتای مخرب ⚠️"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "استیم 🖥️"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/452107/steam.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "گیم 🎮"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "توییچ 📡"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/343527/twitch-network-communication-interaction-connection.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "سایتای ایرانی 🇮🇷"
-    type: "select"
-    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "ویندوز 🧊"
-    type: "select"
-    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "اجازه ندادن 🚫"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
   - name: "کلودفلر ☁️"
     type: "select"
-    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
   - name: "گیتهاب 🐙"
     type: "select"
-    icon: "https://www.svgrepo.com/show/355033/github.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/355033/github.svg"
+  - name: "اسپاتیفای 🎵"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
+  - name: "واتس آپ 🟢"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
+  - name: "تبلیغات 🆎"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/336358/ad.svg"
+  - name: "تبلیغات اپ ها 🍃"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
+  - name: "رهگیری جهانی 🛑"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
+  - name: "المنت 💬"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Element_(software)_logo_(2020).svg"
+  - name: "تیم اسپیک 🎧"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/teamspeak/default.svg"
+  - name: "دلتاچت ✉️"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Delta_chat_(Instant_Messenger)_logo.svg"
+  - name: "سایتای مخرب ⚠️"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
+  - name: "استیم 🖥️"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/452107/steam.svg"
+  - name: "گیم 🎮"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
+  - name: "توییچ 📡"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@develop/icons/twitch.svg"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
+  - name: "ویندوز 🧊"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "اجازه ندادن 🚫"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
   - name: "دیسکورد 🗣️"
     type: "select"
-    icon: "https://automatorplugin.com/wp-content/uploads/2024/10/discord-icon.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/brands/discord.svg"
   - name: "استریمیو 🎬"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
     icon: "https://stremio.github.io/stremio-addon-guide/img/stremio.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "انیدسک 🔴"
+  - name: "انی دسک 🔴"
     type: "select"
-    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
     proxies:
       - "بدون فیلترشکن 🛡️"
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
   - name: "سایتای سانسوری 🤬"
     type: "select"
-    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Censorship.svg/300px-Censorship.svg.png"
     proxies:
       - "اجازه ندادن 🚫"
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "بدون فیلترشکن 🛡️"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/clapperboard.svg"
   - name: "بدون فیلترشکن 🛡️"
     type: "select"
-    icon: "https://www.svgrepo.com/show/6318/connection.svg"
     proxies:
       - "DIRECT"
     hidden: true
+    icon: "https://www.svgrepo.com/show/6318/connection.svg"
   - name: "قطع اینترنت ⛔"
     type: "select"
-    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
     proxies:
       - "REJECT"
     hidden: true
+    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
   - name: "اجازه ندادن 🚫"
     type: "select"
-    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
     proxies:
       - "REJECT"
     hidden: true
+    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
 rules:
+  - "IP-CIDR,127.0.0.0/8,بدون فیلترشکن 🛡️,no-resolve"
+  - "DOMAIN,localhost,بدون فیلترشکن 🛡️"
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,private,بدون فیلترشکن 🛡️"
   - "RULE-SET,DownloadManagers,دانلود منیجر 📥"
   - "RULE-SET,Download,دانلود منیجر 📥"
   - "RULE-SET,stremio,استریمیو 🎬"
@@ -8091,11 +7811,12 @@ rules:
   - "DST-PORT,993,دلتاچت ✉️"
   - "DST-PORT,465,دلتاچت ✉️"
   - "DST-PORT,587,دلتاچت ✉️"
-  - "PROCESS-NAME,com.teamspeak.ts3client,تیماسپیک 🎧"
-  - "PROCESS-NAME,ts3client_win64.exe,تیماسپیک 🎧"
-  - "PROCESS-NAME,ts3client_win32.exe,تیماسپیک 🎧"
-  - "DOMAIN-SUFFIX,ag.tssq.ir,تیماسپیک 🎧"
-  - "DST-PORT,9987,تیماسپیک 🎧"
+  - "PROCESS-NAME,com.teamspeak.ts3client,تیم اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win64.exe,تیم اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win32.exe,تیم اسپیک 🎧"
+  - "PROCESS-NAME,TeamSpeak.exe,تیم اسپیک 🎧"
+  - "DOMAIN-SUFFIX,ag.tssq.ir,تیم اسپیک 🎧"
+  - "DST-PORT,9987,تیم اسپیک 🎧"
   - "RULE-SET,BanProgramAD,تبلیغات اپ ها 🍃"
   - "RULE-SET,BanAD,رهگیری جهانی 🛑"
   - "RULE-SET,PrivateTracker,رهگیری جهانی 🛑"
@@ -8118,9 +7839,12 @@ rules:
   - "RULE-SET,YouTube,یوتیوب ▶️"
   - "RULE-SET,youtube,یوتیوب ▶️"
   - "RULE-SET,YouTubeMusic,یوتیوب ▶️"
-  - "PROCESS-NAME,com.anydesk.anydeskandroid,انیدسک 🔴"
-  - "PROCESS-NAME,AnyDesk.exe,انیدسک 🔴"
-  - "DOMAIN-SUFFIX,anydesk.com,انیدسک 🔴"
+  - "PROCESS-NAME,com.anydesk.anydeskandroid,انی دسک 🔴"
+  - "PROCESS-NAME,AnyDesk.exe,انی دسک 🔴"
+  - "DOMAIN-SUFFIX,anydesk.com,انی دسک 🔴"
+  - "PROCESS-NAME,rustdesk.exe,انی دسک 🔴"
+  - "PROCESS-NAME,com.carriez.flutter_hbb,انی دسک 🔴"
+  - "PROCESS-NAME,dorsandesk.exe,انی دسک 🔴"
   - "PROCESS-NAME,Twitter.exe,توییتر 🐦"
   - "PROCESS-NAME,com.twitter.android,توییتر 🐦"
   - "RULE-SET,Chotwitter,توییتر 🐦"
@@ -8132,9 +7856,6 @@ rules:
   - "RULE-SET,mihspotify,اسپاتیفای 🎵"
   - "PROCESS-NAME,com.instagram.android,اینستاگرام 📸"
   - "RULE-SET,instagram,اینستاگرام 📸"
-  - "DOMAIN-SUFFIX,deepseek.com,هوش مصنوعی 🤖"
-  - "DOMAIN-SUFFIX,qwen.ai,هوش مصنوعی 🤖"
-  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
   - "RULE-SET,censor,سایتای سانسوری 🤬"
   - "RULE-SET,apps,سایتای ایرانی 🇮🇷"
   - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
@@ -8148,6 +7869,10 @@ rules:
   - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
   - "DOMAIN-SUFFIX,unimics.com,سایتای ایرانی 🇮🇷"
   - "RULE-SET,whatsapp,واتس آپ 🟢"
+  - "RULE-SET,Ai,هوش مصنوعی 🤖"
+  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
+  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google,گوگل 🌍"
   - "RULE-SET,steam,استیم 🖥️"
   - "RULE-SET,SteamRegionCheck,استیم 🖥️"
   - "RULE-SET,game,گیم 🎮"
@@ -8162,9 +7887,5 @@ rules:
   - "RULE-SET,github,گیتهاب 🐙"
   - "PROCESS-NAME,com.android.vending,نوع انتخاب پروکسی 🔀"
   - "PROCESS-NAME,com.google.android.gms,نوع انتخاب پروکسی 🔀"
-  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
-  - "RULE-SET,google,گوگل 🌍"
   - "IP-CIDR,10.10.34.0/24,نوع انتخاب پروکسی 🔀"
-  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
-  - "RULE-SET,private,بدون فیلترشکن 🛡️"
   - "MATCH,نوع انتخاب پروکسی 🔀"

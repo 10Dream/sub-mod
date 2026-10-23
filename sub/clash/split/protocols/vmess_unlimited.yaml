@@ -1,287 +1,177 @@
-global-client-fingerprint: "chrome"
-keep-alive-interval: 5
-keep-alive-idle: 10
-disable-keep-alive: false
-port: 7890
+port: 7892
 socks-port: 7891
-redir-port: 7892
-mixed-port: 7893
-tproxy-port: 7894
+mixed-port: 7890
 allow-lan: true
-tcp-concurrent: true
-enable-process: true
-find-process-mode: "always"
-ipv6: false
+mode: "rule"
 log-level: "info"
-geo-auto-update: true
-geo-update-interval: 168
+external-controller: "0.0.0.0:9090"
 secret: ""
-bind-address: "*"
-unified-delay: false
+ipv6: false
 dns:
   enable: true
+  listen: "0.0.0.0:53"
   ipv6: false
   prefer-h3: false
   cache-algorithm: "arc"
+  use-hosts: true
   use-system-hosts: true
-  use-host: true
-  listen: "0.0.0.0:53"
+  respect-rules: false
   enhanced-mode: "fake-ip"
-  fake-ip-filter-mode: "blacklist"
   fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter-mode: "blacklist"
   fake-ip-filter:
-    - "*.lan"
-    - "*.localdomain"
-    - "*.invalid"
-    - "*.localhost"
-    - "*.test"
-    - "*.local"
-    - "*.home.arpa"
+    - "geosite:private"
+    - "+.lan"
+    - "+.localdomain"
+    - "+.invalid"
+    - "+.localhost"
+    - "+.test"
+    - "+.local"
+    - "+.home.arpa"
+    - "+.arpa"
+    - "+.ir"
     - "time.*.com"
+    - "time.*.gov"
+    - "time.*.apple.com"
     - "ntp.*.com"
-    - "*.ir"
+    - "+.pool.ntp.org"
+    - "+.ntp.org"
+    - "time.asis.io"
+    - "time.windows.com"
+    - "time.apple.com"
+    - "connectivitycheck.gstatic.com"
+    - "connectivitycheck.android.com"
+    - "clients3.google.com"
+    - "captive.apple.com"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "router.asus.com"
+    - "tplinkwifi.net"
+    - "tplinkrepeater.net"
+    - "tplinkap.net"
+    - "routerlogin.net"
+    - "routerlogin.com"
+    - "melogin.cn"
+    - "falogin.cn"
+    - "tendawifi.com"
+    - "leike.cc"
+    - "miwifi.com"
+    - "goforward.link"
+    - "+.plex.direct"
+  nameserver-policy:
+    geosite:private: "system"
+    +.arpa: "system"
+    +.lan: "system"
+    +.local: "system"
+    +.home.arpa: "system"
+    router.asus.com: "system"
+    tplinkwifi.net: "system"
+    tplinkrepeater.net: "system"
+    tplinkap.net: "system"
+    routerlogin.net: "system"
+    routerlogin.com: "system"
+    melogin.cn: "system"
+    falogin.cn: "system"
+    tendawifi.com: "system"
+    leike.cc: "system"
+    miwifi.com: "system"
+    goforward.link: "system"
   default-nameserver:
+    - "tcp://1.1.1.1"
+    - "tcp://8.8.8.8"
     - "1.1.1.1"
     - "8.8.8.8"
     - "9.9.9.9"
-  nameserver:
-    - "tcp://1.1.1.1"
     - "tcp://1.0.0.1"
-    - "tcp://8.8.8.8"
     - "tcp://8.8.4.4"
     - "tcp://9.9.9.9"
     - "tcp://149.112.112.112"
     - "tcp://208.67.222.222"
-    - "tcp://208.67.220.222"
+    - "tcp://208.67.220.220"
+  nameserver:
+    - "https://freedns.controld.com/p2#نوع انتخاب پروکسی 🔀"
   fallback:
-    - "tcp://76.76.19.19"
-    - "tcp://76.223.122.150"
-    - "tcp://185.228.168.9"
-    - "tcp://185.228.169.9"
-    - "tcp://8.26.56.26"
-    - "tcp://8.20.247.20"
-    - "tcp://76.76.2.11"
-    - "tcp://76.76.10.11"
-    - "tcp://84.200.69.80"
-    - "tcp://84.200.70.40"
-    - "tcp://45.33.97.5"
-    - "tcp://37.235.1.177"
-    - "tcp://209.244.0.3"
-    - "tcp://209.244.0.4"
-    - "tcp://156.154.70.5"
-    - "tcp://156.154.71.5"
-    - "tcp://103.86.96.100"
-    - "tcp://103.86.99.100"
-    - "tcp://199.85.126.10"
-    - "tcp://199.85.127.10"
-    - "tcp://129.250.35.250"
-    - "tcp://129.250.35.251"
-    - "tcp://94.16.114.254"
-    - "tcp://94.247.43.254"
-    - "tcp://208.67.222.20"
-    - "tcp://195.46.39.39"
-    - "tcp://195.46.39.40"
-    - "tcp://204.117.214.10"
-    - "tcp://199.2.252.10"
-    - "tcp://194.169.169.169"
-    - "tcp://156.154.70.1"
-    - "tcp://156.154.71.1"
-    - "tcp://91.239.100.100"
-    - "tcp://89.233.43.71"
-    - "tcp://64.6.64.6"
-    - "tcp://64.6.65.6"
-    - "tcp://77.88.8.8"
-    - "tcp://77.88.8.1"
+    - "https://dns.adguard-dns.com/dns-query#نوع انتخاب پروکسی 🔀"
+  fallback-lazy-query: true
   fallback-filter:
-    geoip: true
-    geoip-code: "IR"
-    geosite:
-      - "gfw"
+    geoip: false
     ipcidr:
+      - "10.10.34.34/32"
+      - "10.10.34.35/32"
+      - "10.10.34.36/32"
+      - "127.0.0.1/32"
       - "240.0.0.0/4"
-    domain:
-      - "+.google.com"
-      - "+.facebook.com"
-      - "+.youtube.com"
   proxy-server-nameserver:
     - "tcp://1.1.1.1"
     - "tcp://8.8.8.8"
+    - "tcp://9.9.9.9"
+    - "1.1.1.1"
+    - "8.8.8.8"
+    - "9.9.9.9"
+    - "tcp://1.0.0.1"
+    - "tcp://8.8.4.4"
+    - "tcp://149.112.112.112"
+    - "tcp://208.67.222.222"
+    - "tcp://208.67.220.220"
   direct-nameserver:
     - "78.157.42.100"
     - "78.157.42.101"
+    - "tcp://78.157.42.100"
+    - "tcp://78.157.42.101"
+  direct-nameserver-follow-policy: true
 sniffer:
   enable: true
   force-dns-mapping: true
   parse-pure-ip: true
-  override-destination: false
-  sniff:
-    HTTP:
-      ports:
-        - 80
-        - 8080
-        - 8880
-        - 2052
-        - 2082
-        - 2086
-        - 2095
-    TLS:
-      ports:
-        - 443
-        - 8443
-        - 2053
-        - 2083
-        - 2087
-        - 2096
+  override-destination: true
 tun:
   enable: true
   stack: "mixed"
   auto-route: true
   auto-detect-interface: true
-  auto-redir: true
-  dns-hijack:
-    - "any:53"
-    - "tcp://any:53"
 rule-providers:
+  DownloadManagers:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
+    interval: 86400
+    path: "./ruleset/DownloadManagers.yaml"
+  Download:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
+    interval: 86400
+    path: "./ruleset/Download.yaml"
+  stremio:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    interval: 86400
+    path: "./ruleset/stremio.yaml"
+  BanProgramAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanProgramAD.yaml"
+  BanAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanAD.yaml"
+  PrivateTracker:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
+    interval: 86400
+    path: "./ruleset/PrivateTracker.yaml"
   category_public_tracker:
     type: "http"
     behavior: "domain"
     url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-public-tracker.yaml"
     interval: 86400
     path: "./ruleset/category_public_tracker.yaml"
-  iran_ads:
-    type: "http"
-    behavior: "domain"
-    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
-    interval: 86400
-    path: "./ruleset/iran_ads.yaml"
-  PersianBlocker:
-    type: "http"
-    behavior: "domain"
-    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
-    interval: 86400
-    path: "./ruleset/PersianBlocker.yaml"
-  youtube:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
-    interval: 86400
-    path: "./ruleset/youtube.yaml"
-  telegram:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
-    interval: 86400
-    path: "./ruleset/telegram.yaml"
-  twitch:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
-    interval: 86400
-    path: "./ruleset/twitch.yaml"
-  censor:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
-    interval: 86400
-    path: "./ruleset/censor.yaml"
-  local_ips:
-    type: "http"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
-    interval: 86400
-    path: "./ruleset/local_ips.yaml"
-  private:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
-    interval: 86400
-    path: "./ruleset/private.yaml"
-  category_ir:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
-    interval: 86400
-    path: "./ruleset/category_ir.yaml"
-  iran:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
-    interval: 86400
-    path: "./ruleset/iran.yaml"
-  steam:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
-    interval: 86400
-    path: "./ruleset/steam.yaml"
-  game:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
-    interval: 86400
-    path: "./ruleset/game.yaml"
-  category-games:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
-    interval: 86400
-    path: "./ruleset/category-games.yaml"
-  ir:
-    type: "http"
-    format: "yaml"
-    behavior: "domain"
-    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
-    interval: 86400
-    path: "./ruleset/ir.yaml"
-  apps:
-    type: "http"
-    format: "yaml"
-    behavior: "classical"
-    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
-    interval: 86400
-    path: "./ruleset/apps.yaml"
-  ircidr:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
-    interval: 86400
-    path: "./ruleset/ircidr.yaml"
-  irasn:
-    type: "http"
-    format: "yaml"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
-    interval: 86400
-    path: "./ruleset/irasn.yaml"
-  arvancloud:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
-    interval: 86400
-    path: "./ruleset/arvancloud.yaml"
-  derakcloud:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
-    interval: 86400
-    path: "./ruleset/derakcloud.yaml"
-  iranserver:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
-    interval: 86400
-    path: "./ruleset/iranserver.yaml"
-  parspack:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
-    interval: 86400
-    path: "./ruleset/parspack.yaml"
   malware:
     type: "http"
     format: "yaml"
@@ -303,170 +193,79 @@ rule-providers:
     url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/cryptominers.yaml"
     interval: 86400
     path: "./ruleset/cryptominers.yaml"
-  ads:
-    type: "http"
-    format: "yaml"
-    behavior: "domain"
-    url: "https://github.com/Chocolate4U/Iran-clash-rules/releases/download/202606060815/category-ads-all.yaml"
-    interval: 86400
-    path: "./ruleset/ads.yaml"
-  DownloadManagers:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
-    interval: 86400
-    path: "./ruleset/DownloadManagers.yaml"
-  BanProgramAD:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
-    interval: 86400
-    path: "./ruleset/BanProgramAD.yaml"
-  BanAD:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
-    interval: 86400
-    path: "./ruleset/BanAD.yaml"
-  PrivateTracker:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
-    interval: 86400
-    path: "./ruleset/PrivateTracker.yaml"
-  BanEasyList:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
-    interval: 86400
-    path: "./ruleset/BanEasyList.yaml"
-  Download:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
-    interval: 86400
-    path: "./ruleset/Download.yaml"
-  GameDownload:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
-    interval: 86400
-    path: "./ruleset/GameDownload.yaml"
-  SteamRegionCheck:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
-    interval: 86400
-    path: "./ruleset/SteamRegionCheck.yaml"
-  Xbox:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
-    interval: 86400
-    path: "./ruleset/Xbox.yaml"
-  YouTubeMusic:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
-    interval: 86400
-    path: "./ruleset/YouTubeMusic.yaml"
-  YouTube:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
-    interval: 86400
-    path: "./ruleset/YouTube.yaml"
-  Ponzi:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
-    interval: 86400
-    path: "./ruleset/Ponzi.yaml"
   warninglist:
     type: "http"
     behavior: "classical"
     url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/warning-list.yaml"
     interval: 86400
     path: "./ruleset/warninglist.yaml"
-  google:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
-    interval: 86400
-    path: "./ruleset/google.yaml"
-  google-play:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
-    interval: 86400
-    path: "./ruleset/google-play.yaml"
-  xiaomi_block_list:
-    type: "http"
-    format: "yaml"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
-    interval: 86400
-    path: "./ruleset/xiaomi_block_list.yaml"
-  xiaomi_white_list:
+  Ponzi:
     type: "http"
     behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
     interval: 86400
-    path: "./ruleset/xiaomi_white_list.yaml"
-  cloudflare:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
-    interval: 86400
-    path: "./ruleset/cloudflare.yaml"
-  github:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
-    interval: 86400
-    path: "./ruleset/xgithub.yaml"
-  whatsapp:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
-    interval: 86400
-    path: "./ruleset/whatsapp.yaml"
+    path: "./ruleset/Ponzi.yaml"
   LiteAds:
     type: "http"
     behavior: "classical"
     url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/LiteAds.yaml"
     interval: 86400
     path: "./ruleset/LiteAds.yaml"
-  discord:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
-    interval: 86400
-    path: "./ruleset/discord.yaml"
-  instagram:
+  iran_ads:
     type: "http"
     behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
     interval: 86400
-    path: "./ruleset/instagram.yaml"
-  category-ai:
+    path: "./ruleset/iran_ads.yaml"
+  PersianBlocker:
     type: "http"
     behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
     interval: 86400
-    path: "./ruleset/category-ai.yaml"
-  stremio:
+    path: "./ruleset/PersianBlocker.yaml"
+  ads:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/category-ads-all.yaml"
+    interval: 86400
+    path: "./ruleset/ads.yaml"
+  BanEasyList:
     type: "http"
     behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
     interval: 86400
-    path: "./ruleset/stremio.yaml"
-  windows:
+    path: "./ruleset/BanEasyList.yaml"
+  twitch:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
+    interval: 86400
+    path: "./ruleset/twitch.yaml"
+  telegram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
+    interval: 86400
+    path: "./ruleset/telegram.yaml"
+  YouTube:
     type: "http"
     behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
     interval: 86400
-    path: "./ruleset/windows.yaml"
+    path: "./ruleset/YouTube.yaml"
+  youtube:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
+    interval: 86400
+    path: "./ruleset/youtube.yaml"
+  YouTubeMusic:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
+    interval: 86400
+    path: "./ruleset/YouTubeMusic.yaml"
   Chotwitter:
     type: "http"
     format: "yaml"
@@ -498,6 +297,201 @@ rule-providers:
     url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Spotify.yaml"
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
+  instagram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    interval: 86400
+    path: "./ruleset/instagram.yaml"
+  Ai:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/Ai.yaml"
+    interval: 86400
+    path: "./ruleset/Ai.yaml"
+  category-ai:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    interval: 86400
+    path: "./ruleset/category-ai.yaml"
+  censor:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
+    interval: 86400
+    path: "./ruleset/censor.yaml"
+  apps:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
+    interval: 86400
+    path: "./ruleset/apps.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+  arvancloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
+    interval: 86400
+    path: "./ruleset/arvancloud.yaml"
+  derakcloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
+    interval: 86400
+    path: "./ruleset/derakcloud.yaml"
+  iranserver:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
+    interval: 86400
+    path: "./ruleset/iranserver.yaml"
+  parspack:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
+    interval: 86400
+    path: "./ruleset/parspack.yaml"
+  irasn:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
+    interval: 86400
+    path: "./ruleset/irasn.yaml"
+  ircidr:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
+    interval: 86400
+    path: "./ruleset/ircidr.yaml"
+  ir:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
+    interval: 86400
+    path: "./ruleset/ir.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  whatsapp:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
+    interval: 86400
+    path: "./ruleset/whatsapp.yaml"
+  steam:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
+    interval: 86400
+    path: "./ruleset/steam.yaml"
+  SteamRegionCheck:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
+    interval: 86400
+    path: "./ruleset/SteamRegionCheck.yaml"
+  game:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
+    interval: 86400
+    path: "./ruleset/game.yaml"
+  GameDownload:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
+    interval: 86400
+    path: "./ruleset/GameDownload.yaml"
+  category-games:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
+    interval: 86400
+    path: "./ruleset/category-games.yaml"
+  Xbox:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
+    interval: 86400
+    path: "./ruleset/Xbox.yaml"
+  discord:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
+    interval: 86400
+    path: "./ruleset/discord.yaml"
+  xiaomi_white_list:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_white_list.yaml"
+  xiaomi_block_list:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_block_list.yaml"
+  windows:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    interval: 86400
+    path: "./ruleset/windows.yaml"
+  cloudflare:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
+    interval: 86400
+    path: "./ruleset/cloudflare.yaml"
+  github:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
+    interval: 86400
+    path: "./ruleset/xgithub.yaml"
+  google-play:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
+    interval: 86400
+    path: "./ruleset/google-play.yaml"
+  google:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
+    interval: 86400
+    path: "./ruleset/google.yaml"
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  private:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
+    interval: 86400
+    path: "./ruleset/private.yaml"
 proxies:
   - name: "🇨🇳 003-🇳🇱 NL tcp ✂️@GheychiAmoozesh"
     type: "vmess"
@@ -1315,7 +1309,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇫🇮 🇫🇮 | @WhiteDNS | FI42|2.8MB/s|DNSOK|GPT⁺-FI"
+  - name: "🇫🇮 🇫🇮 | @WhiteDNS | FI36|4.5MB/s|DNSOK|GPT⁺-FI"
     type: "vmess"
     server: "185.212.149.7"
     port: 2053
@@ -1323,7 +1317,15 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇺🇸 🇺🇸 | @WhiteDNS | US525|2.7MB/s|DNSOK|GPT⁺-US"
+  - name: "🇫🇮 🇫🇮 | @WhiteDNS | FI37|3.9MB/s|DNSOK|GPT⁺-FI"
+    type: "vmess"
+    server: "185.212.149.7"
+    port: 52080
+    uuid: "ec3c8b97-f308-4fee-aa16-95e2c7595acd"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇺🇸 🇺🇸 | @WhiteDNS | US574|2.8MB/s|DNSOK|GPT⁺-US"
     type: "vmess"
     server: "rib9jxayoqjgn2kw.v.3dns.vip"
     port: 443
@@ -1331,11 +1333,19 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇫🇮 🇫🇮 | @WhiteDNS | FI43|2.6MB/s|DNSOK|GPT⁺-FI"
+  - name: "🇮🇪 🇮🇪 | @WhiteDNS | IE62|584KB/s|DNSOK|GPT⁺-IE"
     type: "vmess"
-    server: "185.212.149.7"
-    port: 52080
-    uuid: "ec3c8b97-f308-4fee-aa16-95e2c7595acd"
+    server: "54.229.151.97"
+    port: 59236
+    uuid: "2387bfbc-10a6-4bd7-dc55-7cba954ce6e8"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:11985"
+    type: "vmess"
+    server: "16.106.45.64"
+    port: 11985
+    uuid: "a8bcce43-abda-315b-8e81-e3e65bcb3d07"
     alterId: 0
     cipher: "auto"
     udp: true
@@ -1347,131 +1357,11 @@ proxies:
     alterId: 0
     cipher: "aes-128-gcm"
     udp: true
-  - name: "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.67:1074"
+  - name: "🇹🇷 🔒 VM-TCP-NA 🇹🇷 TR-167.104.219.97:2086"
     type: "vmess"
-    server: "94.139.183.67"
-    port: 1074
-    uuid: "343bfa1a-f8c1-49e1-9bd8-e2f2360f5a7b"
-    alterId: 0
-    cipher: "aes-128-gcm"
-    udp: true
-  - name: "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-37.202.225.110:5380"
-    type: "vmess"
-    server: "37.202.225.110"
-    port: 5380
-    uuid: "69408c7a-7ed7-48e1-8f34-d9a94fdaf2e5"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.182.151.218:5381"
-    type: "vmess"
-    server: "94.182.151.218"
-    port: 5381
-    uuid: "69408c7a-7ed7-48e1-8f34-d9a94fdaf2e5"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-176.120.17.79:55306"
-    type: "vmess"
-    server: "176.120.17.79"
-    port: 55306
-    uuid: "f003b7ed-c3c8-4155-b3b3-de7feafd1e7f"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇳🇱 🔒 VM-TCP-TLS 🇳🇱 NL-23.137.249.110:30011"
-    type: "vmess"
-    server: "23.137.249.110"
-    port: 30011
-    uuid: "a7aee69e-6e02-47d1-8172-701866bbb28c"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.165.66.164:33208"
-    type: "vmess"
-    server: "38.165.66.164"
-    port: 33208
-    uuid: "9227afcd-026e-781f-1abc-c06efabd2338"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-142.0.135.7:33402"
-    type: "vmess"
-    server: "142.0.135.7"
-    port: 33402
-    uuid: "9227afcd-026e-781f-1abc-c06efabd2338"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-142.0.135.51:33204"
-    type: "vmess"
-    server: "142.0.135.51"
-    port: 33204
-    uuid: "9227afcd-026e-781f-1abc-c06efabd2338"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇯🇵 🔒 VM-WS-TLS 🇯🇵 JP-140.83.57.20:13118"
-    type: "vmess"
-    server: "140.83.57.20"
-    port: 13118
-    uuid: "1f01e389-fbcb-494c-e46a-210ec36329c2"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.14.171.164:33409"
-    type: "vmess"
-    server: "38.14.171.164"
-    port: 33409
-    uuid: "9227afcd-026e-781f-1abc-c06efabd2338"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.165.66.164:33203"
-    type: "vmess"
-    server: "38.165.66.164"
-    port: 33203
-    uuid: "9227afcd-026e-781f-1abc-c06efabd2338"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇹🇷 Best_internet_iran_6"
-    type: "vmess"
-    server: "139.28.240.68"
+    server: "167.104.219.97"
     port: 2086
-    uuid: "f6361af8-bb8f-4609-bf5d-3fc0f688f47b"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇺🇦 Best_internet_iran_7"
-    type: "vmess"
-    server: "178.95.176.16"
-    port: 2086
-    uuid: "f6361af8-bb8f-4609-bf5d-3fc0f688f47b"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇩🇪 Best_internet_iran_9"
-    type: "vmess"
-    server: "91.107.146.97"
-    port: 2086
-    uuid: "f6361af8-bb8f-4609-bf5d-3fc0f688f47b"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇩🇪 Best_internet_iran_12"
-    type: "vmess"
-    server: "94.249.187.46"
-    port: 2086
-    uuid: "f6361af8-bb8f-4609-bf5d-3fc0f688f47b"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇹🇷 Best_internet_iran_13"
-    type: "vmess"
-    server: "153.52.92.81"
-    port: 2086
-    uuid: "f6361af8-bb8f-4609-bf5d-3fc0f688f47b"
+    uuid: "077fd3d8-cfaf-5a9c-533b-a9de5603c254"
     alterId: 0
     cipher: "auto"
     udp: true
@@ -1491,6 +1381,38 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
+  - name: "🇳🇱 🔒 VM-TCP-TLS 🇳🇱 NL-23.137.249.110:30011"
+    type: "vmess"
+    server: "23.137.249.110"
+    port: 30011
+    uuid: "a7aee69e-6e02-47d1-8172-701866bbb28c"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21034"
+    type: "vmess"
+    server: "16.106.32.134"
+    port: 21034
+    uuid: "9464ca40-dd75-3742-a628-d931a9f413b2"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:9039"
+    type: "vmess"
+    server: "16.106.45.64"
+    port: 9039
+    uuid: "4fa65799-694e-316b-b2d3-30c793777cbf"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16284"
+    type: "vmess"
+    server: "16.106.32.134"
+    port: 16284
+    uuid: "0802ac03-7973-39ef-a019-ba02de6c01e1"
+    alterId: 0
+    cipher: "auto"
+    udp: true
   - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16280"
     type: "vmess"
     server: "16.106.32.134"
@@ -1499,9 +1421,9 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.66:1074"
+  - name: "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.67:1074"
     type: "vmess"
-    server: "94.139.183.66"
+    server: "94.139.183.67"
     port: 1074
     uuid: "343bfa1a-f8c1-49e1-9bd8-e2f2360f5a7b"
     alterId: 0
@@ -1523,51 +1445,43 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-104.21.50.237:2095"
+  - name: "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.165.66.164:33208"
     type: "vmess"
-    server: "104.21.50.237"
-    port: 2095
-    uuid: "a55cdc40-5af5-4f02-9a46-41685120fe6f"
+    server: "38.165.66.164"
+    port: 33208
+    uuid: "9227afcd-026e-781f-1abc-c06efabd2338"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-20.27.177.31:36822"
-    type: "vmess"
-    server: "20.27.177.31"
-    port: 36822
-    uuid: "4f198ea9-311e-3dcf-910c-896de6cb160b"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:46288"
+  - name: "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:2056"
     type: "vmess"
     server: "217.60.255.71"
-    port: 46288
+    port: 2056
     uuid: "243bb526-ced4-4508-b0c3-e6442caadf57"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16112"
+  - name: "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-37.202.225.110:5380"
+    type: "vmess"
+    server: "37.202.225.110"
+    port: 5380
+    uuid: "69408c7a-7ed7-48e1-8f34-d9a94fdaf2e5"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇯🇵 🔒 VM-WS-TLS 🇯🇵 JP-140.83.57.20:13118"
+    type: "vmess"
+    server: "140.83.57.20"
+    port: 13118
+    uuid: "1f01e389-fbcb-494c-e46a-210ec36329c2"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21022"
     type: "vmess"
     server: "16.106.32.134"
-    port: 16112
-    uuid: "0802ac03-7973-39ef-a019-ba02de6c01e1"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇱🇺 🔒 VM-HTTPUPGRADE-NA 🇱🇺 LU-188.42.89.89:2052"
-    type: "vmess"
-    server: "188.42.89.89"
-    port: 2052
-    uuid: "60b88bcf-4c90-4c41-9bd7-9f8fd5795848"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:9027"
-    type: "vmess"
-    server: "16.106.45.64"
-    port: 9027
-    uuid: "a8bcce43-abda-315b-8e81-e3e65bcb3d07"
+    port: 21022
+    uuid: "9464ca40-dd75-3742-a628-d931a9f413b2"
     alterId: 0
     cipher: "auto"
     udp: true
@@ -1579,67 +1493,19 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16120"
+  - name: "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-172.67.213.218:2095"
     type: "vmess"
-    server: "16.106.32.134"
-    port: 16120
-    uuid: "0802ac03-7973-39ef-a019-ba02de6c01e1"
+    server: "172.67.213.218"
+    port: 2095
+    uuid: "a55cdc40-5af5-4f02-9a46-41685120fe6f"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇦🇪 🔒 VM-WS-NA 🇦🇪 AE-217.60.183.95:33744"
+  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-123.253.227.234:29053"
     type: "vmess"
-    server: "217.60.183.95"
-    port: 33744
-    uuid: "b3a11068-1a7e-4643-85de-7c82cce46943"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-43.165.174.252:8998"
-    type: "vmess"
-    server: "43.165.174.252"
-    port: 8998
-    uuid: "4b019faa-38b0-473d-bc49-60bb68151c34"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:36771"
-    type: "vmess"
-    server: "217.60.255.71"
-    port: 36771
-    uuid: "243bb526-ced4-4508-b0c3-e6442caadf57"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:11985"
-    type: "vmess"
-    server: "16.106.45.64"
-    port: 11985
-    uuid: "a8bcce43-abda-315b-8e81-e3e65bcb3d07"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇹🇷 🔒 VM-TCP-NA 🇹🇷 TR-167.104.219.97:2086"
-    type: "vmess"
-    server: "167.104.219.97"
-    port: 2086
-    uuid: "077fd3d8-cfaf-5a9c-533b-a9de5603c254"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21034"
-    type: "vmess"
-    server: "16.106.32.134"
-    port: 21034
-    uuid: "9464ca40-dd75-3742-a628-d931a9f413b2"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16284"
-    type: "vmess"
-    server: "16.106.32.134"
-    port: 16284
-    uuid: "0802ac03-7973-39ef-a019-ba02de6c01e1"
+    server: "123.253.227.234"
+    port: 29053
+    uuid: "e351d6d8-c167-3e07-8fda-3f2f4ec0760b"
     alterId: 0
     cipher: "auto"
     udp: true
@@ -1651,6 +1517,38 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
+  - name: "🇫🇷 🔒 VM-TCP-NA 🇫🇷 FR-45.80.215.8:22324"
+    type: "vmess"
+    server: "45.80.215.8"
+    port: 22324
+    uuid: "04621bae-ab36-11ec-b909-0242ac120002"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.182.151.218:5381"
+    type: "vmess"
+    server: "94.182.151.218"
+    port: 5381
+    uuid: "69408c7a-7ed7-48e1-8f34-d9a94fdaf2e5"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇳🇱 🔒 VM-WS-NA 🇳🇱 NL-31.59.150.197:33736"
+    type: "vmess"
+    server: "31.59.150.197"
+    port: 33736
+    uuid: "1281acca-f21d-475c-bf04-eccbee7f8df2"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21018"
+    type: "vmess"
+    server: "16.106.32.134"
+    port: 21018
+    uuid: "9464ca40-dd75-3742-a628-d931a9f413b2"
+    alterId: 0
+    cipher: "auto"
+    udp: true
   - name: "🇩🇪 🔒 VM-TCP-NA 🇩🇪 DE-5.45.97.147:10803"
     type: "vmess"
     server: "5.45.97.147"
@@ -1659,11 +1557,43 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
+  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16113"
+    type: "vmess"
+    server: "16.106.32.134"
+    port: 16113
+    uuid: "0802ac03-7973-39ef-a019-ba02de6c01e1"
+    alterId: 0
+    cipher: "auto"
+    udp: true
   - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21020"
     type: "vmess"
     server: "16.106.32.134"
     port: 21020
     uuid: "9464ca40-dd75-3742-a628-d931a9f413b2"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-20.191.174.48:36802"
+    type: "vmess"
+    server: "20.191.174.48"
+    port: 36802
+    uuid: "a6ab6513-6ec3-327f-a068-b89fe72954b8"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16114"
+    type: "vmess"
+    server: "16.106.32.134"
+    port: 16114
+    uuid: "0802ac03-7973-39ef-a019-ba02de6c01e1"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16310"
+    type: "vmess"
+    server: "16.106.32.134"
+    port: 16310
+    uuid: "0802ac03-7973-39ef-a019-ba02de6c01e1"
     alterId: 0
     cipher: "auto"
     udp: true
@@ -1683,11 +1613,27 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
+  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16116"
+    type: "vmess"
+    server: "16.106.32.134"
+    port: 16116
+    uuid: "0802ac03-7973-39ef-a019-ba02de6c01e1"
+    alterId: 0
+    cipher: "auto"
+    udp: true
   - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21037"
     type: "vmess"
     server: "16.106.32.134"
     port: 21037
     uuid: "9464ca40-dd75-3742-a628-d931a9f413b2"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-20.27.177.31:36822"
+    type: "vmess"
+    server: "20.27.177.31"
+    port: 36822
+    uuid: "4f198ea9-311e-3dcf-910c-896de6cb160b"
     alterId: 0
     cipher: "auto"
     udp: true
@@ -1699,6 +1645,22 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
+  - name: "🇹🇼 🔒 VM-WS-NA 🇹🇼 TW-111.252.188.73:2096"
+    type: "vmess"
+    server: "111.252.188.73"
+    port: 2096
+    uuid: "85ad21e1-c2cd-3407-aa90-815f3f3ea636"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:46288"
+    type: "vmess"
+    server: "217.60.255.71"
+    port: 46288
+    uuid: "243bb526-ced4-4508-b0c3-e6442caadf57"
+    alterId: 0
+    cipher: "auto"
+    udp: true
   - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-123.253.227.234:29006"
     type: "vmess"
     server: "123.253.227.234"
@@ -1707,11 +1669,67 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
+  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:11885"
+    type: "vmess"
+    server: "16.106.45.64"
+    port: 11885
+    uuid: "a8bcce43-abda-315b-8e81-e3e65bcb3d07"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-20.17.157.192:36803"
+    type: "vmess"
+    server: "20.17.157.192"
+    port: 36803
+    uuid: "a6ab6513-6ec3-327f-a068-b89fe72954b8"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21035"
+    type: "vmess"
+    server: "16.106.32.134"
+    port: 21035
+    uuid: "9464ca40-dd75-3742-a628-d931a9f413b2"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-142.0.135.7:33402"
+    type: "vmess"
+    server: "142.0.135.7"
+    port: 33402
+    uuid: "9227afcd-026e-781f-1abc-c06efabd2338"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.14.171.164:33409"
+    type: "vmess"
+    server: "38.14.171.164"
+    port: 33409
+    uuid: "9227afcd-026e-781f-1abc-c06efabd2338"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16112"
+    type: "vmess"
+    server: "16.106.32.134"
+    port: 16112
+    uuid: "0802ac03-7973-39ef-a019-ba02de6c01e1"
+    alterId: 0
+    cipher: "auto"
+    udp: true
   - name: "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:17993"
     type: "vmess"
     server: "217.60.255.71"
     port: 17993
     uuid: "243bb526-ced4-4508-b0c3-e6442caadf57"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇱🇺 🔒 VM-HTTPUPGRADE-NA 🇱🇺 LU-188.42.89.89:2052"
+    type: "vmess"
+    server: "188.42.89.89"
+    port: 2052
+    uuid: "60b88bcf-4c90-4c41-9bd7-9f8fd5795848"
     alterId: 0
     cipher: "auto"
     udp: true
@@ -1739,6 +1757,38 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
+  - name: "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-176.120.17.79:55306"
+    type: "vmess"
+    server: "176.120.17.79"
+    port: 55306
+    uuid: "f003b7ed-c3c8-4155-b3b3-de7feafd1e7f"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:9027"
+    type: "vmess"
+    server: "16.106.45.64"
+    port: 9027
+    uuid: "a8bcce43-abda-315b-8e81-e3e65bcb3d07"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇬🇧 🔒 VM-WS-NA 🇬🇧 GB-77.68.12.207:10000"
+    type: "vmess"
+    server: "77.68.12.207"
+    port: 10000
+    uuid: "3c05ef9e-6582-11f1-a6e5-1727059cff63"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.165.66.164:33203"
+    type: "vmess"
+    server: "38.165.66.164"
+    port: 33203
+    uuid: "9227afcd-026e-781f-1abc-c06efabd2338"
+    alterId: 0
+    cipher: "auto"
+    udp: true
   - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16308"
     type: "vmess"
     server: "16.106.32.134"
@@ -1755,11 +1805,51 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21009"
+  - name: "🇯🇵 🔒 VM-TCP-NONE 🇯🇵 JP-161.33.185.151:18112"
+    type: "vmess"
+    server: "161.33.185.151"
+    port: 18112
+    uuid: "ad45f8f6-0f0a-4cc4-b907-c4582407dc94"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-142.0.135.51:33204"
+    type: "vmess"
+    server: "142.0.135.51"
+    port: 33204
+    uuid: "9227afcd-026e-781f-1abc-c06efabd2338"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21041"
     type: "vmess"
     server: "16.106.32.134"
-    port: 21009
+    port: 21041
     uuid: "9464ca40-dd75-3742-a628-d931a9f413b2"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:33625"
+    type: "vmess"
+    server: "217.60.255.71"
+    port: 33625
+    uuid: "243bb526-ced4-4508-b0c3-e6442caadf57"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16120"
+    type: "vmess"
+    server: "16.106.32.134"
+    port: 16120
+    uuid: "0802ac03-7973-39ef-a019-ba02de6c01e1"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇺🇸 🔒 VM-TCP-NA 🇺🇸 US-216.227.168.157:45277"
+    type: "vmess"
+    server: "216.227.168.157"
+    port: 45277
+    uuid: "469e0b31-30c3-4dab-800d-711232634ce1"
     alterId: 0
     cipher: "auto"
     udp: true
@@ -1771,11 +1861,35 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
+  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21009"
+    type: "vmess"
+    server: "16.106.32.134"
+    port: 21009
+    uuid: "9464ca40-dd75-3742-a628-d931a9f413b2"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇫🇷 🔒 VM-WS-NONE 🇫🇷 FR-162.19.192.89:16626"
+    type: "vmess"
+    server: "162.19.192.89"
+    port: 16626
+    uuid: "62e0878c-ff8c-4a67-b18f-89886e24750c"
+    alterId: 0
+    cipher: "auto"
+    udp: true
   - name: "🇩🇪 🔒 VM-TCP-NA 🇩🇪 DE-179.61.251.37:8082"
     type: "vmess"
     server: "179.61.251.37"
     port: 8082
     uuid: "b6083df7-1310-4b29-8caa-cc03148135c3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇦🇪 🔒 VM-WS-NA 🇦🇪 AE-217.60.183.95:33744"
+    type: "vmess"
+    server: "217.60.183.95"
+    port: 33744
+    uuid: "b3a11068-1a7e-4643-85de-7c82cce46943"
     alterId: 0
     cipher: "auto"
     udp: true
@@ -1803,6 +1917,22 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
+  - name: "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-43.165.174.252:8998"
+    type: "vmess"
+    server: "43.165.174.252"
+    port: 8998
+    uuid: "4b019faa-38b0-473d-bc49-60bb68151c34"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21011"
+    type: "vmess"
+    server: "16.106.32.134"
+    port: 21011
+    uuid: "9464ca40-dd75-3742-a628-d931a9f413b2"
+    alterId: 0
+    cipher: "auto"
+    udp: true
   - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21014"
     type: "vmess"
     server: "16.106.32.134"
@@ -1819,11 +1949,67 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:9039"
+  - name: "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:36771"
     type: "vmess"
-    server: "16.106.45.64"
-    port: 9039
-    uuid: "4fa65799-694e-316b-b2d3-30c793777cbf"
+    server: "217.60.255.71"
+    port: 36771
+    uuid: "243bb526-ced4-4508-b0c3-e6442caadf57"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇹🇷 Best_internet_iran_5"
+    type: "vmess"
+    server: "139.28.240.68"
+    port: 2086
+    uuid: "f6361af8-bb8f-4609-bf5d-3fc0f688f47b"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇺🇦 Best_internet_iran_6"
+    type: "vmess"
+    server: "178.95.176.16"
+    port: 2086
+    uuid: "f6361af8-bb8f-4609-bf5d-3fc0f688f47b"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇩🇪 Best_internet_iran_8"
+    type: "vmess"
+    server: "91.107.146.97"
+    port: 2086
+    uuid: "f6361af8-bb8f-4609-bf5d-3fc0f688f47b"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇩🇪 Best_internet_iran_11"
+    type: "vmess"
+    server: "94.249.187.46"
+    port: 2086
+    uuid: "f6361af8-bb8f-4609-bf5d-3fc0f688f47b"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇹🇷 Best_internet_iran_12"
+    type: "vmess"
+    server: "153.52.92.81"
+    port: 2086
+    uuid: "f6361af8-bb8f-4609-bf5d-3fc0f688f47b"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.66:1074"
+    type: "vmess"
+    server: "94.139.183.66"
+    port: 1074
+    uuid: "343bfa1a-f8c1-49e1-9bd8-e2f2360f5a7b"
+    alterId: 0
+    cipher: "aes-128-gcm"
+    udp: true
+  - name: "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-104.21.50.237:2095"
+    type: "vmess"
+    server: "104.21.50.237"
+    port: 2095
+    uuid: "a55cdc40-5af5-4f02-9a46-41685120fe6f"
     alterId: 0
     cipher: "auto"
     udp: true
@@ -1834,14 +2020,6 @@ proxies:
     uuid: "343bfa1a-f8c1-49e1-9bd8-e2f2360f5a7b"
     alterId: 0
     cipher: "aes-128-gcm"
-    udp: true
-  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21022"
-    type: "vmess"
-    server: "16.106.32.134"
-    port: 21022
-    uuid: "9464ca40-dd75-3742-a628-d931a9f413b2"
-    alterId: 0
-    cipher: "auto"
     udp: true
   - name: "🇨🇳 🔒 VM-WS-NA 🇨🇳 CN-120.48.133.162:10086-1"
     type: "vmess"
@@ -1867,78 +2045,6 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇫🇷 🔒 VM-TCP-NA 🇫🇷 FR-45.80.215.8:22324"
-    type: "vmess"
-    server: "45.80.215.8"
-    port: 22324
-    uuid: "04621bae-ab36-11ec-b909-0242ac120002"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16113"
-    type: "vmess"
-    server: "16.106.32.134"
-    port: 16113
-    uuid: "0802ac03-7973-39ef-a019-ba02de6c01e1"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-20.191.174.48:36802"
-    type: "vmess"
-    server: "20.191.174.48"
-    port: 36802
-    uuid: "a6ab6513-6ec3-327f-a068-b89fe72954b8"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16116"
-    type: "vmess"
-    server: "16.106.32.134"
-    port: 16116
-    uuid: "0802ac03-7973-39ef-a019-ba02de6c01e1"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇹🇼 🔒 VM-WS-NA 🇹🇼 TW-111.252.188.73:2096"
-    type: "vmess"
-    server: "111.252.188.73"
-    port: 2096
-    uuid: "85ad21e1-c2cd-3407-aa90-815f3f3ea636"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-20.17.157.192:36803"
-    type: "vmess"
-    server: "20.17.157.192"
-    port: 36803
-    uuid: "a6ab6513-6ec3-327f-a068-b89fe72954b8"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:33625"
-    type: "vmess"
-    server: "217.60.255.71"
-    port: 33625
-    uuid: "243bb526-ced4-4508-b0c3-e6442caadf57"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇺🇸 🔒 VM-TCP-NA 🇺🇸 US-216.227.168.157:45277"
-    type: "vmess"
-    server: "216.227.168.157"
-    port: 45277
-    uuid: "469e0b31-30c3-4dab-800d-711232634ce1"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:2056"
-    type: "vmess"
-    server: "217.60.255.71"
-    port: 2056
-    uuid: "243bb526-ced4-4508-b0c3-e6442caadf57"
-    alterId: 0
-    cipher: "auto"
-    udp: true
   - name: "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-37.202.225.110:5380-1"
     type: "vmess"
     server: "37.202.225.110"
@@ -1947,99 +2053,11 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-123.253.227.234:29053"
-    type: "vmess"
-    server: "123.253.227.234"
-    port: 29053
-    uuid: "e351d6d8-c167-3e07-8fda-3f2f4ec0760b"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21018"
-    type: "vmess"
-    server: "16.106.32.134"
-    port: 21018
-    uuid: "9464ca40-dd75-3742-a628-d931a9f413b2"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16114"
-    type: "vmess"
-    server: "16.106.32.134"
-    port: 16114
-    uuid: "0802ac03-7973-39ef-a019-ba02de6c01e1"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16310"
-    type: "vmess"
-    server: "16.106.32.134"
-    port: 16310
-    uuid: "0802ac03-7973-39ef-a019-ba02de6c01e1"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇳🇱 🔒 VM-WS-NA 🇳🇱 NL-31.59.150.197:33736"
-    type: "vmess"
-    server: "31.59.150.197"
-    port: 33736
-    uuid: "1281acca-f21d-475c-bf04-eccbee7f8df2"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:11885"
-    type: "vmess"
-    server: "16.106.45.64"
-    port: 11885
-    uuid: "a8bcce43-abda-315b-8e81-e3e65bcb3d07"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21035"
-    type: "vmess"
-    server: "16.106.32.134"
-    port: 21035
-    uuid: "9464ca40-dd75-3742-a628-d931a9f413b2"
-    alterId: 0
-    cipher: "auto"
-    udp: true
   - name: "🇩🇪 🔒 VM-TCP-NA 🇩🇪 DE-49.13.23.221:443"
     type: "vmess"
     server: "49.13.23.221"
     port: 443
     uuid: "254954c6-f115-4703-e196-41ba04a4a16b"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇬🇧 🔒 VM-WS-NA 🇬🇧 GB-77.68.12.207:10000"
-    type: "vmess"
-    server: "77.68.12.207"
-    port: 10000
-    uuid: "3c05ef9e-6582-11f1-a6e5-1727059cff63"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-172.67.213.218:2095"
-    type: "vmess"
-    server: "172.67.213.218"
-    port: 2095
-    uuid: "a55cdc40-5af5-4f02-9a46-41685120fe6f"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21041"
-    type: "vmess"
-    server: "16.106.32.134"
-    port: 21041
-    uuid: "9464ca40-dd75-3742-a628-d931a9f413b2"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21011"
-    type: "vmess"
-    server: "16.106.32.134"
-    port: 21011
-    uuid: "9464ca40-dd75-3742-a628-d931a9f413b2"
     alterId: 0
     cipher: "auto"
     udp: true
@@ -2123,14 +2141,6 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇯🇵 🔒 VM-TCP-NONE 🇯🇵 JP-161.33.185.151:18112"
-    type: "vmess"
-    server: "161.33.185.151"
-    port: 18112
-    uuid: "ad45f8f6-0f0a-4cc4-b907-c4582407dc94"
-    alterId: 0
-    cipher: "auto"
-    udp: true
   - name: "🇨🇿 CZ🇨🇿 | superstar.jp1.srayx.xyz-80 | 343.3ms"
     type: "vmess"
     server: "superstar.jp1.srayx.xyz"
@@ -2171,7 +2181,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇩🇪 CA🇨🇦 | mygptagent.org-443 | 180.58ms"
+  - name: "🇫🇷 CA🇨🇦 | mygptagent.org-443 | 180.58ms"
     type: "vmess"
     server: "mygptagent.org"
     port: 443
@@ -2299,7 +2309,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇬🇧 GB🇬🇧 | aidrivercat.org-443 | 85.93ms"
+  - name: "🇺🇸 GB🇬🇧 | aidrivercat.org-443 | 85.93ms"
     type: "vmess"
     server: "aidrivercat.org"
     port: 443
@@ -2651,14 +2661,6 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇮🇪 Ireland"
-    type: "vmess"
-    server: "54.229.151.97"
-    port: 59236
-    uuid: "2387bfbc-10a6-4bd7-dc55-7cba954ce6e8"
-    alterId: 0
-    cipher: "auto"
-    udp: true
   - name: "🇭🇰 Hong Kong-2"
     type: "vmess"
     server: "qtkdr8jxe3wefxjm.v.3dns.vip"
@@ -2715,14 +2717,6 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇫🇷 🔒 VM-WS-NONE 🇫🇷 FR-162.19.192.89:16626"
-    type: "vmess"
-    server: "162.19.192.89"
-    port: 16626
-    uuid: "62e0878c-ff8c-4a67-b18f-89886e24750c"
-    alterId: 0
-    cipher: "auto"
-    udp: true
   - name: "🇸🇬 vmess-129.226.157.220:59121"
     type: "vmess"
     server: "129.226.157.220"
@@ -2731,35 +2725,75 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇭🇰 vmess-zfd-boardv2.kunlun01dns.com:16284"
+  - name: "🇩🇪 63. 🇬🇧 United Kingdom"
     type: "vmess"
-    server: "zfd-boardv2.kunlun01dns.com"
-    port: 16284
-    uuid: "0802ac03-7973-39ef-a019-ba02de6c01e1"
+    server: "31.77.8.97"
+    port: 110
+    uuid: "d2d8601b-c14b-42c6-b8ea-33889bce152a"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇭🇰 vmess-6JDvArazgU3qQR6Q.v.3dns.vip:443"
+  - name: "🇹🇭 82. 🇹🇭 Thailand"
     type: "vmess"
-    server: "6JDvArazgU3qQR6Q.v.3dns.vip"
+    server: "119.46.51.45"
+    port: 37515
+    uuid: "9b76bc31-17a5-4454-934a-8d5fb602cd70"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🏳️ 94. 🇭🇰 Hong Kong"
+    type: "vmess"
+    server: "yg1.ygkkk.dpdns.org"
+    port: 443
+    uuid: "b2ba4a73-3123-479e-aa96-5973a9ecd0c0"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰 106. 🇭🇰 Hong Kong"
+    type: "vmess"
+    server: "nycqg19zkwacpm1b.v.3dns.vip"
     port: 443
     uuid: "f23bb427-c1f9-4373-876c-2f43e9f790f3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰 114. 🇭🇰 Hong Kong"
+    type: "vmess"
+    server: "qtkdr8jxe3wefxjm.v.3dns.vip"
+    port: 443
+    uuid: "f23bb427-c1f9-4373-876c-2f43e9f790f3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇩🇪 116. 🇩🇪 Germany"
+    type: "vmess"
+    server: "31.59.58.232"
+    port: 20772
+    uuid: "d69007f9-b038-4156-d27f-f81f18094ecf"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🏳️ 119. 🇬🇧 United Kingdom"
+    type: "vmess"
+    server: "188.114.96.19"
+    port: 80
+    uuid: "af4be52a-aab3-4db1-a6bb-c23700dcb9c2"
     alterId: 0
     cipher: "auto"
     udp: true
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
-    icon: "https://www.svgrepo.com/show/412721/choose.svg"
     proxies:
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "توزیع بار چرخشی ⚖️"
       - "قطع اینترنت ⛔"
       - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/412721/choose.svg"
   - name: "دستی 🤏🏻"
     type: "select"
-    icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
+    lazy: true
     proxies:
       - "🇨🇳 003-🇳🇱 NL tcp ✂️@GheychiAmoozesh"
       - "🇨🇳 017-🇫🇷 FR tcp ✂️@GheychiAmoozesh"
@@ -2863,97 +2897,100 @@ proxy-groups:
       - "🇺🇸 @DeltaKroneckerGithub-14"
       - "🇸🇬 @DeltaKroneckerGithub-4"
       - "🇸🇬 @DeltaKroneckerGithub-5"
-      - "🇫🇮 🇫🇮 | @WhiteDNS | FI42|2.8MB/s|DNSOK|GPT⁺-FI"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US525|2.7MB/s|DNSOK|GPT⁺-US"
-      - "🇫🇮 🇫🇮 | @WhiteDNS | FI43|2.6MB/s|DNSOK|GPT⁺-FI"
+      - "🇫🇮 🇫🇮 | @WhiteDNS | FI36|4.5MB/s|DNSOK|GPT⁺-FI"
+      - "🇫🇮 🇫🇮 | @WhiteDNS | FI37|3.9MB/s|DNSOK|GPT⁺-FI"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US574|2.8MB/s|DNSOK|GPT⁺-US"
+      - "🇮🇪 🇮🇪 | @WhiteDNS | IE62|584KB/s|DNSOK|GPT⁺-IE"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:11985"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-89.44.112.130:1007"
-      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.67:1074"
-      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-37.202.225.110:5380"
-      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.182.151.218:5381"
-      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-176.120.17.79:55306"
-      - "🇳🇱 🔒 VM-TCP-TLS 🇳🇱 NL-23.137.249.110:30011"
-      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.165.66.164:33208"
-      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-142.0.135.7:33402"
-      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-142.0.135.51:33204"
-      - "🇯🇵 🔒 VM-WS-TLS 🇯🇵 JP-140.83.57.20:13118"
-      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.14.171.164:33409"
-      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.165.66.164:33203"
-      - "🇹🇷 Best_internet_iran_6"
-      - "🇺🇦 Best_internet_iran_7"
-      - "🇩🇪 Best_internet_iran_9"
-      - "🇩🇪 Best_internet_iran_12"
-      - "🇹🇷 Best_internet_iran_13"
+      - "🇹🇷 🔒 VM-TCP-NA 🇹🇷 TR-167.104.219.97:2086"
       - "🇺🇸 🔒 VM-TCP-NA 🇺🇸 US-104.233.217.193:10001"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21019"
+      - "🇳🇱 🔒 VM-TCP-TLS 🇳🇱 NL-23.137.249.110:30011"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21034"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:9039"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16284"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16280"
-      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.66:1074"
+      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.67:1074"
       - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:2044"
       - "🇩🇪 🔒 VM-TCP-NA 🇩🇪 DE-178.105.168.171:2110"
-      - "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-104.21.50.237:2095"
-      - "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-20.27.177.31:36822"
-      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:46288"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16112"
-      - "🇱🇺 🔒 VM-HTTPUPGRADE-NA 🇱🇺 LU-188.42.89.89:2052"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:9027"
+      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.165.66.164:33208"
+      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:2056"
+      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-37.202.225.110:5380"
+      - "🇯🇵 🔒 VM-WS-TLS 🇯🇵 JP-140.83.57.20:13118"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21022"
       - "🇨🇳 🔒 VM-WS-NA 🇨🇳 CN-120.48.133.162:10086"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16120"
-      - "🇦🇪 🔒 VM-WS-NA 🇦🇪 AE-217.60.183.95:33744"
-      - "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-43.165.174.252:8998"
-      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:36771"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:11985"
-      - "🇹🇷 🔒 VM-TCP-NA 🇹🇷 TR-167.104.219.97:2086"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21034"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16284"
+      - "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-172.67.213.218:2095"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-123.253.227.234:29053"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16115"
+      - "🇫🇷 🔒 VM-TCP-NA 🇫🇷 FR-45.80.215.8:22324"
+      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.182.151.218:5381"
+      - "🇳🇱 🔒 VM-WS-NA 🇳🇱 NL-31.59.150.197:33736"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21018"
       - "🇩🇪 🔒 VM-TCP-NA 🇩🇪 DE-5.45.97.147:10803"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16113"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21020"
+      - "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-20.191.174.48:36802"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16114"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16310"
       - "🇩🇪 🔒 VM-TCP-NA 🇩🇪 DE-181.214.99.229:8084"
       - "🇭🇰 🔒 VM-WS-NA 🇭🇰 HK-47.244.120.197:36703"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16116"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21037"
+      - "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-20.27.177.31:36822"
       - "🇺🇸 🔒 VM-WS-NA 🇺🇸 US-107.173.27.219:6666"
+      - "🇹🇼 🔒 VM-WS-NA 🇹🇼 TW-111.252.188.73:2096"
+      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:46288"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-123.253.227.234:29006"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:11885"
+      - "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-20.17.157.192:36803"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21035"
+      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-142.0.135.7:33402"
+      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.14.171.164:33409"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16112"
       - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:17993"
+      - "🇱🇺 🔒 VM-HTTPUPGRADE-NA 🇱🇺 LU-188.42.89.89:2052"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21017"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16314"
       - "🇭🇰 🔒 VM-WS-NA 🇭🇰 HK-47.244.120.197:44867"
+      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-176.120.17.79:55306"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:9027"
+      - "🇬🇧 🔒 VM-WS-NA 🇬🇧 GB-77.68.12.207:10000"
+      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.165.66.164:33203"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16308"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:11973"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21009"
+      - "🇯🇵 🔒 VM-TCP-NONE 🇯🇵 JP-161.33.185.151:18112"
+      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-142.0.135.51:33204"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21041"
+      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:33625"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16120"
+      - "🇺🇸 🔒 VM-TCP-NA 🇺🇸 US-216.227.168.157:45277"
       - "🇩🇪 🔒 VM-TCP-NA 🇩🇪 DE-5.175.249.58:8083"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21009"
+      - "🇫🇷 🔒 VM-WS-NONE 🇫🇷 FR-162.19.192.89:16626"
       - "🇩🇪 🔒 VM-TCP-NA 🇩🇪 DE-179.61.251.37:8082"
+      - "🇦🇪 🔒 VM-WS-NA 🇦🇪 AE-217.60.183.95:33744"
       - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:16097"
       - "🇺🇸 🔒 VM-WS-NA 🇺🇸 US-4.148.117.156:36801"
       - "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-135.149.170.196:36824"
+      - "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-43.165.174.252:8998"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21011"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21014"
       - "🇫🇷 🔒 VM-WS-NA 🇫🇷 FR-162.19.192.89:16632"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:9039"
+      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:36771"
+      - "🇹🇷 Best_internet_iran_5"
+      - "🇺🇦 Best_internet_iran_6"
+      - "🇩🇪 Best_internet_iran_8"
+      - "🇩🇪 Best_internet_iran_11"
+      - "🇹🇷 Best_internet_iran_12"
+      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.66:1074"
+      - "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-104.21.50.237:2095"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.68:1074"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21022"
       - "🇨🇳 🔒 VM-WS-NA 🇨🇳 CN-120.48.133.162:10086-1"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.182.151.218:5381-1"
       - "🇳🇱 🔒 VM-WS-NA 🇳🇱 NL-168.113.215.6:33736"
-      - "🇫🇷 🔒 VM-TCP-NA 🇫🇷 FR-45.80.215.8:22324"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16113"
-      - "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-20.191.174.48:36802"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16116"
-      - "🇹🇼 🔒 VM-WS-NA 🇹🇼 TW-111.252.188.73:2096"
-      - "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-20.17.157.192:36803"
-      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:33625"
-      - "🇺🇸 🔒 VM-TCP-NA 🇺🇸 US-216.227.168.157:45277"
-      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:2056"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-37.202.225.110:5380-1"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-123.253.227.234:29053"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21018"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16114"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16310"
-      - "🇳🇱 🔒 VM-WS-NA 🇳🇱 NL-31.59.150.197:33736"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:11885"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21035"
       - "🇩🇪 🔒 VM-TCP-NA 🇩🇪 DE-49.13.23.221:443"
-      - "🇬🇧 🔒 VM-WS-NA 🇬🇧 GB-77.68.12.207:10000"
-      - "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-172.67.213.218:2095"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21041"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21011"
       - "🇮🇷 🆔soskeynet 🔓 VM-TCP-N/A 🇮🇷 IR down"
       - "🇹🇷 🆔soskeynet 🔓 VM-TCP-N/A 🇹🇷 TR 153ms"
       - "🇩🇪 🆔surfboardv2ray 🔓 VM-TCP-N/A 🇩🇪 DE down"
@@ -2964,13 +3001,12 @@ proxy-groups:
       - "🇳🇱 🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 113ms"
       - "🇦🇪 🆔v2ray1_ng 🔓 VM-WS-N/A ❔ XX 343ms"
       - "🇹🇷 🆔v2ray1_ng 🔓 VM-TCP-N/A ❔ XX 149ms"
-      - "🇯🇵 🔒 VM-TCP-NONE 🇯🇵 JP-161.33.185.151:18112"
       - "🇨🇿 CZ🇨🇿 | superstar.jp1.srayx.xyz-80 | 343.3ms"
       - "🇮🇷 IR🇮🇷 | s1.connect.labex.pro-1007 | 330.36ms"
       - "🇮🇷 IR🇮🇷 | s1.connect.labex.pro-1007 | 232.71ms"
       - "🇮🇷 IR🇮🇷 | s1.connect.bloroxy.net-1074 | 221.26ms"
       - "🇮🇷 IR🇮🇷 | s.linkinfo.site-3087 | 229.35ms"
-      - "🇩🇪 CA🇨🇦 | mygptagent.org-443 | 180.58ms"
+      - "🇫🇷 CA🇨🇦 | mygptagent.org-443 | 180.58ms"
       - "🇩🇪 DE🇩🇪 | lucas.ehsanazizi-speed-server.com-2110 | 163.01ms"
       - "🇺🇸 US🇺🇸 | jp121.vatilon.cc-10001 | 70.09ms"
       - "🇩🇪 DE🇩🇪 | hgky2opr5Fr3nKjG.v.3dns.vip-443 | 1027.45ms"
@@ -2986,7 +3022,7 @@ proxy-groups:
       - "🇮🇷 IR🇮🇷 | dashboard.ojeshop.top-5380 | 268.81ms"
       - "🇮🇷 IR🇮🇷 | dashboard.ojedata.top-5382 | 521.58ms"
       - "🇮🇷 IR🇮🇷 | c63.halrex.ir-827 | 1166.85ms"
-      - "🇬🇧 GB🇬🇧 | aidrivercat.org-443 | 85.93ms"
+      - "🇺🇸 GB🇬🇧 | aidrivercat.org-443 | 85.93ms"
       - "🇺🇸 GB🇬🇧 | aksai.org-443 | 96.32ms"
       - "🇩🇪 DE🇩🇪 | TsfZhJMBVTaKzhVE.v.3dns.vip-443 | 1026.6ms"
       - "🇮🇷 IR🇮🇷 | NlS3.zelnora.ir-55306 | 327.58ms"
@@ -3030,7 +3066,6 @@ proxy-groups:
       - "🇭🇰 Hong Kong"
       - "🇰🇷 South Korea"
       - "🇭🇰 Hong Kong-1"
-      - "🇮🇪 Ireland"
       - "🇭🇰 Hong Kong-2"
       - "🇭🇰 Hong Kong-3"
       - "🇭🇰 Hong Kong-4"
@@ -3038,19 +3073,21 @@ proxy-groups:
       - "🇭🇰 Hong Kong-5"
       - "🇰🇿 United States"
       - "🏳️ United States"
-      - "🇫🇷 🔒 VM-WS-NONE 🇫🇷 FR-162.19.192.89:16626"
       - "🇸🇬 vmess-129.226.157.220:59121"
-      - "🇭🇰 vmess-zfd-boardv2.kunlun01dns.com:16284"
-      - "🇭🇰 vmess-6JDvArazgU3qQR6Q.v.3dns.vip:443"
+      - "🇩🇪 63. 🇬🇧 United Kingdom"
+      - "🇹🇭 82. 🇹🇭 Thailand"
+      - "🏳️ 94. 🇭🇰 Hong Kong"
+      - "🇭🇰 106. 🇭🇰 Hong Kong"
+      - "🇭🇰 114. 🇭🇰 Hong Kong"
+      - "🇩🇪 116. 🇩🇪 Germany"
+      - "🏳️ 119. 🇬🇧 United Kingdom"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
-    icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
     url: "https://www.gstatic.com/generate_204"
-    interval: 600
+    interval: 30
     tolerance: 50
-    timeout: 3200
-    lazy: false
-    max-failed-times: 2
+    lazy: true
     proxies:
       - "🇨🇳 003-🇳🇱 NL tcp ✂️@GheychiAmoozesh"
       - "🇨🇳 017-🇫🇷 FR tcp ✂️@GheychiAmoozesh"
@@ -3154,97 +3191,100 @@ proxy-groups:
       - "🇺🇸 @DeltaKroneckerGithub-14"
       - "🇸🇬 @DeltaKroneckerGithub-4"
       - "🇸🇬 @DeltaKroneckerGithub-5"
-      - "🇫🇮 🇫🇮 | @WhiteDNS | FI42|2.8MB/s|DNSOK|GPT⁺-FI"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US525|2.7MB/s|DNSOK|GPT⁺-US"
-      - "🇫🇮 🇫🇮 | @WhiteDNS | FI43|2.6MB/s|DNSOK|GPT⁺-FI"
+      - "🇫🇮 🇫🇮 | @WhiteDNS | FI36|4.5MB/s|DNSOK|GPT⁺-FI"
+      - "🇫🇮 🇫🇮 | @WhiteDNS | FI37|3.9MB/s|DNSOK|GPT⁺-FI"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US574|2.8MB/s|DNSOK|GPT⁺-US"
+      - "🇮🇪 🇮🇪 | @WhiteDNS | IE62|584KB/s|DNSOK|GPT⁺-IE"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:11985"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-89.44.112.130:1007"
-      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.67:1074"
-      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-37.202.225.110:5380"
-      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.182.151.218:5381"
-      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-176.120.17.79:55306"
-      - "🇳🇱 🔒 VM-TCP-TLS 🇳🇱 NL-23.137.249.110:30011"
-      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.165.66.164:33208"
-      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-142.0.135.7:33402"
-      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-142.0.135.51:33204"
-      - "🇯🇵 🔒 VM-WS-TLS 🇯🇵 JP-140.83.57.20:13118"
-      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.14.171.164:33409"
-      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.165.66.164:33203"
-      - "🇹🇷 Best_internet_iran_6"
-      - "🇺🇦 Best_internet_iran_7"
-      - "🇩🇪 Best_internet_iran_9"
-      - "🇩🇪 Best_internet_iran_12"
-      - "🇹🇷 Best_internet_iran_13"
+      - "🇹🇷 🔒 VM-TCP-NA 🇹🇷 TR-167.104.219.97:2086"
       - "🇺🇸 🔒 VM-TCP-NA 🇺🇸 US-104.233.217.193:10001"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21019"
+      - "🇳🇱 🔒 VM-TCP-TLS 🇳🇱 NL-23.137.249.110:30011"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21034"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:9039"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16284"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16280"
-      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.66:1074"
+      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.67:1074"
       - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:2044"
       - "🇩🇪 🔒 VM-TCP-NA 🇩🇪 DE-178.105.168.171:2110"
-      - "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-104.21.50.237:2095"
-      - "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-20.27.177.31:36822"
-      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:46288"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16112"
-      - "🇱🇺 🔒 VM-HTTPUPGRADE-NA 🇱🇺 LU-188.42.89.89:2052"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:9027"
+      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.165.66.164:33208"
+      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:2056"
+      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-37.202.225.110:5380"
+      - "🇯🇵 🔒 VM-WS-TLS 🇯🇵 JP-140.83.57.20:13118"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21022"
       - "🇨🇳 🔒 VM-WS-NA 🇨🇳 CN-120.48.133.162:10086"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16120"
-      - "🇦🇪 🔒 VM-WS-NA 🇦🇪 AE-217.60.183.95:33744"
-      - "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-43.165.174.252:8998"
-      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:36771"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:11985"
-      - "🇹🇷 🔒 VM-TCP-NA 🇹🇷 TR-167.104.219.97:2086"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21034"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16284"
+      - "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-172.67.213.218:2095"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-123.253.227.234:29053"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16115"
+      - "🇫🇷 🔒 VM-TCP-NA 🇫🇷 FR-45.80.215.8:22324"
+      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.182.151.218:5381"
+      - "🇳🇱 🔒 VM-WS-NA 🇳🇱 NL-31.59.150.197:33736"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21018"
       - "🇩🇪 🔒 VM-TCP-NA 🇩🇪 DE-5.45.97.147:10803"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16113"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21020"
+      - "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-20.191.174.48:36802"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16114"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16310"
       - "🇩🇪 🔒 VM-TCP-NA 🇩🇪 DE-181.214.99.229:8084"
       - "🇭🇰 🔒 VM-WS-NA 🇭🇰 HK-47.244.120.197:36703"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16116"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21037"
+      - "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-20.27.177.31:36822"
       - "🇺🇸 🔒 VM-WS-NA 🇺🇸 US-107.173.27.219:6666"
+      - "🇹🇼 🔒 VM-WS-NA 🇹🇼 TW-111.252.188.73:2096"
+      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:46288"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-123.253.227.234:29006"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:11885"
+      - "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-20.17.157.192:36803"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21035"
+      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-142.0.135.7:33402"
+      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.14.171.164:33409"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16112"
       - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:17993"
+      - "🇱🇺 🔒 VM-HTTPUPGRADE-NA 🇱🇺 LU-188.42.89.89:2052"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21017"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16314"
       - "🇭🇰 🔒 VM-WS-NA 🇭🇰 HK-47.244.120.197:44867"
+      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-176.120.17.79:55306"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:9027"
+      - "🇬🇧 🔒 VM-WS-NA 🇬🇧 GB-77.68.12.207:10000"
+      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.165.66.164:33203"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16308"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:11973"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21009"
+      - "🇯🇵 🔒 VM-TCP-NONE 🇯🇵 JP-161.33.185.151:18112"
+      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-142.0.135.51:33204"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21041"
+      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:33625"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16120"
+      - "🇺🇸 🔒 VM-TCP-NA 🇺🇸 US-216.227.168.157:45277"
       - "🇩🇪 🔒 VM-TCP-NA 🇩🇪 DE-5.175.249.58:8083"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21009"
+      - "🇫🇷 🔒 VM-WS-NONE 🇫🇷 FR-162.19.192.89:16626"
       - "🇩🇪 🔒 VM-TCP-NA 🇩🇪 DE-179.61.251.37:8082"
+      - "🇦🇪 🔒 VM-WS-NA 🇦🇪 AE-217.60.183.95:33744"
       - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:16097"
       - "🇺🇸 🔒 VM-WS-NA 🇺🇸 US-4.148.117.156:36801"
       - "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-135.149.170.196:36824"
+      - "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-43.165.174.252:8998"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21011"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21014"
       - "🇫🇷 🔒 VM-WS-NA 🇫🇷 FR-162.19.192.89:16632"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:9039"
+      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:36771"
+      - "🇹🇷 Best_internet_iran_5"
+      - "🇺🇦 Best_internet_iran_6"
+      - "🇩🇪 Best_internet_iran_8"
+      - "🇩🇪 Best_internet_iran_11"
+      - "🇹🇷 Best_internet_iran_12"
+      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.66:1074"
+      - "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-104.21.50.237:2095"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.68:1074"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21022"
       - "🇨🇳 🔒 VM-WS-NA 🇨🇳 CN-120.48.133.162:10086-1"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.182.151.218:5381-1"
       - "🇳🇱 🔒 VM-WS-NA 🇳🇱 NL-168.113.215.6:33736"
-      - "🇫🇷 🔒 VM-TCP-NA 🇫🇷 FR-45.80.215.8:22324"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16113"
-      - "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-20.191.174.48:36802"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16116"
-      - "🇹🇼 🔒 VM-WS-NA 🇹🇼 TW-111.252.188.73:2096"
-      - "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-20.17.157.192:36803"
-      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:33625"
-      - "🇺🇸 🔒 VM-TCP-NA 🇺🇸 US-216.227.168.157:45277"
-      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:2056"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-37.202.225.110:5380-1"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-123.253.227.234:29053"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21018"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16114"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16310"
-      - "🇳🇱 🔒 VM-WS-NA 🇳🇱 NL-31.59.150.197:33736"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:11885"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21035"
       - "🇩🇪 🔒 VM-TCP-NA 🇩🇪 DE-49.13.23.221:443"
-      - "🇬🇧 🔒 VM-WS-NA 🇬🇧 GB-77.68.12.207:10000"
-      - "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-172.67.213.218:2095"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21041"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21011"
       - "🇮🇷 🆔soskeynet 🔓 VM-TCP-N/A 🇮🇷 IR down"
       - "🇹🇷 🆔soskeynet 🔓 VM-TCP-N/A 🇹🇷 TR 153ms"
       - "🇩🇪 🆔surfboardv2ray 🔓 VM-TCP-N/A 🇩🇪 DE down"
@@ -3255,13 +3295,12 @@ proxy-groups:
       - "🇳🇱 🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 113ms"
       - "🇦🇪 🆔v2ray1_ng 🔓 VM-WS-N/A ❔ XX 343ms"
       - "🇹🇷 🆔v2ray1_ng 🔓 VM-TCP-N/A ❔ XX 149ms"
-      - "🇯🇵 🔒 VM-TCP-NONE 🇯🇵 JP-161.33.185.151:18112"
       - "🇨🇿 CZ🇨🇿 | superstar.jp1.srayx.xyz-80 | 343.3ms"
       - "🇮🇷 IR🇮🇷 | s1.connect.labex.pro-1007 | 330.36ms"
       - "🇮🇷 IR🇮🇷 | s1.connect.labex.pro-1007 | 232.71ms"
       - "🇮🇷 IR🇮🇷 | s1.connect.bloroxy.net-1074 | 221.26ms"
       - "🇮🇷 IR🇮🇷 | s.linkinfo.site-3087 | 229.35ms"
-      - "🇩🇪 CA🇨🇦 | mygptagent.org-443 | 180.58ms"
+      - "🇫🇷 CA🇨🇦 | mygptagent.org-443 | 180.58ms"
       - "🇩🇪 DE🇩🇪 | lucas.ehsanazizi-speed-server.com-2110 | 163.01ms"
       - "🇺🇸 US🇺🇸 | jp121.vatilon.cc-10001 | 70.09ms"
       - "🇩🇪 DE🇩🇪 | hgky2opr5Fr3nKjG.v.3dns.vip-443 | 1027.45ms"
@@ -3277,7 +3316,7 @@ proxy-groups:
       - "🇮🇷 IR🇮🇷 | dashboard.ojeshop.top-5380 | 268.81ms"
       - "🇮🇷 IR🇮🇷 | dashboard.ojedata.top-5382 | 521.58ms"
       - "🇮🇷 IR🇮🇷 | c63.halrex.ir-827 | 1166.85ms"
-      - "🇬🇧 GB🇬🇧 | aidrivercat.org-443 | 85.93ms"
+      - "🇺🇸 GB🇬🇧 | aidrivercat.org-443 | 85.93ms"
       - "🇺🇸 GB🇬🇧 | aksai.org-443 | 96.32ms"
       - "🇩🇪 DE🇩🇪 | TsfZhJMBVTaKzhVE.v.3dns.vip-443 | 1026.6ms"
       - "🇮🇷 IR🇮🇷 | NlS3.zelnora.ir-55306 | 327.58ms"
@@ -3321,7 +3360,6 @@ proxy-groups:
       - "🇭🇰 Hong Kong"
       - "🇰🇷 South Korea"
       - "🇭🇰 Hong Kong-1"
-      - "🇮🇪 Ireland"
       - "🇭🇰 Hong Kong-2"
       - "🇭🇰 Hong Kong-3"
       - "🇭🇰 Hong Kong-4"
@@ -3329,18 +3367,22 @@ proxy-groups:
       - "🇭🇰 Hong Kong-5"
       - "🇰🇿 United States"
       - "🏳️ United States"
-      - "🇫🇷 🔒 VM-WS-NONE 🇫🇷 FR-162.19.192.89:16626"
       - "🇸🇬 vmess-129.226.157.220:59121"
-      - "🇭🇰 vmess-zfd-boardv2.kunlun01dns.com:16284"
-      - "🇭🇰 vmess-6JDvArazgU3qQR6Q.v.3dns.vip:443"
+      - "🇩🇪 63. 🇬🇧 United Kingdom"
+      - "🇹🇭 82. 🇹🇭 Thailand"
+      - "🏳️ 94. 🇭🇰 Hong Kong"
+      - "🇭🇰 106. 🇭🇰 Hong Kong"
+      - "🇭🇰 114. 🇭🇰 Hong Kong"
+      - "🇩🇪 116. 🇩🇪 Germany"
+      - "🏳️ 119. 🇬🇧 United Kingdom"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
-    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
     strategy: "round-robin"
     url: "https://www.gstatic.com/generate_204"
     interval: 30
+    lazy: true
     timeout: 1500
-    lazy: false
     proxies:
       - "🇨🇳 003-🇳🇱 NL tcp ✂️@GheychiAmoozesh"
       - "🇨🇳 017-🇫🇷 FR tcp ✂️@GheychiAmoozesh"
@@ -3444,97 +3486,100 @@ proxy-groups:
       - "🇺🇸 @DeltaKroneckerGithub-14"
       - "🇸🇬 @DeltaKroneckerGithub-4"
       - "🇸🇬 @DeltaKroneckerGithub-5"
-      - "🇫🇮 🇫🇮 | @WhiteDNS | FI42|2.8MB/s|DNSOK|GPT⁺-FI"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US525|2.7MB/s|DNSOK|GPT⁺-US"
-      - "🇫🇮 🇫🇮 | @WhiteDNS | FI43|2.6MB/s|DNSOK|GPT⁺-FI"
+      - "🇫🇮 🇫🇮 | @WhiteDNS | FI36|4.5MB/s|DNSOK|GPT⁺-FI"
+      - "🇫🇮 🇫🇮 | @WhiteDNS | FI37|3.9MB/s|DNSOK|GPT⁺-FI"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US574|2.8MB/s|DNSOK|GPT⁺-US"
+      - "🇮🇪 🇮🇪 | @WhiteDNS | IE62|584KB/s|DNSOK|GPT⁺-IE"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:11985"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-89.44.112.130:1007"
-      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.67:1074"
-      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-37.202.225.110:5380"
-      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.182.151.218:5381"
-      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-176.120.17.79:55306"
-      - "🇳🇱 🔒 VM-TCP-TLS 🇳🇱 NL-23.137.249.110:30011"
-      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.165.66.164:33208"
-      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-142.0.135.7:33402"
-      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-142.0.135.51:33204"
-      - "🇯🇵 🔒 VM-WS-TLS 🇯🇵 JP-140.83.57.20:13118"
-      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.14.171.164:33409"
-      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.165.66.164:33203"
-      - "🇹🇷 Best_internet_iran_6"
-      - "🇺🇦 Best_internet_iran_7"
-      - "🇩🇪 Best_internet_iran_9"
-      - "🇩🇪 Best_internet_iran_12"
-      - "🇹🇷 Best_internet_iran_13"
+      - "🇹🇷 🔒 VM-TCP-NA 🇹🇷 TR-167.104.219.97:2086"
       - "🇺🇸 🔒 VM-TCP-NA 🇺🇸 US-104.233.217.193:10001"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21019"
+      - "🇳🇱 🔒 VM-TCP-TLS 🇳🇱 NL-23.137.249.110:30011"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21034"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:9039"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16284"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16280"
-      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.66:1074"
+      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.67:1074"
       - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:2044"
       - "🇩🇪 🔒 VM-TCP-NA 🇩🇪 DE-178.105.168.171:2110"
-      - "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-104.21.50.237:2095"
-      - "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-20.27.177.31:36822"
-      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:46288"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16112"
-      - "🇱🇺 🔒 VM-HTTPUPGRADE-NA 🇱🇺 LU-188.42.89.89:2052"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:9027"
+      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.165.66.164:33208"
+      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:2056"
+      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-37.202.225.110:5380"
+      - "🇯🇵 🔒 VM-WS-TLS 🇯🇵 JP-140.83.57.20:13118"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21022"
       - "🇨🇳 🔒 VM-WS-NA 🇨🇳 CN-120.48.133.162:10086"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16120"
-      - "🇦🇪 🔒 VM-WS-NA 🇦🇪 AE-217.60.183.95:33744"
-      - "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-43.165.174.252:8998"
-      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:36771"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:11985"
-      - "🇹🇷 🔒 VM-TCP-NA 🇹🇷 TR-167.104.219.97:2086"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21034"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16284"
+      - "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-172.67.213.218:2095"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-123.253.227.234:29053"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16115"
+      - "🇫🇷 🔒 VM-TCP-NA 🇫🇷 FR-45.80.215.8:22324"
+      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.182.151.218:5381"
+      - "🇳🇱 🔒 VM-WS-NA 🇳🇱 NL-31.59.150.197:33736"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21018"
       - "🇩🇪 🔒 VM-TCP-NA 🇩🇪 DE-5.45.97.147:10803"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16113"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21020"
+      - "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-20.191.174.48:36802"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16114"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16310"
       - "🇩🇪 🔒 VM-TCP-NA 🇩🇪 DE-181.214.99.229:8084"
       - "🇭🇰 🔒 VM-WS-NA 🇭🇰 HK-47.244.120.197:36703"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16116"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21037"
+      - "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-20.27.177.31:36822"
       - "🇺🇸 🔒 VM-WS-NA 🇺🇸 US-107.173.27.219:6666"
+      - "🇹🇼 🔒 VM-WS-NA 🇹🇼 TW-111.252.188.73:2096"
+      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:46288"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-123.253.227.234:29006"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:11885"
+      - "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-20.17.157.192:36803"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21035"
+      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-142.0.135.7:33402"
+      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.14.171.164:33409"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16112"
       - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:17993"
+      - "🇱🇺 🔒 VM-HTTPUPGRADE-NA 🇱🇺 LU-188.42.89.89:2052"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21017"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16314"
       - "🇭🇰 🔒 VM-WS-NA 🇭🇰 HK-47.244.120.197:44867"
+      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-176.120.17.79:55306"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:9027"
+      - "🇬🇧 🔒 VM-WS-NA 🇬🇧 GB-77.68.12.207:10000"
+      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-38.165.66.164:33203"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16308"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:11973"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21009"
+      - "🇯🇵 🔒 VM-TCP-NONE 🇯🇵 JP-161.33.185.151:18112"
+      - "🇺🇸 🔒 VM-WS-TLS 🇺🇸 US-142.0.135.51:33204"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21041"
+      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:33625"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16120"
+      - "🇺🇸 🔒 VM-TCP-NA 🇺🇸 US-216.227.168.157:45277"
       - "🇩🇪 🔒 VM-TCP-NA 🇩🇪 DE-5.175.249.58:8083"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21009"
+      - "🇫🇷 🔒 VM-WS-NONE 🇫🇷 FR-162.19.192.89:16626"
       - "🇩🇪 🔒 VM-TCP-NA 🇩🇪 DE-179.61.251.37:8082"
+      - "🇦🇪 🔒 VM-WS-NA 🇦🇪 AE-217.60.183.95:33744"
       - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:16097"
       - "🇺🇸 🔒 VM-WS-NA 🇺🇸 US-4.148.117.156:36801"
       - "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-135.149.170.196:36824"
+      - "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-43.165.174.252:8998"
+      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21011"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21014"
       - "🇫🇷 🔒 VM-WS-NA 🇫🇷 FR-162.19.192.89:16632"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:9039"
+      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:36771"
+      - "🇹🇷 Best_internet_iran_5"
+      - "🇺🇦 Best_internet_iran_6"
+      - "🇩🇪 Best_internet_iran_8"
+      - "🇩🇪 Best_internet_iran_11"
+      - "🇹🇷 Best_internet_iran_12"
+      - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.66:1074"
+      - "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-104.21.50.237:2095"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.68:1074"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21022"
       - "🇨🇳 🔒 VM-WS-NA 🇨🇳 CN-120.48.133.162:10086-1"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.182.151.218:5381-1"
       - "🇳🇱 🔒 VM-WS-NA 🇳🇱 NL-168.113.215.6:33736"
-      - "🇫🇷 🔒 VM-TCP-NA 🇫🇷 FR-45.80.215.8:22324"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16113"
-      - "🇯🇵 🔒 VM-WS-NA 🇯🇵 JP-20.191.174.48:36802"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16116"
-      - "🇹🇼 🔒 VM-WS-NA 🇹🇼 TW-111.252.188.73:2096"
-      - "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-20.17.157.192:36803"
-      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:33625"
-      - "🇺🇸 🔒 VM-TCP-NA 🇺🇸 US-216.227.168.157:45277"
-      - "🇦🇪 🔒 VM-TCP-NA 🇦🇪 AE-217.60.255.71:2056"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-37.202.225.110:5380-1"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-123.253.227.234:29053"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21018"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16114"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:16310"
-      - "🇳🇱 🔒 VM-WS-NA 🇳🇱 NL-31.59.150.197:33736"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.45.64:11885"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21035"
       - "🇩🇪 🔒 VM-TCP-NA 🇩🇪 DE-49.13.23.221:443"
-      - "🇬🇧 🔒 VM-WS-NA 🇬🇧 GB-77.68.12.207:10000"
-      - "🏳️ 🔒 VM-WS-NA 🏴☠️ NA-172.67.213.218:2095"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21041"
-      - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.32.134:21011"
       - "🇮🇷 🆔soskeynet 🔓 VM-TCP-N/A 🇮🇷 IR down"
       - "🇹🇷 🆔soskeynet 🔓 VM-TCP-N/A 🇹🇷 TR 153ms"
       - "🇩🇪 🆔surfboardv2ray 🔓 VM-TCP-N/A 🇩🇪 DE down"
@@ -3545,13 +3590,12 @@ proxy-groups:
       - "🇳🇱 🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 113ms"
       - "🇦🇪 🆔v2ray1_ng 🔓 VM-WS-N/A ❔ XX 343ms"
       - "🇹🇷 🆔v2ray1_ng 🔓 VM-TCP-N/A ❔ XX 149ms"
-      - "🇯🇵 🔒 VM-TCP-NONE 🇯🇵 JP-161.33.185.151:18112"
       - "🇨🇿 CZ🇨🇿 | superstar.jp1.srayx.xyz-80 | 343.3ms"
       - "🇮🇷 IR🇮🇷 | s1.connect.labex.pro-1007 | 330.36ms"
       - "🇮🇷 IR🇮🇷 | s1.connect.labex.pro-1007 | 232.71ms"
       - "🇮🇷 IR🇮🇷 | s1.connect.bloroxy.net-1074 | 221.26ms"
       - "🇮🇷 IR🇮🇷 | s.linkinfo.site-3087 | 229.35ms"
-      - "🇩🇪 CA🇨🇦 | mygptagent.org-443 | 180.58ms"
+      - "🇫🇷 CA🇨🇦 | mygptagent.org-443 | 180.58ms"
       - "🇩🇪 DE🇩🇪 | lucas.ehsanazizi-speed-server.com-2110 | 163.01ms"
       - "🇺🇸 US🇺🇸 | jp121.vatilon.cc-10001 | 70.09ms"
       - "🇩🇪 DE🇩🇪 | hgky2opr5Fr3nKjG.v.3dns.vip-443 | 1027.45ms"
@@ -3567,7 +3611,7 @@ proxy-groups:
       - "🇮🇷 IR🇮🇷 | dashboard.ojeshop.top-5380 | 268.81ms"
       - "🇮🇷 IR🇮🇷 | dashboard.ojedata.top-5382 | 521.58ms"
       - "🇮🇷 IR🇮🇷 | c63.halrex.ir-827 | 1166.85ms"
-      - "🇬🇧 GB🇬🇧 | aidrivercat.org-443 | 85.93ms"
+      - "🇺🇸 GB🇬🇧 | aidrivercat.org-443 | 85.93ms"
       - "🇺🇸 GB🇬🇧 | aksai.org-443 | 96.32ms"
       - "🇩🇪 DE🇩🇪 | TsfZhJMBVTaKzhVE.v.3dns.vip-443 | 1026.6ms"
       - "🇮🇷 IR🇮🇷 | NlS3.zelnora.ir-55306 | 327.58ms"
@@ -3611,7 +3655,6 @@ proxy-groups:
       - "🇭🇰 Hong Kong"
       - "🇰🇷 South Korea"
       - "🇭🇰 Hong Kong-1"
-      - "🇮🇪 Ireland"
       - "🇭🇰 Hong Kong-2"
       - "🇭🇰 Hong Kong-3"
       - "🇭🇰 Hong Kong-4"
@@ -3619,272 +3662,281 @@ proxy-groups:
       - "🇭🇰 Hong Kong-5"
       - "🇰🇿 United States"
       - "🏳️ United States"
-      - "🇫🇷 🔒 VM-WS-NONE 🇫🇷 FR-162.19.192.89:16626"
       - "🇸🇬 vmess-129.226.157.220:59121"
-      - "🇭🇰 vmess-zfd-boardv2.kunlun01dns.com:16284"
-      - "🇭🇰 vmess-6JDvArazgU3qQR6Q.v.3dns.vip:443"
-  - name: "المنت 💬"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "تیماسپیک 🎧"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/331567/teamspeak.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "دلتاچت ✉️"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/373771/mail.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
+      - "🇩🇪 63. 🇬🇧 United Kingdom"
+      - "🇹🇭 82. 🇹🇭 Thailand"
+      - "🏳️ 94. 🇭🇰 Hong Kong"
+      - "🇭🇰 106. 🇭🇰 Hong Kong"
+      - "🇭🇰 114. 🇭🇰 Hong Kong"
+      - "🇩🇪 116. 🇩🇪 Germany"
+      - "🏳️ 119. 🇬🇧 United Kingdom"
+    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"
-    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
     proxies:
       - "بدون فیلترشکن 🛡️"
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
   - name: "تلگرام 💬"
     type: "select"
-    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
   - name: "یوتیوب ▶️"
     type: "select"
-    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
       - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
   - name: "گوگل 🌍"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
     icon: "https://www.svgrepo.com/show/475656/google-color.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "واتس آپ 🟢"
-    type: "select"
-    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-      - "بدون فیلترشکن 🛡️"
   - name: "هوش مصنوعی 🤖"
     type: "select"
-    icon: "https://www.svgrepo.com/show/306500/openai.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/306500/openai.svg"
   - name: "توییتر 🐦"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
     icon: "https://www.svgrepo.com/show/475689/twitter-color.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "اسپاتیفای 🎵"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
   - name: "اینستاگرام 📸"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
     icon: "https://www.svgrepo.com/show/452229/instagram-1.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-      - "بدون فیلترشکن 🛡️"
-  - name: "تبلیغات 🆎"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/336358/ad.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "تبلیغات اپ ها 🍃"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "رهگیری جهانی 🛑"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "سایتای مخرب ⚠️"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "استیم 🖥️"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/452107/steam.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "گیم 🎮"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "توییچ 📡"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/343527/twitch-network-communication-interaction-connection.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "سایتای ایرانی 🇮🇷"
-    type: "select"
-    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "ویندوز 🧊"
-    type: "select"
-    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "اجازه ندادن 🚫"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
   - name: "کلودفلر ☁️"
     type: "select"
-    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
   - name: "گیتهاب 🐙"
     type: "select"
-    icon: "https://www.svgrepo.com/show/355033/github.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/355033/github.svg"
+  - name: "اسپاتیفای 🎵"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
+  - name: "واتس آپ 🟢"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
+  - name: "تبلیغات 🆎"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/336358/ad.svg"
+  - name: "تبلیغات اپ ها 🍃"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
+  - name: "رهگیری جهانی 🛑"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
+  - name: "المنت 💬"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Element_(software)_logo_(2020).svg"
+  - name: "تیم اسپیک 🎧"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/teamspeak/default.svg"
+  - name: "دلتاچت ✉️"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Delta_chat_(Instant_Messenger)_logo.svg"
+  - name: "سایتای مخرب ⚠️"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
+  - name: "استیم 🖥️"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/452107/steam.svg"
+  - name: "گیم 🎮"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
+  - name: "توییچ 📡"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@develop/icons/twitch.svg"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
+  - name: "ویندوز 🧊"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "اجازه ندادن 🚫"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
   - name: "دیسکورد 🗣️"
     type: "select"
-    icon: "https://automatorplugin.com/wp-content/uploads/2024/10/discord-icon.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/brands/discord.svg"
   - name: "استریمیو 🎬"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
     icon: "https://stremio.github.io/stremio-addon-guide/img/stremio.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "انیدسک 🔴"
+  - name: "انی دسک 🔴"
     type: "select"
-    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
     proxies:
       - "بدون فیلترشکن 🛡️"
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
   - name: "سایتای سانسوری 🤬"
     type: "select"
-    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Censorship.svg/300px-Censorship.svg.png"
     proxies:
       - "اجازه ندادن 🚫"
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "بدون فیلترشکن 🛡️"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/clapperboard.svg"
   - name: "بدون فیلترشکن 🛡️"
     type: "select"
-    icon: "https://www.svgrepo.com/show/6318/connection.svg"
     proxies:
       - "DIRECT"
     hidden: true
+    icon: "https://www.svgrepo.com/show/6318/connection.svg"
   - name: "قطع اینترنت ⛔"
     type: "select"
-    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
     proxies:
       - "REJECT"
     hidden: true
+    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
   - name: "اجازه ندادن 🚫"
     type: "select"
-    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
     proxies:
       - "REJECT"
     hidden: true
+    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
 rules:
+  - "IP-CIDR,127.0.0.0/8,بدون فیلترشکن 🛡️,no-resolve"
+  - "DOMAIN,localhost,بدون فیلترشکن 🛡️"
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,private,بدون فیلترشکن 🛡️"
   - "RULE-SET,DownloadManagers,دانلود منیجر 📥"
   - "RULE-SET,Download,دانلود منیجر 📥"
   - "RULE-SET,stremio,استریمیو 🎬"
@@ -3904,11 +3956,12 @@ rules:
   - "DST-PORT,993,دلتاچت ✉️"
   - "DST-PORT,465,دلتاچت ✉️"
   - "DST-PORT,587,دلتاچت ✉️"
-  - "PROCESS-NAME,com.teamspeak.ts3client,تیماسپیک 🎧"
-  - "PROCESS-NAME,ts3client_win64.exe,تیماسپیک 🎧"
-  - "PROCESS-NAME,ts3client_win32.exe,تیماسپیک 🎧"
-  - "DOMAIN-SUFFIX,ag.tssq.ir,تیماسپیک 🎧"
-  - "DST-PORT,9987,تیماسپیک 🎧"
+  - "PROCESS-NAME,com.teamspeak.ts3client,تیم اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win64.exe,تیم اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win32.exe,تیم اسپیک 🎧"
+  - "PROCESS-NAME,TeamSpeak.exe,تیم اسپیک 🎧"
+  - "DOMAIN-SUFFIX,ag.tssq.ir,تیم اسپیک 🎧"
+  - "DST-PORT,9987,تیم اسپیک 🎧"
   - "RULE-SET,BanProgramAD,تبلیغات اپ ها 🍃"
   - "RULE-SET,BanAD,رهگیری جهانی 🛑"
   - "RULE-SET,PrivateTracker,رهگیری جهانی 🛑"
@@ -3931,9 +3984,12 @@ rules:
   - "RULE-SET,YouTube,یوتیوب ▶️"
   - "RULE-SET,youtube,یوتیوب ▶️"
   - "RULE-SET,YouTubeMusic,یوتیوب ▶️"
-  - "PROCESS-NAME,com.anydesk.anydeskandroid,انیدسک 🔴"
-  - "PROCESS-NAME,AnyDesk.exe,انیدسک 🔴"
-  - "DOMAIN-SUFFIX,anydesk.com,انیدسک 🔴"
+  - "PROCESS-NAME,com.anydesk.anydeskandroid,انی دسک 🔴"
+  - "PROCESS-NAME,AnyDesk.exe,انی دسک 🔴"
+  - "DOMAIN-SUFFIX,anydesk.com,انی دسک 🔴"
+  - "PROCESS-NAME,rustdesk.exe,انی دسک 🔴"
+  - "PROCESS-NAME,com.carriez.flutter_hbb,انی دسک 🔴"
+  - "PROCESS-NAME,dorsandesk.exe,انی دسک 🔴"
   - "PROCESS-NAME,Twitter.exe,توییتر 🐦"
   - "PROCESS-NAME,com.twitter.android,توییتر 🐦"
   - "RULE-SET,Chotwitter,توییتر 🐦"
@@ -3945,9 +4001,6 @@ rules:
   - "RULE-SET,mihspotify,اسپاتیفای 🎵"
   - "PROCESS-NAME,com.instagram.android,اینستاگرام 📸"
   - "RULE-SET,instagram,اینستاگرام 📸"
-  - "DOMAIN-SUFFIX,deepseek.com,هوش مصنوعی 🤖"
-  - "DOMAIN-SUFFIX,qwen.ai,هوش مصنوعی 🤖"
-  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
   - "RULE-SET,censor,سایتای سانسوری 🤬"
   - "RULE-SET,apps,سایتای ایرانی 🇮🇷"
   - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
@@ -3961,6 +4014,10 @@ rules:
   - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
   - "DOMAIN-SUFFIX,unimics.com,سایتای ایرانی 🇮🇷"
   - "RULE-SET,whatsapp,واتس آپ 🟢"
+  - "RULE-SET,Ai,هوش مصنوعی 🤖"
+  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
+  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google,گوگل 🌍"
   - "RULE-SET,steam,استیم 🖥️"
   - "RULE-SET,SteamRegionCheck,استیم 🖥️"
   - "RULE-SET,game,گیم 🎮"
@@ -3975,9 +4032,5 @@ rules:
   - "RULE-SET,github,گیتهاب 🐙"
   - "PROCESS-NAME,com.android.vending,نوع انتخاب پروکسی 🔀"
   - "PROCESS-NAME,com.google.android.gms,نوع انتخاب پروکسی 🔀"
-  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
-  - "RULE-SET,google,گوگل 🌍"
   - "IP-CIDR,10.10.34.0/24,نوع انتخاب پروکسی 🔀"
-  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
-  - "RULE-SET,private,بدون فیلترشکن 🛡️"
   - "MATCH,نوع انتخاب پروکسی 🔀"

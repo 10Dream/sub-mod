@@ -1,287 +1,177 @@
-global-client-fingerprint: "chrome"
-keep-alive-interval: 5
-keep-alive-idle: 10
-disable-keep-alive: false
-port: 7890
+port: 7892
 socks-port: 7891
-redir-port: 7892
-mixed-port: 7893
-tproxy-port: 7894
+mixed-port: 7890
 allow-lan: true
-tcp-concurrent: true
-enable-process: true
-find-process-mode: "always"
-ipv6: false
+mode: "rule"
 log-level: "info"
-geo-auto-update: true
-geo-update-interval: 168
+external-controller: "0.0.0.0:9090"
 secret: ""
-bind-address: "*"
-unified-delay: false
+ipv6: false
 dns:
   enable: true
+  listen: "0.0.0.0:53"
   ipv6: false
   prefer-h3: false
   cache-algorithm: "arc"
+  use-hosts: true
   use-system-hosts: true
-  use-host: true
-  listen: "0.0.0.0:53"
+  respect-rules: false
   enhanced-mode: "fake-ip"
-  fake-ip-filter-mode: "blacklist"
   fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter-mode: "blacklist"
   fake-ip-filter:
-    - "*.lan"
-    - "*.localdomain"
-    - "*.invalid"
-    - "*.localhost"
-    - "*.test"
-    - "*.local"
-    - "*.home.arpa"
+    - "geosite:private"
+    - "+.lan"
+    - "+.localdomain"
+    - "+.invalid"
+    - "+.localhost"
+    - "+.test"
+    - "+.local"
+    - "+.home.arpa"
+    - "+.arpa"
+    - "+.ir"
     - "time.*.com"
+    - "time.*.gov"
+    - "time.*.apple.com"
     - "ntp.*.com"
-    - "*.ir"
+    - "+.pool.ntp.org"
+    - "+.ntp.org"
+    - "time.asis.io"
+    - "time.windows.com"
+    - "time.apple.com"
+    - "connectivitycheck.gstatic.com"
+    - "connectivitycheck.android.com"
+    - "clients3.google.com"
+    - "captive.apple.com"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "router.asus.com"
+    - "tplinkwifi.net"
+    - "tplinkrepeater.net"
+    - "tplinkap.net"
+    - "routerlogin.net"
+    - "routerlogin.com"
+    - "melogin.cn"
+    - "falogin.cn"
+    - "tendawifi.com"
+    - "leike.cc"
+    - "miwifi.com"
+    - "goforward.link"
+    - "+.plex.direct"
+  nameserver-policy:
+    geosite:private: "system"
+    +.arpa: "system"
+    +.lan: "system"
+    +.local: "system"
+    +.home.arpa: "system"
+    router.asus.com: "system"
+    tplinkwifi.net: "system"
+    tplinkrepeater.net: "system"
+    tplinkap.net: "system"
+    routerlogin.net: "system"
+    routerlogin.com: "system"
+    melogin.cn: "system"
+    falogin.cn: "system"
+    tendawifi.com: "system"
+    leike.cc: "system"
+    miwifi.com: "system"
+    goforward.link: "system"
   default-nameserver:
+    - "tcp://1.1.1.1"
+    - "tcp://8.8.8.8"
     - "1.1.1.1"
     - "8.8.8.8"
     - "9.9.9.9"
-  nameserver:
-    - "tcp://1.1.1.1"
     - "tcp://1.0.0.1"
-    - "tcp://8.8.8.8"
     - "tcp://8.8.4.4"
     - "tcp://9.9.9.9"
     - "tcp://149.112.112.112"
     - "tcp://208.67.222.222"
-    - "tcp://208.67.220.222"
+    - "tcp://208.67.220.220"
+  nameserver:
+    - "https://freedns.controld.com/p2#نوع انتخاب پروکسی 🔀"
   fallback:
-    - "tcp://76.76.19.19"
-    - "tcp://76.223.122.150"
-    - "tcp://185.228.168.9"
-    - "tcp://185.228.169.9"
-    - "tcp://8.26.56.26"
-    - "tcp://8.20.247.20"
-    - "tcp://76.76.2.11"
-    - "tcp://76.76.10.11"
-    - "tcp://84.200.69.80"
-    - "tcp://84.200.70.40"
-    - "tcp://45.33.97.5"
-    - "tcp://37.235.1.177"
-    - "tcp://209.244.0.3"
-    - "tcp://209.244.0.4"
-    - "tcp://156.154.70.5"
-    - "tcp://156.154.71.5"
-    - "tcp://103.86.96.100"
-    - "tcp://103.86.99.100"
-    - "tcp://199.85.126.10"
-    - "tcp://199.85.127.10"
-    - "tcp://129.250.35.250"
-    - "tcp://129.250.35.251"
-    - "tcp://94.16.114.254"
-    - "tcp://94.247.43.254"
-    - "tcp://208.67.222.20"
-    - "tcp://195.46.39.39"
-    - "tcp://195.46.39.40"
-    - "tcp://204.117.214.10"
-    - "tcp://199.2.252.10"
-    - "tcp://194.169.169.169"
-    - "tcp://156.154.70.1"
-    - "tcp://156.154.71.1"
-    - "tcp://91.239.100.100"
-    - "tcp://89.233.43.71"
-    - "tcp://64.6.64.6"
-    - "tcp://64.6.65.6"
-    - "tcp://77.88.8.8"
-    - "tcp://77.88.8.1"
+    - "https://dns.adguard-dns.com/dns-query#نوع انتخاب پروکسی 🔀"
+  fallback-lazy-query: true
   fallback-filter:
-    geoip: true
-    geoip-code: "IR"
-    geosite:
-      - "gfw"
+    geoip: false
     ipcidr:
+      - "10.10.34.34/32"
+      - "10.10.34.35/32"
+      - "10.10.34.36/32"
+      - "127.0.0.1/32"
       - "240.0.0.0/4"
-    domain:
-      - "+.google.com"
-      - "+.facebook.com"
-      - "+.youtube.com"
   proxy-server-nameserver:
     - "tcp://1.1.1.1"
     - "tcp://8.8.8.8"
+    - "tcp://9.9.9.9"
+    - "1.1.1.1"
+    - "8.8.8.8"
+    - "9.9.9.9"
+    - "tcp://1.0.0.1"
+    - "tcp://8.8.4.4"
+    - "tcp://149.112.112.112"
+    - "tcp://208.67.222.222"
+    - "tcp://208.67.220.220"
   direct-nameserver:
     - "78.157.42.100"
     - "78.157.42.101"
+    - "tcp://78.157.42.100"
+    - "tcp://78.157.42.101"
+  direct-nameserver-follow-policy: true
 sniffer:
   enable: true
   force-dns-mapping: true
   parse-pure-ip: true
-  override-destination: false
-  sniff:
-    HTTP:
-      ports:
-        - 80
-        - 8080
-        - 8880
-        - 2052
-        - 2082
-        - 2086
-        - 2095
-    TLS:
-      ports:
-        - 443
-        - 8443
-        - 2053
-        - 2083
-        - 2087
-        - 2096
+  override-destination: true
 tun:
   enable: true
   stack: "mixed"
   auto-route: true
   auto-detect-interface: true
-  auto-redir: true
-  dns-hijack:
-    - "any:53"
-    - "tcp://any:53"
 rule-providers:
+  DownloadManagers:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
+    interval: 86400
+    path: "./ruleset/DownloadManagers.yaml"
+  Download:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
+    interval: 86400
+    path: "./ruleset/Download.yaml"
+  stremio:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    interval: 86400
+    path: "./ruleset/stremio.yaml"
+  BanProgramAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanProgramAD.yaml"
+  BanAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanAD.yaml"
+  PrivateTracker:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
+    interval: 86400
+    path: "./ruleset/PrivateTracker.yaml"
   category_public_tracker:
     type: "http"
     behavior: "domain"
     url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-public-tracker.yaml"
     interval: 86400
     path: "./ruleset/category_public_tracker.yaml"
-  iran_ads:
-    type: "http"
-    behavior: "domain"
-    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
-    interval: 86400
-    path: "./ruleset/iran_ads.yaml"
-  PersianBlocker:
-    type: "http"
-    behavior: "domain"
-    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
-    interval: 86400
-    path: "./ruleset/PersianBlocker.yaml"
-  youtube:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
-    interval: 86400
-    path: "./ruleset/youtube.yaml"
-  telegram:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
-    interval: 86400
-    path: "./ruleset/telegram.yaml"
-  twitch:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
-    interval: 86400
-    path: "./ruleset/twitch.yaml"
-  censor:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
-    interval: 86400
-    path: "./ruleset/censor.yaml"
-  local_ips:
-    type: "http"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
-    interval: 86400
-    path: "./ruleset/local_ips.yaml"
-  private:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
-    interval: 86400
-    path: "./ruleset/private.yaml"
-  category_ir:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
-    interval: 86400
-    path: "./ruleset/category_ir.yaml"
-  iran:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
-    interval: 86400
-    path: "./ruleset/iran.yaml"
-  steam:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
-    interval: 86400
-    path: "./ruleset/steam.yaml"
-  game:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
-    interval: 86400
-    path: "./ruleset/game.yaml"
-  category-games:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
-    interval: 86400
-    path: "./ruleset/category-games.yaml"
-  ir:
-    type: "http"
-    format: "yaml"
-    behavior: "domain"
-    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
-    interval: 86400
-    path: "./ruleset/ir.yaml"
-  apps:
-    type: "http"
-    format: "yaml"
-    behavior: "classical"
-    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
-    interval: 86400
-    path: "./ruleset/apps.yaml"
-  ircidr:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
-    interval: 86400
-    path: "./ruleset/ircidr.yaml"
-  irasn:
-    type: "http"
-    format: "yaml"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
-    interval: 86400
-    path: "./ruleset/irasn.yaml"
-  arvancloud:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
-    interval: 86400
-    path: "./ruleset/arvancloud.yaml"
-  derakcloud:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
-    interval: 86400
-    path: "./ruleset/derakcloud.yaml"
-  iranserver:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
-    interval: 86400
-    path: "./ruleset/iranserver.yaml"
-  parspack:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
-    interval: 86400
-    path: "./ruleset/parspack.yaml"
   malware:
     type: "http"
     format: "yaml"
@@ -303,170 +193,79 @@ rule-providers:
     url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/cryptominers.yaml"
     interval: 86400
     path: "./ruleset/cryptominers.yaml"
-  ads:
-    type: "http"
-    format: "yaml"
-    behavior: "domain"
-    url: "https://github.com/Chocolate4U/Iran-clash-rules/releases/download/202606060815/category-ads-all.yaml"
-    interval: 86400
-    path: "./ruleset/ads.yaml"
-  DownloadManagers:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
-    interval: 86400
-    path: "./ruleset/DownloadManagers.yaml"
-  BanProgramAD:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
-    interval: 86400
-    path: "./ruleset/BanProgramAD.yaml"
-  BanAD:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
-    interval: 86400
-    path: "./ruleset/BanAD.yaml"
-  PrivateTracker:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
-    interval: 86400
-    path: "./ruleset/PrivateTracker.yaml"
-  BanEasyList:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
-    interval: 86400
-    path: "./ruleset/BanEasyList.yaml"
-  Download:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
-    interval: 86400
-    path: "./ruleset/Download.yaml"
-  GameDownload:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
-    interval: 86400
-    path: "./ruleset/GameDownload.yaml"
-  SteamRegionCheck:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
-    interval: 86400
-    path: "./ruleset/SteamRegionCheck.yaml"
-  Xbox:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
-    interval: 86400
-    path: "./ruleset/Xbox.yaml"
-  YouTubeMusic:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
-    interval: 86400
-    path: "./ruleset/YouTubeMusic.yaml"
-  YouTube:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
-    interval: 86400
-    path: "./ruleset/YouTube.yaml"
-  Ponzi:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
-    interval: 86400
-    path: "./ruleset/Ponzi.yaml"
   warninglist:
     type: "http"
     behavior: "classical"
     url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/warning-list.yaml"
     interval: 86400
     path: "./ruleset/warninglist.yaml"
-  google:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
-    interval: 86400
-    path: "./ruleset/google.yaml"
-  google-play:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
-    interval: 86400
-    path: "./ruleset/google-play.yaml"
-  xiaomi_block_list:
-    type: "http"
-    format: "yaml"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
-    interval: 86400
-    path: "./ruleset/xiaomi_block_list.yaml"
-  xiaomi_white_list:
+  Ponzi:
     type: "http"
     behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
     interval: 86400
-    path: "./ruleset/xiaomi_white_list.yaml"
-  cloudflare:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
-    interval: 86400
-    path: "./ruleset/cloudflare.yaml"
-  github:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
-    interval: 86400
-    path: "./ruleset/xgithub.yaml"
-  whatsapp:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
-    interval: 86400
-    path: "./ruleset/whatsapp.yaml"
+    path: "./ruleset/Ponzi.yaml"
   LiteAds:
     type: "http"
     behavior: "classical"
     url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/LiteAds.yaml"
     interval: 86400
     path: "./ruleset/LiteAds.yaml"
-  discord:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
-    interval: 86400
-    path: "./ruleset/discord.yaml"
-  instagram:
+  iran_ads:
     type: "http"
     behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
     interval: 86400
-    path: "./ruleset/instagram.yaml"
-  category-ai:
+    path: "./ruleset/iran_ads.yaml"
+  PersianBlocker:
     type: "http"
     behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
     interval: 86400
-    path: "./ruleset/category-ai.yaml"
-  stremio:
+    path: "./ruleset/PersianBlocker.yaml"
+  ads:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/category-ads-all.yaml"
+    interval: 86400
+    path: "./ruleset/ads.yaml"
+  BanEasyList:
     type: "http"
     behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
     interval: 86400
-    path: "./ruleset/stremio.yaml"
-  windows:
+    path: "./ruleset/BanEasyList.yaml"
+  twitch:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
+    interval: 86400
+    path: "./ruleset/twitch.yaml"
+  telegram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
+    interval: 86400
+    path: "./ruleset/telegram.yaml"
+  YouTube:
     type: "http"
     behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
     interval: 86400
-    path: "./ruleset/windows.yaml"
+    path: "./ruleset/YouTube.yaml"
+  youtube:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
+    interval: 86400
+    path: "./ruleset/youtube.yaml"
+  YouTubeMusic:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
+    interval: 86400
+    path: "./ruleset/YouTubeMusic.yaml"
   Chotwitter:
     type: "http"
     format: "yaml"
@@ -498,122 +297,202 @@ rule-providers:
     url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Spotify.yaml"
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
+  instagram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    interval: 86400
+    path: "./ruleset/instagram.yaml"
+  Ai:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/Ai.yaml"
+    interval: 86400
+    path: "./ruleset/Ai.yaml"
+  category-ai:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    interval: 86400
+    path: "./ruleset/category-ai.yaml"
+  censor:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
+    interval: 86400
+    path: "./ruleset/censor.yaml"
+  apps:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
+    interval: 86400
+    path: "./ruleset/apps.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+  arvancloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
+    interval: 86400
+    path: "./ruleset/arvancloud.yaml"
+  derakcloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
+    interval: 86400
+    path: "./ruleset/derakcloud.yaml"
+  iranserver:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
+    interval: 86400
+    path: "./ruleset/iranserver.yaml"
+  parspack:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
+    interval: 86400
+    path: "./ruleset/parspack.yaml"
+  irasn:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
+    interval: 86400
+    path: "./ruleset/irasn.yaml"
+  ircidr:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
+    interval: 86400
+    path: "./ruleset/ircidr.yaml"
+  ir:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
+    interval: 86400
+    path: "./ruleset/ir.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  whatsapp:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
+    interval: 86400
+    path: "./ruleset/whatsapp.yaml"
+  steam:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
+    interval: 86400
+    path: "./ruleset/steam.yaml"
+  SteamRegionCheck:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
+    interval: 86400
+    path: "./ruleset/SteamRegionCheck.yaml"
+  game:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
+    interval: 86400
+    path: "./ruleset/game.yaml"
+  GameDownload:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
+    interval: 86400
+    path: "./ruleset/GameDownload.yaml"
+  category-games:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
+    interval: 86400
+    path: "./ruleset/category-games.yaml"
+  Xbox:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
+    interval: 86400
+    path: "./ruleset/Xbox.yaml"
+  discord:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
+    interval: 86400
+    path: "./ruleset/discord.yaml"
+  xiaomi_white_list:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_white_list.yaml"
+  xiaomi_block_list:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_block_list.yaml"
+  windows:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    interval: 86400
+    path: "./ruleset/windows.yaml"
+  cloudflare:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
+    interval: 86400
+    path: "./ruleset/cloudflare.yaml"
+  github:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
+    interval: 86400
+    path: "./ruleset/xgithub.yaml"
+  google-play:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
+    interval: 86400
+    path: "./ruleset/google-play.yaml"
+  google:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
+    interval: 86400
+    path: "./ruleset/google.yaml"
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  private:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
+    interval: 86400
+    path: "./ruleset/private.yaml"
 proxies:
-  - name: "US 🇺🇸 | @Raydikalx | 96734B"
-    type: "vless"
-    server: "47.251.108.158"
-    port: 443
-    uuid: "975fc322-6e38-434b-a53c-d39fed49b9a9"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "random"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "SmgYcFIvvFXW3xh4gvGhIJuQsaZvWkAylcjB6TEddEs"
-      short-id: "896f52ba2cfca903"
-  - name: "US 🇺🇸 | @Raydikalx | B5554D"
-    type: "vless"
-    server: "47.251.108.158"
-    port: 443
-    uuid: "975fc322-6e38-434b-a53c-d39fed49b9a9"
-    udp: true
-    tls: true
-    network: "raw"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "SmgYcFIvvFXW3xh4gvGhIJuQsaZvWkAylcjB6TEddEs"
-      short-id: "896f52ba2cfca903"
-  - name: "US 🇺🇸 | @Raydikalx | 4730EB"
-    type: "vless"
-    server: "23.95.222.127"
-    port: 8443
-    uuid: "352ff568-f971-4613-bf48-92997a5d44ed"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.apple.com"
-    client-fingerprint: "random"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "ribQDOlZ69PzvZ1EDF0EcmMvbq_T5RQrVRBSGUU2riU"
-      short-id: "35cd899f8de04801"
-  - name: "US 🇺🇸 | @Raydikalx | CDF313"
-    type: "vless"
-    server: "rn.20066002.xyz"
-    port: 443
-    uuid: "444715e6-1c6a-4027-90df-fa01ac984669"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "gateway.icloud.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "q6WMAqAzFYui3TiWXdOJ1-E4NbiHHk5o1mx6W6m4hEM"
-      short-id: "c4623fa4291795e7"
-  - name: "CA 🇨🇦 | @Raydikalx | 1604F0"
-    type: "vless"
-    server: "188.114.98.0"
-    port: 443
-    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "snip.edgeoneai.cc.cd"
-    client-fingerprint: "chrome"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "%"
-      headers:
-        Host: "snip.edgeoneai.cc.cd"
-  - name: "US 🇺🇸 | @Raydikalx | 542687"
-    type: "vless"
-    server: "216.167.126.97"
-    port: 443
-    uuid: "e5c3d067-7a15-4977-90c0-7e0f6e896a09"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "yFvOpugh65xKQNAwKrhitv4d2pflD8QwNFMj-jDOmT8"
-      short-id: "0123456789abcdef"
-  - name: "CA 🇨🇦 | @Raydikalx | 54B434"
-    type: "vless"
-    server: "172.64.153.61"
-    port: 443
-    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "snip.edgeoneai.cc.cd"
-    client-fingerprint: "unsafe"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NETfp=chrome"
-      headers:
-        Host: "snip.edgeoneai.cc.cd"
-  - name: "US 🇺🇸 | @Raydikalx | 734B3C"
-    type: "vless"
-    server: "172.235.58.21"
-    port: 443
-    uuid: "b98d4c6e-6770-4a31-8256-a4750cdea0e7"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.amazon.com"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "0i_xAxYgSNx5NMpK2lOaWGS-CvAiD_LneYPO0MF0owo"
   - name: "US 🇺🇸 | @Raydikalx | 1FD863"
     type: "vless"
     server: "15.204.97.209"
@@ -628,88 +507,9 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "US 🇺🇸 | @Raydikalx | 47E914"
+  - name: "US 🇺🇸 | @Raydikalx | 8BA744"
     type: "vless"
-    server: "15.204.97.216"
-    port: 23576
-    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "fuck.rkn"
-    client-fingerprint: "random"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-  - name: "US 🇺🇸 | @Raydikalx | 66830B"
-    type: "vless"
-    server: "15.204.97.216"
-    port: 23576
-    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "fuck.rkn"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-      short-id: "01"
-  - name: "US 🇺🇸 | @Raydikalx | F922EE"
-    type: "vless"
-    server: "15.204.97.206"
-    port: 23576
-    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "fuck.rkn"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-      short-id: "01"
-  - name: "US 🇺🇸 | @Raydikalx | 18F54F"
-    type: "vless"
-    server: "15.204.97.209"
-    port: 23576
-    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "fuck.rkn"
-    client-fingerprint: "random"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-  - name: "US 🇺🇸 | @Raydikalx | 004A5D"
-    type: "vless"
-    server: "15.204.97.214"
-    port: 23576
-    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "fuck.rkn"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-  - name: "US 🇺🇸 | @Raydikalx | 34BDB7"
-    type: "vless"
-    server: "15.204.97.206"
-    port: 23576
-    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "fuck.rkn"
-    client-fingerprint: "random"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-  - name: "US 🇺🇸 | @Raydikalx | 6A35DF"
-    type: "vless"
-    server: "15.204.97.206"
+    server: "15.204.97.197"
     port: 23576
     uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
     udp: true
@@ -717,26 +517,37 @@ proxies:
     network: "raw"
     servername: "fuck.rkn"
     client-fingerprint: "chrome"
-    alpn:
-      - "http%2f1.1"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "US 🇺🇸 | @Raydikalx | 6EB067"
+  - name: "US 🇺🇸 | @Raydikalx | B5E24A"
     type: "vless"
-    server: "51.81.203.63"
-    port: 443
-    uuid: "cb2dbb6a-a1ea-4023-9ace-6466cee57241"
+    server: "15.204.97.219"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
     udp: true
     tls: true
     network: "tcp"
-    servername: "www.icloud.com"
+    servername: "fuck.rkn"
+    client-fingerprint: "random"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+  - name: "US 🇺🇸 | @Raydikalx | 4CDCFE"
+    type: "vless"
+    server: "15.204.97.195"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "nqwCf6oW49tEtmQ0EzxigZ0uu1pg0E30CS54G40Iti0"
-      short-id: "4477382ff6d3d41c"
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
   - name: "US 🇺🇸 | @Raydikalx | 459F9A"
     type: "vless"
     server: "15.204.97.195"
@@ -777,6 +588,85 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+  - name: "US 🇺🇸 | @Raydikalx | 34BDB7"
+    type: "vless"
+    server: "15.204.97.206"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "random"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+  - name: "US 🇺🇸 | @Raydikalx | 18F54F"
+    type: "vless"
+    server: "15.204.97.209"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "random"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+  - name: "US 🇺🇸 | @Raydikalx | 47E914"
+    type: "vless"
+    server: "15.204.97.216"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "random"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+  - name: "US 🇺🇸 | @Raydikalx | 985F4B"
+    type: "vless"
+    server: "51.81.203.63"
+    port: 443
+    uuid: "cb2dbb6a-a1ea-4023-9ace-6466cee57241"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.icloud.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "nqwCf6oW49tEtmQ0EzxigZ0uu1pg0E30CS54G40Iti0"
+      short-id: "4477382ff6d3d41c"
+  - name: "US 🇺🇸 | @Raydikalx | 655A99"
+    type: "vless"
+    server: "15.204.97.197"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "random"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+  - name: "US 🇺🇸 | @Raydikalx | 004A5D"
+    type: "vless"
+    server: "15.204.97.214"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
   - name: "US 🇺🇸 | @Raydikalx | 1EC5C2"
     type: "vless"
     server: "15.204.97.219"
@@ -791,9 +681,9 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "US 🇺🇸 | @Raydikalx | 4CDCFE"
+  - name: "US 🇺🇸 | @Raydikalx | F922EE"
     type: "vless"
-    server: "15.204.97.195"
+    server: "15.204.97.206"
     port: 23576
     uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
     udp: true
@@ -805,47 +695,36 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "US 🇺🇸 | @Raydikalx | B5E24A"
+  - name: "US 🇺🇸 | @Raydikalx | 168CE3"
     type: "vless"
-    server: "15.204.97.219"
+    server: "15.204.97.195"
     port: 23576
     uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
     udp: true
     tls: true
     network: "tcp"
     servername: "fuck.rkn"
-    client-fingerprint: "random"
+    client-fingerprint: "chrome"
+    alpn:
+      - "networld_vpn-channel@.networld_vpn-channel@.networld_vpn-channel@.networld_vpn-channel@.networld_vpn-channel@.networld_vpn-channel@.networld_vpn-"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-  - name: "US 🇺🇸 | @Raydikalx | EF4903"
+      short-id: "01"
+  - name: "US 🇺🇸 | @Raydikalx | 66830B"
     type: "vless"
-    server: "154.40.55.185"
-    port: 443
-    uuid: "52919204-4ed9-42c8-97a0-0f01d007f898"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.oracle.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "XY0OTrgnRWxHbqBC8u4qFWvZakjNZY83AAnL_lwHu1M"
-      short-id: "7f"
-  - name: "US 🇺🇸 | @Raydikalx | 985F4B"
-    type: "vless"
-    server: "51.81.203.63"
-    port: 443
-    uuid: "cb2dbb6a-a1ea-4023-9ace-6466cee57241"
+    server: "15.204.97.216"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
     udp: true
     tls: true
     network: "raw"
-    servername: "www.icloud.com"
+    servername: "fuck.rkn"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "nqwCf6oW49tEtmQ0EzxigZ0uu1pg0E30CS54G40Iti0"
-      short-id: "4477382ff6d3d41c"
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
   - name: "US 🇺🇸 | @Raydikalx | 6F42E7"
     type: "vless"
     server: "15.204.97.214"
@@ -860,34 +739,6 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "US 🇺🇸 | @Raydikalx | 61A852"
-    type: "vless"
-    server: "154.40.55.185"
-    port: 443
-    uuid: "52919204-4ed9-42c8-97a0-0f01d007f898"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.oracle.com"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "XY0OTrgnRWxHbqBC8u4qFWvZakjNZY83AAnL_lwHu1M"
-      short-id: "e726fb"
-  - name: "US 🇺🇸 | @Raydikalx | 399012"
-    type: "vless"
-    server: "154.40.55.185"
-    port: 443
-    uuid: "52919204-4ed9-42c8-97a0-0f01d007f898"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.oracle.com"
-    client-fingerprint: "random"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "XY0OTrgnRWxHbqBC8u4qFWvZakjNZY83AAnL_lwHu1M"
-      short-id: "7f"
   - name: "US 🇺🇸 | @Raydikalx | 31E8FE"
     type: "vless"
     server: "44.248.233.99"
@@ -898,34 +749,6 @@ proxies:
     network: "tcp"
     servername: "aws.amazon.com"
     client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "p8VhFzvFOBAhWAEAeWmwDxT3xBSRsGYixqi0qnLFnBM"
-      short-id: "21270a66"
-  - name: "US 🇺🇸 | @Raydikalx | 09FD53"
-    type: "vless"
-    server: "44.248.233.99"
-    port: 443
-    uuid: "37615d66-5467-44a3-bc23-f2c3bef7f761"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "aws.amazon.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "p8VhFzvFOBAhWAEAeWmwDxT3xBSRsGYixqi0qnLFnBM"
-      short-id: "21270a66"
-  - name: "US 🇺🇸 | @Raydikalx | 77B2CA"
-    type: "vless"
-    server: "tk1.high-speed-test-56424.me"
-    port: 443
-    uuid: "37615d66-5467-44a3-bc23-f2c3bef7f761"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "aws.amazon.com"
-    client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "p8VhFzvFOBAhWAEAeWmwDxT3xBSRsGYixqi0qnLFnBM"
@@ -944,41 +767,183 @@ proxies:
     reality-opts:
       public-key: "p8VhFzvFOBAhWAEAeWmwDxT3xBSRsGYixqi0qnLFnBM"
       short-id: "21270a66"
-  - name: "US 🇺🇸 | @Raydikalx | 84F135"
+  - name: "US 🇺🇸 | @Raydikalx | 09FD53"
     type: "vless"
-    server: "t15.qifei.app"
+    server: "44.248.233.99"
+    port: 443
+    uuid: "37615d66-5467-44a3-bc23-f2c3bef7f761"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "aws.amazon.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "p8VhFzvFOBAhWAEAeWmwDxT3xBSRsGYixqi0qnLFnBM"
+      short-id: "21270a66"
+  - name: "US 🇺🇸 | @Raydikalx | 052D46"
+    type: "vless"
+    server: "tk1.high-speed-test-56424.me"
+    port: 443
+    uuid: "37615d66-5467-44a3-bc23-f2c3bef7f761"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "aws.amazon.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "p8VhFzvFOBAhWAEAeWmwDxT3xBSRsGYixqi0qnLFnBM"
+      short-id: "21270a66"
+  - name: "CA 🇨🇦 | @Raydikalx | 640ED8"
+    type: "vless"
+    server: "188.114.96.6"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+    ws-opts:
+      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2560"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "US 🇺🇸 | @Raydikalx | 5F0876"
+    type: "vless"
+    server: "tk1.high-speed-test-56424.me"
+    port: 443
+    uuid: "37615d66-5467-44a3-bc23-f2c3bef7f761"
+    udp: true
+    tls: true
+    network: "raw"
+    servername: "aws.amazon.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "p8VhFzvFOBAhWAEAeWmwDxT3xBSRsGYixqi0qnLFnBM"
+      short-id: "21270a66"
+  - name: "US 🇺🇸 | @Raydikalx | B5554D"
+    type: "vless"
+    server: "47.251.108.158"
+    port: 443
+    uuid: "975fc322-6e38-434b-a53c-d39fed49b9a9"
+    udp: true
+    tls: true
+    network: "raw"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "SmgYcFIvvFXW3xh4gvGhIJuQsaZvWkAylcjB6TEddEs"
+      short-id: "896f52ba2cfca903"
+  - name: "CA 🇨🇦 | @Raydikalx | B73E31"
+    type: "vless"
+    server: "172.64.154.211"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "US 🇺🇸 | @Raydikalx | 734B3C"
+    type: "vless"
+    server: "172.235.58.21"
     port: 443
     uuid: "b98d4c6e-6770-4a31-8256-a4750cdea0e7"
     udp: true
     tls: true
     network: "tcp"
     servername: "www.amazon.com"
+    client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "0i_xAxYgSNx5NMpK2lOaWGS-CvAiD_LneYPO0MF0owo"
-  - name: "US 🇺🇸 | @Raydikalx | 45D801"
+  - name: "US 🇺🇸 | @Raydikalx | 4730EB"
     type: "vless"
-    server: "173.249.210.179"
-    port: 61000
-    uuid: "12f4c3f6-ecce-4586-b39d-987757ea9b3b"
+    server: "23.95.222.127"
+    port: 8443
+    uuid: "352ff568-f971-4613-bf48-92997a5d44ed"
     udp: true
     tls: true
     network: "tcp"
-    servername: "www.amd.com"
-    client-fingerprint: "chrome"
+    servername: "www.apple.com"
+    client-fingerprint: "random"
+    flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "c7XtbOUOg19bgo2N-ufXbZHaGHuSB7jAdvmj1zchRn4"
-      short-id: "ecf5"
-  - name: "US 🇺🇸 | @Raydikalx | 921D48"
+      public-key: "ribQDOlZ69PzvZ1EDF0EcmMvbq_T5RQrVRBSGUU2riU"
+      short-id: "35cd899f8de04801"
+  - name: "US 🇺🇸 | @Raydikalx | 8BFC30"
     type: "vless"
-    server: "38.107.232.36"
-    port: 80
-    uuid: "18cf8db1-9f86-43f7-baa0-382efb7f2dfa"
+    server: "154.40.55.185"
+    port: 443
+    uuid: "52919204-4ed9-42c8-97a0-0f01d007f898"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.oracle.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "XY0OTrgnRWxHbqBC8u4qFWvZakjNZY83AAnL_lwHu1M"
+      short-id: "7f"
+  - name: "US 🇺🇸 | @Raydikalx | CDF313"
+    type: "vless"
+    server: "rn.20066002.xyz"
+    port: 443
+    uuid: "444715e6-1c6a-4027-90df-fa01ac984669"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "gateway.icloud.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "q6WMAqAzFYui3TiWXdOJ1-E4NbiHHk5o1mx6W6m4hEM"
+      short-id: "c4623fa4291795e7"
+  - name: "US 🇺🇸 | @Raydikalx | 61A852"
+    type: "vless"
+    server: "154.40.55.185"
+    port: 443
+    uuid: "52919204-4ed9-42c8-97a0-0f01d007f898"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.oracle.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "XY0OTrgnRWxHbqBC8u4qFWvZakjNZY83AAnL_lwHu1M"
+      short-id: "e726fb"
+  - name: "US 🇺🇸 | @Raydikalx | 3F4730"
+    type: "vless"
+    server: "a3.xtssc.top"
+    port: 48805
+    uuid: "48aa91a2-049c-49ac-902c-285a78dda068"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "a3.xtssc.top"
+    client-fingerprint: "chrome"
+  - name: "US 🇺🇸 | @Raydikalx | 9551EE"
+    type: "vless"
+    server: "45.138.100.248"
+    port: 10443
+    uuid: "ae908ff5-f749-402c-af25-e6e9aef4d6bb"
     udp: true
     tls: false
-    network: "ws"
-    ws-opts:
-      path: "/vless/"
+    network: "tcp"
   - name: "US 🇺🇸 | @Raydikalx | 1FB1DB"
     type: "vless"
     server: "45.138.100.248"
@@ -988,6 +953,44 @@ proxies:
     tls: false
     network: "tcp"
     servername: "45.138.100.248"
+  - name: "US 🇺🇸 | @Raydikalx | 7B03AB"
+    type: "vless"
+    server: "45.138.100.248"
+    port: 10443
+    uuid: "ae908ff5-f749-402c-af25-e6e9aef4d6bb"
+    udp: true
+    tls: false
+    network: "tcp"
+    servername: "45.138.100.248"
+    client-fingerprint: "chrome"
+  - name: "US 🇺🇸 | @Raydikalx | 399012"
+    type: "vless"
+    server: "154.40.55.185"
+    port: 443
+    uuid: "52919204-4ed9-42c8-97a0-0f01d007f898"
+    udp: true
+    tls: true
+    network: "raw"
+    servername: "www.oracle.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "XY0OTrgnRWxHbqBC8u4qFWvZakjNZY83AAnL_lwHu1M"
+      short-id: "7f"
+  - name: "US 🇺🇸 | @Raydikalx | F40C28"
+    type: "vless"
+    server: "195.211.98.43"
+    port: 443
+    uuid: "1b4b11d5-4c2d-4533-9a55-636757cdee94"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "xPnpkXu5qfwIArlHKvJsqKJnGdGbJK1tT2GzWMyLohA"
+      short-id: "9c56fddf237e8eaf"
   - name: "US 🇺🇸 | @Raydikalx | 6AFD1A"
     type: "vless"
     server: "195.211.98.43"
@@ -1002,14 +1005,6 @@ proxies:
     reality-opts:
       public-key: "xPnpkXu5qfwIArlHKvJsqKJnGdGbJK1tT2GzWMyLohA"
       short-id: "9c56fddf237e8eaf"
-  - name: "US 🇺🇸 | @Raydikalx | 9551EE"
-    type: "vless"
-    server: "45.138.100.248"
-    port: 10443
-    uuid: "ae908ff5-f749-402c-af25-e6e9aef4d6bb"
-    udp: true
-    tls: false
-    network: "tcp"
   - name: "US 🇺🇸 | @Raydikalx | 1E1D72"
     type: "vless"
     server: "a3.xtssc.top"
@@ -1023,6 +1018,60 @@ proxies:
     alpn:
       - "h2"
       - "http/1.1"
+  - name: "US 🇺🇸 | @Raydikalx | 200A69"
+    type: "vless"
+    server: "208.84.100.209"
+    port: 8080
+    uuid: "36c3dcc2-17b6-4478-b8a7-3978e6d5afe9"
+    udp: true
+    tls: false
+    network: "ws"
+  - name: "US 🇺🇸 | @Raydikalx | 302DF3"
+    type: "vless"
+    server: "cloud-e47182-2221c6-production.up.railway.app"
+    port: 443
+    uuid: "f5bcc903-e03c-807b-d778-5ae46fe7e914"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cloud-e47182-2221c6-production.up.railway.app"
+    ws-opts:
+      path: "/ws/f5bcc903-e03c-807b-d778-5ae46fe7e914"
+      headers:
+        Host: "cloud-e47182-2221c6-production.up.railway.app"
+  - name: "US 🇺🇸 | @Raydikalx | 45D801"
+    type: "vless"
+    server: "173.249.210.179"
+    port: 61000
+    uuid: "12f4c3f6-ecce-4586-b39d-987757ea9b3b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.amd.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "c7XtbOUOg19bgo2N-ufXbZHaGHuSB7jAdvmj1zchRn4"
+      short-id: "ecf5"
+  - name: "US 🇺🇸 | @Raydikalx | 516E52"
+    type: "vless"
+    server: "195.211.98.43"
+    port: 443
+    uuid: "1b4b11d5-4c2d-4533-9a55-636757cdee94"
+    udp: true
+    tls: true
+    network: "raw"
+    servername: "www.cloudflare.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "xPnpkXu5qfwIArlHKvJsqKJnGdGbJK1tT2GzWMyLohA"
+      short-id: "9c56fddf237e8eaf"
+  - name: "CA 🇨🇦 | @Raydikalx | DEBC1A"
+    type: "ss"
+    server: "149.22.95.183"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
   - name: "US 🇺🇸 | @Raydikalx | 983667"
     type: "ss"
     server: "95.215.201.18"
@@ -1030,12 +1079,26 @@ proxies:
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
-  - name: "CA 🇨🇦 | @Raydikalx | DEBC1A"
+  - name: "US 🇺🇸 | @Raydikalx | 93A5EF"
     type: "ss"
-    server: "149.22.95.183"
+    server: "216.105.168.18"
     port: 443
-    cipher: "aes-128-gcm"
-    password: "shadowsocks"
+    cipher: "chacha20-ietf-poly1305"
+    password: "hCCWOcIsK5wrFz4OX70rWf"
+    udp: true
+  - name: "US 🇺🇸 | @Raydikalx | 6B0BC3"
+    type: "ss"
+    server: "216.105.168.18"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "bQZl7HDxSabr1FurTYQHFU"
+    udp: true
+  - name: "US 🇺🇸 | @Raydikalx | BBBCFF"
+    type: "ss"
+    server: "185.230.230.18"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
   - name: "US 🇺🇸 | @Raydikalx | D50052"
     type: "ss"
@@ -1044,30 +1107,37 @@ proxies:
     cipher: "aes-128-gcm"
     password: "shadowsocks"
     udp: true
-  - name: "US 🇺🇸 | @Raydikalx | 4A3857"
+  - name: "US 🇺🇸 | @Raydikalx | 02CE4D"
     type: "ss"
-    server: "156.146.38.167"
+    server: "37.19.198.243"
     port: 443
     cipher: "aes-128-gcm"
     password: "shadowsocks"
     udp: true
-  - name: "US 🇺🇸 | @Raydikalx | F4AF2E"
+  - name: "US 🇺🇸 | @Raydikalx | C6B1E2"
     type: "ss"
-    server: "156.146.38.168"
+    server: "185.215.132.9"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
+    udp: true
+  - name: "US 🇺🇸 | @Raydikalx | BB7720"
+    type: "ss"
+    server: "37.19.198.244"
     port: 443
     cipher: "aes-128-gcm"
     password: "shadowsocks"
     udp: true
-  - name: "US 🇺🇸 | @Raydikalx | FEA075"
+  - name: "US 🇺🇸 | @Raydikalx | 96E9C3"
     type: "ss"
-    server: "156.146.38.170"
-    port: 443
-    cipher: "aes-128-gcm"
-    password: "shadowsocks"
+    server: "45.86.51.18"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
-  - name: "US 🇺🇸 | @Raydikalx | E2EDF3"
+  - name: "US 🇺🇸 | @Raydikalx | 088543"
     type: "ss"
-    server: "173.244.56.9"
+    server: "37.19.198.236"
     port: 443
     cipher: "aes-128-gcm"
     password: "shadowsocks"
@@ -1079,51 +1149,23 @@ proxies:
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
-  - name: "US 🇺🇸 | @Raydikalx | C6B1E2"
+  - name: "US 🇺🇸 | @Raydikalx | FEA075"
     type: "ss"
-    server: "185.215.132.9"
-    port: 19999
-    cipher: "aes-256-gcm"
-    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
-    udp: true
-  - name: "US 🇺🇸 | @Raydikalx | BBBCFF"
-    type: "ss"
-    server: "185.230.230.18"
-    port: 19999
-    cipher: "aes-256-gcm"
-    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
-    udp: true
-  - name: "US 🇺🇸 | @Raydikalx | 96E9C3"
-    type: "ss"
-    server: "45.86.51.18"
-    port: 19999
-    cipher: "aes-256-gcm"
-    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
-    udp: true
-  - name: "US 🇺🇸 | @Raydikalx | 68C2B0"
-    type: "ss"
-    server: "193.151.160.9"
-    port: 19999
-    cipher: "aes-256-gcm"
-    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
-    udp: true
-  - name: "US 🇺🇸 | @Raydikalx | B9D01B"
-    type: "ss"
-    server: "193.151.160.18"
-    port: 19999
-    cipher: "aes-256-gcm"
-    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
-    udp: true
-  - name: "US 🇺🇸 | @Raydikalx | 02CE4D"
-    type: "ss"
-    server: "37.19.198.243"
+    server: "156.146.38.170"
     port: 443
     cipher: "aes-128-gcm"
     password: "shadowsocks"
     udp: true
-  - name: "US 🇺🇸 | @Raydikalx | BB7720"
+  - name: "US 🇺🇸 | @Raydikalx | F4AF2E"
     type: "ss"
-    server: "37.19.198.244"
+    server: "156.146.38.168"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "US 🇺🇸 | @Raydikalx | 4A3857"
+    type: "ss"
+    server: "156.146.38.167"
     port: 443
     cipher: "aes-128-gcm"
     password: "shadowsocks"
@@ -1135,30 +1177,15 @@ proxies:
     cipher: "aes-128-gcm"
     password: "shadowsocks"
     udp: true
-  - name: "US 🇺🇸 | @Raydikalx | C86ABA"
-    type: "ss"
-    server: "173.244.56.6"
-    port: 443
-    cipher: "aes-128-gcm"
-    password: "shadowsocks"
-    udp: true
-  - name: "US 🇺🇸 | @Raydikalx | CE2CEA"
+  - name: "US 🇺🇸 | @Raydikalx | 101269"
     type: "vmess"
-    server: "rib9jxayoqjgn2kw.v.3dns.vip"
-    port: 443
-    uuid: "9b31490d-190e-4ef1-af0a-7ccab3e7c3b5"
+    server: "84.17.41.2"
+    port: 18000
+    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "US 🇺🇸 | @Raydikalx | 110621"
-    type: "vmess"
-    server: "Rib9JXAYoqjGN2KW.v.3dns.vip"
-    port: 443
-    uuid: "9b31490d-190e-4ef1-af0a-7ccab3e7c3b5"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "US 🇺🇸 | @Raydikalx | E38DDB"
+  - name: "US 🇺🇸 | @Raydikalx | 8D9E8F"
     type: "vmess"
     server: "169.197.142.22"
     port: 18000
@@ -1166,9 +1193,25 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "US 🇺🇸 | @Raydikalx | 101269"
+  - name: "US 🇺🇸 | @Raydikalx | 5288D0"
     type: "vmess"
-    server: "84.17.41.2"
+    server: "rib9jxayoqjgn2kw.v.3dns.vip"
+    port: 443
+    uuid: "9b31490d-190e-4ef1-af0a-7ccab3e7c3b5"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "CA 🇨🇦 | @Raydikalx | CD4179"
+    type: "vmess"
+    server: "134.195.196.211"
+    port: 18000
+    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "US 🇺🇸 | @Raydikalx | 3B1D0A"
+    type: "vmess"
+    server: "67.220.95.3"
     port: 18000
     uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
     alterId: 0
@@ -1182,38 +1225,6 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "CA 🇨🇦 | @Raydikalx | A53DAC"
-    type: "vmess"
-    server: "134.195.196.211"
-    port: 18000
-    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "CA 🇨🇦 | @Raydikalx | 4BA3A6"
-    type: "vmess"
-    server: "23.162.200.198"
-    port: 18000
-    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "CA 🇨🇦 | @Raydikalx | 8BB1EE"
-    type: "vmess"
-    server: "us16-4.998998.best"
-    port: 443
-    uuid: "5504eaa8-1395-402f-8e0e-75ecd762e627"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "US 🇺🇸 | @Raydikalx | DE08A7"
-    type: "vmess"
-    server: "67.220.95.3"
-    port: 18000
-    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
-    alterId: 0
-    cipher: "auto"
-    udp: true
   - name: "US 🇺🇸 | @Raydikalx | B00608"
     type: "vmess"
     server: "67.220.95.3"
@@ -1222,18 +1233,9 @@ proxies:
     alterId: 0
     cipher: "aes-128-gcm"
     udp: true
-  - name: "US 🇺🇸 | @Raydikalx | 1DFFCE"
+  - name: "US 🇺🇸 | @Raydikalx | 22AF20"
     type: "trojan"
     server: "216.106.186.32"
-    port: 443
-    password: "dba20dcb635e430fa4d3bfc303a149d2"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "blog.findlocaljobnetworkandbuildcommunityconnections.com"
-  - name: "US 🇺🇸 | @Raydikalx | 49B65F"
-    type: "trojan"
-    server: "blog.findlocaljobnetworkandbuildcommunityconnections.com"
     port: 443
     password: "dba20dcb635e430fa4d3bfc303a149d2"
     udp: true
@@ -1248,6 +1250,31 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
+  - name: "US 🇺🇸 | @Raydikalx | 49B65F"
+    type: "trojan"
+    server: "blog.findlocaljobnetworkandbuildcommunityconnections.com"
+    port: 443
+    password: "dba20dcb635e430fa4d3bfc303a149d2"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "blog.findlocaljobnetworkandbuildcommunityconnections.com"
+  - name: "US 🇺🇸 | @Raydikalx | B8CE94"
+    type: "trojan"
+    server: "www.findlocaljobnetworkandbuildcommunityconnections.com"
+    port: 443
+    password: "242a3d8eee5e4ed1a6bfa4141d549a25"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "US 🇺🇸 | @Raydikalx | 650B6A"
+    type: "trojan"
+    server: "resources.findlocaljobnetworkandbuildcommunityconnections.com"
+    port: 443
+    password: "f0eb8c92ce8946aaba856569cff1a16b"
+    udp: true
+    tls: true
+    network: "tcp"
   - name: "US 🇺🇸 | @Raydikalx | 20635B"
     type: "trojan"
     server: "resources.findlocaljobnetworkandbuildcommunityconnections.com"
@@ -1257,522 +1284,520 @@ proxies:
     tls: true
     network: "tcp"
     servername: "resources.findlocaljobnetworkandbuildcommunityconnections.com"
-  - name: "US 🇺🇸 | @Raydikalx | 650B6A"
-    type: "trojan"
-    server: "resources.findlocaljobnetworkandbuildcommunityconnections.com"
-    port: 443
-    password: "f0eb8c92ce8946aaba856569cff1a16b"
-    udp: true
-    tls: true
-    network: "tcp"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
-    icon: "https://www.svgrepo.com/show/412721/choose.svg"
     proxies:
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "توزیع بار چرخشی ⚖️"
       - "قطع اینترنت ⛔"
       - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/412721/choose.svg"
   - name: "دستی 🤏🏻"
     type: "select"
-    icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
+    lazy: true
     proxies:
-      - "US 🇺🇸 | @Raydikalx | 96734B"
-      - "US 🇺🇸 | @Raydikalx | B5554D"
-      - "US 🇺🇸 | @Raydikalx | 4730EB"
-      - "US 🇺🇸 | @Raydikalx | CDF313"
-      - "CA 🇨🇦 | @Raydikalx | 1604F0"
-      - "US 🇺🇸 | @Raydikalx | 542687"
-      - "CA 🇨🇦 | @Raydikalx | 54B434"
-      - "US 🇺🇸 | @Raydikalx | 734B3C"
       - "US 🇺🇸 | @Raydikalx | 1FD863"
-      - "US 🇺🇸 | @Raydikalx | 47E914"
-      - "US 🇺🇸 | @Raydikalx | 66830B"
-      - "US 🇺🇸 | @Raydikalx | F922EE"
-      - "US 🇺🇸 | @Raydikalx | 18F54F"
-      - "US 🇺🇸 | @Raydikalx | 004A5D"
-      - "US 🇺🇸 | @Raydikalx | 34BDB7"
-      - "US 🇺🇸 | @Raydikalx | 6A35DF"
-      - "US 🇺🇸 | @Raydikalx | 6EB067"
+      - "US 🇺🇸 | @Raydikalx | 8BA744"
+      - "US 🇺🇸 | @Raydikalx | B5E24A"
+      - "US 🇺🇸 | @Raydikalx | 4CDCFE"
       - "US 🇺🇸 | @Raydikalx | 459F9A"
       - "US 🇺🇸 | @Raydikalx | 91D02A"
       - "US 🇺🇸 | @Raydikalx | 5EBA96"
-      - "US 🇺🇸 | @Raydikalx | 1EC5C2"
-      - "US 🇺🇸 | @Raydikalx | 4CDCFE"
-      - "US 🇺🇸 | @Raydikalx | B5E24A"
-      - "US 🇺🇸 | @Raydikalx | EF4903"
+      - "US 🇺🇸 | @Raydikalx | 34BDB7"
+      - "US 🇺🇸 | @Raydikalx | 18F54F"
+      - "US 🇺🇸 | @Raydikalx | 47E914"
       - "US 🇺🇸 | @Raydikalx | 985F4B"
+      - "US 🇺🇸 | @Raydikalx | 655A99"
+      - "US 🇺🇸 | @Raydikalx | 004A5D"
+      - "US 🇺🇸 | @Raydikalx | 1EC5C2"
+      - "US 🇺🇸 | @Raydikalx | F922EE"
+      - "US 🇺🇸 | @Raydikalx | 168CE3"
+      - "US 🇺🇸 | @Raydikalx | 66830B"
       - "US 🇺🇸 | @Raydikalx | 6F42E7"
-      - "US 🇺🇸 | @Raydikalx | 61A852"
-      - "US 🇺🇸 | @Raydikalx | 399012"
       - "US 🇺🇸 | @Raydikalx | 31E8FE"
-      - "US 🇺🇸 | @Raydikalx | 09FD53"
-      - "US 🇺🇸 | @Raydikalx | 77B2CA"
       - "US 🇺🇸 | @Raydikalx | 90052C"
-      - "US 🇺🇸 | @Raydikalx | 84F135"
-      - "US 🇺🇸 | @Raydikalx | 45D801"
-      - "US 🇺🇸 | @Raydikalx | 921D48"
-      - "US 🇺🇸 | @Raydikalx | 1FB1DB"
-      - "US 🇺🇸 | @Raydikalx | 6AFD1A"
+      - "US 🇺🇸 | @Raydikalx | 09FD53"
+      - "US 🇺🇸 | @Raydikalx | 052D46"
+      - "CA 🇨🇦 | @Raydikalx | 640ED8"
+      - "US 🇺🇸 | @Raydikalx | 5F0876"
+      - "US 🇺🇸 | @Raydikalx | B5554D"
+      - "CA 🇨🇦 | @Raydikalx | B73E31"
+      - "US 🇺🇸 | @Raydikalx | 734B3C"
+      - "US 🇺🇸 | @Raydikalx | 4730EB"
+      - "US 🇺🇸 | @Raydikalx | 8BFC30"
+      - "US 🇺🇸 | @Raydikalx | CDF313"
+      - "US 🇺🇸 | @Raydikalx | 61A852"
+      - "US 🇺🇸 | @Raydikalx | 3F4730"
       - "US 🇺🇸 | @Raydikalx | 9551EE"
+      - "US 🇺🇸 | @Raydikalx | 1FB1DB"
+      - "US 🇺🇸 | @Raydikalx | 7B03AB"
+      - "US 🇺🇸 | @Raydikalx | 399012"
+      - "US 🇺🇸 | @Raydikalx | F40C28"
+      - "US 🇺🇸 | @Raydikalx | 6AFD1A"
       - "US 🇺🇸 | @Raydikalx | 1E1D72"
-      - "US 🇺🇸 | @Raydikalx | 983667"
+      - "US 🇺🇸 | @Raydikalx | 200A69"
+      - "US 🇺🇸 | @Raydikalx | 302DF3"
+      - "US 🇺🇸 | @Raydikalx | 45D801"
+      - "US 🇺🇸 | @Raydikalx | 516E52"
       - "CA 🇨🇦 | @Raydikalx | DEBC1A"
-      - "US 🇺🇸 | @Raydikalx | D50052"
-      - "US 🇺🇸 | @Raydikalx | 4A3857"
-      - "US 🇺🇸 | @Raydikalx | F4AF2E"
-      - "US 🇺🇸 | @Raydikalx | FEA075"
-      - "US 🇺🇸 | @Raydikalx | E2EDF3"
-      - "US 🇺🇸 | @Raydikalx | 6AB77E"
-      - "US 🇺🇸 | @Raydikalx | C6B1E2"
+      - "US 🇺🇸 | @Raydikalx | 983667"
+      - "US 🇺🇸 | @Raydikalx | 93A5EF"
+      - "US 🇺🇸 | @Raydikalx | 6B0BC3"
       - "US 🇺🇸 | @Raydikalx | BBBCFF"
-      - "US 🇺🇸 | @Raydikalx | 96E9C3"
-      - "US 🇺🇸 | @Raydikalx | 68C2B0"
-      - "US 🇺🇸 | @Raydikalx | B9D01B"
+      - "US 🇺🇸 | @Raydikalx | D50052"
       - "US 🇺🇸 | @Raydikalx | 02CE4D"
+      - "US 🇺🇸 | @Raydikalx | C6B1E2"
       - "US 🇺🇸 | @Raydikalx | BB7720"
+      - "US 🇺🇸 | @Raydikalx | 96E9C3"
+      - "US 🇺🇸 | @Raydikalx | 088543"
+      - "US 🇺🇸 | @Raydikalx | 6AB77E"
+      - "US 🇺🇸 | @Raydikalx | FEA075"
+      - "US 🇺🇸 | @Raydikalx | F4AF2E"
+      - "US 🇺🇸 | @Raydikalx | 4A3857"
       - "US 🇺🇸 | @Raydikalx | 9366BE"
-      - "US 🇺🇸 | @Raydikalx | C86ABA"
-      - "US 🇺🇸 | @Raydikalx | CE2CEA"
-      - "US 🇺🇸 | @Raydikalx | 110621"
-      - "US 🇺🇸 | @Raydikalx | E38DDB"
       - "US 🇺🇸 | @Raydikalx | 101269"
+      - "US 🇺🇸 | @Raydikalx | 8D9E8F"
+      - "US 🇺🇸 | @Raydikalx | 5288D0"
+      - "CA 🇨🇦 | @Raydikalx | CD4179"
+      - "US 🇺🇸 | @Raydikalx | 3B1D0A"
       - "US 🇺🇸 | @Raydikalx | 452ED5"
-      - "CA 🇨🇦 | @Raydikalx | A53DAC"
-      - "CA 🇨🇦 | @Raydikalx | 4BA3A6"
-      - "CA 🇨🇦 | @Raydikalx | 8BB1EE"
-      - "US 🇺🇸 | @Raydikalx | DE08A7"
       - "US 🇺🇸 | @Raydikalx | B00608"
-      - "US 🇺🇸 | @Raydikalx | 1DFFCE"
-      - "US 🇺🇸 | @Raydikalx | 49B65F"
+      - "US 🇺🇸 | @Raydikalx | 22AF20"
       - "US 🇺🇸 | @Raydikalx | 5FAD98"
-      - "US 🇺🇸 | @Raydikalx | 20635B"
+      - "US 🇺🇸 | @Raydikalx | 49B65F"
+      - "US 🇺🇸 | @Raydikalx | B8CE94"
       - "US 🇺🇸 | @Raydikalx | 650B6A"
+      - "US 🇺🇸 | @Raydikalx | 20635B"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
-    icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
     url: "https://www.gstatic.com/generate_204"
-    interval: 600
+    interval: 30
     tolerance: 50
-    timeout: 3200
-    lazy: false
-    max-failed-times: 2
+    lazy: true
     proxies:
-      - "US 🇺🇸 | @Raydikalx | 96734B"
-      - "US 🇺🇸 | @Raydikalx | B5554D"
-      - "US 🇺🇸 | @Raydikalx | 4730EB"
-      - "US 🇺🇸 | @Raydikalx | CDF313"
-      - "CA 🇨🇦 | @Raydikalx | 1604F0"
-      - "US 🇺🇸 | @Raydikalx | 542687"
-      - "CA 🇨🇦 | @Raydikalx | 54B434"
-      - "US 🇺🇸 | @Raydikalx | 734B3C"
       - "US 🇺🇸 | @Raydikalx | 1FD863"
-      - "US 🇺🇸 | @Raydikalx | 47E914"
-      - "US 🇺🇸 | @Raydikalx | 66830B"
-      - "US 🇺🇸 | @Raydikalx | F922EE"
-      - "US 🇺🇸 | @Raydikalx | 18F54F"
-      - "US 🇺🇸 | @Raydikalx | 004A5D"
-      - "US 🇺🇸 | @Raydikalx | 34BDB7"
-      - "US 🇺🇸 | @Raydikalx | 6A35DF"
-      - "US 🇺🇸 | @Raydikalx | 6EB067"
+      - "US 🇺🇸 | @Raydikalx | 8BA744"
+      - "US 🇺🇸 | @Raydikalx | B5E24A"
+      - "US 🇺🇸 | @Raydikalx | 4CDCFE"
       - "US 🇺🇸 | @Raydikalx | 459F9A"
       - "US 🇺🇸 | @Raydikalx | 91D02A"
       - "US 🇺🇸 | @Raydikalx | 5EBA96"
-      - "US 🇺🇸 | @Raydikalx | 1EC5C2"
-      - "US 🇺🇸 | @Raydikalx | 4CDCFE"
-      - "US 🇺🇸 | @Raydikalx | B5E24A"
-      - "US 🇺🇸 | @Raydikalx | EF4903"
+      - "US 🇺🇸 | @Raydikalx | 34BDB7"
+      - "US 🇺🇸 | @Raydikalx | 18F54F"
+      - "US 🇺🇸 | @Raydikalx | 47E914"
       - "US 🇺🇸 | @Raydikalx | 985F4B"
+      - "US 🇺🇸 | @Raydikalx | 655A99"
+      - "US 🇺🇸 | @Raydikalx | 004A5D"
+      - "US 🇺🇸 | @Raydikalx | 1EC5C2"
+      - "US 🇺🇸 | @Raydikalx | F922EE"
+      - "US 🇺🇸 | @Raydikalx | 168CE3"
+      - "US 🇺🇸 | @Raydikalx | 66830B"
       - "US 🇺🇸 | @Raydikalx | 6F42E7"
-      - "US 🇺🇸 | @Raydikalx | 61A852"
-      - "US 🇺🇸 | @Raydikalx | 399012"
       - "US 🇺🇸 | @Raydikalx | 31E8FE"
-      - "US 🇺🇸 | @Raydikalx | 09FD53"
-      - "US 🇺🇸 | @Raydikalx | 77B2CA"
       - "US 🇺🇸 | @Raydikalx | 90052C"
-      - "US 🇺🇸 | @Raydikalx | 84F135"
-      - "US 🇺🇸 | @Raydikalx | 45D801"
-      - "US 🇺🇸 | @Raydikalx | 921D48"
-      - "US 🇺🇸 | @Raydikalx | 1FB1DB"
-      - "US 🇺🇸 | @Raydikalx | 6AFD1A"
+      - "US 🇺🇸 | @Raydikalx | 09FD53"
+      - "US 🇺🇸 | @Raydikalx | 052D46"
+      - "CA 🇨🇦 | @Raydikalx | 640ED8"
+      - "US 🇺🇸 | @Raydikalx | 5F0876"
+      - "US 🇺🇸 | @Raydikalx | B5554D"
+      - "CA 🇨🇦 | @Raydikalx | B73E31"
+      - "US 🇺🇸 | @Raydikalx | 734B3C"
+      - "US 🇺🇸 | @Raydikalx | 4730EB"
+      - "US 🇺🇸 | @Raydikalx | 8BFC30"
+      - "US 🇺🇸 | @Raydikalx | CDF313"
+      - "US 🇺🇸 | @Raydikalx | 61A852"
+      - "US 🇺🇸 | @Raydikalx | 3F4730"
       - "US 🇺🇸 | @Raydikalx | 9551EE"
+      - "US 🇺🇸 | @Raydikalx | 1FB1DB"
+      - "US 🇺🇸 | @Raydikalx | 7B03AB"
+      - "US 🇺🇸 | @Raydikalx | 399012"
+      - "US 🇺🇸 | @Raydikalx | F40C28"
+      - "US 🇺🇸 | @Raydikalx | 6AFD1A"
       - "US 🇺🇸 | @Raydikalx | 1E1D72"
-      - "US 🇺🇸 | @Raydikalx | 983667"
+      - "US 🇺🇸 | @Raydikalx | 200A69"
+      - "US 🇺🇸 | @Raydikalx | 302DF3"
+      - "US 🇺🇸 | @Raydikalx | 45D801"
+      - "US 🇺🇸 | @Raydikalx | 516E52"
       - "CA 🇨🇦 | @Raydikalx | DEBC1A"
-      - "US 🇺🇸 | @Raydikalx | D50052"
-      - "US 🇺🇸 | @Raydikalx | 4A3857"
-      - "US 🇺🇸 | @Raydikalx | F4AF2E"
-      - "US 🇺🇸 | @Raydikalx | FEA075"
-      - "US 🇺🇸 | @Raydikalx | E2EDF3"
-      - "US 🇺🇸 | @Raydikalx | 6AB77E"
-      - "US 🇺🇸 | @Raydikalx | C6B1E2"
+      - "US 🇺🇸 | @Raydikalx | 983667"
+      - "US 🇺🇸 | @Raydikalx | 93A5EF"
+      - "US 🇺🇸 | @Raydikalx | 6B0BC3"
       - "US 🇺🇸 | @Raydikalx | BBBCFF"
-      - "US 🇺🇸 | @Raydikalx | 96E9C3"
-      - "US 🇺🇸 | @Raydikalx | 68C2B0"
-      - "US 🇺🇸 | @Raydikalx | B9D01B"
+      - "US 🇺🇸 | @Raydikalx | D50052"
       - "US 🇺🇸 | @Raydikalx | 02CE4D"
+      - "US 🇺🇸 | @Raydikalx | C6B1E2"
       - "US 🇺🇸 | @Raydikalx | BB7720"
+      - "US 🇺🇸 | @Raydikalx | 96E9C3"
+      - "US 🇺🇸 | @Raydikalx | 088543"
+      - "US 🇺🇸 | @Raydikalx | 6AB77E"
+      - "US 🇺🇸 | @Raydikalx | FEA075"
+      - "US 🇺🇸 | @Raydikalx | F4AF2E"
+      - "US 🇺🇸 | @Raydikalx | 4A3857"
       - "US 🇺🇸 | @Raydikalx | 9366BE"
-      - "US 🇺🇸 | @Raydikalx | C86ABA"
-      - "US 🇺🇸 | @Raydikalx | CE2CEA"
-      - "US 🇺🇸 | @Raydikalx | 110621"
-      - "US 🇺🇸 | @Raydikalx | E38DDB"
       - "US 🇺🇸 | @Raydikalx | 101269"
+      - "US 🇺🇸 | @Raydikalx | 8D9E8F"
+      - "US 🇺🇸 | @Raydikalx | 5288D0"
+      - "CA 🇨🇦 | @Raydikalx | CD4179"
+      - "US 🇺🇸 | @Raydikalx | 3B1D0A"
       - "US 🇺🇸 | @Raydikalx | 452ED5"
-      - "CA 🇨🇦 | @Raydikalx | A53DAC"
-      - "CA 🇨🇦 | @Raydikalx | 4BA3A6"
-      - "CA 🇨🇦 | @Raydikalx | 8BB1EE"
-      - "US 🇺🇸 | @Raydikalx | DE08A7"
       - "US 🇺🇸 | @Raydikalx | B00608"
-      - "US 🇺🇸 | @Raydikalx | 1DFFCE"
-      - "US 🇺🇸 | @Raydikalx | 49B65F"
+      - "US 🇺🇸 | @Raydikalx | 22AF20"
       - "US 🇺🇸 | @Raydikalx | 5FAD98"
-      - "US 🇺🇸 | @Raydikalx | 20635B"
+      - "US 🇺🇸 | @Raydikalx | 49B65F"
+      - "US 🇺🇸 | @Raydikalx | B8CE94"
       - "US 🇺🇸 | @Raydikalx | 650B6A"
+      - "US 🇺🇸 | @Raydikalx | 20635B"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
-    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
     strategy: "round-robin"
     url: "https://www.gstatic.com/generate_204"
     interval: 30
+    lazy: true
     timeout: 1500
-    lazy: false
     proxies:
-      - "US 🇺🇸 | @Raydikalx | 96734B"
-      - "US 🇺🇸 | @Raydikalx | B5554D"
-      - "US 🇺🇸 | @Raydikalx | 4730EB"
-      - "US 🇺🇸 | @Raydikalx | CDF313"
-      - "CA 🇨🇦 | @Raydikalx | 1604F0"
-      - "US 🇺🇸 | @Raydikalx | 542687"
-      - "CA 🇨🇦 | @Raydikalx | 54B434"
-      - "US 🇺🇸 | @Raydikalx | 734B3C"
       - "US 🇺🇸 | @Raydikalx | 1FD863"
-      - "US 🇺🇸 | @Raydikalx | 47E914"
-      - "US 🇺🇸 | @Raydikalx | 66830B"
-      - "US 🇺🇸 | @Raydikalx | F922EE"
-      - "US 🇺🇸 | @Raydikalx | 18F54F"
-      - "US 🇺🇸 | @Raydikalx | 004A5D"
-      - "US 🇺🇸 | @Raydikalx | 34BDB7"
-      - "US 🇺🇸 | @Raydikalx | 6A35DF"
-      - "US 🇺🇸 | @Raydikalx | 6EB067"
+      - "US 🇺🇸 | @Raydikalx | 8BA744"
+      - "US 🇺🇸 | @Raydikalx | B5E24A"
+      - "US 🇺🇸 | @Raydikalx | 4CDCFE"
       - "US 🇺🇸 | @Raydikalx | 459F9A"
       - "US 🇺🇸 | @Raydikalx | 91D02A"
       - "US 🇺🇸 | @Raydikalx | 5EBA96"
-      - "US 🇺🇸 | @Raydikalx | 1EC5C2"
-      - "US 🇺🇸 | @Raydikalx | 4CDCFE"
-      - "US 🇺🇸 | @Raydikalx | B5E24A"
-      - "US 🇺🇸 | @Raydikalx | EF4903"
+      - "US 🇺🇸 | @Raydikalx | 34BDB7"
+      - "US 🇺🇸 | @Raydikalx | 18F54F"
+      - "US 🇺🇸 | @Raydikalx | 47E914"
       - "US 🇺🇸 | @Raydikalx | 985F4B"
+      - "US 🇺🇸 | @Raydikalx | 655A99"
+      - "US 🇺🇸 | @Raydikalx | 004A5D"
+      - "US 🇺🇸 | @Raydikalx | 1EC5C2"
+      - "US 🇺🇸 | @Raydikalx | F922EE"
+      - "US 🇺🇸 | @Raydikalx | 168CE3"
+      - "US 🇺🇸 | @Raydikalx | 66830B"
       - "US 🇺🇸 | @Raydikalx | 6F42E7"
-      - "US 🇺🇸 | @Raydikalx | 61A852"
-      - "US 🇺🇸 | @Raydikalx | 399012"
       - "US 🇺🇸 | @Raydikalx | 31E8FE"
-      - "US 🇺🇸 | @Raydikalx | 09FD53"
-      - "US 🇺🇸 | @Raydikalx | 77B2CA"
       - "US 🇺🇸 | @Raydikalx | 90052C"
-      - "US 🇺🇸 | @Raydikalx | 84F135"
-      - "US 🇺🇸 | @Raydikalx | 45D801"
-      - "US 🇺🇸 | @Raydikalx | 921D48"
-      - "US 🇺🇸 | @Raydikalx | 1FB1DB"
-      - "US 🇺🇸 | @Raydikalx | 6AFD1A"
+      - "US 🇺🇸 | @Raydikalx | 09FD53"
+      - "US 🇺🇸 | @Raydikalx | 052D46"
+      - "CA 🇨🇦 | @Raydikalx | 640ED8"
+      - "US 🇺🇸 | @Raydikalx | 5F0876"
+      - "US 🇺🇸 | @Raydikalx | B5554D"
+      - "CA 🇨🇦 | @Raydikalx | B73E31"
+      - "US 🇺🇸 | @Raydikalx | 734B3C"
+      - "US 🇺🇸 | @Raydikalx | 4730EB"
+      - "US 🇺🇸 | @Raydikalx | 8BFC30"
+      - "US 🇺🇸 | @Raydikalx | CDF313"
+      - "US 🇺🇸 | @Raydikalx | 61A852"
+      - "US 🇺🇸 | @Raydikalx | 3F4730"
       - "US 🇺🇸 | @Raydikalx | 9551EE"
+      - "US 🇺🇸 | @Raydikalx | 1FB1DB"
+      - "US 🇺🇸 | @Raydikalx | 7B03AB"
+      - "US 🇺🇸 | @Raydikalx | 399012"
+      - "US 🇺🇸 | @Raydikalx | F40C28"
+      - "US 🇺🇸 | @Raydikalx | 6AFD1A"
       - "US 🇺🇸 | @Raydikalx | 1E1D72"
-      - "US 🇺🇸 | @Raydikalx | 983667"
+      - "US 🇺🇸 | @Raydikalx | 200A69"
+      - "US 🇺🇸 | @Raydikalx | 302DF3"
+      - "US 🇺🇸 | @Raydikalx | 45D801"
+      - "US 🇺🇸 | @Raydikalx | 516E52"
       - "CA 🇨🇦 | @Raydikalx | DEBC1A"
-      - "US 🇺🇸 | @Raydikalx | D50052"
-      - "US 🇺🇸 | @Raydikalx | 4A3857"
-      - "US 🇺🇸 | @Raydikalx | F4AF2E"
-      - "US 🇺🇸 | @Raydikalx | FEA075"
-      - "US 🇺🇸 | @Raydikalx | E2EDF3"
-      - "US 🇺🇸 | @Raydikalx | 6AB77E"
-      - "US 🇺🇸 | @Raydikalx | C6B1E2"
+      - "US 🇺🇸 | @Raydikalx | 983667"
+      - "US 🇺🇸 | @Raydikalx | 93A5EF"
+      - "US 🇺🇸 | @Raydikalx | 6B0BC3"
       - "US 🇺🇸 | @Raydikalx | BBBCFF"
-      - "US 🇺🇸 | @Raydikalx | 96E9C3"
-      - "US 🇺🇸 | @Raydikalx | 68C2B0"
-      - "US 🇺🇸 | @Raydikalx | B9D01B"
+      - "US 🇺🇸 | @Raydikalx | D50052"
       - "US 🇺🇸 | @Raydikalx | 02CE4D"
+      - "US 🇺🇸 | @Raydikalx | C6B1E2"
       - "US 🇺🇸 | @Raydikalx | BB7720"
+      - "US 🇺🇸 | @Raydikalx | 96E9C3"
+      - "US 🇺🇸 | @Raydikalx | 088543"
+      - "US 🇺🇸 | @Raydikalx | 6AB77E"
+      - "US 🇺🇸 | @Raydikalx | FEA075"
+      - "US 🇺🇸 | @Raydikalx | F4AF2E"
+      - "US 🇺🇸 | @Raydikalx | 4A3857"
       - "US 🇺🇸 | @Raydikalx | 9366BE"
-      - "US 🇺🇸 | @Raydikalx | C86ABA"
-      - "US 🇺🇸 | @Raydikalx | CE2CEA"
-      - "US 🇺🇸 | @Raydikalx | 110621"
-      - "US 🇺🇸 | @Raydikalx | E38DDB"
       - "US 🇺🇸 | @Raydikalx | 101269"
+      - "US 🇺🇸 | @Raydikalx | 8D9E8F"
+      - "US 🇺🇸 | @Raydikalx | 5288D0"
+      - "CA 🇨🇦 | @Raydikalx | CD4179"
+      - "US 🇺🇸 | @Raydikalx | 3B1D0A"
       - "US 🇺🇸 | @Raydikalx | 452ED5"
-      - "CA 🇨🇦 | @Raydikalx | A53DAC"
-      - "CA 🇨🇦 | @Raydikalx | 4BA3A6"
-      - "CA 🇨🇦 | @Raydikalx | 8BB1EE"
-      - "US 🇺🇸 | @Raydikalx | DE08A7"
       - "US 🇺🇸 | @Raydikalx | B00608"
-      - "US 🇺🇸 | @Raydikalx | 1DFFCE"
-      - "US 🇺🇸 | @Raydikalx | 49B65F"
+      - "US 🇺🇸 | @Raydikalx | 22AF20"
       - "US 🇺🇸 | @Raydikalx | 5FAD98"
-      - "US 🇺🇸 | @Raydikalx | 20635B"
+      - "US 🇺🇸 | @Raydikalx | 49B65F"
+      - "US 🇺🇸 | @Raydikalx | B8CE94"
       - "US 🇺🇸 | @Raydikalx | 650B6A"
-  - name: "المنت 💬"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "تیماسپیک 🎧"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/331567/teamspeak.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "دلتاچت ✉️"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/373771/mail.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
+      - "US 🇺🇸 | @Raydikalx | 20635B"
+    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"
-    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
     proxies:
       - "بدون فیلترشکن 🛡️"
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
   - name: "تلگرام 💬"
     type: "select"
-    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
   - name: "یوتیوب ▶️"
     type: "select"
-    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
       - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
   - name: "گوگل 🌍"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
     icon: "https://www.svgrepo.com/show/475656/google-color.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "واتس آپ 🟢"
-    type: "select"
-    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-      - "بدون فیلترشکن 🛡️"
   - name: "هوش مصنوعی 🤖"
     type: "select"
-    icon: "https://www.svgrepo.com/show/306500/openai.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/306500/openai.svg"
   - name: "توییتر 🐦"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
     icon: "https://www.svgrepo.com/show/475689/twitter-color.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "اسپاتیفای 🎵"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
   - name: "اینستاگرام 📸"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
     icon: "https://www.svgrepo.com/show/452229/instagram-1.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-      - "بدون فیلترشکن 🛡️"
-  - name: "تبلیغات 🆎"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/336358/ad.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "تبلیغات اپ ها 🍃"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "رهگیری جهانی 🛑"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "سایتای مخرب ⚠️"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "استیم 🖥️"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/452107/steam.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "گیم 🎮"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "توییچ 📡"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/343527/twitch-network-communication-interaction-connection.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "سایتای ایرانی 🇮🇷"
-    type: "select"
-    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "ویندوز 🧊"
-    type: "select"
-    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "اجازه ندادن 🚫"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
   - name: "کلودفلر ☁️"
     type: "select"
-    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
   - name: "گیتهاب 🐙"
     type: "select"
-    icon: "https://www.svgrepo.com/show/355033/github.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/355033/github.svg"
+  - name: "اسپاتیفای 🎵"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
+  - name: "واتس آپ 🟢"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
+  - name: "تبلیغات 🆎"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/336358/ad.svg"
+  - name: "تبلیغات اپ ها 🍃"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
+  - name: "رهگیری جهانی 🛑"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
+  - name: "المنت 💬"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Element_(software)_logo_(2020).svg"
+  - name: "تیم اسپیک 🎧"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/teamspeak/default.svg"
+  - name: "دلتاچت ✉️"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Delta_chat_(Instant_Messenger)_logo.svg"
+  - name: "سایتای مخرب ⚠️"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
+  - name: "استیم 🖥️"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/452107/steam.svg"
+  - name: "گیم 🎮"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
+  - name: "توییچ 📡"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@develop/icons/twitch.svg"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
+  - name: "ویندوز 🧊"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "اجازه ندادن 🚫"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
   - name: "دیسکورد 🗣️"
     type: "select"
-    icon: "https://automatorplugin.com/wp-content/uploads/2024/10/discord-icon.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/brands/discord.svg"
   - name: "استریمیو 🎬"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
     icon: "https://stremio.github.io/stremio-addon-guide/img/stremio.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "انیدسک 🔴"
+  - name: "انی دسک 🔴"
     type: "select"
-    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
     proxies:
       - "بدون فیلترشکن 🛡️"
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
   - name: "سایتای سانسوری 🤬"
     type: "select"
-    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Censorship.svg/300px-Censorship.svg.png"
     proxies:
       - "اجازه ندادن 🚫"
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "بدون فیلترشکن 🛡️"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/clapperboard.svg"
   - name: "بدون فیلترشکن 🛡️"
     type: "select"
-    icon: "https://www.svgrepo.com/show/6318/connection.svg"
     proxies:
       - "DIRECT"
     hidden: true
+    icon: "https://www.svgrepo.com/show/6318/connection.svg"
   - name: "قطع اینترنت ⛔"
     type: "select"
-    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
     proxies:
       - "REJECT"
     hidden: true
+    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
   - name: "اجازه ندادن 🚫"
     type: "select"
-    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
     proxies:
       - "REJECT"
     hidden: true
+    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
 rules:
+  - "IP-CIDR,127.0.0.0/8,بدون فیلترشکن 🛡️,no-resolve"
+  - "DOMAIN,localhost,بدون فیلترشکن 🛡️"
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,private,بدون فیلترشکن 🛡️"
   - "RULE-SET,DownloadManagers,دانلود منیجر 📥"
   - "RULE-SET,Download,دانلود منیجر 📥"
   - "RULE-SET,stremio,استریمیو 🎬"
@@ -1792,11 +1817,12 @@ rules:
   - "DST-PORT,993,دلتاچت ✉️"
   - "DST-PORT,465,دلتاچت ✉️"
   - "DST-PORT,587,دلتاچت ✉️"
-  - "PROCESS-NAME,com.teamspeak.ts3client,تیماسپیک 🎧"
-  - "PROCESS-NAME,ts3client_win64.exe,تیماسپیک 🎧"
-  - "PROCESS-NAME,ts3client_win32.exe,تیماسپیک 🎧"
-  - "DOMAIN-SUFFIX,ag.tssq.ir,تیماسپیک 🎧"
-  - "DST-PORT,9987,تیماسپیک 🎧"
+  - "PROCESS-NAME,com.teamspeak.ts3client,تیم اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win64.exe,تیم اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win32.exe,تیم اسپیک 🎧"
+  - "PROCESS-NAME,TeamSpeak.exe,تیم اسپیک 🎧"
+  - "DOMAIN-SUFFIX,ag.tssq.ir,تیم اسپیک 🎧"
+  - "DST-PORT,9987,تیم اسپیک 🎧"
   - "RULE-SET,BanProgramAD,تبلیغات اپ ها 🍃"
   - "RULE-SET,BanAD,رهگیری جهانی 🛑"
   - "RULE-SET,PrivateTracker,رهگیری جهانی 🛑"
@@ -1819,9 +1845,12 @@ rules:
   - "RULE-SET,YouTube,یوتیوب ▶️"
   - "RULE-SET,youtube,یوتیوب ▶️"
   - "RULE-SET,YouTubeMusic,یوتیوب ▶️"
-  - "PROCESS-NAME,com.anydesk.anydeskandroid,انیدسک 🔴"
-  - "PROCESS-NAME,AnyDesk.exe,انیدسک 🔴"
-  - "DOMAIN-SUFFIX,anydesk.com,انیدسک 🔴"
+  - "PROCESS-NAME,com.anydesk.anydeskandroid,انی دسک 🔴"
+  - "PROCESS-NAME,AnyDesk.exe,انی دسک 🔴"
+  - "DOMAIN-SUFFIX,anydesk.com,انی دسک 🔴"
+  - "PROCESS-NAME,rustdesk.exe,انی دسک 🔴"
+  - "PROCESS-NAME,com.carriez.flutter_hbb,انی دسک 🔴"
+  - "PROCESS-NAME,dorsandesk.exe,انی دسک 🔴"
   - "PROCESS-NAME,Twitter.exe,توییتر 🐦"
   - "PROCESS-NAME,com.twitter.android,توییتر 🐦"
   - "RULE-SET,Chotwitter,توییتر 🐦"
@@ -1833,9 +1862,6 @@ rules:
   - "RULE-SET,mihspotify,اسپاتیفای 🎵"
   - "PROCESS-NAME,com.instagram.android,اینستاگرام 📸"
   - "RULE-SET,instagram,اینستاگرام 📸"
-  - "DOMAIN-SUFFIX,deepseek.com,هوش مصنوعی 🤖"
-  - "DOMAIN-SUFFIX,qwen.ai,هوش مصنوعی 🤖"
-  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
   - "RULE-SET,censor,سایتای سانسوری 🤬"
   - "RULE-SET,apps,سایتای ایرانی 🇮🇷"
   - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
@@ -1849,6 +1875,10 @@ rules:
   - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
   - "DOMAIN-SUFFIX,unimics.com,سایتای ایرانی 🇮🇷"
   - "RULE-SET,whatsapp,واتس آپ 🟢"
+  - "RULE-SET,Ai,هوش مصنوعی 🤖"
+  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
+  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google,گوگل 🌍"
   - "RULE-SET,steam,استیم 🖥️"
   - "RULE-SET,SteamRegionCheck,استیم 🖥️"
   - "RULE-SET,game,گیم 🎮"
@@ -1863,9 +1893,5 @@ rules:
   - "RULE-SET,github,گیتهاب 🐙"
   - "PROCESS-NAME,com.android.vending,نوع انتخاب پروکسی 🔀"
   - "PROCESS-NAME,com.google.android.gms,نوع انتخاب پروکسی 🔀"
-  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
-  - "RULE-SET,google,گوگل 🌍"
   - "IP-CIDR,10.10.34.0/24,نوع انتخاب پروکسی 🔀"
-  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
-  - "RULE-SET,private,بدون فیلترشکن 🛡️"
   - "MATCH,نوع انتخاب پروکسی 🔀"

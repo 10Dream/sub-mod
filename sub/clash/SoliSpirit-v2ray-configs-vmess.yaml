@@ -1,287 +1,177 @@
-global-client-fingerprint: "chrome"
-keep-alive-interval: 5
-keep-alive-idle: 10
-disable-keep-alive: false
-port: 7890
+port: 7892
 socks-port: 7891
-redir-port: 7892
-mixed-port: 7893
-tproxy-port: 7894
+mixed-port: 7890
 allow-lan: true
-tcp-concurrent: true
-enable-process: true
-find-process-mode: "always"
-ipv6: false
+mode: "rule"
 log-level: "info"
-geo-auto-update: true
-geo-update-interval: 168
+external-controller: "0.0.0.0:9090"
 secret: ""
-bind-address: "*"
-unified-delay: false
+ipv6: false
 dns:
   enable: true
+  listen: "0.0.0.0:53"
   ipv6: false
   prefer-h3: false
   cache-algorithm: "arc"
+  use-hosts: true
   use-system-hosts: true
-  use-host: true
-  listen: "0.0.0.0:53"
+  respect-rules: false
   enhanced-mode: "fake-ip"
-  fake-ip-filter-mode: "blacklist"
   fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter-mode: "blacklist"
   fake-ip-filter:
-    - "*.lan"
-    - "*.localdomain"
-    - "*.invalid"
-    - "*.localhost"
-    - "*.test"
-    - "*.local"
-    - "*.home.arpa"
+    - "geosite:private"
+    - "+.lan"
+    - "+.localdomain"
+    - "+.invalid"
+    - "+.localhost"
+    - "+.test"
+    - "+.local"
+    - "+.home.arpa"
+    - "+.arpa"
+    - "+.ir"
     - "time.*.com"
+    - "time.*.gov"
+    - "time.*.apple.com"
     - "ntp.*.com"
-    - "*.ir"
+    - "+.pool.ntp.org"
+    - "+.ntp.org"
+    - "time.asis.io"
+    - "time.windows.com"
+    - "time.apple.com"
+    - "connectivitycheck.gstatic.com"
+    - "connectivitycheck.android.com"
+    - "clients3.google.com"
+    - "captive.apple.com"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "router.asus.com"
+    - "tplinkwifi.net"
+    - "tplinkrepeater.net"
+    - "tplinkap.net"
+    - "routerlogin.net"
+    - "routerlogin.com"
+    - "melogin.cn"
+    - "falogin.cn"
+    - "tendawifi.com"
+    - "leike.cc"
+    - "miwifi.com"
+    - "goforward.link"
+    - "+.plex.direct"
+  nameserver-policy:
+    geosite:private: "system"
+    +.arpa: "system"
+    +.lan: "system"
+    +.local: "system"
+    +.home.arpa: "system"
+    router.asus.com: "system"
+    tplinkwifi.net: "system"
+    tplinkrepeater.net: "system"
+    tplinkap.net: "system"
+    routerlogin.net: "system"
+    routerlogin.com: "system"
+    melogin.cn: "system"
+    falogin.cn: "system"
+    tendawifi.com: "system"
+    leike.cc: "system"
+    miwifi.com: "system"
+    goforward.link: "system"
   default-nameserver:
+    - "tcp://1.1.1.1"
+    - "tcp://8.8.8.8"
     - "1.1.1.1"
     - "8.8.8.8"
     - "9.9.9.9"
-  nameserver:
-    - "tcp://1.1.1.1"
     - "tcp://1.0.0.1"
-    - "tcp://8.8.8.8"
     - "tcp://8.8.4.4"
     - "tcp://9.9.9.9"
     - "tcp://149.112.112.112"
     - "tcp://208.67.222.222"
-    - "tcp://208.67.220.222"
+    - "tcp://208.67.220.220"
+  nameserver:
+    - "https://freedns.controld.com/p2#نوع انتخاب پروکسی 🔀"
   fallback:
-    - "tcp://76.76.19.19"
-    - "tcp://76.223.122.150"
-    - "tcp://185.228.168.9"
-    - "tcp://185.228.169.9"
-    - "tcp://8.26.56.26"
-    - "tcp://8.20.247.20"
-    - "tcp://76.76.2.11"
-    - "tcp://76.76.10.11"
-    - "tcp://84.200.69.80"
-    - "tcp://84.200.70.40"
-    - "tcp://45.33.97.5"
-    - "tcp://37.235.1.177"
-    - "tcp://209.244.0.3"
-    - "tcp://209.244.0.4"
-    - "tcp://156.154.70.5"
-    - "tcp://156.154.71.5"
-    - "tcp://103.86.96.100"
-    - "tcp://103.86.99.100"
-    - "tcp://199.85.126.10"
-    - "tcp://199.85.127.10"
-    - "tcp://129.250.35.250"
-    - "tcp://129.250.35.251"
-    - "tcp://94.16.114.254"
-    - "tcp://94.247.43.254"
-    - "tcp://208.67.222.20"
-    - "tcp://195.46.39.39"
-    - "tcp://195.46.39.40"
-    - "tcp://204.117.214.10"
-    - "tcp://199.2.252.10"
-    - "tcp://194.169.169.169"
-    - "tcp://156.154.70.1"
-    - "tcp://156.154.71.1"
-    - "tcp://91.239.100.100"
-    - "tcp://89.233.43.71"
-    - "tcp://64.6.64.6"
-    - "tcp://64.6.65.6"
-    - "tcp://77.88.8.8"
-    - "tcp://77.88.8.1"
+    - "https://dns.adguard-dns.com/dns-query#نوع انتخاب پروکسی 🔀"
+  fallback-lazy-query: true
   fallback-filter:
-    geoip: true
-    geoip-code: "IR"
-    geosite:
-      - "gfw"
+    geoip: false
     ipcidr:
+      - "10.10.34.34/32"
+      - "10.10.34.35/32"
+      - "10.10.34.36/32"
+      - "127.0.0.1/32"
       - "240.0.0.0/4"
-    domain:
-      - "+.google.com"
-      - "+.facebook.com"
-      - "+.youtube.com"
   proxy-server-nameserver:
     - "tcp://1.1.1.1"
     - "tcp://8.8.8.8"
+    - "tcp://9.9.9.9"
+    - "1.1.1.1"
+    - "8.8.8.8"
+    - "9.9.9.9"
+    - "tcp://1.0.0.1"
+    - "tcp://8.8.4.4"
+    - "tcp://149.112.112.112"
+    - "tcp://208.67.222.222"
+    - "tcp://208.67.220.220"
   direct-nameserver:
     - "78.157.42.100"
     - "78.157.42.101"
+    - "tcp://78.157.42.100"
+    - "tcp://78.157.42.101"
+  direct-nameserver-follow-policy: true
 sniffer:
   enable: true
   force-dns-mapping: true
   parse-pure-ip: true
-  override-destination: false
-  sniff:
-    HTTP:
-      ports:
-        - 80
-        - 8080
-        - 8880
-        - 2052
-        - 2082
-        - 2086
-        - 2095
-    TLS:
-      ports:
-        - 443
-        - 8443
-        - 2053
-        - 2083
-        - 2087
-        - 2096
+  override-destination: true
 tun:
   enable: true
   stack: "mixed"
   auto-route: true
   auto-detect-interface: true
-  auto-redir: true
-  dns-hijack:
-    - "any:53"
-    - "tcp://any:53"
 rule-providers:
+  DownloadManagers:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
+    interval: 86400
+    path: "./ruleset/DownloadManagers.yaml"
+  Download:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
+    interval: 86400
+    path: "./ruleset/Download.yaml"
+  stremio:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    interval: 86400
+    path: "./ruleset/stremio.yaml"
+  BanProgramAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanProgramAD.yaml"
+  BanAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanAD.yaml"
+  PrivateTracker:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
+    interval: 86400
+    path: "./ruleset/PrivateTracker.yaml"
   category_public_tracker:
     type: "http"
     behavior: "domain"
     url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-public-tracker.yaml"
     interval: 86400
     path: "./ruleset/category_public_tracker.yaml"
-  iran_ads:
-    type: "http"
-    behavior: "domain"
-    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
-    interval: 86400
-    path: "./ruleset/iran_ads.yaml"
-  PersianBlocker:
-    type: "http"
-    behavior: "domain"
-    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
-    interval: 86400
-    path: "./ruleset/PersianBlocker.yaml"
-  youtube:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
-    interval: 86400
-    path: "./ruleset/youtube.yaml"
-  telegram:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
-    interval: 86400
-    path: "./ruleset/telegram.yaml"
-  twitch:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
-    interval: 86400
-    path: "./ruleset/twitch.yaml"
-  censor:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
-    interval: 86400
-    path: "./ruleset/censor.yaml"
-  local_ips:
-    type: "http"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
-    interval: 86400
-    path: "./ruleset/local_ips.yaml"
-  private:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
-    interval: 86400
-    path: "./ruleset/private.yaml"
-  category_ir:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
-    interval: 86400
-    path: "./ruleset/category_ir.yaml"
-  iran:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
-    interval: 86400
-    path: "./ruleset/iran.yaml"
-  steam:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
-    interval: 86400
-    path: "./ruleset/steam.yaml"
-  game:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
-    interval: 86400
-    path: "./ruleset/game.yaml"
-  category-games:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
-    interval: 86400
-    path: "./ruleset/category-games.yaml"
-  ir:
-    type: "http"
-    format: "yaml"
-    behavior: "domain"
-    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
-    interval: 86400
-    path: "./ruleset/ir.yaml"
-  apps:
-    type: "http"
-    format: "yaml"
-    behavior: "classical"
-    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
-    interval: 86400
-    path: "./ruleset/apps.yaml"
-  ircidr:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
-    interval: 86400
-    path: "./ruleset/ircidr.yaml"
-  irasn:
-    type: "http"
-    format: "yaml"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
-    interval: 86400
-    path: "./ruleset/irasn.yaml"
-  arvancloud:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
-    interval: 86400
-    path: "./ruleset/arvancloud.yaml"
-  derakcloud:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
-    interval: 86400
-    path: "./ruleset/derakcloud.yaml"
-  iranserver:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
-    interval: 86400
-    path: "./ruleset/iranserver.yaml"
-  parspack:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
-    interval: 86400
-    path: "./ruleset/parspack.yaml"
   malware:
     type: "http"
     format: "yaml"
@@ -303,170 +193,79 @@ rule-providers:
     url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/cryptominers.yaml"
     interval: 86400
     path: "./ruleset/cryptominers.yaml"
-  ads:
-    type: "http"
-    format: "yaml"
-    behavior: "domain"
-    url: "https://github.com/Chocolate4U/Iran-clash-rules/releases/download/202606060815/category-ads-all.yaml"
-    interval: 86400
-    path: "./ruleset/ads.yaml"
-  DownloadManagers:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
-    interval: 86400
-    path: "./ruleset/DownloadManagers.yaml"
-  BanProgramAD:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
-    interval: 86400
-    path: "./ruleset/BanProgramAD.yaml"
-  BanAD:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
-    interval: 86400
-    path: "./ruleset/BanAD.yaml"
-  PrivateTracker:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
-    interval: 86400
-    path: "./ruleset/PrivateTracker.yaml"
-  BanEasyList:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
-    interval: 86400
-    path: "./ruleset/BanEasyList.yaml"
-  Download:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
-    interval: 86400
-    path: "./ruleset/Download.yaml"
-  GameDownload:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
-    interval: 86400
-    path: "./ruleset/GameDownload.yaml"
-  SteamRegionCheck:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
-    interval: 86400
-    path: "./ruleset/SteamRegionCheck.yaml"
-  Xbox:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
-    interval: 86400
-    path: "./ruleset/Xbox.yaml"
-  YouTubeMusic:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
-    interval: 86400
-    path: "./ruleset/YouTubeMusic.yaml"
-  YouTube:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
-    interval: 86400
-    path: "./ruleset/YouTube.yaml"
-  Ponzi:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
-    interval: 86400
-    path: "./ruleset/Ponzi.yaml"
   warninglist:
     type: "http"
     behavior: "classical"
     url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/warning-list.yaml"
     interval: 86400
     path: "./ruleset/warninglist.yaml"
-  google:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
-    interval: 86400
-    path: "./ruleset/google.yaml"
-  google-play:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
-    interval: 86400
-    path: "./ruleset/google-play.yaml"
-  xiaomi_block_list:
-    type: "http"
-    format: "yaml"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
-    interval: 86400
-    path: "./ruleset/xiaomi_block_list.yaml"
-  xiaomi_white_list:
+  Ponzi:
     type: "http"
     behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
     interval: 86400
-    path: "./ruleset/xiaomi_white_list.yaml"
-  cloudflare:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
-    interval: 86400
-    path: "./ruleset/cloudflare.yaml"
-  github:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
-    interval: 86400
-    path: "./ruleset/xgithub.yaml"
-  whatsapp:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
-    interval: 86400
-    path: "./ruleset/whatsapp.yaml"
+    path: "./ruleset/Ponzi.yaml"
   LiteAds:
     type: "http"
     behavior: "classical"
     url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/LiteAds.yaml"
     interval: 86400
     path: "./ruleset/LiteAds.yaml"
-  discord:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
-    interval: 86400
-    path: "./ruleset/discord.yaml"
-  instagram:
+  iran_ads:
     type: "http"
     behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
     interval: 86400
-    path: "./ruleset/instagram.yaml"
-  category-ai:
+    path: "./ruleset/iran_ads.yaml"
+  PersianBlocker:
     type: "http"
     behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
     interval: 86400
-    path: "./ruleset/category-ai.yaml"
-  stremio:
+    path: "./ruleset/PersianBlocker.yaml"
+  ads:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/category-ads-all.yaml"
+    interval: 86400
+    path: "./ruleset/ads.yaml"
+  BanEasyList:
     type: "http"
     behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
     interval: 86400
-    path: "./ruleset/stremio.yaml"
-  windows:
+    path: "./ruleset/BanEasyList.yaml"
+  twitch:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
+    interval: 86400
+    path: "./ruleset/twitch.yaml"
+  telegram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
+    interval: 86400
+    path: "./ruleset/telegram.yaml"
+  YouTube:
     type: "http"
     behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
     interval: 86400
-    path: "./ruleset/windows.yaml"
+    path: "./ruleset/YouTube.yaml"
+  youtube:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
+    interval: 86400
+    path: "./ruleset/youtube.yaml"
+  YouTubeMusic:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
+    interval: 86400
+    path: "./ruleset/YouTubeMusic.yaml"
   Chotwitter:
     type: "http"
     format: "yaml"
@@ -498,1104 +297,323 @@ rule-providers:
     url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Spotify.yaml"
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
+  instagram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    interval: 86400
+    path: "./ruleset/instagram.yaml"
+  Ai:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/Ai.yaml"
+    interval: 86400
+    path: "./ruleset/Ai.yaml"
+  category-ai:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    interval: 86400
+    path: "./ruleset/category-ai.yaml"
+  censor:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
+    interval: 86400
+    path: "./ruleset/censor.yaml"
+  apps:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
+    interval: 86400
+    path: "./ruleset/apps.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+  arvancloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
+    interval: 86400
+    path: "./ruleset/arvancloud.yaml"
+  derakcloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
+    interval: 86400
+    path: "./ruleset/derakcloud.yaml"
+  iranserver:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
+    interval: 86400
+    path: "./ruleset/iranserver.yaml"
+  parspack:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
+    interval: 86400
+    path: "./ruleset/parspack.yaml"
+  irasn:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
+    interval: 86400
+    path: "./ruleset/irasn.yaml"
+  ircidr:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
+    interval: 86400
+    path: "./ruleset/ircidr.yaml"
+  ir:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
+    interval: 86400
+    path: "./ruleset/ir.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  whatsapp:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
+    interval: 86400
+    path: "./ruleset/whatsapp.yaml"
+  steam:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
+    interval: 86400
+    path: "./ruleset/steam.yaml"
+  SteamRegionCheck:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
+    interval: 86400
+    path: "./ruleset/SteamRegionCheck.yaml"
+  game:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
+    interval: 86400
+    path: "./ruleset/game.yaml"
+  GameDownload:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
+    interval: 86400
+    path: "./ruleset/GameDownload.yaml"
+  category-games:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
+    interval: 86400
+    path: "./ruleset/category-games.yaml"
+  Xbox:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
+    interval: 86400
+    path: "./ruleset/Xbox.yaml"
+  discord:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
+    interval: 86400
+    path: "./ruleset/discord.yaml"
+  xiaomi_white_list:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_white_list.yaml"
+  xiaomi_block_list:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_block_list.yaml"
+  windows:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    interval: 86400
+    path: "./ruleset/windows.yaml"
+  cloudflare:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
+    interval: 86400
+    path: "./ruleset/cloudflare.yaml"
+  github:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
+    interval: 86400
+    path: "./ruleset/xgithub.yaml"
+  google-play:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
+    interval: 86400
+    path: "./ruleset/google-play.yaml"
+  google:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
+    interval: 86400
+    path: "./ruleset/google.yaml"
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  private:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
+    interval: 86400
+    path: "./ruleset/private.yaml"
 proxies:
   - name: "🔥Join+Telegram:@Farah_VPN🟣"
     type: "vmess"
-    server: "iran1.danqela.ir"
-    port: 28966
-    uuid: "9de7119b-c407-4677-955b-2679567c72c8"
+    server: "xcf037.facai2024.com"
+    port: 443
+    uuid: "d9863037-0463-4615-e972-36ba9662d1e9"
     alterId: 0
     cipher: "auto"
     udp: true
   - name: "🔥Join+Telegram:@Farah_VPN🟣-1"
     type: "vmess"
-    server: "gerdi-1.povrak.ir"
-    port: 50407
-    uuid: "0682cfaa-3669-4649-bd87-fce9641f1dda"
+    server: "fer-4.povrak.ir"
+    port: 47014
+    uuid: "6df4f26a-258a-4a58-bf45-cb6091277e36"
     alterId: 0
     cipher: "auto"
     udp: true
   - name: "🔥Join+Telegram:@Farah_VPN🟣-2"
     type: "vmess"
-    server: "fin-3.povrak.ir"
-    port: 56268
-    uuid: "d5d5c844-d99e-41d2-a5b9-701adf597498"
+    server: "51.75.74.253"
+    port: 10000
+    uuid: "678a8a2c-aca8-11f1-b342-afa6288e22f8"
     alterId: 0
     cipher: "auto"
     udp: true
   - name: "🔥Join+Telegram:@Farah_VPN🟣-3"
     type: "vmess"
-    server: "159.69.180.75"
-    port: 8880
-    uuid: "8c0be351-cc26-4c4d-8cb8-147b9b25e50e"
+    server: "82.198.246.97"
+    port: 180
+    uuid: "d13fc2f5-3e05-4795-81eb-44143a09e552"
     alterId: 0
     cipher: "auto"
     udp: true
   - name: "🔥Join+Telegram:@Farah_VPN🟣-4"
     type: "vmess"
-    server: "dashboard.aframarket.top"
-    port: 5384
-    uuid: "130b0fbf-4f19-44d0-911f-95355e9632e4"
+    server: "planb.mojcn.com.linuxlh.xin"
+    port: 16644
+    uuid: "75d8194d-cd07-4690-bb8c-4fdb509eb8ca"
     alterId: 0
     cipher: "auto"
     udp: true
   - name: "🔥Join+Telegram:@Farah_VPN🟣-5"
     type: "vmess"
-    server: "57.131.168.202"
-    port: 53183
-    uuid: "2cb092f6-d62c-4e8c-a9f2-db9d46f42de7"
+    server: "defe.sync-bridge.ir"
+    port: 443
+    uuid: "e9f12253-bc99-4ea6-8ad0-00e407abe269"
     alterId: 0
     cipher: "auto"
     udp: true
   - name: "🔥Join+Telegram:@Farah_VPN🟣-6"
     type: "vmess"
-    server: "mtckundigepwu3up.v.3dns.vip"
-    port: 443
-    uuid: "f23bb427c1f94373876c2f43e9f790f3"
+    server: "yh2.dtku41.xyz"
+    port: 8080
+    uuid: "9258153a-dc97-4e39-9037-009abfc4fed0"
     alterId: 0
     cipher: "auto"
     udp: true
   - name: "🔥Join+Telegram:@Farah_VPN🟣-7"
     type: "vmess"
-    server: "node.socks5.kdns.fr"
+    server: "8.218.184.4"
     port: 443
-    uuid: "118eba6a-21f3-45d4-af0b-2a9344f2487e"
+    uuid: "f23bb427c1f94373876c2f43e9f790f3"
     alterId: 0
     cipher: "auto"
     udp: true
   - name: "🔥Join+Telegram:@Farah_VPN🟣-8"
     type: "vmess"
-    server: "144.225.130.23"
-    port: 443
-    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
+    server: "3.162.103.19"
+    port: 80
+    uuid: "a150d554-e962-4632-829f-ee583ada3f95"
     alterId: 0
     cipher: "auto"
     udp: true
   - name: "🔥Join+Telegram:@Farah_VPN🟣-9"
     type: "vmess"
-    server: "zfd-hkv2.kunlun01dns.com"
-    port: 16115
-    uuid: "0802ac03-7973-39ef-a019-ba02de6c01e1"
+    server: "cfcdn2.sanfencdn9.com"
+    port: 2052
+    uuid: "ab1ee1ac-884c-44dc-ab65-d533d32e2b1a"
     alterId: 0
     cipher: "auto"
     udp: true
   - name: "🔥Join+Telegram:@Farah_VPN🟣-10"
     type: "vmess"
-    server: "23.162.200.198"
-    port: 18000
-    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
+    server: "pori.cjlife.ir"
+    port: 110
+    uuid: "0accd97e-a16c-4d4f-b19a-883f7ea0f484"
     alterId: 0
     cipher: "auto"
     udp: true
   - name: "🔥Join+Telegram:@Farah_VPN🟣-11"
     type: "vmess"
-    server: "206.245.166.132"
-    port: 34204
-    uuid: "beb22b15-2c6f-4bc4-b4ef-309b5a797a57"
+    server: "95.182.95.244"
+    port: 56268
+    uuid: "d7b9fe42-6116-466e-b0b5-bd83ff827a91"
     alterId: 0
     cipher: "auto"
     udp: true
   - name: "🔥Join+Telegram:@Farah_VPN🟣-12"
     type: "vmess"
-    server: "conjoro90.yellowsky.ir"
-    port: 1718
-    uuid: "b4c4beab-1972-4a93-bdd0-b050d74f49a0"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-13"
-    type: "vmess"
-    server: "www.speedtest.net"
-    port: 443
-    uuid: "c8b3fd38-cb60-434c-bd7e-63638226f4a8"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-14"
-    type: "vmess"
-    server: "188.114.97.3"
-    port: 80
-    uuid: "b79a6959-6feb-43ba-b3c7-f1afae9ea32c"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-15"
-    type: "vmess"
-    server: "212.87.220.98"
-    port: 443
-    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-16"
-    type: "vmess"
-    server: "142.202.48.108"
-    port: 22324
-    uuid: "04621bae-ab36-11ec-b909-0242ac120002"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-17"
-    type: "vmess"
-    server: "194.164.192.16"
-    port: 443
-    uuid: "5f72f180-b21b-4b7a-8484-240759012604"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-18"
-    type: "vmess"
-    server: "i2psm3knof5qjjix.v.3dns.vip"
-    port: 443
-    uuid: "f23bb427-c1f9-4373-876c-2f43e9f790f3"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-19"
-    type: "vmess"
-    server: "212.95.34.195"
-    port: 443
-    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-20"
-    type: "vmess"
-    server: "176.120.17.222"
-    port: 8080
-    uuid: "2afac806-6ce1-46a8-8458-95ce8ba8d1c8"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-21"
-    type: "vmess"
-    server: "213.210.39.216"
-    port: 28109
-    uuid: "d6b5e1f3-398f-403e-94b0-f04f5a78d448"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-22"
-    type: "vmess"
-    server: "67.220.95.3"
-    port: 18000
-    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
-    alterId: 0
-    cipher: "aes-128-gcm"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-23"
-    type: "vmess"
-    server: "nycqg19zkwacpm1b.v.3dns.vip"
-    port: 443
-    uuid: "f23bb427c1f94373876c2f43e9f790f3"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-24"
-    type: "vmess"
-    server: "38.110.1.246"
-    port: 18000
-    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-25"
-    type: "vmess"
-    server: "141.193.213.20"
-    port: 443
-    uuid: "4612618c-24cd-4379-9924-cfdf3d61fa5a"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-26"
-    type: "vmess"
-    server: "6jdvarazgu3qqr6q.v.3dns.vip"
-    port: 443
-    uuid: "f23bb427-c1f9-4373-876c-2f43e9f790f3"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-27"
-    type: "vmess"
-    server: "dashboard.afrasoft.top"
-    port: 5383
-    uuid: "b2bc2ff5-e36e-453b-84e9-d93a33203ac3"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-28"
-    type: "vmess"
-    server: "8095978a-4cf8-3668-bdf2-4bf7bd179086.oneplus.pub"
-    port: 80
-    uuid: "46cfcfe1-e450-459d-a3ab-9406011ab3eb"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-29"
-    type: "vmess"
-    server: "de.zhou-yufan.com"
-    port: 443
-    uuid: "f38e591d-d13a-4c30-9763-6be3ad65f3ec"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-30"
-    type: "vmess"
-    server: "mnl2.qjcm.ir"
-    port: 2086
-    uuid: "43c7c028-4309-41c8-99f2-0896766615f1"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-31"
-    type: "vmess"
-    server: "45.32.57.118"
-    port: 4433
-    uuid: "35b89832-0a7c-48dd-8d1c-a2891b522195"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-32"
-    type: "vmess"
-    server: "149.88.23.207"
-    port: 18000
-    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-33"
-    type: "vmess"
-    server: "57.131.168.202"
-    port: 53183
-    uuid: "a3f95685-6d84-4625-a0ea-8a10e7d26d89"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-34"
-    type: "vmess"
-    server: "47.242.79.198"
-    port: 443
-    uuid: "f23bb427c1f94373876c2f43e9f790f3"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-35"
-    type: "vmess"
-    server: "206.1.103.45"
-    port: 17784
-    uuid: "d5f0b42c-1b8b-407d-84e7-32cddf6ad192"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-36"
-    type: "vmess"
-    server: "pahobac.org"
-    port: 443
-    uuid: "03fcc618-b93d-6796-6aed-8a38c975d581"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-37"
-    type: "vmess"
-    server: "63.181.37.22"
-    port: 1003
-    uuid: "86ddeb8d-288e-4399-b496-3e8f2ca45247"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-38"
-    type: "vmess"
-    server: "104.18.114.129"
-    port: 2095
-    uuid: "18d96190-c10f-448f-a82a-2d36df5c3cde"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-39"
-    type: "vmess"
-    server: "connecto4.kolman.com.de"
-    port: 8080
-    uuid: "5190813e-35e1-45dc-b915-189ab4bf46bf"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-40"
-    type: "vmess"
-    server: "dog-tw.kunlun01dns.com"
-    port: 21036
-    uuid: "9464ca40-dd75-3742-a628-d931a9f413b2"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-41"
-    type: "vmess"
-    server: "[2a06:98c1:310f::d7a3:52e1]"
-    port: 443
-    uuid: "0cf6d970-3f1d-4aae-a989-92a8f76ae3db"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-42"
-    type: "vmess"
-    server: "172.64.198.229"
-    port: 2052
-    uuid: "d6b6d982-d52f-465a-b988-85670b23f64a"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-43"
-    type: "vmess"
-    server: "206.1.103.212"
-    port: 8080
-    uuid: "106760ec-33f3-47cc-8b50-0e6df48d6784"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-44"
-    type: "vmess"
-    server: "72.249.206.49"
-    port: 27074
-    uuid: "dd37aaee-98e9-4942-ec48-17180c881942"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-45"
-    type: "vmess"
-    server: "142.132.178.99"
-    port: 443
-    uuid: "5f72f180-b21b-4b7a-8484-240759012604"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-46"
-    type: "vmess"
-    server: "185.104.189.38"
-    port: 80
-    uuid: "43dcdce1-3cea-4193-bc8d-90b92071d779"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-47"
-    type: "vmess"
-    server: "www.velvetmountain.shop"
-    port: 8080
-    uuid: "22826b44-5c1a-4b4b-dbaa-83a2e8bd95f0"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-48"
-    type: "vmess"
-    server: "104.24.169.183"
-    port: 8080
-    uuid: "nasnet"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-49"
-    type: "vmess"
-    server: "node.socks5.kdns.fr"
-    port: 443
-    uuid: "f683235c-54b0-4442-bf0d-812d3804946e"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-50"
-    type: "vmess"
-    server: "us5-1.998998.best"
-    port: 443
-    uuid: "5504eaa8-1395-402f-8e0e-75ecd762e627"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-51"
-    type: "vmess"
-    server: "119.46.51.45"
-    port: 37515
-    uuid: "9b76bc31-17a5-4454-934a-8d5fb602cd70"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-52"
-    type: "vmess"
-    server: "v2ray1.dozapp.xyz"
-    port: 8443
-    uuid: "60441548-b68e-43b2-8191-e3b884be4b3c"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-53"
-    type: "vmess"
-    server: "hk2.lrzdx.uk"
-    port: 443
-    uuid: "db69d5bc-d36c-4903-f471-74b98c5cefe5"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-54"
-    type: "vmess"
-    server: "77.90.11.178"
-    port: 17662
-    uuid: "eafa523f-3472-4efc-f1c5-6ce25b3910a9"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-55"
-    type: "vmess"
-    server: "mute-math-d64e.0e503992ad7026.WOrKERs.deV"
-    port: 443
-    uuid: "03fcc618-b93d-6796-6aed-8a38c975d581"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-56"
-    type: "vmess"
-    server: "66.112.209.213"
-    port: 17045
-    uuid: "85171597-4bef-46a0-9bee-32e9c929f83f"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-57"
-    type: "vmess"
-    server: "fer-5.povrak.ir"
-    port: 47014
-    uuid: "d4aa69e8-2739-42b3-9cd4-af1e4fb04ad5"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-58"
-    type: "vmess"
-    server: "84.75.76.16"
-    port: 443
-    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-59"
-    type: "vmess"
-    server: "nl-2a972c8052.shamanapp.online"
-    port: 33736
-    uuid: "1281acca-f21d-475c-bf04-eccbee7f8df2"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-60"
-    type: "vmess"
-    server: "78.31.249.175"
-    port: 65531
-    uuid: "7aa3a024-e333-4b63-99a2-3db9d3b2054e"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-61"
-    type: "vmess"
-    server: "188.114.96.19"
-    port: 80
-    uuid: "af4be52a-aab3-4db1-a6bb-c23700dcb9c2"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-62"
-    type: "vmess"
-    server: "91.193.58.201"
-    port: 443
-    uuid: "bb46ca03-b177-432d-8900-4c173632b6d6"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-63"
-    type: "vmess"
-    server: "91.107.255.181"
-    port: 28110
-    uuid: "753fa7bf-b0be-4c2e-adbe-7e49977f1e3d"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-64"
-    type: "vmess"
-    server: "9641684.sdf65h4.top"
-    port: 443
-    uuid: "250c015d-bab0-4ed3-b638-b4eda48f5840"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-65"
-    type: "vmess"
-    server: "82.198.246.250"
-    port: 180
-    uuid: "d13fc2f5-3e05-4795-81eb-44143a09e552"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-66"
-    type: "vmess"
-    server: "157.245.4.170"
-    port: 8881
-    uuid: "db5afae4-ac23-41a6-8378-f307a9a47436"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-67"
-    type: "vmess"
-    server: "31.76.11.83"
-    port: 22266
-    uuid: "2d8f57bd-12b5-41ad-a806-6501753c264c"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-68"
-    type: "vmess"
-    server: "104.16.58.52"
-    port: 8080
-    uuid: "b551aa22-22af-11ee-b8d8-f23c932eb68d"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-69"
-    type: "vmess"
-    server: "176.65.140.210"
-    port: 23981
-    uuid: "f3c9c73e-4361-474d-8d4d-ed80decc63d5"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-70"
-    type: "vmess"
-    server: "129.150.61.136"
-    port: 53386
-    uuid: "32e75662-c1ed-4e8d-f78c-3dcc685cc795"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-71"
-    type: "vmess"
-    server: "212.135.211.242"
-    port: 443
-    uuid: "1c3fb1c0-1204-49db-b842-f72d50f014c1"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-72"
-    type: "vmess"
-    server: "vuk2.0bad.com"
-    port: 443
-    uuid: "927094d3-d678-4763-8591-e240d0bcae87"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-73"
-    type: "vmess"
-    server: "ushsfs1.povrak.ir"
-    port: 37387
-    uuid: "b85ba3bc-bac6-4cfc-b8be-fe16a7dac1b1"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-74"
-    type: "vmess"
-    server: "36.133.78.37"
-    port: 50015
-    uuid: "e1be6941-0667-469c-9224-6f34adb549ba"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-75"
-    type: "vmess"
-    server: "ushsfs1.povrak.ir"
-    port: 37387
-    uuid: "43fc0a68-f682-468b-baed-979026ad6199"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-76"
-    type: "vmess"
-    server: "185.19.33.99"
-    port: 16755
-    uuid: "b560ca16-d73b-47f4-a9c4-9dd5fe3a0069"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-77"
-    type: "vmess"
-    server: "fin-4.povrak.ir"
-    port: 51401
-    uuid: "6df4f26a-258a-4a58-bf45-cb6091277e36"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-78"
-    type: "vmess"
-    server: "tr4.cinemafa98.ir"
-    port: 55420
-    uuid: "59be635b-fdc5-4252-b1b0-af1bd2c1053a"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-79"
-    type: "vmess"
-    server: "V2r.seervexo.ir"
-    port: 1995
-    uuid: "4137aa32-d79c-41e7-80f5-3475df81c21b"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-80"
-    type: "vmess"
-    server: "irc.jahancloud.cfd"
-    port: 443
-    uuid: "24b73122-9c73-45ae-871d-1837e427a9bf"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-81"
-    type: "vmess"
-    server: "5.75.201.2"
-    port: 443
-    uuid: "c44c4ee0-6294-45b5-8a34-98e19f92e92a"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-82"
-    type: "vmess"
-    server: "94.159.110.41"
-    port: 443
-    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-83"
-    type: "vmess"
-    server: "6jdvarazgu3qqr6q.v.3dns.vip"
-    port: 443
-    uuid: "f23bb427c1f94373876c2f43e9f790f3"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-84"
-    type: "vmess"
-    server: "104.19.38.62"
-    port: 2086
-    uuid: "29eebb60-b27b-4a9d-bba5-947763d9205e"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-85"
-    type: "vmess"
-    server: "planb.mojcn.com.linuxlh.xin"
-    port: 16622
-    uuid: "0f2a8df7-6119-496d-aef8-45ff837cf9ec"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-86"
-    type: "vmess"
-    server: "tokyo02.zgjok.com"
-    port: 443
-    uuid: "3fe113f9-e564-4111-b8c7-11f597687689"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-87"
-    type: "vmess"
-    server: "160.115.193.99"
-    port: 60222
-    uuid: "84134d90-e4fe-4a86-c8d6-4d7bedb3c333"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-88"
-    type: "vmess"
-    server: "5.188.26.85"
-    port: 443
-    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-89"
-    type: "vmess"
-    server: "89.124.251.17"
-    port: 53402
-    uuid: "435ea3e6-ddc5-4d71-8f7a-78a0b328e015"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-90"
-    type: "vmess"
-    server: "172.64.149.182"
-    port: 8080
-    uuid: "nasnet"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-91"
-    type: "vmess"
-    server: "20.2.218.142"
-    port: 8443
-    uuid: "3960f128-1163-40a3-8dd7-7c91176e14a5"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-92"
-    type: "vmess"
-    server: "zula.ir"
-    port: 443
-    uuid: "950db6aa-4926-4616-816e-ec0312dcb87b"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-93"
-    type: "vmess"
-    server: "195.177.255.233"
-    port: 41343
-    uuid: "1714bc08-e888-4c47-9bcd-5fd750c6df0e"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-94"
-    type: "vmess"
-    server: "82.198.246.37"
-    port: 180
-    uuid: "d13fc2f5-3e05-4795-81eb-44143a09e552"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-95"
-    type: "vmess"
-    server: "nll2.qjcm.ir"
-    port: 2086
-    uuid: "43c7c028-4309-41c8-99f2-0896766615f1"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-96"
-    type: "vmess"
-    server: "193.180.208.234"
-    port: 443
-    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-97"
-    type: "vmess"
-    server: "dashboard.ojeshop.top"
-    port: 5380
-    uuid: "d751954b-1a9e-4d05-b4b8-d3d3c0a50a76"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-98"
-    type: "vmess"
-    server: "5.75.192.206"
-    port: 15307
-    uuid: "18c1c45d-95bf-435b-ae4c-7eb96f793af4"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-99"
-    type: "vmess"
-    server: "45.199.138.152"
-    port: 45886
-    uuid: "418048af-a293-4b99-9b0c-98ca4690dd24"
-    alterId: 64
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-100"
-    type: "vmess"
-    server: "tr1-smart.adelping.com"
-    port: 80
-    uuid: "68c8f462-8468-4931-90a8-680c3d6cb3c1"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-101"
-    type: "vmess"
-    server: "158.51.121.123"
-    port: 443
-    uuid: "03fcc618-b93d-6796-6aed-8a38c975d581"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-102"
-    type: "vmess"
-    server: "tilebani.com"
-    port: 443
-    uuid: "03fcc618-b93d-6796-6aed-8a38c975d581"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-103"
-    type: "vmess"
-    server: "jp5.998998.best"
-    port: 443
-    uuid: "5504eaa8-1395-402f-8e0e-75ecd762e627"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-104"
-    type: "vmess"
-    server: "94.184.33.86"
-    port: 2104
-    uuid: "f59b99d0-8367-4aac-b2c5-11a95db9c477"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-105"
-    type: "vmess"
-    server: "superjinx-production-d80d.up.railway.app"
-    port: 443
-    uuid: "7c1b29ba-6e83-45dc-bbb8-f8ad272c1e7a"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-106"
-    type: "vmess"
-    server: "104.19.45.80"
+    server: "104.19.45.34"
     port: 2095
     uuid: "7a737f41-b792-4260-94ff-3d864da67b80"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-107"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-13"
     type: "vmess"
-    server: "91.107.255.181"
-    port: 28110
-    uuid: "be711f12-6fb3-42d8-8025-18551677363f"
+    server: "172.66.44.97"
+    port: 8080
+    uuid: "96d88304-6bc1-4ef1-b26e-845e7c1cc38e"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-108"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-14"
     type: "vmess"
-    server: "95.81.126.119"
-    port: 443
-    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
+    server: "47.243.39.251"
+    port: 32913
+    uuid: "47506713-508e-441a-bb02-56eb679b4dc9"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-109"
-    type: "vmess"
-    server: "lL0GIaPVZ6Zxkd94.v.3dns.vip"
-    port: 443
-    uuid: "1abe49dedb6e4f65a0f0a5ea79ddefad"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-110"
-    type: "vmess"
-    server: "cindy50.ceoiii.com"
-    port: 36801
-    uuid: "a6ab6513-6ec3-327f-a068-b89fe72954b8"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-111"
-    type: "vmess"
-    server: "45.131.209.253"
-    port: 80
-    uuid: "9ac947aa-de86-41c3-9a60-4c061c7c95f0"
-    alterId: 0
-    cipher: "none"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-112"
-    type: "vmess"
-    server: "172.64.233.17"
-    port: 2086
-    uuid: "e9e3cc13-db48-4cc1-8c24-7626439a5339"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-113"
-    type: "vmess"
-    server: "WIDkzavxwwjiXsNk.v.3dns.vip"
-    port: 443
-    uuid: "efe82ebc-46b3-4242-b612-b652b8fbc870"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-114"
-    type: "vmess"
-    server: "fera4.povrak.ir"
-    port: 26988
-    uuid: "574df633-0bfb-4fda-88d9-437e6ad0594d"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-115"
-    type: "vmess"
-    server: "mmkio.tc6.ccwu.cc"
-    port: 443
-    uuid: "1798b14b-aee0-4008-ba9a-2e53877761b4"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-116"
-    type: "vmess"
-    server: "132.145.80.230"
-    port: 80
-    uuid: "5155860e-d07d-46c3-9128-3afbd84626c7"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-117"
-    type: "vmess"
-    server: "156.249.18.107"
-    port: 41000
-    uuid: "f9fa3a9c-f7d5-414f-88e6-6970585d9949"
-    alterId: 64
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-118"
-    type: "vmess"
-    server: "dashboard.afrapay.top"
-    port: 5385
-    uuid: "76cefcd7-6b53-4c65-ad29-1a92734fc968"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-119"
-    type: "vmess"
-    server: "31.57.62.68"
-    port: 8443
-    uuid: "3a57ed25-d489-4449-b2b7-d334a9547f9d"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-120"
-    type: "vmess"
-    server: "wo6ah0f-g06.jp06-jz-vm0.entry.fr0528.art"
-    port: 28788
-    uuid: "a3b5a6fc-0b92-3b66-beda-eb2a49361a21"
-    alterId: 1
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-121"
-    type: "vmess"
-    server: "89.41.172.106"
-    port: 22324
-    uuid: "04621bae-ab36-11ec-b909-0242ac120002"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-122"
-    type: "vmess"
-    server: "139.28.240.68"
-    port: 2086
-    uuid: "f6361af8-bb8f-4609-bf5d-3fc0f688f47b"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-123"
-    type: "vmess"
-    server: "ES.1.vpxpp.ir"
-    port: 8087
-    uuid: "d8778d3a-defa-4a50-a3e3-bd82fb3aaad8"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-124"
-    type: "vmess"
-    server: "185.19.33.15"
-    port: 58818
-    uuid: "edc6ec2a-8098-482b-b07c-05e0c8aad789"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-125"
-    type: "vmess"
-    server: "max.mankadmu.com"
-    port: 443
-    uuid: "03fcc618-b93d-6796-6aed-8a38c975d581"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-126"
-    type: "vmess"
-    server: "104.19.38.18"
-    port: 2052
-    uuid: "d6b6d982-d52f-465a-b988-85670b23f64a"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-127"
-    type: "vmess"
-    server: "46.8.237.242"
-    port: 80
-    uuid: "7d85828a-906b-43c4-8dc9-0785cd4801af"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-128"
-    type: "vmess"
-    server: "36.133.78.37"
-    port: 50014
-    uuid: "f114d414-1535-4321-856c-29979eeed799"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-129"
-    type: "vmess"
-    server: "EwKrslzTlAZVqwb1.v.3dns.vip"
-    port: 443
-    uuid: "545a503ba94849b38105e6a0fbc493e8"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-130"
-    type: "vmess"
-    server: "104.26.13.31"
-    port: 2086
-    uuid: "e9e3cc13-db48-4cc1-8c24-7626439a5339"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-131"
-    type: "vmess"
-    server: "8.219.97.17"
-    port: 443
-    uuid: "a9f4de8b-68f1-44b6-b6a2-1db60940503a"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-132"
-    type: "vmess"
-    server: "47.244.120.197"
-    port: 44867
-    uuid: "845e6b08-2919-4290-ade0-5dc7dcea59ca"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-133"
-    type: "vmess"
-    server: "104.105.18.214"
-    port: 2053
-    uuid: "9a1a05d9-69be-45d3-e326-c6621edf7b31"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-134"
-    type: "vmess"
-    server: "zfd-hkv1.kunlun01dns.com"
-    port: 16114
-    uuid: "0802ac03-7973-39ef-a019-ba02de6c01e1"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-135"
-    type: "vmess"
-    server: "654168416355441.oylfmxz.cn"
-    port: 443
-    uuid: "d90e4077-bc7e-414d-a650-70bf1baae4d6"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-136"
-    type: "vmess"
-    server: "skb"
-    port: 4439
-    uuid: "b"
-    alterId: 0
-    cipher: "chacha20-poly1305"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-137"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-15"
     type: "vmess"
     server: "46.8.102.58"
     port: 46994
@@ -1603,591 +621,111 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-138"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-16"
     type: "vmess"
-    server: "rush-t2tvv.ceeopp.site"
-    port: 443
-    uuid: "03fcc618-b93d-6796-6aed-8a38c975d581"
+    server: "www.zeneco.ir"
+    port: 2495
+    uuid: "bed17909-34c1-4e6c-b444-0f5db9cb5ce8"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-139"
-    type: "vmess"
-    server: "magicvip.iddns.ir"
-    port: 22324
-    uuid: "04621bae-ab36-11ec-b909-0242ac120002"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-140"
-    type: "vmess"
-    server: "fr3.musktrump.top"
-    port: 80
-    uuid: "77e34e38-0ec2-3865-ab0c-2651a83c3c82"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-141"
-    type: "vmess"
-    server: "seoul02.zgjok.com"
-    port: 443
-    uuid: "1a1e5196-eab4-4772-9012-65c27f19a524"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-142"
-    type: "vmess"
-    server: "138.2.49.230"
-    port: 10021
-    uuid: "a12e496e-f89a-434a-8011-108846f0e412"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-143"
-    type: "vmess"
-    server: "uk3-2.998998.best"
-    port: 443
-    uuid: "5504eaa8-1395-402f-8e0e-75ecd762e627"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-144"
-    type: "vmess"
-    server: "ar.paydar.site"
-    port: 9443
-    uuid: "a67c2a3a-4e31-4374-8658-8db0d514adc2"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-145"
-    type: "vmess"
-    server: "fisgww.povrak.ir"
-    port: 58179
-    uuid: "381e0782-92b0-40ef-806f-76ebbcde3a16"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-146"
-    type: "vmess"
-    server: "poeiLD4YbYshwTWI.v.3dns.vip"
-    port: 443
-    uuid: "cd91e99a99664510a83ac6e91834a800"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-147"
-    type: "vmess"
-    server: "127.0.0.53"
-    port: 85
-    uuid: "88888888-8888-8888-8888-888888888888"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-148"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-17"
     type: "vmess"
     server: "dashboard.ojeshop.top"
     port: 5380
-    uuid: "f4907423-e6a2-44f8-9831-ef3a8c9da32c"
+    uuid: "0a406682-8c49-4c4a-b332-ed76322c16e2"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-149"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-18"
     type: "vmess"
-    server: "57.129.132.223"
-    port: 80
-    uuid: "a25cbf11-2908-4a1b-a3a8-9a571777dca3"
+    server: "cn05.downloadmovie.cn"
+    port: 65026
+    uuid: "0253b574-8020-3186-a647-0267295ac9bb"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-150"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-19"
     type: "vmess"
-    server: "dashboard.nixcmarket.top"
-    port: 36822
-    uuid: "f739ccf8-7587-418d-9d1e-8b8d07dcfbe6"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-151"
-    type: "vmess"
-    server: "dashboard.afratr.top"
-    port: 5384
-    uuid: "b2bc2ff5-e36e-453b-84e9-d93a33203ac3"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-152"
-    type: "vmess"
-    server: "67.220.85.46"
-    port: 18000
-    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-153"
-    type: "vmess"
-    server: "104.17.136.198"
-    port: 443
-    uuid: "0cf6d970-3f1d-4aae-a989-92a8f76ae3db"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-154"
-    type: "vmess"
-    server: "216.106.187.60"
-    port: 443
-    uuid: "03fcc618-b93d-6796-6aed-8a38c975d581"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-155"
-    type: "vmess"
-    server: "141.101.115.19"
-    port: 80
-    uuid: "2ac4e269-1576-4f41-8c0d-6242e3c5fd8c"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-156"
-    type: "vmess"
-    server: "104.21.7.133"
-    port: 80
-    uuid: "0cf6d970-3f1d-4aae-a989-92a8f76ae3db"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-157"
-    type: "vmess"
-    server: "38.95.119.243"
-    port: 52008
-    uuid: "5d7acc8e-f539-44e0-d255-41fc14cfc877"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-158"
-    type: "vmess"
-    server: "defe.sync-bridge.ir"
-    port: 443
-    uuid: "386c5322-48aa-4fc1-814f-2ff6c34d77e0"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-159"
-    type: "vmess"
-    server: "185.99.2.175"
-    port: 443
-    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-160"
-    type: "vmess"
-    server: "167.172.232.63"
-    port: 8881
-    uuid: "db5afae4-ac23-41a6-8378-f307a9a47436"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-161"
-    type: "vmess"
-    server: "v29.hdacd.com"
-    port: 30829
-    uuid: "cbb3f877-d1fb-344c-87a9-d153bffd5484"
-    alterId: 2
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-162"
-    type: "vmess"
-    server: "planb.mojcn.com.linuxlh.xin"
-    port: 16626
-    uuid: "b21ccbf7-afe6-4c25-8cae-0a1d9d89b4a4"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-163"
-    type: "vmess"
-    server: "188.121.120.86"
-    port: 13830
-    uuid: "3691f80b-63d1-424f-ad2c-82548d77fb1d"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-164"
-    type: "vmess"
-    server: "188.253.25.172"
-    port: 443
-    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-165"
-    type: "vmess"
-    server: "m.cnmjin.net"
-    port: 16632
-    uuid: "d7e9f3c3-57c6-457e-b10f-df27907ef081"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-166"
-    type: "vmess"
-    server: "LV.1.vpxpp.ir"
-    port: 2022
-    uuid: "46b7aac1-2e6e-4d69-820e-7e94e070b4fc"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-167"
-    type: "vmess"
-    server: "syJ2gGUgMwBwQwQx.v.3dns.vip"
-    port: 443
-    uuid: "f0b7bbd66aad458aaec0e9acaab768b6"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-168"
-    type: "vmess"
-    server: "v36.hdacd.com"
-    port: 30836
-    uuid: "cbb3f877-d1fb-344c-87a9-d153bffd5484"
-    alterId: 2
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-169"
-    type: "vmess"
-    server: "fisgww.povrak.ir"
-    port: 58179
-    uuid: "e71635b8-53b8-45bc-871d-428efe6eaf7c"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-170"
-    type: "vmess"
-    server: "176.120.17.222"
-    port: 8080
-    uuid: "3f6cdf7d-e4f4-4c11-8474-63c50ccba633"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-171"
-    type: "vmess"
-    server: "star.starnick2030.ir"
-    port: 9022
-    uuid: "11c9da87-198b-40d5-a83e-546e8c73a50e"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-172"
-    type: "vmess"
-    server: "aZW0eunYVdvRe73k.v.3dns.vip"
-    port: 443
-    uuid: "f0b7bbd66aad458aaec0e9acaab768b6"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-173"
-    type: "vmess"
-    server: "85.215.41.19"
-    port: 443
-    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-174"
-    type: "vmess"
-    server: "104.19.47.158"
-    port: 8080
-    uuid: "b551aa22-22af-11ee-b8d8-f23c932eb68d"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-175"
-    type: "vmess"
-    server: "47.76.102.39"
-    port: 443
-    uuid: "f23bb427c1f94373876c2f43e9f790f3"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-176"
-    type: "vmess"
-    server: "time.is"
-    port: 443
-    uuid: "b526926d-1474-4f41-985e-8b877cb840cd"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-177"
-    type: "vmess"
-    server: "cf.090227.xyz"
-    port: 443
-    uuid: "0cf6d970-3f1d-4aae-a989-92a8f76ae3db"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-178"
-    type: "vmess"
-    server: "green.mobonline.info"
-    port: 2086
-    uuid: "99fd7527-2041-45a6-a625-f438efc8d2b9"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-179"
-    type: "vmess"
-    server: "106.52.57.86"
-    port: 10001
-    uuid: "f56b9a92-47d4-4d6e-b828-1aa3e96dae65"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-180"
-    type: "vmess"
-    server: "Forde.arosakforosh.ir"
-    port: 5941
-    uuid: "26f3dc79-c1a5-40aa-b9dd-6436b5e4188e"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-181"
-    type: "vmess"
-    server: "tr4.asasin5.ir"
-    port: 110
-    uuid: "40fe98aa-6402-4360-8536-2abff5dc2c23"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-182"
-    type: "vmess"
-    server: "n5.mobiza.ir"
+    server: "104.19.45.237"
     port: 2095
-    uuid: "26e1faba-1d7e-4777-a62d-7ad463f5abe8"
+    uuid: "7a737f41-b792-4260-94ff-3d864da67b80"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-183"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-20"
     type: "vmess"
-    server: "hi.northcluster.info"
-    port: 52300
-    uuid: "6e571484-4166-4699-8f58-b34a1823691f"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-184"
-    type: "vmess"
-    server: "51.83.52.172"
-    port: 2085
-    uuid: "2c72c667-093c-47a5-a108-493c93282b57"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-185"
-    type: "vmess"
-    server: "140.83.51.161"
-    port: 25686
-    uuid: "6733c357-ba11-4e9f-f00f-7d87f2776ff9"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-186"
-    type: "vmess"
-    server: "digitalocean.com"
-    port: 8080
-    uuid: "e8b1500b-e9e8-5492-8312-f4eadf7d0767"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-187"
-    type: "vmess"
-    server: "132.243.22.80"
-    port: 443
-    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-188"
-    type: "vmess"
-    server: "185.233.203.113"
-    port: 443
-    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-189"
-    type: "vmess"
-    server: "snnsjsowowiwueieyeye.sobu.ir"
+    server: "sbskwkekeoepeojskxoeoeooo.vahidzhv.ir"
     port: 40864
     uuid: "2ffe4ed0-b9d1-445b-80f2-3ed06a0b36d0"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-190"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-21"
     type: "vmess"
-    server: "172.233.14.17"
-    port: 22324
-    uuid: "04621bae-ab36-11ec-b909-0242ac120002"
+    server: "82.198.246.250"
+    port: 180
+    uuid: "d13fc2f5-3e05-4795-81eb-44143a09e552"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-191"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-22"
     type: "vmess"
-    server: "104.19.47.12"
-    port: 8080
-    uuid: "b551aa22-22af-11ee-b8d8-f23c932eb68d"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-192"
-    type: "vmess"
-    server: "aidrivercat.org"
+    server: "7dba81fc3a0b.oylfmxz.cn"
     port: 443
-    uuid: "03fcc618-b93d-6796-6aed-8a38c975d581"
+    uuid: "d90e4077-bc7e-414d-a650-70bf1baae4d6"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-193"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-23"
     type: "vmess"
-    server: "nomino.11hi8itbaf.workers.dev"
+    server: "8.217.230.196"
+    port: 9999
+    uuid: "02dc4f5b-b87d-410d-b9d5-0c6f921d92f8"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-24"
+    type: "vmess"
+    server: "jp.6807251.xyz"
+    port: 62283
+    uuid: "7aa3a024-e333-4b63-99a2-3db9d3b2054e"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-25"
+    type: "vmess"
+    server: "165.140.217.53"
     port: 443
-    uuid: "03fcc618-b93d-6796-6aed-8a38c975d581"
+    uuid: "b65a2d69-5634-42a2-e4be-54e8a6176900"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-194"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-26"
     type: "vmess"
-    server: "turkip.hartoshi77.xyz"
+    server: "vah4urdzl3jdx5r2.v.3dns.vip"
     port: 443
-    uuid: "49bc2c08-864e-4f10-9335-3ad02f823b15"
+    uuid: "f23bb427c1f94373876c2f43e9f790f3"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-195"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-27"
     type: "vmess"
-    server: "88.198.91.100"
-    port: 30561
-    uuid: "7e1eb307-c809-4e13-963e-d17b49806683"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-196"
-    type: "vmess"
-    server: "ddd47481-0d6f-08b9-7209-b0ddc0c5fa45.oneplus.pub"
-    port: 80
-    uuid: "46cfcfe1-e450-459d-a3ab-9406011ab3eb"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-197"
-    type: "vmess"
-    server: "2nj8qyoHuZwgCP8J.v.3dns.vip"
+    server: "ejomsxptp19apygl.v.3dns.vip"
     port: 443
-    uuid: "9b31490d-190e-4ef1-af0a-7ccab3e7c3b5"
+    uuid: "f23bb427c1f94373876c2f43e9f790f3"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-198"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-28"
     type: "vmess"
-    server: "fisgww.povrak.ir"
-    port: 58179
-    uuid: "af5e3422-337e-43e3-88ca-2687eb379866"
+    server: "fin-4.povrak.ir"
+    port: 56268
+    uuid: "e98033da-3f98-47ae-9922-e82814b8e3cc"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-199"
-    type: "vmess"
-    server: "xc011-2.meiziba5566.com"
-    port: 443
-    uuid: "42576a04-5a4d-4c7e-fcb4-a8582ab46031"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-200"
-    type: "vmess"
-    server: "172.67.195.146"
-    port: 443
-    uuid: "f5f0babe-aea2-4f07-a1fc-3c9820253f49"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-201"
-    type: "vmess"
-    server: "163.245.196.106"
-    port: 40443
-    uuid: "XEXEVIL"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-202"
-    type: "vmess"
-    server: "104.19.47.226"
-    port: 8080
-    uuid: "b551aa22-22af-11ee-b8d8-f23c932eb68d"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-203"
-    type: "vmess"
-    server: "dashboard.afragame.top"
-    port: 5387
-    uuid: "cfd42ad2-6fc7-443f-994e-10e3d7df24d1"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-204"
-    type: "vmess"
-    server: "104.19.45.13"
-    port: 2086
-    uuid: "e9e3cc13-db48-4cc1-8c24-7626439a5339"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-205"
-    type: "vmess"
-    server: "31.76.11.83"
-    port: 26662
-    uuid: "57160c16-b7db-40d8-bd06-ced30edd4df6"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-206"
-    type: "vmess"
-    server: "s10.tiiizshop.com"
-    port: 2082
-    uuid: "5aa3424e-b5c5-460c-bbf1-d6f6169d30f5"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-207"
-    type: "vmess"
-    server: "65.109.208.97"
-    port: 54225
-    uuid: "d6b5858a-5f3f-45e9-a98c-d1c05f171652"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-208"
-    type: "vmess"
-    server: "91.107.146.97"
-    port: 2086
-    uuid: "f6361af8-bb8f-4609-bf5d-3fc0f688f47b"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-209"
-    type: "vmess"
-    server: "37.143.131.229"
-    port: 8080
-    uuid: "f8aac2be-4d3c-4fa3-9afb-89b6c7e14596"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-210"
-    type: "vmess"
-    server: "172.66.44.97"
-    port: 8080
-    uuid: "be6134da-f1c7-4a0a-90cc-de639082f64b"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-211"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-29"
     type: "vmess"
     server: "127.0.0.53"
     port: 86
@@ -2195,143 +733,391 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-212"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-30"
     type: "vmess"
-    server: "hms082.gwdef.sbs"
-    port: 443
-    uuid: "bc864078-dcf3-4bf4-8dbf-ca9f200b56be"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-213"
-    type: "vmess"
-    server: "5.45.97.147"
-    port: 10803
-    uuid: "018fbfb7-721a-49a9-b9f5-fb55d92592b6"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-214"
-    type: "vmess"
-    server: "newrelax.relaxedboy.online"
-    port: 110
-    uuid: "8e9687fc-a3a7-414a-8676-8e2136797cfe"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-215"
-    type: "vmess"
-    server: "mtn-maznet.ddns.net"
-    port: 2083
-    uuid: "fdfe76d8-7971-4720-a76f-4b7ba23cc707"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-216"
-    type: "vmess"
-    server: "3j41E63Msh9TgXvR.v.3dns.vip"
-    port: 443
-    uuid: "1abe49dedb6e4f65a0f0a5ea79ddefad"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-217"
-    type: "vmess"
-    server: "FiNl1-ReAlIy.12l.iR"
-    port: 56755
-    uuid: "199951ee-5936-43f7-b183-273295263314"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-218"
-    type: "vmess"
-    server: "172.67.185.62"
+    server: "104.19.47.199"
     port: 8080
     uuid: "b551aa22-22af-11ee-b8d8-f23c932eb68d"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-219"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-31"
     type: "vmess"
-    server: "dog-hk.kunlun01dns.com"
-    port: 21022
-    uuid: "9464ca40-dd75-3742-a628-d931a9f413b2"
+    server: "cf.0sm.com"
+    port: 443
+    uuid: "0cf6d970-3f1d-4aae-a989-92a8f76ae3db"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-220"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-32"
     type: "vmess"
-    server: "google.whatsapp.snapp.torob.basalam.fortresshost.ir."
+    server: "node.socks5.kdns.fr"
+    port: 443
+    uuid: "67d5bb32-1b51-4dad-97fb-c27ffbc3e58f"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-33"
+    type: "vmess"
+    server: "195.85.23.225"
+    port: 443
+    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-34"
+    type: "vmess"
+    server: "ir2.fastraytel9880.ir"
+    port: 26557
+    uuid: "a3eccc08-c420-49d3-a825-f9b2fe75f7f5"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-35"
+    type: "vmess"
+    server: "47.243.194.125"
+    port: 443
+    uuid: "f23bb427-c1f9-4373-876c-2f43e9f790f3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-36"
+    type: "vmess"
+    server: "gerdi-1.povrak.ir"
+    port: 50407
+    uuid: "28cb6438-bd95-47d8-858e-8af01d1910de"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-37"
+    type: "vmess"
+    server: "irc.jahannetwork.sbs"
+    port: 443
+    uuid: "d139a951-9769-493e-a73f-158e82c05970"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-38"
+    type: "vmess"
+    server: "153.52.92.112"
+    port: 20505
+    uuid: "dec4f1c6-64a7-43b2-8b2b-3071a7798db1"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-39"
+    type: "vmess"
+    server: "142.171.48.179"
+    port: 28167
+    uuid: "2abe0fba-ecd7-483a-83a2-33600b6a4df7"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-40"
+    type: "vmess"
+    server: "104.21.235.57"
     port: 80
-    uuid: "479526cd-5011-43cf-a788-504da95e07c2"
+    uuid: "7022982f-da4c-48c9-c660-b2315abdcf7e"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-221"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-41"
     type: "vmess"
-    server: "zudssgtmrqg9lpvi.v.3dns.vip"
+    server: "38.107.226.227"
+    port: 22324
+    uuid: "04621bae-ab36-11ec-b909-0242ac120002"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-42"
+    type: "vmess"
+    server: "185.19.33.99"
+    port: 58741
+    uuid: "b560ca16-d73b-47f4-a9c4-9dd5fe3a0069"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-43"
+    type: "vmess"
+    server: "36.133.78.37"
+    port: 50013
+    uuid: "abcb006d-739f-4cec-b13f-12c10d334d92"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-44"
+    type: "vmess"
+    server: "176.65.151.175"
+    port: 26047
+    uuid: "1b5dd3f4-34b6-4e43-8265-c64d7858ac79"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-45"
+    type: "vmess"
+    server: "irc.jahanrocket.sbs"
+    port: 443
+    uuid: "8566c1c5-dd01-461f-b337-7e1e0de5f12f"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-46"
+    type: "vmess"
+    server: "CZE2OsD7QJH7t7ez.v.3dns.vip"
+    port: 443
+    uuid: "545a503ba94849b38105e6a0fbc493e8"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-47"
+    type: "vmess"
+    server: "Ftst.goalir.co.uk"
+    port: 443
+    uuid: "ce63f3dd-4c12-41f9-bbed-f1b948501692"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-48"
+    type: "vmess"
+    server: "qtkdr8jxe3wefxjm.v.3dns.vip"
     port: 443
     uuid: "f23bb427c1f94373876c2f43e9f790f3"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-222"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-49"
     type: "vmess"
-    server: "gerall-1.povrak.ir"
-    port: 50407
-    uuid: "09c63b2a-3e33-4410-ac2a-f4ef6d8a9254"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-223"
-    type: "vmess"
-    server: "dashboard.ojestore.top"
-    port: 5381
-    uuid: "4161dbb9-09b6-4d0a-9361-2b52049ffb97"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-224"
-    type: "vmess"
-    server: "web-pmapdcb-mabtu.up.railway.app"
+    server: "15.235.83.228"
     port: 443
-    uuid: "e5cc130a-c773-4c3c-beea-b55fee28ed72"
+    uuid: "03fcc618-b93d-6796-6aed-8a38c975d581"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-225"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-50"
     type: "vmess"
-    server: "forde.arosakforosh.ir"
-    port: 5941
-    uuid: "26f3dc79-c1a5-40aa-b9dd-6436b5e4188e"
+    server: "143.14.59.99"
+    port: 8080
+    uuid: "8035e2a4-34d4-4521-9c12-3a8474355735"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-226"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-51"
     type: "vmess"
-    server: "95.182.95.244"
-    port: 47014
-    uuid: "d7b9fe42-6116-466e-b0b5-bd83ff827a91"
+    server: "8.210.140.23"
+    port: 54809
+    uuid: "fde73daf-cc67-42f3-9935-35b132b01abd"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-227"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-52"
     type: "vmess"
-    server: "hk2.998998.best"
+    server: "176.120.17.21"
+    port: 1015
+    uuid: "7c1e62c4-b423-4d1e-a618-304e21a568fe"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-53"
+    type: "vmess"
+    server: "jp5.998998.best"
     port: 443
     uuid: "5504eaa8-1395-402f-8e0e-75ecd762e627"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-228"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-54"
     type: "vmess"
-    server: "jp4.998998.best"
+    server: "yg1.ygkkk.dpdns.org"
     port: 443
-    uuid: "5504eaa8-1395-402f-8e0e-75ecd762e627"
+    uuid: "b2ba4a73-3123-479e-aa96-5973a9ecd0c0"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-229"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-55"
+    type: "vmess"
+    server: "51.159.155.52"
+    port: 3389
+    uuid: "9c050a86-d612-48f1-ec32-e573df08a1b7"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-56"
+    type: "vmess"
+    server: "31.77.8.97"
+    port: 110
+    uuid: "d2d8601b-c14b-42c6-b8ea-33889bce152a"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-57"
+    type: "vmess"
+    server: "2001:bc8:32d7:1a9::2"
+    port: 23388
+    uuid: "3a966d20-7b9d-48cc-ba2c-8d38161b6d3a"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-58"
+    type: "vmess"
+    server: "198.41.208.172"
+    port: 443
+    uuid: "20e92881-5fb4-4b05-bc77-57929476dc69"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-59"
+    type: "vmess"
+    server: "6c00bf1f-a569-4d54-9f71-a13611801867.661.qzz.io"
+    port: 443
+    uuid: "0c6b96bc-5e3a-4500-8497-6dead1965609"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-60"
+    type: "vmess"
+    server: "cn03.downloadmovie.cn"
+    port: 65027
+    uuid: "0253b574-8020-3186-a647-0267295ac9bb"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-61"
+    type: "vmess"
+    server: "108.162.192.63"
+    port: 80
+    uuid: "2ac4e269-1576-4f41-8c0d-6242e3c5fd8c"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-62"
+    type: "vmess"
+    server: "216.106.183.35"
+    port: 443
+    uuid: "03fcc618-b93d-6796-6aed-8a38c975d581"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-63"
+    type: "vmess"
+    server: "tlash.jahannetface.sbs"
+    port: 443
+    uuid: "7c12b328-75d8-4dd8-9670-21122f24f0c5"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-64"
+    type: "vmess"
+    server: "104.105.18.214"
+    port: 2053
+    uuid: "9a1a05d9-69be-45d3-e326-c6621edf7b31"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-65"
+    type: "vmess"
+    server: "167.17.68.89"
+    port: 22324
+    uuid: "04621bae-ab36-11ec-b909-0242ac120002"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-66"
+    type: "vmess"
+    server: "134.195.196.211"
+    port: 18000
+    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-67"
+    type: "vmess"
+    server: "45.131.208.228"
+    port: 80
+    uuid: "f491cbe4-7548-446c-8d3e-64008e3b1325"
+    alterId: 0
+    cipher: "none"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-68"
+    type: "vmess"
+    server: "www.speedtest.net"
+    port: 2053
+    uuid: "00fb7867-95ad-4eaf-99f1-22255beb6251"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-69"
+    type: "vmess"
+    server: "usjshp.povrak.ir"
+    port: 37387
+    uuid: "2840d623-4c46-4d47-812d-d0fcd418b2ac"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-70"
+    type: "vmess"
+    server: "185.19.33.99"
+    port: 16755
+    uuid: "eef192eb-c257-4828-b5a4-0509bad66743"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-71"
+    type: "vmess"
+    server: "node.socks5.kdns.fr"
+    port: 443
+    uuid: "3d69d9bc-eaae-42bd-828f-6894c7d7edbf"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-72"
+    type: "vmess"
+    server: "www.speedtest.net"
+    port: 80
+    uuid: "0242912c-8a27-4029-b647-5da93857e697"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-73"
+    type: "vmess"
+    server: "planb.mojcn.com.linuxlh.xin"
+    port: 16632
+    uuid: "8ed52c4d-1fe1-4c08-b46f-ca8eb2729cb9"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-74"
+    type: "vmess"
+    server: "176.65.140.210"
+    port: 23981
+    uuid: "3a98c196-7408-4c49-bbbf-da50188b14e0"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-75"
+    type: "vmess"
+    server: "5.160.131.227"
+    port: 9022
+    uuid: "11c9da87-198b-40d5-a83e-546e8c73a50e"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-76"
+    type: "vmess"
+    server: "node-us-2.a2a3a4.top"
+    port: 8443
+    uuid: "c539face-28f9-4cdb-aa6d-78f61038942b"
+    alterId: 16
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-77"
+    type: "vmess"
+    server: "cfcdn3.sanfencdn9.com"
+    port: 2052
+    uuid: "afa7ee50-d214-4a54-a558-e5c96480916d"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-78"
     type: "vmess"
     server: "gov.uk"
     port: 443
@@ -2339,159 +1125,191 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-230"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-79"
     type: "vmess"
-    server: "gm.sportone.cyou"
-    port: 5011
-    uuid: "9f1a6999-4407-425c-aec1-7a4cd3d06923"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-231"
-    type: "vmess"
-    server: "editmamad.ddns.ge"
-    port: 443
-    uuid: "6a014334-f9bc-4e5b-a246-269924c75ce3"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-232"
-    type: "vmess"
-    server: "195.133.192.232"
-    port: 1233
-    uuid: "9b6419f8-8120-442e-a48c-6bf52aef0abf"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-233"
-    type: "vmess"
-    server: "mci-maznet.ddns.net"
-    port: 443
-    uuid: "73fa018c-4a55-408d-b7c4-7811490b3731"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-234"
-    type: "vmess"
-    server: "Nl.lion-lion.ir"
-    port: 8243
-    uuid: "9f0d2eb1-1b97-4b6a-8f49-a52186508171"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-235"
-    type: "vmess"
-    server: "tun-1.veraspeed.ir"
-    port: 1001
-    uuid: "8605b8dd-5b4c-4f2f-96c1-a01495cbc37e"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-236"
-    type: "vmess"
-    server: "216.152.152.187"
-    port: 22324
-    uuid: "04621bae-ab36-11ec-b909-0242ac120002"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-237"
-    type: "vmess"
-    server: "dee2309db4944c248b6d4672c6641e25.oylfmxz.cn"
-    port: 443
-    uuid: "d90e4077-bc7e-414d-a650-70bf1baae4d6"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-238"
-    type: "vmess"
-    server: "zfd-boardv2.kunlun01dns.com"
-    port: 16314
-    uuid: "0802ac03-7973-39ef-a019-ba02de6c01e1"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-239"
-    type: "vmess"
-    server: "120.48.133.162"
-    port: 10086
-    uuid: "fde10e39-48bb-4dcf-b3ba-71d711323a54"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-240"
-    type: "vmess"
-    server: "157.148.7.55"
-    port: 50011
-    uuid: "1b30f413-2865-4d40-9146-4207778718cd"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-241"
-    type: "vmess"
-    server: "143.14.59.99"
-    port: 8080
-    uuid: "dd7b5e83-19d3-4e1c-a957-6d3d4f30cd63"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-242"
-    type: "vmess"
-    server: "156.245.232.239"
-    port: 35043
-    uuid: "b15e481d-17e4-41a8-84c2-23d4f0514d9a"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-243"
-    type: "vmess"
-    server: "Sada.seervexo.ir"
-    port: 1995
-    uuid: "8896c158-a596-4b0a-a32e-9491e1e62339"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-244"
-    type: "vmess"
-    server: "vpnhub.armanspeed.ir"
-    port: 64628
-    uuid: "6e301754-60a9-4386-969f-5f4d7bb857a3"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-245"
-    type: "vmess"
-    server: "104.21.221.95"
+    server: "132.145.80.230"
     port: 80
-    uuid: "7022982f-da4c-48c9-c660-b2315abdcf7e"
+    uuid: "5155860e-d07d-46c3-9128-3afbd84626c7"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-246"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-80"
     type: "vmess"
-    server: "www.speedtest.net"
+    server: "36.133.78.37"
+    port: 50012
+    uuid: "148e82ae-5014-4a1a-a783-dd63fa9cdc9d"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-81"
+    type: "vmess"
+    server: "104.19.46.27"
+    port: 2086
+    uuid: "e9e3cc13-db48-4cc1-8c24-7626439a5339"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-82"
+    type: "vmess"
+    server: "165.140.217.2"
     port: 443
-    uuid: "bb46ca03-b177-432d-8900-4c173632b6d6"
+    uuid: "b65a2d69-5634-42a2-e4be-54e8a6176900"
+    alterId: 0
+    cipher: "chacha20-poly1305"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-83"
+    type: "vmess"
+    server: "planb.mojcn.com.linuxlh.xin"
+    port: 16644
+    uuid: "94f95569-8fde-4e51-abb4-d472cf811c9c"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-247"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-84"
     type: "vmess"
-    server: "199.232.78.160"
+    server: "cd2.videobazi.com"
+    port: 2052
+    uuid: "60b88bcf-4c90-4c41-9bd7-9f8fd5795848"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-85"
+    type: "vmess"
+    server: "185.230.190.29"
     port: 443
-    uuid: "6ba68c69-e108-502d-7b1c-e806fbc3cccd"
+    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-248"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-86"
     type: "vmess"
-    server: "[2606:4700:91b3::bfbb:dce3]"
-    port: 80
+    server: "rush-w1niu.teeopp.online"
+    port: 443
+    uuid: "03fcc618-b93d-6796-6aed-8a38c975d581"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-87"
+    type: "vmess"
+    server: "[2803:f800:50::4746:5fa6]"
+    port: 443
     uuid: "0cf6d970-3f1d-4aae-a989-92a8f76ae3db"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-249"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-88"
+    type: "vmess"
+    server: "m01c7b2z26dtqgee.v.3dns.vip"
+    port: 443
+    uuid: "f23bb427c1f94373876c2f43e9f790f3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-89"
+    type: "vmess"
+    server: "aZW0eunYVdvRe73k.v.3dns.vip"
+    port: 443
+    uuid: "f0b7bbd66aad458aaec0e9acaab768b6"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-90"
+    type: "vmess"
+    server: "cc28.goingside.site"
+    port: 8998
+    uuid: "4b019faa-38b0-473d-bc49-60bb68151c34"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-91"
+    type: "vmess"
+    server: "dashboard.afrawebsite.top"
+    port: 3071
+    uuid: "bbefddcb-9484-46cd-8664-3be3dde98bc7"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-92"
+    type: "vmess"
+    server: "104.19.46.123"
+    port: 2052
+    uuid: "d6b6d982-d52f-465a-b988-85670b23f64a"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-93"
+    type: "vmess"
+    server: "188.114.96.2"
+    port: 443
+    uuid: "05641cf5-58d2-4ba4-a9f1-b3cda0b1fb1d"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-94"
+    type: "vmess"
+    server: "jp121.vatilon.cc"
+    port: 10001
+    uuid: "aec8e5e3-bb81-4b22-8802-0b88c54997b3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-95"
+    type: "vmess"
+    server: "212.43.156.143"
+    port: 443
+    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-96"
+    type: "vmess"
+    server: "91.228.186.109"
+    port: 40910
+    uuid: "e3a5832e-a126-4961-b7d2-1cad6773af00"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-97"
+    type: "vmess"
+    server: "104.19.32.46"
+    port: 2086
+    uuid: "29eebb60-b27b-4a9d-bba5-947763d9205e"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-98"
+    type: "vmess"
+    server: "188.114.96.19"
+    port: 80
+    uuid: "479526cd-5011-43cf-a788-504da95e07c2"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-99"
+    type: "vmess"
+    server: "188.253.25.172"
+    port: 443
+    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-100"
+    type: "vmess"
+    server: "23.227.38.6"
+    port: 2086
+    uuid: "29eebb60-b27b-4a9d-bba5-947763d9205e"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-101"
+    type: "vmess"
+    server: "us-23.hihu.net"
+    port: 443
+    uuid: "e9674560-9d1a-11f1-b333-205c6d5f5d78"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-102"
     type: "vmess"
     server: "109.172.93.20"
     port: 443
@@ -2499,287 +1317,167 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-250"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-103"
     type: "vmess"
-    server: "hhhnmjki.932.pp.ua"
-    port: 443
-    uuid: "2bfe58f7-da1d-45df-ab43-7c665b20ee29"
+    server: "newrelax.relaxedboy.online"
+    port: 110
+    uuid: "8e9687fc-a3a7-414a-8676-8e2136797cfe"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-251"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-104"
     type: "vmess"
-    server: "sy.australiacaregroup.site"
-    port: 10001
-    uuid: "aec8e5e3-bb81-4b22-8802-0b88c54997b3"
+    server: "193.168.200.207"
+    port: 55136
+    uuid: "fe0f6ae2-85e4-4815-9206-4209bc118e94"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-252"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-105"
     type: "vmess"
-    server: "jpaws.ccwink.photos"
-    port: 53225
-    uuid: "a157bb84-dd84-4ad8-86b0-0656bc76e4d1"
+    server: "aws.appleid.bf"
+    port: 2086
+    uuid: "3960f128-1163-40a3-8dd7-7c91176e14a5"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-253"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-106"
     type: "vmess"
-    server: "web-production-0392e.up.railway.app"
-    port: 443
-    uuid: "e4ea74dd-2663-43a1-b843-14443cf70ddb"
+    server: "36.133.78.37"
+    port: 50012
+    uuid: "e37149b8-63df-4b4e-bd17-d7fc0b3009db"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-254"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-107"
     type: "vmess"
-    server: "143.14.59.109"
-    port: 2100
-    uuid: "6b306661-93c7-4653-94d6-a8adb742b82f"
+    server: "193.24.120.6"
+    port: 1070
+    uuid: "098f7482-7e4d-4395-92a9-c57584af9154"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-255"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-108"
     type: "vmess"
-    server: "172.66.203.67"
-    port: 443
+    server: "31.15.17.68"
+    port: 38036
+    uuid: "030bc293-1c0e-483c-a65f-0f73c0672bcd"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-109"
+    type: "vmess"
+    server: "cf.0sm.com"
+    port: 80
     uuid: "0cf6d970-3f1d-4aae-a989-92a8f76ae3db"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-256"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-110"
     type: "vmess"
-    server: "uk2-2.998998.best"
+    server: "guanwang.awsno.com"
+    port: 443
+    uuid: "6a89a215-22bf-4bd7-9642-b95b2e09583a"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-111"
+    type: "vmess"
+    server: "206.1.103.155"
+    port: 13621
+    uuid: "6cecaaad-fadc-4f1c-9a79-b5f7fa995076"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-112"
+    type: "vmess"
+    server: "104.19.47.20"
+    port: 8443
+    uuid: "39135a39-e6ca-43df-a360-d859eea58d86"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-113"
+    type: "vmess"
+    server: "195.26.26.148"
+    port: 54588
+    uuid: "5fa81b59-214d-4d6e-9397-e3914926ed21"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-114"
+    type: "vmess"
+    server: "jp4.998998.best"
     port: 443
     uuid: "5504eaa8-1395-402f-8e0e-75ecd762e627"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-257"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-115"
     type: "vmess"
-    server: "vah4urdzl3jdx5r2.v.3dns.vip"
+    server: "data-jp-v1.usabooks.com.cn"
+    port: 20301
+    uuid: "b1478e24-4916-3abe-8f17-15931012ecbe"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-116"
+    type: "vmess"
+    server: "eeetst.aparatratinfo.ir"
+    port: 8443
+    uuid: "4b89551a-7b7c-442b-b790-207e48229045"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-117"
+    type: "vmess"
+    server: "ger1.ez0535.ir"
+    port: 443
+    uuid: "6218633e-7f0f-42ba-bbce-0b641b8f796f"
+    alterId: 0
+    cipher: "chacha20-poly1305"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-118"
+    type: "vmess"
+    server: "zfd-boardv2.kunlun01dns.com"
+    port: 16317
+    uuid: "0802ac03-7973-39ef-a019-ba02de6c01e1"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-119"
+    type: "vmess"
+    server: "v36.hdacd.com"
+    port: 30836
+    uuid: "cbb3f877-d1fb-344c-87a9-d153bffd5484"
+    alterId: 2
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-120"
+    type: "vmess"
+    server: "fast.jahancloud.space"
+    port: 443
+    uuid: "f68e0023-143d-4b44-b603-300df0baf052"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-121"
+    type: "vmess"
+    server: "93ucrn4i0pffuabk.v.3dns.vip"
     port: 443
     uuid: "f23bb427-c1f9-4373-876c-2f43e9f790f3"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-258"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-122"
     type: "vmess"
-    server: "89.41.172.85"
-    port: 22324
-    uuid: "04621bae-ab36-11ec-b909-0242ac120002"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-259"
-    type: "vmess"
-    server: "36.134.35.36"
-    port: 50011
-    uuid: "1b30f413-2865-4d40-9146-4207778718cd"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-260"
-    type: "vmess"
-    server: "104.19.47.113"
-    port: 8080
-    uuid: "b551aa22-22af-11ee-b8d8-f23c932eb68d"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-261"
-    type: "vmess"
-    server: "185.19.33.15"
-    port: 51300
-    uuid: "2cbe7580-105b-4e63-8569-52b62a7f0948"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-262"
-    type: "vmess"
-    server: "mygptagent.org"
-    port: 443
-    uuid: "03fcc618-b93d-6796-6aed-8a38c975d581"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-263"
-    type: "vmess"
-    server: "193.24.120.32"
-    port: 1070
-    uuid: "dac2a3bd-0519-4641-9f16-5de37434b124"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-264"
-    type: "vmess"
-    server: "139.59.24.215"
-    port: 3389
-    uuid: "9c050a86-d612-48f1-ec32-e573df08a1b7"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-265"
-    type: "vmess"
-    server: "104.17.77.77"
-    port: 8443
-    uuid: "60441548-b68e-43b2-8191-e3b884be4b3c"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-266"
-    type: "vmess"
-    server: "USA.SixMax.ir"
-    port: 110
-    uuid: "cabf1c07-21c2-4fc7-865c-7c9ee5e36bc8"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-267"
-    type: "vmess"
-    server: "irc.jahanstar.sbs"
-    port: 443
-    uuid: "d6a00e97-f284-458f-b064-f49a26134e6b"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-268"
-    type: "vmess"
-    server: "152.67.8.205"
+    server: "3h-kazakhstan1.09vpn.com"
     port: 80
-    uuid: "9db4c708-aef8-4359-821b-38e47990be0d"
+    uuid: "567f4be5-12ab-42e1-b8d9-db6fd1fdd31c"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-269"
-    type: "vmess"
-    server: "dashboard.afracafe.top"
-    port: 5388
-    uuid: "130b0fbf-4f19-44d0-911f-95355e9632e4"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-270"
-    type: "vmess"
-    server: "47.242.81.94"
-    port: 52080
-    uuid: "e47b9f77-60e4-4738-8d53-772b6002e146"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-271"
-    type: "vmess"
-    server: "s1.connect.bloroxy.net"
-    port: 1027
-    uuid: "a8db1a30-f66a-428e-ad1d-4f17c76b57e3"
-    alterId: 0
-    cipher: "aes-128-gcm"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-272"
-    type: "vmess"
-    server: "206.1.103.45"
-    port: 10120
-    uuid: "40efac41-6ecd-4941-901c-1231ac46b4b4"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-273"
-    type: "vmess"
-    server: "165.140.216.141"
-    port: 443
-    uuid: "e7d72a8d-26f2-4b54-b366-0c43e0bcba7d"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-274"
-    type: "vmess"
-    server: "65.109.208.97"
-    port: 38318
-    uuid: "1240607b-86ed-4ef1-9123-8061144cbdbf"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-275"
-    type: "vmess"
-    server: "chatgpt.com"
-    port: 443
-    uuid: "bb46ca03-b177-432d-8900-4c173632b6d6"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-276"
-    type: "vmess"
-    server: "select-us.ddnskunlun.com"
-    port: 9027
-    uuid: "a8bcce43-abda-315b-8e81-e3e65bcb3d07"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-277"
-    type: "vmess"
-    server: "20.193.153.19"
-    port: 15834
-    uuid: "39a8c374-76b1-4e90-ab85-85cd9a42ded2"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-278"
-    type: "vmess"
-    server: "104.21.234.52"
-    port: 80
-    uuid: "7022982f-da4c-48c9-c660-b2315abdcf7e"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-279"
-    type: "vmess"
-    server: "104.21.232.63"
-    port: 80
-    uuid: "7022982f-da4c-48c9-c660-b2315abdcf7e"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-280"
-    type: "vmess"
-    server: "ray.skymirror.cc"
-    port: 443
-    uuid: "c99929e1-9c82-4a33-d11e-f177247b8f63"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-281"
-    type: "vmess"
-    server: "212.74.39.64"
-    port: 8080
-    uuid: "446e349f-9007-4d3a-9e0d-2456e128cfab"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-282"
-    type: "vmess"
-    server: "8103.shomaparvazroyadetonnist-bypassishere.lat"
-    port: 8103
-    uuid: "8f74ec8a-971c-11ed-a8fc-0242ac120002"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-283"
-    type: "vmess"
-    server: "za-a-zzy.glnyhlgc.com"
-    port: 443
-    uuid: "5583af50-f464-4df6-e2ef-34592311e5c6"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-284"
-    type: "vmess"
-    server: "superjinx-production-3aac.up.railway.app"
-    port: 443
-    uuid: "d0b644a4-df8f-4195-8cc5-d9915e368ca2"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-285"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-123"
     type: "vmess"
     server: "91.216.217.181"
     port: 443
@@ -2787,131 +1485,1427 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-286"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-124"
     type: "vmess"
-    server: "57.129.64.238"
+    server: "168.222.49.188"
+    port: 80
+    uuid: "055de40d-c5d0-4064-b124-949ba284c3b4"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-125"
+    type: "vmess"
+    server: "124.151.45.60"
+    port: 38320
+    uuid: "d643d6ea-2e48-4ad5-b96e-d11b889cc6a6"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-126"
+    type: "vmess"
+    server: "141.193.213.20"
     port: 443
-    uuid: "03fcc618-b93d-6796-6aed-8a38c975d581"
+    uuid: "4612618c-24cd-4379-9924-cfdf3d61fa5a"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-287"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-127"
     type: "vmess"
-    server: "36.133.78.37"
-    port: 50015
-    uuid: "148e82ae-5014-4a1a-a783-dd63fa9cdc9d"
+    server: "127.0.0.53"
+    port: 85
+    uuid: "88888888-8888-8888-8888-888888888888"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-288"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-128"
     type: "vmess"
-    server: "dashboard.afrashop.top"
-    port: 5381
-    uuid: "76cefcd7-6b53-4c65-ad29-1a92734fc968"
+    server: "104.20.25.166"
+    port: 2052
+    uuid: "d6b6d982-d52f-465a-b988-85670b23f64a"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-289"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-129"
     type: "vmess"
-    server: "91.149.236.46"
-    port: 20143
-    uuid: "6785594d-31c8-48ff-c7ad-9f99c9483bf0"
+    server: "12812.shomaparvazroyadetonnist-bypassishere.lat"
+    port: 12812
+    uuid: "8f74ec8a-971c-11ed-a8fc-0242ac120002"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-290"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-130"
     type: "vmess"
-    server: "85.159.228.232"
+    server: "207c13fb-83b6-2021-766b-6c95e56a4a33.bugtik.ltd"
+    port: 80
+    uuid: "46cfcfe1-e450-459d-a3ab-9406011ab3eb"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-131"
+    type: "vmess"
+    server: "9641684.sdf65h4.top"
     port: 443
-    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
+    uuid: "250c015d-bab0-4ed3-b638-b4eda48f5840"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-291"
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-132"
     type: "vmess"
-    server: "172.111.38.100"
-    port: 22324
-    uuid: "04621bae-ab36-11ec-b909-0242ac120002"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-292"
-    type: "vmess"
-    server: "168.113.215.6"
-    port: 33736
-    uuid: "1281acca-f21d-475c-bf04-eccbee7f8df2"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-293"
-    type: "vmess"
-    server: "de.connfull.org"
-    port: 2053
-    uuid: "83694535-1784-4647-a9b4-067c48903263"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🔥Join+Telegram:@Farah_VPN🟣-294"
-    type: "vmess"
-    server: "t245hvl0VMtlXR4v.v.3dns.vip"
+    server: "UcKniXjfd2JOKBmx.v.3dns.vip"
     port: 443
     uuid: "1abe49dedb6e4f65a0f0a5ea79ddefad"
     alterId: 0
     cipher: "auto"
     udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-133"
+    type: "vmess"
+    server: "node8.liudonghoe.com"
+    port: 443
+    uuid: "47050e4e-965d-41ca-976d-73c1f11e6905"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-134"
+    type: "vmess"
+    server: "siderail-production-a994.up.railway.app"
+    port: 443
+    uuid: "1344069d-7769-4a3b-be82-5664a109af70"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-135"
+    type: "vmess"
+    server: "104.21.230.53"
+    port: 80
+    uuid: "7022982f-da4c-48c9-c660-b2315abdcf7e"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-136"
+    type: "vmess"
+    server: "ef4e4860-008c-3e01-d1f8-bd56dc5b419b.oneplus.pub"
+    port: 80
+    uuid: "46cfcfe1-e450-459d-a3ab-9406011ab3eb"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-137"
+    type: "vmess"
+    server: "38.107.234.57"
+    port: 80
+    uuid: "567f4be5-12ab-42e1-b8d9-db6fd1fdd31c"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-138"
+    type: "vmess"
+    server: "212.95.34.195"
+    port: 443
+    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-139"
+    type: "vmess"
+    server: "dl.pristytools.com"
+    port: 2096
+    uuid: "5623d95e-4c7c-41b4-b1ef-8538b8e895ea"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-140"
+    type: "vmess"
+    server: "Nls1.zelnora.ir"
+    port: 64586
+    uuid: "241d92cd-34a9-4e4b-bed4-2bea4d2b5fba"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-141"
+    type: "vmess"
+    server: "amir.amirport.ir"
+    port: 8880
+    uuid: "a2bba858-e8c2-438e-9da5-52687a0aa201"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-142"
+    type: "vmess"
+    server: "64.188.106.254"
+    port: 443
+    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-143"
+    type: "vmess"
+    server: "t.cnmjcn.cyou"
+    port: 16622
+    uuid: "b43b4eb3-3874-474d-a2fb-ddf1d15b1398"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-144"
+    type: "vmess"
+    server: "editmamad.ddns.ge"
+    port: 443
+    uuid: "6a014334-f9bc-4e5b-a246-269924c75ce3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-145"
+    type: "vmess"
+    server: "195.177.255.233"
+    port: 19981
+    uuid: "6c21cbb2-e4c7-42f8-aa0f-226420bd1875"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-146"
+    type: "vmess"
+    server: "t1.620720.xyz"
+    port: 8443
+    uuid: "516d8a7a-3f0b-41d3-bad0-246116381516"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-147"
+    type: "vmess"
+    server: "36.139.117.41"
+    port: 50011
+    uuid: "9195e0f1-f466-4e69-838f-a95519b5d45e"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-148"
+    type: "vmess"
+    server: "206.1.102.64"
+    port: 1777
+    uuid: "75ceca7d-2bb0-4da7-a5c8-0555b9e95ae5"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-149"
+    type: "vmess"
+    server: "172.67.197.47"
+    port: 443
+    uuid: "516d8a7a-3f0b-41d3-bad0-246116381516"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-150"
+    type: "vmess"
+    server: "fr3.musktrump.top"
+    port: 80
+    uuid: "77e34e38-0ec2-3865-ab0c-2651a83c3c82"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-151"
+    type: "vmess"
+    server: "188.114.96.42"
+    port: 80
+    uuid: "43dcdce1-3cea-4193-bc8d-90b92071d779"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-152"
+    type: "vmess"
+    server: "104.19.47.79"
+    port: 2086
+    uuid: "e9e3cc13-db48-4cc1-8c24-7626439a5339"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-153"
+    type: "vmess"
+    server: "irc.jahanstar.sbs"
+    port: 443
+    uuid: "d6a00e97-f284-458f-b064-f49a26134e6b"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-154"
+    type: "vmess"
+    server: "hk2.lrzdx.uk"
+    port: 443
+    uuid: "db69d5bc-d36c-4903-f471-74b98c5cefe5"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-155"
+    type: "vmess"
+    server: "apjhdggyx.com"
+    port: 443
+    uuid: "5f72f180-b21b-4b7a-8484-240759012604"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-156"
+    type: "vmess"
+    server: "seoul01.zgjok.com"
+    port: 443
+    uuid: "182f1650-ca13-480c-b0b4-1ca44ed0504e"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-157"
+    type: "vmess"
+    server: "njk.222560.xyz"
+    port: 443
+    uuid: "13ad36e6-c091-43f2-8505-47d868dd544c"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-158"
+    type: "vmess"
+    server: "138.197.1.222"
+    port: 8881
+    uuid: "db5afae4-ac23-41a6-8378-f307a9a47436"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-159"
+    type: "vmess"
+    server: "39.108.113.127"
+    port: 10086
+    uuid: "7547daaa-1577-49b0-9519-bd1823add1a7"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-160"
+    type: "vmess"
+    server: "65.109.209.239"
+    port: 16911
+    uuid: "c5f59d68-5a26-40b8-a086-2f531e06737c"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-161"
+    type: "vmess"
+    server: "dog-hk.kunlun01dns.com"
+    port: 21021
+    uuid: "9464ca40-dd75-3742-a628-d931a9f413b2"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-162"
+    type: "vmess"
+    server: "31.76.11.83"
+    port: 22266
+    uuid: "2d8f57bd-12b5-41ad-a806-6501753c264c"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-163"
+    type: "vmess"
+    server: "hk2.998998.best"
+    port: 443
+    uuid: "5504eaa8-1395-402f-8e0e-75ecd762e627"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-164"
+    type: "vmess"
+    server: "47.129.115.96"
+    port: 31414
+    uuid: "dfa9f875-3805-49d9-8636-46b6899be24e"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-165"
+    type: "vmess"
+    server: "36.133.78.37"
+    port: 50016
+    uuid: "9e63ca55-1ff9-453b-ae80-75947b8596d3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-166"
+    type: "vmess"
+    server: "94.177.51.198"
+    port: 443
+    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-167"
+    type: "vmess"
+    server: "Aim7HqTuvNOofcsx.v.3dns.vip"
+    port: 443
+    uuid: "1abe49dedb6e4f65a0f0a5ea79ddefad"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-168"
+    type: "vmess"
+    server: "node.socks5.kdns.fr"
+    port: 443
+    uuid: "e53732d9-85c6-44fe-91eb-52fe9349dccc"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-169"
+    type: "vmess"
+    server: "176.65.140.210"
+    port: 28267
+    uuid: "5a07247c-ea05-4dac-ab9f-6d778b5e0583"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-170"
+    type: "vmess"
+    server: "fr-nin.neninet.ir"
+    port: 18875
+    uuid: "475e7934-442f-40c5-972b-12f6e0a5a05d"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-171"
+    type: "vmess"
+    server: "188.212.97.40"
+    port: 57682
+    uuid: "73ecc5d3-236e-4dbe-809a-49484277a10f"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-172"
+    type: "vmess"
+    server: "206.238.238.222"
+    port: 8443
+    uuid: "f5f0babe-aea2-4f07-a1fc-3c9820253f49"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-173"
+    type: "vmess"
+    server: "36.133.78.37"
+    port: 50017
+    uuid: "23b5790c-4e96-49fa-95fc-9079ce9cf43c"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-174"
+    type: "vmess"
+    server: "ushsfs.povrak.ir"
+    port: 37387
+    uuid: "2840d623-4c46-4d47-812d-d0fcd418b2ac"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-175"
+    type: "vmess"
+    server: "111.88.74.167"
+    port: 443
+    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-176"
+    type: "vmess"
+    server: "104.19.47.237"
+    port: 8080
+    uuid: "b551aa22-22af-11ee-b8d8-f23c932eb68d"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-177"
+    type: "vmess"
+    server: "104.19.32.226"
+    port: 2052
+    uuid: "d6b6d982-d52f-465a-b988-85670b23f64a"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-178"
+    type: "vmess"
+    server: "36.133.78.37"
+    port: 50013
+    uuid: "9e63ca55-1ff9-453b-ae80-75947b8596d3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-179"
+    type: "vmess"
+    server: "3sdfgvcxxx.938.pp.ua"
+    port: 443
+    uuid: "0212fab5-e93c-4904-b7a8-187fd535f354"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-180"
+    type: "vmess"
+    server: "91.108.146.32"
+    port: 443
+    uuid: "1fcf7664-a923-4a71-90f6-ff212fbb062e"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-181"
+    type: "vmess"
+    server: "168.222.49.188"
+    port: 80
+    uuid: "20e840a9-b3d6-4941-ab1f-d37cd958b0b8"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-182"
+    type: "vmess"
+    server: "36.133.78.37"
+    port: 50015
+    uuid: "1b30f413-2865-4d40-9146-4207778718cd"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-183"
+    type: "vmess"
+    server: "104.105.6.167"
+    port: 2053
+    uuid: "9a1a05d9-69be-45d3-e326-c6621edf7b31"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-184"
+    type: "vmess"
+    server: "129.146.77.248"
+    port: 39495
+    uuid: "f836c736-87fc-4fde-aabc-00857ecdff3e"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-185"
+    type: "vmess"
+    server: "irc.jahannetwork.sbs"
+    port: 443
+    uuid: "c8e4af5f-b189-4742-b310-c02f9cb0c7c5"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-186"
+    type: "vmess"
+    server: "wjofHsQtEuEywxEq.v.3dns.vip"
+    port: 443
+    uuid: "a9f4de8b-68f1-44b6-b6a2-1db60940503a"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-187"
+    type: "vmess"
+    server: "94.159.105.148"
+    port: 443
+    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-188"
+    type: "vmess"
+    server: "206.1.103.179"
+    port: 43980
+    uuid: "5945249a-a2f8-42b5-9002-39f5a6d8e72a"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-189"
+    type: "vmess"
+    server: "v29.hdacd.com"
+    port: 30829
+    uuid: "cbb3f877-d1fb-344c-87a9-d153bffd5484"
+    alterId: 2
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-190"
+    type: "vmess"
+    server: "109.248.162.194"
+    port: 41925
+    uuid: "bd9b9eb5-2b21-4303-8bdb-21c6e71663fe"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-191"
+    type: "vmess"
+    server: "outside.feuma.ir"
+    port: 2000
+    uuid: "8e035cbe-3f02-4b64-8ba8-82cc05b83214"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-192"
+    type: "vmess"
+    server: "193.24.120.240"
+    port: 4412
+    uuid: "13554232-b7f1-4391-bb1c-9c3f114f3525"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-193"
+    type: "vmess"
+    server: "cubigatoro-production.up.railway.app"
+    port: 443
+    uuid: "96eda25e-7f48-4647-ad8b-6f8b2fbe6e3b"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-194"
+    type: "vmess"
+    server: "178.95.176.16"
+    port: 2086
+    uuid: "f6361af8-bb8f-4609-bf5d-3fc0f688f47b"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-195"
+    type: "vmess"
+    server: "36.133.78.37"
+    port: 50011
+    uuid: "1b30f413-2865-4d40-9146-4207778718cd"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-196"
+    type: "vmess"
+    server: "english.povrak.ir"
+    port: 34204
+    uuid: "24abed22-d556-450a-bb83-134bade63e3e"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-197"
+    type: "vmess"
+    server: "132.243.22.80"
+    port: 443
+    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-198"
+    type: "vmess"
+    server: "sareikela.com"
+    port: 443
+    uuid: "03fcc618-b93d-6796-6aed-8a38c975d581"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-199"
+    type: "vmess"
+    server: "vip.seervexo.ir"
+    port: 5698
+    uuid: "6573d372-0bc0-4aae-8636-58f6a1ea07cf"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-200"
+    type: "vmess"
+    server: "151.101.56.90"
+    port: 443
+    uuid: "6ba68c69-e108-502d-7b1c-e806fbc3cccd"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-201"
+    type: "vmess"
+    server: "2.27.16.177"
+    port: 443
+    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-202"
+    type: "vmess"
+    server: "zfd-jpv2.kunlun01dns.com"
+    port: 16122
+    uuid: "0802ac03-7973-39ef-a019-ba02de6c01e1"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-203"
+    type: "vmess"
+    server: "62.60.245.128"
+    port: 18188
+    uuid: "7ba52802-3108-4cfa-8d44-917965ff61dd"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-204"
+    type: "vmess"
+    server: "193.148.253.210"
+    port: 442
+    uuid: "874b6ac7-1f58-4792-8b41-f6bb1256ed85"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-205"
+    type: "vmess"
+    server: "165.140.217.2"
+    port: 443
+    uuid: "b65a2d69-5634-42a2-e4be-54e8a6176900"
+    alterId: 0
+    cipher: "none"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-206"
+    type: "vmess"
+    server: "hi.northcluster.info"
+    port: 52300
+    uuid: "6e571484-4166-4699-8f58-b34a1823691f"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-207"
+    type: "vmess"
+    server: "104.19.174.68"
+    port: 8080
+    uuid: "nasnet"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-208"
+    type: "vmess"
+    server: "47.76.44.32"
+    port: 443
+    uuid: "f23bb427-c1f9-4373-876c-2f43e9f790f3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-209"
+    type: "vmess"
+    server: "206.1.103.45"
+    port: 17784
+    uuid: "d5f0b42c-1b8b-407d-84e7-32cddf6ad192"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-210"
+    type: "vmess"
+    server: "89.150.35.155"
+    port: 443
+    uuid: "5f72f180-b21b-4b7a-8484-240759012604"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-211"
+    type: "vmess"
+    server: "s1.connect.labex.pro"
+    port: 1007
+    uuid: "14594d5e-86bd-4727-8772-feb16dbf24ec"
+    alterId: 0
+    cipher: "aes-128-gcm"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-212"
+    type: "vmess"
+    server: "irc.jahanstar.sbs"
+    port: 443
+    uuid: "4c92dec0-634c-4952-bd81-5a2201c2ece5"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-213"
+    type: "vmess"
+    server: "fera3.povrak.ir"
+    port: 65075
+    uuid: "493015b3-8fb1-451d-b1df-09a4c7eeebb7"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-214"
+    type: "vmess"
+    server: "vvvbnh.taipei102.indevs.in"
+    port: 443
+    uuid: "2bfe58f7-da1d-45df-ab43-7c665b20ee29"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-215"
+    type: "vmess"
+    server: "67.220.95.3"
+    port: 18000
+    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
+    alterId: 0
+    cipher: "aes-128-gcm"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-216"
+    type: "vmess"
+    server: "65.109.208.97"
+    port: 54225
+    uuid: "d676e069-4821-4a52-a913-b32140b9a7c3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-217"
+    type: "vmess"
+    server: "104.21.237.87"
+    port: 80
+    uuid: "7022982f-da4c-48c9-c660-b2315abdcf7e"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-218"
+    type: "vmess"
+    server: "104.19.47.16"
+    port: 8080
+    uuid: "b551aa22-22af-11ee-b8d8-f23c932eb68d"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-219"
+    type: "vmess"
+    server: "212.74.39.64"
+    port: 8080
+    uuid: "891db494-d44d-4e3d-9df4-b9267ebd6a80"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-220"
+    type: "vmess"
+    server: "206.237.20.44"
+    port: 55216
+    uuid: "154dbc39-0921-cf11-29bd-156c5000d763"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-221"
+    type: "vmess"
+    server: "104.19.32.216"
+    port: 2086
+    uuid: "e9e3cc13-db48-4cc1-8c24-7626439a5339"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-222"
+    type: "vmess"
+    server: "nmk.tc7.ccwu.cc"
+    port: 80
+    uuid: "1798b14b-aee0-4008-ba9a-2e53877761b4"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-223"
+    type: "vmess"
+    server: "[2606:4700:91b3::bfbb:dce3]"
+    port: 80
+    uuid: "0cf6d970-3f1d-4aae-a989-92a8f76ae3db"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-224"
+    type: "vmess"
+    server: "dee2309db4se3g5sds35g4s3dg.oylfmxz.cn"
+    port: 443
+    uuid: "d90e4077-bc7e-414d-a650-70bf1baae4d6"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-225"
+    type: "vmess"
+    server: "AUSbEb7vTjqR13wy.v.3dns.vip"
+    port: 443
+    uuid: "545a503ba94849b38105e6a0fbc493e8"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-226"
+    type: "vmess"
+    server: "47.244.120.197"
+    port: 44867
+    uuid: "845e6b08-2919-4290-ade0-5dc7dcea59ca"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-227"
+    type: "vmess"
+    server: "dashboard.afrakala.top"
+    port: 5382
+    uuid: "76cefcd7-6b53-4c65-ad29-1a92734fc968"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-228"
+    type: "vmess"
+    server: "fin-3.povrak.ir"
+    port: 56268
+    uuid: "d5d5c844-d99e-41d2-a5b9-701adf597498"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-229"
+    type: "vmess"
+    server: "162.159.135.234"
+    port: 2083
+    uuid: "ac251237-576f-40c8-a543-554960c958b1"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-230"
+    type: "vmess"
+    server: "GR1-Public-IR.g2gstore.ir"
+    port: 9119
+    uuid: "ae56511d-6b39-454b-847b-b711782d18cb"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-231"
+    type: "vmess"
+    server: "ex1ogt73nzpqkac2.v.3dns.vip"
+    port: 443
+    uuid: "f23bb427-c1f9-4373-876c-2f43e9f790f3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-232"
+    type: "vmess"
+    server: "oc.imfun.fun"
+    port: 18112
+    uuid: "ad45f8f6-0f0a-4cc4-b907-c4582407dc94"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-233"
+    type: "vmess"
+    server: "82.198.246.233"
+    port: 180
+    uuid: "d13fc2f5-3e05-4795-81eb-44143a09e552"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-234"
+    type: "vmess"
+    server: "185.204.171.3"
+    port: 2096
+    uuid: "d36f4d3c-07c0-4694-bde6-69643162f082"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-235"
+    type: "vmess"
+    server: "104.16.219.108"
+    port: 80
+    uuid: "950db6aa-4926-4616-816e-ec0312dcb87b"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-236"
+    type: "vmess"
+    server: "104.21.231.59"
+    port: 80
+    uuid: "7022982f-da4c-48c9-c660-b2315abdcf7e"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-237"
+    type: "vmess"
+    server: "5.45.97.147"
+    port: 10803
+    uuid: "018fbfb7-721a-49a9-b9f5-fb55d92592b6"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-238"
+    type: "vmess"
+    server: "cg1c02.waimaojd.com"
+    port: 443
+    uuid: "332774e5-9371-48bb-b518-1fe56c7268da"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-239"
+    type: "vmess"
+    server: "node.socks5.kdns.fr"
+    port: 443
+    uuid: "e1ed0569-bfe4-468f-aa9a-63819e8229ef"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-240"
+    type: "vmess"
+    server: "152.67.8.205"
+    port: 80
+    uuid: "9db4c708-aef8-4359-821b-38e47990be0d"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-241"
+    type: "vmess"
+    server: "XSmlqR4AuuOPMsMN.v.3dns.vip"
+    port: 443
+    uuid: "edd281f6-71e4-4c1e-ac6b-a1c52e2e1270"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-242"
+    type: "vmess"
+    server: "149.88.23.207"
+    port: 18000
+    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-243"
+    type: "vmess"
+    server: "defe.sync-bridge.ir"
+    port: 443
+    uuid: "386c5322-48aa-4fc1-814f-2ff6c34d77e0"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-244"
+    type: "vmess"
+    server: "65.109.184.159"
+    port: 8080
+    uuid: "e8d938f1-1360-4774-bcc5-3dd9154e58fe"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-245"
+    type: "vmess"
+    server: "89.42.196.211"
+    port: 443
+    uuid: "@AbolNetAS_bot"
+    alterId: 0
+    cipher: "chacha20-poly1305"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-246"
+    type: "vmess"
+    server: "wwafj5lhl6bi8au9.v.3dns.vip"
+    port: 443
+    uuid: "f23bb427-c1f9-4373-876c-2f43e9f790f3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-247"
+    type: "vmess"
+    server: "108.162.192.188"
+    port: 80
+    uuid: "2ac4e269-1576-4f41-8c0d-6242e3c5fd8c"
+    alterId: 0
+    cipher: "none"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-248"
+    type: "vmess"
+    server: "personalws22-production.up.railway.app"
+    port: 443
+    uuid: "f5ddeb40-ec81-4af5-8689-f09e09b838a1"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-249"
+    type: "vmess"
+    server: "sy.australiacaregroup.site"
+    port: 10001
+    uuid: "aec8e5e3-bb81-4b22-8802-0b88c54997b3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-250"
+    type: "vmess"
+    server: "82.198.246.37"
+    port: 180
+    uuid: "d13fc2f5-3e05-4795-81eb-44143a09e552"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-251"
+    type: "vmess"
+    server: "87.120.222.2"
+    port: 443
+    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-252"
+    type: "vmess"
+    server: "216.128.176.166"
+    port: 28809
+    uuid: "ebca559c-a4a1-4062-9453-6412d8ff5255"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-253"
+    type: "vmess"
+    server: "xc011-2.meiziba5566.com"
+    port: 443
+    uuid: "42576a04-5a4d-4c7e-fcb4-a8582ab46031"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-254"
+    type: "vmess"
+    server: "140.238.2.250"
+    port: 443
+    uuid: "41a7089a-040b-4538-8b8d-010902405bde"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-255"
+    type: "vmess"
+    server: "206.245.166.132"
+    port: 34204
+    uuid: "beb22b15-2c6f-4bc4-b4ef-309b5a797a57"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-256"
+    type: "vmess"
+    server: "m.cnmjin.net"
+    port: 16632
+    uuid: "21af4a11-cf99-4370-bdd7-8a50cd0c6c49"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-257"
+    type: "vmess"
+    server: "[2a06:98c1:3108::dac:6f9c]"
+    port: 80
+    uuid: "0cf6d970-3f1d-4aae-a989-92a8f76ae3db"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-258"
+    type: "vmess"
+    server: "v2.tgfaka.com"
+    port: 48443
+    uuid: "6f48efb9-3817-4652-832f-fd04d93ebbc1"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-259"
+    type: "vmess"
+    server: "masster.bigchanger.site"
+    port: 9090
+    uuid: "c6253350-247c-4900-a601-80ebd0733897"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-260"
+    type: "vmess"
+    server: "54.229.151.97"
+    port: 59236
+    uuid: "2387bfbc-10a6-4bd7-dc55-7cba954ce6e8"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-261"
+    type: "vmess"
+    server: "turknew.net-flowa.com"
+    port: 80
+    uuid: "cd96479e-9c39-4a7f-ba0c-806a83af19ca"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-262"
+    type: "vmess"
+    server: "188.114.96.19"
+    port: 80
+    uuid: "af4be52a-aab3-4db1-a6bb-c23700dcb9c2"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-263"
+    type: "vmess"
+    server: "ddd47481-0d6f-08b9-7209-b0ddc0c5fa45.oneplus.pub"
+    port: 80
+    uuid: "46cfcfe1-e450-459d-a3ab-9406011ab3eb"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-264"
+    type: "vmess"
+    server: "zula.ir"
+    port: 80
+    uuid: "af2e6961-fe27-4416-9f33-87278fee397c"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-265"
+    type: "vmess"
+    server: "hong.1.povrak.ir"
+    port: 52364
+    uuid: "29c6f854-2068-4899-8d68-7a5f0ffb92d1"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-266"
+    type: "vmess"
+    server: "dl1.armd.fun"
+    port: 443
+    uuid: "92262a4d-1d5b-4741-a2d0-7b3169e963eb"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-267"
+    type: "vmess"
+    server: "104.16.219.108"
+    port: 80
+    uuid: "441da342-ce90-441e-bff9-d2ceb55e68ca"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-268"
+    type: "vmess"
+    server: "n1747624274.4u9ma.icu"
+    port: 443
+    uuid: "d8daf507-a4ac-4eea-8399-8f0cd071eb52"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-269"
+    type: "vmess"
+    server: "fera3.povrak.ir"
+    port: 65075
+    uuid: "b85ba3bc-bac6-4cfc-b8be-fe16a7dac1b1"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-270"
+    type: "vmess"
+    server: "185.19.33.99"
+    port: 16755
+    uuid: "b560ca16-d73b-47f4-a9c4-9dd5fe3a0069"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-271"
+    type: "vmess"
+    server: "198.57.27.190"
+    port: 22324
+    uuid: "04621bae-ab36-11ec-b909-0242ac120002"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-272"
+    type: "vmess"
+    server: "gtgrtgg.vurneq.ir"
+    port: 41797
+    uuid: "b31c579c-fede-421d-8361-fd84405ec4c2"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-273"
+    type: "vmess"
+    server: "104.26.14.137"
+    port: 80
+    uuid: "43dcdce1-3cea-4193-bc8d-90b92071d779"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-274"
+    type: "vmess"
+    server: "gs03-1.guoshi1520.com"
+    port: 443
+    uuid: "82ff6d30-2920-4ebd-b95c-b016ede1a841"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-275"
+    type: "vmess"
+    server: "167.71.250.115"
+    port: 8881
+    uuid: "db5afae4-ac23-41a6-8378-f307a9a47436"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-276"
+    type: "vmess"
+    server: "18.220.175.9"
+    port: 12809
+    uuid: "59df3a1f-6195-48ea-9936-8812642e2457"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-277"
+    type: "vmess"
+    server: "62.60.219.95"
+    port: 110
+    uuid: "110"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-278"
+    type: "vmess"
+    server: "cdn.sfacg.uk"
+    port: 2083
+    uuid: "ac251237-576f-40c8-a543-554960c958b1"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-279"
+    type: "vmess"
+    server: "qtkdr8jxe3wefxjm.v.3dns.vip"
+    port: 443
+    uuid: "f23bb427-c1f9-4373-876c-2f43e9f790f3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-280"
+    type: "vmess"
+    server: "36.133.78.37"
+    port: 50016
+    uuid: "abcb006d-739f-4cec-b13f-12c10d334d92"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-281"
+    type: "vmess"
+    server: "104.20.77.131"
+    port: 443
+    uuid: "91a4ed1f-f693-4685-a6be-f0981d6f2613"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-282"
+    type: "vmess"
+    server: "V2r.seervexo.ir"
+    port: 1590
+    uuid: "6573d372-0bc0-4aae-8636-58f6a1ea07cf"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-283"
+    type: "vmess"
+    server: "142.132.178.99"
+    port: 443
+    uuid: "5f72f180-b21b-4b7a-8484-240759012604"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-284"
+    type: "vmess"
+    server: "79.133.126.233"
+    port: 8443
+    uuid: "6acc18fb-2cfb-40f8-a795-f6fea701cc44"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-285"
+    type: "vmess"
+    server: "104.21.221.215"
+    port: 80
+    uuid: "7022982f-da4c-48c9-c660-b2315abdcf7e"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-286"
+    type: "vmess"
+    server: "6ernu3zmhsv7s95fm.lovebaipiao.net"
+    port: 80
+    uuid: "8e438035-7a1f-44aa-92bf-568dd64517d7"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-287"
+    type: "vmess"
+    server: "178.104.201.75"
+    port: 34597
+    uuid: "@AvaalVPN"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-288"
+    type: "vmess"
+    server: "206.1.99.160"
+    port: 443
+    uuid: "Nitro_Skybot@"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-289"
+    type: "vmess"
+    server: "64.188.97.153"
+    port: 443
+    uuid: "db50a20e-7ff5-4e70-948f-17cc9ca7c154"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-290"
+    type: "vmess"
+    server: "s.linkinfo.site"
+    port: 3087
+    uuid: "e5125fe5-e4a6-4b43-bd00-c364a01dab28"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-291"
+    type: "vmess"
+    server: "bgroup.node1.v.nodelist-gfwairport2.top"
+    port: 41001
+    uuid: "2155145a-b1b5-443a-8977-670f6bd10f02"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-292"
+    type: "vmess"
+    server: "mci.mosi.mosipro.ml"
+    port: 443
+    uuid: "420e3d0a-0725-414f-80f6-7990578bb64c"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-293"
+    type: "vmess"
+    server: "family.bucket.x9.kfc-520.com"
+    port: 10045
+    uuid: "1dc73529-f030-3ac5-ad64-f7666b9a51bc"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🔥Join+Telegram:@Farah_VPN🟣-294"
+    type: "vmess"
+    server: "194.99.79.26"
+    port: 443
+    uuid: "03fcc618-b93d-6796-6aed-8a38c975d581"
+    alterId: 0
+    cipher: "auto"
+    udp: true
   - name: "🔥Join+Telegram:@Farah_VPN🟣-295"
     type: "vmess"
-    server: "vip1.showtimeless.site"
-    port: 8880
-    uuid: "90ee55d8-2651-4d0a-b9dc-f3d4bdc7c295"
+    server: "3kCf86Ufi0U5xBDA.v.3dns.vip"
+    port: 443
+    uuid: "1abe49dedb6e4f65a0f0a5ea79ddefad"
     alterId: 0
     cipher: "auto"
     udp: true
   - name: "🔥Join+Telegram:@Farah_VPN🟣-296"
     type: "vmess"
-    server: "198.62.62.199"
-    port: 443
-    uuid: "f08369d1-5ee7-4b16-d786-30bce12fc33c"
+    server: "dashboard.afrastore.top"
+    port: 5384
+    uuid: "63a01857-93c1-490b-95f5-991bd79116c5"
     alterId: 0
     cipher: "auto"
     udp: true
   - name: "🔥Join+Telegram:@Farah_VPN🟣-297"
     type: "vmess"
-    server: "20.205.140.244"
+    server: "57.128.164.21"
     port: 80
-    uuid: "defe8224-819e-436b-87c7-ece80453c3f2"
+    uuid: "10029c03-5d2f-4185-aab2-cbf91eef7361"
     alterId: 0
     cipher: "auto"
     udp: true
   - name: "🔥Join+Telegram:@Farah_VPN🟣-298"
     type: "vmess"
-    server: "dashboard.daylishop.top"
-    port: 5388
-    uuid: "7cd67187-251c-43bd-bc96-d4ce468ce6a5"
+    server: "r627r8.vatilon.cc"
+    port: 10001
+    uuid: "aec8e5e3-bb81-4b22-8802-0b88c54997b3"
     alterId: 0
     cipher: "auto"
     udp: true
   - name: "🔥Join+Telegram:@Farah_VPN🟣-299"
     type: "vmess"
-    server: "172.67.198.187"
+    server: "193.148.253.210"
     port: 443
-    uuid: "93ea486a-bada-42a4-ac38-d088b320fa1e"
+    uuid: "4878b80d-7602-499c-b742-b09ac4355e0b"
     alterId: 0
     cipher: "auto"
     udp: true
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
-    icon: "https://www.svgrepo.com/show/412721/choose.svg"
     proxies:
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "توزیع بار چرخشی ⚖️"
       - "قطع اینترنت ⛔"
       - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/412721/choose.svg"
   - name: "دستی 🤏🏻"
     type: "select"
-    icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
+    lazy: true
     proxies:
       - "🔥Join+Telegram:@Farah_VPN🟣"
       - "🔥Join+Telegram:@Farah_VPN🟣-1"
@@ -3213,15 +3207,13 @@ proxy-groups:
       - "🔥Join+Telegram:@Farah_VPN🟣-297"
       - "🔥Join+Telegram:@Farah_VPN🟣-298"
       - "🔥Join+Telegram:@Farah_VPN🟣-299"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
-    icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
     url: "https://www.gstatic.com/generate_204"
-    interval: 600
+    interval: 30
     tolerance: 50
-    timeout: 3200
-    lazy: false
-    max-failed-times: 2
+    lazy: true
     proxies:
       - "🔥Join+Telegram:@Farah_VPN🟣"
       - "🔥Join+Telegram:@Farah_VPN🟣-1"
@@ -3523,14 +3515,14 @@ proxy-groups:
       - "🔥Join+Telegram:@Farah_VPN🟣-297"
       - "🔥Join+Telegram:@Farah_VPN🟣-298"
       - "🔥Join+Telegram:@Farah_VPN🟣-299"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
-    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
     strategy: "round-robin"
     url: "https://www.gstatic.com/generate_204"
     interval: 30
+    lazy: true
     timeout: 1500
-    lazy: false
     proxies:
       - "🔥Join+Telegram:@Farah_VPN🟣"
       - "🔥Join+Telegram:@Farah_VPN🟣-1"
@@ -3832,268 +3824,273 @@ proxy-groups:
       - "🔥Join+Telegram:@Farah_VPN🟣-297"
       - "🔥Join+Telegram:@Farah_VPN🟣-298"
       - "🔥Join+Telegram:@Farah_VPN🟣-299"
-  - name: "المنت 💬"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "تیماسپیک 🎧"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/331567/teamspeak.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "دلتاچت ✉️"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/373771/mail.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"
-    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
     proxies:
       - "بدون فیلترشکن 🛡️"
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
   - name: "تلگرام 💬"
     type: "select"
-    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
   - name: "یوتیوب ▶️"
     type: "select"
-    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
       - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
   - name: "گوگل 🌍"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
     icon: "https://www.svgrepo.com/show/475656/google-color.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "واتس آپ 🟢"
-    type: "select"
-    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-      - "بدون فیلترشکن 🛡️"
   - name: "هوش مصنوعی 🤖"
     type: "select"
-    icon: "https://www.svgrepo.com/show/306500/openai.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/306500/openai.svg"
   - name: "توییتر 🐦"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
     icon: "https://www.svgrepo.com/show/475689/twitter-color.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "اسپاتیفای 🎵"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
   - name: "اینستاگرام 📸"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
     icon: "https://www.svgrepo.com/show/452229/instagram-1.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-      - "بدون فیلترشکن 🛡️"
-  - name: "تبلیغات 🆎"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/336358/ad.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "تبلیغات اپ ها 🍃"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "رهگیری جهانی 🛑"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "سایتای مخرب ⚠️"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "استیم 🖥️"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/452107/steam.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "گیم 🎮"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "توییچ 📡"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/343527/twitch-network-communication-interaction-connection.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "سایتای ایرانی 🇮🇷"
-    type: "select"
-    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "ویندوز 🧊"
-    type: "select"
-    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "اجازه ندادن 🚫"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
   - name: "کلودفلر ☁️"
     type: "select"
-    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
   - name: "گیتهاب 🐙"
     type: "select"
-    icon: "https://www.svgrepo.com/show/355033/github.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/355033/github.svg"
+  - name: "اسپاتیفای 🎵"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
+  - name: "واتس آپ 🟢"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
+  - name: "تبلیغات 🆎"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/336358/ad.svg"
+  - name: "تبلیغات اپ ها 🍃"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
+  - name: "رهگیری جهانی 🛑"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
+  - name: "المنت 💬"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Element_(software)_logo_(2020).svg"
+  - name: "تیم اسپیک 🎧"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/teamspeak/default.svg"
+  - name: "دلتاچت ✉️"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Delta_chat_(Instant_Messenger)_logo.svg"
+  - name: "سایتای مخرب ⚠️"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
+  - name: "استیم 🖥️"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/452107/steam.svg"
+  - name: "گیم 🎮"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
+  - name: "توییچ 📡"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@develop/icons/twitch.svg"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
+  - name: "ویندوز 🧊"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "اجازه ندادن 🚫"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
   - name: "دیسکورد 🗣️"
     type: "select"
-    icon: "https://automatorplugin.com/wp-content/uploads/2024/10/discord-icon.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/brands/discord.svg"
   - name: "استریمیو 🎬"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
     icon: "https://stremio.github.io/stremio-addon-guide/img/stremio.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "انیدسک 🔴"
+  - name: "انی دسک 🔴"
     type: "select"
-    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
     proxies:
       - "بدون فیلترشکن 🛡️"
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
   - name: "سایتای سانسوری 🤬"
     type: "select"
-    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Censorship.svg/300px-Censorship.svg.png"
     proxies:
       - "اجازه ندادن 🚫"
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "بدون فیلترشکن 🛡️"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/clapperboard.svg"
   - name: "بدون فیلترشکن 🛡️"
     type: "select"
-    icon: "https://www.svgrepo.com/show/6318/connection.svg"
     proxies:
       - "DIRECT"
     hidden: true
+    icon: "https://www.svgrepo.com/show/6318/connection.svg"
   - name: "قطع اینترنت ⛔"
     type: "select"
-    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
     proxies:
       - "REJECT"
     hidden: true
+    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
   - name: "اجازه ندادن 🚫"
     type: "select"
-    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
     proxies:
       - "REJECT"
     hidden: true
+    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
 rules:
+  - "IP-CIDR,127.0.0.0/8,بدون فیلترشکن 🛡️,no-resolve"
+  - "DOMAIN,localhost,بدون فیلترشکن 🛡️"
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,private,بدون فیلترشکن 🛡️"
   - "RULE-SET,DownloadManagers,دانلود منیجر 📥"
   - "RULE-SET,Download,دانلود منیجر 📥"
   - "RULE-SET,stremio,استریمیو 🎬"
@@ -4113,11 +4110,12 @@ rules:
   - "DST-PORT,993,دلتاچت ✉️"
   - "DST-PORT,465,دلتاچت ✉️"
   - "DST-PORT,587,دلتاچت ✉️"
-  - "PROCESS-NAME,com.teamspeak.ts3client,تیماسپیک 🎧"
-  - "PROCESS-NAME,ts3client_win64.exe,تیماسپیک 🎧"
-  - "PROCESS-NAME,ts3client_win32.exe,تیماسپیک 🎧"
-  - "DOMAIN-SUFFIX,ag.tssq.ir,تیماسپیک 🎧"
-  - "DST-PORT,9987,تیماسپیک 🎧"
+  - "PROCESS-NAME,com.teamspeak.ts3client,تیم اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win64.exe,تیم اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win32.exe,تیم اسپیک 🎧"
+  - "PROCESS-NAME,TeamSpeak.exe,تیم اسپیک 🎧"
+  - "DOMAIN-SUFFIX,ag.tssq.ir,تیم اسپیک 🎧"
+  - "DST-PORT,9987,تیم اسپیک 🎧"
   - "RULE-SET,BanProgramAD,تبلیغات اپ ها 🍃"
   - "RULE-SET,BanAD,رهگیری جهانی 🛑"
   - "RULE-SET,PrivateTracker,رهگیری جهانی 🛑"
@@ -4140,9 +4138,12 @@ rules:
   - "RULE-SET,YouTube,یوتیوب ▶️"
   - "RULE-SET,youtube,یوتیوب ▶️"
   - "RULE-SET,YouTubeMusic,یوتیوب ▶️"
-  - "PROCESS-NAME,com.anydesk.anydeskandroid,انیدسک 🔴"
-  - "PROCESS-NAME,AnyDesk.exe,انیدسک 🔴"
-  - "DOMAIN-SUFFIX,anydesk.com,انیدسک 🔴"
+  - "PROCESS-NAME,com.anydesk.anydeskandroid,انی دسک 🔴"
+  - "PROCESS-NAME,AnyDesk.exe,انی دسک 🔴"
+  - "DOMAIN-SUFFIX,anydesk.com,انی دسک 🔴"
+  - "PROCESS-NAME,rustdesk.exe,انی دسک 🔴"
+  - "PROCESS-NAME,com.carriez.flutter_hbb,انی دسک 🔴"
+  - "PROCESS-NAME,dorsandesk.exe,انی دسک 🔴"
   - "PROCESS-NAME,Twitter.exe,توییتر 🐦"
   - "PROCESS-NAME,com.twitter.android,توییتر 🐦"
   - "RULE-SET,Chotwitter,توییتر 🐦"
@@ -4154,9 +4155,6 @@ rules:
   - "RULE-SET,mihspotify,اسپاتیفای 🎵"
   - "PROCESS-NAME,com.instagram.android,اینستاگرام 📸"
   - "RULE-SET,instagram,اینستاگرام 📸"
-  - "DOMAIN-SUFFIX,deepseek.com,هوش مصنوعی 🤖"
-  - "DOMAIN-SUFFIX,qwen.ai,هوش مصنوعی 🤖"
-  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
   - "RULE-SET,censor,سایتای سانسوری 🤬"
   - "RULE-SET,apps,سایتای ایرانی 🇮🇷"
   - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
@@ -4170,6 +4168,10 @@ rules:
   - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
   - "DOMAIN-SUFFIX,unimics.com,سایتای ایرانی 🇮🇷"
   - "RULE-SET,whatsapp,واتس آپ 🟢"
+  - "RULE-SET,Ai,هوش مصنوعی 🤖"
+  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
+  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google,گوگل 🌍"
   - "RULE-SET,steam,استیم 🖥️"
   - "RULE-SET,SteamRegionCheck,استیم 🖥️"
   - "RULE-SET,game,گیم 🎮"
@@ -4184,9 +4186,5 @@ rules:
   - "RULE-SET,github,گیتهاب 🐙"
   - "PROCESS-NAME,com.android.vending,نوع انتخاب پروکسی 🔀"
   - "PROCESS-NAME,com.google.android.gms,نوع انتخاب پروکسی 🔀"
-  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
-  - "RULE-SET,google,گوگل 🌍"
   - "IP-CIDR,10.10.34.0/24,نوع انتخاب پروکسی 🔀"
-  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
-  - "RULE-SET,private,بدون فیلترشکن 🛡️"
   - "MATCH,نوع انتخاب پروکسی 🔀"

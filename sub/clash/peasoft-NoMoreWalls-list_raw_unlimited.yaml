@@ -1,287 +1,177 @@
-global-client-fingerprint: "chrome"
-keep-alive-interval: 5
-keep-alive-idle: 10
-disable-keep-alive: false
-port: 7890
+port: 7892
 socks-port: 7891
-redir-port: 7892
-mixed-port: 7893
-tproxy-port: 7894
+mixed-port: 7890
 allow-lan: true
-tcp-concurrent: true
-enable-process: true
-find-process-mode: "always"
-ipv6: false
+mode: "rule"
 log-level: "info"
-geo-auto-update: true
-geo-update-interval: 168
+external-controller: "0.0.0.0:9090"
 secret: ""
-bind-address: "*"
-unified-delay: false
+ipv6: false
 dns:
   enable: true
+  listen: "0.0.0.0:53"
   ipv6: false
   prefer-h3: false
   cache-algorithm: "arc"
+  use-hosts: true
   use-system-hosts: true
-  use-host: true
-  listen: "0.0.0.0:53"
+  respect-rules: false
   enhanced-mode: "fake-ip"
-  fake-ip-filter-mode: "blacklist"
   fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter-mode: "blacklist"
   fake-ip-filter:
-    - "*.lan"
-    - "*.localdomain"
-    - "*.invalid"
-    - "*.localhost"
-    - "*.test"
-    - "*.local"
-    - "*.home.arpa"
+    - "geosite:private"
+    - "+.lan"
+    - "+.localdomain"
+    - "+.invalid"
+    - "+.localhost"
+    - "+.test"
+    - "+.local"
+    - "+.home.arpa"
+    - "+.arpa"
+    - "+.ir"
     - "time.*.com"
+    - "time.*.gov"
+    - "time.*.apple.com"
     - "ntp.*.com"
-    - "*.ir"
+    - "+.pool.ntp.org"
+    - "+.ntp.org"
+    - "time.asis.io"
+    - "time.windows.com"
+    - "time.apple.com"
+    - "connectivitycheck.gstatic.com"
+    - "connectivitycheck.android.com"
+    - "clients3.google.com"
+    - "captive.apple.com"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "router.asus.com"
+    - "tplinkwifi.net"
+    - "tplinkrepeater.net"
+    - "tplinkap.net"
+    - "routerlogin.net"
+    - "routerlogin.com"
+    - "melogin.cn"
+    - "falogin.cn"
+    - "tendawifi.com"
+    - "leike.cc"
+    - "miwifi.com"
+    - "goforward.link"
+    - "+.plex.direct"
+  nameserver-policy:
+    geosite:private: "system"
+    +.arpa: "system"
+    +.lan: "system"
+    +.local: "system"
+    +.home.arpa: "system"
+    router.asus.com: "system"
+    tplinkwifi.net: "system"
+    tplinkrepeater.net: "system"
+    tplinkap.net: "system"
+    routerlogin.net: "system"
+    routerlogin.com: "system"
+    melogin.cn: "system"
+    falogin.cn: "system"
+    tendawifi.com: "system"
+    leike.cc: "system"
+    miwifi.com: "system"
+    goforward.link: "system"
   default-nameserver:
+    - "tcp://1.1.1.1"
+    - "tcp://8.8.8.8"
     - "1.1.1.1"
     - "8.8.8.8"
     - "9.9.9.9"
-  nameserver:
-    - "tcp://1.1.1.1"
     - "tcp://1.0.0.1"
-    - "tcp://8.8.8.8"
     - "tcp://8.8.4.4"
     - "tcp://9.9.9.9"
     - "tcp://149.112.112.112"
     - "tcp://208.67.222.222"
-    - "tcp://208.67.220.222"
+    - "tcp://208.67.220.220"
+  nameserver:
+    - "https://freedns.controld.com/p2#نوع انتخاب پروکسی 🔀"
   fallback:
-    - "tcp://76.76.19.19"
-    - "tcp://76.223.122.150"
-    - "tcp://185.228.168.9"
-    - "tcp://185.228.169.9"
-    - "tcp://8.26.56.26"
-    - "tcp://8.20.247.20"
-    - "tcp://76.76.2.11"
-    - "tcp://76.76.10.11"
-    - "tcp://84.200.69.80"
-    - "tcp://84.200.70.40"
-    - "tcp://45.33.97.5"
-    - "tcp://37.235.1.177"
-    - "tcp://209.244.0.3"
-    - "tcp://209.244.0.4"
-    - "tcp://156.154.70.5"
-    - "tcp://156.154.71.5"
-    - "tcp://103.86.96.100"
-    - "tcp://103.86.99.100"
-    - "tcp://199.85.126.10"
-    - "tcp://199.85.127.10"
-    - "tcp://129.250.35.250"
-    - "tcp://129.250.35.251"
-    - "tcp://94.16.114.254"
-    - "tcp://94.247.43.254"
-    - "tcp://208.67.222.20"
-    - "tcp://195.46.39.39"
-    - "tcp://195.46.39.40"
-    - "tcp://204.117.214.10"
-    - "tcp://199.2.252.10"
-    - "tcp://194.169.169.169"
-    - "tcp://156.154.70.1"
-    - "tcp://156.154.71.1"
-    - "tcp://91.239.100.100"
-    - "tcp://89.233.43.71"
-    - "tcp://64.6.64.6"
-    - "tcp://64.6.65.6"
-    - "tcp://77.88.8.8"
-    - "tcp://77.88.8.1"
+    - "https://dns.adguard-dns.com/dns-query#نوع انتخاب پروکسی 🔀"
+  fallback-lazy-query: true
   fallback-filter:
-    geoip: true
-    geoip-code: "IR"
-    geosite:
-      - "gfw"
+    geoip: false
     ipcidr:
+      - "10.10.34.34/32"
+      - "10.10.34.35/32"
+      - "10.10.34.36/32"
+      - "127.0.0.1/32"
       - "240.0.0.0/4"
-    domain:
-      - "+.google.com"
-      - "+.facebook.com"
-      - "+.youtube.com"
   proxy-server-nameserver:
     - "tcp://1.1.1.1"
     - "tcp://8.8.8.8"
+    - "tcp://9.9.9.9"
+    - "1.1.1.1"
+    - "8.8.8.8"
+    - "9.9.9.9"
+    - "tcp://1.0.0.1"
+    - "tcp://8.8.4.4"
+    - "tcp://149.112.112.112"
+    - "tcp://208.67.222.222"
+    - "tcp://208.67.220.220"
   direct-nameserver:
     - "78.157.42.100"
     - "78.157.42.101"
+    - "tcp://78.157.42.100"
+    - "tcp://78.157.42.101"
+  direct-nameserver-follow-policy: true
 sniffer:
   enable: true
   force-dns-mapping: true
   parse-pure-ip: true
-  override-destination: false
-  sniff:
-    HTTP:
-      ports:
-        - 80
-        - 8080
-        - 8880
-        - 2052
-        - 2082
-        - 2086
-        - 2095
-    TLS:
-      ports:
-        - 443
-        - 8443
-        - 2053
-        - 2083
-        - 2087
-        - 2096
+  override-destination: true
 tun:
   enable: true
   stack: "mixed"
   auto-route: true
   auto-detect-interface: true
-  auto-redir: true
-  dns-hijack:
-    - "any:53"
-    - "tcp://any:53"
 rule-providers:
+  DownloadManagers:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
+    interval: 86400
+    path: "./ruleset/DownloadManagers.yaml"
+  Download:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
+    interval: 86400
+    path: "./ruleset/Download.yaml"
+  stremio:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    interval: 86400
+    path: "./ruleset/stremio.yaml"
+  BanProgramAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanProgramAD.yaml"
+  BanAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanAD.yaml"
+  PrivateTracker:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
+    interval: 86400
+    path: "./ruleset/PrivateTracker.yaml"
   category_public_tracker:
     type: "http"
     behavior: "domain"
     url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-public-tracker.yaml"
     interval: 86400
     path: "./ruleset/category_public_tracker.yaml"
-  iran_ads:
-    type: "http"
-    behavior: "domain"
-    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
-    interval: 86400
-    path: "./ruleset/iran_ads.yaml"
-  PersianBlocker:
-    type: "http"
-    behavior: "domain"
-    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
-    interval: 86400
-    path: "./ruleset/PersianBlocker.yaml"
-  youtube:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
-    interval: 86400
-    path: "./ruleset/youtube.yaml"
-  telegram:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
-    interval: 86400
-    path: "./ruleset/telegram.yaml"
-  twitch:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
-    interval: 86400
-    path: "./ruleset/twitch.yaml"
-  censor:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
-    interval: 86400
-    path: "./ruleset/censor.yaml"
-  local_ips:
-    type: "http"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
-    interval: 86400
-    path: "./ruleset/local_ips.yaml"
-  private:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
-    interval: 86400
-    path: "./ruleset/private.yaml"
-  category_ir:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
-    interval: 86400
-    path: "./ruleset/category_ir.yaml"
-  iran:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
-    interval: 86400
-    path: "./ruleset/iran.yaml"
-  steam:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
-    interval: 86400
-    path: "./ruleset/steam.yaml"
-  game:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
-    interval: 86400
-    path: "./ruleset/game.yaml"
-  category-games:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
-    interval: 86400
-    path: "./ruleset/category-games.yaml"
-  ir:
-    type: "http"
-    format: "yaml"
-    behavior: "domain"
-    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
-    interval: 86400
-    path: "./ruleset/ir.yaml"
-  apps:
-    type: "http"
-    format: "yaml"
-    behavior: "classical"
-    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
-    interval: 86400
-    path: "./ruleset/apps.yaml"
-  ircidr:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
-    interval: 86400
-    path: "./ruleset/ircidr.yaml"
-  irasn:
-    type: "http"
-    format: "yaml"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
-    interval: 86400
-    path: "./ruleset/irasn.yaml"
-  arvancloud:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
-    interval: 86400
-    path: "./ruleset/arvancloud.yaml"
-  derakcloud:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
-    interval: 86400
-    path: "./ruleset/derakcloud.yaml"
-  iranserver:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
-    interval: 86400
-    path: "./ruleset/iranserver.yaml"
-  parspack:
-    type: "http"
-    format: "yaml"
-    behavior: "ipcidr"
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
-    interval: 86400
-    path: "./ruleset/parspack.yaml"
   malware:
     type: "http"
     format: "yaml"
@@ -303,170 +193,79 @@ rule-providers:
     url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/cryptominers.yaml"
     interval: 86400
     path: "./ruleset/cryptominers.yaml"
-  ads:
-    type: "http"
-    format: "yaml"
-    behavior: "domain"
-    url: "https://github.com/Chocolate4U/Iran-clash-rules/releases/download/202606060815/category-ads-all.yaml"
-    interval: 86400
-    path: "./ruleset/ads.yaml"
-  DownloadManagers:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
-    interval: 86400
-    path: "./ruleset/DownloadManagers.yaml"
-  BanProgramAD:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
-    interval: 86400
-    path: "./ruleset/BanProgramAD.yaml"
-  BanAD:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
-    interval: 86400
-    path: "./ruleset/BanAD.yaml"
-  PrivateTracker:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
-    interval: 86400
-    path: "./ruleset/PrivateTracker.yaml"
-  BanEasyList:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
-    interval: 86400
-    path: "./ruleset/BanEasyList.yaml"
-  Download:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
-    interval: 86400
-    path: "./ruleset/Download.yaml"
-  GameDownload:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
-    interval: 86400
-    path: "./ruleset/GameDownload.yaml"
-  SteamRegionCheck:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
-    interval: 86400
-    path: "./ruleset/SteamRegionCheck.yaml"
-  Xbox:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
-    interval: 86400
-    path: "./ruleset/Xbox.yaml"
-  YouTubeMusic:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
-    interval: 86400
-    path: "./ruleset/YouTubeMusic.yaml"
-  YouTube:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
-    interval: 86400
-    path: "./ruleset/YouTube.yaml"
-  Ponzi:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
-    interval: 86400
-    path: "./ruleset/Ponzi.yaml"
   warninglist:
     type: "http"
     behavior: "classical"
     url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/warning-list.yaml"
     interval: 86400
     path: "./ruleset/warninglist.yaml"
-  google:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
-    interval: 86400
-    path: "./ruleset/google.yaml"
-  google-play:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
-    interval: 86400
-    path: "./ruleset/google-play.yaml"
-  xiaomi_block_list:
-    type: "http"
-    format: "yaml"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
-    interval: 86400
-    path: "./ruleset/xiaomi_block_list.yaml"
-  xiaomi_white_list:
+  Ponzi:
     type: "http"
     behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
     interval: 86400
-    path: "./ruleset/xiaomi_white_list.yaml"
-  cloudflare:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
-    interval: 86400
-    path: "./ruleset/cloudflare.yaml"
-  github:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
-    interval: 86400
-    path: "./ruleset/xgithub.yaml"
-  whatsapp:
-    type: "http"
-    behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
-    interval: 86400
-    path: "./ruleset/whatsapp.yaml"
+    path: "./ruleset/Ponzi.yaml"
   LiteAds:
     type: "http"
     behavior: "classical"
     url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/LiteAds.yaml"
     interval: 86400
     path: "./ruleset/LiteAds.yaml"
-  discord:
-    type: "http"
-    behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
-    interval: 86400
-    path: "./ruleset/discord.yaml"
-  instagram:
+  iran_ads:
     type: "http"
     behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
     interval: 86400
-    path: "./ruleset/instagram.yaml"
-  category-ai:
+    path: "./ruleset/iran_ads.yaml"
+  PersianBlocker:
     type: "http"
     behavior: "domain"
-    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
     interval: 86400
-    path: "./ruleset/category-ai.yaml"
-  stremio:
+    path: "./ruleset/PersianBlocker.yaml"
+  ads:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/category-ads-all.yaml"
+    interval: 86400
+    path: "./ruleset/ads.yaml"
+  BanEasyList:
     type: "http"
     behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
     interval: 86400
-    path: "./ruleset/stremio.yaml"
-  windows:
+    path: "./ruleset/BanEasyList.yaml"
+  twitch:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
+    interval: 86400
+    path: "./ruleset/twitch.yaml"
+  telegram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
+    interval: 86400
+    path: "./ruleset/telegram.yaml"
+  YouTube:
     type: "http"
     behavior: "classical"
-    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
     interval: 86400
-    path: "./ruleset/windows.yaml"
+    path: "./ruleset/YouTube.yaml"
+  youtube:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
+    interval: 86400
+    path: "./ruleset/youtube.yaml"
+  YouTubeMusic:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
+    interval: 86400
+    path: "./ruleset/YouTubeMusic.yaml"
   Chotwitter:
     type: "http"
     format: "yaml"
@@ -498,7 +297,214 @@ rule-providers:
     url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Spotify.yaml"
     interval: 86400
     path: "./ruleset/mihSpotify.yaml"
+  instagram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    interval: 86400
+    path: "./ruleset/instagram.yaml"
+  Ai:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/Ai.yaml"
+    interval: 86400
+    path: "./ruleset/Ai.yaml"
+  category-ai:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    interval: 86400
+    path: "./ruleset/category-ai.yaml"
+  censor:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
+    interval: 86400
+    path: "./ruleset/censor.yaml"
+  apps:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
+    interval: 86400
+    path: "./ruleset/apps.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+  arvancloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
+    interval: 86400
+    path: "./ruleset/arvancloud.yaml"
+  derakcloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
+    interval: 86400
+    path: "./ruleset/derakcloud.yaml"
+  iranserver:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
+    interval: 86400
+    path: "./ruleset/iranserver.yaml"
+  parspack:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
+    interval: 86400
+    path: "./ruleset/parspack.yaml"
+  irasn:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
+    interval: 86400
+    path: "./ruleset/irasn.yaml"
+  ircidr:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
+    interval: 86400
+    path: "./ruleset/ircidr.yaml"
+  ir:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
+    interval: 86400
+    path: "./ruleset/ir.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  whatsapp:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
+    interval: 86400
+    path: "./ruleset/whatsapp.yaml"
+  steam:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
+    interval: 86400
+    path: "./ruleset/steam.yaml"
+  SteamRegionCheck:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
+    interval: 86400
+    path: "./ruleset/SteamRegionCheck.yaml"
+  game:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
+    interval: 86400
+    path: "./ruleset/game.yaml"
+  GameDownload:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
+    interval: 86400
+    path: "./ruleset/GameDownload.yaml"
+  category-games:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
+    interval: 86400
+    path: "./ruleset/category-games.yaml"
+  Xbox:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
+    interval: 86400
+    path: "./ruleset/Xbox.yaml"
+  discord:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
+    interval: 86400
+    path: "./ruleset/discord.yaml"
+  xiaomi_white_list:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_white_list.yaml"
+  xiaomi_block_list:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_block_list.yaml"
+  windows:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    interval: 86400
+    path: "./ruleset/windows.yaml"
+  cloudflare:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
+    interval: 86400
+    path: "./ruleset/cloudflare.yaml"
+  github:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
+    interval: 86400
+    path: "./ruleset/xgithub.yaml"
+  google-play:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
+    interval: 86400
+    path: "./ruleset/google-play.yaml"
+  google:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
+    interval: 86400
+    path: "./ruleset/google.yaml"
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  private:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
+    interval: 86400
+    path: "./ruleset/private.yaml"
 proxies:
+  - name: "45.150.110.8"
+    type: "socks5"
+    server: "45.150.110.8"
+    port: 1080
+    username: ""
+    password: ""
+  - name: "51.15.20.32"
+    type: "socks5"
+    server: "51.15.20.32"
+    port: 1088
+    username: ""
+    password: ""
   - name: "🇩🇪192088 | ⚡️Telegram = t.me/v..."
     type: "hysteria2"
     server: "35.158.96.132"
@@ -631,14 +637,6 @@ proxies:
     skip-cert-verify: true
     obfs: "salamander"
     obfs-password: "KevinZakarian"
-  - name: "🇮🇷198624 | ⚡️Telegram = t.me/S..."
-    type: "hysteria2"
-    server: "ir1.wufpel.ir"
-    port: 443
-    password: "L5h99fyPz7ER5yxTks4tjDjHQa5Sk96s"
-    sni: "b2ab2c3a2670d4b2.wufpel.ir"
-    obfs: "salamander"
-    obfs-password: "3mVEvYnmg5a4U6_66TQgh1W8"
   - name: "@meliproxyy"
     type: "hysteria2"
     server: "me17.msjia8844.site"
@@ -917,7 +915,7 @@ proxies:
     network: "tcp"
     servername: "yahoo.com"
     client-fingerprint: "chrome"
-  - name: "🇺🇦[www.v2nodes.com] vless-UA-1... #7"
+  - name: "🇺🇦[www.v2nodes.com] vless-UA-1... #9"
     type: "vless"
     server: "213.111.148.137"
     port: 443
@@ -943,6 +941,16 @@ proxies:
       path: "/fp=androidsecurity=tls"
       headers:
         Host: "proxy-1cu.pages.dev"
+  - name: "🇬🇧[www.v2nodes.com] vless-GB-1... #1"
+    type: "vless"
+    server: "p2real4.greewebservices.ir"
+    port: 1340
+    uuid: "2582857a-632b-4c4e-9b67-96213cbaf58c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "play.googleapis.com"
+    client-fingerprint: "ios"
   - name: "🏳[www.v2nodes.com] vless-"
     type: "vless"
     server: "155.103.71.142"
@@ -1052,6 +1060,17 @@ proxies:
         Host: "95.128.71.79"
   - name: "🇨🇦[www.v2nodes.com] vless-CA-1..."
     type: "vless"
+    server: "209.200.246.148"
+    port: 443
+    uuid: "ca52e2b6-fb9f-4dac-b6dc-49da9923f251"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+  - name: "🇨🇦[www.v2nodes.com] vless-CA-1... #1"
+    type: "vless"
     server: "66.70.179.198"
     port: 2053
     uuid: "dc620cd6-a9d8-4a0f-8f18-006b895db77e"
@@ -1060,17 +1079,18 @@ proxies:
     network: "tcp"
     servername: "www.cloudflare.com"
     client-fingerprint: "chrome"
-  - name: "🇨🇦[www.v2nodes.com] vless-CA-1... #1"
+  - name: "🇨🇦[www.v2nodes.com] vless-CA-1... #2"
     type: "vless"
-    server: "212.74.39.214"
+    server: "milo.rubinaz.xyz"
     port: 8080
     uuid: "6bceb548-d9b6-461f-8e37-a5a7fbcdc2c8"
     udp: true
     tls: false
     network: "tcp"
-  - name: "🏳[www.v2nodes.com] vless- #3"
+    servername: "milo.rubinaz.xyz"
+  - name: "🇸🇬[www.v2nodes.com] vless-SG"
     type: "vless"
-    server: "www.5199dy.com"
+    server: "cf.877774.xyz"
     port: 443
     uuid: "d342d11e-d224-4463-b982-532309285094"
     udp: true
@@ -1081,7 +1101,7 @@ proxies:
       path: "/fp=chrome"
       headers:
         Host: "ccc.010304.xyz"
-  - name: "🇸🇬[www.v2nodes.com] vless-SG"
+  - name: "🇸🇬[www.v2nodes.com] vless-SG #1"
     type: "vless"
     server: "199.181.197.40"
     port: 8880
@@ -1106,7 +1126,7 @@ proxies:
       path: "/id-pusatfp=chrome"
       headers:
         Host: "tn1r.eu.cc"
-  - name: "🇸🇬[www.v2nodes.com] vless-SG #1"
+  - name: "🇸🇬[www.v2nodes.com] vless-SG #2"
     type: "vless"
     server: "172.67.155.65"
     port: 8443
@@ -1119,7 +1139,7 @@ proxies:
       path: "/Chanel0111Netsecurity=tls"
       headers:
         Host: "lucasjow.us.ci"
-  - name: "🇸🇬[www.v2nodes.com] vless-SG #2"
+  - name: "🇸🇬[www.v2nodes.com] vless-SG #3"
     type: "vless"
     server: "66.235.200.30"
     port: 8880
@@ -1131,7 +1151,7 @@ proxies:
       path: "/"
       headers:
         Host: "vms.lifetime47.workers.dev"
-  - name: "🇸🇬[www.v2nodes.com] vless-SG #3"
+  - name: "🇸🇬[www.v2nodes.com] vless-SG #4"
     type: "vless"
     server: "www.gov.se"
     port: 8080
@@ -1144,20 +1164,20 @@ proxies:
       path: "/"
       headers:
         Host: "sdf23g-billowing-moon-348e.mzm468gc.workers.dev"
-  - name: "🏳[www.v2nodes.com] vless- #30"
+  - name: "🇸🇬[www.v2nodes.com] vless-SG #5"
     type: "vless"
-    server: "172.64.150.28"
-    port: 2082
+    server: "172.64.150.43"
+    port: 8080
     uuid: "e5cc16a6-ea42-46b2-82ae-ad2157e1641b"
     udp: true
     tls: false
     network: "ws"
     servername: "hhlfy.twiladaphne.ndjp.net"
     ws-opts:
-      path: "/fpfp=chrome"
+      path: "/sg-melbi"
       headers:
         Host: "hhlfy.twiladaphne.ndjp.net"
-  - name: "🇸🇬[www.v2nodes.com] vless-SG #5"
+  - name: "🇸🇬[www.v2nodes.com] vless-SG #6"
     type: "vless"
     server: "104.21.91.244"
     port: 443
@@ -1165,7 +1185,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🏳[www.v2nodes.com] vless- #24"
+  - name: "🇭🇰[www.v2nodes.com] vless-HK"
     type: "vless"
     server: "188.114.97.6"
     port: 443
@@ -1195,14 +1215,6 @@ proxies:
       path: "/cart/docs/www/proxyipfp=chromesecurity=tls"
       headers:
         Host: "lucasjow.us.ci"
-  - name: "🇭🇰[www.v2nodes.com] vless-HK #3"
-    type: "vless"
-    server: "cf.090227.xyz"
-    port: 443
-    uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
-    udp: true
-    tls: false
-    network: "tcp"
   - name: "🇨🇭[www.v2nodes.com] vless-CH-1..."
     type: "vless"
     server: "208.69.78.217"
@@ -1264,7 +1276,7 @@ proxies:
       path: "pyip=bpb.yousef.isegaro.comfp=randomsecurity=tls"
       headers:
         Host: "free.cndyw.ggff.net"
-  - name: "🏳[www.v2nodes.com] vless- #4"
+  - name: "🏳[www.v2nodes.com] vless- #3"
     type: "vless"
     server: "213.111.177.107"
     port: 443
@@ -1278,6 +1290,28 @@ proxies:
       headers:
         Host: "vlso5.1d.mom"
   - name: "🇩🇪[www.v2nodes.com] vless-DE-1..."
+    type: "vless"
+    server: "46.28.69.123"
+    port: 443
+    uuid: "b945f9aa-1b45-4912-aa7e-248509472bad"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "gateway.icloud.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+  - name: "🇩🇪[www.v2nodes.com] vless-DE-1... #1"
+    type: "vless"
+    server: "89.169.53.176"
+    port: 4443
+    uuid: "20dd9433-389e-4573-ba7b-689619cf13da"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "gateway.icloud.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+  - name: "🇩🇪[www.v2nodes.com] vless-DE-1... #2"
     type: "vless"
     server: "uiuxtestsdcv-development-r6dg9.lucity.app"
     port: 443
@@ -1302,7 +1336,7 @@ proxies:
     network: "tcp"
     servername: "play.google.com"
     client-fingerprint: "chrome"
-  - name: "🇩🇪[www.v2nodes.com] vless-DE-1... #2"
+  - name: "🇩🇪[www.v2nodes.com] vless-DE-1... #4"
     type: "vless"
     server: "45.144.30.86"
     port: 443
@@ -1310,7 +1344,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇺🇸[www.v2nodes.com] vless-US-1... #6"
+  - name: "🇺🇸[www.v2nodes.com] vless-US-1... #8"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
@@ -1323,7 +1357,7 @@ proxies:
       path: "/fp=chrome"
       headers:
         Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net."
-  - name: "🇩🇪[www.v2nodes.com] vless-DE-1... #4"
+  - name: "🇩🇪[www.v2nodes.com] vless-DE-1... #6"
     type: "vless"
     server: "shortbig.ir"
     port: 2087
@@ -1331,7 +1365,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇩🇪[www.v2nodes.com] vless-DE-1... #5"
+  - name: "🇩🇪[www.v2nodes.com] vless-DE-1... #7"
     type: "vless"
     server: "903.rtgpu.com"
     port: 443
@@ -1341,7 +1375,7 @@ proxies:
     network: "ws"
     ws-opts:
       path: "/nmd2security=tls"
-  - name: "🇩🇪[www.v2nodes.com] vless-DE-1... #6"
+  - name: "🇩🇪[www.v2nodes.com] vless-DE-1... #8"
     type: "vless"
     server: "dl.hessabb.ir"
     port: 2051
@@ -1353,7 +1387,7 @@ proxies:
       path: "/download"
       headers:
         Host: "dl.hessabb.ir"
-  - name: "🇺🇸[www.v2nodes.com] vless-US-1... #7"
+  - name: "🇺🇸[www.v2nodes.com] vless-US-1... #9"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
@@ -1366,7 +1400,7 @@ proxies:
       path: "/fp=chrome"
       headers:
         Host: "copy_az_channel_NUFiLTER_a11ia.global.ssl.fastly.net."
-  - name: "🇩🇪[www.v2nodes.com] vless-DE-1... #8"
+  - name: "🇩🇪[www.v2nodes.com] vless-DE-1... #10"
     type: "vless"
     server: "shortbig.ir"
     port: 443
@@ -1381,7 +1415,7 @@ proxies:
       path: "/9d9fdbc18c834cffab4276811501fbaefp=unsafe"
       headers:
         Host: "alman.5f2vvtqh5syot.info"
-  - name: "🇩🇪[www.v2nodes.com] vless-DE-1... #10"
+  - name: "🇩🇪[www.v2nodes.com] vless-DE-1... #12"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -1394,17 +1428,6 @@ proxies:
       path: "/security=tls"
       headers:
         Host: "copy_az_channel_NUFiLTER_a1i.global.ssl.fastly.net."
-  - name: "🇩🇪[www.v2nodes.com] vless-DE-1... #11"
-    type: "vless"
-    server: "144.31.215.162"
-    port: 443
-    uuid: "558b26f6-061b-4079-9b84-ca13b3e90ae3"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "c1.qwyak.ru"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
   - name: "🇪🇪[www.v2nodes.com] vless-EE-1..."
     type: "vless"
     server: "93.89.220.37"
@@ -1427,6 +1450,17 @@ proxies:
     servername: "login.sakhweb.fyi"
     client-fingerprint: "firefox"
     flow: "xtls-rprx-vision"
+  - name: "🇪🇸[www.v2nodes.com] vless-ES-1..."
+    type: "vless"
+    server: "193.238.154.78"
+    port: 443
+    uuid: "897d47f8-4dd5-42a1-bcd0-bef19caff55a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "gateway.icloud.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
   - name: "🇪🇸[www.v2nodes.com] vless-ES-4... #4"
     type: "vless"
     server: "31.57.190.89"
@@ -1440,7 +1474,7 @@ proxies:
       path: "/fp=chromefp=chromesecurity=tls"
       headers:
         Host: "ccc.010304.xyz"
-  - name: "🏳[www.v2nodes.com] vless- #9"
+  - name: "🏳[www.v2nodes.com] vless- #8"
     type: "vless"
     server: "31.57.190.89"
     port: 443
@@ -1466,7 +1500,7 @@ proxies:
       path: "/fp=chromefp=chrome"
       headers:
         Host: "ccc.010304.xyz"
-  - name: "🇪🇸[www.v2nodes.com] vless-ES-1... #4"
+  - name: "🇪🇸[www.v2nodes.com] vless-ES-1... #5"
     type: "vless"
     server: "212.227.235.66"
     port: 2053
@@ -1502,7 +1536,7 @@ proxies:
       path: "/proxyip=ProxyIP.CMLiussss.netfp=chromesecurity=tls"
       headers:
         Host: "cf3.schzyc.cc.cd"
-  - name: "Telegram---Chanel0111Netfp=chrome&security=tls#🏳[www.v2nodes.com] vless- #8"
+  - name: "Telegram---Chanel0111Netfp=chrome&security=tls#🏳[www.v2nodes.com] vless- #7"
     type: "vless"
     server: "104.21.91.244"
     port: 443
@@ -1552,7 +1586,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.microsoft.com"
-    client-fingerprint: "chrome"
+    client-fingerprint: "firefox"
     flow: "xtls-rprx-vision"
   - name: "🇫🇮[www.v2nodes.com] vless-FI-1... #2"
     type: "vless"
@@ -1615,7 +1649,7 @@ proxies:
     servername: "www.foxsports.com"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
-  - name: "🏳[www.v2nodes.com] vless- #11"
+  - name: "🏳[www.v2nodes.com] vless- #10"
     type: "vless"
     server: "107.181.151.241"
     port: 443
@@ -1628,17 +1662,16 @@ proxies:
     flow: "xtls-rprx-vision"
   - name: "🇫🇷[www.v2nodes.com] vless-FR-1..."
     type: "vless"
-    server: "redcloudport-bidarbash.sbs"
-    port: 443
-    uuid: "2bdcf0ac-f84e-471f-98dc-a1807acab1cb"
+    server: "138.124.70.41"
+    port: 14430
+    uuid: "6cc745e3-4eb9-46c8-a4a1-85dee7b87edc"
     udp: true
-    tls: true
+    tls: false
     network: "ws"
-    servername: "redcloudport-bidarbash.sbs"
     ws-opts:
-      path: "/zoodifp=chrome"
+      path: "/vless"
       headers:
-        Host: "redcloudport-bidarbash.sbs"
+        Host: "138.124.70.41"
   - name: "🇫🇷[www.v2nodes.com] vless-FR-1... #1"
     type: "vless"
     server: "137.74.16.237"
@@ -1653,15 +1686,15 @@ proxies:
   - name: "🇫🇷[www.v2nodes.com] vless-FR-1... #2"
     type: "vless"
     server: "152.228.139.33"
-    port: 35108
-    uuid: "81dc0b61-f9fe-4ad6-8b4e-b8c067b73712"
+    port: 51671
+    uuid: "75cc7568-abb0-46a8-88be-8137d3c647d4"
     udp: true
     tls: true
     network: "grpc"
-    servername: "www.nvidia.com"
-    client-fingerprint: "chrome"
+    servername: "www.sony.com"
+    client-fingerprint: "firefox"
     grpc-opts:
-      grpc-service-name: "grpc-common3"
+      grpc-service-name: "grpc_common3"
   - name: "🇫🇷[www.v2nodes.com] vless-FR-1... #3"
     type: "vless"
     server: "161.97.160.224"
@@ -1673,7 +1706,7 @@ proxies:
     servername: "passport.yandex.ru"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
-  - name: "🏳[www.v2nodes.com] vless- #12"
+  - name: "🇫🇷[www.v2nodes.com] vless-FR-1... #4"
     type: "vless"
     server: "51.77.217.70"
     port: 2053
@@ -1682,18 +1715,19 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.apple.com"
-    client-fingerprint: "chrome"
+    client-fingerprint: "firefox"
   - name: "🇬🇧[www.v2nodes.com] vless-GB-1..."
     type: "vless"
-    server: "p2real4.greewebservices.ir"
-    port: 1340
-    uuid: "2582857a-632b-4c4e-9b67-96213cbaf58c"
+    server: "130.12.242.106"
+    port: 443
+    uuid: "bc058e69-0444-4c7b-98da-bd67f0b143da"
     udp: true
     tls: true
     network: "tcp"
-    servername: "play.googleapis.com"
-    client-fingerprint: "ios"
-  - name: "🇬🇧[www.v2nodes.com] vless-GB-1... #1"
+    servername: "deepl.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+  - name: "🇬🇧[www.v2nodes.com] vless-GB-1... #2"
     type: "vless"
     server: "uk.2ul.top"
     port: 443
@@ -1703,7 +1737,7 @@ proxies:
     network: "tcp"
     servername: "www.cloudflare.com"
     client-fingerprint: "chrome"
-  - name: "🇬🇧[www.v2nodes.com] vless-GB-1... #4"
+  - name: "🇬🇧[www.v2nodes.com] vless-GB-1... #5"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -1716,7 +1750,7 @@ proxies:
       path: "/fp=chrome"
       headers:
         Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
-  - name: "🇬🇧[www.v2nodes.com] vless-GB-1... #5"
+  - name: "🇬🇧[www.v2nodes.com] vless-GB-1... #6"
     type: "vless"
     server: "connect.hondamotor.site"
     port: 10002
@@ -1724,7 +1758,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇬🇧[www.v2nodes.com] vless-GB-1... #6"
+  - name: "🇬🇧[www.v2nodes.com] vless-GB-1... #7"
     type: "vless"
     server: "23.81.36.148"
     port: 1222
@@ -1732,7 +1766,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇬🇧[www.v2nodes.com] vless-GB-1... #7"
+  - name: "🇬🇧[www.v2nodes.com] vless-GB-1... #8"
     type: "vless"
     server: "51.89.194.151"
     port: 2053
@@ -1741,8 +1775,8 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.apple.com"
-    client-fingerprint: "chrome"
-  - name: "🇬🇧[www.v2nodes.com] vless-GB-1... #8"
+    client-fingerprint: "firefox"
+  - name: "🇬🇧[www.v2nodes.com] vless-GB-1... #9"
     type: "vless"
     server: "node-uk.connectsuite.org"
     port: 8443
@@ -1750,6 +1784,17 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
+  - name: "🇬🇧[www.v2nodes.com] vless-GB-1... #10"
+    type: "vless"
+    server: "83.147.18.3"
+    port: 443
+    uuid: "9f61cdf4-810d-4052-bbc7-2da0c8e20104"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
   - name: "🇬🇷[www.v2nodes.com] vless-GR-1..."
     type: "vless"
     server: "85.90.197.220"
@@ -1785,7 +1830,7 @@ proxies:
     servername: "www.apple.com"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
-  - name: "🏳[www.v2nodes.com] vless- #13"
+  - name: "🇭🇰[www.v2nodes.com] vless-HK-1... #1"
     type: "vless"
     server: "82.29.36.250"
     port: 443
@@ -1796,7 +1841,7 @@ proxies:
     servername: "aws.amazon.com"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
-  - name: "🇭🇰[www.v2nodes.com] vless-HK-1... #1"
+  - name: "🇭🇰[www.v2nodes.com] vless-HK-1... #2"
     type: "vless"
     server: "195.58.144.56"
     port: 11907
@@ -1808,7 +1853,7 @@ proxies:
     alpn:
       - "h2"
       - "http/1.1"
-  - name: "🇭🇰[www.v2nodes.com] vless-HK-1... #2"
+  - name: "🇭🇰[www.v2nodes.com] vless-HK-1... #3"
     type: "vless"
     server: "47.238.210.5"
     port: 13779
@@ -1816,7 +1861,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🏳[www.v2nodes.com] vless- #14"
+  - name: "🏳[www.v2nodes.com] vless- #11"
     type: "vless"
     server: "103.148.73.173"
     port: 8443
@@ -1829,19 +1874,19 @@ proxies:
       path: "/81574b6b-c9d7-44a0-b83d-dad56e8cb530fp=chrome"
       headers:
         Host: "ty986gfazs.cainiaohub.xyz"
-  - name: "🏳[www.v2nodes.com] vless- #15"
+  - name: "🇭🇰 香港 | HKG #1"
     type: "vless"
-    server: "103.180.20.108"
+    server: "103.180.20.176"
     port: 8443
     uuid: "c1c04450-bf71-4049-ad0c-9cf6d94d9f1f"
     udp: true
-    tls: true
+    tls: false
     network: "ws"
-    servername: "ty986gfazs.cainiaohub.xyz"
+    servername: "tse1.mm.bing.net"
     ws-opts:
-      path: "/81574b6b-c9d7-44a0-b83d-dad56e8cb530fp=chrome"
+      path: "/81574b6b-c9d7-44a0-b83d-dad56e8cb530security=tls"
       headers:
-        Host: "ty986gfazs.cainiaohub.xyz"
+        Host: "tse1.mm.bing.net"
   - name: "🇭🇺[www.v2nodes.com] vless-HU-6..."
     type: "vless"
     server: "37.221.210.113"
@@ -1861,35 +1906,14 @@ proxies:
     port: 443
     uuid: "d342d11e-d224-4463-b982-532309285094"
     udp: true
-    tls: false
+    tls: true
     network: "ws"
     servername: "ccc.010304.xyz"
     ws-opts:
-      path: "/fp=chromesecurity=tls"
+      path: "/fp=chrome"
       headers:
         Host: "ccc.010304.xyz"
-  - name: "🏳[www.v2nodes.com] vless- #16"
-    type: "vless"
-    server: "165.99.222.161"
-    port: 443
-    uuid: "30572b57-f5ab-4eb8-82d4-a24d399b99f6"
-    udp: true
-    tls: false
-    network: "tcp"
   - name: "🇮🇳[www.v2nodes.com] vless-IN-1..."
-    type: "vless"
-    server: "5.253.29.254"
-    port: 14430
-    uuid: "c7c27192-60a5-4ce1-b613-95270d82309d"
-    udp: true
-    tls: false
-    network: "ws"
-    servername: "5.253.29.254"
-    ws-opts:
-      path: "/vless"
-      headers:
-        Host: "5.253.29.254"
-  - name: "🇮🇳[www.v2nodes.com] vless-IN-1... #1"
     type: "vless"
     server: "13.140.56.100"
     port: 14430
@@ -1897,9 +1921,12 @@ proxies:
     udp: true
     tls: false
     network: "ws"
+    servername: "13.140.56.100"
     ws-opts:
       path: "/vless"
-  - name: "🇮🇳[www.v2nodes.com] vless-IN-1... #2"
+      headers:
+        Host: "13.140.56.100"
+  - name: "🇮🇳[www.v2nodes.com] vless-IN-1... #1"
     type: "vless"
     server: "dorado.yokkastars.com"
     port: 40443
@@ -1907,7 +1934,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇮🇳[www.v2nodes.com] vless-IN-1... #3"
+  - name: "🇮🇳[www.v2nodes.com] vless-IN-1... #2"
     type: "vless"
     server: "194.61.31.126"
     port: 2053
@@ -1948,7 +1975,7 @@ proxies:
       path: "/fp=chrome"
       headers:
         Host: "ccc.010304.xyz"
-  - name: "🏳[www.v2nodes.com] vless- #17"
+  - name: "🏳[www.v2nodes.com] vless- #12"
     type: "vless"
     server: "kclx.eu.org"
     port: 443
@@ -1991,11 +2018,11 @@ proxies:
     tls: true
     network: "tcp"
     servername: "jp3.nztvpn.com"
-    client-fingerprint: "chrome"
+    client-fingerprint: "firefox"
     flow: "xtls-rprx-vision"
-  - name: "🏳[www.v2nodes.com] vless- #18"
+  - name: "🇯🇵[www.v2nodes.com] vless-JP-1... #4"
     type: "vless"
-    server: "104.16.111.202"
+    server: "43.170.8.95"
     port: 443
     uuid: "4e4f1f70-5e56-4a76-bb9d-db087f4690c4"
     udp: true
@@ -2003,10 +2030,10 @@ proxies:
     network: "ws"
     servername: "jp3.yohototo.top"
     ws-opts:
-      path: "/tyxywsfp=unsafe"
+      path: "/tyxywsfp=firefox"
       headers:
         Host: "jp3.yohototo.top"
-  - name: "🏳[www.v2nodes.com] vless- #19"
+  - name: "🇯🇵[www.v2nodes.com] vless-JP-1... #5"
     type: "vless"
     server: "137.220.221.179"
     port: 443
@@ -2014,10 +2041,21 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🏳[www.v2nodes.com] vless- #20"
+  - name: "🇯🇵[www.v2nodes.com] vless-JP-1... #6"
     type: "vless"
     server: "103.75.118.228"
-    port: 11452
+    port: 12683
+    uuid: "814bd064-544d-4255-a070-5705c03f6da9"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.apple.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+  - name: "🇯🇵[www.v2nodes.com] vless-JP-1... #7"
+    type: "vless"
+    server: "3.114.220.22"
+    port: 10583
     uuid: "814bd064-544d-4255-a070-5705c03f6da9"
     udp: true
     tls: true
@@ -2047,7 +2085,7 @@ proxies:
     client-fingerprint: "chrome"
   - name: "🇱🇰[www.v2nodes.com] vless-LK-7..."
     type: "vless"
-    server: "support.zoom.us"
+    server: "free.sahanwickramasinghe.me"
     port: 80
     uuid: "fcdb24e3-5e66-4c45-b89e-ac9441f4dcda"
     udp: true
@@ -2057,6 +2095,17 @@ proxies:
       path: "/"
       headers:
         Host: "free.sahanwickramasinghe.me"
+  - name: "🇱🇻[www.v2nodes.com] vless-LV-1..."
+    type: "vless"
+    server: "195.123.208.32"
+    port: 443
+    uuid: "1ebcb694-875c-4be7-b6a2-d53c8208991b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "gateway.icloud.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
   - name: "🇲🇩[www.v2nodes.com] vless-MD-4..."
     type: "vless"
     server: "185.153.198.86"
@@ -2091,18 +2140,6 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇲🇾[www.v2nodes.com] vless-MY-1... #1"
-    type: "vless"
-    server: "forwarded.frnhk.xyz"
-    port: 46003
-    uuid: "6006c9a2-c0a2-4cda-80f2-405b0d790fc8"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/my1023"
-      headers:
-        Host: "forwarded.frnhk.xyz"
   - name: "🇲🇾[www.v2nodes.com] vless-MY-5..."
     type: "vless"
     server: "216.173.67.59"
@@ -2118,13 +2155,24 @@ proxies:
         Host: "ccc.010304.xyz"
   - name: "🇳🇱[www.v2nodes.com] vless-NL-1..."
     type: "vless"
+    server: "195.123.221.36"
+    port: 443
+    uuid: "9c60369d-e5f9-4cec-9e63-1560e88e119a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "gateway.icloud.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+  - name: "🇳🇱[www.v2nodes.com] vless-NL-1... #1"
+    type: "vless"
     server: "94.237.46.104"
     port: 443
     uuid: "dac47070-c136-49f3-8ed2-32b68e710ea3"
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇳🇱[www.v2nodes.com] vless-NL-1... #1"
+  - name: "🇳🇱[www.v2nodes.com] vless-NL-1... #2"
     type: "vless"
     server: "n1.fazelino.site"
     port: 443
@@ -2139,7 +2187,7 @@ proxies:
       path: "/api/getfp=chrome"
       headers:
         Host: "api.fazelino.site"
-  - name: "🇳🇱[www.v2nodes.com] vless-NL-1... #2"
+  - name: "🇳🇱[www.v2nodes.com] vless-NL-1... #3"
     type: "vless"
     server: "111.88.128.167"
     port: 8517
@@ -2153,7 +2201,7 @@ proxies:
       - "h2"
     grpc-opts:
       grpc-service-name: "api.v1.StreamService"
-  - name: "🇳🇱[www.v2nodes.com] vless-NL-1... #3"
+  - name: "🇳🇱[www.v2nodes.com] vless-NL-1... #4"
     type: "vless"
     server: "77.90.61.135"
     port: 443
@@ -2161,7 +2209,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇳🇱[www.v2nodes.com] vless-NL-1... #4"
+  - name: "🇳🇱[www.v2nodes.com] vless-NL-1... #5"
     type: "vless"
     server: "9.247.34.118"
     port: 2053
@@ -2172,29 +2220,29 @@ proxies:
     servername: "www.rutube.ru"
     client-fingerprint: "edge"
     flow: "xtls-rprx-vision"
-  - name: "🇳🇱[www.v2nodes.com] vless-NL-1... #5"
+  - name: "🇳🇱[www.v2nodes.com] vless-NL-1... #6"
     type: "vless"
-    server: "sw.golangwikito.cfd"
+    server: "217.60.35.146"
     port: 443
     uuid: "f8d52ece-fad4-478d-875d-df6eed3befa7"
     udp: true
     tls: true
     network: "tcp"
     servername: "sw.golangwikito.cfd"
-    client-fingerprint: "chrome"
+    client-fingerprint: "firefox"
     flow: "xtls-rprx-vision"
-  - name: "🇳🇱[www.v2nodes.com] vless-NL-1... #6"
+  - name: "🇳🇱[www.v2nodes.com] vless-NL-1... #7"
     type: "vless"
     server: "server.slavkiti.monster"
     port: 443
-    uuid: "4d017db2-7655-4276-9557-e2ec25b04ee7"
+    uuid: "6dfc9149-1ff9-41c3-8563-0ef284381731"
     udp: true
     tls: true
     network: "tcp"
     servername: "www.tradingview.com"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
-  - name: "🇳🇱[www.v2nodes.com] vless-NL-1... #7"
+  - name: "🇳🇱[www.v2nodes.com] vless-NL-1... #8"
     type: "vless"
     server: "uk1-2.998998.best"
     port: 443
@@ -2224,7 +2272,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "pl.flen-vpn.xyz"
-  - name: "🏳[www.v2nodes.com] vless- #21"
+  - name: "🏳[www.v2nodes.com] vless- #13"
     type: "vless"
     server: "62.152.58.90"
     port: 443
@@ -2236,6 +2284,17 @@ proxies:
     client-fingerprint: "random"
   - name: "🇵🇱[www.v2nodes.com] vless-PL-1... #2"
     type: "vless"
+    server: "82.118.22.161"
+    port: 443
+    uuid: "05488656-d4bf-4634-8b2e-e4ff5a56c7e2"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "safari"
+    flow: "xtls-rprx-vision"
+  - name: "🇵🇱[www.v2nodes.com] vless-PL-1... #3"
+    type: "vless"
     server: "150.251.113.34"
     port: 443
     uuid: "d7d724b5-17ce-4f3c-877d-dfbf0f07afa1"
@@ -2245,7 +2304,7 @@ proxies:
     servername: "www.cloudflare.com"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
-  - name: "🇵🇱[www.v2nodes.com] vless-PL-1... #3"
+  - name: "🇵🇱[www.v2nodes.com] vless-PL-1... #4"
     type: "vless"
     server: "54.37.136.194"
     port: 2053
@@ -2254,8 +2313,8 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.cloudflare.com"
-    client-fingerprint: "chrome"
-  - name: "🇵🇱[www.v2nodes.com] vless-PL-1... #7"
+    client-fingerprint: "firefox"
+  - name: "🇵🇱[www.v2nodes.com] vless-PL-1... #8"
     type: "vless"
     server: "157.22.128.7"
     port: 443
@@ -2268,21 +2327,6 @@ proxies:
       path: "pyip=bpb.yousef.isegaro.comfp=randomsecurity=tls"
       headers:
         Host: "free.cndyw.ggff.net"
-  - name: "🏳[www.v2nodes.com] vless- #25"
-    type: "vless"
-    server: "188.114.97.6"
-    port: 443
-    uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "lucasjow.us.ci"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/fp=chrome"
-      headers:
-        Host: "lucasjow.us.ci"
   - name: "🇵🇱[www.v2nodes.com] vless-PL-4..."
     type: "vless"
     server: "157.22.128.7"
@@ -2379,6 +2423,18 @@ proxies:
     flow: "xtls-rprx-vision"
   - name: "🇸🇪[www.v2nodes.com] vless-SE-1... #2"
     type: "vless"
+    server: "193.188.21.253"
+    port: 14430
+    uuid: "57f7772d-f5d6-4d8f-992d-5fa5e0d6da55"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/vless"
+      headers:
+        Host: "193.188.21.253"
+  - name: "🇸🇪[www.v2nodes.com] vless-SE-1... #3"
+    type: "vless"
     server: "5.189.254.168"
     port: 2053
     uuid: "51a0af77-a60c-4d9b-81a4-f50e1b38d90b"
@@ -2390,7 +2446,7 @@ proxies:
       path: "/proxyip=ProxyIP.CMLiussss.netfp=chromesecurity=tls"
       headers:
         Host: "cf3.schzyc.cc.cd"
-  - name: "🇸🇪[www.v2nodes.com] vless-SE-1... #3"
+  - name: "🇸🇪[www.v2nodes.com] vless-SE-1... #4"
     type: "vless"
     server: "94.143.231.146"
     port: 443
@@ -2398,7 +2454,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇸🇪[www.v2nodes.com] vless-SE-1... #4"
+  - name: "🇸🇪[www.v2nodes.com] vless-SE-1... #5"
     type: "vless"
     server: "193.163.203.170"
     port: 443
@@ -2442,6 +2498,17 @@ proxies:
     client-fingerprint: "firefox"
   - name: "🇸🇬[www.v2nodes.com] vless-SG-1... #3"
     type: "vless"
+    server: "147.93.173.45"
+    port: 10444
+    uuid: "75c5f51b-d548-4eab-a26e-aa10fc3dbc7b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "video.yandex.ru"
+    client-fingerprint: "safari"
+    flow: "xtls-rprx-vision"
+  - name: "🇸🇬[www.v2nodes.com] vless-SG-1... #4"
+    type: "vless"
     server: "funagfrdfs.alixxplay.com"
     port: 46105
     uuid: "57beeeb0-03fc-4fc9-94da-7604488a7134"
@@ -2449,9 +2516,9 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.lamer.com.sg"
-    client-fingerprint: "chrome"
+    client-fingerprint: "safari"
     flow: "xtls-rprx-vision"
-  - name: "🇸🇬[www.v2nodes.com] vless-SG-1... #4"
+  - name: "🇸🇬[www.v2nodes.com] vless-SG-1... #5"
     type: "vless"
     server: "47.237.74.17"
     port: 16263
@@ -2459,7 +2526,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇸🇬[www.v2nodes.com] vless-SG-1... #5"
+  - name: "🇸🇬[www.v2nodes.com] vless-SG-1... #6"
     type: "vless"
     server: "139.162.27.96"
     port: 2096
@@ -2472,7 +2539,18 @@ proxies:
       path: "/free-server.techsonic.devfp=chrome"
       headers:
         Host: "free-server.techsonic.dev"
-  - name: "🏳[www.v2nodes.com] vless- #26"
+  - name: "🇸🇬[www.v2nodes.com] vless-SG-1... #7"
+    type: "vless"
+    server: "206.206.76.75"
+    port: 443
+    uuid: "1e3d3634-36ac-43ac-a439-9665d885238f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+  - name: "🇸🇬[www.v2nodes.com] vless-SG-1... #8"
     type: "vless"
     server: "54.251.9.130"
     port: 24146
@@ -2483,7 +2561,7 @@ proxies:
     servername: "www.intel.com"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
-  - name: "🇸🇬[www.v2nodes.com] vless-SG-1... #6"
+  - name: "🇸🇬[www.v2nodes.com] vless-SG-1... #9"
     type: "vless"
     server: "54.169.200.246"
     port: 41688
@@ -2494,15 +2572,18 @@ proxies:
     servername: "www.intel.com"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
-  - name: "🏳[www.v2nodes.com] vless- #27"
+  - name: "🇸🇬[www.v2nodes.com] vless-SG-1... #10"
     type: "vless"
     server: "46.137.202.178"
     port: 12512
     uuid: "2a6c617d-98e4-49c3-95ab-76f02fcf0150"
     udp: true
-    tls: false
+    tls: true
     network: "tcp"
-  - name: "🏳[www.v2nodes.com] vless- #28"
+    servername: "www.intel.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+  - name: "🏳[www.v2nodes.com] vless- #15"
     type: "vless"
     server: "sg2-8sb.6121999.dpdns.org"
     port: 19825
@@ -2515,13 +2596,13 @@ proxies:
     flow: "xtls-rprx-vision"
   - name: "🇮🇳[www.v2nodes.com] vless-IN"
     type: "vless"
-    server: "hydra.yokkastars.com"
+    server: "5.253.30.99"
     port: 40443
-    uuid: "405b964e-a2d2-454f-aaaa-711cc218897c"
+    uuid: "511c1563-2cb6-4064-abc6-a59ee49818a8"
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇸🇬[www.v2nodes.com] vless-SG-1... #7"
+  - name: "🇸🇬[www.v2nodes.com] vless-SG-1... #11"
     type: "vless"
     server: "172.67.155.65"
     port: 8443
@@ -2534,10 +2615,10 @@ proxies:
       path: "/?B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub?ed=2048security=tls"
       headers:
         Host: "lucasjow.us.ci"
-  - name: "🏳[www.v2nodes.com] vless- #29"
+  - name: "🇸🇬[www.v2nodes.com] vless-SG-1... #12"
     type: "vless"
     server: "3.0.111.82"
-    port: 12972
+    port: 10574
     uuid: "814bd064-544d-4255-a070-5705c03f6da9"
     udp: true
     tls: true
@@ -2560,6 +2641,19 @@ proxies:
       path: "/?Telegram---mehrosaboranfp=chrome"
       headers:
         Host: "lucasjow.us.ci"
+  - name: "🏳[www.v2nodes.com] vless- #16"
+    type: "vless"
+    server: "172.64.150.28"
+    port: 2082
+    uuid: "e5cc16a6-ea42-46b2-82ae-ad2157e1641b"
+    udp: true
+    tls: false
+    network: "ws"
+    servername: "hhlfy.twiladaphne.ndjp.net"
+    ws-opts:
+      path: "/fpfp=chrome"
+      headers:
+        Host: "hhlfy.twiladaphne.ndjp.net"
   - name: "🇸🇬[www.v2nodes.com] vless-SG-9... #1"
     type: "vless"
     server: "103.133.1.30"
@@ -2580,19 +2674,6 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇸🇬[www.v2nodes.com] vless-SG-8... #1"
-    type: "vless"
-    server: "172.66.47.10"
-    port: 443
-    uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "lucasjow.us.ci"
-    ws-opts:
-      path: "/cart/docs/www/proxyip=108.160.132.132fp=chrome"
-      headers:
-        Host: "lucasjow.us.ci"
   - name: "🇹🇭[www.v2nodes.com] vless-TH-1..."
     type: "vless"
     server: "154.21.203.106"
@@ -2603,21 +2684,17 @@ proxies:
     network: "tcp"
   - name: "🇹🇭[www.v2nodes.com] vless-TH-1... #1"
     type: "vless"
-    server: "104.16.10.9"
-    port: 443
+    server: "support.zoom.us.v2ray.simspeedup.com"
+    port: 80
     uuid: "3c52e091-6714-4915-949f-2149fe69951b"
     udp: true
     tls: false
-    network: "tcp"
+    network: "ws"
+    ws-opts:
+      path: "/ws"
+      headers:
+        Host: "support.zoom.us.v2ray.simspeedup.com"
   - name: "🇹🇷[www.v2nodes.com] vless-TR-1..."
-    type: "vless"
-    server: "sable56.fars-remen.ir"
-    port: 8446
-    uuid: "633c1bb0-60d5-41fb-a9c4-11f408b264ec"
-    udp: true
-    tls: false
-    network: "tcp"
-  - name: "🇹🇷[www.v2nodes.com] vless-TR-1... #1"
     type: "vless"
     server: "62.133.63.45"
     port: 8444
@@ -2629,7 +2706,7 @@ proxies:
     client-fingerprint: "chrome"
     grpc-opts:
       grpc-service-name: "GunService"
-  - name: "🇹🇷[www.v2nodes.com] vless-TR-1... #2"
+  - name: "🇹🇷[www.v2nodes.com] vless-TR-1... #1"
     type: "vless"
     server: "78.135.73.47"
     port: 443
@@ -2638,9 +2715,9 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.datadoghq.com"
-    client-fingerprint: "chrome"
+    client-fingerprint: "firefox"
     flow: "xtls-rprx-vision"
-  - name: "🇹🇷[www.v2nodes.com] vless-TR-1... #3"
+  - name: "🇹🇷[www.v2nodes.com] vless-TR-1... #2"
     type: "vless"
     server: "151.241.226.201"
     port: 2053
@@ -2650,7 +2727,17 @@ proxies:
     network: "tcp"
     servername: "www.apple.com"
     client-fingerprint: "firefox"
-  - name: "🏳[www.v2nodes.com] vless- #31"
+  - name: "🇹🇼[www.v2nodes.com] vless-TW-1..."
+    type: "vless"
+    server: "hinet1.2yly.com"
+    port: 24215
+    uuid: "19d5a678-8396-4e3b-93da-ece618d0e83a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "addons.mozilla.org"
+    client-fingerprint: "chrome"
+  - name: "🏳[www.v2nodes.com] vless- #17"
     type: "vless"
     server: "59.125.69.23"
     port: 443
@@ -2663,7 +2750,7 @@ proxies:
       path: "/81574b6b-c9d7-44a0-b83d-dad56e8cb530fp=chrome"
       headers:
         Host: "ty986gfazs.cainiaohub.xyz"
-  - name: "🏳[www.v2nodes.com] vless- #32"
+  - name: "🇺🇦[www.v2nodes.com] vless-UA-1..."
     type: "vless"
     server: "netx.smrtai.top"
     port: 443
@@ -2673,18 +2760,18 @@ proxies:
     network: "tcp"
     servername: "www.cloudflare.com"
     client-fingerprint: "chrome"
-  - name: "🇺🇦[www.v2nodes.com] vless-UA-1..."
+  - name: "🇺🇦[www.v2nodes.com] vless-UA-1... #1"
     type: "vless"
     server: "staging.lastilhame.monster"
     port: 443
-    uuid: "ee39fb11-56a3-4ee7-9e7c-35a4235bd30e"
+    uuid: "aded66f1-de12-4c3c-af9e-a21d6e7d9c96"
     udp: true
     tls: true
     network: "tcp"
-    servername: "www.tradingview.com"
+    servername: "www.foxsports.com"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
-  - name: "🇺🇦[www.v2nodes.com] vless-UA-1... #6"
+  - name: "🇺🇦[www.v2nodes.com] vless-UA-1... #8"
     type: "vless"
     server: "83.147.18.75"
     port: 443
@@ -2695,7 +2782,31 @@ proxies:
     servername: "www.bing.com"
     client-fingerprint: "qq"
     flow: "xtls-rprx-vision"
-  - name: "🇺🇸[www.v2nodes.com] vless-US-1..."
+  - name: "🇺🇸 美国 | USA #20"
+    type: "vless"
+    server: "146.75.59.186"
+    port: 443
+    uuid: "7dee06cc-4bc8-43ca-a6c2-59f81107f2e3"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
+  - name: "🇺🇸[www.v2nodes.com] vless-US-1... #1"
+    type: "vless"
+    server: "50.117.15.225"
+    port: 443
+    uuid: "67eb6b17-7797-4ded-bf52-423c4c5f6cbd"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.foxsports.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+  - name: "🇺🇸[www.v2nodes.com] vless-US-1... #3"
     type: "vless"
     server: "budulai.himoy.space"
     port: 443
@@ -2703,7 +2814,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇺🇸[www.v2nodes.com] vless-US-1... #2"
+  - name: "🇺🇸[www.v2nodes.com] vless-US-1... #5"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
@@ -2716,15 +2827,7 @@ proxies:
       path: "/fp=chrome"
       headers:
         Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net."
-  - name: "🇺🇸[www.v2nodes.com] vless-US-1... #3"
-    type: "vless"
-    server: "172.235.58.21"
-    port: 443
-    uuid: "b98d4c6e-6770-4a31-8256-a4750cdea0e7"
-    udp: true
-    tls: false
-    network: "tcp"
-  - name: "🇺🇸[www.v2nodes.com] vless-US-1... #4"
+  - name: "🇺🇸[www.v2nodes.com] vless-US-1... #6"
     type: "vless"
     server: "104.21.91.244"
     port: 443
@@ -2739,7 +2842,7 @@ proxies:
       path: "/cart/docs/www/proxyip=108.160.132.132?edfp=chrome"
       headers:
         Host: "lucasjow.us.ci"
-  - name: "🇺🇸[www.v2nodes.com] vless-US-1... #5"
+  - name: "🇺🇸[www.v2nodes.com] vless-US-1... #7"
     type: "vless"
     server: "188.114.98.0"
     port: 443
@@ -2754,7 +2857,7 @@ proxies:
       path: "/drsukitgreiusweqa9otrh983fp=chrome"
       headers:
         Host: "server5.9966338.xyz"
-  - name: "🇺🇸[www.v2nodes.com] vless-US-1... #8"
+  - name: "🇺🇸[www.v2nodes.com] vless-US-1... #10"
     type: "vless"
     server: "funagfrdfs.alixxplay.com"
     port: 47691
@@ -2765,7 +2868,7 @@ proxies:
     servername: "m.media-amazon.com"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
-  - name: "🇺🇸[www.v2nodes.com] vless-US-1... #9"
+  - name: "🇺🇸[www.v2nodes.com] vless-US-1... #11"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
@@ -2773,7 +2876,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇺🇸[www.v2nodes.com] vless-US-1... #10"
+  - name: "🇺🇸[www.v2nodes.com] vless-US-1... #12"
     type: "vless"
     server: "147.45.60.160"
     port: 8444
@@ -2804,19 +2907,338 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇺🇸US_1|4.1MB/s"
+  - name: "🇳🇱NL_1|2.1MB/s"
     type: "vless"
-    server: "ct.877774.xyz"
+    server: "188.114.98.0"
     port: 443
-    uuid: "e0ccda9e-08ba-4da3-8844-73d586c7fff7"
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
     udp: true
     tls: true
     network: "ws"
-    servername: "us-lax.862400.xyz"
+    servername: "snip.edgeoneai.cc.cd"
+    alpn:
+      - "http/1.1"
     ws-opts:
-      path: "/announcement?ed=2048fp=random"
+      path: "/?TELEGRAM-TOOTFFARANGIfp=chrome"
       headers:
-        Host: "us-lax.862400.xyz"
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "🇸🇬SG_1|4.5MB/s"
+    type: "vless"
+    server: "172.64.150.43"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    ws-opts:
+      path: "/fp=unsafe"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "🇸🇬SG_2|4.6MB/s"
+    type: "vless"
+    server: "172.64.154.211"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    alpn:
+      - "h3"
+      - "h2"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "🇷🇺RU_1|1.6MB/s"
+    type: "vless"
+    server: "139.100.226.187"
+    port: 8443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    ws-opts:
+      path: "/fdip=sstp://vpn:vpn@public-vpn-200.opengw.net:443fp=chrome"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "🇺🇸US_1|1.6MB/s"
+    type: "vless"
+    server: "www.speedtest.net"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2560fp=chrome"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "🇦🇹AT_1|1.5MB/s"
+    type: "vless"
+    server: "130.78.185.4"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    ws-opts:
+      path: "/fp=chromefp=chrome"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "🇩🇪DE_3|1.9MB/s"
+    type: "vless"
+    server: "185.208.172.85"
+    port: 8443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    ws-opts:
+      path: "/fdip=sstp://vpn:vpn@public-vpn-200.opengw.net:443fp=chromefp=chrome"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "🇺🇸US_5|2.2MB/s"
+    type: "vless"
+    server: "43.174.195.1"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    ws-opts:
+      path: "/fdip=sstp://vpn:vpn@public-vpn-200.opengw.net:443fp=chrome"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "🇸🇬SG_3|4.0MB/s"
+    type: "vless"
+    server: "104.18.43.67"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    ws-opts:
+      path: "/fp=chromefp=chrome"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "🇸🇬SG_4|2.6MB/s"
+    type: "vless"
+    server: "104.18.36.29"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NETfp=chromefp=unsafe"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "🇰🇷KR_1|1.5MB/s"
+    type: "vless"
+    server: "158.247.222.168"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "🇺🇸US_17|1.8MB/s"
+    type: "vless"
+    server: "104.16.137.145"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "🇺🇸US_18|2.2MB/s"
+    type: "vless"
+    server: "104.16.65.1"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "🇵🇱PL_1|2.7MB/s"
+    type: "vless"
+    server: "pl2.himoy.space"
+    port: 443
+    uuid: "5131b5e9-2c3c-44a0-8f18-0641f3f21cac"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "pl2.himoy.space"
+    client-fingerprint: "firefox"
+  - name: "🇨🇦CA_2|1.6MB/s"
+    type: "vless"
+    server: "213.152.165.203"
+    port: 2093
+    uuid: "0b418782-e023-447e-ba99-e66b84ff118d"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.apple.com"
+    client-fingerprint: "chrome"
+  - name: "🇳🇱NL_5|1.2MB/s"
+    type: "vless"
+    server: "nl2.himoy.space"
+    port: 443
+    uuid: "5131b5e9-2c3c-44a0-8f18-0641f3f21cac"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "nl2.himoy.space"
+    client-fingerprint: "chrome"
+  - name: "🇺🇸US_19|3.3MB/s"
+    type: "vless"
+    server: "104.223.72.232"
+    port: 443
+    uuid: "444715e6-1c6a-4027-90df-fa01ac984669"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "gateway.icloud.com"
+    client-fingerprint: "chrome"
+  - name: "🇳🇱NL_6|3.7MB/s"
+    type: "vless"
+    server: "netherlands02.azotvpn.xyz"
+    port: 443
+    uuid: "a500be68-4ff6-433b-9968-472be69fab14"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "netherlands02.azotvpn.xyz"
+    client-fingerprint: "safari"
+  - name: "🇸🇬SG_6|2.3MB/s"
+    type: "vless"
+    server: "104.18.32.47"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    alpn:
+      - "h3"
+      - "h2"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "🇺🇸US_20|3.2MB/s"
+    type: "vless"
+    server: "104.17.149.181"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "🇺🇸US_21|2.2MB/s"
+    type: "vless"
+    server: "104.16.66.12"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "🇩🇪DE_7|3.2MB/s"
+    type: "vless"
+    server: "64.188.71.236"
+    port: 2083
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "🇨🇦CA_3|2.1MB/s"
+    type: "vless"
+    server: "40.233.99.248"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "🇸🇬SG_7|3.6MB/s"
+    type: "vless"
+    server: "104.18.38.125"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "🇸🇬SG_8|4.2MB/s"
+    type: "vless"
+    server: "172.64.157.161"
+    port: 443
+    uuid: "495c7195-85b8-498a-bf20-2ea9ce9175b5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "snip.edgeoneai.cc.cd"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "snip.edgeoneai.cc.cd"
+  - name: "🇺🇸US_22|2.8MB/s"
+    type: "vless"
+    server: "67.216.218.76"
+    port: 443
+    uuid: "77821190-1670-4e06-8111-98388d6fcefd"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.apple.com"
+    client-fingerprint: "chrome"
   - name: "🇧🇬 保加利亚 | BGR #1"
     type: "vless"
     server: "104.152.48.248"
@@ -2920,19 +3342,6 @@ proxies:
       path: "/fp=chrome"
       headers:
         Host: "snip.edgeoneai.cc.cd"
-  - name: "🇭🇰 香港 | HKG #1"
-    type: "vless"
-    server: "103.180.20.176"
-    port: 8443
-    uuid: "c1c04450-bf71-4049-ad0c-9cf6d94d9f1f"
-    udp: true
-    tls: false
-    network: "ws"
-    servername: "tse1.mm.bing.net"
-    ws-opts:
-      path: "/81574b6b-c9d7-44a0-b83d-dad56e8cb530security=tls"
-      headers:
-        Host: "tse1.mm.bing.net"
   - name: "🇭🇰 香港 | HKG #2"
     type: "vless"
     server: "163.53.18.35"
@@ -3466,19 +3875,6 @@ proxies:
       path: "/fp=chrome"
       headers:
         Host: "snip.edgeoneai.cc.cd"
-  - name: "🇺🇸 美国 | USA #20"
-    type: "vless"
-    server: "146.75.59.186"
-    port: 443
-    uuid: "7dee06cc-4bc8-43ca-a6c2-59f81107f2e3"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/fp=chrome"
-      headers:
-        Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
   - name: "🇺🇸 美国 | USA #21"
     type: "vless"
     server: "104.17.96.139"
@@ -3525,21 +3921,21 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "nQeEoXC5Yl5PZnPLvKUpFTU9cyQcNG902zpibWkwGbo="
     udp: true
-  - name: "🏳[www.v2nodes.com] ss-"
+  - name: "🇦🇹[www.v2nodes.com] ss-AT-1595..."
     type: "ss"
     server: "82.110.60.9"
     port: 19999
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
-  - name: "🏳[www.v2nodes.com] ss- #1"
+  - name: "🇨🇦[www.v2nodes.com] ss-CA-1559..."
     type: "ss"
     server: "51.222.141.125"
     port: 445
     cipher: "aes-256-gcm"
     password: "zDNVedRFPQexG9v"
     udp: true
-  - name: "🏳[www.v2nodes.com] ss- #2"
+  - name: "🇨🇦[www.v2nodes.com] ss-CA-1559... #1"
     type: "ss"
     server: "51.79.85.185"
     port: 8118
@@ -3560,21 +3956,21 @@ proxies:
     cipher: "aes-256-gcm"
     password: "kDWvXYZoTBcGkC4"
     udp: true
-  - name: "🇨🇦[www.v2nodes.com] ss-CA-1546..."
+  - name: "🏳[www.v2nodes.com] ss-"
     type: "ss"
     server: "51.222.155.113"
     port: 5601
     cipher: "aes-256-gcm"
     password: "Y6R9pAtvxxzmGC"
     udp: true
-  - name: "🏳[www.v2nodes.com] ss- #3"
+  - name: "🏳[www.v2nodes.com] ss- #1"
     type: "ss"
     server: "51.222.155.32"
     port: 5003
     cipher: "aes-256-gcm"
     password: "g5MeD6Ft3CWlJId"
     udp: true
-  - name: "🏳[www.v2nodes.com] ss- #4"
+  - name: "🏳[www.v2nodes.com] ss- #2"
     type: "ss"
     server: "51.79.64.198"
     port: 8119
@@ -3588,21 +3984,21 @@ proxies:
     cipher: "aes-256-gcm"
     password: "kDWvXYZoTBcGkC4"
     udp: true
-  - name: "🏳[www.v2nodes.com] ss- #5"
+  - name: "🏳[www.v2nodes.com] ss- #3"
     type: "ss"
     server: "51.222.12.127"
     port: 445
     cipher: "aes-256-gcm"
     password: "zDNVedRFPQexG9v"
     udp: true
-  - name: "🏳[www.v2nodes.com] ss- #6"
+  - name: "🇨🇭[www.v2nodes.com] ss-CH-1573..."
     type: "ss"
     server: "132.243.175.144"
     port: 8388
     cipher: "chacha20-ietf-poly1305"
     password: "e8KgS8fD0yDqYFpgN4G5piCOt9aFyqA3"
     udp: true
-  - name: "🏳[www.v2nodes.com] ss- #7"
+  - name: "🇨🇿[www.v2nodes.com] ss-CZ-1599..."
     type: "ss"
     server: "67.159.18.34"
     port: 17001
@@ -3615,6 +4011,13 @@ proxies:
     port: 19999
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
+    udp: true
+  - name: "🇪🇬[www.v2nodes.com] ss-EG-1599..."
+    type: "ss"
+    server: "38.54.59.102"
+    port: 443
+    cipher: "aes-256-gcm"
+    password: "pKEW8JPByTVTLtM"
     udp: true
   - name: "🇬🇧[www.v2nodes.com] ss-GB-1602..."
     type: "ss"
@@ -3630,28 +4033,28 @@ proxies:
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
-  - name: "🏳[www.v2nodes.com] ss- #8"
+  - name: "🇮🇹IT_1|1.4MB/s"
     type: "ss"
     server: "202.50.253.54"
     port: 19999
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
-  - name: "🇮🇹[www.v2nodes.com] ss-IT-1602... #1"
+  - name: "🇮🇹[www.v2nodes.com] ss-IT-1602... #2"
     type: "ss"
     server: "202.50.253.72"
     port: 19999
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
-  - name: "🇮🇹[www.v2nodes.com] ss-IT-1602... #2"
+  - name: "🇮🇹[www.v2nodes.com] ss-IT-1602... #3"
     type: "ss"
     server: "202.50.253.18"
     port: 19999
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
-  - name: "🏳[www.v2nodes.com] ss- #9"
+  - name: "🇮🇹[www.v2nodes.com] ss-IT-1602... #4"
     type: "ss"
     server: "202.50.253.99"
     port: 19999
@@ -3665,14 +4068,14 @@ proxies:
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
-  - name: "🇮🇹[www.v2nodes.com] ss-IT-1602... #4"
+  - name: "🇮🇹[www.v2nodes.com] ss-IT-1602... #6"
     type: "ss"
     server: "202.50.253.36"
     port: 19999
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
-  - name: "🏳[www.v2nodes.com] ss- #10"
+  - name: "🇮🇹[www.v2nodes.com] ss-IT-1602... #7"
     type: "ss"
     server: "202.50.253.81"
     port: 19999
@@ -3686,14 +4089,21 @@ proxies:
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
-  - name: "🏳[www.v2nodes.com] ss- #12"
+  - name: "🇮🇹[www.v2nodes.com] ss-IT-1602... #9"
+    type: "ss"
+    server: "202.50.253.27"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
+    udp: true
+  - name: "🇮🇹[www.v2nodes.com] ss-IT-1597..."
     type: "ss"
     server: "185.164.175.81"
     port: 19999
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
-  - name: "🏳[www.v2nodes.com] ss- #13"
+  - name: "🏳[www.v2nodes.com] ss- #4"
     type: "ss"
     server: "57.131.48.45"
     port: 8388
@@ -3728,6 +4138,13 @@ proxies:
     cipher: "aes-256-gcm"
     password: "585f0e10-7b51-4f2e-a13d-479b045171bd"
     udp: true
+  - name: "🇲🇽[www.v2nodes.com] ss-MX-1564..."
+    type: "ss"
+    server: "64.177.90.30"
+    port: 8388
+    cipher: "aes-256-gcm"
+    password: "BWyPPTusFKhGgzKh"
+    udp: true
   - name: "🇳🇱[www.v2nodes.com] ss-NL-1602..."
     type: "ss"
     server: "62.210.26.134"
@@ -3735,14 +4152,7 @@ proxies:
     cipher: "aes-128-gcm"
     password: "3653a8e7d4956b523e18db47e749af30"
     udp: true
-  - name: "🇳🇴[www.v2nodes.com] ss-NO-1220..."
-    type: "ss"
-    server: "185.213.23.63"
-    port: 990
-    cipher: "chacha20-ietf-poly1305"
-    password: "ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44="
-    udp: true
-  - name: "🏳[www.v2nodes.com] ss- #14"
+  - name: "🏳[www.v2nodes.com] ss- #5"
     type: "ss"
     server: "194.68.44.42"
     port: 64546
@@ -3756,13 +4166,6 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "QFWzCw2uX9B9i6qAYeFBIE"
     udp: true
-  - name: "🇸🇪[www.v2nodes.com] ss-SE-1560..."
-    type: "ss"
-    server: "70.34.212.124"
-    port: 8388
-    cipher: "aes-256-gcm"
-    password: "AxIYWtskJWIIaefW"
-    udp: true
   - name: "🇸🇬[www.v2nodes.com] ss-SG-1559..."
     type: "ss"
     server: "139.180.220.175"
@@ -3770,7 +4173,7 @@ proxies:
     cipher: "aes-256-gcm"
     password: "qpSevKaUXYQKvSjp"
     udp: true
-  - name: "🏳[www.v2nodes.com] ss- #15"
+  - name: "🇹🇭[www.v2nodes.com] ss-TH-1591..."
     type: "ss"
     server: "pphfree2.mvpnpvpn.de5.net"
     port: 52351
@@ -3798,61 +4201,47 @@ proxies:
     cipher: "aes-128-gcm"
     password: "a7be96a98392ef40dab7693317a81cc0"
     udp: true
-  - name: "🏳[www.v2nodes.com] ss- #16"
+  - name: "🇺🇸[www.v2nodes.com] ss-US-1603... #2"
     type: "ss"
     server: "185.230.230.18"
     port: 19999
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
-  - name: "🇺🇸[www.v2nodes.com] ss-US-1603... #2"
+  - name: "🇺🇸[www.v2nodes.com] ss-US-1603... #3"
     type: "ss"
     server: "185.215.132.18"
     port: 19999
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
-  - name: "🏳[www.v2nodes.com] ss- #17"
+  - name: "🇺🇸[www.v2nodes.com] ss-US-1602..."
     type: "ss"
     server: "95.215.201.18"
     port: 19999
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
-  - name: "🏳[www.v2nodes.com] ss- #18"
+  - name: "🇺🇸[www.v2nodes.com] ss-US-1602... #1"
     type: "ss"
     server: "193.151.163.18"
     port: 19999
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
-  - name: "🇺🇸[www.v2nodes.com] ss-US-1602..."
+  - name: "🇺🇸[www.v2nodes.com] ss-US-1602... #2"
     type: "ss"
     server: "45.86.51.18"
     port: 19999
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
-  - name: "🇺🇸[www.v2nodes.com] ss-US-1602... #1"
+  - name: "🇺🇸[www.v2nodes.com] ss-US-1602... #3"
     type: "ss"
     server: "193.151.160.18"
     port: 19999
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
-    udp: true
-  - name: "🏳[www.v2nodes.com] ss- #19"
-    type: "ss"
-    server: "185.215.132.9"
-    port: 19999
-    cipher: "aes-256-gcm"
-    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
-    udp: true
-  - name: "🇿🇦[www.v2nodes.com] ss-ZA-1534..."
-    type: "ss"
-    server: "139.84.247.164"
-    port: 8388
-    cipher: "chacha20-ietf-poly1305"
-    password: "tfAcRikawhNoZAhu"
     udp: true
   - name: "🇿🇦[www.v2nodes.com] ss-ZA-1336..."
     type: "ss"
@@ -3861,7 +4250,7 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "aduB9HGxQHjA2SBMRjkHX6"
     udp: true
-  - name: "🏳[www.v2nodes.com] ss- #20"
+  - name: "🇿🇦[www.v2nodes.com] ss-ZA-1333..."
     type: "ss"
     server: "102.133.165.160"
     port: 16233
@@ -4066,7 +4455,23 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇩🇪[www.v2nodes.com] trojan-DE-..."
+  - name: "🇭🇰HK_1|3.8MB/s"
+    type: "vmess"
+    server: "47.242.81.94"
+    port: 52080
+    uuid: "e47b9f77-60e4-4738-8d53-772b6002e146"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇷🇺RU_2|2.8MB/s"
+    type: "vmess"
+    server: "158.160.180.165"
+    port: 24212
+    uuid: "c58c1205-b308-416f-8503-c04557abf93d"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🏳[www.v2nodes.com] trojan-"
     type: "trojan"
     server: "de3.dedushka.top"
     port: 443
@@ -4074,7 +4479,7 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
-  - name: "🇩🇪[www.v2nodes.com] trojan-DE-... #1"
+  - name: "🇩🇪[www.v2nodes.com] trojan-DE-..."
     type: "trojan"
     server: "de12.dedushka.top"
     port: 443
@@ -4083,7 +4488,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "de12.dedushka.top"
-  - name: "🇩🇪[www.v2nodes.com] trojan-DE-... #2"
+  - name: "🇩🇪[www.v2nodes.com] trojan-DE-... #1"
     type: "trojan"
     server: "de5.dedushka.top"
     port: 443
@@ -4092,7 +4497,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "de5.dedushka.top"
-  - name: "🇩🇪[www.v2nodes.com] trojan-DE-... #3"
+  - name: "🇩🇪[www.v2nodes.com] trojan-DE-... #2"
     type: "trojan"
     server: "it1.dedushka.top"
     port: 443
@@ -4101,7 +4506,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "it1.dedushka.top"
-  - name: "🏳[www.v2nodes.com] trojan-"
+  - name: "🏳[www.v2nodes.com] trojan- #1"
     type: "trojan"
     server: "de2.dedushka.top"
     port: 443
@@ -4110,7 +4515,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "de2.dedushka.top"
-  - name: "🏳[www.v2nodes.com] trojan- #1"
+  - name: "🏳[www.v2nodes.com] trojan- #2"
     type: "trojan"
     server: "de8.dedushka.top"
     port: 443
@@ -4119,24 +4524,6 @@ proxies:
     tls: true
     network: "tcp"
     servername: "de8.dedushka.top"
-  - name: "🇩🇪[www.v2nodes.com] trojan-DE-... #4"
-    type: "trojan"
-    server: "de4.dedushka.top"
-    port: 443
-    password: "4_VfP9fKaM-3LpSVvoZuc_WUzLoCdHaA"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "de4.dedushka.top"
-  - name: "🇩🇪[www.v2nodes.com] trojan-DE-... #5"
-    type: "trojan"
-    server: "de10.dedushka.top"
-    port: 443
-    password: "4_VfP9fKaM-3LpSVvoZuc_WUzLoCdHaA"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "de10.dedushka.top"
   - name: "🇫🇷[www.v2nodes.com] trojan-FR-..."
     type: "trojan"
     server: "185.255.179.166"
@@ -4150,9 +4537,9 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "🇫🇷[www.v2nodes.com] trojan-FR-... #4"
+  - name: "🇫🇷[www.v2nodes.com] trojan-FR-... #1"
     type: "trojan"
-    server: "185.220.100.168"
+    server: "185.225.68.232"
     port: 443
     password: "humanity"
     udp: true
@@ -4163,7 +4550,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "🇫🇷[www.v2nodes.com] trojan-FR-... #1"
+  - name: "🇫🇷[www.v2nodes.com] trojan-FR-... #2"
     type: "trojan"
     server: "212.227.144.37"
     port: 8443
@@ -4189,7 +4576,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "🇫🇷[www.v2nodes.com] trojan-FR-... #2"
+  - name: "🇫🇷[www.v2nodes.com] trojan-FR-... #3"
     type: "trojan"
     server: "www.calmlunch.com"
     port: 443
@@ -4215,7 +4602,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "🇫🇷[www.v2nodes.com] trojan-FR-... #3"
+  - name: "🇫🇷[www.v2nodes.com] trojan-FR-... #4"
     type: "trojan"
     server: "45.130.125.160"
     port: 443
@@ -4230,13 +4617,26 @@ proxies:
         Host: "www.calmlunch.com"
   - name: "🇫🇷[www.v2nodes.com] trojan-FR-... #5"
     type: "trojan"
+    server: "185.220.100.168"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "🇫🇷[www.v2nodes.com] trojan-FR-... #6"
+    type: "trojan"
     server: "165.215.250.14"
     port: 443
     password: "humanity"
     udp: true
     tls: true
     network: "tcp"
-  - name: "🇫🇷[www.v2nodes.com] trojan-FR-... #6"
+  - name: "🇫🇷[www.v2nodes.com] trojan-FR-... #7"
     type: "trojan"
     server: "104.19.229.21"
     port: 443
@@ -4249,7 +4649,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "🇫🇷[www.v2nodes.com] trojan-FR-... #7"
+  - name: "🇫🇷[www.v2nodes.com] trojan-FR-... #8"
     type: "trojan"
     server: "165.215.250.14"
     port: 443
@@ -4262,7 +4662,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "🇫🇷[www.v2nodes.com] trojan-FR-... #8"
+  - name: "🇫🇷[www.v2nodes.com] trojan-FR-... #9"
     type: "trojan"
     server: "212.183.88.136"
     port: 443
@@ -4416,19 +4816,6 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
-  - name: "🇳🇱[www.v2nodes.com] trojan-NL-... #10"
-    type: "trojan"
-    server: "46.62.204.134"
-    port: 443
-    password: "humanity"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "www.pleadcourt.org"
-    ws-opts:
-      path: "/assignment"
-      headers:
-        Host: "www.pleadcourt.org"
   - name: "🇵🇱[www.v2nodes.com] trojan-PL-..."
     type: "trojan"
     server: "pl1.dedushka.top"
@@ -4473,7 +4860,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "sj6.freeguard.org"
-  - name: "🇺🇸[www.v2nodes.com] trojan-US-... #2"
+  - name: "🇺🇸[www.v2nodes.com] trojan-US-... #1"
     type: "trojan"
     server: "blog.findlocaljobnetworkandbuildcommunityconnections.com"
     port: 443
@@ -4481,7 +4868,6 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
-    servername: "blog.findlocaljobnetworkandbuildcommunityconnections.com"
   - name: "香港2|@ripaojiedian"
     type: "trojan"
     server: "7d0a2gz0-7a0c.aws-agent.net"
@@ -4572,24 +4958,497 @@ proxies:
     tls: true
     network: "tcp"
     servername: "m.ctrip.com"
-  - name: "120.232.204.58"
-    type: "http"
-    server: "120.232.204.58"
-    port: 52200
+  - name: "🇳🇱NL_2|1.8MB/s"
+    type: "trojan"
+    server: "172.66.40.99"
+    port: 443
+    password: "humanity"
+    udp: true
     tls: true
-    username: ""
-    password: ""
-  - name: "185.221.132.242"
+    network: "ws"
+    servername: "www.trusteeforward.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "130.195.250.34"
     type: "http"
-    server: "185.221.132.242"
+    server: "130.195.250.34"
     port: 443
     tls: true
     username: ""
     password: "None"
+  - name: "95.153.31.66"
+    type: "http"
+    server: "95.153.31.66"
+    port: 9443
+    tls: true
+    username: ""
+    password: ""
+  - name: "37.120.213.210"
+    type: "http"
+    server: "37.120.213.210"
+    port: 9443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "213.139.9.142"
+    type: "http"
+    server: "213.139.9.142"
+    port: 9443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "146.70.123.98"
+    type: "http"
+    server: "146.70.123.98"
+    port: 443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "146.70.242.130"
+    type: "http"
+    server: "146.70.242.130"
+    port: 443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "193.239.236.134"
+    type: "http"
+    server: "193.239.236.134"
+    port: 443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "169.150.248.17"
+    type: "http"
+    server: "169.150.248.17"
+    port: 443
+    tls: true
+    username: ""
+    password: ""
+  - name: "146.70.170.210"
+    type: "http"
+    server: "146.70.170.210"
+    port: 9443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "185.216.35.66"
+    type: "http"
+    server: "185.216.35.66"
+    port: 443
+    tls: true
+    username: ""
+    password: ""
   - name: "213.109.163.119"
     type: "http"
     server: "213.109.163.119"
     port: 443
+    tls: true
+    username: ""
+    password: ""
+  - name: "158.173.154.1"
+    type: "http"
+    server: "158.173.154.1"
+    port: 9002
+    tls: true
+    username: ""
+    password: ""
+  - name: "198.105.124.180"
+    type: "http"
+    server: "198.105.124.180"
+    port: 8443
+    tls: true
+    username: ""
+    password: ""
+  - name: "84.17.47.148"
+    type: "http"
+    server: "84.17.47.148"
+    port: 9002
+    tls: true
+    username: ""
+    password: "None"
+  - name: "64.98.50.100"
+    type: "http"
+    server: "64.98.50.100"
+    port: 443
+    tls: true
+    username: ""
+    password: ""
+  - name: "44.248.167.117"
+    type: "http"
+    server: "44.248.167.117"
+    port: 8443
+    tls: true
+    username: ""
+    password: ""
+  - name: "193.176.84.19"
+    type: "http"
+    server: "193.176.84.19"
+    port: 9002
+    tls: true
+    username: ""
+    password: ""
+  - name: "87.98.174.157"
+    type: "http"
+    server: "87.98.174.157"
+    port: 6103
+    tls: true
+    username: ""
+    password: "None"
+  - name: "158.173.154.2"
+    type: "http"
+    server: "158.173.154.2"
+    port: 9002
+    tls: true
+    username: ""
+    password: ""
+  - name: "146.70.244.2"
+    type: "http"
+    server: "146.70.244.2"
+    port: 443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "133.18.200.207"
+    type: "http"
+    server: "133.18.200.207"
+    port: 343
+    tls: true
+    username: ""
+    password: "None"
+  - name: "185.164.35.16"
+    type: "http"
+    server: "185.164.35.16"
+    port: 9443
+    tls: true
+    username: ""
+    password: ""
+  - name: "146.70.242.146"
+    type: "http"
+    server: "146.70.242.146"
+    port: 443
+    tls: true
+    username: ""
+    password: ""
+  - name: "138.199.35.210"
+    type: "http"
+    server: "138.199.35.210"
+    port: 9002
+    tls: true
+    username: ""
+    password: ""
+  - name: "138.199.35.198"
+    type: "http"
+    server: "138.199.35.198"
+    port: 9002
+    tls: true
+    username: "null"
+    password: "null"
+  - name: "138.199.35.214"
+    type: "http"
+    server: "138.199.35.214"
+    port: 9002
+    tls: true
+    username: ""
+    password: "None"
+  - name: "185.163.110.194"
+    type: "http"
+    server: "185.163.110.194"
+    port: 443
+    tls: true
+    username: ""
+    password: ""
+  - name: "185.164.138.156"
+    type: "http"
+    server: "185.164.138.156"
+    port: 443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "44.229.69.166"
+    type: "http"
+    server: "44.229.69.166"
+    port: 8443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "138.199.35.200"
+    type: "http"
+    server: "138.199.35.200"
+    port: 9002
+    tls: true
+    username: "null"
+    password: "null"
+  - name: "138.199.35.205"
+    type: "http"
+    server: "138.199.35.205"
+    port: 9002
+    tls: true
+    username: "null"
+    password: "null"
+  - name: "149.88.27.33"
+    type: "http"
+    server: "149.88.27.33"
+    port: 9443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "130.195.250.18"
+    type: "http"
+    server: "130.195.250.18"
+    port: 443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "138.199.35.197"
+    type: "http"
+    server: "138.199.35.197"
+    port: 9002
+    tls: true
+    username: ""
+    password: "None"
+  - name: "185.183.105.130"
+    type: "http"
+    server: "185.183.105.130"
+    port: 443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "87.106.223.158"
+    type: "http"
+    server: "87.106.223.158"
+    port: 443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "146.70.221.34"
+    type: "http"
+    server: "146.70.221.34"
+    port: 443
+    tls: true
+    username: ""
+    password: ""
+  - name: "185.94.192.210"
+    type: "http"
+    server: "185.94.192.210"
+    port: 443
+    tls: true
+    username: ""
+    password: ""
+  - name: "212.102.63.61"
+    type: "http"
+    server: "212.102.63.61"
+    port: 443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "138.199.35.195"
+    type: "http"
+    server: "138.199.35.195"
+    port: 9002
+    tls: true
+    username: ""
+    password: ""
+  - name: "82.96.128.175"
+    type: "http"
+    server: "82.96.128.175"
+    port: 8090
+    tls: true
+    username: ""
+    password: "None"
+  - name: "212.102.63.31"
+    type: "http"
+    server: "212.102.63.31"
+    port: 443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "154.47.25.78"
+    type: "http"
+    server: "154.47.25.78"
+    port: 9443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "82.66.235.221"
+    type: "http"
+    server: "82.66.235.221"
+    port: 443
+    tls: true
+    username: ""
+    password: ""
+  - name: "185.221.132.226"
+    type: "http"
+    server: "185.221.132.226"
+    port: 9443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "31.171.155.210"
+    type: "http"
+    server: "31.171.155.210"
+    port: 9443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "135.136.1.2"
+    type: "http"
+    server: "135.136.1.2"
+    port: 9443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "84.233.178.33"
+    type: "http"
+    server: "84.233.178.33"
+    port: 9443
+    tls: true
+    username: ""
+    password: ""
+  - name: "31.7.62.50"
+    type: "http"
+    server: "31.7.62.50"
+    port: 443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "31.171.154.66"
+    type: "http"
+    server: "31.171.154.66"
+    port: 9443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "149.102.245.65"
+    type: "http"
+    server: "149.102.245.65"
+    port: 443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "193.176.84.22"
+    type: "http"
+    server: "193.176.84.22"
+    port: 9002
+    tls: true
+    username: ""
+    password: ""
+  - name: "149.36.50.129"
+    type: "http"
+    server: "149.36.50.129"
+    port: 443
+    tls: true
+    username: ""
+    password: ""
+  - name: "172.64.69.89"
+    type: "http"
+    server: "172.64.69.89"
+    port: 443
+    tls: true
+    username: ""
+    password: ""
+  - name: "87.120.103.226"
+    type: "http"
+    server: "87.120.103.226"
+    port: 443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "149.22.86.1"
+    type: "http"
+    server: "149.22.86.1"
+    port: 443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "84.17.47.125"
+    type: "http"
+    server: "84.17.47.125"
+    port: 9002
+    tls: true
+    username: ""
+    password: "None"
+  - name: "154.47.29.174"
+    type: "http"
+    server: "154.47.29.174"
+    port: 443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "38.165.231.71"
+    type: "http"
+    server: "38.165.231.71"
+    port: 9443
+    tls: true
+    username: ""
+    password: ""
+  - name: "128.199.121.61"
+    type: "http"
+    server: "128.199.121.61"
+    port: 9090
+    tls: false
+    username: ""
+    password: ""
+  - name: "198.44.157.27"
+    type: "http"
+    server: "198.44.157.27"
+    port: 9443
+    tls: true
+    username: ""
+    password: ""
+  - name: "172.64.68.89"
+    type: "http"
+    server: "172.64.68.89"
+    port: 443
+    tls: true
+    username: ""
+    password: "None"
+  - name: "193.176.84.24"
+    type: "http"
+    server: "193.176.84.24"
+    port: 9002
+    tls: true
+    username: ""
+    password: ""
+  - name: "23.175.41.231"
+    type: "http"
+    server: "23.175.41.231"
+    port: 8080
+    tls: false
+    username: ""
+    password: ""
+  - name: "103.124.138.70"
+    type: "http"
+    server: "103.124.138.70"
+    port: 8090
+    tls: false
+    username: ""
+    password: ""
+  - name: "84.17.47.147"
+    type: "http"
+    server: "84.17.47.147"
+    port: 9002
+    tls: true
+    username: "null"
+    password: "null"
+  - name: "138.199.35.202"
+    type: "http"
+    server: "138.199.35.202"
+    port: 9002
+    tls: true
+    username: "null"
+    password: "None"
+  - name: "193.176.84.36"
+    type: "http"
+    server: "193.176.84.36"
+    port: 9002
+    tls: true
+    username: ""
+    password: ""
+  - name: "193.176.84.25"
+    type: "http"
+    server: "193.176.84.25"
+    port: 9002
     tls: true
     username: ""
     password: ""
@@ -4600,13 +5459,6 @@ proxies:
     tls: true
     username: ""
     password: "None"
-  - name: "158.173.154.1"
-    type: "http"
-    server: "158.173.154.1"
-    port: 9002
-    tls: true
-    username: ""
-    password: ""
   - name: "158.173.154.5"
     type: "http"
     server: "158.173.154.5"
@@ -4642,13 +5494,6 @@ proxies:
     tls: true
     username: ""
     password: ""
-  - name: "198.105.124.180"
-    type: "http"
-    server: "198.105.124.180"
-    port: 8443
-    tls: true
-    username: ""
-    password: ""
   - name: "18.200.158.139"
     type: "http"
     server: "18.200.158.139"
@@ -4670,20 +5515,13 @@ proxies:
     tls: true
     username: ""
     password: ""
-  - name: "84.17.47.125"
+  - name: "84.17.47.125-1"
     type: "http"
     server: "84.17.47.125"
     port: 9002
     tls: true
     username: ""
     password: ""
-  - name: "84.17.47.148"
-    type: "http"
-    server: "84.17.47.148"
-    port: 9002
-    tls: true
-    username: ""
-    password: "None"
   - name: "84.17.47.123"
     type: "http"
     server: "84.17.47.123"
@@ -4694,13 +5532,6 @@ proxies:
   - name: "84.17.47.124"
     type: "http"
     server: "84.17.47.124"
-    port: 9002
-    tls: true
-    username: ""
-    password: ""
-  - name: "193.176.84.19"
-    type: "http"
-    server: "193.176.84.19"
     port: 9002
     tls: true
     username: ""
@@ -4726,34 +5557,22 @@ proxies:
     tls: true
     username: ""
     password: ""
-  - name: "64.98.50.100"
-    type: "http"
-    server: "64.98.50.100"
-    port: 443
-    tls: true
-    username: ""
-    password: ""
-  - name: "44.248.167.117"
-    type: "http"
-    server: "44.248.167.117"
-    port: 8443
-    tls: true
-    username: ""
-    password: ""
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
-    icon: "https://www.svgrepo.com/show/412721/choose.svg"
     proxies:
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "توزیع بار چرخشی ⚖️"
       - "قطع اینترنت ⛔"
       - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/412721/choose.svg"
   - name: "دستی 🤏🏻"
     type: "select"
-    icon: "https://www.svgrepo.com/show/372331/cursor-hand-click.svg"
+    lazy: true
     proxies:
+      - "45.150.110.8"
+      - "51.15.20.32"
       - "🇩🇪192088 | ⚡️Telegram = t.me/v..."
       - "@KAFING_2"
       - "🇺🇸139909 | ⚡️Telegram = t.me/S..."
@@ -4771,7 +5590,6 @@ proxy-groups:
       - "🛸100@oneclickvpnkeys"
       - "@v2ray_configs_pools 🌍 ⚡️"
       - "🩵+@Azarakhsh_Proxy+🩷"
-      - "🇮🇷198624 | ⚡️Telegram = t.me/S..."
       - "@meliproxyy"
       - "@FarazV2ray"
       - "Telegram@vpnjey"
@@ -4803,8 +5621,9 @@ proxy-groups:
       - "🇦🇱[www.v2nodes.com] vless-AL-1..."
       - "🇦🇲[www.v2nodes.com] vless-AM-1..."
       - "🇦🇲[www.v2nodes.com] vless-AM-1... #1"
-      - "🇺🇦[www.v2nodes.com] vless-UA-1... #7"
+      - "🇺🇦[www.v2nodes.com] vless-UA-1... #9"
       - "🇦🇹[www.v2nodes.com] vless-AT-3... #1"
+      - "🇬🇧[www.v2nodes.com] vless-GB-1... #1"
       - "🏳[www.v2nodes.com] vless-"
       - "🇧🇬[www.v2nodes.com] vless-BG-3... #1"
       - "🏳[www.v2nodes.com] vless- #1"
@@ -4816,43 +5635,45 @@ proxy-groups:
       - "🇧🇾[www.v2nodes.com] vless-BY-1... #1"
       - "🇨🇦[www.v2nodes.com] vless-CA-1..."
       - "🇨🇦[www.v2nodes.com] vless-CA-1... #1"
-      - "🏳[www.v2nodes.com] vless- #3"
+      - "🇨🇦[www.v2nodes.com] vless-CA-1... #2"
       - "🇸🇬[www.v2nodes.com] vless-SG"
-      - "🇯🇵[www.v2nodes.com] vless-JP"
       - "🇸🇬[www.v2nodes.com] vless-SG #1"
+      - "🇯🇵[www.v2nodes.com] vless-JP"
       - "🇸🇬[www.v2nodes.com] vless-SG #2"
       - "🇸🇬[www.v2nodes.com] vless-SG #3"
-      - "🏳[www.v2nodes.com] vless- #30"
+      - "🇸🇬[www.v2nodes.com] vless-SG #4"
       - "🇸🇬[www.v2nodes.com] vless-SG #5"
-      - "🏳[www.v2nodes.com] vless- #24"
+      - "🇸🇬[www.v2nodes.com] vless-SG #6"
+      - "🇭🇰[www.v2nodes.com] vless-HK"
       - "🇭🇰[www.v2nodes.com] vless-HK #1"
-      - "🇭🇰[www.v2nodes.com] vless-HK #3"
       - "🇨🇭[www.v2nodes.com] vless-CH-1..."
       - "🇿🇦[www.v2nodes.com] vless-ZA-1..."
       - "🇨🇱[www.v2nodes.com] vless-CL-1... #1"
       - "🇨🇱[www.v2nodes.com] vless-CL-1... #2"
       - "🇨🇾[www.v2nodes.com] vless-CY-1..."
-      - "🏳[www.v2nodes.com] vless- #4"
+      - "🏳[www.v2nodes.com] vless- #3"
       - "🇩🇪[www.v2nodes.com] vless-DE-1..."
-      - "🇫🇮[www.v2nodes.com] vless-FI-1... #3"
+      - "🇩🇪[www.v2nodes.com] vless-DE-1... #1"
       - "🇩🇪[www.v2nodes.com] vless-DE-1... #2"
-      - "🇺🇸[www.v2nodes.com] vless-US-1... #6"
+      - "🇫🇮[www.v2nodes.com] vless-FI-1... #3"
       - "🇩🇪[www.v2nodes.com] vless-DE-1... #4"
-      - "🇩🇪[www.v2nodes.com] vless-DE-1... #5"
+      - "🇺🇸[www.v2nodes.com] vless-US-1... #8"
       - "🇩🇪[www.v2nodes.com] vless-DE-1... #6"
-      - "🇺🇸[www.v2nodes.com] vless-US-1... #7"
+      - "🇩🇪[www.v2nodes.com] vless-DE-1... #7"
       - "🇩🇪[www.v2nodes.com] vless-DE-1... #8"
+      - "🇺🇸[www.v2nodes.com] vless-US-1... #9"
       - "🇩🇪[www.v2nodes.com] vless-DE-1... #10"
-      - "🇩🇪[www.v2nodes.com] vless-DE-1... #11"
+      - "🇩🇪[www.v2nodes.com] vless-DE-1... #12"
       - "🇪🇪[www.v2nodes.com] vless-EE-1..."
       - "🇪🇪[www.v2nodes.com] vless-EE-1... #2"
+      - "🇪🇸[www.v2nodes.com] vless-ES-1..."
       - "🇪🇸[www.v2nodes.com] vless-ES-4... #4"
-      - "🏳[www.v2nodes.com] vless- #9"
+      - "🏳[www.v2nodes.com] vless- #8"
       - "🇪🇸[www.v2nodes.com] vless-ES-2... #2"
-      - "🇪🇸[www.v2nodes.com] vless-ES-1... #4"
+      - "🇪🇸[www.v2nodes.com] vless-ES-1... #5"
       - "🇪🇸[www.v2nodes.com] vless-ES-2... #1"
       - "🇪🇸[www.v2nodes.com] vless-ES-4..."
-      - "Telegram---Chanel0111Netfp=chrome&security=tls#🏳[www.v2nodes.com] vless- #8"
+      - "Telegram---Chanel0111Netfp=chrome&security=tls#🏳[www.v2nodes.com] vless- #7"
       - "🇪🇸[www.v2nodes.com] vless-ES-4... #1"
       - "🇪🇸[www.v2nodes.com] vless-ES-4... #5"
       - "🇫🇮[www.v2nodes.com] vless-FI-1... #1"
@@ -4861,51 +5682,51 @@ proxy-groups:
       - "🇫🇮[www.v2nodes.com] vless-FI-1... #13"
       - "🇫🇮[www.v2nodes.com] vless-FI-1... #6"
       - "🇫🇮[www.v2nodes.com] vless-FI-1... #7"
-      - "🏳[www.v2nodes.com] vless- #11"
+      - "🏳[www.v2nodes.com] vless- #10"
       - "🇫🇷[www.v2nodes.com] vless-FR-1..."
       - "🇫🇷[www.v2nodes.com] vless-FR-1... #1"
       - "🇫🇷[www.v2nodes.com] vless-FR-1... #2"
       - "🇫🇷[www.v2nodes.com] vless-FR-1... #3"
-      - "🏳[www.v2nodes.com] vless- #12"
+      - "🇫🇷[www.v2nodes.com] vless-FR-1... #4"
       - "🇬🇧[www.v2nodes.com] vless-GB-1..."
-      - "🇬🇧[www.v2nodes.com] vless-GB-1... #1"
-      - "🇬🇧[www.v2nodes.com] vless-GB-1... #4"
+      - "🇬🇧[www.v2nodes.com] vless-GB-1... #2"
       - "🇬🇧[www.v2nodes.com] vless-GB-1... #5"
       - "🇬🇧[www.v2nodes.com] vless-GB-1... #6"
       - "🇬🇧[www.v2nodes.com] vless-GB-1... #7"
       - "🇬🇧[www.v2nodes.com] vless-GB-1... #8"
+      - "🇬🇧[www.v2nodes.com] vless-GB-1... #9"
+      - "🇬🇧[www.v2nodes.com] vless-GB-1... #10"
       - "🇬🇷[www.v2nodes.com] vless-GR-1..."
       - "🇬🇷[www.v2nodes.com] vless-GR-3..."
       - "🇭🇰[www.v2nodes.com] vless-HK-1..."
-      - "🏳[www.v2nodes.com] vless- #13"
       - "🇭🇰[www.v2nodes.com] vless-HK-1... #1"
       - "🇭🇰[www.v2nodes.com] vless-HK-1... #2"
-      - "🏳[www.v2nodes.com] vless- #14"
-      - "🏳[www.v2nodes.com] vless- #15"
+      - "🇭🇰[www.v2nodes.com] vless-HK-1... #3"
+      - "🏳[www.v2nodes.com] vless- #11"
+      - "🇭🇰 香港 | HKG #1"
       - "🇭🇺[www.v2nodes.com] vless-HU-6..."
       - "🇮🇱[www.v2nodes.com] vless-IL-1... #1"
-      - "🏳[www.v2nodes.com] vless- #16"
       - "🇮🇳[www.v2nodes.com] vless-IN-1..."
       - "🇮🇳[www.v2nodes.com] vless-IN-1... #1"
       - "🇮🇳[www.v2nodes.com] vless-IN-1... #2"
-      - "🇮🇳[www.v2nodes.com] vless-IN-1... #3"
       - "🇮🇹[www.v2nodes.com] vless-IT-1..."
       - "🇮🇹[www.v2nodes.com] vless-IT-1... #1"
       - "🇮🇹[www.v2nodes.com] vless-IT-1... #2"
-      - "🏳[www.v2nodes.com] vless- #17"
+      - "🏳[www.v2nodes.com] vless- #12"
       - "🇮🇹[www.v2nodes.com] vless-IT-2..."
       - "🇯🇵[www.v2nodes.com] vless-JP-1... #2"
       - "🇯🇵[www.v2nodes.com] vless-JP-1... #3"
-      - "🏳[www.v2nodes.com] vless- #18"
-      - "🏳[www.v2nodes.com] vless- #19"
-      - "🏳[www.v2nodes.com] vless- #20"
+      - "🇯🇵[www.v2nodes.com] vless-JP-1... #4"
+      - "🇯🇵[www.v2nodes.com] vless-JP-1... #5"
+      - "🇯🇵[www.v2nodes.com] vless-JP-1... #6"
+      - "🇯🇵[www.v2nodes.com] vless-JP-1... #7"
       - "🇰🇿[www.v2nodes.com] vless-KZ-1..."
       - "🇰🇿[www.v2nodes.com] vless-KZ-1... #1"
       - "🇱🇰[www.v2nodes.com] vless-LK-7..."
+      - "🇱🇻[www.v2nodes.com] vless-LV-1..."
       - "🇲🇩[www.v2nodes.com] vless-MD-4..."
       - "🇲🇽[www.v2nodes.com] vless-MX-1... #2"
       - "🇲🇾[www.v2nodes.com] vless-MY-1..."
-      - "🇲🇾[www.v2nodes.com] vless-MY-1... #1"
       - "🇲🇾[www.v2nodes.com] vless-MY-5..."
       - "🇳🇱[www.v2nodes.com] vless-NL-1..."
       - "🇳🇱[www.v2nodes.com] vless-NL-1... #1"
@@ -4915,13 +5736,14 @@ proxy-groups:
       - "🇳🇱[www.v2nodes.com] vless-NL-1... #5"
       - "🇳🇱[www.v2nodes.com] vless-NL-1... #6"
       - "🇳🇱[www.v2nodes.com] vless-NL-1... #7"
+      - "🇳🇱[www.v2nodes.com] vless-NL-1... #8"
       - "🇷🇴[www.v2nodes.com] vless-RO-1..."
       - "🇵🇱[www.v2nodes.com] vless-PL-1... #1"
-      - "🏳[www.v2nodes.com] vless- #21"
+      - "🏳[www.v2nodes.com] vless- #13"
       - "🇵🇱[www.v2nodes.com] vless-PL-1... #2"
       - "🇵🇱[www.v2nodes.com] vless-PL-1... #3"
-      - "🇵🇱[www.v2nodes.com] vless-PL-1... #7"
-      - "🏳[www.v2nodes.com] vless- #25"
+      - "🇵🇱[www.v2nodes.com] vless-PL-1... #4"
+      - "🇵🇱[www.v2nodes.com] vless-PL-1... #8"
       - "🇵🇱[www.v2nodes.com] vless-PL-4..."
       - "🇵🇱[www.v2nodes.com] vless-PL-2... #1"
       - "🇷🇴[www.v2nodes.com] vless-RO-1... #1"
@@ -4933,44 +5755,73 @@ proxy-groups:
       - "🇸🇪[www.v2nodes.com] vless-SE-1... #2"
       - "🇸🇪[www.v2nodes.com] vless-SE-1... #3"
       - "🇸🇪[www.v2nodes.com] vless-SE-1... #4"
+      - "🇸🇪[www.v2nodes.com] vless-SE-1... #5"
       - "🇸🇬[www.v2nodes.com] vless-SG-1..."
       - "🇸🇬[www.v2nodes.com] vless-SG-1... #1"
       - "🇸🇬[www.v2nodes.com] vless-SG-1... #2"
       - "🇸🇬[www.v2nodes.com] vless-SG-1... #3"
       - "🇸🇬[www.v2nodes.com] vless-SG-1... #4"
       - "🇸🇬[www.v2nodes.com] vless-SG-1... #5"
-      - "🏳[www.v2nodes.com] vless- #26"
       - "🇸🇬[www.v2nodes.com] vless-SG-1... #6"
-      - "🏳[www.v2nodes.com] vless- #27"
-      - "🏳[www.v2nodes.com] vless- #28"
-      - "🇮🇳[www.v2nodes.com] vless-IN"
       - "🇸🇬[www.v2nodes.com] vless-SG-1... #7"
-      - "🏳[www.v2nodes.com] vless- #29"
+      - "🇸🇬[www.v2nodes.com] vless-SG-1... #8"
+      - "🇸🇬[www.v2nodes.com] vless-SG-1... #9"
+      - "🇸🇬[www.v2nodes.com] vless-SG-1... #10"
+      - "🏳[www.v2nodes.com] vless- #15"
+      - "🇮🇳[www.v2nodes.com] vless-IN"
+      - "🇸🇬[www.v2nodes.com] vless-SG-1... #11"
+      - "🇸🇬[www.v2nodes.com] vless-SG-1... #12"
       - "🇸🇬[www.v2nodes.com] vless-SG-9..."
+      - "🏳[www.v2nodes.com] vless- #16"
       - "🇸🇬[www.v2nodes.com] vless-SG-9... #1"
       - "🇸🇬[www.v2nodes.com] vless-SG-8..."
-      - "🇸🇬[www.v2nodes.com] vless-SG-8... #1"
       - "🇹🇭[www.v2nodes.com] vless-TH-1..."
       - "🇹🇭[www.v2nodes.com] vless-TH-1... #1"
       - "🇹🇷[www.v2nodes.com] vless-TR-1..."
       - "🇹🇷[www.v2nodes.com] vless-TR-1... #1"
       - "🇹🇷[www.v2nodes.com] vless-TR-1... #2"
-      - "🇹🇷[www.v2nodes.com] vless-TR-1... #3"
-      - "🏳[www.v2nodes.com] vless- #31"
-      - "🏳[www.v2nodes.com] vless- #32"
+      - "🇹🇼[www.v2nodes.com] vless-TW-1..."
+      - "🏳[www.v2nodes.com] vless- #17"
       - "🇺🇦[www.v2nodes.com] vless-UA-1..."
-      - "🇺🇦[www.v2nodes.com] vless-UA-1... #6"
-      - "🇺🇸[www.v2nodes.com] vless-US-1..."
-      - "🇺🇸[www.v2nodes.com] vless-US-1... #2"
+      - "🇺🇦[www.v2nodes.com] vless-UA-1... #1"
+      - "🇺🇦[www.v2nodes.com] vless-UA-1... #8"
+      - "🇺🇸 美国 | USA #20"
+      - "🇺🇸[www.v2nodes.com] vless-US-1... #1"
       - "🇺🇸[www.v2nodes.com] vless-US-1... #3"
-      - "🇺🇸[www.v2nodes.com] vless-US-1... #4"
       - "🇺🇸[www.v2nodes.com] vless-US-1... #5"
-      - "🇺🇸[www.v2nodes.com] vless-US-1... #8"
-      - "🇺🇸[www.v2nodes.com] vless-US-1... #9"
+      - "🇺🇸[www.v2nodes.com] vless-US-1... #6"
+      - "🇺🇸[www.v2nodes.com] vless-US-1... #7"
       - "🇺🇸[www.v2nodes.com] vless-US-1... #10"
+      - "🇺🇸[www.v2nodes.com] vless-US-1... #11"
+      - "🇺🇸[www.v2nodes.com] vless-US-1... #12"
       - "🇻🇳[www.v2nodes.com] vless-VN-1..."
       - "🇻🇳[www.v2nodes.com] vless-VN-1... #1"
-      - "🇺🇸US_1|4.1MB/s"
+      - "🇳🇱NL_1|2.1MB/s"
+      - "🇸🇬SG_1|4.5MB/s"
+      - "🇸🇬SG_2|4.6MB/s"
+      - "🇷🇺RU_1|1.6MB/s"
+      - "🇺🇸US_1|1.6MB/s"
+      - "🇦🇹AT_1|1.5MB/s"
+      - "🇩🇪DE_3|1.9MB/s"
+      - "🇺🇸US_5|2.2MB/s"
+      - "🇸🇬SG_3|4.0MB/s"
+      - "🇸🇬SG_4|2.6MB/s"
+      - "🇰🇷KR_1|1.5MB/s"
+      - "🇺🇸US_17|1.8MB/s"
+      - "🇺🇸US_18|2.2MB/s"
+      - "🇵🇱PL_1|2.7MB/s"
+      - "🇨🇦CA_2|1.6MB/s"
+      - "🇳🇱NL_5|1.2MB/s"
+      - "🇺🇸US_19|3.3MB/s"
+      - "🇳🇱NL_6|3.7MB/s"
+      - "🇸🇬SG_6|2.3MB/s"
+      - "🇺🇸US_20|3.2MB/s"
+      - "🇺🇸US_21|2.2MB/s"
+      - "🇩🇪DE_7|3.2MB/s"
+      - "🇨🇦CA_3|2.1MB/s"
+      - "🇸🇬SG_7|3.6MB/s"
+      - "🇸🇬SG_8|4.2MB/s"
+      - "🇺🇸US_22|2.8MB/s"
       - "🇧🇬 保加利亚 | BGR #1"
       - "🇨🇾 塞浦路斯 | CYP #1"
       - "🇩🇪 德国 | DEU #1"
@@ -4980,7 +5831,6 @@ proxy-groups:
       - "🇪🇸 西班牙 | ESP #2"
       - "🇫🇷 法国 | FRA #1"
       - "🇬🇪 GE_51 #1"
-      - "🇭🇰 香港 | HKG #1"
       - "🇭🇰 香港 | HKG #2"
       - "🇯🇵 日本 | JPN #1"
       - "🇯🇵 日本 | JPN #2"
@@ -5023,60 +5873,58 @@ proxy-groups:
       - "🇺🇸 美国 | USA #17"
       - "🇺🇸 美国 | USA #18"
       - "🇺🇸 美国 | USA #19"
-      - "🇺🇸 美国 | USA #20"
       - "🇺🇸 美国 | USA #21"
       - "🇺🇸 美国 | USA #22"
       - "🇺🇸 美国 | USA #23"
       - "🇦🇱[www.v2nodes.com] ss-AL-1490..."
+      - "🇦🇹[www.v2nodes.com] ss-AT-1595..."
+      - "🇨🇦[www.v2nodes.com] ss-CA-1559..."
+      - "🇨🇦[www.v2nodes.com] ss-CA-1559... #1"
+      - "🇨🇦[www.v2nodes.com] ss-CA-1558..."
+      - "🇨🇦[www.v2nodes.com] ss-CA-1557..."
       - "🏳[www.v2nodes.com] ss-"
       - "🏳[www.v2nodes.com] ss- #1"
       - "🏳[www.v2nodes.com] ss- #2"
-      - "🇨🇦[www.v2nodes.com] ss-CA-1558..."
-      - "🇨🇦[www.v2nodes.com] ss-CA-1557..."
-      - "🇨🇦[www.v2nodes.com] ss-CA-1546..."
-      - "🏳[www.v2nodes.com] ss- #3"
-      - "🏳[www.v2nodes.com] ss- #4"
       - "🇨🇦[www.v2nodes.com] ss-CA-1545..."
-      - "🏳[www.v2nodes.com] ss- #5"
-      - "🏳[www.v2nodes.com] ss- #6"
-      - "🏳[www.v2nodes.com] ss- #7"
+      - "🏳[www.v2nodes.com] ss- #3"
+      - "🇨🇭[www.v2nodes.com] ss-CH-1573..."
+      - "🇨🇿[www.v2nodes.com] ss-CZ-1599..."
       - "🇩🇪[www.v2nodes.com] ss-DE-1602..."
+      - "🇪🇬[www.v2nodes.com] ss-EG-1599..."
       - "🇬🇧[www.v2nodes.com] ss-GB-1602..."
       - "🇮🇹[www.v2nodes.com] ss-IT-1602..."
-      - "🏳[www.v2nodes.com] ss- #8"
-      - "🇮🇹[www.v2nodes.com] ss-IT-1602... #1"
+      - "🇮🇹IT_1|1.4MB/s"
       - "🇮🇹[www.v2nodes.com] ss-IT-1602... #2"
-      - "🏳[www.v2nodes.com] ss- #9"
-      - "🇺🇸 美国 | USA #16"
+      - "🇮🇹[www.v2nodes.com] ss-IT-1602... #3"
       - "🇮🇹[www.v2nodes.com] ss-IT-1602... #4"
-      - "🏳[www.v2nodes.com] ss- #10"
+      - "🇺🇸 美国 | USA #16"
+      - "🇮🇹[www.v2nodes.com] ss-IT-1602... #6"
+      - "🇮🇹[www.v2nodes.com] ss-IT-1602... #7"
       - "🇮🇹 意大利 | ITA #1"
-      - "🏳[www.v2nodes.com] ss- #12"
-      - "🏳[www.v2nodes.com] ss- #13"
+      - "🇮🇹[www.v2nodes.com] ss-IT-1602... #9"
+      - "🇮🇹[www.v2nodes.com] ss-IT-1597..."
+      - "🏳[www.v2nodes.com] ss- #4"
       - "🇯🇵[www.v2nodes.com] ss-JP-1599..."
       - "🇯🇵[www.v2nodes.com] ss-JP-1598..."
       - "🇯🇵[www.v2nodes.com] ss-JP-1544..."
       - "🇰🇷[www.v2nodes.com] ss-KR-1602... #1"
+      - "🇲🇽[www.v2nodes.com] ss-MX-1564..."
       - "🇳🇱[www.v2nodes.com] ss-NL-1602..."
-      - "🇳🇴[www.v2nodes.com] ss-NO-1220..."
-      - "🏳[www.v2nodes.com] ss- #14"
+      - "🏳[www.v2nodes.com] ss- #5"
       - "🇷🇴[www.v2nodes.com] ss-RO-1298..."
-      - "🇸🇪[www.v2nodes.com] ss-SE-1560..."
       - "🇸🇬[www.v2nodes.com] ss-SG-1559..."
-      - "🏳[www.v2nodes.com] ss- #15"
+      - "🇹🇭[www.v2nodes.com] ss-TH-1591..."
       - "🇹🇷[www.v2nodes.com] ss-TR-1602..."
       - "🇺🇸[www.v2nodes.com] ss-US-1603..."
       - "🇺🇸[www.v2nodes.com] ss-US-1603... #1"
-      - "🏳[www.v2nodes.com] ss- #16"
       - "🇺🇸[www.v2nodes.com] ss-US-1603... #2"
-      - "🏳[www.v2nodes.com] ss- #17"
-      - "🏳[www.v2nodes.com] ss- #18"
+      - "🇺🇸[www.v2nodes.com] ss-US-1603... #3"
       - "🇺🇸[www.v2nodes.com] ss-US-1602..."
       - "🇺🇸[www.v2nodes.com] ss-US-1602... #1"
-      - "🏳[www.v2nodes.com] ss- #19"
-      - "🇿🇦[www.v2nodes.com] ss-ZA-1534..."
+      - "🇺🇸[www.v2nodes.com] ss-US-1602... #2"
+      - "🇺🇸[www.v2nodes.com] ss-US-1602... #3"
       - "🇿🇦[www.v2nodes.com] ss-ZA-1336..."
-      - "🏳[www.v2nodes.com] ss- #20"
+      - "🇿🇦[www.v2nodes.com] ss-ZA-1333..."
       - "tg频道:@ripaojiedian #1"
       - "🇷🇺 俄罗斯 | RUS #1"
       - "防范境外势力渗透"
@@ -5102,25 +5950,26 @@ proxy-groups:
       - "🇰🇷 韩国|@ripaojiedian"
       - "🇺🇸 美国|@ripaojiedian"
       - "🇺🇸 美国2|@ripaojiedian"
+      - "🇭🇰HK_1|3.8MB/s"
+      - "🇷🇺RU_2|2.8MB/s"
+      - "🏳[www.v2nodes.com] trojan-"
       - "🇩🇪[www.v2nodes.com] trojan-DE-..."
       - "🇩🇪[www.v2nodes.com] trojan-DE-... #1"
       - "🇩🇪[www.v2nodes.com] trojan-DE-... #2"
-      - "🇩🇪[www.v2nodes.com] trojan-DE-... #3"
-      - "🏳[www.v2nodes.com] trojan-"
       - "🏳[www.v2nodes.com] trojan- #1"
-      - "🇩🇪[www.v2nodes.com] trojan-DE-... #4"
-      - "🇩🇪[www.v2nodes.com] trojan-DE-... #5"
+      - "🏳[www.v2nodes.com] trojan- #2"
       - "🇫🇷[www.v2nodes.com] trojan-FR-..."
-      - "🇫🇷[www.v2nodes.com] trojan-FR-... #4"
       - "🇫🇷[www.v2nodes.com] trojan-FR-... #1"
-      - "🏳[www.v2nodes.com] trojan- #3"
       - "🇫🇷[www.v2nodes.com] trojan-FR-... #2"
-      - "🏳[www.v2nodes.com] trojan- #4"
+      - "🏳[www.v2nodes.com] trojan- #3"
       - "🇫🇷[www.v2nodes.com] trojan-FR-... #3"
+      - "🏳[www.v2nodes.com] trojan- #4"
+      - "🇫🇷[www.v2nodes.com] trojan-FR-... #4"
       - "🇫🇷[www.v2nodes.com] trojan-FR-... #5"
       - "🇫🇷[www.v2nodes.com] trojan-FR-... #6"
       - "🇫🇷[www.v2nodes.com] trojan-FR-... #7"
       - "🇫🇷[www.v2nodes.com] trojan-FR-... #8"
+      - "🇫🇷[www.v2nodes.com] trojan-FR-... #9"
       - "🇭🇰[www.v2nodes.com] trojan-HK-..."
       - "🇯🇵[www.v2nodes.com] trojan-JP-..."
       - "🇰🇷[www.v2nodes.com] trojan-KR-..."
@@ -5135,13 +5984,12 @@ proxy-groups:
       - "🇳🇱[www.v2nodes.com] trojan-NL-... #6"
       - "🇳🇱[www.v2nodes.com] trojan-NL-... #8"
       - "🇳🇱[www.v2nodes.com] trojan-NL-... #9"
-      - "🇳🇱[www.v2nodes.com] trojan-NL-... #10"
       - "🇵🇱[www.v2nodes.com] trojan-PL-..."
       - "🏳[www.v2nodes.com] trojan- #7"
       - "🇸🇬[www.v2nodes.com] trojan-SG-..."
       - "🇸🇬[www.v2nodes.com] trojan-SG-... #1"
       - "🇺🇸[www.v2nodes.com] trojan-US-..."
-      - "🇺🇸[www.v2nodes.com] trojan-US-... #2"
+      - "🇺🇸[www.v2nodes.com] trojan-US-... #1"
       - "香港2|@ripaojiedian"
       - "香港3|@ripaojiedian"
       - "香港4|@ripaojiedian"
@@ -5152,40 +6000,101 @@ proxy-groups:
       - "美国2|@ripaojiedian"
       - "台湾|@ripaojiedian"
       - "韩国|@ripaojiedian"
-      - "120.232.204.58"
-      - "185.221.132.242"
+      - "🇳🇱NL_2|1.8MB/s"
+      - "130.195.250.34"
+      - "95.153.31.66"
+      - "37.120.213.210"
+      - "213.139.9.142"
+      - "146.70.123.98"
+      - "146.70.242.130"
+      - "193.239.236.134"
+      - "169.150.248.17"
+      - "146.70.170.210"
+      - "185.216.35.66"
       - "213.109.163.119"
-      - "213.109.163.119-1"
       - "158.173.154.1"
+      - "198.105.124.180"
+      - "84.17.47.148"
+      - "64.98.50.100"
+      - "44.248.167.117"
+      - "193.176.84.19"
+      - "87.98.174.157"
+      - "158.173.154.2"
+      - "146.70.244.2"
+      - "133.18.200.207"
+      - "185.164.35.16"
+      - "146.70.242.146"
+      - "138.199.35.210"
+      - "138.199.35.198"
+      - "138.199.35.214"
+      - "185.163.110.194"
+      - "185.164.138.156"
+      - "44.229.69.166"
+      - "138.199.35.200"
+      - "138.199.35.205"
+      - "149.88.27.33"
+      - "130.195.250.18"
+      - "138.199.35.197"
+      - "185.183.105.130"
+      - "87.106.223.158"
+      - "146.70.221.34"
+      - "185.94.192.210"
+      - "212.102.63.61"
+      - "138.199.35.195"
+      - "82.96.128.175"
+      - "212.102.63.31"
+      - "154.47.25.78"
+      - "82.66.235.221"
+      - "185.221.132.226"
+      - "31.171.155.210"
+      - "135.136.1.2"
+      - "84.233.178.33"
+      - "31.7.62.50"
+      - "31.171.154.66"
+      - "149.102.245.65"
+      - "193.176.84.22"
+      - "149.36.50.129"
+      - "172.64.69.89"
+      - "87.120.103.226"
+      - "149.22.86.1"
+      - "84.17.47.125"
+      - "154.47.29.174"
+      - "38.165.231.71"
+      - "128.199.121.61"
+      - "198.44.157.27"
+      - "172.64.68.89"
+      - "193.176.84.24"
+      - "23.175.41.231"
+      - "103.124.138.70"
+      - "84.17.47.147"
+      - "138.199.35.202"
+      - "193.176.84.36"
+      - "193.176.84.25"
+      - "213.109.163.119-1"
       - "158.173.154.5"
       - "51.159.225.196"
       - "83.206.1.225"
       - "84.235.228.156"
       - "82.65.162.76"
-      - "198.105.124.180"
       - "18.200.158.139"
       - "62.90.77.30"
       - "185.219.159.15"
-      - "84.17.47.125"
-      - "84.17.47.148"
+      - "84.17.47.125-1"
       - "84.17.47.123"
       - "84.17.47.124"
-      - "193.176.84.19"
       - "193.176.84.21"
       - "193.176.84.26"
       - "193.176.84.34"
-      - "64.98.50.100"
-      - "44.248.167.117"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
-    icon: "https://www.svgrepo.com/show/7876/speedometer.svg"
     url: "https://www.gstatic.com/generate_204"
-    interval: 600
+    interval: 30
     tolerance: 50
-    timeout: 3200
-    lazy: false
-    max-failed-times: 2
+    lazy: true
     proxies:
+      - "45.150.110.8"
+      - "51.15.20.32"
       - "🇩🇪192088 | ⚡️Telegram = t.me/v..."
       - "@KAFING_2"
       - "🇺🇸139909 | ⚡️Telegram = t.me/S..."
@@ -5203,7 +6112,6 @@ proxy-groups:
       - "🛸100@oneclickvpnkeys"
       - "@v2ray_configs_pools 🌍 ⚡️"
       - "🩵+@Azarakhsh_Proxy+🩷"
-      - "🇮🇷198624 | ⚡️Telegram = t.me/S..."
       - "@meliproxyy"
       - "@FarazV2ray"
       - "Telegram@vpnjey"
@@ -5235,8 +6143,9 @@ proxy-groups:
       - "🇦🇱[www.v2nodes.com] vless-AL-1..."
       - "🇦🇲[www.v2nodes.com] vless-AM-1..."
       - "🇦🇲[www.v2nodes.com] vless-AM-1... #1"
-      - "🇺🇦[www.v2nodes.com] vless-UA-1... #7"
+      - "🇺🇦[www.v2nodes.com] vless-UA-1... #9"
       - "🇦🇹[www.v2nodes.com] vless-AT-3... #1"
+      - "🇬🇧[www.v2nodes.com] vless-GB-1... #1"
       - "🏳[www.v2nodes.com] vless-"
       - "🇧🇬[www.v2nodes.com] vless-BG-3... #1"
       - "🏳[www.v2nodes.com] vless- #1"
@@ -5248,43 +6157,45 @@ proxy-groups:
       - "🇧🇾[www.v2nodes.com] vless-BY-1... #1"
       - "🇨🇦[www.v2nodes.com] vless-CA-1..."
       - "🇨🇦[www.v2nodes.com] vless-CA-1... #1"
-      - "🏳[www.v2nodes.com] vless- #3"
+      - "🇨🇦[www.v2nodes.com] vless-CA-1... #2"
       - "🇸🇬[www.v2nodes.com] vless-SG"
-      - "🇯🇵[www.v2nodes.com] vless-JP"
       - "🇸🇬[www.v2nodes.com] vless-SG #1"
+      - "🇯🇵[www.v2nodes.com] vless-JP"
       - "🇸🇬[www.v2nodes.com] vless-SG #2"
       - "🇸🇬[www.v2nodes.com] vless-SG #3"
-      - "🏳[www.v2nodes.com] vless- #30"
+      - "🇸🇬[www.v2nodes.com] vless-SG #4"
       - "🇸🇬[www.v2nodes.com] vless-SG #5"
-      - "🏳[www.v2nodes.com] vless- #24"
+      - "🇸🇬[www.v2nodes.com] vless-SG #6"
+      - "🇭🇰[www.v2nodes.com] vless-HK"
       - "🇭🇰[www.v2nodes.com] vless-HK #1"
-      - "🇭🇰[www.v2nodes.com] vless-HK #3"
       - "🇨🇭[www.v2nodes.com] vless-CH-1..."
       - "🇿🇦[www.v2nodes.com] vless-ZA-1..."
       - "🇨🇱[www.v2nodes.com] vless-CL-1... #1"
       - "🇨🇱[www.v2nodes.com] vless-CL-1... #2"
       - "🇨🇾[www.v2nodes.com] vless-CY-1..."
-      - "🏳[www.v2nodes.com] vless- #4"
+      - "🏳[www.v2nodes.com] vless- #3"
       - "🇩🇪[www.v2nodes.com] vless-DE-1..."
-      - "🇫🇮[www.v2nodes.com] vless-FI-1... #3"
+      - "🇩🇪[www.v2nodes.com] vless-DE-1... #1"
       - "🇩🇪[www.v2nodes.com] vless-DE-1... #2"
-      - "🇺🇸[www.v2nodes.com] vless-US-1... #6"
+      - "🇫🇮[www.v2nodes.com] vless-FI-1... #3"
       - "🇩🇪[www.v2nodes.com] vless-DE-1... #4"
-      - "🇩🇪[www.v2nodes.com] vless-DE-1... #5"
+      - "🇺🇸[www.v2nodes.com] vless-US-1... #8"
       - "🇩🇪[www.v2nodes.com] vless-DE-1... #6"
-      - "🇺🇸[www.v2nodes.com] vless-US-1... #7"
+      - "🇩🇪[www.v2nodes.com] vless-DE-1... #7"
       - "🇩🇪[www.v2nodes.com] vless-DE-1... #8"
+      - "🇺🇸[www.v2nodes.com] vless-US-1... #9"
       - "🇩🇪[www.v2nodes.com] vless-DE-1... #10"
-      - "🇩🇪[www.v2nodes.com] vless-DE-1... #11"
+      - "🇩🇪[www.v2nodes.com] vless-DE-1... #12"
       - "🇪🇪[www.v2nodes.com] vless-EE-1..."
       - "🇪🇪[www.v2nodes.com] vless-EE-1... #2"
+      - "🇪🇸[www.v2nodes.com] vless-ES-1..."
       - "🇪🇸[www.v2nodes.com] vless-ES-4... #4"
-      - "🏳[www.v2nodes.com] vless- #9"
+      - "🏳[www.v2nodes.com] vless- #8"
       - "🇪🇸[www.v2nodes.com] vless-ES-2... #2"
-      - "🇪🇸[www.v2nodes.com] vless-ES-1... #4"
+      - "🇪🇸[www.v2nodes.com] vless-ES-1... #5"
       - "🇪🇸[www.v2nodes.com] vless-ES-2... #1"
       - "🇪🇸[www.v2nodes.com] vless-ES-4..."
-      - "Telegram---Chanel0111Netfp=chrome&security=tls#🏳[www.v2nodes.com] vless- #8"
+      - "Telegram---Chanel0111Netfp=chrome&security=tls#🏳[www.v2nodes.com] vless- #7"
       - "🇪🇸[www.v2nodes.com] vless-ES-4... #1"
       - "🇪🇸[www.v2nodes.com] vless-ES-4... #5"
       - "🇫🇮[www.v2nodes.com] vless-FI-1... #1"
@@ -5293,51 +6204,51 @@ proxy-groups:
       - "🇫🇮[www.v2nodes.com] vless-FI-1... #13"
       - "🇫🇮[www.v2nodes.com] vless-FI-1... #6"
       - "🇫🇮[www.v2nodes.com] vless-FI-1... #7"
-      - "🏳[www.v2nodes.com] vless- #11"
+      - "🏳[www.v2nodes.com] vless- #10"
       - "🇫🇷[www.v2nodes.com] vless-FR-1..."
       - "🇫🇷[www.v2nodes.com] vless-FR-1... #1"
       - "🇫🇷[www.v2nodes.com] vless-FR-1... #2"
       - "🇫🇷[www.v2nodes.com] vless-FR-1... #3"
-      - "🏳[www.v2nodes.com] vless- #12"
+      - "🇫🇷[www.v2nodes.com] vless-FR-1... #4"
       - "🇬🇧[www.v2nodes.com] vless-GB-1..."
-      - "🇬🇧[www.v2nodes.com] vless-GB-1... #1"
-      - "🇬🇧[www.v2nodes.com] vless-GB-1... #4"
+      - "🇬🇧[www.v2nodes.com] vless-GB-1... #2"
       - "🇬🇧[www.v2nodes.com] vless-GB-1... #5"
       - "🇬🇧[www.v2nodes.com] vless-GB-1... #6"
       - "🇬🇧[www.v2nodes.com] vless-GB-1... #7"
       - "🇬🇧[www.v2nodes.com] vless-GB-1... #8"
+      - "🇬🇧[www.v2nodes.com] vless-GB-1... #9"
+      - "🇬🇧[www.v2nodes.com] vless-GB-1... #10"
       - "🇬🇷[www.v2nodes.com] vless-GR-1..."
       - "🇬🇷[www.v2nodes.com] vless-GR-3..."
       - "🇭🇰[www.v2nodes.com] vless-HK-1..."
-      - "🏳[www.v2nodes.com] vless- #13"
       - "🇭🇰[www.v2nodes.com] vless-HK-1... #1"
       - "🇭🇰[www.v2nodes.com] vless-HK-1... #2"
-      - "🏳[www.v2nodes.com] vless- #14"
-      - "🏳[www.v2nodes.com] vless- #15"
+      - "🇭🇰[www.v2nodes.com] vless-HK-1... #3"
+      - "🏳[www.v2nodes.com] vless- #11"
+      - "🇭🇰 香港 | HKG #1"
       - "🇭🇺[www.v2nodes.com] vless-HU-6..."
       - "🇮🇱[www.v2nodes.com] vless-IL-1... #1"
-      - "🏳[www.v2nodes.com] vless- #16"
       - "🇮🇳[www.v2nodes.com] vless-IN-1..."
       - "🇮🇳[www.v2nodes.com] vless-IN-1... #1"
       - "🇮🇳[www.v2nodes.com] vless-IN-1... #2"
-      - "🇮🇳[www.v2nodes.com] vless-IN-1... #3"
       - "🇮🇹[www.v2nodes.com] vless-IT-1..."
       - "🇮🇹[www.v2nodes.com] vless-IT-1... #1"
       - "🇮🇹[www.v2nodes.com] vless-IT-1... #2"
-      - "🏳[www.v2nodes.com] vless- #17"
+      - "🏳[www.v2nodes.com] vless- #12"
       - "🇮🇹[www.v2nodes.com] vless-IT-2..."
       - "🇯🇵[www.v2nodes.com] vless-JP-1... #2"
       - "🇯🇵[www.v2nodes.com] vless-JP-1... #3"
-      - "🏳[www.v2nodes.com] vless- #18"
-      - "🏳[www.v2nodes.com] vless- #19"
-      - "🏳[www.v2nodes.com] vless- #20"
+      - "🇯🇵[www.v2nodes.com] vless-JP-1... #4"
+      - "🇯🇵[www.v2nodes.com] vless-JP-1... #5"
+      - "🇯🇵[www.v2nodes.com] vless-JP-1... #6"
+      - "🇯🇵[www.v2nodes.com] vless-JP-1... #7"
       - "🇰🇿[www.v2nodes.com] vless-KZ-1..."
       - "🇰🇿[www.v2nodes.com] vless-KZ-1... #1"
       - "🇱🇰[www.v2nodes.com] vless-LK-7..."
+      - "🇱🇻[www.v2nodes.com] vless-LV-1..."
       - "🇲🇩[www.v2nodes.com] vless-MD-4..."
       - "🇲🇽[www.v2nodes.com] vless-MX-1... #2"
       - "🇲🇾[www.v2nodes.com] vless-MY-1..."
-      - "🇲🇾[www.v2nodes.com] vless-MY-1... #1"
       - "🇲🇾[www.v2nodes.com] vless-MY-5..."
       - "🇳🇱[www.v2nodes.com] vless-NL-1..."
       - "🇳🇱[www.v2nodes.com] vless-NL-1... #1"
@@ -5347,13 +6258,14 @@ proxy-groups:
       - "🇳🇱[www.v2nodes.com] vless-NL-1... #5"
       - "🇳🇱[www.v2nodes.com] vless-NL-1... #6"
       - "🇳🇱[www.v2nodes.com] vless-NL-1... #7"
+      - "🇳🇱[www.v2nodes.com] vless-NL-1... #8"
       - "🇷🇴[www.v2nodes.com] vless-RO-1..."
       - "🇵🇱[www.v2nodes.com] vless-PL-1... #1"
-      - "🏳[www.v2nodes.com] vless- #21"
+      - "🏳[www.v2nodes.com] vless- #13"
       - "🇵🇱[www.v2nodes.com] vless-PL-1... #2"
       - "🇵🇱[www.v2nodes.com] vless-PL-1... #3"
-      - "🇵🇱[www.v2nodes.com] vless-PL-1... #7"
-      - "🏳[www.v2nodes.com] vless- #25"
+      - "🇵🇱[www.v2nodes.com] vless-PL-1... #4"
+      - "🇵🇱[www.v2nodes.com] vless-PL-1... #8"
       - "🇵🇱[www.v2nodes.com] vless-PL-4..."
       - "🇵🇱[www.v2nodes.com] vless-PL-2... #1"
       - "🇷🇴[www.v2nodes.com] vless-RO-1... #1"
@@ -5365,44 +6277,73 @@ proxy-groups:
       - "🇸🇪[www.v2nodes.com] vless-SE-1... #2"
       - "🇸🇪[www.v2nodes.com] vless-SE-1... #3"
       - "🇸🇪[www.v2nodes.com] vless-SE-1... #4"
+      - "🇸🇪[www.v2nodes.com] vless-SE-1... #5"
       - "🇸🇬[www.v2nodes.com] vless-SG-1..."
       - "🇸🇬[www.v2nodes.com] vless-SG-1... #1"
       - "🇸🇬[www.v2nodes.com] vless-SG-1... #2"
       - "🇸🇬[www.v2nodes.com] vless-SG-1... #3"
       - "🇸🇬[www.v2nodes.com] vless-SG-1... #4"
       - "🇸🇬[www.v2nodes.com] vless-SG-1... #5"
-      - "🏳[www.v2nodes.com] vless- #26"
       - "🇸🇬[www.v2nodes.com] vless-SG-1... #6"
-      - "🏳[www.v2nodes.com] vless- #27"
-      - "🏳[www.v2nodes.com] vless- #28"
-      - "🇮🇳[www.v2nodes.com] vless-IN"
       - "🇸🇬[www.v2nodes.com] vless-SG-1... #7"
-      - "🏳[www.v2nodes.com] vless- #29"
+      - "🇸🇬[www.v2nodes.com] vless-SG-1... #8"
+      - "🇸🇬[www.v2nodes.com] vless-SG-1... #9"
+      - "🇸🇬[www.v2nodes.com] vless-SG-1... #10"
+      - "🏳[www.v2nodes.com] vless- #15"
+      - "🇮🇳[www.v2nodes.com] vless-IN"
+      - "🇸🇬[www.v2nodes.com] vless-SG-1... #11"
+      - "🇸🇬[www.v2nodes.com] vless-SG-1... #12"
       - "🇸🇬[www.v2nodes.com] vless-SG-9..."
+      - "🏳[www.v2nodes.com] vless- #16"
       - "🇸🇬[www.v2nodes.com] vless-SG-9... #1"
       - "🇸🇬[www.v2nodes.com] vless-SG-8..."
-      - "🇸🇬[www.v2nodes.com] vless-SG-8... #1"
       - "🇹🇭[www.v2nodes.com] vless-TH-1..."
       - "🇹🇭[www.v2nodes.com] vless-TH-1... #1"
       - "🇹🇷[www.v2nodes.com] vless-TR-1..."
       - "🇹🇷[www.v2nodes.com] vless-TR-1... #1"
       - "🇹🇷[www.v2nodes.com] vless-TR-1... #2"
-      - "🇹🇷[www.v2nodes.com] vless-TR-1... #3"
-      - "🏳[www.v2nodes.com] vless- #31"
-      - "🏳[www.v2nodes.com] vless- #32"
+      - "🇹🇼[www.v2nodes.com] vless-TW-1..."
+      - "🏳[www.v2nodes.com] vless- #17"
       - "🇺🇦[www.v2nodes.com] vless-UA-1..."
-      - "🇺🇦[www.v2nodes.com] vless-UA-1... #6"
-      - "🇺🇸[www.v2nodes.com] vless-US-1..."
-      - "🇺🇸[www.v2nodes.com] vless-US-1... #2"
+      - "🇺🇦[www.v2nodes.com] vless-UA-1... #1"
+      - "🇺🇦[www.v2nodes.com] vless-UA-1... #8"
+      - "🇺🇸 美国 | USA #20"
+      - "🇺🇸[www.v2nodes.com] vless-US-1... #1"
       - "🇺🇸[www.v2nodes.com] vless-US-1... #3"
-      - "🇺🇸[www.v2nodes.com] vless-US-1... #4"
       - "🇺🇸[www.v2nodes.com] vless-US-1... #5"
-      - "🇺🇸[www.v2nodes.com] vless-US-1... #8"
-      - "🇺🇸[www.v2nodes.com] vless-US-1... #9"
+      - "🇺🇸[www.v2nodes.com] vless-US-1... #6"
+      - "🇺🇸[www.v2nodes.com] vless-US-1... #7"
       - "🇺🇸[www.v2nodes.com] vless-US-1... #10"
+      - "🇺🇸[www.v2nodes.com] vless-US-1... #11"
+      - "🇺🇸[www.v2nodes.com] vless-US-1... #12"
       - "🇻🇳[www.v2nodes.com] vless-VN-1..."
       - "🇻🇳[www.v2nodes.com] vless-VN-1... #1"
-      - "🇺🇸US_1|4.1MB/s"
+      - "🇳🇱NL_1|2.1MB/s"
+      - "🇸🇬SG_1|4.5MB/s"
+      - "🇸🇬SG_2|4.6MB/s"
+      - "🇷🇺RU_1|1.6MB/s"
+      - "🇺🇸US_1|1.6MB/s"
+      - "🇦🇹AT_1|1.5MB/s"
+      - "🇩🇪DE_3|1.9MB/s"
+      - "🇺🇸US_5|2.2MB/s"
+      - "🇸🇬SG_3|4.0MB/s"
+      - "🇸🇬SG_4|2.6MB/s"
+      - "🇰🇷KR_1|1.5MB/s"
+      - "🇺🇸US_17|1.8MB/s"
+      - "🇺🇸US_18|2.2MB/s"
+      - "🇵🇱PL_1|2.7MB/s"
+      - "🇨🇦CA_2|1.6MB/s"
+      - "🇳🇱NL_5|1.2MB/s"
+      - "🇺🇸US_19|3.3MB/s"
+      - "🇳🇱NL_6|3.7MB/s"
+      - "🇸🇬SG_6|2.3MB/s"
+      - "🇺🇸US_20|3.2MB/s"
+      - "🇺🇸US_21|2.2MB/s"
+      - "🇩🇪DE_7|3.2MB/s"
+      - "🇨🇦CA_3|2.1MB/s"
+      - "🇸🇬SG_7|3.6MB/s"
+      - "🇸🇬SG_8|4.2MB/s"
+      - "🇺🇸US_22|2.8MB/s"
       - "🇧🇬 保加利亚 | BGR #1"
       - "🇨🇾 塞浦路斯 | CYP #1"
       - "🇩🇪 德国 | DEU #1"
@@ -5412,7 +6353,6 @@ proxy-groups:
       - "🇪🇸 西班牙 | ESP #2"
       - "🇫🇷 法国 | FRA #1"
       - "🇬🇪 GE_51 #1"
-      - "🇭🇰 香港 | HKG #1"
       - "🇭🇰 香港 | HKG #2"
       - "🇯🇵 日本 | JPN #1"
       - "🇯🇵 日本 | JPN #2"
@@ -5455,60 +6395,58 @@ proxy-groups:
       - "🇺🇸 美国 | USA #17"
       - "🇺🇸 美国 | USA #18"
       - "🇺🇸 美国 | USA #19"
-      - "🇺🇸 美国 | USA #20"
       - "🇺🇸 美国 | USA #21"
       - "🇺🇸 美国 | USA #22"
       - "🇺🇸 美国 | USA #23"
       - "🇦🇱[www.v2nodes.com] ss-AL-1490..."
+      - "🇦🇹[www.v2nodes.com] ss-AT-1595..."
+      - "🇨🇦[www.v2nodes.com] ss-CA-1559..."
+      - "🇨🇦[www.v2nodes.com] ss-CA-1559... #1"
+      - "🇨🇦[www.v2nodes.com] ss-CA-1558..."
+      - "🇨🇦[www.v2nodes.com] ss-CA-1557..."
       - "🏳[www.v2nodes.com] ss-"
       - "🏳[www.v2nodes.com] ss- #1"
       - "🏳[www.v2nodes.com] ss- #2"
-      - "🇨🇦[www.v2nodes.com] ss-CA-1558..."
-      - "🇨🇦[www.v2nodes.com] ss-CA-1557..."
-      - "🇨🇦[www.v2nodes.com] ss-CA-1546..."
-      - "🏳[www.v2nodes.com] ss- #3"
-      - "🏳[www.v2nodes.com] ss- #4"
       - "🇨🇦[www.v2nodes.com] ss-CA-1545..."
-      - "🏳[www.v2nodes.com] ss- #5"
-      - "🏳[www.v2nodes.com] ss- #6"
-      - "🏳[www.v2nodes.com] ss- #7"
+      - "🏳[www.v2nodes.com] ss- #3"
+      - "🇨🇭[www.v2nodes.com] ss-CH-1573..."
+      - "🇨🇿[www.v2nodes.com] ss-CZ-1599..."
       - "🇩🇪[www.v2nodes.com] ss-DE-1602..."
+      - "🇪🇬[www.v2nodes.com] ss-EG-1599..."
       - "🇬🇧[www.v2nodes.com] ss-GB-1602..."
       - "🇮🇹[www.v2nodes.com] ss-IT-1602..."
-      - "🏳[www.v2nodes.com] ss- #8"
-      - "🇮🇹[www.v2nodes.com] ss-IT-1602... #1"
+      - "🇮🇹IT_1|1.4MB/s"
       - "🇮🇹[www.v2nodes.com] ss-IT-1602... #2"
-      - "🏳[www.v2nodes.com] ss- #9"
-      - "🇺🇸 美国 | USA #16"
+      - "🇮🇹[www.v2nodes.com] ss-IT-1602... #3"
       - "🇮🇹[www.v2nodes.com] ss-IT-1602... #4"
-      - "🏳[www.v2nodes.com] ss- #10"
+      - "🇺🇸 美国 | USA #16"
+      - "🇮🇹[www.v2nodes.com] ss-IT-1602... #6"
+      - "🇮🇹[www.v2nodes.com] ss-IT-1602... #7"
       - "🇮🇹 意大利 | ITA #1"
-      - "🏳[www.v2nodes.com] ss- #12"
-      - "🏳[www.v2nodes.com] ss- #13"
+      - "🇮🇹[www.v2nodes.com] ss-IT-1602... #9"
+      - "🇮🇹[www.v2nodes.com] ss-IT-1597..."
+      - "🏳[www.v2nodes.com] ss- #4"
       - "🇯🇵[www.v2nodes.com] ss-JP-1599..."
       - "🇯🇵[www.v2nodes.com] ss-JP-1598..."
       - "🇯🇵[www.v2nodes.com] ss-JP-1544..."
       - "🇰🇷[www.v2nodes.com] ss-KR-1602... #1"
+      - "🇲🇽[www.v2nodes.com] ss-MX-1564..."
       - "🇳🇱[www.v2nodes.com] ss-NL-1602..."
-      - "🇳🇴[www.v2nodes.com] ss-NO-1220..."
-      - "🏳[www.v2nodes.com] ss- #14"
+      - "🏳[www.v2nodes.com] ss- #5"
       - "🇷🇴[www.v2nodes.com] ss-RO-1298..."
-      - "🇸🇪[www.v2nodes.com] ss-SE-1560..."
       - "🇸🇬[www.v2nodes.com] ss-SG-1559..."
-      - "🏳[www.v2nodes.com] ss- #15"
+      - "🇹🇭[www.v2nodes.com] ss-TH-1591..."
       - "🇹🇷[www.v2nodes.com] ss-TR-1602..."
       - "🇺🇸[www.v2nodes.com] ss-US-1603..."
       - "🇺🇸[www.v2nodes.com] ss-US-1603... #1"
-      - "🏳[www.v2nodes.com] ss- #16"
       - "🇺🇸[www.v2nodes.com] ss-US-1603... #2"
-      - "🏳[www.v2nodes.com] ss- #17"
-      - "🏳[www.v2nodes.com] ss- #18"
+      - "🇺🇸[www.v2nodes.com] ss-US-1603... #3"
       - "🇺🇸[www.v2nodes.com] ss-US-1602..."
       - "🇺🇸[www.v2nodes.com] ss-US-1602... #1"
-      - "🏳[www.v2nodes.com] ss- #19"
-      - "🇿🇦[www.v2nodes.com] ss-ZA-1534..."
+      - "🇺🇸[www.v2nodes.com] ss-US-1602... #2"
+      - "🇺🇸[www.v2nodes.com] ss-US-1602... #3"
       - "🇿🇦[www.v2nodes.com] ss-ZA-1336..."
-      - "🏳[www.v2nodes.com] ss- #20"
+      - "🇿🇦[www.v2nodes.com] ss-ZA-1333..."
       - "tg频道:@ripaojiedian #1"
       - "🇷🇺 俄罗斯 | RUS #1"
       - "防范境外势力渗透"
@@ -5534,25 +6472,26 @@ proxy-groups:
       - "🇰🇷 韩国|@ripaojiedian"
       - "🇺🇸 美国|@ripaojiedian"
       - "🇺🇸 美国2|@ripaojiedian"
+      - "🇭🇰HK_1|3.8MB/s"
+      - "🇷🇺RU_2|2.8MB/s"
+      - "🏳[www.v2nodes.com] trojan-"
       - "🇩🇪[www.v2nodes.com] trojan-DE-..."
       - "🇩🇪[www.v2nodes.com] trojan-DE-... #1"
       - "🇩🇪[www.v2nodes.com] trojan-DE-... #2"
-      - "🇩🇪[www.v2nodes.com] trojan-DE-... #3"
-      - "🏳[www.v2nodes.com] trojan-"
       - "🏳[www.v2nodes.com] trojan- #1"
-      - "🇩🇪[www.v2nodes.com] trojan-DE-... #4"
-      - "🇩🇪[www.v2nodes.com] trojan-DE-... #5"
+      - "🏳[www.v2nodes.com] trojan- #2"
       - "🇫🇷[www.v2nodes.com] trojan-FR-..."
-      - "🇫🇷[www.v2nodes.com] trojan-FR-... #4"
       - "🇫🇷[www.v2nodes.com] trojan-FR-... #1"
-      - "🏳[www.v2nodes.com] trojan- #3"
       - "🇫🇷[www.v2nodes.com] trojan-FR-... #2"
-      - "🏳[www.v2nodes.com] trojan- #4"
+      - "🏳[www.v2nodes.com] trojan- #3"
       - "🇫🇷[www.v2nodes.com] trojan-FR-... #3"
+      - "🏳[www.v2nodes.com] trojan- #4"
+      - "🇫🇷[www.v2nodes.com] trojan-FR-... #4"
       - "🇫🇷[www.v2nodes.com] trojan-FR-... #5"
       - "🇫🇷[www.v2nodes.com] trojan-FR-... #6"
       - "🇫🇷[www.v2nodes.com] trojan-FR-... #7"
       - "🇫🇷[www.v2nodes.com] trojan-FR-... #8"
+      - "🇫🇷[www.v2nodes.com] trojan-FR-... #9"
       - "🇭🇰[www.v2nodes.com] trojan-HK-..."
       - "🇯🇵[www.v2nodes.com] trojan-JP-..."
       - "🇰🇷[www.v2nodes.com] trojan-KR-..."
@@ -5567,13 +6506,12 @@ proxy-groups:
       - "🇳🇱[www.v2nodes.com] trojan-NL-... #6"
       - "🇳🇱[www.v2nodes.com] trojan-NL-... #8"
       - "🇳🇱[www.v2nodes.com] trojan-NL-... #9"
-      - "🇳🇱[www.v2nodes.com] trojan-NL-... #10"
       - "🇵🇱[www.v2nodes.com] trojan-PL-..."
       - "🏳[www.v2nodes.com] trojan- #7"
       - "🇸🇬[www.v2nodes.com] trojan-SG-..."
       - "🇸🇬[www.v2nodes.com] trojan-SG-... #1"
       - "🇺🇸[www.v2nodes.com] trojan-US-..."
-      - "🇺🇸[www.v2nodes.com] trojan-US-... #2"
+      - "🇺🇸[www.v2nodes.com] trojan-US-... #1"
       - "香港2|@ripaojiedian"
       - "香港3|@ripaojiedian"
       - "香港4|@ripaojiedian"
@@ -5584,39 +6522,102 @@ proxy-groups:
       - "美国2|@ripaojiedian"
       - "台湾|@ripaojiedian"
       - "韩国|@ripaojiedian"
-      - "120.232.204.58"
-      - "185.221.132.242"
+      - "🇳🇱NL_2|1.8MB/s"
+      - "130.195.250.34"
+      - "95.153.31.66"
+      - "37.120.213.210"
+      - "213.139.9.142"
+      - "146.70.123.98"
+      - "146.70.242.130"
+      - "193.239.236.134"
+      - "169.150.248.17"
+      - "146.70.170.210"
+      - "185.216.35.66"
       - "213.109.163.119"
-      - "213.109.163.119-1"
       - "158.173.154.1"
+      - "198.105.124.180"
+      - "84.17.47.148"
+      - "64.98.50.100"
+      - "44.248.167.117"
+      - "193.176.84.19"
+      - "87.98.174.157"
+      - "158.173.154.2"
+      - "146.70.244.2"
+      - "133.18.200.207"
+      - "185.164.35.16"
+      - "146.70.242.146"
+      - "138.199.35.210"
+      - "138.199.35.198"
+      - "138.199.35.214"
+      - "185.163.110.194"
+      - "185.164.138.156"
+      - "44.229.69.166"
+      - "138.199.35.200"
+      - "138.199.35.205"
+      - "149.88.27.33"
+      - "130.195.250.18"
+      - "138.199.35.197"
+      - "185.183.105.130"
+      - "87.106.223.158"
+      - "146.70.221.34"
+      - "185.94.192.210"
+      - "212.102.63.61"
+      - "138.199.35.195"
+      - "82.96.128.175"
+      - "212.102.63.31"
+      - "154.47.25.78"
+      - "82.66.235.221"
+      - "185.221.132.226"
+      - "31.171.155.210"
+      - "135.136.1.2"
+      - "84.233.178.33"
+      - "31.7.62.50"
+      - "31.171.154.66"
+      - "149.102.245.65"
+      - "193.176.84.22"
+      - "149.36.50.129"
+      - "172.64.69.89"
+      - "87.120.103.226"
+      - "149.22.86.1"
+      - "84.17.47.125"
+      - "154.47.29.174"
+      - "38.165.231.71"
+      - "128.199.121.61"
+      - "198.44.157.27"
+      - "172.64.68.89"
+      - "193.176.84.24"
+      - "23.175.41.231"
+      - "103.124.138.70"
+      - "84.17.47.147"
+      - "138.199.35.202"
+      - "193.176.84.36"
+      - "193.176.84.25"
+      - "213.109.163.119-1"
       - "158.173.154.5"
       - "51.159.225.196"
       - "83.206.1.225"
       - "84.235.228.156"
       - "82.65.162.76"
-      - "198.105.124.180"
       - "18.200.158.139"
       - "62.90.77.30"
       - "185.219.159.15"
-      - "84.17.47.125"
-      - "84.17.47.148"
+      - "84.17.47.125-1"
       - "84.17.47.123"
       - "84.17.47.124"
-      - "193.176.84.19"
       - "193.176.84.21"
       - "193.176.84.26"
       - "193.176.84.34"
-      - "64.98.50.100"
-      - "44.248.167.117"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
-    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
     strategy: "round-robin"
     url: "https://www.gstatic.com/generate_204"
     interval: 30
+    lazy: true
     timeout: 1500
-    lazy: false
     proxies:
+      - "45.150.110.8"
+      - "51.15.20.32"
       - "🇩🇪192088 | ⚡️Telegram = t.me/v..."
       - "@KAFING_2"
       - "🇺🇸139909 | ⚡️Telegram = t.me/S..."
@@ -5634,7 +6635,6 @@ proxy-groups:
       - "🛸100@oneclickvpnkeys"
       - "@v2ray_configs_pools 🌍 ⚡️"
       - "🩵+@Azarakhsh_Proxy+🩷"
-      - "🇮🇷198624 | ⚡️Telegram = t.me/S..."
       - "@meliproxyy"
       - "@FarazV2ray"
       - "Telegram@vpnjey"
@@ -5666,8 +6666,9 @@ proxy-groups:
       - "🇦🇱[www.v2nodes.com] vless-AL-1..."
       - "🇦🇲[www.v2nodes.com] vless-AM-1..."
       - "🇦🇲[www.v2nodes.com] vless-AM-1... #1"
-      - "🇺🇦[www.v2nodes.com] vless-UA-1... #7"
+      - "🇺🇦[www.v2nodes.com] vless-UA-1... #9"
       - "🇦🇹[www.v2nodes.com] vless-AT-3... #1"
+      - "🇬🇧[www.v2nodes.com] vless-GB-1... #1"
       - "🏳[www.v2nodes.com] vless-"
       - "🇧🇬[www.v2nodes.com] vless-BG-3... #1"
       - "🏳[www.v2nodes.com] vless- #1"
@@ -5679,43 +6680,45 @@ proxy-groups:
       - "🇧🇾[www.v2nodes.com] vless-BY-1... #1"
       - "🇨🇦[www.v2nodes.com] vless-CA-1..."
       - "🇨🇦[www.v2nodes.com] vless-CA-1... #1"
-      - "🏳[www.v2nodes.com] vless- #3"
+      - "🇨🇦[www.v2nodes.com] vless-CA-1... #2"
       - "🇸🇬[www.v2nodes.com] vless-SG"
-      - "🇯🇵[www.v2nodes.com] vless-JP"
       - "🇸🇬[www.v2nodes.com] vless-SG #1"
+      - "🇯🇵[www.v2nodes.com] vless-JP"
       - "🇸🇬[www.v2nodes.com] vless-SG #2"
       - "🇸🇬[www.v2nodes.com] vless-SG #3"
-      - "🏳[www.v2nodes.com] vless- #30"
+      - "🇸🇬[www.v2nodes.com] vless-SG #4"
       - "🇸🇬[www.v2nodes.com] vless-SG #5"
-      - "🏳[www.v2nodes.com] vless- #24"
+      - "🇸🇬[www.v2nodes.com] vless-SG #6"
+      - "🇭🇰[www.v2nodes.com] vless-HK"
       - "🇭🇰[www.v2nodes.com] vless-HK #1"
-      - "🇭🇰[www.v2nodes.com] vless-HK #3"
       - "🇨🇭[www.v2nodes.com] vless-CH-1..."
       - "🇿🇦[www.v2nodes.com] vless-ZA-1..."
       - "🇨🇱[www.v2nodes.com] vless-CL-1... #1"
       - "🇨🇱[www.v2nodes.com] vless-CL-1... #2"
       - "🇨🇾[www.v2nodes.com] vless-CY-1..."
-      - "🏳[www.v2nodes.com] vless- #4"
+      - "🏳[www.v2nodes.com] vless- #3"
       - "🇩🇪[www.v2nodes.com] vless-DE-1..."
-      - "🇫🇮[www.v2nodes.com] vless-FI-1... #3"
+      - "🇩🇪[www.v2nodes.com] vless-DE-1... #1"
       - "🇩🇪[www.v2nodes.com] vless-DE-1... #2"
-      - "🇺🇸[www.v2nodes.com] vless-US-1... #6"
+      - "🇫🇮[www.v2nodes.com] vless-FI-1... #3"
       - "🇩🇪[www.v2nodes.com] vless-DE-1... #4"
-      - "🇩🇪[www.v2nodes.com] vless-DE-1... #5"
+      - "🇺🇸[www.v2nodes.com] vless-US-1... #8"
       - "🇩🇪[www.v2nodes.com] vless-DE-1... #6"
-      - "🇺🇸[www.v2nodes.com] vless-US-1... #7"
+      - "🇩🇪[www.v2nodes.com] vless-DE-1... #7"
       - "🇩🇪[www.v2nodes.com] vless-DE-1... #8"
+      - "🇺🇸[www.v2nodes.com] vless-US-1... #9"
       - "🇩🇪[www.v2nodes.com] vless-DE-1... #10"
-      - "🇩🇪[www.v2nodes.com] vless-DE-1... #11"
+      - "🇩🇪[www.v2nodes.com] vless-DE-1... #12"
       - "🇪🇪[www.v2nodes.com] vless-EE-1..."
       - "🇪🇪[www.v2nodes.com] vless-EE-1... #2"
+      - "🇪🇸[www.v2nodes.com] vless-ES-1..."
       - "🇪🇸[www.v2nodes.com] vless-ES-4... #4"
-      - "🏳[www.v2nodes.com] vless- #9"
+      - "🏳[www.v2nodes.com] vless- #8"
       - "🇪🇸[www.v2nodes.com] vless-ES-2... #2"
-      - "🇪🇸[www.v2nodes.com] vless-ES-1... #4"
+      - "🇪🇸[www.v2nodes.com] vless-ES-1... #5"
       - "🇪🇸[www.v2nodes.com] vless-ES-2... #1"
       - "🇪🇸[www.v2nodes.com] vless-ES-4..."
-      - "Telegram---Chanel0111Netfp=chrome&security=tls#🏳[www.v2nodes.com] vless- #8"
+      - "Telegram---Chanel0111Netfp=chrome&security=tls#🏳[www.v2nodes.com] vless- #7"
       - "🇪🇸[www.v2nodes.com] vless-ES-4... #1"
       - "🇪🇸[www.v2nodes.com] vless-ES-4... #5"
       - "🇫🇮[www.v2nodes.com] vless-FI-1... #1"
@@ -5724,51 +6727,51 @@ proxy-groups:
       - "🇫🇮[www.v2nodes.com] vless-FI-1... #13"
       - "🇫🇮[www.v2nodes.com] vless-FI-1... #6"
       - "🇫🇮[www.v2nodes.com] vless-FI-1... #7"
-      - "🏳[www.v2nodes.com] vless- #11"
+      - "🏳[www.v2nodes.com] vless- #10"
       - "🇫🇷[www.v2nodes.com] vless-FR-1..."
       - "🇫🇷[www.v2nodes.com] vless-FR-1... #1"
       - "🇫🇷[www.v2nodes.com] vless-FR-1... #2"
       - "🇫🇷[www.v2nodes.com] vless-FR-1... #3"
-      - "🏳[www.v2nodes.com] vless- #12"
+      - "🇫🇷[www.v2nodes.com] vless-FR-1... #4"
       - "🇬🇧[www.v2nodes.com] vless-GB-1..."
-      - "🇬🇧[www.v2nodes.com] vless-GB-1... #1"
-      - "🇬🇧[www.v2nodes.com] vless-GB-1... #4"
+      - "🇬🇧[www.v2nodes.com] vless-GB-1... #2"
       - "🇬🇧[www.v2nodes.com] vless-GB-1... #5"
       - "🇬🇧[www.v2nodes.com] vless-GB-1... #6"
       - "🇬🇧[www.v2nodes.com] vless-GB-1... #7"
       - "🇬🇧[www.v2nodes.com] vless-GB-1... #8"
+      - "🇬🇧[www.v2nodes.com] vless-GB-1... #9"
+      - "🇬🇧[www.v2nodes.com] vless-GB-1... #10"
       - "🇬🇷[www.v2nodes.com] vless-GR-1..."
       - "🇬🇷[www.v2nodes.com] vless-GR-3..."
       - "🇭🇰[www.v2nodes.com] vless-HK-1..."
-      - "🏳[www.v2nodes.com] vless- #13"
       - "🇭🇰[www.v2nodes.com] vless-HK-1... #1"
       - "🇭🇰[www.v2nodes.com] vless-HK-1... #2"
-      - "🏳[www.v2nodes.com] vless- #14"
-      - "🏳[www.v2nodes.com] vless- #15"
+      - "🇭🇰[www.v2nodes.com] vless-HK-1... #3"
+      - "🏳[www.v2nodes.com] vless- #11"
+      - "🇭🇰 香港 | HKG #1"
       - "🇭🇺[www.v2nodes.com] vless-HU-6..."
       - "🇮🇱[www.v2nodes.com] vless-IL-1... #1"
-      - "🏳[www.v2nodes.com] vless- #16"
       - "🇮🇳[www.v2nodes.com] vless-IN-1..."
       - "🇮🇳[www.v2nodes.com] vless-IN-1... #1"
       - "🇮🇳[www.v2nodes.com] vless-IN-1... #2"
-      - "🇮🇳[www.v2nodes.com] vless-IN-1... #3"
       - "🇮🇹[www.v2nodes.com] vless-IT-1..."
       - "🇮🇹[www.v2nodes.com] vless-IT-1... #1"
       - "🇮🇹[www.v2nodes.com] vless-IT-1... #2"
-      - "🏳[www.v2nodes.com] vless- #17"
+      - "🏳[www.v2nodes.com] vless- #12"
       - "🇮🇹[www.v2nodes.com] vless-IT-2..."
       - "🇯🇵[www.v2nodes.com] vless-JP-1... #2"
       - "🇯🇵[www.v2nodes.com] vless-JP-1... #3"
-      - "🏳[www.v2nodes.com] vless- #18"
-      - "🏳[www.v2nodes.com] vless- #19"
-      - "🏳[www.v2nodes.com] vless- #20"
+      - "🇯🇵[www.v2nodes.com] vless-JP-1... #4"
+      - "🇯🇵[www.v2nodes.com] vless-JP-1... #5"
+      - "🇯🇵[www.v2nodes.com] vless-JP-1... #6"
+      - "🇯🇵[www.v2nodes.com] vless-JP-1... #7"
       - "🇰🇿[www.v2nodes.com] vless-KZ-1..."
       - "🇰🇿[www.v2nodes.com] vless-KZ-1... #1"
       - "🇱🇰[www.v2nodes.com] vless-LK-7..."
+      - "🇱🇻[www.v2nodes.com] vless-LV-1..."
       - "🇲🇩[www.v2nodes.com] vless-MD-4..."
       - "🇲🇽[www.v2nodes.com] vless-MX-1... #2"
       - "🇲🇾[www.v2nodes.com] vless-MY-1..."
-      - "🇲🇾[www.v2nodes.com] vless-MY-1... #1"
       - "🇲🇾[www.v2nodes.com] vless-MY-5..."
       - "🇳🇱[www.v2nodes.com] vless-NL-1..."
       - "🇳🇱[www.v2nodes.com] vless-NL-1... #1"
@@ -5778,13 +6781,14 @@ proxy-groups:
       - "🇳🇱[www.v2nodes.com] vless-NL-1... #5"
       - "🇳🇱[www.v2nodes.com] vless-NL-1... #6"
       - "🇳🇱[www.v2nodes.com] vless-NL-1... #7"
+      - "🇳🇱[www.v2nodes.com] vless-NL-1... #8"
       - "🇷🇴[www.v2nodes.com] vless-RO-1..."
       - "🇵🇱[www.v2nodes.com] vless-PL-1... #1"
-      - "🏳[www.v2nodes.com] vless- #21"
+      - "🏳[www.v2nodes.com] vless- #13"
       - "🇵🇱[www.v2nodes.com] vless-PL-1... #2"
       - "🇵🇱[www.v2nodes.com] vless-PL-1... #3"
-      - "🇵🇱[www.v2nodes.com] vless-PL-1... #7"
-      - "🏳[www.v2nodes.com] vless- #25"
+      - "🇵🇱[www.v2nodes.com] vless-PL-1... #4"
+      - "🇵🇱[www.v2nodes.com] vless-PL-1... #8"
       - "🇵🇱[www.v2nodes.com] vless-PL-4..."
       - "🇵🇱[www.v2nodes.com] vless-PL-2... #1"
       - "🇷🇴[www.v2nodes.com] vless-RO-1... #1"
@@ -5796,44 +6800,73 @@ proxy-groups:
       - "🇸🇪[www.v2nodes.com] vless-SE-1... #2"
       - "🇸🇪[www.v2nodes.com] vless-SE-1... #3"
       - "🇸🇪[www.v2nodes.com] vless-SE-1... #4"
+      - "🇸🇪[www.v2nodes.com] vless-SE-1... #5"
       - "🇸🇬[www.v2nodes.com] vless-SG-1..."
       - "🇸🇬[www.v2nodes.com] vless-SG-1... #1"
       - "🇸🇬[www.v2nodes.com] vless-SG-1... #2"
       - "🇸🇬[www.v2nodes.com] vless-SG-1... #3"
       - "🇸🇬[www.v2nodes.com] vless-SG-1... #4"
       - "🇸🇬[www.v2nodes.com] vless-SG-1... #5"
-      - "🏳[www.v2nodes.com] vless- #26"
       - "🇸🇬[www.v2nodes.com] vless-SG-1... #6"
-      - "🏳[www.v2nodes.com] vless- #27"
-      - "🏳[www.v2nodes.com] vless- #28"
-      - "🇮🇳[www.v2nodes.com] vless-IN"
       - "🇸🇬[www.v2nodes.com] vless-SG-1... #7"
-      - "🏳[www.v2nodes.com] vless- #29"
+      - "🇸🇬[www.v2nodes.com] vless-SG-1... #8"
+      - "🇸🇬[www.v2nodes.com] vless-SG-1... #9"
+      - "🇸🇬[www.v2nodes.com] vless-SG-1... #10"
+      - "🏳[www.v2nodes.com] vless- #15"
+      - "🇮🇳[www.v2nodes.com] vless-IN"
+      - "🇸🇬[www.v2nodes.com] vless-SG-1... #11"
+      - "🇸🇬[www.v2nodes.com] vless-SG-1... #12"
       - "🇸🇬[www.v2nodes.com] vless-SG-9..."
+      - "🏳[www.v2nodes.com] vless- #16"
       - "🇸🇬[www.v2nodes.com] vless-SG-9... #1"
       - "🇸🇬[www.v2nodes.com] vless-SG-8..."
-      - "🇸🇬[www.v2nodes.com] vless-SG-8... #1"
       - "🇹🇭[www.v2nodes.com] vless-TH-1..."
       - "🇹🇭[www.v2nodes.com] vless-TH-1... #1"
       - "🇹🇷[www.v2nodes.com] vless-TR-1..."
       - "🇹🇷[www.v2nodes.com] vless-TR-1... #1"
       - "🇹🇷[www.v2nodes.com] vless-TR-1... #2"
-      - "🇹🇷[www.v2nodes.com] vless-TR-1... #3"
-      - "🏳[www.v2nodes.com] vless- #31"
-      - "🏳[www.v2nodes.com] vless- #32"
+      - "🇹🇼[www.v2nodes.com] vless-TW-1..."
+      - "🏳[www.v2nodes.com] vless- #17"
       - "🇺🇦[www.v2nodes.com] vless-UA-1..."
-      - "🇺🇦[www.v2nodes.com] vless-UA-1... #6"
-      - "🇺🇸[www.v2nodes.com] vless-US-1..."
-      - "🇺🇸[www.v2nodes.com] vless-US-1... #2"
+      - "🇺🇦[www.v2nodes.com] vless-UA-1... #1"
+      - "🇺🇦[www.v2nodes.com] vless-UA-1... #8"
+      - "🇺🇸 美国 | USA #20"
+      - "🇺🇸[www.v2nodes.com] vless-US-1... #1"
       - "🇺🇸[www.v2nodes.com] vless-US-1... #3"
-      - "🇺🇸[www.v2nodes.com] vless-US-1... #4"
       - "🇺🇸[www.v2nodes.com] vless-US-1... #5"
-      - "🇺🇸[www.v2nodes.com] vless-US-1... #8"
-      - "🇺🇸[www.v2nodes.com] vless-US-1... #9"
+      - "🇺🇸[www.v2nodes.com] vless-US-1... #6"
+      - "🇺🇸[www.v2nodes.com] vless-US-1... #7"
       - "🇺🇸[www.v2nodes.com] vless-US-1... #10"
+      - "🇺🇸[www.v2nodes.com] vless-US-1... #11"
+      - "🇺🇸[www.v2nodes.com] vless-US-1... #12"
       - "🇻🇳[www.v2nodes.com] vless-VN-1..."
       - "🇻🇳[www.v2nodes.com] vless-VN-1... #1"
-      - "🇺🇸US_1|4.1MB/s"
+      - "🇳🇱NL_1|2.1MB/s"
+      - "🇸🇬SG_1|4.5MB/s"
+      - "🇸🇬SG_2|4.6MB/s"
+      - "🇷🇺RU_1|1.6MB/s"
+      - "🇺🇸US_1|1.6MB/s"
+      - "🇦🇹AT_1|1.5MB/s"
+      - "🇩🇪DE_3|1.9MB/s"
+      - "🇺🇸US_5|2.2MB/s"
+      - "🇸🇬SG_3|4.0MB/s"
+      - "🇸🇬SG_4|2.6MB/s"
+      - "🇰🇷KR_1|1.5MB/s"
+      - "🇺🇸US_17|1.8MB/s"
+      - "🇺🇸US_18|2.2MB/s"
+      - "🇵🇱PL_1|2.7MB/s"
+      - "🇨🇦CA_2|1.6MB/s"
+      - "🇳🇱NL_5|1.2MB/s"
+      - "🇺🇸US_19|3.3MB/s"
+      - "🇳🇱NL_6|3.7MB/s"
+      - "🇸🇬SG_6|2.3MB/s"
+      - "🇺🇸US_20|3.2MB/s"
+      - "🇺🇸US_21|2.2MB/s"
+      - "🇩🇪DE_7|3.2MB/s"
+      - "🇨🇦CA_3|2.1MB/s"
+      - "🇸🇬SG_7|3.6MB/s"
+      - "🇸🇬SG_8|4.2MB/s"
+      - "🇺🇸US_22|2.8MB/s"
       - "🇧🇬 保加利亚 | BGR #1"
       - "🇨🇾 塞浦路斯 | CYP #1"
       - "🇩🇪 德国 | DEU #1"
@@ -5843,7 +6876,6 @@ proxy-groups:
       - "🇪🇸 西班牙 | ESP #2"
       - "🇫🇷 法国 | FRA #1"
       - "🇬🇪 GE_51 #1"
-      - "🇭🇰 香港 | HKG #1"
       - "🇭🇰 香港 | HKG #2"
       - "🇯🇵 日本 | JPN #1"
       - "🇯🇵 日本 | JPN #2"
@@ -5886,60 +6918,58 @@ proxy-groups:
       - "🇺🇸 美国 | USA #17"
       - "🇺🇸 美国 | USA #18"
       - "🇺🇸 美国 | USA #19"
-      - "🇺🇸 美国 | USA #20"
       - "🇺🇸 美国 | USA #21"
       - "🇺🇸 美国 | USA #22"
       - "🇺🇸 美国 | USA #23"
       - "🇦🇱[www.v2nodes.com] ss-AL-1490..."
+      - "🇦🇹[www.v2nodes.com] ss-AT-1595..."
+      - "🇨🇦[www.v2nodes.com] ss-CA-1559..."
+      - "🇨🇦[www.v2nodes.com] ss-CA-1559... #1"
+      - "🇨🇦[www.v2nodes.com] ss-CA-1558..."
+      - "🇨🇦[www.v2nodes.com] ss-CA-1557..."
       - "🏳[www.v2nodes.com] ss-"
       - "🏳[www.v2nodes.com] ss- #1"
       - "🏳[www.v2nodes.com] ss- #2"
-      - "🇨🇦[www.v2nodes.com] ss-CA-1558..."
-      - "🇨🇦[www.v2nodes.com] ss-CA-1557..."
-      - "🇨🇦[www.v2nodes.com] ss-CA-1546..."
-      - "🏳[www.v2nodes.com] ss- #3"
-      - "🏳[www.v2nodes.com] ss- #4"
       - "🇨🇦[www.v2nodes.com] ss-CA-1545..."
-      - "🏳[www.v2nodes.com] ss- #5"
-      - "🏳[www.v2nodes.com] ss- #6"
-      - "🏳[www.v2nodes.com] ss- #7"
+      - "🏳[www.v2nodes.com] ss- #3"
+      - "🇨🇭[www.v2nodes.com] ss-CH-1573..."
+      - "🇨🇿[www.v2nodes.com] ss-CZ-1599..."
       - "🇩🇪[www.v2nodes.com] ss-DE-1602..."
+      - "🇪🇬[www.v2nodes.com] ss-EG-1599..."
       - "🇬🇧[www.v2nodes.com] ss-GB-1602..."
       - "🇮🇹[www.v2nodes.com] ss-IT-1602..."
-      - "🏳[www.v2nodes.com] ss- #8"
-      - "🇮🇹[www.v2nodes.com] ss-IT-1602... #1"
+      - "🇮🇹IT_1|1.4MB/s"
       - "🇮🇹[www.v2nodes.com] ss-IT-1602... #2"
-      - "🏳[www.v2nodes.com] ss- #9"
-      - "🇺🇸 美国 | USA #16"
+      - "🇮🇹[www.v2nodes.com] ss-IT-1602... #3"
       - "🇮🇹[www.v2nodes.com] ss-IT-1602... #4"
-      - "🏳[www.v2nodes.com] ss- #10"
+      - "🇺🇸 美国 | USA #16"
+      - "🇮🇹[www.v2nodes.com] ss-IT-1602... #6"
+      - "🇮🇹[www.v2nodes.com] ss-IT-1602... #7"
       - "🇮🇹 意大利 | ITA #1"
-      - "🏳[www.v2nodes.com] ss- #12"
-      - "🏳[www.v2nodes.com] ss- #13"
+      - "🇮🇹[www.v2nodes.com] ss-IT-1602... #9"
+      - "🇮🇹[www.v2nodes.com] ss-IT-1597..."
+      - "🏳[www.v2nodes.com] ss- #4"
       - "🇯🇵[www.v2nodes.com] ss-JP-1599..."
       - "🇯🇵[www.v2nodes.com] ss-JP-1598..."
       - "🇯🇵[www.v2nodes.com] ss-JP-1544..."
       - "🇰🇷[www.v2nodes.com] ss-KR-1602... #1"
+      - "🇲🇽[www.v2nodes.com] ss-MX-1564..."
       - "🇳🇱[www.v2nodes.com] ss-NL-1602..."
-      - "🇳🇴[www.v2nodes.com] ss-NO-1220..."
-      - "🏳[www.v2nodes.com] ss- #14"
+      - "🏳[www.v2nodes.com] ss- #5"
       - "🇷🇴[www.v2nodes.com] ss-RO-1298..."
-      - "🇸🇪[www.v2nodes.com] ss-SE-1560..."
       - "🇸🇬[www.v2nodes.com] ss-SG-1559..."
-      - "🏳[www.v2nodes.com] ss- #15"
+      - "🇹🇭[www.v2nodes.com] ss-TH-1591..."
       - "🇹🇷[www.v2nodes.com] ss-TR-1602..."
       - "🇺🇸[www.v2nodes.com] ss-US-1603..."
       - "🇺🇸[www.v2nodes.com] ss-US-1603... #1"
-      - "🏳[www.v2nodes.com] ss- #16"
       - "🇺🇸[www.v2nodes.com] ss-US-1603... #2"
-      - "🏳[www.v2nodes.com] ss- #17"
-      - "🏳[www.v2nodes.com] ss- #18"
+      - "🇺🇸[www.v2nodes.com] ss-US-1603... #3"
       - "🇺🇸[www.v2nodes.com] ss-US-1602..."
       - "🇺🇸[www.v2nodes.com] ss-US-1602... #1"
-      - "🏳[www.v2nodes.com] ss- #19"
-      - "🇿🇦[www.v2nodes.com] ss-ZA-1534..."
+      - "🇺🇸[www.v2nodes.com] ss-US-1602... #2"
+      - "🇺🇸[www.v2nodes.com] ss-US-1602... #3"
       - "🇿🇦[www.v2nodes.com] ss-ZA-1336..."
-      - "🏳[www.v2nodes.com] ss- #20"
+      - "🇿🇦[www.v2nodes.com] ss-ZA-1333..."
       - "tg频道:@ripaojiedian #1"
       - "🇷🇺 俄罗斯 | RUS #1"
       - "防范境外势力渗透"
@@ -5965,25 +6995,26 @@ proxy-groups:
       - "🇰🇷 韩国|@ripaojiedian"
       - "🇺🇸 美国|@ripaojiedian"
       - "🇺🇸 美国2|@ripaojiedian"
+      - "🇭🇰HK_1|3.8MB/s"
+      - "🇷🇺RU_2|2.8MB/s"
+      - "🏳[www.v2nodes.com] trojan-"
       - "🇩🇪[www.v2nodes.com] trojan-DE-..."
       - "🇩🇪[www.v2nodes.com] trojan-DE-... #1"
       - "🇩🇪[www.v2nodes.com] trojan-DE-... #2"
-      - "🇩🇪[www.v2nodes.com] trojan-DE-... #3"
-      - "🏳[www.v2nodes.com] trojan-"
       - "🏳[www.v2nodes.com] trojan- #1"
-      - "🇩🇪[www.v2nodes.com] trojan-DE-... #4"
-      - "🇩🇪[www.v2nodes.com] trojan-DE-... #5"
+      - "🏳[www.v2nodes.com] trojan- #2"
       - "🇫🇷[www.v2nodes.com] trojan-FR-..."
-      - "🇫🇷[www.v2nodes.com] trojan-FR-... #4"
       - "🇫🇷[www.v2nodes.com] trojan-FR-... #1"
-      - "🏳[www.v2nodes.com] trojan- #3"
       - "🇫🇷[www.v2nodes.com] trojan-FR-... #2"
-      - "🏳[www.v2nodes.com] trojan- #4"
+      - "🏳[www.v2nodes.com] trojan- #3"
       - "🇫🇷[www.v2nodes.com] trojan-FR-... #3"
+      - "🏳[www.v2nodes.com] trojan- #4"
+      - "🇫🇷[www.v2nodes.com] trojan-FR-... #4"
       - "🇫🇷[www.v2nodes.com] trojan-FR-... #5"
       - "🇫🇷[www.v2nodes.com] trojan-FR-... #6"
       - "🇫🇷[www.v2nodes.com] trojan-FR-... #7"
       - "🇫🇷[www.v2nodes.com] trojan-FR-... #8"
+      - "🇫🇷[www.v2nodes.com] trojan-FR-... #9"
       - "🇭🇰[www.v2nodes.com] trojan-HK-..."
       - "🇯🇵[www.v2nodes.com] trojan-JP-..."
       - "🇰🇷[www.v2nodes.com] trojan-KR-..."
@@ -5998,13 +7029,12 @@ proxy-groups:
       - "🇳🇱[www.v2nodes.com] trojan-NL-... #6"
       - "🇳🇱[www.v2nodes.com] trojan-NL-... #8"
       - "🇳🇱[www.v2nodes.com] trojan-NL-... #9"
-      - "🇳🇱[www.v2nodes.com] trojan-NL-... #10"
       - "🇵🇱[www.v2nodes.com] trojan-PL-..."
       - "🏳[www.v2nodes.com] trojan- #7"
       - "🇸🇬[www.v2nodes.com] trojan-SG-..."
       - "🇸🇬[www.v2nodes.com] trojan-SG-... #1"
       - "🇺🇸[www.v2nodes.com] trojan-US-..."
-      - "🇺🇸[www.v2nodes.com] trojan-US-... #2"
+      - "🇺🇸[www.v2nodes.com] trojan-US-... #1"
       - "香港2|@ripaojiedian"
       - "香港3|@ripaojiedian"
       - "香港4|@ripaojiedian"
@@ -6015,292 +7045,358 @@ proxy-groups:
       - "美国2|@ripaojiedian"
       - "台湾|@ripaojiedian"
       - "韩国|@ripaojiedian"
-      - "120.232.204.58"
-      - "185.221.132.242"
+      - "🇳🇱NL_2|1.8MB/s"
+      - "130.195.250.34"
+      - "95.153.31.66"
+      - "37.120.213.210"
+      - "213.139.9.142"
+      - "146.70.123.98"
+      - "146.70.242.130"
+      - "193.239.236.134"
+      - "169.150.248.17"
+      - "146.70.170.210"
+      - "185.216.35.66"
       - "213.109.163.119"
-      - "213.109.163.119-1"
       - "158.173.154.1"
+      - "198.105.124.180"
+      - "84.17.47.148"
+      - "64.98.50.100"
+      - "44.248.167.117"
+      - "193.176.84.19"
+      - "87.98.174.157"
+      - "158.173.154.2"
+      - "146.70.244.2"
+      - "133.18.200.207"
+      - "185.164.35.16"
+      - "146.70.242.146"
+      - "138.199.35.210"
+      - "138.199.35.198"
+      - "138.199.35.214"
+      - "185.163.110.194"
+      - "185.164.138.156"
+      - "44.229.69.166"
+      - "138.199.35.200"
+      - "138.199.35.205"
+      - "149.88.27.33"
+      - "130.195.250.18"
+      - "138.199.35.197"
+      - "185.183.105.130"
+      - "87.106.223.158"
+      - "146.70.221.34"
+      - "185.94.192.210"
+      - "212.102.63.61"
+      - "138.199.35.195"
+      - "82.96.128.175"
+      - "212.102.63.31"
+      - "154.47.25.78"
+      - "82.66.235.221"
+      - "185.221.132.226"
+      - "31.171.155.210"
+      - "135.136.1.2"
+      - "84.233.178.33"
+      - "31.7.62.50"
+      - "31.171.154.66"
+      - "149.102.245.65"
+      - "193.176.84.22"
+      - "149.36.50.129"
+      - "172.64.69.89"
+      - "87.120.103.226"
+      - "149.22.86.1"
+      - "84.17.47.125"
+      - "154.47.29.174"
+      - "38.165.231.71"
+      - "128.199.121.61"
+      - "198.44.157.27"
+      - "172.64.68.89"
+      - "193.176.84.24"
+      - "23.175.41.231"
+      - "103.124.138.70"
+      - "84.17.47.147"
+      - "138.199.35.202"
+      - "193.176.84.36"
+      - "193.176.84.25"
+      - "213.109.163.119-1"
       - "158.173.154.5"
       - "51.159.225.196"
       - "83.206.1.225"
       - "84.235.228.156"
       - "82.65.162.76"
-      - "198.105.124.180"
       - "18.200.158.139"
       - "62.90.77.30"
       - "185.219.159.15"
-      - "84.17.47.125"
-      - "84.17.47.148"
+      - "84.17.47.125-1"
       - "84.17.47.123"
       - "84.17.47.124"
-      - "193.176.84.19"
       - "193.176.84.21"
       - "193.176.84.26"
       - "193.176.84.34"
-      - "64.98.50.100"
-      - "44.248.167.117"
-  - name: "المنت 💬"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/353655/matrix-icon.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "تیماسپیک 🎧"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/331567/teamspeak.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "دلتاچت ✉️"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/373771/mail.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"
-    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
     proxies:
       - "بدون فیلترشکن 🛡️"
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
   - name: "تلگرام 💬"
     type: "select"
-    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
   - name: "یوتیوب ▶️"
     type: "select"
-    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
       - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
   - name: "گوگل 🌍"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
     icon: "https://www.svgrepo.com/show/475656/google-color.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "واتس آپ 🟢"
-    type: "select"
-    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-      - "بدون فیلترشکن 🛡️"
   - name: "هوش مصنوعی 🤖"
     type: "select"
-    icon: "https://www.svgrepo.com/show/306500/openai.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/306500/openai.svg"
   - name: "توییتر 🐦"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
     icon: "https://www.svgrepo.com/show/475689/twitter-color.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "اسپاتیفای 🎵"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
   - name: "اینستاگرام 📸"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
     icon: "https://www.svgrepo.com/show/452229/instagram-1.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-      - "بدون فیلترشکن 🛡️"
-  - name: "تبلیغات 🆎"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/336358/ad.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "تبلیغات اپ ها 🍃"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "رهگیری جهانی 🛑"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "سایتای مخرب ⚠️"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
-    proxies:
-      - "اجازه ندادن 🚫"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "بدون فیلترشکن 🛡️"
-  - name: "استیم 🖥️"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/452107/steam.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "گیم 🎮"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "توییچ 📡"
-    type: "select"
-    icon: "https://www.svgrepo.com/show/343527/twitch-network-communication-interaction-connection.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "سایتای ایرانی 🇮🇷"
-    type: "select"
-    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
-    proxies:
-      - "بدون فیلترشکن 🛡️"
-      - "نوع انتخاب پروکسی 🔀"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "ویندوز 🧊"
-    type: "select"
-    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "اجازه ندادن 🚫"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
   - name: "کلودفلر ☁️"
     type: "select"
-    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
   - name: "گیتهاب 🐙"
     type: "select"
-    icon: "https://www.svgrepo.com/show/355033/github.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/355033/github.svg"
+  - name: "اسپاتیفای 🎵"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
+  - name: "واتس آپ 🟢"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
+  - name: "تبلیغات 🆎"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/336358/ad.svg"
+  - name: "تبلیغات اپ ها 🍃"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
+  - name: "رهگیری جهانی 🛑"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
+  - name: "المنت 💬"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Element_(software)_logo_(2020).svg"
+  - name: "تیم اسپیک 🎧"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/teamspeak/default.svg"
+  - name: "دلتاچت ✉️"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Delta_chat_(Instant_Messenger)_logo.svg"
+  - name: "سایتای مخرب ⚠️"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
+  - name: "استیم 🖥️"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/452107/steam.svg"
+  - name: "گیم 🎮"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
+  - name: "توییچ 📡"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@develop/icons/twitch.svg"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
+  - name: "ویندوز 🧊"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "اجازه ندادن 🚫"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
   - name: "دیسکورد 🗣️"
     type: "select"
-    icon: "https://automatorplugin.com/wp-content/uploads/2024/10/discord-icon.svg"
     proxies:
       - "نوع انتخاب پروکسی 🔀"
       - "بدون فیلترشکن 🛡️"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/brands/discord.svg"
   - name: "استریمیو 🎬"
     type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
     icon: "https://stremio.github.io/stremio-addon-guide/img/stremio.svg"
-    proxies:
-      - "نوع انتخاب پروکسی 🔀"
-      - "بدون فیلترشکن 🛡️"
-      - "خودکار (بهترین پینگ) 🤖"
-      - "دستی 🤏🏻"
-      - "اجازه ندادن 🚫"
-  - name: "انیدسک 🔴"
+  - name: "انی دسک 🔴"
     type: "select"
-    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
     proxies:
       - "بدون فیلترشکن 🛡️"
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
   - name: "سایتای سانسوری 🤬"
     type: "select"
-    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Censorship.svg/300px-Censorship.svg.png"
     proxies:
       - "اجازه ندادن 🚫"
       - "نوع انتخاب پروکسی 🔀"
       - "خودکار (بهترین پینگ) 🤖"
       - "دستی 🤏🏻"
       - "بدون فیلترشکن 🛡️"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/clapperboard.svg"
   - name: "بدون فیلترشکن 🛡️"
     type: "select"
-    icon: "https://www.svgrepo.com/show/6318/connection.svg"
     proxies:
       - "DIRECT"
     hidden: true
+    icon: "https://www.svgrepo.com/show/6318/connection.svg"
   - name: "قطع اینترنت ⛔"
     type: "select"
-    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
     proxies:
       - "REJECT"
     hidden: true
+    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
   - name: "اجازه ندادن 🚫"
     type: "select"
-    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
     proxies:
       - "REJECT"
     hidden: true
+    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
 rules:
+  - "IP-CIDR,127.0.0.0/8,بدون فیلترشکن 🛡️,no-resolve"
+  - "DOMAIN,localhost,بدون فیلترشکن 🛡️"
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,private,بدون فیلترشکن 🛡️"
   - "RULE-SET,DownloadManagers,دانلود منیجر 📥"
   - "RULE-SET,Download,دانلود منیجر 📥"
   - "RULE-SET,stremio,استریمیو 🎬"
@@ -6320,11 +7416,12 @@ rules:
   - "DST-PORT,993,دلتاچت ✉️"
   - "DST-PORT,465,دلتاچت ✉️"
   - "DST-PORT,587,دلتاچت ✉️"
-  - "PROCESS-NAME,com.teamspeak.ts3client,تیماسپیک 🎧"
-  - "PROCESS-NAME,ts3client_win64.exe,تیماسپیک 🎧"
-  - "PROCESS-NAME,ts3client_win32.exe,تیماسپیک 🎧"
-  - "DOMAIN-SUFFIX,ag.tssq.ir,تیماسپیک 🎧"
-  - "DST-PORT,9987,تیماسپیک 🎧"
+  - "PROCESS-NAME,com.teamspeak.ts3client,تیم اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win64.exe,تیم اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win32.exe,تیم اسپیک 🎧"
+  - "PROCESS-NAME,TeamSpeak.exe,تیم اسپیک 🎧"
+  - "DOMAIN-SUFFIX,ag.tssq.ir,تیم اسپیک 🎧"
+  - "DST-PORT,9987,تیم اسپیک 🎧"
   - "RULE-SET,BanProgramAD,تبلیغات اپ ها 🍃"
   - "RULE-SET,BanAD,رهگیری جهانی 🛑"
   - "RULE-SET,PrivateTracker,رهگیری جهانی 🛑"
@@ -6347,9 +7444,12 @@ rules:
   - "RULE-SET,YouTube,یوتیوب ▶️"
   - "RULE-SET,youtube,یوتیوب ▶️"
   - "RULE-SET,YouTubeMusic,یوتیوب ▶️"
-  - "PROCESS-NAME,com.anydesk.anydeskandroid,انیدسک 🔴"
-  - "PROCESS-NAME,AnyDesk.exe,انیدسک 🔴"
-  - "DOMAIN-SUFFIX,anydesk.com,انیدسک 🔴"
+  - "PROCESS-NAME,com.anydesk.anydeskandroid,انی دسک 🔴"
+  - "PROCESS-NAME,AnyDesk.exe,انی دسک 🔴"
+  - "DOMAIN-SUFFIX,anydesk.com,انی دسک 🔴"
+  - "PROCESS-NAME,rustdesk.exe,انی دسک 🔴"
+  - "PROCESS-NAME,com.carriez.flutter_hbb,انی دسک 🔴"
+  - "PROCESS-NAME,dorsandesk.exe,انی دسک 🔴"
   - "PROCESS-NAME,Twitter.exe,توییتر 🐦"
   - "PROCESS-NAME,com.twitter.android,توییتر 🐦"
   - "RULE-SET,Chotwitter,توییتر 🐦"
@@ -6361,9 +7461,6 @@ rules:
   - "RULE-SET,mihspotify,اسپاتیفای 🎵"
   - "PROCESS-NAME,com.instagram.android,اینستاگرام 📸"
   - "RULE-SET,instagram,اینستاگرام 📸"
-  - "DOMAIN-SUFFIX,deepseek.com,هوش مصنوعی 🤖"
-  - "DOMAIN-SUFFIX,qwen.ai,هوش مصنوعی 🤖"
-  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
   - "RULE-SET,censor,سایتای سانسوری 🤬"
   - "RULE-SET,apps,سایتای ایرانی 🇮🇷"
   - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
@@ -6377,6 +7474,10 @@ rules:
   - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
   - "DOMAIN-SUFFIX,unimics.com,سایتای ایرانی 🇮🇷"
   - "RULE-SET,whatsapp,واتس آپ 🟢"
+  - "RULE-SET,Ai,هوش مصنوعی 🤖"
+  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
+  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google,گوگل 🌍"
   - "RULE-SET,steam,استیم 🖥️"
   - "RULE-SET,SteamRegionCheck,استیم 🖥️"
   - "RULE-SET,game,گیم 🎮"
@@ -6391,9 +7492,5 @@ rules:
   - "RULE-SET,github,گیتهاب 🐙"
   - "PROCESS-NAME,com.android.vending,نوع انتخاب پروکسی 🔀"
   - "PROCESS-NAME,com.google.android.gms,نوع انتخاب پروکسی 🔀"
-  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
-  - "RULE-SET,google,گوگل 🌍"
   - "IP-CIDR,10.10.34.0/24,نوع انتخاب پروکسی 🔀"
-  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
-  - "RULE-SET,private,بدون فیلترشکن 🛡️"
   - "MATCH,نوع انتخاب پروکسی 🔀"
