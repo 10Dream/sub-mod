@@ -527,9 +527,10 @@ def parse_hysteria2(link: str):
         if insecure in ["1", "true"]: proxy["skip-cert-verify"] = True
         obfs = qs.get("obfs", [""])[0]
         if obfs and obfs != "none":
-            proxy["obfs"] = obfs
             obfs_pass = qs.get("obfs-password", [""])[0]
-            if obfs_pass: proxy["obfs-password"] = obfs_pass
+            if obfs_pass:
+                proxy["obfs"] = obfs
+                proxy["obfs-password"] = obfs_pass
         return proxy
     except Exception:
         return None
@@ -1102,6 +1103,10 @@ def validate_proxy(p) -> bool:
     except (ValueError, TypeError):
         return False
     server_lower = server.lower()
+    if server_lower.startswith("@") or " " in server_lower or "/" in server_lower or "\\" in server_lower or "telegram" in server_lower:
+        return False
+    if "." not in server and ":" not in server:
+        return False
     blocked = ["127.0.0.1", "0.0.0.0", "localhost", "t.me", "github.com", "raw.githubusercontent.com", "google.com"]
     if any(b in server_lower for b in blocked):
         return False
@@ -1401,3 +1406,30 @@ def run_converter_for_all(sources, normal_dir, clash_dir, max_workers=8):
                 pass
                 
     print(f"[تبدیل کلش] {converted_count} فایل با موفقیت به کانفیگ دوگانه کلش تبدیل شدند.", flush=True)
+
+def parse_subscription_text(content: str) -> list:
+    """
+    پارس محتوای خام متنی یا Base64 سابسکریپشن و استخراج لیست دیکشنری پروکسی‌های معتبر
+    این تابع توسط source_manager.py برای اعتبارسنجی منابع راکد و زنده استفاده می‌شود.
+    """
+    if not content:
+        return []
+    
+    # در صورت وجود انکودینگ بیس۶۴ ابتدا دیکود شود
+    decoded = safe_decode(content.strip())
+    text = decoded if decoded else content
+    
+    proxies = []
+    for line in text.splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        line_clean = remove_control_chars(line)
+        split_links = split_concatenated_links(line_clean)
+        for single_link in split_links:
+            p = parse_proxy(single_link)
+            if p and validate_proxy(p):
+                proxies.append(p)
+                
+    return proxies
+
