@@ -493,6 +493,30 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
+  - name: "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.189.40:8880"
+    type: "vless"
+    server: "92.53.189.40"
+    port: 8880
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "vms.lifetime19.workers.dev"
+  - name: "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.188.30:8880"
+    type: "vless"
+    server: "92.53.188.30"
+    port: 8880
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "vms.lifetime18.workers.dev"
   - name: "🇸🇮 🔒 VL-GRPC-TLS 🇸🇮 SI-92.53.188.36:443"
     type: "vless"
     server: "92.53.188.36"
@@ -506,30 +530,34 @@ proxies:
       - "h3"
       - "h2"
       - "http/1.1"
-  - name: "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.188.30:8880"
+  - name: "🇸🇮 @DeltaKroneckerGithub"
     type: "vless"
-    server: "92.53.188.30"
-    port: 8880
-    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    server: "92.42.201.102"
+    port: 443
+    uuid: "d0c8aa8d-a535-432a-b521-21f0e561f643"
     udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "vms.lifetime18.workers.dev"
-  - name: "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.189.40:8880"
+    tls: true
+    network: "tcp"
+    servername: "node-slo01.rkitman.ru"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "8C7evg_SSrJbxMTaUqJoylqB9HSNsmBvmUlgs_c5EiU"
+      short-id: "88d9dc52ef39c8bd"
+  - name: "🇸🇮 @DeltaKroneckerGithub-1"
     type: "vless"
-    server: "92.53.189.40"
-    port: 8880
-    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    server: "92.42.201.107"
+    port: 443
+    uuid: "d0c8aa8d-a535-432a-b521-21f0e561f643"
     udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "vms.lifetime19.workers.dev"
+    tls: true
+    network: "tcp"
+    servername: "node-slo02.rkitman.ru"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "8C7evg_SSrJbxMTaUqJoylqB9HSNsmBvmUlgs_c5EiU"
+      short-id: "88d9dc52ef39c8bd"
   - name: "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.60.78.221:443"
     type: "vless"
     server: "92.60.78.221"
@@ -558,9 +586,11 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "🇸🇮 🔒 VL-GRPC-TLS 🇸🇮 SI-92.53.188.36:443"
-      - "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.188.30:8880"
       - "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.189.40:8880"
+      - "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.188.30:8880"
+      - "🇸🇮 🔒 VL-GRPC-TLS 🇸🇮 SI-92.53.188.36:443"
+      - "🇸🇮 @DeltaKroneckerGithub"
+      - "🇸🇮 @DeltaKroneckerGithub-1"
       - "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.60.78.221:443"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
@@ -570,9 +600,11 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "🇸🇮 🔒 VL-GRPC-TLS 🇸🇮 SI-92.53.188.36:443"
-      - "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.188.30:8880"
       - "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.189.40:8880"
+      - "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.188.30:8880"
+      - "🇸🇮 🔒 VL-GRPC-TLS 🇸🇮 SI-92.53.188.36:443"
+      - "🇸🇮 @DeltaKroneckerGithub"
+      - "🇸🇮 @DeltaKroneckerGithub-1"
       - "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.60.78.221:443"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
@@ -583,9 +615,11 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "🇸🇮 🔒 VL-GRPC-TLS 🇸🇮 SI-92.53.188.36:443"
-      - "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.188.30:8880"
       - "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.189.40:8880"
+      - "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.188.30:8880"
+      - "🇸🇮 🔒 VL-GRPC-TLS 🇸🇮 SI-92.53.188.36:443"
+      - "🇸🇮 @DeltaKroneckerGithub"
+      - "🇸🇮 @DeltaKroneckerGithub-1"
       - "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.60.78.221:443"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
