@@ -505,18 +505,6 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "cv_KJnMzQUZruACPbH-BCgLWrYqPm2dbUymg-gW_sVc"
-  - name: "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.9.80:80"
-    type: "vless"
-    server: "151.101.9.80"
-    port: 80
-    uuid: "5a1d2c0c-abfa-4050-918f-bfab3eaee62a"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/?ed=1049"
-      headers:
-        Host: "adspeedx23.global.ssl.fastly.net"
   - name: "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
     type: "ss"
     server: "185.210.217.94"
@@ -524,6 +512,20 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "XF0klw7870vXn3uQIxe19Q"
     udp: true
+  - name: "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
+    type: "vless"
+    server: "194.71.227.213"
+    port: 443
+    uuid: "c18b978e-1c4e-415c-8bea-07942b563a64"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "shuma.ccwu.cc"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "shuma.ccwu.cc"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -539,8 +541,8 @@ proxy-groups:
     lazy: true
     proxies:
       - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.164-443 | 90.14ms"
-      - "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.9.80:80"
       - "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
+      - "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -550,8 +552,8 @@ proxy-groups:
     lazy: true
     proxies:
       - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.164-443 | 90.14ms"
-      - "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.9.80:80"
       - "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
+      - "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -562,8 +564,8 @@ proxy-groups:
     timeout: 1500
     proxies:
       - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.164-443 | 90.14ms"
-      - "🇧🇪 🔒 VL-WS-NA 🇧🇪 BE-151.101.9.80:80"
       - "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
+      - "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"
