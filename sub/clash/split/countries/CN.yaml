@@ -493,7 +493,7 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "🇨🇳 CN🇨🇳 | 120.48.133.162-10086 | 265.8ms"
+  - name: "🇨🇳 🔒 VM-WS-NA 🇨🇳 CN-120.48.133.162:10086"
     type: "vmess"
     server: "120.48.133.162"
     port: 10086
@@ -501,7 +501,37 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇨🇳 REALITY|CN🇨🇳 | 122.8.45.4-8443 | 112.18ms"
+  - name: "🇨🇳 🔒 VM-WS-NA 🇨🇳 CN-120.48.133.162:10086-1"
+    type: "vmess"
+    server: "120.48.133.162"
+    port: 10086
+    uuid: "a8d931b0-6c27-428b-8d86-c20efea3dba7"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇨🇳 🔒 VL-WS-TLS 🇨🇳 CN-103.118.254.37:443"
+    type: "vless"
+    server: "103.118.254.37"
+    port: 443
+    uuid: "c18b978e-1c4e-415c-8bea-07942b563a64"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "shuma.ccwu.cc"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "shuma.ccwu.cc"
+  - name: "🇨🇳 🔒 VM-TCP-NA 🇨🇳 CN-112.132.215.108:50002"
+    type: "vmess"
+    server: "112.132.215.108"
+    port: 50002
+    uuid: "418048af-a293-4b99-9b0c-98ca3580dd24"
+    alterId: 64
+    cipher: "auto"
+    udp: true
+  - name: "🇨🇳 🔒 VL-GRPC-RLT 🇨🇳 CN-122.8.45.4:8443"
     type: "vless"
     server: "122.8.45.4"
     port: 8443
@@ -515,22 +545,6 @@ proxies:
       public-key: "iVDh09Vm2DqZMNQoUdf-LCZ6TqVGb9mLXnClAK2LRj4"
     grpc-opts:
       grpc-service-name: "TunService"
-  - name: "🇨🇳 🔒 VM-WS-NA 🇨🇳 CN-120.48.133.162:10086"
-    type: "vmess"
-    server: "120.48.133.162"
-    port: 10086
-    uuid: "a8d931b0-6c27-428b-8d86-c20efea3dba7"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇨🇳 🔒 VM-TCP-NA 🇨🇳 CN-112.132.215.108:50002"
-    type: "vmess"
-    server: "112.132.215.108"
-    port: 50002
-    uuid: "418048af-a293-4b99-9b0c-98ca3580dd24"
-    alterId: 64
-    cipher: "auto"
-    udp: true
   - name: "🇨🇳 @DeltaKroneckerGithub"
     type: "trojan"
     server: "tyy129.magiclampcloud.com"
@@ -1300,20 +1314,6 @@ proxies:
     tls: true
     network: "tcp"
     servername: "ja262.magiclampcloud.cn"
-  - name: "🇨🇳 🔒 VL-WS-TLS 🇨🇳 CN-103.118.254.37:443"
-    type: "vless"
-    server: "103.118.254.37"
-    port: 443
-    uuid: "c18b978e-1c4e-415c-8bea-07942b563a64"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "shuma.ccwu.cc"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "shuma.ccwu.cc"
   - name: "🇨🇳 @DeltaKroneckerGithub-87"
     type: "http"
     server: "dns.alidns.com"
@@ -1349,10 +1349,11 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "🇨🇳 CN🇨🇳 | 120.48.133.162-10086 | 265.8ms"
-      - "🇨🇳 REALITY|CN🇨🇳 | 122.8.45.4-8443 | 112.18ms"
       - "🇨🇳 🔒 VM-WS-NA 🇨🇳 CN-120.48.133.162:10086"
+      - "🇨🇳 🔒 VM-WS-NA 🇨🇳 CN-120.48.133.162:10086-1"
+      - "🇨🇳 🔒 VL-WS-TLS 🇨🇳 CN-103.118.254.37:443"
       - "🇨🇳 🔒 VM-TCP-NA 🇨🇳 CN-112.132.215.108:50002"
+      - "🇨🇳 🔒 VL-GRPC-RLT 🇨🇳 CN-122.8.45.4:8443"
       - "🇨🇳 @DeltaKroneckerGithub"
       - "🇨🇳 @DeltaKroneckerGithub-1"
       - "🇨🇳 @DeltaKroneckerGithub-2"
@@ -1440,7 +1441,6 @@ proxy-groups:
       - "🇨🇳 @DeltaKroneckerGithub-84"
       - "🇨🇳 @DeltaKroneckerGithub-85"
       - "🇨🇳 @DeltaKroneckerGithub-86"
-      - "🇨🇳 🔒 VL-WS-TLS 🇨🇳 CN-103.118.254.37:443"
       - "🇨🇳 @DeltaKroneckerGithub-87"
       - "🇨🇳 >>@oneclickvpnkeys::NL"
       - "🇨🇳 >>@oneclickvpnkeys::NL-1"
@@ -1452,10 +1452,11 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "🇨🇳 CN🇨🇳 | 120.48.133.162-10086 | 265.8ms"
-      - "🇨🇳 REALITY|CN🇨🇳 | 122.8.45.4-8443 | 112.18ms"
       - "🇨🇳 🔒 VM-WS-NA 🇨🇳 CN-120.48.133.162:10086"
+      - "🇨🇳 🔒 VM-WS-NA 🇨🇳 CN-120.48.133.162:10086-1"
+      - "🇨🇳 🔒 VL-WS-TLS 🇨🇳 CN-103.118.254.37:443"
       - "🇨🇳 🔒 VM-TCP-NA 🇨🇳 CN-112.132.215.108:50002"
+      - "🇨🇳 🔒 VL-GRPC-RLT 🇨🇳 CN-122.8.45.4:8443"
       - "🇨🇳 @DeltaKroneckerGithub"
       - "🇨🇳 @DeltaKroneckerGithub-1"
       - "🇨🇳 @DeltaKroneckerGithub-2"
@@ -1543,7 +1544,6 @@ proxy-groups:
       - "🇨🇳 @DeltaKroneckerGithub-84"
       - "🇨🇳 @DeltaKroneckerGithub-85"
       - "🇨🇳 @DeltaKroneckerGithub-86"
-      - "🇨🇳 🔒 VL-WS-TLS 🇨🇳 CN-103.118.254.37:443"
       - "🇨🇳 @DeltaKroneckerGithub-87"
       - "🇨🇳 >>@oneclickvpnkeys::NL"
       - "🇨🇳 >>@oneclickvpnkeys::NL-1"
@@ -1556,10 +1556,11 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "🇨🇳 CN🇨🇳 | 120.48.133.162-10086 | 265.8ms"
-      - "🇨🇳 REALITY|CN🇨🇳 | 122.8.45.4-8443 | 112.18ms"
       - "🇨🇳 🔒 VM-WS-NA 🇨🇳 CN-120.48.133.162:10086"
+      - "🇨🇳 🔒 VM-WS-NA 🇨🇳 CN-120.48.133.162:10086-1"
+      - "🇨🇳 🔒 VL-WS-TLS 🇨🇳 CN-103.118.254.37:443"
       - "🇨🇳 🔒 VM-TCP-NA 🇨🇳 CN-112.132.215.108:50002"
+      - "🇨🇳 🔒 VL-GRPC-RLT 🇨🇳 CN-122.8.45.4:8443"
       - "🇨🇳 @DeltaKroneckerGithub"
       - "🇨🇳 @DeltaKroneckerGithub-1"
       - "🇨🇳 @DeltaKroneckerGithub-2"
@@ -1647,7 +1648,6 @@ proxy-groups:
       - "🇨🇳 @DeltaKroneckerGithub-84"
       - "🇨🇳 @DeltaKroneckerGithub-85"
       - "🇨🇳 @DeltaKroneckerGithub-86"
-      - "🇨🇳 🔒 VL-WS-TLS 🇨🇳 CN-103.118.254.37:443"
       - "🇨🇳 @DeltaKroneckerGithub-87"
       - "🇨🇳 >>@oneclickvpnkeys::NL"
       - "🇨🇳 >>@oneclickvpnkeys::NL-1"
