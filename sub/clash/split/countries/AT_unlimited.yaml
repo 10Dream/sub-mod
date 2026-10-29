@@ -493,7 +493,33 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "🇦🇹 🔒 TR-WS-NA 🇦🇹 AT-212.183.88.136:443"
+  - name: "🇦🇹 🔒 VL-WS-TLS 🇦🇹 AT-152.53.1.40:8443"
+    type: "vless"
+    server: "152.53.1.40"
+    port: 8443
+    uuid: "2b0e5676-fb62-4bf0-9607-6e7818421e8e"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "au4.pad-sservice.lat"
+    client-fingerprint: "firefox"
+    ws-opts:
+      path: "/A14U"
+      headers:
+        Host: "au4.pad-service.com"
+  - name: "🇦🇹 🔒 VL-WS-NONE 🇦🇹 AT-212.183.88.30:8880"
+    type: "vless"
+    server: "212.183.88.30"
+    port: 8880
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: false
+    network: "ws"
+    servername: "212.183.88.30"
+    ws-opts:
+      headers:
+        Host: "vms.lifetime23.workers.dev"
+  - name: "🇦🇹 🔒 TR-WS-TLS 🇦🇹 AT-212.183.88.136:443"
     type: "trojan"
     server: "212.183.88.136"
     port: 443
@@ -503,7 +529,7 @@ proxies:
     network: "ws"
     servername: "www.calmlunch.com"
     ws-opts:
-      path: "/%2Fassignment"
+      path: "//assignment"
       headers:
         Host: "www.calmlunch.com"
   - name: "🇦🇹 🔒 VL-WS-TLS 🇦🇹 AT-62.83.41.69:8443"
@@ -519,18 +545,19 @@ proxies:
       path: "/AU6W"
       headers:
         Host: "au6.pad-sservice.lat"
-  - name: "🇦🇹 🔒 VL-WS-NONE 🇦🇹 AT-212.183.88.30:8880"
-    type: "vless"
-    server: "212.183.88.30"
-    port: 8880
-    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+  - name: "🇦🇹 🔒 TR-WS-NA 🇦🇹 AT-212.183.88.136:443"
+    type: "trojan"
+    server: "212.183.88.136"
+    port: 443
+    password: "humanity"
     udp: true
-    tls: false
+    tls: true
     network: "ws"
-    servername: "212.183.88.30"
+    servername: "www.calmlunch.com"
     ws-opts:
+      path: "/%2Fassignment"
       headers:
-        Host: "vms.lifetime23.workers.dev"
+        Host: "www.calmlunch.com"
   - name: "🇦🇹 🔒 TR-TCP-TLS 🇦🇹 AT-86.106.119.23:443"
     type: "trojan"
     server: "86.106.119.23"
@@ -554,20 +581,44 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44="
     udp: true
-  - name: "🇦🇹 RELAY🚩 | www.calmlunch.com-443 | 9.63ms"
+  - name: "🇦🇹 AT🇦🇹 | dresden.gosgenarchive.com-448 | 212.66ms"
     type: "trojan"
-    server: "212.183.88.136"
-    port: 443
-    password: "humanity"
+    server: "dresden.gosgenarchive.com"
+    port: 448
+    password: "hn7BMZxEjR9uE0adcvA6cqQMoKwA88hT"
     udp: true
     tls: true
-    network: "ws"
-    servername: "www.calmlunch.com"
-    ws-opts:
-      path: "//assignment"
-      headers:
-        Host: "www.calmlunch.com"
-  - name: "🇦🇹 AT🇦🇹 | softice.net-443 | 221.89ms"
+    network: "grpc"
+    servername: "dresden.gosgenarchive.com"
+    grpc-opts:
+      grpc-service-name: "TrojanGRPC"
+  - name: "🇦🇹 REALITY|AT🇦🇹 | 152.53.64.139-8443 | 144.95ms"
+    type: "vless"
+    server: "152.53.64.139"
+    port: 8443
+    uuid: "84a794a5-2420-4ca7-8e08-8d21571f36f3"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "avstri.plus-hit.ru"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "Zvq-k6PMXjmd6YlWcu3T1J63m0IxZcOaedRwSG9O0lI"
+      short-id: "92558baf673ab721"
+  - name: "🇦🇹 AT🇦🇹 | softice.net-443 | 217.09ms"
+    type: "vless"
+    server: "softice.net"
+    port: 443
+    uuid: "ef328563-cda1-4530-9b0a-988cc5a74d78"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "softice.net"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+  - name: "🇦🇹 AT🇦🇹 | softice.net-443 | 203.07ms"
     type: "vless"
     server: "188.137.158.199"
     port: 443
@@ -577,7 +628,7 @@ proxies:
     network: "tcp"
     servername: "softice.net"
     flow: "xtls-rprx-vision"
-  - name: "🇦🇹 AT🇦🇹 | softice.net-443 | 199.8ms"
+  - name: "🇦🇹 AT🇦🇹 | softice.net-443 | 237.32ms"
     type: "vless"
     server: "188.137.158.169"
     port: 443
@@ -588,7 +639,7 @@ proxies:
     servername: "softice.net"
     client-fingerprint: "firefox"
     flow: "xtls-rprx-vision"
-  - name: "🇦🇹 AT🇦🇹 | softice.net-443 | 220.35ms"
+  - name: "🇦🇹 AT🇦🇹 | softice.net-443 | 150.56ms"
     type: "vless"
     server: "188.137.158.159"
     port: 443
@@ -598,36 +649,23 @@ proxies:
     network: "tcp"
     servername: "softice.net"
     flow: "xtls-rprx-vision"
-  - name: "🇦🇹 RELAY🚩 | shephe.dpdns.org-8443 | 45.24ms"
+  - name: "🇦🇹 RELAY🚩 | cdn8848.776676.xyz-8443 | 11.19ms"
     type: "vless"
-    server: "132.243.203.214"
+    server: "132.243.203.243"
     port: 8443
-    uuid: "9e3132b8-b595-444a-833a-2de44789f9d7"
+    uuid: "d342d11e-d424-4583-b36e-524ab1f0afa4"
     udp: true
     tls: true
     network: "ws"
-    servername: "shephe.dpdns.org"
+    servername: "cdn8848.776676.xyz"
+    client-fingerprint: "chrome"
     ws-opts:
-      path: "/"
+      path: "%2Farchive%3Fed%3D2560"
       headers:
-        Host: "shephe.dpdns.org"
-  - name: "🇦🇹 AT🇦🇹 | au4.pad-sservice.lat-8443 | 266.38ms"
+        Host: "cdn8848.776676.xyz"
+  - name: "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.179:443"
     type: "vless"
-    server: "152.53.1.40"
-    port: 8443
-    uuid: "2b0e5676-fb62-4bf0-9607-6e7818421e8e"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "au4.pad-sservice.lat"
-    client-fingerprint: "firefox"
-    ws-opts:
-      path: "/A14U"
-      headers:
-        Host: "au4.pad-service.com"
-  - name: "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.199:443"
-    type: "vless"
-    server: "188.137.158.199"
+    server: "188.137.158.179"
     port: 443
     uuid: "ef328563-cda1-4530-9b0a-988cc5a74d78"
     udp: true
@@ -653,9 +691,9 @@ proxies:
       - "h2"
       - "http/1.1"
     flow: "xtls-rprx-vision"
-  - name: "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.179:443"
+  - name: "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.199:443"
     type: "vless"
-    server: "188.137.158.179"
+    server: "188.137.158.199"
     port: 443
     uuid: "ef328563-cda1-4530-9b0a-988cc5a74d78"
     udp: true
@@ -681,17 +719,6 @@ proxies:
       - "h2"
       - "http/1.1"
     flow: "xtls-rprx-vision"
-  - name: "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.179:443-1"
-    type: "vless"
-    server: "188.137.158.179"
-    port: 443
-    uuid: "ef328563-cda1-4530-9b0a-988cc5a74d78"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "softice.net"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
   - name: "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.159:443"
     type: "vless"
     server: "188.137.158.159"
@@ -705,17 +732,6 @@ proxies:
     alpn:
       - "h2"
       - "http/1.1"
-    flow: "xtls-rprx-vision"
-  - name: "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.189:443-1"
-    type: "vless"
-    server: "188.137.158.189"
-    port: 443
-    uuid: "ef328563-cda1-4530-9b0a-988cc5a74d78"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "softice.net"
-    client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
   - name: "🇦🇹 🆔v2ray1_ng 🔒 VL-WS-N/A ❔ XX 477ms"
     type: "vless"
@@ -744,19 +760,6 @@ proxies:
       - "h2"
       - "http/1.1"
     flow: "xtls-rprx-vision"
-  - name: "🇦🇹 @DeltaKroneckerGithub"
-    type: "trojan"
-    server: "212.183.88.136"
-    port: 443
-    password: "humanity"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "www.calmlunch.com"
-    ws-opts:
-      path: "/assignment"
-      headers:
-        Host: "www.calmlunch.com"
   - name: "🇦🇹 Romania"
     type: "vless"
     server: "3zot60.anusvovi.stream"
@@ -771,7 +774,7 @@ proxies:
     reality-opts:
       public-key: "Dj1TD7Sy_TciG915ffXFpMu_pYHnrpGo_ypyyDw44Uc"
       short-id: "8fbdc8d37cc76852"
-  - name: "🇦🇹 @DeltaKroneckerGithub-1"
+  - name: "🇦🇹 @DeltaKroneckerGithub"
     type: "ss"
     server: "130.195.222.215"
     port: 443
@@ -784,16 +787,18 @@ proxies:
       host: "woshinidie-et3.pages.dev"
       path: "59fc5f8c-5697-4eb8-acf2-8ae363f203a2/?ed\\=2560"
       mux: false
-  - name: "🇦🇹 @DeltaKroneckerGithub-2"
-    type: "vless"
-    server: "50.7.184.122"
+  - name: "🇦🇹 @DeltaKroneckerGithub-1"
+    type: "ss"
+    server: "130.195.222.215"
     port: 443
-    uuid: "cd3bb7d9-7df3-4644-ac05-c260990ac277"
+    cipher: "none"
+    password: "https://t.me/WangCai2🇨🇳"
     udp: true
-    tls: true
-    network: "tcp"
-    servername: "at3.moritech.net"
-    flow: "xtls-rprx-vision"
+    plugin: "v2ray-plugin"
+    plugin-opts:
+      mode: "websocket"
+      path: "59fc5f8c-5697-4eb8-acf2-8ae363f203a2/?ed=2560"
+      host: "woshinidie-et3.pages.dev"
   - name: "🇦🇹 080-ws-tls ✂️@GheychiAmoozesh"
     type: "vless"
     server: "212.183.88.29"
@@ -822,31 +827,31 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "🇦🇹 🔒 TR-WS-NA 🇦🇹 AT-212.183.88.136:443"
-      - "🇦🇹 🔒 VL-WS-TLS 🇦🇹 AT-62.83.41.69:8443"
+      - "🇦🇹 🔒 VL-WS-TLS 🇦🇹 AT-152.53.1.40:8443"
       - "🇦🇹 🔒 VL-WS-NONE 🇦🇹 AT-212.183.88.30:8880"
+      - "🇦🇹 🔒 TR-WS-TLS 🇦🇹 AT-212.183.88.136:443"
+      - "🇦🇹 🔒 VL-WS-TLS 🇦🇹 AT-62.83.41.69:8443"
+      - "🇦🇹 🔒 TR-WS-NA 🇦🇹 AT-212.183.88.136:443"
       - "🇦🇹 🔒 TR-TCP-TLS 🇦🇹 AT-86.106.119.23:443"
       - "🇦🇹 🔒 SS-TCP-NA 🇦🇹 AT-146.70.146.222:1080"
       - "🇦🇹 🔒 SS-TCP-NA 🇦🇹 AT-37.235.56.69:990"
-      - "🇦🇹 RELAY🚩 | www.calmlunch.com-443 | 9.63ms"
-      - "🇦🇹 AT🇦🇹 | softice.net-443 | 221.89ms"
-      - "🇦🇹 AT🇦🇹 | softice.net-443 | 199.8ms"
-      - "🇦🇹 AT🇦🇹 | softice.net-443 | 220.35ms"
-      - "🇦🇹 RELAY🚩 | shephe.dpdns.org-8443 | 45.24ms"
-      - "🇦🇹 AT🇦🇹 | au4.pad-sservice.lat-8443 | 266.38ms"
-      - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.199:443"
-      - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.169:443"
+      - "🇦🇹 AT🇦🇹 | dresden.gosgenarchive.com-448 | 212.66ms"
+      - "🇦🇹 REALITY|AT🇦🇹 | 152.53.64.139-8443 | 144.95ms"
+      - "🇦🇹 AT🇦🇹 | softice.net-443 | 217.09ms"
+      - "🇦🇹 AT🇦🇹 | softice.net-443 | 203.07ms"
+      - "🇦🇹 AT🇦🇹 | softice.net-443 | 237.32ms"
+      - "🇦🇹 AT🇦🇹 | softice.net-443 | 150.56ms"
+      - "🇦🇹 RELAY🚩 | cdn8848.776676.xyz-8443 | 11.19ms"
       - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.179:443"
+      - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.169:443"
+      - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.199:443"
       - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.189:443"
-      - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.179:443-1"
       - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.159:443"
-      - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.189:443-1"
       - "🇦🇹 🆔v2ray1_ng 🔒 VL-WS-N/A ❔ XX 477ms"
       - "🇦🇹 🆔v2ray1_ng 🔒 VL-TCP-N/A ❔ XX 173ms"
-      - "🇦🇹 @DeltaKroneckerGithub"
       - "🇦🇹 Romania"
+      - "🇦🇹 @DeltaKroneckerGithub"
       - "🇦🇹 @DeltaKroneckerGithub-1"
-      - "🇦🇹 @DeltaKroneckerGithub-2"
       - "🇦🇹 080-ws-tls ✂️@GheychiAmoozesh"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
@@ -856,31 +861,31 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "🇦🇹 🔒 TR-WS-NA 🇦🇹 AT-212.183.88.136:443"
-      - "🇦🇹 🔒 VL-WS-TLS 🇦🇹 AT-62.83.41.69:8443"
+      - "🇦🇹 🔒 VL-WS-TLS 🇦🇹 AT-152.53.1.40:8443"
       - "🇦🇹 🔒 VL-WS-NONE 🇦🇹 AT-212.183.88.30:8880"
+      - "🇦🇹 🔒 TR-WS-TLS 🇦🇹 AT-212.183.88.136:443"
+      - "🇦🇹 🔒 VL-WS-TLS 🇦🇹 AT-62.83.41.69:8443"
+      - "🇦🇹 🔒 TR-WS-NA 🇦🇹 AT-212.183.88.136:443"
       - "🇦🇹 🔒 TR-TCP-TLS 🇦🇹 AT-86.106.119.23:443"
       - "🇦🇹 🔒 SS-TCP-NA 🇦🇹 AT-146.70.146.222:1080"
       - "🇦🇹 🔒 SS-TCP-NA 🇦🇹 AT-37.235.56.69:990"
-      - "🇦🇹 RELAY🚩 | www.calmlunch.com-443 | 9.63ms"
-      - "🇦🇹 AT🇦🇹 | softice.net-443 | 221.89ms"
-      - "🇦🇹 AT🇦🇹 | softice.net-443 | 199.8ms"
-      - "🇦🇹 AT🇦🇹 | softice.net-443 | 220.35ms"
-      - "🇦🇹 RELAY🚩 | shephe.dpdns.org-8443 | 45.24ms"
-      - "🇦🇹 AT🇦🇹 | au4.pad-sservice.lat-8443 | 266.38ms"
-      - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.199:443"
-      - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.169:443"
+      - "🇦🇹 AT🇦🇹 | dresden.gosgenarchive.com-448 | 212.66ms"
+      - "🇦🇹 REALITY|AT🇦🇹 | 152.53.64.139-8443 | 144.95ms"
+      - "🇦🇹 AT🇦🇹 | softice.net-443 | 217.09ms"
+      - "🇦🇹 AT🇦🇹 | softice.net-443 | 203.07ms"
+      - "🇦🇹 AT🇦🇹 | softice.net-443 | 237.32ms"
+      - "🇦🇹 AT🇦🇹 | softice.net-443 | 150.56ms"
+      - "🇦🇹 RELAY🚩 | cdn8848.776676.xyz-8443 | 11.19ms"
       - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.179:443"
+      - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.169:443"
+      - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.199:443"
       - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.189:443"
-      - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.179:443-1"
       - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.159:443"
-      - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.189:443-1"
       - "🇦🇹 🆔v2ray1_ng 🔒 VL-WS-N/A ❔ XX 477ms"
       - "🇦🇹 🆔v2ray1_ng 🔒 VL-TCP-N/A ❔ XX 173ms"
-      - "🇦🇹 @DeltaKroneckerGithub"
       - "🇦🇹 Romania"
+      - "🇦🇹 @DeltaKroneckerGithub"
       - "🇦🇹 @DeltaKroneckerGithub-1"
-      - "🇦🇹 @DeltaKroneckerGithub-2"
       - "🇦🇹 080-ws-tls ✂️@GheychiAmoozesh"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
@@ -891,31 +896,31 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "🇦🇹 🔒 TR-WS-NA 🇦🇹 AT-212.183.88.136:443"
-      - "🇦🇹 🔒 VL-WS-TLS 🇦🇹 AT-62.83.41.69:8443"
+      - "🇦🇹 🔒 VL-WS-TLS 🇦🇹 AT-152.53.1.40:8443"
       - "🇦🇹 🔒 VL-WS-NONE 🇦🇹 AT-212.183.88.30:8880"
+      - "🇦🇹 🔒 TR-WS-TLS 🇦🇹 AT-212.183.88.136:443"
+      - "🇦🇹 🔒 VL-WS-TLS 🇦🇹 AT-62.83.41.69:8443"
+      - "🇦🇹 🔒 TR-WS-NA 🇦🇹 AT-212.183.88.136:443"
       - "🇦🇹 🔒 TR-TCP-TLS 🇦🇹 AT-86.106.119.23:443"
       - "🇦🇹 🔒 SS-TCP-NA 🇦🇹 AT-146.70.146.222:1080"
       - "🇦🇹 🔒 SS-TCP-NA 🇦🇹 AT-37.235.56.69:990"
-      - "🇦🇹 RELAY🚩 | www.calmlunch.com-443 | 9.63ms"
-      - "🇦🇹 AT🇦🇹 | softice.net-443 | 221.89ms"
-      - "🇦🇹 AT🇦🇹 | softice.net-443 | 199.8ms"
-      - "🇦🇹 AT🇦🇹 | softice.net-443 | 220.35ms"
-      - "🇦🇹 RELAY🚩 | shephe.dpdns.org-8443 | 45.24ms"
-      - "🇦🇹 AT🇦🇹 | au4.pad-sservice.lat-8443 | 266.38ms"
-      - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.199:443"
-      - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.169:443"
+      - "🇦🇹 AT🇦🇹 | dresden.gosgenarchive.com-448 | 212.66ms"
+      - "🇦🇹 REALITY|AT🇦🇹 | 152.53.64.139-8443 | 144.95ms"
+      - "🇦🇹 AT🇦🇹 | softice.net-443 | 217.09ms"
+      - "🇦🇹 AT🇦🇹 | softice.net-443 | 203.07ms"
+      - "🇦🇹 AT🇦🇹 | softice.net-443 | 237.32ms"
+      - "🇦🇹 AT🇦🇹 | softice.net-443 | 150.56ms"
+      - "🇦🇹 RELAY🚩 | cdn8848.776676.xyz-8443 | 11.19ms"
       - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.179:443"
+      - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.169:443"
+      - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.199:443"
       - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.189:443"
-      - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.179:443-1"
       - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.159:443"
-      - "🇦🇹 🔒 VL-TCP-TLS 🇦🇹 AT-188.137.158.189:443-1"
       - "🇦🇹 🆔v2ray1_ng 🔒 VL-WS-N/A ❔ XX 477ms"
       - "🇦🇹 🆔v2ray1_ng 🔒 VL-TCP-N/A ❔ XX 173ms"
-      - "🇦🇹 @DeltaKroneckerGithub"
       - "🇦🇹 Romania"
+      - "🇦🇹 @DeltaKroneckerGithub"
       - "🇦🇹 @DeltaKroneckerGithub-1"
-      - "🇦🇹 @DeltaKroneckerGithub-2"
       - "🇦🇹 080-ws-tls ✂️@GheychiAmoozesh"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
