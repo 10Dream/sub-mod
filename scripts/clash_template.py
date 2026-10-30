@@ -1,19 +1,28 @@
 # -*- coding: utf-8 -*-
 # =====================================================================
 # ماژول تمپلت پیکربندی پیشرفته کلش میهومو (Mihomo Clash Meta Template)
-# به‌روزرسانی شده بر اساس الگوی رسمی whitedns.yaml
+# به‌روزرسانی شده بر اساس الگوی بهینه‌شده mkb-mtn1.yaml
 # =====================================================================
 
-# ۱. تنظیمات عمومی (General Settings)
-GENERAL_SETTINGS = {   'port': 7892,
+# ۱. تنظیمات عمومی، شتاب‌دهی و پایداری (General Settings & Optimizations)
+GENERAL_SETTINGS = {
+    'unified-delay': True,
+    'tcp-concurrent': True,
+    'find-process-mode': 'strict',
+    'profile': {
+        'store-selected': True,
+        'store-fake-ip': True
+    },
+    'port': 7892,
     'socks-port': 7891,
     'mixed-port': 7890,
     'allow-lan': True,
     'mode': 'rule',
-    'log-level': 'info',
+    'log-level': 'warning',
     'external-controller': '0.0.0.0:9090',
     'secret': '',
-    'ipv6': False}
+    'ipv6': True
+}
 
 # ۲. تنظیمات پیشرفته و ضد فیلترینگ DNS
 DNS_SETTINGS = {   'enable': True,
@@ -120,16 +129,48 @@ DNS_SETTINGS = {   'enable': True,
     'direct-nameserver-follow-policy': True}
 
 # ۳. تنظیمات اسنیفر ترافیک (Sniffer Settings)
-SNIFFER_SETTINGS = {   'enable': True,
-    'force-dns-mapping': True,
-    'parse-pure-ip': True,
-    'override-destination': True}
+SNIFFER_SETTINGS = {
+    'enable': True,
+    'force-dns-mapping': False,
+    'parse-pure-ip': False,
+    'override-destination': True,
+    'sniff': {
+        'HTTP': {
+            'ports': [80, '8080-8880'],
+            'override-destination': True
+        },
+        'TLS': {
+            'ports': [443, 8443]
+        },
+        'QUIC': {
+            'ports': [443, 8443]
+        }
+    }
+}
 
 # ۴. تنظیمات تانل سیستم‌عامل (TUN Settings)
-TUN_SETTINGS = {   'enable': True,
-    'stack': 'mixed',
+TUN_SETTINGS = {
+    'enable': True,
+    'stack': 'mips',
+    'dns-mode': 'hijack',
+    'dns-hijack': [
+        'any:53',
+        'tcp://any:53'
+    ],
     'auto-route': True,
-    'auto-detect-interface': True}
+    'auto-detect-interface': True,
+    'strict-route': True,
+    'route-exclude-address': [
+        '10.0.0.0/8',
+        '172.16.0.0/12',
+        '192.168.0.0/16',
+        '127.0.0.0/8',
+        '169.254.0.0/16',
+        '::1/128',
+        'fc00::/7',
+        'fe80::/10'
+    ]
+}
 
 # ۵. مخازن قوانین (Rule Providers)
 RULE_PROVIDERS = {   'DownloadManagers': {   'type': 'http',
