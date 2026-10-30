@@ -1,0 +1,3996 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
+port: 7892
+socks-port: 7891
+mixed-port: 7890
+allow-lan: true
+mode: "rule"
+log-level: "warning"
+external-controller: "0.0.0.0:9090"
+secret: ""
+ipv6: true
+dns:
+  enable: true
+  listen: "0.0.0.0:53"
+  ipv6: false
+  prefer-h3: false
+  cache-algorithm: "arc"
+  use-hosts: true
+  use-system-hosts: true
+  respect-rules: false
+  enhanced-mode: "fake-ip"
+  fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter-mode: "blacklist"
+  fake-ip-filter:
+    - "geosite:private"
+    - "+.lan"
+    - "+.localdomain"
+    - "+.invalid"
+    - "+.localhost"
+    - "+.test"
+    - "+.local"
+    - "+.home.arpa"
+    - "+.arpa"
+    - "+.ir"
+    - "time.*.com"
+    - "time.*.gov"
+    - "time.*.apple.com"
+    - "ntp.*.com"
+    - "+.pool.ntp.org"
+    - "+.ntp.org"
+    - "time.asis.io"
+    - "time.windows.com"
+    - "time.apple.com"
+    - "connectivitycheck.gstatic.com"
+    - "connectivitycheck.android.com"
+    - "clients3.google.com"
+    - "captive.apple.com"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "router.asus.com"
+    - "tplinkwifi.net"
+    - "tplinkrepeater.net"
+    - "tplinkap.net"
+    - "routerlogin.net"
+    - "routerlogin.com"
+    - "melogin.cn"
+    - "falogin.cn"
+    - "tendawifi.com"
+    - "leike.cc"
+    - "miwifi.com"
+    - "goforward.link"
+    - "+.plex.direct"
+  nameserver-policy:
+    geosite:private: "system"
+    +.arpa: "system"
+    +.lan: "system"
+    +.local: "system"
+    +.home.arpa: "system"
+    router.asus.com: "system"
+    tplinkwifi.net: "system"
+    tplinkrepeater.net: "system"
+    tplinkap.net: "system"
+    routerlogin.net: "system"
+    routerlogin.com: "system"
+    melogin.cn: "system"
+    falogin.cn: "system"
+    tendawifi.com: "system"
+    leike.cc: "system"
+    miwifi.com: "system"
+    goforward.link: "system"
+  default-nameserver:
+    - "tcp://1.1.1.1"
+    - "tcp://8.8.8.8"
+    - "1.1.1.1"
+    - "8.8.8.8"
+    - "9.9.9.9"
+    - "tcp://1.0.0.1"
+    - "tcp://8.8.4.4"
+    - "tcp://9.9.9.9"
+    - "tcp://149.112.112.112"
+    - "tcp://208.67.222.222"
+    - "tcp://208.67.220.220"
+  nameserver:
+    - "https://freedns.controld.com/p2#نوع انتخاب پروکسی 🔀"
+  fallback:
+    - "https://dns.adguard-dns.com/dns-query#نوع انتخاب پروکسی 🔀"
+  fallback-lazy-query: true
+  fallback-filter:
+    geoip: false
+    ipcidr:
+      - "10.10.34.34/32"
+      - "10.10.34.35/32"
+      - "10.10.34.36/32"
+      - "127.0.0.1/32"
+      - "240.0.0.0/4"
+  proxy-server-nameserver:
+    - "tcp://1.1.1.1"
+    - "tcp://8.8.8.8"
+    - "tcp://9.9.9.9"
+    - "1.1.1.1"
+    - "8.8.8.8"
+    - "9.9.9.9"
+    - "tcp://1.0.0.1"
+    - "tcp://8.8.4.4"
+    - "tcp://149.112.112.112"
+    - "tcp://208.67.222.222"
+    - "tcp://208.67.220.220"
+  direct-nameserver:
+    - "78.157.42.100"
+    - "78.157.42.101"
+    - "tcp://78.157.42.100"
+    - "tcp://78.157.42.101"
+  direct-nameserver-follow-policy: true
+sniffer:
+  enable: true
+  force-dns-mapping: false
+  parse-pure-ip: false
+  override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
+tun:
+  enable: true
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+  auto-route: true
+  auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
+rule-providers:
+  DownloadManagers:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
+    interval: 86400
+    path: "./ruleset/DownloadManagers.yaml"
+  Download:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
+    interval: 86400
+    path: "./ruleset/Download.yaml"
+  stremio:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    interval: 86400
+    path: "./ruleset/stremio.yaml"
+  BanProgramAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanProgramAD.yaml"
+  BanAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanAD.yaml"
+  PrivateTracker:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
+    interval: 86400
+    path: "./ruleset/PrivateTracker.yaml"
+  category_public_tracker:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-public-tracker.yaml"
+    interval: 86400
+    path: "./ruleset/category_public_tracker.yaml"
+  malware:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/malware.yaml"
+    interval: 86400
+    path: "./ruleset/malware.yaml"
+  phishing:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/phishing.yaml"
+    interval: 86400
+    path: "./ruleset/phishing.yaml"
+  cryptominers:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/cryptominers.yaml"
+    interval: 86400
+    path: "./ruleset/cryptominers.yaml"
+  warninglist:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/warning-list.yaml"
+    interval: 86400
+    path: "./ruleset/warninglist.yaml"
+  Ponzi:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
+    interval: 86400
+    path: "./ruleset/Ponzi.yaml"
+  LiteAds:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/LiteAds.yaml"
+    interval: 86400
+    path: "./ruleset/LiteAds.yaml"
+  iran_ads:
+    type: "http"
+    behavior: "domain"
+    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    interval: 86400
+    path: "./ruleset/iran_ads.yaml"
+  PersianBlocker:
+    type: "http"
+    behavior: "domain"
+    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    interval: 86400
+    path: "./ruleset/PersianBlocker.yaml"
+  ads:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/category-ads-all.yaml"
+    interval: 86400
+    path: "./ruleset/ads.yaml"
+  BanEasyList:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
+    interval: 86400
+    path: "./ruleset/BanEasyList.yaml"
+  twitch:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
+    interval: 86400
+    path: "./ruleset/twitch.yaml"
+  telegram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
+    interval: 86400
+    path: "./ruleset/telegram.yaml"
+  YouTube:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
+    interval: 86400
+    path: "./ruleset/YouTube.yaml"
+  youtube:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
+    interval: 86400
+    path: "./ruleset/youtube.yaml"
+  YouTubeMusic:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
+    interval: 86400
+    path: "./ruleset/YouTubeMusic.yaml"
+  Chotwitter:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/twitter.yaml"
+    interval: 86400
+    path: "./ruleset/Chotwitter.yaml"
+  mihTwitter:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Twitter.yaml"
+    interval: 86400
+    path: "./ruleset/mihTwitter.yaml"
+  Domtwitter:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/twitter.yaml"
+    interval: 86400
+    path: "./ruleset/Domtwitter.yaml"
+  DomainSpotify:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/spotify.yaml"
+    interval: 86400
+    path: "./ruleset/DomainSpotify.yaml"
+  mihspotify:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Spotify.yaml"
+    interval: 86400
+    path: "./ruleset/mihSpotify.yaml"
+  instagram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    interval: 86400
+    path: "./ruleset/instagram.yaml"
+  Ai:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/Ai.yaml"
+    interval: 86400
+    path: "./ruleset/Ai.yaml"
+  category-ai:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    interval: 86400
+    path: "./ruleset/category-ai.yaml"
+  censor:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
+    interval: 86400
+    path: "./ruleset/censor.yaml"
+  apps:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
+    interval: 86400
+    path: "./ruleset/apps.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+  arvancloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
+    interval: 86400
+    path: "./ruleset/arvancloud.yaml"
+  derakcloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
+    interval: 86400
+    path: "./ruleset/derakcloud.yaml"
+  iranserver:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
+    interval: 86400
+    path: "./ruleset/iranserver.yaml"
+  parspack:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
+    interval: 86400
+    path: "./ruleset/parspack.yaml"
+  irasn:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
+    interval: 86400
+    path: "./ruleset/irasn.yaml"
+  ircidr:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
+    interval: 86400
+    path: "./ruleset/ircidr.yaml"
+  ir:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
+    interval: 86400
+    path: "./ruleset/ir.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  whatsapp:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
+    interval: 86400
+    path: "./ruleset/whatsapp.yaml"
+  steam:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
+    interval: 86400
+    path: "./ruleset/steam.yaml"
+  SteamRegionCheck:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
+    interval: 86400
+    path: "./ruleset/SteamRegionCheck.yaml"
+  game:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
+    interval: 86400
+    path: "./ruleset/game.yaml"
+  GameDownload:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
+    interval: 86400
+    path: "./ruleset/GameDownload.yaml"
+  category-games:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
+    interval: 86400
+    path: "./ruleset/category-games.yaml"
+  Xbox:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
+    interval: 86400
+    path: "./ruleset/Xbox.yaml"
+  discord:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
+    interval: 86400
+    path: "./ruleset/discord.yaml"
+  xiaomi_white_list:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_white_list.yaml"
+  xiaomi_block_list:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_block_list.yaml"
+  windows:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    interval: 86400
+    path: "./ruleset/windows.yaml"
+  cloudflare:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
+    interval: 86400
+    path: "./ruleset/cloudflare.yaml"
+  github:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
+    interval: 86400
+    path: "./ruleset/xgithub.yaml"
+  google-play:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
+    interval: 86400
+    path: "./ruleset/google-play.yaml"
+  google:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
+    interval: 86400
+    path: "./ruleset/google.yaml"
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  private:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
+    interval: 86400
+    path: "./ruleset/private.yaml"
+proxies:
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 158ms | VLESS"
+    type: "vless"
+    server: "167.17.69.171"
+    port: 443
+    uuid: "00144519-7e0d-476b-8d28-435576af9262"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "channel@networld_vpn-channel@networld_vpn-channel@networld_vpn-channel@networld_vpn-channel@networld_vpn-channel@networld_vpn-channel@networld_vpn-channel@networld_vpnù"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "ALT8hIGeZEhi0sQFbXP_ntBg8Xo-v7i0YCLrqTnBxRk"
+      short-id: "0990d22f"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 76ms | VLESS"
+    type: "vless"
+    server: "45.43.79.92"
+    port: 443
+    uuid: "042b12d8-bac4-4b3a-b661-79e333f08e4e"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "vikt659.isgood.host"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "M4Y9h339sntl5wEpiCa7f4IKhJ_8JLzPnAz2IzKlngM"
+      short-id: "af4ca5d16438c938"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 209ms | VLESS"
+    type: "vless"
+    server: "47.253.226.114"
+    port: 443
+    uuid: "055a1ce8-2a16-4a0d-a2c2-22826c9b2413"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "Svl81isn16RPAFnjtmYw7A6TPnsEPLHuYYaJht65Rzc"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | VLESS"
+    type: "vless"
+    server: "159.89.87.21"
+    port: 28190
+    uuid: "14c80e0e-f7ce-4991-94fc-99a1db4a9b1e"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "aws.amazon.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "ZJRnFU-1s1JOnO8E9uZ7b00l1fPEh63fGRbdBANFRno"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 96ms | VLESS"
+    type: "vless"
+    server: "tus.hemad.qzz.io"
+    port: 2053
+    uuid: "16423c7c-2c18-435b-8bbd-2bd3d5700628"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "tus.tun257xr.cfd"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/speed"
+      headers:
+        Host: "tus.tun257xr.cfd"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 231ms | VLESS"
+    type: "vless"
+    server: "47.251.25.74"
+    port: 443
+    uuid: "18805ff3-b420-45de-af18-93be14024ae8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.amazon.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "H56cOJhw0xw76lDEpt7IuJJmVGemK6_CK34KtHwDMX8"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 183ms | VLESS"
+    type: "vless"
+    server: "195.211.98.43"
+    port: 443
+    uuid: "1b4b11d5-4c2d-4533-9a55-636757cdee94"
+    udp: true
+    tls: true
+    network: "raw"
+    servername: "www.cloudflare.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "xPnpkXu5qfwIArlHKvJsqKJnGdGbJK1tT2GzWMyLohA"
+      short-id: "9c56fddf237e8eaf"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 214ms | VLESS"
+    type: "vless"
+    server: "185.95.231.156"
+    port: 443
+    uuid: "1f8cf47a-b66a-4916-979f-26edfcf44eea"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.apple.com"
+    client-fingerprint: "random"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "8eXftARun6KH38UZhuqIfPR1VF2DLS9RMBZEnF5k6To"
+      short-id: "a3a578ab"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 226ms | VLESS"
+    type: "vless"
+    server: "185.168.208.190"
+    port: 47443
+    uuid: "1fe01c8a-ab37-4e95-bbfc-95d4a608931e"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "us-1.waspguard.ru"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "hz7rzdHvTAVwfy48pa6313yBF-sV7V0svvPVnl95bgY"
+      short-id: "ae97246a8f799854"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 89ms | VLESS"
+    type: "vless"
+    server: "46.29.255.123"
+    port: 59539
+    uuid: "30572b57-f5ab-4eb8-82d4-a24d399b99f6"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cloudflare-dns.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "R6mPqCsjZMWauci4LHw7Qp1LGKmBd-sxMXplyOn9bSQ"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 299ms | VLESS"
+    type: "vless"
+    server: "156.252.229.11"
+    port: 8443
+    uuid: "3e21e3d3-6d26-4155-b851-764dd8e8c6b5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "play.googleapis.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "7jPluypHwPilf_Mq7JOY96SwKkbK35WuIlN1HwGQ_0A"
+      short-id: "974f7f8f"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 302ms | VLESS"
+    type: "vless"
+    server: "2.26.55.145"
+    port: 1443
+    uuid: "42a64b9a-ab79-4094-8656-30366a7c2ea3"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "se.peregrine-sub.net"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "PUj1la__ltNjv_ASE5n4HJY7GiRs--N-0aYhkcAApCI"
+      short-id: "7b6803a79bba5c52"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 146ms | VLESS"
+    type: "vless"
+    server: "xray2-direct-mci1-fs-ce.freesocks.work"
+    port: 443
+    uuid: "4349a709-1f75-4f41-9baa-0fa8dda62734"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "dl.google.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "7j3hmlHrEDk3Kjx-dFG3E3jf0c6PZF45trIPFsuKWmI"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 228ms | VLESS"
+    type: "vless"
+    server: "167.233.147.148"
+    port: 443
+    uuid: "47e7e14d-2519-4146-aa2f-6eaa52c0a908"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "dynu.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "0E-OTXVHsukKvwgwynrI49nTaT5m6rxdaFPg4D_UszI"
+      short-id: "9cc0"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 242ms | VLESS"
+    type: "vless"
+    server: "15.204.97.206"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 248ms | VLESS"
+    type: "vless"
+    server: "15.204.97.206"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 129ms | VLESS"
+    type: "vless"
+    server: "15.204.97.209"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 133ms | VLESS"
+    type: "vless"
+    server: "15.204.97.209"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "raw"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 243ms | VLESS"
+    type: "vless"
+    server: "15.204.97.214"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 248ms | VLESS-1"
+    type: "vless"
+    server: "15.204.97.214"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 232ms | VLESS"
+    type: "vless"
+    server: "15.204.97.219"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 233ms | VLESS"
+    type: "vless"
+    server: "15.204.97.219"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 116ms | VLESS"
+    type: "vless"
+    server: "51.158.206.12"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 100ms | VLESS"
+    type: "vless"
+    server: "51.158.206.20"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 93ms | VLESS"
+    type: "vless"
+    server: "51.158.206.26"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 91ms | VLESS"
+    type: "vless"
+    server: "51.158.206.34"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 103ms | VLESS"
+    type: "vless"
+    server: "51.158.206.86"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 92ms | VLESS"
+    type: "vless"
+    server: "51.158.206.87"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 129ms | VLESS"
+    type: "vless"
+    server: "51.158.206.8"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 89ms | VLESS-1"
+    type: "vless"
+    server: "51.158.206.93"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 90ms | VLESS"
+    type: "vless"
+    server: "51.158.206.96"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 135ms | VLESS"
+    type: "vless"
+    server: "62.210.91.2"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 189ms | VLESS"
+    type: "vless"
+    server: "62.210.91.2"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 317ms | VLESS"
+    type: "vless"
+    server: "ww13.levikogjgfdd.ir"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 282ms | VLESS"
+    type: "vless"
+    server: "ww13.levikogjgfdd.ir"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 98ms | VLESS"
+    type: "vless"
+    server: "108.165.236.229"
+    port: 443
+    uuid: "49996e29-93c5-4975-b56f-792acbbf3444"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "jyfrj1cims.dev.onappjet.com"
+    ws-opts:
+      path: "/jx-yjkteysq815pzp"
+      headers:
+        Host: "jyfrj1cims.dev.onappjet.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 178ms | VLESS"
+    type: "vless"
+    server: "swedenafteraventura.space"
+    port: 443
+    uuid: "50a87e21-f0e2-4b53-a787-91adfe748f63"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "swedenafteraventura.space"
+    client-fingerprint: "ios"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "TyuIIquHoesD9YwMQJHda0YZ3Hy9Dh123dQ00iGK0QY"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 190ms | VLESS"
+    type: "vless"
+    server: "185.121.179.122"
+    port: 443
+    uuid: "63c5f8b3-3d3d-46a9-ae1f-58635cdaf891"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "de.stream-node6.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "wpZDT_592emHu309qN-7-qceofbMJzoAdIx9m9RFJGg"
+      short-id: "98753667b2406829"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 84ms | VLESS"
+    type: "vless"
+    server: "185.126.236.125"
+    port: 8443
+    uuid: "69158986-cfae-4567-8391-0f96d9d985bd"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "av.neuroniko.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "ud15DX-emDBS7QsLMabJ7CjgIteK61jxwSp1v0Fewxc"
+      short-id: "10a59b0a94367ac2"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 122ms | VLESS"
+    type: "vless"
+    server: "av.neuroniko.com"
+    port: 8443
+    uuid: "69158986-cfae-4567-8391-0f96d9d985bd"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "av.neuroniko.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "ud15DX-emDBS7QsLMabJ7CjgIteK61jxwSp1v0Fewxc"
+      short-id: "10a59b0a94367ac2"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 465ms | VLESS"
+    type: "vless"
+    server: "139.162.27.96"
+    port: 2096
+    uuid: "6e59d5c5-7aa3-4c36-a4c4-e3b899525ed2"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "free-server.techsonic.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/free-server.techsonic.dev"
+      headers:
+        Host: "free-server.techsonic.dev"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 136ms | VLESS"
+    type: "vless"
+    server: "130.49.177.193"
+    port: 443
+    uuid: "727a9178-d7f0-4142-8205-b0d19959ded0"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "de-2.ffpn.pro"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "DCpi9-1rSXxBnEIAQ9U3mTqHivk7vHJRV_T2pWw5vCc"
+      short-id: "681fc2dd643bc2f3"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 164ms | VLESS"
+    type: "vless"
+    server: "195.123.235.177"
+    port: 443
+    uuid: "729dd5f2-f5ff-4070-8c10-863eceded0b1"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "gateway.icloud.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "5B83otQ5ZQwtBFhR7xzsGJRXflkFKRJpQguYbE5JWGI"
+      short-id: "c85d029f5e8eb393"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 157ms | VLESS"
+    type: "vless"
+    server: "195.123.235.177"
+    port: 443
+    uuid: "729dd5f2-f5ff-4070-8c10-863eceded0b1"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "gateway.icloud.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "5B83otQ5ZQwtBFhR7xzsGJRXflkFKRJpQguYbE5JWGI"
+      short-id: "c85d029f5e8eb393"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 388ms | VLESS"
+    type: "vless"
+    server: "186.246.9.101"
+    port: 443
+    uuid: "7ad63b26-bf70-4872-8fab-ebaf73a1e19d"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "update-61.topp-con.xyz"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "LEziyH-E4k9hehGRJkVi1FadVObB_NZJy8U7oUCVWXU"
+      short-id: "b9120cd53ffd7bba"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 187ms | VLESS"
+    type: "vless"
+    server: "nl.privatevip.ir"
+    port: 444
+    uuid: "7c730089-1791-4828-89b2-86e7e1663063"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.microsoft.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "ESmN6Our58LlyvJIWcgfHKkuDVYmO8I2z-0hT4J1iQs"
+      short-id: "c9c3398e"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 123ms | VLESS"
+    type: "vless"
+    server: "kipl.ratzofinder.ir"
+    port: 2082
+    uuid: "890c12b5-c3dd-48d4-accc-0dce2db1b637"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "play.google.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "mRKBERszJtP2vL6peLVkAsTrnRJdbRigzUjYvb-K534"
+      short-id: "336516d9"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 124ms | VLESS"
+    type: "vless"
+    server: "n04.jinggai.online"
+    port: 8443
+    uuid: "91ad30e9-ab06-4b4c-9fb9-1c2aa97d8b3a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "n04.jinggai.online"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/nvl-n04-ws/e0577fe8fd7c8823"
+      headers:
+        Host: "n04.jinggai.online"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 233ms | VLESS-1"
+    type: "vless"
+    server: "67.209.184.133"
+    port: 443
+    uuid: "96ebc166-565c-474f-9712-7990b55c368a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.bing.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "Tp015Ga5LodBwKs4z7Wz4hTvqeh8-4q1EQPZqvZfWR0"
+      short-id: "ad09494d431b2b92"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 224ms | VLESS"
+    type: "vless"
+    server: "31.172.69.31"
+    port: 8443
+    uuid: "9c6e83fc-b755-4ad4-9b0a-14b610153d8f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.samsung.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "H43_itYl9CE0AJiCktUfriENFmixY_MTHgX8slCrN2Q"
+      short-id: "a4e32c324d86cfdf"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 203ms | VLESS"
+    type: "vless"
+    server: "31.172.69.31"
+    port: 8443
+    uuid: "9c6e83fc-b755-4ad4-9b0a-14b610153d8f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.samsung.com"
+    client-fingerprint: "qq"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "H43_itYl9CE0AJiCktUfriENFmixY_MTHgX8slCrN2Q"
+      short-id: "a4e32c324d86cfdf"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 119ms | VLESS"
+    type: "vless"
+    server: "5.187.4.75"
+    port: 8443
+    uuid: "9c6e83fc-b755-4ad4-9b0a-14b610153d8f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.samsung.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "0bmhEnhtswgFKbBedH4ez5O4xmgMfXIuEuSdFLy0PmI"
+      short-id: "25115fee0590a21e"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 183ms | VLESS"
+    type: "vless"
+    server: "us.bsh-net.ru"
+    port: 443
+    uuid: "a0fa7e19-70ec-41e0-b0cc-bcc984d4201a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "us.bsh-net.ru"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "LEb-1eNb7yzDYJ7rBs8k7VNWcfw6FnuTIIYeCBjHRkM"
+      short-id: "da8e9fff883c5950"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 93ms | VLESS"
+    type: "vless"
+    server: "137.74.16.237"
+    port: 443
+    uuid: "aaec4e42-a095-44b6-a239-f16d234a0798"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.icloud.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "7LSzvilTVKGMtBDuKGeMrLtlhY7tQf5YcG566dEgO0I"
+      short-id: "b390e0a721d242b0"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 226ms | VLESS-1"
+    type: "vless"
+    server: "31.77.13.22"
+    port: 2063
+    uuid: "b18d5990-96eb-4587-a386-7f8ef7591e6a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "rusbid.de"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "MMpt_jWc4J3oySBdf5sPDVRkiWlZmOObth6A1scM9BM"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 129ms | VLESS-1"
+    type: "vless"
+    server: "109.248.170.119"
+    port: 13447
+    uuid: "b573cefb-7bc7-4a42-b407-b8b534e66773"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yahoo.com"
+    reality-opts:
+      public-key: "_0wM2ep44eAcrgf5PflKaBivknCWT6kMvQBQUoScCkE"
+      short-id: "83"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 130ms | VLESS"
+    type: "vless"
+    server: "163.245.42.132"
+    port: 443
+    uuid: "b9bfa54d-bc44-4592-a6d6-89a9665d286f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "mother-earth.fyi"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 90ms | VLESS"
+    type: "vless"
+    server: "9.247.23.209"
+    port: 443
+    uuid: "b9bfa54d-bc44-4592-a6d6-89a9665d286f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "mother-earth.fyi"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 192ms | VLESS"
+    type: "vless"
+    server: "edge.bookmai.com"
+    port: 443
+    uuid: "b9bfa54d-bc44-4592-a6d6-89a9665d286f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "mother-earth.fyi"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 159ms | VLESS"
+    type: "vless"
+    server: "edge.bookmai.com"
+    port: 443
+    uuid: "b9bfa54d-bc44-4592-a6d6-89a9665d286f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "mother-earth.fyi"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 90ms | VLESS-1"
+    type: "vless"
+    server: "130.12.242.106"
+    port: 443
+    uuid: "bc058e69-0444-4c7b-98da-bd67f0b143da"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "deepl.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "vnjp7zIK2H3CGdjSis_79KXqS6IG-opmpbETPUD-EC8"
+      short-id: "15affa0af66dfc79"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | VLESS-1"
+    type: "vless"
+    server: "195.123.235.183"
+    port: 443
+    uuid: "c14ec728-3eca-4750-87fc-fd1e6aeb81d5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "gateway.icloud.com"
+    client-fingerprint: "random"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "H3R3BUAl7thrIZsznTbb-eRREIjQOH2f3WO0oTN7OGY"
+      short-id: "a0e2a6074c6456b0"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 93ms | VLESS-1"
+    type: "vless"
+    server: "189.74.106.73"
+    port: 443
+    uuid: "c6628db6-025d-40e8-b79d-033f4372a6b7"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "api.setevoypriliv.cc"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "r5WB5FnSCt4eeBC1FJMfkWHbzsMuabo0Rc6wuAhlZUs"
+      short-id: "a8"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 247ms | VLESS"
+    type: "vless"
+    server: "51.81.203.63"
+    port: 443
+    uuid: "cb2dbb6a-a1ea-4023-9ace-6466cee57241"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.icloud.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "nqwCf6oW49tEtmQ0EzxigZ0uu1pg0E30CS54G40Iti0"
+      short-id: "4477382ff6d3d41c"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 81ms | VLESS"
+    type: "vless"
+    server: "91.107.180.176"
+    port: 465
+    uuid: "d0d3d49c-56e8-40e1-9e83-793d03f83d93"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "hw7.divarkhaghazi.com"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "hw7.divarkhaghazi.com."
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 164ms | VLESS-1"
+    type: "vless"
+    server: "hw7.divarkhaghazi.com"
+    port: 465
+    uuid: "d0d3d49c-56e8-40e1-9e83-793d03f83d93"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "hw7.divarkhaghazi.com."
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
+      headers:
+        Host: "hw7.divarkhaghazi.com."
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 142ms | VLESS"
+    type: "vless"
+    server: "hw7.divarkhaghazi.com"
+    port: 465
+    uuid: "d0d3d49c-56e8-40e1-9e83-793d03f83d93"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "hw7.divarkhaghazi.com."
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "hw7.divarkhaghazi.com."
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 284ms | VLESS"
+    type: "vless"
+    server: "46.28.67.55"
+    port: 443
+    uuid: "d1a6a033-fdbd-46a6-a177-3370ba042b9f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "i2dJ1_XGDpp50qpEclh6SWSWkxt4B0t2hi2qOVQbeSU"
+      short-id: "d06d78e974491b6e"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 68ms | VLESS"
+    type: "vless"
+    server: "104.16.122.227"
+    port: 443
+    uuid: "d342d11e-d224-4463-b982-532309285094"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ccc.010304.xyz"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2560"
+      headers:
+        Host: "ccc.010304.xyz"
+  - name: "Telegram---Lent_Gc---Lent_Gc---Lent_Gc---Lent_Gc&security=tls&encryption=none&insecure=0&host=ccc.010304.xyz&fp=chrome&type=ws&allowInsecure=0&sni=ccc.010304.xyz#@v2ray_free_config_iran | V2Ray | 🇮🇷 102ms | VLESS"
+    type: "vless"
+    server: "104.18.35.15"
+    port: 443
+    uuid: "d342d11e-d224-4463-b982-532309285094"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | VLESS-2"
+    type: "vless"
+    server: "104.18.35.15"
+    port: 443
+    uuid: "d342d11e-d224-4463-b982-532309285094"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ccc.010304.xyz"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "ccc.010304.xyz"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 41ms | VLESS"
+    type: "vless"
+    server: "188.164.248.216"
+    port: 443
+    uuid: "d342d11e-d224-4463-b982-532309285094"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ccc.010304.xyz"
+    client-fingerprint: "ios"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "ccc.010304.xyz"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 46ms | VLESS"
+    type: "vless"
+    server: "188.164.248.216"
+    port: 443
+    uuid: "d342d11e-d224-4463-b982-532309285094"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ccc.010304.xyz"
+    client-fingerprint: "edge"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "ccc.010304.xyz"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 42ms | VLESS"
+    type: "vless"
+    server: "188.164.248.216"
+    port: 443
+    uuid: "d342d11e-d224-4463-b982-532309285094"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ccc.010304.xyz"
+    client-fingerprint: "safari"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "ccc.010304.xyz"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 68ms | VLESS-1"
+    type: "vless"
+    server: "43.174.193.1"
+    port: 443
+    uuid: "d342d11e-d224-4463-b982-532309285094"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ccc.010304.xyz"
+    client-fingerprint: "android"
+    ws-opts:
+      path: "/fp=chrome"
+      headers:
+        Host: "ccc.010304.xyz"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 164ms | VLESS"
+    type: "vless"
+    server: "43.174.193.1"
+    port: 443
+    uuid: "d342d11e-d224-4463-b982-532309285094"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ccc.010304.xyz"
+    client-fingerprint: "safari"
+    ws-opts:
+      path: "/fp"
+      headers:
+        Host: "ccc.010304.xyz"
+  - name: "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&encryption=none&insecure=0&host=ccc.010304.xyz&fp=unsafe&type=ws&allowInsecure=0&sni=ccc.010304.xyz#@v2ray_free_config_iran | Argo VPN | 🇮🇷 89ms | VLESS"
+    type: "vless"
+    server: "88.216.69.253"
+    port: 443
+    uuid: "d342d11e-d224-4463-b982-532309285094"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 196ms | VLESS"
+    type: "vless"
+    server: "57.131.38.163"
+    port: 2053
+    uuid: "d4b08cd6-0903-411a-9dac-45dbdf5c9712"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.apple.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "Ej2H5ucT7qKegYcT8wODdlxa-cLHr7F4hDVUHzAhcnc"
+      short-id: "5b8a942318178e7b"
+  - name: "@v2ray_free_config_iran | V2Ray | 🌐US | 🇮🇷170ms | ⚡11.26Mbps | VLESS"
+    type: "vless"
+    server: "169.40.42.104"
+    port: 443
+    uuid: "d65cc14c-f53f-4fe2-b262-97856601319c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yahoo.com"
+    client-fingerprint: "ios"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
+      short-id: "c39cc7310a"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 187ms | VLESS"
+    type: "vless"
+    server: "169.40.42.224"
+    port: 443
+    uuid: "d65cc14c-f53f-4fe2-b262-97856601319c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yahoo.com"
+    client-fingerprint: "ios"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
+      short-id: "c39cc7310a"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 169ms | VLESS"
+    type: "vless"
+    server: "169.40.42.235"
+    port: 443
+    uuid: "d65cc14c-f53f-4fe2-b262-97856601319c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yahoo.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
+      short-id: "c39cc7310a"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 181ms | VLESS"
+    type: "vless"
+    server: "66.70.179.198"
+    port: 2053
+    uuid: "dc620cd6-a9d8-4a0f-8f18-006b895db77e"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    reality-opts:
+      public-key: "k4l6TxwkBbx9DhZAFpByq5rfCWFSgyOex3f_eFe9CWU"
+      short-id: "83f8317a948bb769"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 94ms | VLESS"
+    type: "vless"
+    server: "104.18.100.43"
+    port: 443
+    uuid: "e221699d-e705-4664-9162-a75a82aa3997"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sg2-xr.zgrelay.com"
+    ws-opts:
+      path: "/700gvl-kr3"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 75ms | VLESS"
+    type: "vless"
+    server: "sg2-xr.zgrelay.com"
+    port: 443
+    uuid: "e221699d-e705-4664-9162-a75a82aa3997"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "sg2-xr.zgrelay.com"
+    ws-opts:
+      path: "/700gvl-kr3"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 122ms | VLESS"
+    type: "vless"
+    server: "fast.145779.xyz"
+    port: 2053
+    uuid: "e3149c82-00f6-4227-b2c0-b78f1dd81279"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "fast.145779.xyz"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/ws-tesla"
+      headers:
+        Host: "fast.145779.xyz"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 465ms | VLESS-1"
+    type: "vless"
+    server: "54.37.136.194"
+    port: 2053
+    uuid: "e8a432c8-5d84-49a5-b822-67ed761a58f9"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "Vemd9Jjk5xKO8qSC3g8VVagwcb4J1BcTvp86CswQC0A"
+      short-id: "50ba05992b05c1c3"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 118ms | VLESS"
+    type: "vless"
+    server: "212.227.235.66"
+    port: 2053
+    uuid: "ead0dd61-d398-40ad-80d6-a0e1e516d7d3"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.apple.com"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "7Y6Xb5Ql_03K25x8yKUSOKI2JTOMyv2nyCcFza90uxk"
+      short-id: "29e8dcd2b37aaa7f"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 247ms | VLESS"
+    type: "vless"
+    server: "172.237.88.103"
+    port: 443
+    uuid: "efd11a89-7506-44ce-95b6-6654859f155b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "zoom.us"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "EeLAX-BAjzSdRes-zpUFzVOYsBedmP8lUOHhXXJFXyI"
+      short-id: "5a42dbd7e26a0415"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 273ms | VLESS"
+    type: "vless"
+    server: "155.212.240.10"
+    port: 443
+    uuid: "f27b6f65-6e59-4f89-b929-afa397ca587f"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "n.bitpulse.me"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/019bcbad-3813-7cce-8786-3ac0e418f128?ed"
+      headers:
+        Host: "n.bitpulse.me"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 188ms | VLESS"
+    type: "vless"
+    server: "turk.bettercallakbar.ir"
+    port: 443
+    uuid: "f7dfc4cc-d3b1-4239-88d8-d982c241d05c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "turk.bettercallakbar.ir"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "turk.bettercallakbar.ir"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 83ms | VLESS"
+    type: "vless"
+    server: "104.17.11.191"
+    port: 443
+    uuid: "fc7d2cfe-f5ef-40c8-a848-a0bdc11f6349"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "vpn.cintaku.qzz.io"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/vlessws"
+      headers:
+        Host: "vpn.cintaku.qzz.io"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 182ms | SS"
+    type: "ss"
+    server: "dns22.m3hrzd.ir"
+    port: 1346
+    cipher: "chacha20-ietf-poly1305"
+    password: "T-I8y9fR15f4-Fgx7XdaVNg_n0UOY2Ip"
+    udp: true
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 111ms | SS"
+    type: "ss"
+    server: "dns22.m3hrzd.ir"
+    port: 1354
+    cipher: "chacha20-ietf-poly1305"
+    password: "T-I8y9fR15f4-Fgx7XdaVNg_n0UOY2Ip"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 172ms | SS"
+    type: "ss"
+    server: "alb.rvpn.app"
+    port: 8388
+    cipher: "chacha20-ietf-poly1305"
+    password: "hTTg7lwQMzpaF7KXpY3A8w"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 91ms | SS"
+    type: "ss"
+    server: "82.38.31.180"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 130ms | SS"
+    type: "ss"
+    server: "82.38.31.181"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 99ms | SS"
+    type: "ss"
+    server: "82.38.31.182"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 141ms | SS"
+    type: "ss"
+    server: "82.38.31.213"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 135ms | SS"
+    type: "ss"
+    server: "82.38.31.216"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 131ms | SS"
+    type: "ss"
+    server: "82.38.31.217"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 133ms | SS"
+    type: "ss"
+    server: "193.29.139.151"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 93ms | SS"
+    type: "ss"
+    server: "193.29.139.225"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 92ms | SS"
+    type: "ss"
+    server: "82.38.31.10"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 136ms | SS"
+    type: "ss"
+    server: "82.38.31.11"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 95ms | SS"
+    type: "ss"
+    server: "82.38.31.149"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 296ms | SS"
+    type: "ss"
+    server: "82.38.31.175"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 291ms | SS"
+    type: "ss"
+    server: "82.38.31.175"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 130ms | SS-1"
+    type: "ss"
+    server: "82.38.31.18"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 172ms | SS-1"
+    type: "ss"
+    server: "82.38.31.46"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 90ms | SS"
+    type: "ss"
+    server: "82.38.31.62"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 92ms | SS-1"
+    type: "ss"
+    server: "82.38.31.7"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 219ms | SS"
+    type: "ss"
+    server: "149.22.95.183"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 194ms | SS"
+    type: "ss"
+    server: "156.146.38.167"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 69ms | SS"
+    type: "ss"
+    server: "156.146.38.168"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 193ms | SS"
+    type: "ss"
+    server: "156.146.38.169"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 194ms | SS-1"
+    type: "ss"
+    server: "156.146.38.170"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 178ms | SS"
+    type: "ss"
+    server: "37.19.198.160"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 164ms | SS"
+    type: "ss"
+    server: "37.19.198.243"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 161ms | SS"
+    type: "ss"
+    server: "37.19.198.244"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 291ms | SS-1"
+    type: "ss"
+    server: "84.247.155.196"
+    port: 80
+    cipher: "aes-256-gcm"
+    password: "3eOFeNssde7PYYMv"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 185ms | SS"
+    type: "ss"
+    server: "185.215.132.18"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | SS"
+    type: "ss"
+    server: "185.215.132.9"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | SS-1"
+    type: "ss"
+    server: "185.230.230.18"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 465ms | SS"
+    type: "ss"
+    server: "193.151.160.18"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 192ms | SS"
+    type: "ss"
+    server: "193.151.160.9"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | SS-2"
+    type: "ss"
+    server: "193.151.163.18"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
+    udp: true
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 168ms | SS"
+    type: "ss"
+    server: "202.50.253.18"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 169ms | SS"
+    type: "ss"
+    server: "202.50.253.27"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
+    udp: true
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 465ms | SS"
+    type: "ss"
+    server: "202.50.253.36"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 465ms | SS-1"
+    type: "ss"
+    server: "202.50.253.45"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 164ms | SS-1"
+    type: "ss"
+    server: "202.50.253.54"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 156ms | SS"
+    type: "ss"
+    server: "202.50.253.72"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 172ms | SS-2"
+    type: "ss"
+    server: "202.50.253.81"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | SS-3"
+    type: "ss"
+    server: "45.86.51.18"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 378ms | SS"
+    type: "ss"
+    server: "46.17.46.27"
+    port: 18443
+    cipher: "aes-256-gcm"
+    password: "cCMJgJTA3BA489YUYrFq7XHXSiSpWlLa"
+    udp: true
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 97ms | SS"
+    type: "ss"
+    server: "51.83.192.80"
+    port: 8388
+    cipher: "aes-256-gcm"
+    password: "itzvpn@321"
+    udp: true
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 163ms | VMESS"
+    type: "vmess"
+    server: "104.16.241.229"
+    port: 443
+    uuid: "5f1d6d32-76b3-4562-8982-df2b7c122708"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 104ms | VMESS"
+    type: "vmess"
+    server: "104.27.21.118"
+    port: 443
+    uuid: "5f1d6d32-76b3-4562-8982-df2b7c122708"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 108ms | VMESS"
+    type: "vmess"
+    server: "190.93.247.169"
+    port: 443
+    uuid: "5f1d6d32-76b3-4562-8982-df2b7c122708"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 123ms | VMESS"
+    type: "vmess"
+    server: "104.18.228.35"
+    port: 443
+    uuid: "5f1d6d32-76b3-4562-8982-df2b7c122708"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 123ms | VMESS-1"
+    type: "vmess"
+    server: "188.114.97.144"
+    port: 443
+    uuid: "5f1d6d32-76b3-4562-8982-df2b7c122708"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 123ms | VMESS-2"
+    type: "vmess"
+    server: "190.93.246.67"
+    port: 443
+    uuid: "5f1d6d32-76b3-4562-8982-df2b7c122708"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 121ms | VMESS"
+    type: "vmess"
+    server: "104.21.91.19"
+    port: 443
+    uuid: "5f1d6d32-76b3-4562-8982-df2b7c122708"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 121ms | VMESS-1"
+    type: "vmess"
+    server: "188.114.96.125"
+    port: 443
+    uuid: "5f1d6d32-76b3-4562-8982-df2b7c122708"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 134ms | VMESS"
+    type: "vmess"
+    server: "104.25.105.1"
+    port: 443
+    uuid: "5f1d6d32-76b3-4562-8982-df2b7c122708"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 347ms | VMESS"
+    type: "vmess"
+    server: "190.93.244.201"
+    port: 443
+    uuid: "5f1d6d32-76b3-4562-8982-df2b7c122708"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 313ms | VMESS"
+    type: "vmess"
+    server: "198.41.214.141"
+    port: 443
+    uuid: "5f1d6d32-76b3-4562-8982-df2b7c122708"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 331ms | VMESS"
+    type: "vmess"
+    server: "104.16.232.223"
+    port: 443
+    uuid: "5f1d6d32-76b3-4562-8982-df2b7c122708"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 338ms | VMESS"
+    type: "vmess"
+    server: "104.17.127.110"
+    port: 443
+    uuid: "5f1d6d32-76b3-4562-8982-df2b7c122708"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 140ms | VMESS"
+    type: "vmess"
+    server: "47.88.79.34"
+    port: 443
+    uuid: "9b31490d-190e-4ef1-af0a-7ccab3e7c3b5"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 101ms | VMESS"
+    type: "vmess"
+    server: "104.21.7.133"
+    port: 80
+    uuid: "0cf6d970-3f1d-4aae-a989-92a8f76ae3db"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 226ms | VMESS"
+    type: "vmess"
+    server: "129.146.77.248"
+    port: 39495
+    uuid: "f836c736-87fc-4fde-aabc-00857ecdff3e"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 307ms | VMESS"
+    type: "vmess"
+    server: "rib9jxayoqjgn2kw.v.3dns.vip"
+    port: 443
+    uuid: "9b31490d-190e-4ef1-af0a-7ccab3e7c3b5"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 465ms | VMESS"
+    type: "vmess"
+    server: "120.48.133.162"
+    port: 10086
+    uuid: "a8d931b0-6c27-428b-8d86-c20efea3dba7"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 87ms | VMESS"
+    type: "vmess"
+    server: "172.67.187.145"
+    port: 80
+    uuid: "0cf6d970-3f1d-4aae-a989-92a8f76ae3db"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 174ms | VMESS"
+    type: "vmess"
+    server: "23.162.200.198"
+    port: 18000
+    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 85ms | VMESS"
+    type: "vmess"
+    server: "www.shopify.com"
+    port: 443
+    uuid: "6a89a215-22bf-4bd7-9642-b95b2e09583a"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 122ms | VMESS"
+    type: "vmess"
+    server: "www.windowsmsidownloads.com"
+    port: 443
+    uuid: "80be2deb-3b27-4775-9bd1-7f2a2b9c261b"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 148ms | VMESS"
+    type: "vmess"
+    server: "www.ubuntuupdates.com"
+    port: 443
+    uuid: "83b09a64-1eaf-4c4d-89ed-866d4b6b8115"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 123ms | VMESS"
+    type: "vmess"
+    server: "guanwang.awsno.com"
+    port: 443
+    uuid: "6a89a215-22bf-4bd7-9642-b95b2e09583a"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 229ms | TROJAN"
+    type: "trojan"
+    server: "167.88.61.175"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "blog.browseseniorrolesandenhanceyourcareertoday.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 225ms | TROJAN"
+    type: "trojan"
+    server: "167.88.61.193"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "browseseniorrolesandenhanceyourcareertoday.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 227ms | TROJAN"
+    type: "trojan"
+    server: "167.88.61.198"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn.browseseniorrolesandenhanceyourcareertoday.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 220ms | TROJAN"
+    type: "trojan"
+    server: "167.88.61.85"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "resources.browseseniorrolesandenhanceyourcareertoday.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 228ms | TROJAN"
+    type: "trojan"
+    server: "169.197.140.218"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "learn.discoverfreshgraduatejobsstartyourprofessionaljourney.com"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 225ms | TROJAN"
+    type: "trojan"
+    server: "169.197.140.224"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "resources.discoverfreshgraduatejobsstartyourprofessionaljourney.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 180ms | TROJAN"
+    type: "trojan"
+    server: "170.101.101.112"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "resources.explorecreativejobsandenhanceyourcareerportfolio.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 172ms | TROJAN"
+    type: "trojan"
+    server: "170.101.101.131"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "blog.explorecreativejobsandenhanceyourcareerportfolio.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 217ms | TROJAN"
+    type: "trojan"
+    server: "170.101.101.19"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "learn.explorecreativejobsandenhanceyourcareerportfolio.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 178ms | TROJAN"
+    type: "trojan"
+    server: "170.101.101.211"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "api.explorecreativejobsandenhanceyourcareerportfolio.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 185ms | TROJAN"
+    type: "trojan"
+    server: "170.101.101.67"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "courses.explorecreativejobsandenhanceyourcareerportfolio.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 82ms | TROJAN"
+    type: "trojan"
+    server: "193.108.119.15"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "courses.iloverussia2026.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 85ms | TROJAN"
+    type: "trojan"
+    server: "193.108.119.96"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "learn.iloverussia2026.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 226ms | TROJAN"
+    type: "trojan"
+    server: "216.106.186.66"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.findlocaljobnetworkandbuildcommunityconnections.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 167ms | TROJAN"
+    type: "trojan"
+    server: "216.152.147.201"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "resources.connectingpeoplewithgreatjobs.com"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 167ms | TROJAN"
+    type: "trojan"
+    server: "216.152.147.48"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "courses.connectingpeoplewithgreatjobs.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | TROJAN"
+    type: "trojan"
+    server: "216.152.147.74"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "api.connectingpeoplewithgreatjobs.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 173ms | TROJAN"
+    type: "trojan"
+    server: "216.152.147.79"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "blog.connectingpeoplewithgreatjobs.com"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 190ms | TROJAN"
+    type: "trojan"
+    server: "216.152.147.85"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn.connectingpeoplewithgreatjobs.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 176ms | TROJAN"
+    type: "trojan"
+    server: "216.152.147.89"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.connectingpeoplewithgreatjobs.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 210ms | TROJAN"
+    type: "trojan"
+    server: "216.152.147.93"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "connectingpeoplewithgreatjobs.com"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 186ms | TROJAN"
+    type: "trojan"
+    server: "216.152.155.158"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "resources.nextjobopportunityandclaimyouridealrole.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 465ms | TROJAN"
+    type: "trojan"
+    server: "216.152.155.176"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "blog.nextjobopportunityandclaimyouridealrole.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | TROJAN-1"
+    type: "trojan"
+    server: "216.152.155.23"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "courses.nextjobopportunityandclaimyouridealrole.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | TROJAN-2"
+    type: "trojan"
+    server: "216.152.155.54"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "learn.nextjobopportunityandclaimyouridealrole.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 177ms | TROJAN"
+    type: "trojan"
+    server: "216.152.155.59"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "api.nextjobopportunityandclaimyouridealrole.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | TROJAN-3"
+    type: "trojan"
+    server: "216.152.156.49"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn.healthcarejobshubenhancemedicalprofessionalskillstoday.com"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🌐IL | 🇮🇷140ms | ⚡2.74Mbps | TROJAN"
+    type: "trojan"
+    server: "64.176.163.182"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "exploreeducationsectoropportunitiestodayandadvancecareers.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 244ms | TROJAN"
+    type: "trojan"
+    server: "64.176.7.205"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "advanceyouremploymentskillsandcareerdevelopmenthub.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 209ms | TROJAN"
+    type: "trojan"
+    server: "66.163.112.121"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.unlockyourfuturefindyourperfectcareer.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 216ms | TROJAN"
+    type: "trojan"
+    server: "66.163.112.142"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn.unlockyourfuturefindyourperfectcareer.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 125ms | TROJAN"
+    type: "trojan"
+    server: "66.163.112.147"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "courses.unlockyourfuturefindyourperfectcareer.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 214ms | TROJAN"
+    type: "trojan"
+    server: "66.163.112.242"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "resources.unlockyourfuturefindyourperfectcareer.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 255ms | TROJAN"
+    type: "trojan"
+    server: "66.163.112.76"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "api.unlockyourfuturefindyourperfectcareer.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 245ms | TROJAN"
+    type: "trojan"
+    server: "66.163.114.106"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.findconnectwithemployersandbuildprofessionalnetwork.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 79ms | TROJAN"
+    type: "trojan"
+    server: "66.163.114.114"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "learn.findconnectwithemployersandbuildprofessionalnetwork.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 78ms | TROJAN"
+    type: "trojan"
+    server: "66.163.114.126"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "resources.findconnectwithemployersandbuildprofessionalnetwork.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | TROJAN-4"
+    type: "trojan"
+    server: "66.163.114.132"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "courses.findconnectwithemployersandbuildprofessionalnetwork.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 201ms | TROJAN"
+    type: "trojan"
+    server: "66.163.114.166"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "blog.findconnectwithemployersandbuildprofessionalnetwork.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 200ms | TROJAN"
+    type: "trojan"
+    server: "66.163.114.245"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "findconnectwithemployersandbuildprofessionalnetwork.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 70ms | TROJAN"
+    type: "trojan"
+    server: "66.163.114.45"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn.findconnectwithemployersandbuildprofessionalnetwork.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 230ms | TROJAN"
+    type: "trojan"
+    server: "ca001.zestapp778.com"
+    port: 46977
+    password: "5t6i121em5lkmsmk"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ca001.zestapp778.com"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 175ms | TROJAN"
+    type: "trojan"
+    server: "us001.zestapp778.com"
+    port: 57277
+    password: "5t6i121em5lkmsmk"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "us001.zestapp778.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 260ms | TROJAN"
+    type: "trojan"
+    server: "us007.zestapp778.com"
+    port: 42314
+    password: "5t6i121em5lkmsmk"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 226ms | TROJAN-1"
+    type: "trojan"
+    server: "216.106.186.32"
+    port: 443
+    password: "dba20dcb635e430fa4d3bfc303a149d2"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "blog.findlocaljobnetworkandbuildcommunityconnections.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 220ms | TROJAN-1"
+    type: "trojan"
+    server: "216.106.186.33"
+    port: 443
+    password: "f0eb8c92ce8946aaba856569cff1a16b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "resources.findlocaljobnetworkandbuildcommunityconnections.com"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 244ms | TROJAN"
+    type: "trojan"
+    server: "104.16.34.14"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.trusteeforward.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.trusteeforward.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 247ms | TROJAN"
+    type: "trojan"
+    server: "104.17.121.71"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 88ms | TROJAN"
+    type: "trojan"
+    server: "104.17.175.201"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 124ms | TROJAN"
+    type: "trojan"
+    server: "104.17.206.147"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.trusteeforward.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.trusteeforward.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 230ms | TROJAN-1"
+    type: "trojan"
+    server: "104.18.37.127"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.trusteeforward.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.trusteeforward.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 171ms | TROJAN"
+    type: "trojan"
+    server: "104.19.229.21"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "//assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 93ms | TROJAN"
+    type: "trojan"
+    server: "104.20.55.137"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.trusteeforward.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.trusteeforward.com"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 91ms | TROJAN"
+    type: "trojan"
+    server: "141.101.115.104"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 153ms | TROJAN"
+    type: "trojan"
+    server: "141.193.213.172"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🌐FR | 🇮🇷99ms | ⚡4.54Mbps | TROJAN"
+    type: "trojan"
+    server: "185.18.250.252"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 85ms | TROJAN"
+    type: "trojan"
+    server: "188.114.97.6"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "//assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 105ms | TROJAN"
+    type: "trojan"
+    server: "188.114.98.0"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.trusteeforward.com"
+    ws-opts:
+      path: "/assignment?TELEGRAM--B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub--TELEGRAM"
+      headers:
+        Host: "www.trusteeforward.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 158ms | TROJAN"
+    type: "trojan"
+    server: "188.114.98.0"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 100ms | TROJAN"
+    type: "trojan"
+    server: "188.114.98.0"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment?Telegram---Config7x--CONFIG7X"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 87ms | TROJAN"
+    type: "trojan"
+    server: "194.147.149.54"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 84ms | TROJAN"
+    type: "trojan"
+    server: "45.130.125.160"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 63ms | TROJAN"
+    type: "trojan"
+    server: "45.80.111.7"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 84ms | TROJAN"
+    type: "trojan"
+    server: "8.47.69.0"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.pleadcourt.org"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.pleadcourt.org"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 161ms | TROJAN"
+    type: "trojan"
+    server: "8.6.112.206"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.trusteeforward.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.trusteeforward.com"
+proxy-groups:
+  - name: "نوع انتخاب پروکسی 🔀"
+    type: "select"
+    proxies:
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "توزیع بار چرخشی ⚖️"
+      - "قطع اینترنت ⛔"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/412721/choose.svg"
+  - name: "دستی 🤏🏻"
+    type: "select"
+    lazy: true
+    proxies:
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 158ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 76ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 209ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 96ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 231ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 183ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 214ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 226ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 89ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 299ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 302ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 146ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 228ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 242ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 248ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 129ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 133ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 243ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 248ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 232ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 233ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 116ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 100ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 93ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 91ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 103ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 92ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 129ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 89ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 90ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 135ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 189ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 317ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 282ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 98ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 178ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 190ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 84ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 122ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 465ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 136ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 164ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 157ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 388ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 187ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 123ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 124ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 233ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 224ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 203ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 119ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 183ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 93ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 226ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 129ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 130ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 90ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 192ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 159ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 90ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | VLESS-1"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 93ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 247ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 81ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 164ms | VLESS-1"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 142ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 284ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 68ms | VLESS"
+      - "Telegram---Lent_Gc---Lent_Gc---Lent_Gc---Lent_Gc&security=tls&encryption=none&insecure=0&host=ccc.010304.xyz&fp=chrome&type=ws&allowInsecure=0&sni=ccc.010304.xyz#@v2ray_free_config_iran | V2Ray | 🇮🇷 102ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | VLESS-2"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 41ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 46ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 42ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 68ms | VLESS-1"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 164ms | VLESS"
+      - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&encryption=none&insecure=0&host=ccc.010304.xyz&fp=unsafe&type=ws&allowInsecure=0&sni=ccc.010304.xyz#@v2ray_free_config_iran | Argo VPN | 🇮🇷 89ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 196ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🌐US | 🇮🇷170ms | ⚡11.26Mbps | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 187ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 169ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 181ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 94ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 75ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 122ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 465ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 118ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 247ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 273ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 188ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 83ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 182ms | SS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 111ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 172ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 91ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 130ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 99ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 141ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 135ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 131ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 133ms | SS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 93ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 92ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 136ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 95ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 296ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 291ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 130ms | SS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 172ms | SS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 90ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 92ms | SS-1"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 219ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 194ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 69ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 193ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 194ms | SS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 178ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 164ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 161ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 291ms | SS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 185ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | SS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 465ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 192ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | SS-2"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 168ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 169ms | SS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 465ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 465ms | SS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 164ms | SS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 156ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 172ms | SS-2"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | SS-3"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 378ms | SS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 97ms | SS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 163ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 104ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 108ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 123ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 123ms | VMESS-1"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 123ms | VMESS-2"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 121ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 121ms | VMESS-1"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 134ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 347ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 313ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 331ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 338ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 140ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 101ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 226ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 307ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 465ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 87ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 174ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 85ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 122ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 148ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 123ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 229ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 225ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 227ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 220ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 228ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 225ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 180ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 172ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 217ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 178ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 185ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 82ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 85ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 226ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 167ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 167ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 173ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 190ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 176ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 210ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 186ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 465ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | TROJAN-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | TROJAN-2"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 177ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | TROJAN-3"
+      - "@v2ray_free_config_iran | Argo VPN | 🌐IL | 🇮🇷140ms | ⚡2.74Mbps | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 244ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 209ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 216ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 125ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 214ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 255ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 245ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 79ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 78ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | TROJAN-4"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 201ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 200ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 70ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 230ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 175ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 260ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 226ms | TROJAN-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 220ms | TROJAN-1"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 244ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 247ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 88ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 124ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 230ms | TROJAN-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 171ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 93ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 91ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 153ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🌐FR | 🇮🇷99ms | ⚡4.54Mbps | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 85ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 105ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 158ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 100ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 87ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 84ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 63ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 84ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 161ms | TROJAN"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
+  - name: "خودکار (بهترین پینگ) 🤖"
+    type: "url-test"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 30
+    tolerance: 50
+    lazy: true
+    proxies:
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 158ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 76ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 209ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 96ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 231ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 183ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 214ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 226ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 89ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 299ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 302ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 146ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 228ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 242ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 248ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 129ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 133ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 243ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 248ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 232ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 233ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 116ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 100ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 93ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 91ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 103ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 92ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 129ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 89ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 90ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 135ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 189ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 317ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 282ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 98ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 178ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 190ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 84ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 122ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 465ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 136ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 164ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 157ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 388ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 187ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 123ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 124ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 233ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 224ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 203ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 119ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 183ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 93ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 226ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 129ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 130ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 90ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 192ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 159ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 90ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | VLESS-1"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 93ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 247ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 81ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 164ms | VLESS-1"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 142ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 284ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 68ms | VLESS"
+      - "Telegram---Lent_Gc---Lent_Gc---Lent_Gc---Lent_Gc&security=tls&encryption=none&insecure=0&host=ccc.010304.xyz&fp=chrome&type=ws&allowInsecure=0&sni=ccc.010304.xyz#@v2ray_free_config_iran | V2Ray | 🇮🇷 102ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | VLESS-2"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 41ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 46ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 42ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 68ms | VLESS-1"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 164ms | VLESS"
+      - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&encryption=none&insecure=0&host=ccc.010304.xyz&fp=unsafe&type=ws&allowInsecure=0&sni=ccc.010304.xyz#@v2ray_free_config_iran | Argo VPN | 🇮🇷 89ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 196ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🌐US | 🇮🇷170ms | ⚡11.26Mbps | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 187ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 169ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 181ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 94ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 75ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 122ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 465ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 118ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 247ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 273ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 188ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 83ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 182ms | SS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 111ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 172ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 91ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 130ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 99ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 141ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 135ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 131ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 133ms | SS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 93ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 92ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 136ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 95ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 296ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 291ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 130ms | SS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 172ms | SS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 90ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 92ms | SS-1"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 219ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 194ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 69ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 193ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 194ms | SS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 178ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 164ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 161ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 291ms | SS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 185ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | SS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 465ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 192ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | SS-2"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 168ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 169ms | SS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 465ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 465ms | SS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 164ms | SS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 156ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 172ms | SS-2"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | SS-3"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 378ms | SS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 97ms | SS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 163ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 104ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 108ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 123ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 123ms | VMESS-1"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 123ms | VMESS-2"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 121ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 121ms | VMESS-1"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 134ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 347ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 313ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 331ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 338ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 140ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 101ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 226ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 307ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 465ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 87ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 174ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 85ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 122ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 148ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 123ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 229ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 225ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 227ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 220ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 228ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 225ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 180ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 172ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 217ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 178ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 185ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 82ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 85ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 226ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 167ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 167ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 173ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 190ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 176ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 210ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 186ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 465ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | TROJAN-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | TROJAN-2"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 177ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | TROJAN-3"
+      - "@v2ray_free_config_iran | Argo VPN | 🌐IL | 🇮🇷140ms | ⚡2.74Mbps | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 244ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 209ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 216ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 125ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 214ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 255ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 245ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 79ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 78ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | TROJAN-4"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 201ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 200ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 70ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 230ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 175ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 260ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 226ms | TROJAN-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 220ms | TROJAN-1"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 244ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 247ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 88ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 124ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 230ms | TROJAN-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 171ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 93ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 91ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 153ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🌐FR | 🇮🇷99ms | ⚡4.54Mbps | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 85ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 105ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 158ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 100ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 87ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 84ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 63ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 84ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 161ms | TROJAN"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
+  - name: "توزیع بار چرخشی ⚖️"
+    type: "load-balance"
+    strategy: "round-robin"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 30
+    lazy: true
+    timeout: 1500
+    proxies:
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 158ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 76ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 209ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 96ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 231ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 183ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 214ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 226ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 89ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 299ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 302ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 146ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 228ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 242ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 248ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 129ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 133ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 243ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 248ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 232ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 233ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 116ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 100ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 93ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 91ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 103ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 92ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 129ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 89ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 90ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 135ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 189ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 317ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 282ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 98ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 178ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 190ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 84ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 122ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 465ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 136ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 164ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 157ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 388ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 187ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 123ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 124ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 233ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 224ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 203ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 119ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 183ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 93ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 226ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 129ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 130ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 90ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 192ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 159ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 90ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | VLESS-1"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 93ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 247ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 81ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 164ms | VLESS-1"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 142ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 284ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 68ms | VLESS"
+      - "Telegram---Lent_Gc---Lent_Gc---Lent_Gc---Lent_Gc&security=tls&encryption=none&insecure=0&host=ccc.010304.xyz&fp=chrome&type=ws&allowInsecure=0&sni=ccc.010304.xyz#@v2ray_free_config_iran | V2Ray | 🇮🇷 102ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | VLESS-2"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 41ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 46ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 42ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 68ms | VLESS-1"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 164ms | VLESS"
+      - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&encryption=none&insecure=0&host=ccc.010304.xyz&fp=unsafe&type=ws&allowInsecure=0&sni=ccc.010304.xyz#@v2ray_free_config_iran | Argo VPN | 🇮🇷 89ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 196ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🌐US | 🇮🇷170ms | ⚡11.26Mbps | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 187ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 169ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 181ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 94ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 75ms | VLESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 122ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 465ms | VLESS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 118ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 247ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 273ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 188ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 83ms | VLESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 182ms | SS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 111ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 172ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 91ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 130ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 99ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 141ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 135ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 131ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 133ms | SS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 93ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 92ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 136ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 95ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 296ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 291ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 130ms | SS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 172ms | SS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 90ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 92ms | SS-1"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 219ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 194ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 69ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 193ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 194ms | SS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 178ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 164ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 161ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 291ms | SS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 185ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | SS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 465ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 192ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | SS-2"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 168ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 169ms | SS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 465ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 465ms | SS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 164ms | SS-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 156ms | SS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 172ms | SS-2"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | SS-3"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 378ms | SS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 97ms | SS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 163ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 104ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 108ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 123ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 123ms | VMESS-1"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 123ms | VMESS-2"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 121ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 121ms | VMESS-1"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 134ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 347ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 313ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 331ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 338ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 140ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 101ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 226ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 307ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 465ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 87ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 174ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 85ms | VMESS"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 122ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 148ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 123ms | VMESS"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 229ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 225ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 227ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 220ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 228ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 225ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 180ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 172ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 217ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 178ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 185ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 82ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 85ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 226ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 167ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 167ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 173ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 190ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 176ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 210ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 186ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 465ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | TROJAN-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | TROJAN-2"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 177ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | TROJAN-3"
+      - "@v2ray_free_config_iran | Argo VPN | 🌐IL | 🇮🇷140ms | ⚡2.74Mbps | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 244ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 209ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 216ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 125ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 214ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 255ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 245ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 79ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 78ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | TROJAN-4"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 201ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 200ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 70ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 230ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 175ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 260ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 226ms | TROJAN-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 220ms | TROJAN-1"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 244ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 247ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 88ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 124ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 230ms | TROJAN-1"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 171ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 93ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 91ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 153ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🌐FR | 🇮🇷99ms | ⚡4.54Mbps | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 85ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 105ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 158ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 100ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 87ms | TROJAN"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 84ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 63ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 84ms | TROJAN"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 161ms | TROJAN"
+    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
+  - name: "دانلود منیجر 📥"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
+  - name: "تلگرام 💬"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
+  - name: "یوتیوب ▶️"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
+  - name: "گوگل 🌍"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/475656/google-color.svg"
+  - name: "هوش مصنوعی 🤖"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/306500/openai.svg"
+  - name: "توییتر 🐦"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/475689/twitter-color.svg"
+  - name: "اینستاگرام 📸"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/452229/instagram-1.svg"
+  - name: "کلودفلر ☁️"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
+  - name: "گیتهاب 🐙"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/355033/github.svg"
+  - name: "اسپاتیفای 🎵"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
+  - name: "واتس آپ 🟢"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
+  - name: "تبلیغات 🆎"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/336358/ad.svg"
+  - name: "تبلیغات اپ ها 🍃"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
+  - name: "رهگیری جهانی 🛑"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
+  - name: "المنت 💬"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Element_(software)_logo_(2020).svg"
+  - name: "تیم اسپیک 🎧"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/teamspeak/default.svg"
+  - name: "دلتاچت ✉️"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Delta_chat_(Instant_Messenger)_logo.svg"
+  - name: "سایتای مخرب ⚠️"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
+  - name: "استیم 🖥️"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/452107/steam.svg"
+  - name: "گیم 🎮"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
+  - name: "توییچ 📡"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@develop/icons/twitch.svg"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
+  - name: "ویندوز 🧊"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "اجازه ندادن 🚫"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
+  - name: "دیسکورد 🗣️"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/brands/discord.svg"
+  - name: "استریمیو 🎬"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://stremio.github.io/stremio-addon-guide/img/stremio.svg"
+  - name: "انی دسک 🔴"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
+  - name: "سایتای سانسوری 🤬"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/clapperboard.svg"
+  - name: "بدون فیلترشکن 🛡️"
+    type: "select"
+    proxies:
+      - "DIRECT"
+    hidden: true
+    icon: "https://www.svgrepo.com/show/6318/connection.svg"
+  - name: "قطع اینترنت ⛔"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
+  - name: "اجازه ندادن 🚫"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
+rules:
+  - "IP-CIDR,127.0.0.0/8,بدون فیلترشکن 🛡️,no-resolve"
+  - "DOMAIN,localhost,بدون فیلترشکن 🛡️"
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,private,بدون فیلترشکن 🛡️"
+  - "RULE-SET,DownloadManagers,دانلود منیجر 📥"
+  - "RULE-SET,Download,دانلود منیجر 📥"
+  - "RULE-SET,stremio,استریمیو 🎬"
+  - "PROCESS-NAME,im.vector.app,المنت 💬"
+  - "PROCESS-NAME,io.element.android.x,المنت 💬"
+  - "PROCESS-NAME,Element.exe,المنت 💬"
+  - "DOMAIN-SUFFIX,aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,chat.aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,site.aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,electonet.xyz,المنت 💬"
+  - "DOMAIN-SUFFIX,chat.electonet.xyz,المنت 💬"
+  - "DOMAIN-SUFFIX,rainbuwu.ir,المنت 💬"
+  - "DOMAIN-SUFFIX,cinny.rainbuwu.ir,المنت 💬"
+  - "PROCESS-NAME,chat.delta,دلتاچت ✉️"
+  - "PROCESS-NAME,DeltaChat.exe,دلتاچت ✉️"
+  - "DOMAIN-SUFFIX,arsalandalvand.ir,دلتاچت ✉️"
+  - "DST-PORT,993,دلتاچت ✉️"
+  - "DST-PORT,465,دلتاچت ✉️"
+  - "DST-PORT,587,دلتاچت ✉️"
+  - "PROCESS-NAME,com.teamspeak.ts3client,تیم اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win64.exe,تیم اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win32.exe,تیم اسپیک 🎧"
+  - "PROCESS-NAME,TeamSpeak.exe,تیم اسپیک 🎧"
+  - "DOMAIN-SUFFIX,ag.tssq.ir,تیم اسپیک 🎧"
+  - "DST-PORT,9987,تیم اسپیک 🎧"
+  - "RULE-SET,BanProgramAD,تبلیغات اپ ها 🍃"
+  - "RULE-SET,BanAD,رهگیری جهانی 🛑"
+  - "RULE-SET,PrivateTracker,رهگیری جهانی 🛑"
+  - "RULE-SET,category_public_tracker,رهگیری جهانی 🛑"
+  - "RULE-SET,malware,سایتای مخرب ⚠️"
+  - "RULE-SET,phishing,سایتای مخرب ⚠️"
+  - "RULE-SET,cryptominers,سایتای مخرب ⚠️"
+  - "RULE-SET,warninglist,سایتای مخرب ⚠️"
+  - "RULE-SET,Ponzi,سایتای مخرب ⚠️"
+  - "RULE-SET,LiteAds,تبلیغات 🆎"
+  - "RULE-SET,iran_ads,تبلیغات 🆎"
+  - "RULE-SET,PersianBlocker,تبلیغات 🆎"
+  - "RULE-SET,ads,تبلیغات 🆎"
+  - "RULE-SET,BanEasyList,تبلیغات 🆎"
+  - "RULE-SET,twitch,توییچ 📡"
+  - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger.web,تلگرام 💬"
+  - "RULE-SET,telegram,تلگرام 💬"
+  - "RULE-SET,YouTube,یوتیوب ▶️"
+  - "RULE-SET,youtube,یوتیوب ▶️"
+  - "RULE-SET,YouTubeMusic,یوتیوب ▶️"
+  - "PROCESS-NAME,com.anydesk.anydeskandroid,انی دسک 🔴"
+  - "PROCESS-NAME,AnyDesk.exe,انی دسک 🔴"
+  - "DOMAIN-SUFFIX,anydesk.com,انی دسک 🔴"
+  - "PROCESS-NAME,rustdesk.exe,انی دسک 🔴"
+  - "PROCESS-NAME,com.carriez.flutter_hbb,انی دسک 🔴"
+  - "PROCESS-NAME,dorsandesk.exe,انی دسک 🔴"
+  - "PROCESS-NAME,Twitter.exe,توییتر 🐦"
+  - "PROCESS-NAME,com.twitter.android,توییتر 🐦"
+  - "RULE-SET,Chotwitter,توییتر 🐦"
+  - "RULE-SET,mihTwitter,توییتر 🐦"
+  - "RULE-SET,Domtwitter,توییتر 🐦"
+  - "PROCESS-NAME,com.spotify.music,اسپاتیفای 🎵"
+  - "PROCESS-NAME,Spotify.exe,اسپاتیفای 🎵"
+  - "RULE-SET,DomainSpotify,اسپاتیفای 🎵"
+  - "RULE-SET,mihspotify,اسپاتیفای 🎵"
+  - "PROCESS-NAME,com.instagram.android,اینستاگرام 📸"
+  - "RULE-SET,instagram,اینستاگرام 📸"
+  - "RULE-SET,censor,سایتای سانسوری 🤬"
+  - "RULE-SET,apps,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,arvancloud,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,derakcloud,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,iranserver,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,parspack,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,irasn,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,ircidr,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,ir,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
+  - "DOMAIN-SUFFIX,unimics.com,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,whatsapp,واتس آپ 🟢"
+  - "RULE-SET,Ai,هوش مصنوعی 🤖"
+  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
+  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google,گوگل 🌍"
+  - "RULE-SET,steam,استیم 🖥️"
+  - "RULE-SET,SteamRegionCheck,استیم 🖥️"
+  - "RULE-SET,game,گیم 🎮"
+  - "RULE-SET,GameDownload,گیم 🎮"
+  - "RULE-SET,category-games,گیم 🎮"
+  - "RULE-SET,Xbox,گیم 🎮"
+  - "RULE-SET,discord,دیسکورد 🗣️"
+  - "RULE-SET,xiaomi_white_list,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,xiaomi_block_list,تبلیغات اپ ها 🍃"
+  - "RULE-SET,windows,ویندوز 🧊"
+  - "RULE-SET,cloudflare,کلودفلر ☁️"
+  - "RULE-SET,github,گیتهاب 🐙"
+  - "PROCESS-NAME,com.android.vending,نوع انتخاب پروکسی 🔀"
+  - "PROCESS-NAME,com.google.android.gms,نوع انتخاب پروکسی 🔀"
+  - "IP-CIDR,10.10.34.0/24,نوع انتخاب پروکسی 🔀"
+  - "MATCH,نوع انتخاب پروکسی 🔀"

@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -579,47 +613,14 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "QFWzCw2uX9B9i6qAYeFBIE"
     udp: true
-  - name: "🇷🇴 REALITY|RO🇷🇴 | 87.58.205.88-443 | 189.72ms"
-    type: "vless"
-    server: "87.58.205.88"
-    port: 443
-    uuid: "d49e6f64-2a62-4fc6-8dde-9ab1bdf12c02"
+  - name: "🇷🇴 194.68.44.42"
+    type: "ss"
+    server: "194.68.44.42"
+    port: 64546
+    cipher: "chacha20-ietf-poly1305"
+    password: "U83u9OGpvSatIUW7LsWffr"
     udp: true
-    tls: true
-    network: "xhttp"
-    servername: "google.com"
-    reality-opts:
-      public-key: "v_s3GW5_7jvB081tdUeyoDUUTq6fZwqKbVS7CdvLFA0"
-      short-id: "72cd47c079c0a3df"
-  - name: "🇷🇴 REALITY|RO🇷🇴 | 89.125.166.87-443 | 187.64ms"
-    type: "vless"
-    server: "89.125.166.87"
-    port: 443
-    uuid: "c3eb1b3a-4d14-45b8-861b-b16b6cc6f23a"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "sni-ncdega35uy.mydevelopertool.xyz"
-    client-fingerprint: "safari"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "XnyehftF9E2q-RCq8rMl6WHkpVuH_waVXl3D1DyIE3s"
-      short-id: "c4c4a66c12939a0d"
-  - name: "🇷🇴 REALITY|RO🇷🇴 | 88.80.135.80-443 | 167.22ms"
-    type: "vless"
-    server: "88.80.135.80"
-    port: 443
-    uuid: "c2a96312-2f83-40e2-8178-e65c3789ba05"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "lumen014.filebeam.website"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "xcTXD3of3Yt5hHdIwYGZ1LjMBgiL6sqj5J33J4U4ozM"
-      short-id: "a7c31f92"
-  - name: "🇷🇴 🔒 VL-TCP-RLT 🇷🇴 RO-205.237.110.254:443"
+  - name: "🇷🇴 REALITY|RO🇷🇴 | 205.237.110.254-443 | 99.94ms"
     type: "vless"
     server: "205.237.110.254"
     port: 443
@@ -660,6 +661,18 @@ proxies:
     reality-opts:
       public-key: "qs57RRflA_LrI4H5rFIgF0aoWM1P1dLrtd5Yi5NiRQ0"
       short-id: "2dcb233be829ed90"
+  - name: "🇷🇴 🔒 VL-XHTTP-RLT 🇷🇴 RO-87.58.205.88:443"
+    type: "vless"
+    server: "87.58.205.88"
+    port: 443
+    uuid: "d49e6f64-2a62-4fc6-8dde-9ab1bdf12c02"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "google.com"
+    reality-opts:
+      public-key: "v_s3GW5_7jvB081tdUeyoDUUTq6fZwqKbVS7CdvLFA0"
+      short-id: "72cd47c079c0a3df"
   - name: "🇷🇴 🔒 VL-XHTTP-RLT 🇷🇴 RO-37.46.196.85:8443"
     type: "vless"
     server: "37.46.196.85"
@@ -672,6 +685,28 @@ proxies:
     reality-opts:
       public-key: "Gu_QdtOX6E8pZcYvDWgHKA5dxcit7hrpU27sizCEWXg"
       short-id: "e0"
+  - name: "🇷🇴 🐌 - Tel:  @Hddify - 4"
+    type: "trojan"
+    server: "hakime-kos2.karamoz2.ir"
+    port: 443
+    password: "svmykwb2l2v8jpd6"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "low-lvl.karamoz2.ir"
+  - name: "🇷🇴 RELAY🚩 | valid22.validbv9501.ir-2087 | 187.22ms"
+    type: "vless"
+    server: "45.85.118.16"
+    port: 2087
+    uuid: "38a43f18-b4d9-443f-9ff1-4cf9de3d666e"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "valid22.validbv9501.ir"
+    ws-opts:
+      path: "/eyJqdW5rIjoiS0ZJaGhSaG14Z0NMeCIsInByb3RvY29sIjoidmwiLCJtb2RlIjoicHJveHlpcCIsInBhbmVsSVBzIjpbIjE0Ni4xMDMuMTE0LjEzNCJdfQ"
+      headers:
+        Host: "valid22.validbv9501.ir"
   - name: "🇷🇴 🔒 VL-TCP-TLS 🇷🇴 RO-95.173.199.78:8443"
     type: "vless"
     server: "95.173.199.78"
@@ -702,35 +737,34 @@ proxies:
     network: "tcp"
     servername: "ams1.fromblancwithlove.com"
     client-fingerprint: "chrome"
-  - name: "🇷🇴 🐌 - Tel:  @Hddify - 4"
-    type: "trojan"
-    server: "hakime-kos2.karamoz2.ir"
-    port: 443
-    password: "svmykwb2l2v8jpd6"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "low-lvl.karamoz2.ir"
-  - name: "🇷🇴 🇷🇴 Bucharest, B, Romania"
-    type: "ss"
-    server: "194.68.44.42"
-    port: 64546
-    cipher: "chacha20-ietf-poly1305"
-    password: "U83u9OGpvSatIUW7LsWffr"
-    udp: true
-  - name: "🇷🇴 RELAY🚩 | valid22.validbv9501.ir-2087 | 180.69ms"
+  - name: "🇷🇴 🆔ar14n24b 🔒 VL-TCP- ❔ XX down"
     type: "vless"
-    server: "45.85.118.16"
-    port: 2087
-    uuid: "38a43f18-b4d9-443f-9ff1-4cf9de3d666e"
+    server: "85.90.196.203"
+    port: 443
+    uuid: "d6b59299-2f48-4e9b-9130-b9e9cb5d0a51"
     udp: true
     tls: true
-    network: "ws"
-    servername: "valid22.validbv9501.ir"
-    ws-opts:
-      path: "/eyJqdW5rIjoiS0ZJaGhSaG14Z0NMeCIsInByb3RvY29sIjoidmwiLCJtb2RlIjoicHJveHlpcCIsInBhbmVsSVBzIjpbIjE0Ni4xMDMuMTE0LjEzNCJdfQ"
-      headers:
-        Host: "valid22.validbv9501.ir"
+    network: "tcp"
+    servername: "ro1.hat.onl"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "V3uMWEfDQAPFP6o5ED8Jtk0rJBPs7IlOLf_Wh8w_jXc"
+      short-id: "76132b3b39704c44"
+  - name: "🇷🇴 🆔ar14n24b 🔒 VL-TCP- ❔ XX 158ms"
+    type: "vless"
+    server: "205.237.110.254"
+    port: 443
+    uuid: "e75ad2eb-6c1f-45ce-8023-f5f10875df66"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "zsit.eu-cdn294.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "IG6lxrx_xkGOoBuo3DC8sgQoIFmqVgznIr0qOuNO0w4"
+      short-id: "cd2d53510b4df2a8"
   - name: "🇷🇴 @DeltaKroneckerGithub"
     type: "trojan"
     server: "185.247.224.136"
@@ -925,6 +959,15 @@ proxies:
     network: "tcp"
     servername: "cdn7-09.vk-cdnvideo.com"
     client-fingerprint: "chrome"
+  - name: "🇷🇴 VLESS 145 t.me/iProxyChannel"
+    type: "vless"
+    server: "cdn7-09.vk-cdnvideo.com"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-09.vk-cdnvideo.com"
   - name: "🇷🇴 VLESS 170 t.me/iProxyChannel"
     type: "vless"
     server: "77.74.123.168"
@@ -1047,6 +1090,16 @@ proxies:
     network: "tcp"
     servername: "cdn9-33.vk-cdnvideo.com"
     client-fingerprint: "chrome"
+  - name: "🇷🇴 VLESS 89 t.me/iProxyChannel"
+    type: "vless"
+    server: "cdn7-09.vk-cdnvideo.com"
+    port: 8443
+    uuid: "931729a8-3c20-4841-89a1-f18dc9ce0a6f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn7-09.vk-cdnvideo.com"
+    client-fingerprint: "chrome"
   - name: "🇷🇴 VLESS 115 t.me/iProxyChannel"
     type: "vless"
     server: "cdn9-33.vk-cdnvideo.com"
@@ -1097,19 +1150,19 @@ proxy-groups:
       - "🇷🇴 🔒 TR-TCP-TLS 🇷🇴 RO-38.180.35.145:443"
       - "🇷🇴 🔒 SS-TCP-NA 🇷🇴 RO-146.70.254.238:1080"
       - "🇷🇴 🔒 SS-TCP-NA 🇷🇴 RO-154.46.31.106:443"
-      - "🇷🇴 REALITY|RO🇷🇴 | 87.58.205.88-443 | 189.72ms"
-      - "🇷🇴 REALITY|RO🇷🇴 | 89.125.166.87-443 | 187.64ms"
-      - "🇷🇴 REALITY|RO🇷🇴 | 88.80.135.80-443 | 167.22ms"
-      - "🇷🇴 🔒 VL-TCP-RLT 🇷🇴 RO-205.237.110.254:443"
+      - "🇷🇴 194.68.44.42"
+      - "🇷🇴 REALITY|RO🇷🇴 | 205.237.110.254-443 | 99.94ms"
       - "🇷🇴 🔒 VL-TCP-RLT 🇷🇴 RO-46.28.67.55:443"
       - "🇷🇴 🔒 VL-GRPC-RLT 🇷🇴 RO-82.152.132.14:443"
+      - "🇷🇴 🔒 VL-XHTTP-RLT 🇷🇴 RO-87.58.205.88:443"
       - "🇷🇴 🔒 VL-XHTTP-RLT 🇷🇴 RO-37.46.196.85:8443"
+      - "🇷🇴 🐌 - Tel:  @Hddify - 4"
+      - "🇷🇴 RELAY🚩 | valid22.validbv9501.ir-2087 | 187.22ms"
       - "🇷🇴 🔒 VL-TCP-TLS 🇷🇴 RO-95.173.199.78:8443"
       - "🇷🇴 🔒 VL-TCP-TLS 🇷🇴 RO-95.173.199.85:8443"
       - "🇷🇴 🔒 VL-TCP-TLS 🇷🇴 RO-95.173.199.118:8443"
-      - "🇷🇴 🐌 - Tel:  @Hddify - 4"
-      - "🇷🇴 🇷🇴 Bucharest, B, Romania"
-      - "🇷🇴 RELAY🚩 | valid22.validbv9501.ir-2087 | 180.69ms"
+      - "🇷🇴 🆔ar14n24b 🔒 VL-TCP- ❔ XX down"
+      - "🇷🇴 🆔ar14n24b 🔒 VL-TCP- ❔ XX 158ms"
       - "🇷🇴 @DeltaKroneckerGithub"
       - "🇷🇴 Romania"
       - "🇷🇴 Romania-1"
@@ -1131,6 +1184,7 @@ proxy-groups:
       - "🇷🇴 VLESS 225 t.me/iProxyChannel"
       - "🇷🇴 VLESS 119 t.me/iProxyChannel"
       - "🇷🇴 VLESS 93 t.me/iProxyChannel"
+      - "🇷🇴 VLESS 145 t.me/iProxyChannel"
       - "🇷🇴 VLESS 170 t.me/iProxyChannel"
       - "🇷🇴 VLESS 116 t.me/iProxyChannel"
       - "🇷🇴 VLESS 129 t.me/iProxyChannel"
@@ -1144,6 +1198,7 @@ proxy-groups:
       - "🇷🇴 VLESS 156 t.me/iProxyChannel"
       - "🇷🇴 VLESS 228 t.me/iProxyChannel"
       - "🇷🇴 VLESS 122 t.me/iProxyChannel"
+      - "🇷🇴 VLESS 89 t.me/iProxyChannel"
       - "🇷🇴 VLESS 115 t.me/iProxyChannel"
       - "🇷🇴 VLESS 100 t.me/iProxyChannel"
       - "🇷🇴 VLESS 107 t.me/iProxyChannel"
@@ -1163,19 +1218,19 @@ proxy-groups:
       - "🇷🇴 🔒 TR-TCP-TLS 🇷🇴 RO-38.180.35.145:443"
       - "🇷🇴 🔒 SS-TCP-NA 🇷🇴 RO-146.70.254.238:1080"
       - "🇷🇴 🔒 SS-TCP-NA 🇷🇴 RO-154.46.31.106:443"
-      - "🇷🇴 REALITY|RO🇷🇴 | 87.58.205.88-443 | 189.72ms"
-      - "🇷🇴 REALITY|RO🇷🇴 | 89.125.166.87-443 | 187.64ms"
-      - "🇷🇴 REALITY|RO🇷🇴 | 88.80.135.80-443 | 167.22ms"
-      - "🇷🇴 🔒 VL-TCP-RLT 🇷🇴 RO-205.237.110.254:443"
+      - "🇷🇴 194.68.44.42"
+      - "🇷🇴 REALITY|RO🇷🇴 | 205.237.110.254-443 | 99.94ms"
       - "🇷🇴 🔒 VL-TCP-RLT 🇷🇴 RO-46.28.67.55:443"
       - "🇷🇴 🔒 VL-GRPC-RLT 🇷🇴 RO-82.152.132.14:443"
+      - "🇷🇴 🔒 VL-XHTTP-RLT 🇷🇴 RO-87.58.205.88:443"
       - "🇷🇴 🔒 VL-XHTTP-RLT 🇷🇴 RO-37.46.196.85:8443"
+      - "🇷🇴 🐌 - Tel:  @Hddify - 4"
+      - "🇷🇴 RELAY🚩 | valid22.validbv9501.ir-2087 | 187.22ms"
       - "🇷🇴 🔒 VL-TCP-TLS 🇷🇴 RO-95.173.199.78:8443"
       - "🇷🇴 🔒 VL-TCP-TLS 🇷🇴 RO-95.173.199.85:8443"
       - "🇷🇴 🔒 VL-TCP-TLS 🇷🇴 RO-95.173.199.118:8443"
-      - "🇷🇴 🐌 - Tel:  @Hddify - 4"
-      - "🇷🇴 🇷🇴 Bucharest, B, Romania"
-      - "🇷🇴 RELAY🚩 | valid22.validbv9501.ir-2087 | 180.69ms"
+      - "🇷🇴 🆔ar14n24b 🔒 VL-TCP- ❔ XX down"
+      - "🇷🇴 🆔ar14n24b 🔒 VL-TCP- ❔ XX 158ms"
       - "🇷🇴 @DeltaKroneckerGithub"
       - "🇷🇴 Romania"
       - "🇷🇴 Romania-1"
@@ -1197,6 +1252,7 @@ proxy-groups:
       - "🇷🇴 VLESS 225 t.me/iProxyChannel"
       - "🇷🇴 VLESS 119 t.me/iProxyChannel"
       - "🇷🇴 VLESS 93 t.me/iProxyChannel"
+      - "🇷🇴 VLESS 145 t.me/iProxyChannel"
       - "🇷🇴 VLESS 170 t.me/iProxyChannel"
       - "🇷🇴 VLESS 116 t.me/iProxyChannel"
       - "🇷🇴 VLESS 129 t.me/iProxyChannel"
@@ -1210,6 +1266,7 @@ proxy-groups:
       - "🇷🇴 VLESS 156 t.me/iProxyChannel"
       - "🇷🇴 VLESS 228 t.me/iProxyChannel"
       - "🇷🇴 VLESS 122 t.me/iProxyChannel"
+      - "🇷🇴 VLESS 89 t.me/iProxyChannel"
       - "🇷🇴 VLESS 115 t.me/iProxyChannel"
       - "🇷🇴 VLESS 100 t.me/iProxyChannel"
       - "🇷🇴 VLESS 107 t.me/iProxyChannel"
@@ -1230,19 +1287,19 @@ proxy-groups:
       - "🇷🇴 🔒 TR-TCP-TLS 🇷🇴 RO-38.180.35.145:443"
       - "🇷🇴 🔒 SS-TCP-NA 🇷🇴 RO-146.70.254.238:1080"
       - "🇷🇴 🔒 SS-TCP-NA 🇷🇴 RO-154.46.31.106:443"
-      - "🇷🇴 REALITY|RO🇷🇴 | 87.58.205.88-443 | 189.72ms"
-      - "🇷🇴 REALITY|RO🇷🇴 | 89.125.166.87-443 | 187.64ms"
-      - "🇷🇴 REALITY|RO🇷🇴 | 88.80.135.80-443 | 167.22ms"
-      - "🇷🇴 🔒 VL-TCP-RLT 🇷🇴 RO-205.237.110.254:443"
+      - "🇷🇴 194.68.44.42"
+      - "🇷🇴 REALITY|RO🇷🇴 | 205.237.110.254-443 | 99.94ms"
       - "🇷🇴 🔒 VL-TCP-RLT 🇷🇴 RO-46.28.67.55:443"
       - "🇷🇴 🔒 VL-GRPC-RLT 🇷🇴 RO-82.152.132.14:443"
+      - "🇷🇴 🔒 VL-XHTTP-RLT 🇷🇴 RO-87.58.205.88:443"
       - "🇷🇴 🔒 VL-XHTTP-RLT 🇷🇴 RO-37.46.196.85:8443"
+      - "🇷🇴 🐌 - Tel:  @Hddify - 4"
+      - "🇷🇴 RELAY🚩 | valid22.validbv9501.ir-2087 | 187.22ms"
       - "🇷🇴 🔒 VL-TCP-TLS 🇷🇴 RO-95.173.199.78:8443"
       - "🇷🇴 🔒 VL-TCP-TLS 🇷🇴 RO-95.173.199.85:8443"
       - "🇷🇴 🔒 VL-TCP-TLS 🇷🇴 RO-95.173.199.118:8443"
-      - "🇷🇴 🐌 - Tel:  @Hddify - 4"
-      - "🇷🇴 🇷🇴 Bucharest, B, Romania"
-      - "🇷🇴 RELAY🚩 | valid22.validbv9501.ir-2087 | 180.69ms"
+      - "🇷🇴 🆔ar14n24b 🔒 VL-TCP- ❔ XX down"
+      - "🇷🇴 🆔ar14n24b 🔒 VL-TCP- ❔ XX 158ms"
       - "🇷🇴 @DeltaKroneckerGithub"
       - "🇷🇴 Romania"
       - "🇷🇴 Romania-1"
@@ -1264,6 +1321,7 @@ proxy-groups:
       - "🇷🇴 VLESS 225 t.me/iProxyChannel"
       - "🇷🇴 VLESS 119 t.me/iProxyChannel"
       - "🇷🇴 VLESS 93 t.me/iProxyChannel"
+      - "🇷🇴 VLESS 145 t.me/iProxyChannel"
       - "🇷🇴 VLESS 170 t.me/iProxyChannel"
       - "🇷🇴 VLESS 116 t.me/iProxyChannel"
       - "🇷🇴 VLESS 129 t.me/iProxyChannel"
@@ -1277,6 +1335,7 @@ proxy-groups:
       - "🇷🇴 VLESS 156 t.me/iProxyChannel"
       - "🇷🇴 VLESS 228 t.me/iProxyChannel"
       - "🇷🇴 VLESS 122 t.me/iProxyChannel"
+      - "🇷🇴 VLESS 89 t.me/iProxyChannel"
       - "🇷🇴 VLESS 115 t.me/iProxyChannel"
       - "🇷🇴 VLESS 100 t.me/iProxyChannel"
       - "🇷🇴 VLESS 107 t.me/iProxyChannel"

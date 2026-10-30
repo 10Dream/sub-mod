@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -1240,7 +1274,7 @@ proxies:
     cipher: "2022-blake3-aes-128-gcm"
     password: "IsDcGLee0Vlvf3gbDpO+Fw=="
     udp: true
-  - name: "🇮🇷 RELAY🚩 | de.mitivpn.in.net-443 | 48.27ms"
+  - name: "🇮🇷 RELAY🚩 | de.mitivpn.in.net-443 | 32.72ms"
     type: "trojan"
     server: "b2n.ir"
     port: 443
@@ -1349,33 +1383,34 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇮🇷 REALITY|IR🇮🇷 | p1tun0.greewebservices.ir-38820 | 371.53ms"
+  - name: "🇮🇷 REALITY|IR🇮🇷 | srv1.segara.ir-8443 | 331.03ms"
     type: "vless"
-    server: "p1tun0.greewebservices.ir"
-    port: 38820
-    uuid: "f234330e-f9df-46e3-8f60-b2af5173c147"
+    server: "srv1.segara.ir"
+    port: 8443
+    uuid: "fcadb901-a3e1-425c-bbb5-229c4d45ef7a"
     udp: true
     tls: true
     network: "tcp"
-    servername: "play.google.com"
-    client-fingerprint: "ios"
-    reality-opts:
-      public-key: "xQnXh5EfPDhcEBB7rRiLca33GYrMEeUa35domLL_yA8"
-      short-id: "66ded2"
-  - name: "🇮🇷 REALITY|IR🇮🇷 | Racknarock.sorixset.ir-4123 | 444.69ms"
-    type: "vless"
-    server: "racknarock.sorixset.ir"
-    port: 4123
-    uuid: "e9d5cda8-eca9-4100-adb0-d857a7221e4a"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.technolife.com"
+    servername: "play-apps-features.googleusercontent.com"
     client-fingerprint: "chrome"
     reality-opts:
-      public-key: "o99jHUwk4g942D1EKMNODQXCnI90o_J76rZH7PhPvzU"
-      short-id: "50ddc4b90bffd5b7"
-  - name: "🇮🇷 REALITY|IR🇮🇷 | g1.haxat.bestvbest.ir-20610 | 450.53ms"
+      public-key: "bpqWvZAEHPgZ-kGrJDu6INWZ6InPJxXdJei3VxcAJR8"
+      short-id: "ae4931ddfcb70677"
+  - name: "🇮🇷 REALITY|IR🇮🇷 | ir4.mobileemdad.top-443 | 213.43ms"
+    type: "vless"
+    server: "ir4.mobileemdad.top"
+    port: 443
+    uuid: "da24590d-b15a-4d8e-8648-51c40c9963e1"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "nobitex.ir"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "PjR-SM4fOm2fY4mTqWoqZDRyxontvpailM0gBqUxlUQ"
+      short-id: "cbe2503ffd040d"
+  - name: "🇮🇷 REALITY|IR🇮🇷 | g1.haxat.bestvbest.ir-20610 | 341.17ms"
     type: "vless"
     server: "g1.haxat.bestvbest.ir"
     port: 20610
@@ -1388,20 +1423,7 @@ proxies:
     reality-opts:
       public-key: "lcXIrYi2o8yXrYHR321qQ--5lqVT8a6TKbaGpYTq4CI"
       short-id: "1d1a8f9fefeff5e6"
-  - name: "🇮🇷 REALITY|IR🇮🇷 | tun12.momasvps.ir-5018 | 419.62ms"
-    type: "vless"
-    server: "tun12.momasvps.ir"
-    port: 5018
-    uuid: "ce334334-3ab8-45a2-8af7-f151f413e402"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "www.aparat.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "KVrKzcMWnFc8-s2Cre3PUS3ojMvugd1BxS9on54vBW0"
-      short-id: "9d57eae0ee3fd6cb"
-  - name: "🇮🇷 REALITY|IR🇮🇷 | jsv-ir.jmovies.ir-443 | 571.87ms"
+  - name: "🇮🇷 REALITY|IR🇮🇷 | jsv-ir.jmovies.ir-443 | 680.14ms"
     type: "vless"
     server: "jsv-ir.jmovies.ir"
     port: 443
@@ -1414,7 +1436,7 @@ proxies:
     reality-opts:
       public-key: "fwS6bEyF28VsSapBZZ2vz6LJmVismH0NYupk6STFRWc"
       short-id: "f373df45a687eaff"
-  - name: "🇮🇷 REALITY|IR🇮🇷 | 37.202.228.56-443 | 226.39ms"
+  - name: "🇮🇷 REALITY|IR🇮🇷 | 37.202.228.56-443 | 157.5ms"
     type: "vless"
     server: "37.202.228.56"
     port: 443
@@ -1427,34 +1449,7 @@ proxies:
     reality-opts:
       public-key: "J5kmrlkFtPh30sNqkY4hH3LoM0Vpj1h10JYaCo2CJzI"
       short-id: "9ddd9f551b3db80c"
-  - name: "🇮🇷 REALITY|IR🇮🇷 | mojif.fusetea.ir-1080 | 557.74ms"
-    type: "vless"
-    server: "mojif.fusetea.ir"
-    port: 1080
-    uuid: "9bf4e75a-cb13-45c5-ba43-c4c0ccf6fffc"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "www.aparat.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "u3EnhSlPtnsjoA4OQwRa8Pk5mQCnBXHYWSP1bfdjYm8"
-      short-id: "a17c76d6a2f35aaf"
-  - name: "🇮🇷 REALITY|IR🇮🇷 | ir1.mobileemdad.top-443 | 247.93ms"
-    type: "vless"
-    server: "ir1.mobileemdad.top"
-    port: 443
-    uuid: "99a7651f-3c4c-42fd-9492-ee6c9b2fab09"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "nobitex.ir"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "PjR-SM4fOm2fY4mTqWoqZDRyxontvpailM0gBqUxlUQ"
-      short-id: "070a23aed243"
-  - name: "🇮🇷 REALITY|IR🇮🇷 | p2tun0.greewebservices.ir-28820 | 421.47ms"
+  - name: "🇮🇷 REALITY|IR🇮🇷 | p2tun0.greewebservices.ir-28820 | 325.75ms"
     type: "vless"
     server: "p2tun0.greewebservices.ir"
     port: 28820
@@ -1467,20 +1462,46 @@ proxies:
     reality-opts:
       public-key: "xQnXh5EfPDhcEBB7rRiLca33GYrMEeUa35domLL_yA8"
       short-id: "e3085d4fc679ba12"
-  - name: "🇮🇷 REALITY|IR🇮🇷 | ger2.soft98ver2.com-305 | 345.34ms"
+  - name: "🇮🇷 REALITY|IR🇮🇷 | srv3.segara.ir-8443 | 342.15ms"
     type: "vless"
-    server: "ger2.soft98ver2.com"
-    port: 305
-    uuid: "6585d148-2108-4214-8bb8-709926da2cc4"
+    server: "srv3.segara.ir"
+    port: 8443
+    uuid: "6fe3a2fe-d31d-4351-bb4f-0df204078be6"
     udp: true
     tls: true
     network: "tcp"
-    servername: "www.digikala.com"
+    servername: "play-apps-features.googleusercontent.com"
     client-fingerprint: "chrome"
     reality-opts:
-      public-key: "Loj5B5xQUvPRgSjtLSeC28MxtlJnJuCrzXZKbEmL528"
-      short-id: "d62919f9d17775e4"
-  - name: "🇮🇷 REALITY|IR🇮🇷 | p1tun01.greewebservices.ir-38830 | 376.85ms"
+      public-key: "bpqWvZAEHPgZ-kGrJDu6INWZ6InPJxXdJei3VxcAJR8"
+      short-id: "ae4931ddfcb70677"
+  - name: "🇮🇷 REALITY|IR🇮🇷 | dl1.uploadeliasiran03.ir-443 | 319.74ms"
+    type: "vless"
+    server: "dl1.uploadeliasiran03.ir"
+    port: 443
+    uuid: "5e47536f-7fa9-4cac-89d3-1426d06c1b56"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.aparat.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "uh67g4brJ3f4oGMcRpp2UyBD3R7HydwLMUFyhdBENxk"
+      short-id: "164b2cb4ee0e9352"
+  - name: "🇮🇷 REALITY|IR🇮🇷 | p2tun0.greewebservices.ir-28820 | 168.24ms"
+    type: "vless"
+    server: "p2tun0.greewebservices.ir"
+    port: 28820
+    uuid: "59ba16fb-d83e-4a1a-9c7c-6c2764a98284"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "play.google.com"
+    client-fingerprint: "ios"
+    reality-opts:
+      public-key: "xQnXh5EfPDhcEBB7rRiLca33GYrMEeUa35domLL_yA8"
+      short-id: "e3085d4fc679ba12"
+  - name: "🇮🇷 REALITY|IR🇮🇷 | p1tun01.greewebservices.ir-38830 | 256.07ms"
     type: "vless"
     server: "p1tun01.greewebservices.ir"
     port: 38830
@@ -1493,7 +1514,61 @@ proxies:
     reality-opts:
       public-key: "xQnXh5EfPDhcEBB7rRiLca33GYrMEeUa35domLL_yA8"
       short-id: "e3085d4f"
-  - name: "🇮🇷 REALITY|IR🇮🇷 | workshop.pingxoxo.info-36171 | 249.32ms"
+  - name: "🇮🇷 REALITY|IR🇮🇷 | 79.175.189.121-40021 | 162.85ms"
+    type: "vless"
+    server: "79.175.189.121"
+    port: 40021
+    uuid: "4e8e5f05-5c8a-4f53-ba16-1ed044ed0df8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "digikala.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "ioucvr6V3ToaaU3dmWhIDT6UiS_jnL8t0AXaQQNfDwQ"
+      short-id: "5276"
+  - name: "🇮🇷 REALITY|IR🇮🇷 | fst.mobistora.ir-443 | 264.26ms"
+    type: "vless"
+    server: "fst.mobistora.ir"
+    port: 443
+    uuid: "4cebda86-2af3-4757-a83f-b31136856884"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "link.aparat.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "HLpLMCvrPiRj4klewfrHBu0Yqz8EX6Hzk2v-vy44wQQ"
+      short-id: "1e0815e664af2cd4"
+  - name: "🇮🇷 REALITY|IR🇮🇷 | 176.120.17.194-443 | 85.3ms"
+    type: "vless"
+    server: "176.120.17.194"
+    port: 443
+    uuid: "4cebda86-2af3-4757-a83f-b31136856884"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "link.aparat.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "Ujxrbw9tFC3UTedIMMOPeE2U5EYQs0PS9R41kgx7rGs"
+      short-id: "cd2127913b181d62"
+  - name: "🇮🇷 REALITY|IR🇮🇷 | irfuir.azad0namah.ir-2093 | 346.8ms"
+    type: "vless"
+    server: "irfuir.azad0namah.ir"
+    port: 2093
+    uuid: "43eb37ef-1f51-4339-92dd-6b1917b7826b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "play.google.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "bZfukZbo9c0YlMe41NU1nOonO7ej9m0KHeZyPU2IVzI"
+      short-id: "3c9fa9da5d45945c"
+  - name: "🇮🇷 REALITY|IR🇮🇷 | workshop.pingxoxo.info-36171 | 227.95ms"
     type: "vless"
     server: "workshop.pingxoxo.info"
     port: 36171
@@ -1507,7 +1582,7 @@ proxies:
     reality-opts:
       public-key: "IYhfI8lsuJrFV8zzp1XXbh9sPkvBlBNOTtJwBubhxxw"
       short-id: "e4eb3ada03de9e92"
-  - name: "🇮🇷 REALITY|IR🇮🇷 | g4.haxat.bestvbest.ir-56126 | 433.28ms"
+  - name: "🇮🇷 REALITY|IR🇮🇷 | g4.haxat.bestvbest.ir-56126 | 335.52ms"
     type: "vless"
     server: "g4.haxat.bestvbest.ir"
     port: 56126
@@ -1520,7 +1595,59 @@ proxies:
     reality-opts:
       public-key: "oNv1vk-DHPrbFy__k2B7Am2lTtKfW4dXM7shzi7VFyk"
       short-id: "228b68f87a662053"
-  - name: "🇮🇷 REALITY|IR🇮🇷 | p2tun0.greewebservices.ir-28820 | 542.51ms"
+  - name: "🇮🇷 REALITY|IR🇮🇷 | wsfdje.hospitaldt.ir-15222 | 282.4ms"
+    type: "vless"
+    server: "wsfdje.hospitaldt.ir"
+    port: 15222
+    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.aparat.com"
+    client-fingerprint: "ios"
+    reality-opts:
+      public-key: "W_0O5fiA1zi8nXHksSKSTLzwLPyjECWNES5-gDAbQRY"
+      short-id: "197fe3f584bc15f3"
+  - name: "🇮🇷 REALITY|IR🇮🇷 | odinnda.hospitaldt.ir-5273 | 356.61ms"
+    type: "vless"
+    server: "odinnda.hospitaldt.ir"
+    port: 5273
+    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.aparat.com"
+    client-fingerprint: "ios"
+    reality-opts:
+      public-key: "W_0O5fiA1zi8nXHksSKSTLzwLPyjECWNES5-gDAbQRY"
+      short-id: "197fe3f584bc15f3"
+  - name: "🇮🇷 REALITY|IR🇮🇷 | dashboard.wingerdt.com-11147 | 189.03ms"
+    type: "vless"
+    server: "dashboard.wingerdt.com"
+    port: 11147
+    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.aparat.com"
+    client-fingerprint: "ios"
+    reality-opts:
+      public-key: "W_0O5fiA1zi8nXHksSKSTLzwLPyjECWNES5-gDAbQRY"
+      short-id: "197fe3f584bc15f3"
+  - name: "🇮🇷 REALITY|IR🇮🇷 | app.wingerdt.com-18191 | 216.91ms"
+    type: "vless"
+    server: "app.wingerdt.com"
+    port: 18191
+    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.aparat.com"
+    client-fingerprint: "ios"
+    reality-opts:
+      public-key: "W_0O5fiA1zi8nXHksSKSTLzwLPyjECWNES5-gDAbQRY"
+      short-id: "197fe3f584bc15f3"
+  - name: "🇮🇷 REALITY|IR🇮🇷 | p2tun0.greewebservices.ir-28820 | 327.6ms"
     type: "vless"
     server: "p2tun0.greewebservices.ir"
     port: 28820
@@ -1533,19 +1660,6 @@ proxies:
     reality-opts:
       public-key: "xQnXh5EfPDhcEBB7rRiLca33GYrMEeUa35domLL_yA8"
       short-id: "e3085d4fc679ba12"
-  - name: "🇮🇷 REALITY|IR🇮🇷 | srv1.segara.ir-8443 | 444.2ms"
-    type: "vless"
-    server: "srv1.segara.ir"
-    port: 8443
-    uuid: "21c51a85-c125-4440-b690-113c9d7b2b87"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "iran.ir"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "bpqWvZAEHPgZ-kGrJDu6INWZ6InPJxXdJei3VxcAJR8"
-      short-id: "ae4931ddfcb70677"
   - name: "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-194.32.214.94:2096"
     type: "vless"
     server: "194.32.214.94"
@@ -1796,20 +1910,6 @@ proxies:
     reality-opts:
       public-key: "lcXIrYi2o8yXrYHR321qQ--5lqVT8a6TKbaGpYTq4CI"
       short-id: "1d1a8f9fefeff5e6"
-  - name: "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-176.120.17.194:443"
-    type: "vless"
-    server: "176.120.17.194"
-    port: 443
-    uuid: "4cebda86-2af3-4757-a83f-b31136856884"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "link.aparat.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "Ujxrbw9tFC3UTedIMMOPeE2U5EYQs0PS9R41kgx7rGs"
-      short-id: "cd2127913b181d62"
   - name: "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-85.9.105.114:56126"
     type: "vless"
     server: "85.9.105.114"
@@ -2377,7 +2477,7 @@ proxies:
       path: "/"
       headers:
         Host: "big1.sedighi0915.ir"
-  - name: "🇮🇷 IR🇮🇷 | s1.connect.labex.pro-1007 | 243.72ms"
+  - name: "🇮🇷 IR🇮🇷 | s1.connect.labex.pro-1007 | 178.69ms"
     type: "vmess"
     server: "s1.connect.labex.pro"
     port: 1007
@@ -2385,7 +2485,7 @@ proxies:
     alterId: 0
     cipher: "aes-128-gcm"
     udp: true
-  - name: "🇮🇷 IR🇮🇷 | s1.connect.labex.pro-1007 | 240.46ms"
+  - name: "🇮🇷 IR🇮🇷 | s1.connect.labex.pro-1007 | 288.01ms"
     type: "vmess"
     server: "s1.connect.labex.pro"
     port: 1007
@@ -2393,7 +2493,7 @@ proxies:
     alterId: 0
     cipher: "aes-128-gcm"
     udp: true
-  - name: "🇮🇷 IR🇮🇷 | s1.connect.bloroxy.net-1074 | 264.27ms"
+  - name: "🇮🇷 IR🇮🇷 | s1.connect.bloroxy.net-1074 | 209.18ms"
     type: "vmess"
     server: "s1.connect.bloroxy.net"
     port: 1074
@@ -2401,15 +2501,15 @@ proxies:
     alterId: 0
     cipher: "aes-128-gcm"
     udp: true
-  - name: "🇮🇷 IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 174.38ms"
+  - name: "🇮🇷 IR🇮🇷 | ir.yzcq.ir-2050 | 336.34ms"
     type: "vmess"
-    server: "funnymemes.goalir.co.uk"
-    port: 8880
-    uuid: "57f6abd4-7e42-494d-bf7e-c966bf3f82c4"
+    server: "ir.yzcq.ir"
+    port: 2050
+    uuid: "986bd21b-225d-479a-964e-93a58f15017a"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇮🇷 IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 190.06ms"
+  - name: "🇮🇷 IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 105.72ms"
     type: "vmess"
     server: "funnymemes.goalir.co.uk"
     port: 8880
@@ -2417,15 +2517,15 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇮🇷 IR🇮🇷 | dashboard.ojestore.top-5381 | 395.67ms"
+  - name: "🇮🇷 IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 101.51ms"
     type: "vmess"
-    server: "dashboard.ojestore.top"
-    port: 5381
-    uuid: "ef8502b7-9b45-4537-936d-d3af01dee2e3"
+    server: "funnymemes.goalir.co.uk"
+    port: 8880
+    uuid: "bdfd43ab-e8d5-4e2d-8efe-515379276715"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇮🇷 IR🇮🇷 | dashboard.ojestore.top-5381 | 392.64ms"
+  - name: "🇮🇷 IR🇮🇷 | dashboard.ojestore.top-5381 | 277.45ms"
     type: "vmess"
     server: "dashboard.ojestore.top"
     port: 5381
@@ -2433,15 +2533,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇮🇷 IR🇮🇷 | dashboard.ojeshop.top-5380 | 391.29ms"
-    type: "vmess"
-    server: "dashboard.ojeshop.top"
-    port: 5380
-    uuid: "ef8502b7-9b45-4537-936d-d3af01dee2e3"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇮🇷 IR🇮🇷 | dashboard.ojeshop.top-5380 | 319.32ms"
+  - name: "🇮🇷 IR🇮🇷 | dashboard.ojeshop.top-5380 | 258.25ms"
     type: "vmess"
     server: "dashboard.ojeshop.top"
     port: 5380
@@ -2449,15 +2541,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇮🇷 IR🇮🇷 | dashboard.ojedata.top-5382 | 543.19ms"
-    type: "vmess"
-    server: "dashboard.ojedata.top"
-    port: 5382
-    uuid: "ef8502b7-9b45-4537-936d-d3af01dee2e3"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇮🇷 IR🇮🇷 | dashboard.ojedata.top-5382 | 495.23ms"
+  - name: "🇮🇷 IR🇮🇷 | dashboard.ojedata.top-5382 | 416.7ms"
     type: "vmess"
     server: "dashboard.ojedata.top"
     port: 5382
@@ -2465,23 +2549,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇮🇷 IR🇮🇷 | asiatun.roshdiran1.ir-4345 | 886.13ms"
-    type: "vmess"
-    server: "asiatun.roshdiran1.ir"
-    port: 4345
-    uuid: "558fecaf-bea9-4bca-9e18-2f28240dd2df"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇮🇷 IR🇮🇷 | asiatun.roshdiran1.ir-4242 | 529.82ms"
-    type: "vmess"
-    server: "asiatun.roshdiran1.ir"
-    port: 4242
-    uuid: "558fecaf-bea9-4bca-9e18-2f28240dd2df"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇮🇷 IR🇮🇷 | NlS3.zelnora.ir-55306 | 372.07ms"
+  - name: "🇮🇷 IR🇮🇷 | NlS3.zelnora.ir-55306 | 253.97ms"
     type: "vmess"
     server: "NlS3.zelnora.ir"
     port: 55306
@@ -2489,15 +2557,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇮🇷 IR🇮🇷 | 212.80.8.184-443 | 230.76ms"
-    type: "vmess"
-    server: "212.80.8.184"
-    port: 443
-    uuid: "8ed21777-4390-483e-b51e-55eb272636ec"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇮🇷 RELAY🚩 | pages.dev-443 | 37.77ms"
+  - name: "🇮🇷 RELAY🚩 | pages.dev-443 | 8.22ms"
     type: "vmess"
     server: "2.189.59.2"
     port: 443
@@ -2505,7 +2565,47 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇮🇷 IR🇮🇷 | webassets.cafebazaar.ir-443 | 1524.62ms"
+  - name: "🇮🇷 IR🇮🇷 | 185.126.6.177-5645 | 165.44ms"
+    type: "vmess"
+    server: "185.126.6.177"
+    port: 5645
+    uuid: "0d3c1a3a-2aed-4480-84ef-4ed902148483"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇮🇷 IR🇮🇷 | 62.220.121.35-443 | 160.81ms"
+    type: "vmess"
+    server: "62.220.121.35"
+    port: 443
+    uuid: "be1ae321-b91b-426e-8e4e-a2fb008e88b4"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇮🇷 IR🇮🇷 | soft98.ir-443 | 494.92ms"
+    type: "vless"
+    server: "77.237.90.153"
+    port: 443
+    uuid: "fbacdd35-1012-499a-a1a0-daf7ec426c6b"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "soft98.ir"
+  - name: "🇮🇷 IR🇮🇷 | tun1.plasmoon.ir-2026 | 526.81ms"
+    type: "vless"
+    server: "ser1.plasmoon.ir"
+    port: 2026
+    uuid: "fa5be8ca-4201-4490-ac69-0df80ea27d91"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "tun1.plasmoon.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+  - name: "🇮🇷 IR🇮🇷 | webassets.cafebazaar.ir-443 | 907.15ms"
     type: "vless"
     server: "45.82.136.188"
     port: 443
@@ -2517,7 +2617,7 @@ proxies:
     client-fingerprint: "chrome"
     ws-opts:
       path: "/"
-  - name: "🇮🇷 TELEGRAM---@MTMVPN---@MTMVPN---@MTMVPN---@MTMVPN&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#RELAY🚩 | lucasjow.us.ci-443 | 13.72ms"
+  - name: "🇮🇷 TELEGRAM---MARAMBASHI---MARAMBASHI---MARAMBASHI---MARAMBASHI&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#RELAY🚩 | lucasjow.us.ci-443 | 2.51ms"
     type: "vless"
     server: "b2n.ir"
     port: 443
@@ -2525,15 +2625,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇮🇷 IR🇮🇷 | test.nvclud.ir-1022 | 388.7ms"
-    type: "vless"
-    server: "test.nvclud.ir"
-    port: 1022
-    uuid: "e399faac-f600-4df6-9426-6aadf5170c57"
-    udp: true
-    tls: false
-    network: "tcp"
-  - name: "🇮🇷 Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=serv2.servvadd.org&fp=chrome&type=ws&allowInsecure=0&sni=serv2.servvadd.org#IR🇮🇷 | serv2.servvadd.org-443 | 549.4ms"
+  - name: "🇮🇷 Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=serv2.servvadd.org&fp=chrome&type=ws&allowInsecure=0&sni=serv2.servvadd.org#IR🇮🇷 | serv2.servvadd.org-443 | 438.32ms"
     type: "vless"
     server: "www.varzesh3.com"
     port: 443
@@ -2541,7 +2633,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇮🇷 RELAY🚩 | SAnDWORm.pagEs.DEV-443 | 50.19ms"
+  - name: "🇮🇷 RELAY🚩 | SAnDWORm.pagEs.DEV-443 | 24.01ms"
     type: "vless"
     server: "zula.ir"
     port: 443
@@ -2558,7 +2650,7 @@ proxies:
       path: "/nBvJWhBF9Zbeiq3B"
       headers:
         Host: "SaNDworM.pAges.dEv"
-  - name: "🇮🇷 IR🇮🇷 | g1.sabet1.blazevx.ir-31913 | 474.93ms"
+  - name: "🇮🇷 IR🇮🇷 | g1.sabet1.blazevx.ir-31913 | 326.51ms"
     type: "vless"
     server: "g1.sabet1.blazevx.ir"
     port: 31913
@@ -2566,7 +2658,56 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇮🇷 IR🇮🇷 | s2.zynetraq.ir-2087 | 454.61ms"
+  - name: "🇮🇷 RELAY🚩 | www.speedtest.net-2095 | 12.76ms"
+    type: "vless"
+    server: "46.245.64.203"
+    port: 2095
+    uuid: "c4ec4179-1d0b-41f5-ae98-fd46b1aa98e6"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "www.speedtest.net"
+  - name: "🇮🇷 RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 21.98ms"
+    type: "vless"
+    server: "79.175.189.145"
+    port: 443
+    uuid: "Telegram-Parsashonam-12"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "p4r34m.hendevaneh.sbs"
+  - name: "🇮🇷 IR🇮🇷 | ask.w-ert.org-40289 | 174.15ms"
+    type: "vless"
+    server: "tun2.w-ert.org"
+    port: 40289
+    uuid: "9d356fd5-cf3f-4e73-b424-414e78c911bf"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ask.w-ert.org"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+  - name: "🇮🇷 RELAY🚩 | sslcert.okamii1.ir-2083 | 184.82ms"
+    type: "vless"
+    server: "fast3.mo-chephosting.ir"
+    port: 2083
+    uuid: "9ad8b73b-4aa4-43be-87b5-166ced009cea"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "sslcert.okamii1.ir"
+  - name: "🇮🇷 IR🇮🇷 | 010uk.nimhub.ir-1024 | 565.66ms"
+    type: "vless"
+    server: "010uk.nimhub.ir"
+    port: 1024
+    uuid: "82fefb57-ad17-4e26-8725-2fb55d3b8569"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇮🇷 IR🇮🇷 | s2.zynetraq.ir-2087 | 329.92ms"
     type: "vless"
     server: "s2.zynetraq.ir"
     port: 2087
@@ -2575,10 +2716,40 @@ proxies:
     tls: true
     network: "tcp"
     servername: "s2.zynetraq.ir"
-  - name: "🇮🇷 IR🇮🇷 | kaveh4.gofuc7f.ir-8443 | 746.49ms"
+  - name: "🇮🇷 IR🇮🇷 | dl3.gooniforoshi.fun-443 | 218.34ms"
+    type: "vless"
+    server: "dl3.gooniforoshi.fun"
+    port: 443
+    uuid: "73e08fcb-a0c7-45d0-b55d-f78c903c64a6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "dl3.gooniforoshi.fun"
+    ws-opts:
+      path: "/download.php"
+      headers:
+        Host: "dl3.gooniforoshi.fun"
+  - name: "🇮🇷 RELAY🚩 | test-teSt-tEsT-teSt.pagES.DEv-443 | 28.79ms"
+    type: "vless"
+    server: "allsms.rozfa.com"
+    port: 443
+    uuid: "6a89dc04-7781-46fe-b35c-e14a6b6e60b8"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "test-teSt-tEsT-teSt.pagES.DEv"
+    client-fingerprint: "randomized"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/Telegram-@V2ray_Alpha/?ed=2048"
+      headers:
+        Host: "TESt-TEsT-TEST-TEsT.pAGes.dEV"
+  - name: "🇮🇷 IR🇮🇷 | kaveh4.gofuc7f.ir-2096 | 496.77ms"
     type: "vless"
     server: "kaveh4.gofuc7f.ir"
-    port: 8443
+    port: 2096
     uuid: "647f3600-112a-406c-9d19-6d1da58ff041"
     udp: true
     tls: true
@@ -2588,20 +2759,20 @@ proxies:
     alpn:
       - "h2"
       - "http/1.1"
-  - name: "🇮🇷 IR🇮🇷 | callme.restaurantcloud.ir-6002 | 357.8ms"
+  - name: "🇮🇷 IR🇮🇷 | iron4.gofuc7f.ir-2083 | 502.03ms"
     type: "vless"
-    server: "callme.restaurantcloud.ir"
-    port: 6002
-    uuid: "5bd8679a-d15b-48b7-82f2-8b726d57701a"
+    server: "iron4.gofuc7f.ir"
+    port: 2083
+    uuid: "647f3600-112a-406c-9d19-6d1da58ff041"
     udp: true
     tls: true
-    network: "tcp"
-    servername: "callme.restaurantcloud.ir"
+    network: "xhttp"
+    servername: "iron4.gofuc7f.ir"
     client-fingerprint: "chrome"
     alpn:
       - "h2"
       - "http/1.1"
-  - name: "🇮🇷 IR🇮🇷 | ffd7d2055bc64724.2f6.ir-8001 | 792.09ms"
+  - name: "🇮🇷 IR🇮🇷 | ffd7d2055bc64724.2f6.ir-8001 | 428.04ms"
     type: "vless"
     server: "ffd7d2055bc64724.2f6.ir"
     port: 8001
@@ -2609,7 +2780,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇮🇷 IR🇮🇷 | s3.lemvuno.ir-2087 | 372.59ms"
+  - name: "🇮🇷 IR🇮🇷 | s3.lemvuno.ir-2087 | 336.81ms"
     type: "vless"
     server: "s3.lemvuno.ir"
     port: 2087
@@ -2619,155 +2790,151 @@ proxies:
     network: "xhttp"
     servername: "s3.lemvuno.ir"
     client-fingerprint: "chrome"
-  - name: "🇮🇷 IR🇮🇷 | lizardf1.fastshop11.ir-2095 | 552.39ms"
+  - name: "🇮🇷 IR🇮🇷 | skyroom.online-443 | 199.87ms"
     type: "vless"
-    server: "snapp.ir"
-    port: 2095
-    uuid: "41bc5a50-7c41-4078-9a2a-611ab1c6dddb"
+    server: "tr-1-tun.healingfluence.org"
+    port: 443
+    uuid: "1526b134-fad7-4fd9-93e4-276cdc6d827b"
     udp: true
     tls: false
-    network: "ws"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "lizardf1.fastshop11.ir"
-  - name: "🇮🇷 IR🇮🇷 | docs.sslforfree.shop-2083 | 290.37ms"
+    network: "xhttp"
+  - name: "🇮🇷 IR🇮🇷 | tun1.plasmoon.ir-2050 | 510.98ms"
     type: "vless"
-    server: "docs.sslforfree.shop"
-    port: 2083
-    uuid: "392e172e-6046-4229-b8c4-fed6e1fbe970"
+    server: "ser2.plasmoon.ir"
+    port: 2050
+    uuid: "02837f9f-84ab-40b7-b081-0dd2b3d3c719"
     udp: true
     tls: true
-    network: "ws"
-    servername: "docs.sslforfree.shop"
+    network: "tcp"
+    servername: "tun1.plasmoon.ir"
     client-fingerprint: "chrome"
     alpn:
       - "http/1.1"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "docs.sslforfree.shop"
-  - name: "🇮🇷 IR🇮🇷 | s9.femqera.ir-2087 | 442.13ms"
-    type: "vless"
-    server: "s9.femqera.ir"
-    port: 2087
-    uuid: "0538457f-1f34-4bb4-37ca-99f935ce92e4"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "s9.femqera.ir"
-    client-fingerprint: "chrome"
-  - name: "🇮🇷 IR🇮🇷+|+37.32.30.203-9147+|+222.09ms"
+  - name: "🇮🇷 IR🇮🇷+|+87.107.114.36-8445+|+156.77ms"
     type: "ss"
-    server: "37.32.30.203"
-    port: 9147
-    cipher: "aes-256-gcm"
-    password: "Y2NmZTljMDgyOWQwZmU3ZTkxMDFjMTc3OGI0Mjk2"
+    server: "87.107.114.36"
+    port: 8445
+    cipher: "xchacha20-ietf-poly1305"
+    password: "6na0t24ln2b14v7w"
     udp: true
-  - name: "🇮🇷 IR🇮🇷+|+37.32.29.37-9147+|+234.59ms"
+  - name: "🇮🇷 IR🇮🇷+|+87.107.114.36-8445+|+156.38ms"
+    type: "ss"
+    server: "87.107.114.36"
+    port: 8445
+    cipher: "xchacha20-ietf-poly1305"
+    password: "6na0t24ln2b14v7w"
+    udp: true
+  - name: "🇮🇷 IR🇮🇷+|+37.32.29.37-9147+|+168.57ms"
     type: "ss"
     server: "37.32.29.37"
     port: 9147
     cipher: "aes-256-gcm"
     password: "NTQxZDFiZDhmYzZjZTQwN2E3NDc1MmMwYzk5MTJl"
     udp: true
-  - name: "🇮🇷 IR🇮🇷+|+37.32.29.37-9147+|+221.38ms"
+  - name: "🇮🇷 IR🇮🇷+|+185.126.3.131-8080+|+159.72ms"
     type: "ss"
-    server: "37.32.29.37"
-    port: 9147
+    server: "185.126.3.131"
+    port: 8080
     cipher: "aes-256-gcm"
-    password: "NTQxZDFiZDhmYzZjZTQwN2E3NDc1MmMwYzk5MTJl"
+    password: "/OLeIfgLaRtDyLpshWEB+X8WQkWX6FkOEH87bGrmiBw="
     udp: true
-  - name: "🇮🇷 IR🇮🇷+|+188.121.123.142-9118+|+225.02ms"
+  - name: "🇮🇷 IR🇮🇷+|+185.126.3.131-8080+|+160.09ms"
     type: "ss"
-    server: "188.121.123.142"
-    port: 9118
+    server: "185.126.3.131"
+    port: 8080
     cipher: "aes-256-gcm"
-    password: "MjA4Mzg3OTY4YWViNzczMjQ3ZDI3MzljN2ZkZTQw"
+    password: "/OLeIfgLaRtDyLpshWEB+X8WQkWX6FkOEH87bGrmiBw=7"
     udp: true
-  - name: "🇮🇷 IR🇮🇷+|+Eygelshoven-NL.mrapanel.shop-1080+|+274.21ms"
+  - name: "🇮🇷 IR🇮🇷+|+Eygelshoven-NL.mrapanel.shop-1080+|+122ms"
     type: "ss"
     server: "Eygelshoven-NL.mrapanel.shop"
     port: 1080
     cipher: "chacha20-ietf-poly1305"
     password: "rYg2gk3ZPwz6XMGN9AGy8xGKHju9tCY2"
     udp: true
-  - name: "🇮🇷 IR🇮🇷+|+p1tun2.greewebservices.ir-2060+|+362.66ms"
+  - name: "🇮🇷 IR🇮🇷+|+p1tun2.greewebservices.ir-2060+|+285.98ms"
     type: "ss"
     server: "p1tun2.greewebservices.ir"
     port: 2060
     cipher: "chacha20-ietf-poly1305"
     password: "lKas7axN_5UwIlEgGh3V3Q"
     udp: true
-  - name: "🇮🇷 IR🇮🇷+|+iranspeedteststatus.10326.garqino.ir-10761+|+363.04ms"
-    type: "ss"
-    server: "iranspeedteststatus.10326.garqino.ir"
-    port: 10761
-    cipher: "chacha20-ietf-poly1305"
-    password: "e9ByZo_RDguP07n8MnhNuXC1zuSQiIFe"
-    udp: true
-  - name: "🇮🇷 IR🇮🇷+|+p1tun2.greewebservices.ir-2060+|+350.87ms"
+  - name: "🇮🇷 IR🇮🇷+|+p1tun2.greewebservices.ir-2060+|+342.26ms"
     type: "ss"
     server: "p1tun2.greewebservices.ir"
     port: 2060
     cipher: "chacha20-ietf-poly1305"
     password: "aW4KvGdoS8ldtmRCS58iHg"
     udp: true
-  - name: "🇮🇷 IR🇮🇷+|+p2tun3.greewebservices.ir-1030+|+374.8ms"
-    type: "ss"
-    server: "p2tun3.greewebservices.ir"
-    port: 1030
-    cipher: "chacha20-ietf-poly1305"
-    password: "XPjTkv8alWK_UQdMpznwPg"
-    udp: true
-  - name: "🇮🇷 IR🇮🇷+|+iranivew.curtvip.ir-20410+|+361.56ms"
+  - name: "🇮🇷 IR🇮🇷+|+iranivew.curtvip.ir-20410+|+427.65ms"
     type: "ss"
     server: "iranivew.curtvip.ir"
     port: 20410
     cipher: "chacha20-ietf-poly1305"
     password: "NF8QBE9CTl7iWQlppG9L9iprz8_F7lin"
     udp: true
-  - name: "🇮🇷 IR🇮🇷+|+iranibestv1.pingxoxo.info-10210+|+237.85ms"
+  - name: "🇮🇷 IR🇮🇷+|+iranibestv1.pingxoxo.info-10210+|+238.59ms"
     type: "ss"
     server: "iranibestv1.pingxoxo.info"
     port: 10210
     cipher: "chacha20-ietf-poly1305"
     password: "NF8QBE9CTl7iWQlppG9L9iprz8_F7lin"
     udp: true
-  - name: "🇮🇷 IR🇮🇷+|+ipxvision.blazevx.ir-31913+|+364.23ms"
+  - name: "🇮🇷 IR🇮🇷+|+ipxvision.blazevx.ir-31913+|+337.91ms"
     type: "ss"
     server: "ipxvision.blazevx.ir"
     port: 31913
     cipher: "chacha20-ietf-poly1305"
     password: "NF8QBE9CTl7iWQlppG9L9iprz8_F7lin"
     udp: true
-  - name: "🇮🇷 IR🇮🇷+|+p2tun3.greewebservices.ir-1030+|+218.69ms"
+  - name: "🇮🇷 IR🇮🇷+|+ser2.plasmoon.ir-2027+|+436.31ms"
     type: "ss"
-    server: "p2tun3.greewebservices.ir"
-    port: 1030
+    server: "ser2.plasmoon.ir"
+    port: 2027
     cipher: "chacha20-ietf-poly1305"
-    password: "FD9ptlhJfYob46-x7xy92A"
+    password: "MvPwmeQpaYA6qAegSlNr-qED-OgCxKLg"
     udp: true
-  - name: "🇮🇷 IR🇮🇷+|+trohop.sarzaminshadi13.ir-2060+|+779.76ms"
+  - name: "🇮🇷 IR🇮🇷+|+ser2.plasmoon.ir-2027+|+681.12ms"
+    type: "ss"
+    server: "ser2.plasmoon.ir"
+    port: 2027
+    cipher: "chacha20-ietf-poly1305"
+    password: "MvPwmeQpaYA6qAegSlNr-qED-OgCxKLg"
+    udp: true
+  - name: "🇮🇷 IR🇮🇷+|+ukohop.sarzaminshadi13.ir-6606+|+443.87ms"
+    type: "ss"
+    server: "ukohop.sarzaminshadi13.ir"
+    port: 6606
+    cipher: "chacha20-ietf-poly1305"
+    password: "zMTJa-rGFe8QU3QpfXabvvSUpohAxLz0"
+    udp: true
+  - name: "🇮🇷 IR🇮🇷+|+trohop.sarzaminshadi13.ir-2060+|+660.59ms"
     type: "ss"
     server: "trohop.sarzaminshadi13.ir"
     port: 2060
     cipher: "chacha20-ietf-poly1305"
     password: "zMTJa-rGFe8QU3QpfXabvvSUpohAxLz0"
     udp: true
-  - name: "🇮🇷 IR🇮🇷+|+p2tun3.greewebservices.ir-1030+|+440.17ms"
+  - name: "🇮🇷 IR🇮🇷+|+ddehop.sarzaminshadi13.ir-1990+|+710.98ms"
     type: "ss"
-    server: "p2tun3.greewebservices.ir"
-    port: 1030
+    server: "ddehop.sarzaminshadi13.ir"
+    port: 1990
     cipher: "chacha20-ietf-poly1305"
-    password: "2MRyo1ekfJ0exGnAVcKe6g"
+    password: "zMTJa-rGFe8QU3QpfXabvvSUpohAxLz0"
     udp: true
-  - name: "🇮🇷 IR🇮🇷+|+mojif.fusetea.ir-2089+|+471.93ms"
+  - name: "🇮🇷 IR🇮🇷+|+185.126.6.177-8080+|+164.79ms"
     type: "ss"
-    server: "mojif.fusetea.ir"
-    port: 2089
-    cipher: "chacha20-ietf-poly1305"
-    password: "0mL0gbgQoGb6zgBBdoBU21EijVaCQ1us"
+    server: "185.126.6.177"
+    port: 8080
+    cipher: "2022-blake3-aes-256-gcm"
+    password: "ds/bL5iY70g0LUY+qjPByd2K5ofsjSI2T1CtFngaOCY="
+    udp: true
+  - name: "🇮🇷 IR🇮🇷+|+ser1.plasmoon.ir-2028+|+534.75ms"
+    type: "ss"
+    server: "ser1.plasmoon.ir"
+    port: 2028
+    cipher: "2022-blake3-aes-128-gcm"
+    password: "UVqvTTy4pr77CJ2linjEnA=="
     udp: true
   - name: "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-62.60.146.58:28820-1"
     type: "vless"
@@ -2838,15 +3005,15 @@ proxies:
     alterId: 1
     cipher: "aes-128-gcm"
     udp: true
-  - name: "🇮🇷 🆔soskeynet 🔓 VM-TCP-N/A 🇮🇷 IR 236ms"
+  - name: "🇮🇷 🆔soskeynet 🔓 VM-TCP-N/A 🇮🇷 IR 347ms"
     type: "vmess"
-    server: "212.80.8.184"
-    port: 443
-    uuid: "8aafc141-9118-47b0-9d69-7cb0fdd8cb68"
+    server: "dashboard.ojestore.top"
+    port: 5381
+    uuid: "cea74654-bbec-4d52-808f-0d3e57cbd03c"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇮🇷 🆔capoit 🔒 VL-XHTTP-N/A 🇮🇷 IR 440ms"
+  - name: "🇮🇷 🆔capoit 🔒 VL-XHTTP-N/A ❔ XX 362ms"
     type: "vless"
     server: "turk.karmatel.ir"
     port: 2083
@@ -2860,297 +3027,152 @@ proxies:
       - "h2"
       - "http/1.1"
       - "h3"
-  - name: "🇮🇷 🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 396ms"
+  - name: "🇮🇷 🆔ar14n24b 🔒 VM-TCP- ❔ XX 349ms"
     type: "vmess"
-    server: "ir.yzcq.ir"
-    port: 2050
-    uuid: "986bd21b-225d-479a-964e-93a58f15017a"
+    server: "rubik.plappme.ir"
+    port: 2083
+    uuid: "f25463c6-ce85-4e8b-9894-994b5b63eb48"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇮🇷 🆔ar14n24b 🔒 VM-GRPC- ❔ XX 219ms"
-    type: "vmess"
-    server: "185.126.6.177"
-    port: 5645
-    uuid: "0d3c1a3a-2aed-4480-84ef-4ed902148483"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇮🇷 🆔ar14n24b 🔒 VL-WS-N/A 🇮🇷 IR 650ms"
+  - name: "🇮🇷 🆔ar14n24b 🔓 VL--N/A ❔ XX 354ms"
     type: "vless"
-    server: "goold.zovip2.ir"
-    port: 443
-    uuid: "0a302734-fe85-4636-b929-74d4108b078d"
+    server: "s2.zynetraq.ir"
+    port: 2087
+    uuid: "22c6684b-cd4f-4c8e-62e3-a17fc698471f"
+    udp: true
+    tls: false
+    network: "tcp"
+    alpn:
+      - "h2"
+      - "http/1.1"
+      - "h3"
+  - name: "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 365ms"
+    type: "vless"
+    server: "finio.pedramhost.ir"
+    port: 27195
+    uuid: "b4f8be1d-8327-48cc-b84e-7e3714ab5439"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "play.google.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "h2IZ2DHQ-ibHC8NzuO7TVo3wS7G8DBV1hoCCR5cbRko"
+      short-id: "cd9a75b7"
+  - name: "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 238ms"
+    type: "vless"
+    server: "tunell2027.crackerbinam.org"
+    port: 48312
+    uuid: "f47057d5-120d-4b42-b6d6-30469aef6813"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "d9eM_jy8ztZrOf3DMq1m55VQSo7bnKcG1dRnO9ktJ2Y"
+      short-id: "902c315efc"
+  - name: "🇮🇷 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 258ms"
+    type: "vless"
+    server: "tus.hemad.qzz.io"
+    port: 2053
+    uuid: "16423c7c-2c18-435b-8bbd-2bd3d5700628"
     udp: true
     tls: true
     network: "ws"
-    servername: "goold.zovip2.ir"
+    servername: "tus.tun257xr.cfd"
     client-fingerprint: "chrome"
     alpn:
       - "http/1.1"
     ws-opts:
-      path: "/api/v3/pulse"
-      headers:
-        Host: "goold.zovip2.ir"
-  - name: "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 225ms"
+      path: "/speed"
+  - name: "🇮🇷 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 426ms"
     type: "vless"
-    server: "79.175.189.121"
-    port: 40021
-    uuid: "4e8e5f05-5c8a-4f53-ba16-1ed044ed0df8"
+    server: "tus.velqarion.ir"
+    port: 2053
+    uuid: "16423c7c-2c18-435b-8bbd-2bd3d5700628"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "tus.qorvantis.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/speed"
+  - name: "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX down"
+    type: "vless"
+    server: "195.254.165.243"
+    port: 443
+    uuid: "1f6531a1-a6eb-4274-9f51-4a0899456fcf"
     udp: true
     tls: true
     network: "tcp"
-    servername: "digikala.com"
+    servername: "play.google.com"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "ioucvr6V3ToaaU3dmWhIDT6UiS_jnL8t0AXaQQNfDwQ"
-      short-id: "5276"
-  - name: "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 268ms"
+      public-key: "zSjG6wndmLAzE8ykCBXpAm2eh0viWVSy3gt2juXF4EE"
+      short-id: "eaa8"
+  - name: "🇮🇷 🆔ar14n24b 🔒 VL-TCP-N/A ❔ XX 353ms"
     type: "vless"
-    server: "al3.irgemini.sbs"
-    port: 22542
-    uuid: "4e8e5f05-5c8a-4f53-ba16-1ed044ed0df8"
+    server: "s-3.xorian.ir"
+    port: 60018
+    uuid: "f34c5f4b-302a-4ab1-9c37-be66b2a07f4a"
     udp: true
     tls: true
     network: "tcp"
-    servername: "digikala.com"
+    servername: "data-pi-23.xorian.ir"
     client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
     flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "5HFT7xa6H2zRUNDR0c-MNYH4DM_clxtV5nuSwtwBhzc"
-      short-id: "a1c8"
-  - name: "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 279ms"
+  - name: "🇮🇷 🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A ❔ XX 485ms"
+    type: "vmess"
+    server: "asiatun.roshdiran1.ir"
+    port: 4242
+    uuid: "558fecaf-bea9-4bca-9e18-2f28240dd2df"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇮🇷 🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A ❔ XX 459ms"
+    type: "vmess"
+    server: "asiatun.roshdiran1.ir"
+    port: 4345
+    uuid: "558fecaf-bea9-4bca-9e18-2f28240dd2df"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇮🇷 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX 346ms"
     type: "vless"
-    server: "fr3.irgemini.sbs"
-    port: 21038
-    uuid: "4e8e5f05-5c8a-4f53-ba16-1ed044ed0df8"
+    server: "p1tun0.greewebservices.ir"
+    port: 38820
+    uuid: "f234330e-f9df-46e3-8f60-b2af5173c147"
     udp: true
     tls: true
     network: "tcp"
-    servername: "digikala.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "b8quWnq43DQ0wM9SlkP9GttSlhWFyUcUGyyF8sJE5l4"
-      short-id: "d1"
-  - name: "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 249ms"
-    type: "vless"
-    server: "nl3.irgemini.sbs"
-    port: 26917
-    uuid: "4e8e5f05-5c8a-4f53-ba16-1ed044ed0df8"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "digikala.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "utIPSHmW0u_sRmKzSEB3PeSsGZ3wzjf8egEn-A6Fi08"
-      short-id: "d97b"
-  - name: "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 229ms"
-    type: "vless"
-    server: "real3.irgemini.sbs"
-    port: 40021
-    uuid: "4e8e5f05-5c8a-4f53-ba16-1ed044ed0df8"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "digikala.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "ioucvr6V3ToaaU3dmWhIDT6UiS_jnL8t0AXaQQNfDwQ"
-      short-id: "4b148366dd"
-  - name: "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 241ms"
-    type: "vless"
-    server: "tr3.irgemini.sbs"
-    port: 21766
-    uuid: "4e8e5f05-5c8a-4f53-ba16-1ed044ed0df8"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "digikala.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "TqxtumkJnsoAEXZPgugXosvWu0vpbwXwBR9K1NN_nko"
-      short-id: "2c"
-  - name: "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 260ms"
-    type: "vless"
-    server: "uk3.irgemini.sbs"
-    port: 25962
-    uuid: "4e8e5f05-5c8a-4f53-ba16-1ed044ed0df8"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "digikala.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "drcdyyhvM-Oh1G4TZIdAGzFp3HaiDLLEhiPOF8rGwm4"
-      short-id: "5a1b24a42e39a0"
-  - name: "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 248ms"
-    type: "vless"
-    server: "usa3.irgemini.sbs"
-    port: 20888
-    uuid: "4e8e5f05-5c8a-4f53-ba16-1ed044ed0df8"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "digikala.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "-Yy-3m0zbnI32OBg2iHwdODDIOQSff4pNFCRGtQiwUo"
-      short-id: "bbde95"
-  - name: "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 555ms"
-    type: "vless"
-    server: "tun.shadowing.fun"
-    port: 14129
-    uuid: "87747302-df5a-4c58-9ce8-9b0cecc7978e"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "filimo.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "qfo5-cVy63c8DxJus7hVq-1gE9ODCrIsYfGakLEHu3I"
-      short-id: "e1"
-  - name: "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 387ms"
-    type: "vless"
-    server: "srv1.segara.ir"
-    port: 8443
-    uuid: "fcadb901-a3e1-425c-bbb5-229c4d45ef7a"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "play-apps-features.googleusercontent.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "bpqWvZAEHPgZ-kGrJDu6INWZ6InPJxXdJei3VxcAJR8"
-      short-id: "ae4931ddfcb70677"
-  - name: "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 324ms"
-    type: "vless"
-    server: "dashboard.wingerdt.com"
-    port: 11147
-    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.aparat.com"
-    client-fingerprint: "ios"
-    reality-opts:
-      public-key: "W_0O5fiA1zi8nXHksSKSTLzwLPyjECWNES5-gDAbQRY"
-      short-id: "197fe3f584bc15f3"
-  - name: "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 415ms"
-    type: "vless"
-    server: "odinnda.hospitaldt.ir"
-    port: 5273
-    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.aparat.com"
-    client-fingerprint: "ios"
-    reality-opts:
-      public-key: "W_0O5fiA1zi8nXHksSKSTLzwLPyjECWNES5-gDAbQRY"
-      short-id: "197fe3f584bc15f3"
-  - name: "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 407ms"
-    type: "vless"
-    server: "wsfdje.hospitaldt.ir"
-    port: 15222
-    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.aparat.com"
-    client-fingerprint: "ios"
-    reality-opts:
-      public-key: "W_0O5fiA1zi8nXHksSKSTLzwLPyjECWNES5-gDAbQRY"
-      short-id: "197fe3f584bc15f3"
-  - name: "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 274ms"
-    type: "vless"
-    server: "app.wingerdt.com"
-    port: 18191
-    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.aparat.com"
-    client-fingerprint: "ios"
-    reality-opts:
-      public-key: "W_0O5fiA1zi8nXHksSKSTLzwLPyjECWNES5-gDAbQRY"
-      short-id: "197fe3f584bc15f3"
-  - name: "🇮🇷 🆔ar14n24b 🔒 VL-XHTTP- ❔ XX 385ms"
-    type: "vless"
-    server: "ng1.istgahfilm.ir"
-    port: 8857
-    uuid: "9fcb8080-1ad9-4a37-b92f-46be7053e39a"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "aparat.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "0z13Oz2r2Khq0jHUgbPWxseVLoQTlFMuMDwL9a-X7yY"
-      short-id: "37962ada43f6"
-  - name: "🇮🇷 🆔ar14n24b 🔒 VL-XHTTP- 🇮🇷 IR 224ms"
-    type: "vless"
-    server: "89.42.196.237"
-    port: 2030
-    uuid: "2dcf2405-102b-471f-be53-296b0bf8c1a7"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "amp-api-edge.apps.apple.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "3mA0RBw4RFVbXJN3RbtA4U0TsaD4EtVELLyQ9K8xww8"
-      short-id: "135ce189ff681b18"
-  - name: "🇮🇷 🆔ar14n24b 🔒 VL-XHTTP- 🇮🇷 IR 503ms"
-    type: "vless"
-    server: "nzidam.zelmuro.ir"
-    port: 437
-    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
-    udp: true
-    tls: true
-    network: "xhttp"
     servername: "play.google.com"
     client-fingerprint: "ios"
     reality-opts:
-      public-key: "W_0O5fiA1zi8nXHksSKSTLzwLPyjECWNES5-gDAbQRY"
-      short-id: "197fe3f584bc15f3"
-  - name: "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 474ms"
+      public-key: "xQnXh5EfPDhcEBB7rRiLca33GYrMEeUa35domLL_yA8"
+      short-id: "66ded2"
+  - name: "🇮🇷 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX down"
     type: "vless"
-    server: "playaudio.zelmuro.ir"
-    port: 26183
-    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
+    server: "tunell2027.crackerbinam.org"
+    port: 48312
+    uuid: "f47057d5-120d-4b42-b6d6-30469aef6813"
     udp: true
     tls: true
     network: "tcp"
-    servername: "www.aparat.com"
-    client-fingerprint: "ios"
+    servername: "www.cloudflare.com"
     reality-opts:
-      public-key: "W_0O5fiA1zi8nXHksSKSTLzwLPyjECWNES5-gDAbQRY"
-      short-id: "197fe3f584bc15f3"
-  - name: "🇮🇷 🆔v2ray1_ng 🔒 VL-GRPC- 🇮🇷 IR down"
-    type: "vless"
-    server: "workshopnew.subpannel.ir"
-    port: 6036
-    uuid: "e17b1c07-de04-4734-a6ec-5a6ea45dc39c"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "aparat.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "G8xIYrbqP8tFKaMM9BvXj9_BC2JDbUjQqfeuY5YQyGA"
-      short-id: "3b828513ffa33f"
-    grpc-opts:
-      grpc-service-name: "Grpc"
-  - name: "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 686ms"
+      public-key: "d9eM_jy8ztZrOf3DMq1m55VQSo7bnKcG1dRnO9ktJ2Y"
+      short-id: "902c315efc"
+  - name: "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 549ms"
     type: "vless"
     server: "mail.loyalsmile.net"
     port: 2095
@@ -3160,7 +3182,7 @@ proxies:
     network: "ws"
     ws-opts:
       path: "/wp-content"
-  - name: "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 708ms"
+  - name: "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 542ms"
     type: "vless"
     server: "mail.loyalsmile.net"
     port: 8880
@@ -3170,7 +3192,7 @@ proxies:
     network: "ws"
     ws-opts:
       path: "/wp-content2"
-  - name: "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 682ms"
+  - name: "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 530ms"
     type: "vless"
     server: "mail.loyalsmile.net"
     port: 8080
@@ -3261,6 +3283,14 @@ proxies:
     port: 443
     cipher: "none"
     password: "RSzEIkk2EsHEAVj15N5E/A=="
+    udp: true
+  - name: "🇮🇷 vmess-92.42.203.240:2052"
+    type: "vmess"
+    server: "92.42.203.240"
+    port: 2052
+    uuid: "6a9d4c0b-938a-4b58-911d-e3ca45d17ab5"
+    alterId: 0
+    cipher: "auto"
     udp: true
   - name: "🇮🇷 🍄 - Tel:  @Hddify - 9"
     type: "vless"
@@ -3354,14 +3384,6 @@ proxies:
     client-fingerprint: "chrome"
   - name: "🇮🇷 @DeltaKroneckerGithub-11"
     type: "vmess"
-    server: "92.42.203.240"
-    port: 2052
-    uuid: "6a9d4c0b-938a-4b58-911d-e3ca45d17ab5"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇮🇷 @DeltaKroneckerGithub-12"
-    type: "vmess"
     server: "212.80.8.184"
     port: 443
     uuid: "9ed79305-5e4a-4977-92fb-014db8b0a62f"
@@ -3425,18 +3447,6 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.ignitelimit.com"
-  - name: "🇮🇷 🇩🇪 | @WhiteDNS | DE258|1.3MB/s|DNSOK|GPT⁺-DE"
-    type: "vless"
-    server: "dnld.chaqalli.com"
-    port: 8180
-    uuid: "560ecca1-7e20-4b41-b4d6-781fb3bc179d"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
-      headers:
-        Host: "dnld.chaqalli.com"
   - name: "🇮🇷 VLESS 111 t.me/iProxyChannel"
     type: "vless"
     server: "62.60.251.131"
@@ -3524,7 +3534,7 @@ proxy-groups:
       - "🇮🇷 🔒 SS-TCP-NA 🇮🇷 IR-94.139.180.31:1990"
       - "🇮🇷 🔒 SS-TCP-NA 🇮🇷 IR-37.202.228.102:8443"
       - "🇮🇷 🔒 SS-TCP-NA 🇮🇷 IR-81.12.33.14:8080"
-      - "🇮🇷 RELAY🚩 | de.mitivpn.in.net-443 | 48.27ms"
+      - "🇮🇷 RELAY🚩 | de.mitivpn.in.net-443 | 32.72ms"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-86.54.42.143:8880"
       - "🇮🇷 🔒 VM-TCP-NONE 🇮🇷 IR-5.202.19.74:3535"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.67:1080"
@@ -3537,21 +3547,27 @@ proxy-groups:
       - "🇮🇷 🔒 VM-HTTPUPGRADE-NA 🇮🇷 IR-109.122.244.189:4345"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-37.202.225.110:5380"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.182.151.218:5381"
-      - "🇮🇷 REALITY|IR🇮🇷 | p1tun0.greewebservices.ir-38820 | 371.53ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | Racknarock.sorixset.ir-4123 | 444.69ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | g1.haxat.bestvbest.ir-20610 | 450.53ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | tun12.momasvps.ir-5018 | 419.62ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | jsv-ir.jmovies.ir-443 | 571.87ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | 37.202.228.56-443 | 226.39ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | mojif.fusetea.ir-1080 | 557.74ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | ir1.mobileemdad.top-443 | 247.93ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | p2tun0.greewebservices.ir-28820 | 421.47ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | ger2.soft98ver2.com-305 | 345.34ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | p1tun01.greewebservices.ir-38830 | 376.85ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | workshop.pingxoxo.info-36171 | 249.32ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | g4.haxat.bestvbest.ir-56126 | 433.28ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | p2tun0.greewebservices.ir-28820 | 542.51ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | srv1.segara.ir-8443 | 444.2ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | srv1.segara.ir-8443 | 331.03ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | ir4.mobileemdad.top-443 | 213.43ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | g1.haxat.bestvbest.ir-20610 | 341.17ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | jsv-ir.jmovies.ir-443 | 680.14ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | 37.202.228.56-443 | 157.5ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | p2tun0.greewebservices.ir-28820 | 325.75ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | srv3.segara.ir-8443 | 342.15ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | dl1.uploadeliasiran03.ir-443 | 319.74ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | p2tun0.greewebservices.ir-28820 | 168.24ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | p1tun01.greewebservices.ir-38830 | 256.07ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | 79.175.189.121-40021 | 162.85ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | fst.mobistora.ir-443 | 264.26ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | 176.120.17.194-443 | 85.3ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | irfuir.azad0namah.ir-2093 | 346.8ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | workshop.pingxoxo.info-36171 | 227.95ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | g4.haxat.bestvbest.ir-56126 | 335.52ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | wsfdje.hospitaldt.ir-15222 | 282.4ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | odinnda.hospitaldt.ir-5273 | 356.61ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | dashboard.wingerdt.com-11147 | 189.03ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | app.wingerdt.com-18191 | 216.91ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | p2tun0.greewebservices.ir-28820 | 327.6ms"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-194.32.214.94:2096"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-62.60.146.32:38820"
       - "🇮🇷 🔒 VL-XHTTP-RLT 🇮🇷 IR-5.202.4.153:443"
@@ -3571,7 +3587,6 @@ proxy-groups:
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-37.202.233.89:8443"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-78.110.120.38:443"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-85.9.105.114:20610"
-      - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-176.120.17.194:443"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-85.9.105.114:56126"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-109.94.164.233:36171"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-78.157.61.61:8443"
@@ -3621,52 +3636,58 @@ proxy-groups:
       - "🇮🇷 🔒 VL-TCP-NONE 🇮🇷 IR-31.216.62.178:8002"
       - "🇮🇷 🔒 VL-GRPC-TLS 🇮🇷 IR-194.50.216.61:443"
       - "🇮🇷 🌱 - Tel:  @Hddify - 1"
-      - "🇮🇷 IR🇮🇷 | s1.connect.labex.pro-1007 | 243.72ms"
-      - "🇮🇷 IR🇮🇷 | s1.connect.labex.pro-1007 | 240.46ms"
-      - "🇮🇷 IR🇮🇷 | s1.connect.bloroxy.net-1074 | 264.27ms"
-      - "🇮🇷 IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 174.38ms"
-      - "🇮🇷 IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 190.06ms"
-      - "🇮🇷 IR🇮🇷 | dashboard.ojestore.top-5381 | 395.67ms"
-      - "🇮🇷 IR🇮🇷 | dashboard.ojestore.top-5381 | 392.64ms"
-      - "🇮🇷 IR🇮🇷 | dashboard.ojeshop.top-5380 | 391.29ms"
-      - "🇮🇷 IR🇮🇷 | dashboard.ojeshop.top-5380 | 319.32ms"
-      - "🇮🇷 IR🇮🇷 | dashboard.ojedata.top-5382 | 543.19ms"
-      - "🇮🇷 IR🇮🇷 | dashboard.ojedata.top-5382 | 495.23ms"
-      - "🇮🇷 IR🇮🇷 | asiatun.roshdiran1.ir-4345 | 886.13ms"
-      - "🇮🇷 IR🇮🇷 | asiatun.roshdiran1.ir-4242 | 529.82ms"
-      - "🇮🇷 IR🇮🇷 | NlS3.zelnora.ir-55306 | 372.07ms"
-      - "🇮🇷 IR🇮🇷 | 212.80.8.184-443 | 230.76ms"
-      - "🇮🇷 RELAY🚩 | pages.dev-443 | 37.77ms"
-      - "🇮🇷 IR🇮🇷 | webassets.cafebazaar.ir-443 | 1524.62ms"
-      - "🇮🇷 TELEGRAM---@MTMVPN---@MTMVPN---@MTMVPN---@MTMVPN&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#RELAY🚩 | lucasjow.us.ci-443 | 13.72ms"
-      - "🇮🇷 IR🇮🇷 | test.nvclud.ir-1022 | 388.7ms"
-      - "🇮🇷 Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=serv2.servvadd.org&fp=chrome&type=ws&allowInsecure=0&sni=serv2.servvadd.org#IR🇮🇷 | serv2.servvadd.org-443 | 549.4ms"
-      - "🇮🇷 RELAY🚩 | SAnDWORm.pagEs.DEV-443 | 50.19ms"
-      - "🇮🇷 IR🇮🇷 | g1.sabet1.blazevx.ir-31913 | 474.93ms"
-      - "🇮🇷 IR🇮🇷 | s2.zynetraq.ir-2087 | 454.61ms"
-      - "🇮🇷 IR🇮🇷 | kaveh4.gofuc7f.ir-8443 | 746.49ms"
-      - "🇮🇷 IR🇮🇷 | callme.restaurantcloud.ir-6002 | 357.8ms"
-      - "🇮🇷 IR🇮🇷 | ffd7d2055bc64724.2f6.ir-8001 | 792.09ms"
-      - "🇮🇷 IR🇮🇷 | s3.lemvuno.ir-2087 | 372.59ms"
-      - "🇮🇷 IR🇮🇷 | lizardf1.fastshop11.ir-2095 | 552.39ms"
-      - "🇮🇷 IR🇮🇷 | docs.sslforfree.shop-2083 | 290.37ms"
-      - "🇮🇷 IR🇮🇷 | s9.femqera.ir-2087 | 442.13ms"
-      - "🇮🇷 IR🇮🇷+|+37.32.30.203-9147+|+222.09ms"
-      - "🇮🇷 IR🇮🇷+|+37.32.29.37-9147+|+234.59ms"
-      - "🇮🇷 IR🇮🇷+|+37.32.29.37-9147+|+221.38ms"
-      - "🇮🇷 IR🇮🇷+|+188.121.123.142-9118+|+225.02ms"
-      - "🇮🇷 IR🇮🇷+|+Eygelshoven-NL.mrapanel.shop-1080+|+274.21ms"
-      - "🇮🇷 IR🇮🇷+|+p1tun2.greewebservices.ir-2060+|+362.66ms"
-      - "🇮🇷 IR🇮🇷+|+iranspeedteststatus.10326.garqino.ir-10761+|+363.04ms"
-      - "🇮🇷 IR🇮🇷+|+p1tun2.greewebservices.ir-2060+|+350.87ms"
-      - "🇮🇷 IR🇮🇷+|+p2tun3.greewebservices.ir-1030+|+374.8ms"
-      - "🇮🇷 IR🇮🇷+|+iranivew.curtvip.ir-20410+|+361.56ms"
-      - "🇮🇷 IR🇮🇷+|+iranibestv1.pingxoxo.info-10210+|+237.85ms"
-      - "🇮🇷 IR🇮🇷+|+ipxvision.blazevx.ir-31913+|+364.23ms"
-      - "🇮🇷 IR🇮🇷+|+p2tun3.greewebservices.ir-1030+|+218.69ms"
-      - "🇮🇷 IR🇮🇷+|+trohop.sarzaminshadi13.ir-2060+|+779.76ms"
-      - "🇮🇷 IR🇮🇷+|+p2tun3.greewebservices.ir-1030+|+440.17ms"
-      - "🇮🇷 IR🇮🇷+|+mojif.fusetea.ir-2089+|+471.93ms"
+      - "🇮🇷 IR🇮🇷 | s1.connect.labex.pro-1007 | 178.69ms"
+      - "🇮🇷 IR🇮🇷 | s1.connect.labex.pro-1007 | 288.01ms"
+      - "🇮🇷 IR🇮🇷 | s1.connect.bloroxy.net-1074 | 209.18ms"
+      - "🇮🇷 IR🇮🇷 | ir.yzcq.ir-2050 | 336.34ms"
+      - "🇮🇷 IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 105.72ms"
+      - "🇮🇷 IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 101.51ms"
+      - "🇮🇷 IR🇮🇷 | dashboard.ojestore.top-5381 | 277.45ms"
+      - "🇮🇷 IR🇮🇷 | dashboard.ojeshop.top-5380 | 258.25ms"
+      - "🇮🇷 IR🇮🇷 | dashboard.ojedata.top-5382 | 416.7ms"
+      - "🇮🇷 IR🇮🇷 | NlS3.zelnora.ir-55306 | 253.97ms"
+      - "🇮🇷 RELAY🚩 | pages.dev-443 | 8.22ms"
+      - "🇮🇷 IR🇮🇷 | 185.126.6.177-5645 | 165.44ms"
+      - "🇮🇷 IR🇮🇷 | 62.220.121.35-443 | 160.81ms"
+      - "🇮🇷 IR🇮🇷 | soft98.ir-443 | 494.92ms"
+      - "🇮🇷 IR🇮🇷 | tun1.plasmoon.ir-2026 | 526.81ms"
+      - "🇮🇷 IR🇮🇷 | webassets.cafebazaar.ir-443 | 907.15ms"
+      - "🇮🇷 TELEGRAM---MARAMBASHI---MARAMBASHI---MARAMBASHI---MARAMBASHI&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#RELAY🚩 | lucasjow.us.ci-443 | 2.51ms"
+      - "🇮🇷 Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=serv2.servvadd.org&fp=chrome&type=ws&allowInsecure=0&sni=serv2.servvadd.org#IR🇮🇷 | serv2.servvadd.org-443 | 438.32ms"
+      - "🇮🇷 RELAY🚩 | SAnDWORm.pagEs.DEV-443 | 24.01ms"
+      - "🇮🇷 IR🇮🇷 | g1.sabet1.blazevx.ir-31913 | 326.51ms"
+      - "🇮🇷 RELAY🚩 | www.speedtest.net-2095 | 12.76ms"
+      - "🇮🇷 RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 21.98ms"
+      - "🇮🇷 IR🇮🇷 | ask.w-ert.org-40289 | 174.15ms"
+      - "🇮🇷 RELAY🚩 | sslcert.okamii1.ir-2083 | 184.82ms"
+      - "🇮🇷 IR🇮🇷 | 010uk.nimhub.ir-1024 | 565.66ms"
+      - "🇮🇷 IR🇮🇷 | s2.zynetraq.ir-2087 | 329.92ms"
+      - "🇮🇷 IR🇮🇷 | dl3.gooniforoshi.fun-443 | 218.34ms"
+      - "🇮🇷 RELAY🚩 | test-teSt-tEsT-teSt.pagES.DEv-443 | 28.79ms"
+      - "🇮🇷 IR🇮🇷 | kaveh4.gofuc7f.ir-2096 | 496.77ms"
+      - "🇮🇷 IR🇮🇷 | iron4.gofuc7f.ir-2083 | 502.03ms"
+      - "🇮🇷 IR🇮🇷 | ffd7d2055bc64724.2f6.ir-8001 | 428.04ms"
+      - "🇮🇷 IR🇮🇷 | s3.lemvuno.ir-2087 | 336.81ms"
+      - "🇮🇷 IR🇮🇷 | skyroom.online-443 | 199.87ms"
+      - "🇮🇷 IR🇮🇷 | tun1.plasmoon.ir-2050 | 510.98ms"
+      - "🇮🇷 IR🇮🇷+|+87.107.114.36-8445+|+156.77ms"
+      - "🇮🇷 IR🇮🇷+|+87.107.114.36-8445+|+156.38ms"
+      - "🇮🇷 IR🇮🇷+|+37.32.29.37-9147+|+168.57ms"
+      - "🇮🇷 IR🇮🇷+|+185.126.3.131-8080+|+159.72ms"
+      - "🇮🇷 IR🇮🇷+|+185.126.3.131-8080+|+160.09ms"
+      - "🇮🇷 IR🇮🇷+|+Eygelshoven-NL.mrapanel.shop-1080+|+122ms"
+      - "🇮🇷 IR🇮🇷+|+p1tun2.greewebservices.ir-2060+|+285.98ms"
+      - "🇮🇷 IR🇮🇷+|+p1tun2.greewebservices.ir-2060+|+342.26ms"
+      - "🇮🇷 IR🇮🇷+|+iranivew.curtvip.ir-20410+|+427.65ms"
+      - "🇮🇷 IR🇮🇷+|+iranibestv1.pingxoxo.info-10210+|+238.59ms"
+      - "🇮🇷 IR🇮🇷+|+ipxvision.blazevx.ir-31913+|+337.91ms"
+      - "🇮🇷 IR🇮🇷+|+ser2.plasmoon.ir-2027+|+436.31ms"
+      - "🇮🇷 IR🇮🇷+|+ser2.plasmoon.ir-2027+|+681.12ms"
+      - "🇮🇷 IR🇮🇷+|+ukohop.sarzaminshadi13.ir-6606+|+443.87ms"
+      - "🇮🇷 IR🇮🇷+|+trohop.sarzaminshadi13.ir-2060+|+660.59ms"
+      - "🇮🇷 IR🇮🇷+|+ddehop.sarzaminshadi13.ir-1990+|+710.98ms"
+      - "🇮🇷 IR🇮🇷+|+185.126.6.177-8080+|+164.79ms"
+      - "🇮🇷 IR🇮🇷+|+ser1.plasmoon.ir-2028+|+534.75ms"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-62.60.146.58:28820-1"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.66:1080"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.68:1074"
@@ -3675,33 +3696,23 @@ proxy-groups:
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.67:1170"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.67:1074"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.66:1170"
-      - "🇮🇷 🆔soskeynet 🔓 VM-TCP-N/A 🇮🇷 IR 236ms"
-      - "🇮🇷 🆔capoit 🔒 VL-XHTTP-N/A 🇮🇷 IR 440ms"
-      - "🇮🇷 🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 396ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VM-GRPC- ❔ XX 219ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-WS-N/A 🇮🇷 IR 650ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 225ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 268ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 279ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 249ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 229ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 241ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 260ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 248ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 555ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 387ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 324ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 415ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 407ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 274ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-XHTTP- ❔ XX 385ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-XHTTP- 🇮🇷 IR 224ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-XHTTP- 🇮🇷 IR 503ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 474ms"
-      - "🇮🇷 🆔v2ray1_ng 🔒 VL-GRPC- 🇮🇷 IR down"
-      - "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 686ms"
-      - "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 708ms"
-      - "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 682ms"
+      - "🇮🇷 🆔soskeynet 🔓 VM-TCP-N/A 🇮🇷 IR 347ms"
+      - "🇮🇷 🆔capoit 🔒 VL-XHTTP-N/A ❔ XX 362ms"
+      - "🇮🇷 🆔ar14n24b 🔒 VM-TCP- ❔ XX 349ms"
+      - "🇮🇷 🆔ar14n24b 🔓 VL--N/A ❔ XX 354ms"
+      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 365ms"
+      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 238ms"
+      - "🇮🇷 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 258ms"
+      - "🇮🇷 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 426ms"
+      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX down"
+      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP-N/A ❔ XX 353ms"
+      - "🇮🇷 🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A ❔ XX 485ms"
+      - "🇮🇷 🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A ❔ XX 459ms"
+      - "🇮🇷 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX 346ms"
+      - "🇮🇷 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX down"
+      - "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 549ms"
+      - "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 542ms"
+      - "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 530ms"
       - "🇮🇷 @DeltaKroneckerGithub"
       - "🇮🇷 @DeltaKroneckerGithub-1"
       - "🇮🇷 @DeltaKroneckerGithub-2"
@@ -3713,6 +3724,7 @@ proxy-groups:
       - "🇮🇷 @DeltaKroneckerGithub-8"
       - "🇮🇷 @DeltaKroneckerGithub-9"
       - "🇮🇷 @DeltaKroneckerGithub-10"
+      - "🇮🇷 vmess-92.42.203.240:2052"
       - "🇮🇷 🍄 - Tel:  @Hddify - 9"
       - "🇮🇷 🍄 - Tel:  @Hddify - 11"
       - "🇮🇷 🍄 - Tel:  @Hddify - 13"
@@ -3722,13 +3734,11 @@ proxy-groups:
       - "🇮🇷 072-ws-tls ✂️@GheychiAmoozesh"
       - "🇮🇷 🔒 VL-XHTTP-TLS 🇮🇷 IR-212.80.9.153:2087-1"
       - "🇮🇷 @DeltaKroneckerGithub-11"
-      - "🇮🇷 @DeltaKroneckerGithub-12"
       - "🇮🇷 🚀 - @Hddify - 1"
       - "🇮🇷 🚀 - @Hddify - 4"
       - "🇮🇷 🚀 - @Hddify - 8"
       - "🇮🇷 🚀 - @Hddify - 14"
       - "🇮🇷 🚀 - @Hddify - 19"
-      - "🇮🇷 🇩🇪 | @WhiteDNS | DE258|1.3MB/s|DNSOK|GPT⁺-DE"
       - "🇮🇷 VLESS 111 t.me/iProxyChannel"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
@@ -3803,7 +3813,7 @@ proxy-groups:
       - "🇮🇷 🔒 SS-TCP-NA 🇮🇷 IR-94.139.180.31:1990"
       - "🇮🇷 🔒 SS-TCP-NA 🇮🇷 IR-37.202.228.102:8443"
       - "🇮🇷 🔒 SS-TCP-NA 🇮🇷 IR-81.12.33.14:8080"
-      - "🇮🇷 RELAY🚩 | de.mitivpn.in.net-443 | 48.27ms"
+      - "🇮🇷 RELAY🚩 | de.mitivpn.in.net-443 | 32.72ms"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-86.54.42.143:8880"
       - "🇮🇷 🔒 VM-TCP-NONE 🇮🇷 IR-5.202.19.74:3535"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.67:1080"
@@ -3816,21 +3826,27 @@ proxy-groups:
       - "🇮🇷 🔒 VM-HTTPUPGRADE-NA 🇮🇷 IR-109.122.244.189:4345"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-37.202.225.110:5380"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.182.151.218:5381"
-      - "🇮🇷 REALITY|IR🇮🇷 | p1tun0.greewebservices.ir-38820 | 371.53ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | Racknarock.sorixset.ir-4123 | 444.69ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | g1.haxat.bestvbest.ir-20610 | 450.53ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | tun12.momasvps.ir-5018 | 419.62ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | jsv-ir.jmovies.ir-443 | 571.87ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | 37.202.228.56-443 | 226.39ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | mojif.fusetea.ir-1080 | 557.74ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | ir1.mobileemdad.top-443 | 247.93ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | p2tun0.greewebservices.ir-28820 | 421.47ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | ger2.soft98ver2.com-305 | 345.34ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | p1tun01.greewebservices.ir-38830 | 376.85ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | workshop.pingxoxo.info-36171 | 249.32ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | g4.haxat.bestvbest.ir-56126 | 433.28ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | p2tun0.greewebservices.ir-28820 | 542.51ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | srv1.segara.ir-8443 | 444.2ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | srv1.segara.ir-8443 | 331.03ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | ir4.mobileemdad.top-443 | 213.43ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | g1.haxat.bestvbest.ir-20610 | 341.17ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | jsv-ir.jmovies.ir-443 | 680.14ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | 37.202.228.56-443 | 157.5ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | p2tun0.greewebservices.ir-28820 | 325.75ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | srv3.segara.ir-8443 | 342.15ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | dl1.uploadeliasiran03.ir-443 | 319.74ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | p2tun0.greewebservices.ir-28820 | 168.24ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | p1tun01.greewebservices.ir-38830 | 256.07ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | 79.175.189.121-40021 | 162.85ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | fst.mobistora.ir-443 | 264.26ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | 176.120.17.194-443 | 85.3ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | irfuir.azad0namah.ir-2093 | 346.8ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | workshop.pingxoxo.info-36171 | 227.95ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | g4.haxat.bestvbest.ir-56126 | 335.52ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | wsfdje.hospitaldt.ir-15222 | 282.4ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | odinnda.hospitaldt.ir-5273 | 356.61ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | dashboard.wingerdt.com-11147 | 189.03ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | app.wingerdt.com-18191 | 216.91ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | p2tun0.greewebservices.ir-28820 | 327.6ms"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-194.32.214.94:2096"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-62.60.146.32:38820"
       - "🇮🇷 🔒 VL-XHTTP-RLT 🇮🇷 IR-5.202.4.153:443"
@@ -3850,7 +3866,6 @@ proxy-groups:
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-37.202.233.89:8443"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-78.110.120.38:443"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-85.9.105.114:20610"
-      - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-176.120.17.194:443"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-85.9.105.114:56126"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-109.94.164.233:36171"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-78.157.61.61:8443"
@@ -3900,52 +3915,58 @@ proxy-groups:
       - "🇮🇷 🔒 VL-TCP-NONE 🇮🇷 IR-31.216.62.178:8002"
       - "🇮🇷 🔒 VL-GRPC-TLS 🇮🇷 IR-194.50.216.61:443"
       - "🇮🇷 🌱 - Tel:  @Hddify - 1"
-      - "🇮🇷 IR🇮🇷 | s1.connect.labex.pro-1007 | 243.72ms"
-      - "🇮🇷 IR🇮🇷 | s1.connect.labex.pro-1007 | 240.46ms"
-      - "🇮🇷 IR🇮🇷 | s1.connect.bloroxy.net-1074 | 264.27ms"
-      - "🇮🇷 IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 174.38ms"
-      - "🇮🇷 IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 190.06ms"
-      - "🇮🇷 IR🇮🇷 | dashboard.ojestore.top-5381 | 395.67ms"
-      - "🇮🇷 IR🇮🇷 | dashboard.ojestore.top-5381 | 392.64ms"
-      - "🇮🇷 IR🇮🇷 | dashboard.ojeshop.top-5380 | 391.29ms"
-      - "🇮🇷 IR🇮🇷 | dashboard.ojeshop.top-5380 | 319.32ms"
-      - "🇮🇷 IR🇮🇷 | dashboard.ojedata.top-5382 | 543.19ms"
-      - "🇮🇷 IR🇮🇷 | dashboard.ojedata.top-5382 | 495.23ms"
-      - "🇮🇷 IR🇮🇷 | asiatun.roshdiran1.ir-4345 | 886.13ms"
-      - "🇮🇷 IR🇮🇷 | asiatun.roshdiran1.ir-4242 | 529.82ms"
-      - "🇮🇷 IR🇮🇷 | NlS3.zelnora.ir-55306 | 372.07ms"
-      - "🇮🇷 IR🇮🇷 | 212.80.8.184-443 | 230.76ms"
-      - "🇮🇷 RELAY🚩 | pages.dev-443 | 37.77ms"
-      - "🇮🇷 IR🇮🇷 | webassets.cafebazaar.ir-443 | 1524.62ms"
-      - "🇮🇷 TELEGRAM---@MTMVPN---@MTMVPN---@MTMVPN---@MTMVPN&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#RELAY🚩 | lucasjow.us.ci-443 | 13.72ms"
-      - "🇮🇷 IR🇮🇷 | test.nvclud.ir-1022 | 388.7ms"
-      - "🇮🇷 Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=serv2.servvadd.org&fp=chrome&type=ws&allowInsecure=0&sni=serv2.servvadd.org#IR🇮🇷 | serv2.servvadd.org-443 | 549.4ms"
-      - "🇮🇷 RELAY🚩 | SAnDWORm.pagEs.DEV-443 | 50.19ms"
-      - "🇮🇷 IR🇮🇷 | g1.sabet1.blazevx.ir-31913 | 474.93ms"
-      - "🇮🇷 IR🇮🇷 | s2.zynetraq.ir-2087 | 454.61ms"
-      - "🇮🇷 IR🇮🇷 | kaveh4.gofuc7f.ir-8443 | 746.49ms"
-      - "🇮🇷 IR🇮🇷 | callme.restaurantcloud.ir-6002 | 357.8ms"
-      - "🇮🇷 IR🇮🇷 | ffd7d2055bc64724.2f6.ir-8001 | 792.09ms"
-      - "🇮🇷 IR🇮🇷 | s3.lemvuno.ir-2087 | 372.59ms"
-      - "🇮🇷 IR🇮🇷 | lizardf1.fastshop11.ir-2095 | 552.39ms"
-      - "🇮🇷 IR🇮🇷 | docs.sslforfree.shop-2083 | 290.37ms"
-      - "🇮🇷 IR🇮🇷 | s9.femqera.ir-2087 | 442.13ms"
-      - "🇮🇷 IR🇮🇷+|+37.32.30.203-9147+|+222.09ms"
-      - "🇮🇷 IR🇮🇷+|+37.32.29.37-9147+|+234.59ms"
-      - "🇮🇷 IR🇮🇷+|+37.32.29.37-9147+|+221.38ms"
-      - "🇮🇷 IR🇮🇷+|+188.121.123.142-9118+|+225.02ms"
-      - "🇮🇷 IR🇮🇷+|+Eygelshoven-NL.mrapanel.shop-1080+|+274.21ms"
-      - "🇮🇷 IR🇮🇷+|+p1tun2.greewebservices.ir-2060+|+362.66ms"
-      - "🇮🇷 IR🇮🇷+|+iranspeedteststatus.10326.garqino.ir-10761+|+363.04ms"
-      - "🇮🇷 IR🇮🇷+|+p1tun2.greewebservices.ir-2060+|+350.87ms"
-      - "🇮🇷 IR🇮🇷+|+p2tun3.greewebservices.ir-1030+|+374.8ms"
-      - "🇮🇷 IR🇮🇷+|+iranivew.curtvip.ir-20410+|+361.56ms"
-      - "🇮🇷 IR🇮🇷+|+iranibestv1.pingxoxo.info-10210+|+237.85ms"
-      - "🇮🇷 IR🇮🇷+|+ipxvision.blazevx.ir-31913+|+364.23ms"
-      - "🇮🇷 IR🇮🇷+|+p2tun3.greewebservices.ir-1030+|+218.69ms"
-      - "🇮🇷 IR🇮🇷+|+trohop.sarzaminshadi13.ir-2060+|+779.76ms"
-      - "🇮🇷 IR🇮🇷+|+p2tun3.greewebservices.ir-1030+|+440.17ms"
-      - "🇮🇷 IR🇮🇷+|+mojif.fusetea.ir-2089+|+471.93ms"
+      - "🇮🇷 IR🇮🇷 | s1.connect.labex.pro-1007 | 178.69ms"
+      - "🇮🇷 IR🇮🇷 | s1.connect.labex.pro-1007 | 288.01ms"
+      - "🇮🇷 IR🇮🇷 | s1.connect.bloroxy.net-1074 | 209.18ms"
+      - "🇮🇷 IR🇮🇷 | ir.yzcq.ir-2050 | 336.34ms"
+      - "🇮🇷 IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 105.72ms"
+      - "🇮🇷 IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 101.51ms"
+      - "🇮🇷 IR🇮🇷 | dashboard.ojestore.top-5381 | 277.45ms"
+      - "🇮🇷 IR🇮🇷 | dashboard.ojeshop.top-5380 | 258.25ms"
+      - "🇮🇷 IR🇮🇷 | dashboard.ojedata.top-5382 | 416.7ms"
+      - "🇮🇷 IR🇮🇷 | NlS3.zelnora.ir-55306 | 253.97ms"
+      - "🇮🇷 RELAY🚩 | pages.dev-443 | 8.22ms"
+      - "🇮🇷 IR🇮🇷 | 185.126.6.177-5645 | 165.44ms"
+      - "🇮🇷 IR🇮🇷 | 62.220.121.35-443 | 160.81ms"
+      - "🇮🇷 IR🇮🇷 | soft98.ir-443 | 494.92ms"
+      - "🇮🇷 IR🇮🇷 | tun1.plasmoon.ir-2026 | 526.81ms"
+      - "🇮🇷 IR🇮🇷 | webassets.cafebazaar.ir-443 | 907.15ms"
+      - "🇮🇷 TELEGRAM---MARAMBASHI---MARAMBASHI---MARAMBASHI---MARAMBASHI&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#RELAY🚩 | lucasjow.us.ci-443 | 2.51ms"
+      - "🇮🇷 Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=serv2.servvadd.org&fp=chrome&type=ws&allowInsecure=0&sni=serv2.servvadd.org#IR🇮🇷 | serv2.servvadd.org-443 | 438.32ms"
+      - "🇮🇷 RELAY🚩 | SAnDWORm.pagEs.DEV-443 | 24.01ms"
+      - "🇮🇷 IR🇮🇷 | g1.sabet1.blazevx.ir-31913 | 326.51ms"
+      - "🇮🇷 RELAY🚩 | www.speedtest.net-2095 | 12.76ms"
+      - "🇮🇷 RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 21.98ms"
+      - "🇮🇷 IR🇮🇷 | ask.w-ert.org-40289 | 174.15ms"
+      - "🇮🇷 RELAY🚩 | sslcert.okamii1.ir-2083 | 184.82ms"
+      - "🇮🇷 IR🇮🇷 | 010uk.nimhub.ir-1024 | 565.66ms"
+      - "🇮🇷 IR🇮🇷 | s2.zynetraq.ir-2087 | 329.92ms"
+      - "🇮🇷 IR🇮🇷 | dl3.gooniforoshi.fun-443 | 218.34ms"
+      - "🇮🇷 RELAY🚩 | test-teSt-tEsT-teSt.pagES.DEv-443 | 28.79ms"
+      - "🇮🇷 IR🇮🇷 | kaveh4.gofuc7f.ir-2096 | 496.77ms"
+      - "🇮🇷 IR🇮🇷 | iron4.gofuc7f.ir-2083 | 502.03ms"
+      - "🇮🇷 IR🇮🇷 | ffd7d2055bc64724.2f6.ir-8001 | 428.04ms"
+      - "🇮🇷 IR🇮🇷 | s3.lemvuno.ir-2087 | 336.81ms"
+      - "🇮🇷 IR🇮🇷 | skyroom.online-443 | 199.87ms"
+      - "🇮🇷 IR🇮🇷 | tun1.plasmoon.ir-2050 | 510.98ms"
+      - "🇮🇷 IR🇮🇷+|+87.107.114.36-8445+|+156.77ms"
+      - "🇮🇷 IR🇮🇷+|+87.107.114.36-8445+|+156.38ms"
+      - "🇮🇷 IR🇮🇷+|+37.32.29.37-9147+|+168.57ms"
+      - "🇮🇷 IR🇮🇷+|+185.126.3.131-8080+|+159.72ms"
+      - "🇮🇷 IR🇮🇷+|+185.126.3.131-8080+|+160.09ms"
+      - "🇮🇷 IR🇮🇷+|+Eygelshoven-NL.mrapanel.shop-1080+|+122ms"
+      - "🇮🇷 IR🇮🇷+|+p1tun2.greewebservices.ir-2060+|+285.98ms"
+      - "🇮🇷 IR🇮🇷+|+p1tun2.greewebservices.ir-2060+|+342.26ms"
+      - "🇮🇷 IR🇮🇷+|+iranivew.curtvip.ir-20410+|+427.65ms"
+      - "🇮🇷 IR🇮🇷+|+iranibestv1.pingxoxo.info-10210+|+238.59ms"
+      - "🇮🇷 IR🇮🇷+|+ipxvision.blazevx.ir-31913+|+337.91ms"
+      - "🇮🇷 IR🇮🇷+|+ser2.plasmoon.ir-2027+|+436.31ms"
+      - "🇮🇷 IR🇮🇷+|+ser2.plasmoon.ir-2027+|+681.12ms"
+      - "🇮🇷 IR🇮🇷+|+ukohop.sarzaminshadi13.ir-6606+|+443.87ms"
+      - "🇮🇷 IR🇮🇷+|+trohop.sarzaminshadi13.ir-2060+|+660.59ms"
+      - "🇮🇷 IR🇮🇷+|+ddehop.sarzaminshadi13.ir-1990+|+710.98ms"
+      - "🇮🇷 IR🇮🇷+|+185.126.6.177-8080+|+164.79ms"
+      - "🇮🇷 IR🇮🇷+|+ser1.plasmoon.ir-2028+|+534.75ms"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-62.60.146.58:28820-1"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.66:1080"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.68:1074"
@@ -3954,33 +3975,23 @@ proxy-groups:
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.67:1170"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.67:1074"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.66:1170"
-      - "🇮🇷 🆔soskeynet 🔓 VM-TCP-N/A 🇮🇷 IR 236ms"
-      - "🇮🇷 🆔capoit 🔒 VL-XHTTP-N/A 🇮🇷 IR 440ms"
-      - "🇮🇷 🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 396ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VM-GRPC- ❔ XX 219ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-WS-N/A 🇮🇷 IR 650ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 225ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 268ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 279ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 249ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 229ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 241ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 260ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 248ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 555ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 387ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 324ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 415ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 407ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 274ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-XHTTP- ❔ XX 385ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-XHTTP- 🇮🇷 IR 224ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-XHTTP- 🇮🇷 IR 503ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 474ms"
-      - "🇮🇷 🆔v2ray1_ng 🔒 VL-GRPC- 🇮🇷 IR down"
-      - "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 686ms"
-      - "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 708ms"
-      - "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 682ms"
+      - "🇮🇷 🆔soskeynet 🔓 VM-TCP-N/A 🇮🇷 IR 347ms"
+      - "🇮🇷 🆔capoit 🔒 VL-XHTTP-N/A ❔ XX 362ms"
+      - "🇮🇷 🆔ar14n24b 🔒 VM-TCP- ❔ XX 349ms"
+      - "🇮🇷 🆔ar14n24b 🔓 VL--N/A ❔ XX 354ms"
+      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 365ms"
+      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 238ms"
+      - "🇮🇷 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 258ms"
+      - "🇮🇷 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 426ms"
+      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX down"
+      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP-N/A ❔ XX 353ms"
+      - "🇮🇷 🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A ❔ XX 485ms"
+      - "🇮🇷 🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A ❔ XX 459ms"
+      - "🇮🇷 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX 346ms"
+      - "🇮🇷 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX down"
+      - "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 549ms"
+      - "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 542ms"
+      - "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 530ms"
       - "🇮🇷 @DeltaKroneckerGithub"
       - "🇮🇷 @DeltaKroneckerGithub-1"
       - "🇮🇷 @DeltaKroneckerGithub-2"
@@ -3992,6 +4003,7 @@ proxy-groups:
       - "🇮🇷 @DeltaKroneckerGithub-8"
       - "🇮🇷 @DeltaKroneckerGithub-9"
       - "🇮🇷 @DeltaKroneckerGithub-10"
+      - "🇮🇷 vmess-92.42.203.240:2052"
       - "🇮🇷 🍄 - Tel:  @Hddify - 9"
       - "🇮🇷 🍄 - Tel:  @Hddify - 11"
       - "🇮🇷 🍄 - Tel:  @Hddify - 13"
@@ -4001,13 +4013,11 @@ proxy-groups:
       - "🇮🇷 072-ws-tls ✂️@GheychiAmoozesh"
       - "🇮🇷 🔒 VL-XHTTP-TLS 🇮🇷 IR-212.80.9.153:2087-1"
       - "🇮🇷 @DeltaKroneckerGithub-11"
-      - "🇮🇷 @DeltaKroneckerGithub-12"
       - "🇮🇷 🚀 - @Hddify - 1"
       - "🇮🇷 🚀 - @Hddify - 4"
       - "🇮🇷 🚀 - @Hddify - 8"
       - "🇮🇷 🚀 - @Hddify - 14"
       - "🇮🇷 🚀 - @Hddify - 19"
-      - "🇮🇷 🇩🇪 | @WhiteDNS | DE258|1.3MB/s|DNSOK|GPT⁺-DE"
       - "🇮🇷 VLESS 111 t.me/iProxyChannel"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
@@ -4083,7 +4093,7 @@ proxy-groups:
       - "🇮🇷 🔒 SS-TCP-NA 🇮🇷 IR-94.139.180.31:1990"
       - "🇮🇷 🔒 SS-TCP-NA 🇮🇷 IR-37.202.228.102:8443"
       - "🇮🇷 🔒 SS-TCP-NA 🇮🇷 IR-81.12.33.14:8080"
-      - "🇮🇷 RELAY🚩 | de.mitivpn.in.net-443 | 48.27ms"
+      - "🇮🇷 RELAY🚩 | de.mitivpn.in.net-443 | 32.72ms"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-86.54.42.143:8880"
       - "🇮🇷 🔒 VM-TCP-NONE 🇮🇷 IR-5.202.19.74:3535"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.67:1080"
@@ -4096,21 +4106,27 @@ proxy-groups:
       - "🇮🇷 🔒 VM-HTTPUPGRADE-NA 🇮🇷 IR-109.122.244.189:4345"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-37.202.225.110:5380"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.182.151.218:5381"
-      - "🇮🇷 REALITY|IR🇮🇷 | p1tun0.greewebservices.ir-38820 | 371.53ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | Racknarock.sorixset.ir-4123 | 444.69ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | g1.haxat.bestvbest.ir-20610 | 450.53ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | tun12.momasvps.ir-5018 | 419.62ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | jsv-ir.jmovies.ir-443 | 571.87ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | 37.202.228.56-443 | 226.39ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | mojif.fusetea.ir-1080 | 557.74ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | ir1.mobileemdad.top-443 | 247.93ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | p2tun0.greewebservices.ir-28820 | 421.47ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | ger2.soft98ver2.com-305 | 345.34ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | p1tun01.greewebservices.ir-38830 | 376.85ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | workshop.pingxoxo.info-36171 | 249.32ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | g4.haxat.bestvbest.ir-56126 | 433.28ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | p2tun0.greewebservices.ir-28820 | 542.51ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | srv1.segara.ir-8443 | 444.2ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | srv1.segara.ir-8443 | 331.03ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | ir4.mobileemdad.top-443 | 213.43ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | g1.haxat.bestvbest.ir-20610 | 341.17ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | jsv-ir.jmovies.ir-443 | 680.14ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | 37.202.228.56-443 | 157.5ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | p2tun0.greewebservices.ir-28820 | 325.75ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | srv3.segara.ir-8443 | 342.15ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | dl1.uploadeliasiran03.ir-443 | 319.74ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | p2tun0.greewebservices.ir-28820 | 168.24ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | p1tun01.greewebservices.ir-38830 | 256.07ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | 79.175.189.121-40021 | 162.85ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | fst.mobistora.ir-443 | 264.26ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | 176.120.17.194-443 | 85.3ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | irfuir.azad0namah.ir-2093 | 346.8ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | workshop.pingxoxo.info-36171 | 227.95ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | g4.haxat.bestvbest.ir-56126 | 335.52ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | wsfdje.hospitaldt.ir-15222 | 282.4ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | odinnda.hospitaldt.ir-5273 | 356.61ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | dashboard.wingerdt.com-11147 | 189.03ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | app.wingerdt.com-18191 | 216.91ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | p2tun0.greewebservices.ir-28820 | 327.6ms"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-194.32.214.94:2096"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-62.60.146.32:38820"
       - "🇮🇷 🔒 VL-XHTTP-RLT 🇮🇷 IR-5.202.4.153:443"
@@ -4130,7 +4146,6 @@ proxy-groups:
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-37.202.233.89:8443"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-78.110.120.38:443"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-85.9.105.114:20610"
-      - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-176.120.17.194:443"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-85.9.105.114:56126"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-109.94.164.233:36171"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-78.157.61.61:8443"
@@ -4180,52 +4195,58 @@ proxy-groups:
       - "🇮🇷 🔒 VL-TCP-NONE 🇮🇷 IR-31.216.62.178:8002"
       - "🇮🇷 🔒 VL-GRPC-TLS 🇮🇷 IR-194.50.216.61:443"
       - "🇮🇷 🌱 - Tel:  @Hddify - 1"
-      - "🇮🇷 IR🇮🇷 | s1.connect.labex.pro-1007 | 243.72ms"
-      - "🇮🇷 IR🇮🇷 | s1.connect.labex.pro-1007 | 240.46ms"
-      - "🇮🇷 IR🇮🇷 | s1.connect.bloroxy.net-1074 | 264.27ms"
-      - "🇮🇷 IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 174.38ms"
-      - "🇮🇷 IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 190.06ms"
-      - "🇮🇷 IR🇮🇷 | dashboard.ojestore.top-5381 | 395.67ms"
-      - "🇮🇷 IR🇮🇷 | dashboard.ojestore.top-5381 | 392.64ms"
-      - "🇮🇷 IR🇮🇷 | dashboard.ojeshop.top-5380 | 391.29ms"
-      - "🇮🇷 IR🇮🇷 | dashboard.ojeshop.top-5380 | 319.32ms"
-      - "🇮🇷 IR🇮🇷 | dashboard.ojedata.top-5382 | 543.19ms"
-      - "🇮🇷 IR🇮🇷 | dashboard.ojedata.top-5382 | 495.23ms"
-      - "🇮🇷 IR🇮🇷 | asiatun.roshdiran1.ir-4345 | 886.13ms"
-      - "🇮🇷 IR🇮🇷 | asiatun.roshdiran1.ir-4242 | 529.82ms"
-      - "🇮🇷 IR🇮🇷 | NlS3.zelnora.ir-55306 | 372.07ms"
-      - "🇮🇷 IR🇮🇷 | 212.80.8.184-443 | 230.76ms"
-      - "🇮🇷 RELAY🚩 | pages.dev-443 | 37.77ms"
-      - "🇮🇷 IR🇮🇷 | webassets.cafebazaar.ir-443 | 1524.62ms"
-      - "🇮🇷 TELEGRAM---@MTMVPN---@MTMVPN---@MTMVPN---@MTMVPN&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#RELAY🚩 | lucasjow.us.ci-443 | 13.72ms"
-      - "🇮🇷 IR🇮🇷 | test.nvclud.ir-1022 | 388.7ms"
-      - "🇮🇷 Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=serv2.servvadd.org&fp=chrome&type=ws&allowInsecure=0&sni=serv2.servvadd.org#IR🇮🇷 | serv2.servvadd.org-443 | 549.4ms"
-      - "🇮🇷 RELAY🚩 | SAnDWORm.pagEs.DEV-443 | 50.19ms"
-      - "🇮🇷 IR🇮🇷 | g1.sabet1.blazevx.ir-31913 | 474.93ms"
-      - "🇮🇷 IR🇮🇷 | s2.zynetraq.ir-2087 | 454.61ms"
-      - "🇮🇷 IR🇮🇷 | kaveh4.gofuc7f.ir-8443 | 746.49ms"
-      - "🇮🇷 IR🇮🇷 | callme.restaurantcloud.ir-6002 | 357.8ms"
-      - "🇮🇷 IR🇮🇷 | ffd7d2055bc64724.2f6.ir-8001 | 792.09ms"
-      - "🇮🇷 IR🇮🇷 | s3.lemvuno.ir-2087 | 372.59ms"
-      - "🇮🇷 IR🇮🇷 | lizardf1.fastshop11.ir-2095 | 552.39ms"
-      - "🇮🇷 IR🇮🇷 | docs.sslforfree.shop-2083 | 290.37ms"
-      - "🇮🇷 IR🇮🇷 | s9.femqera.ir-2087 | 442.13ms"
-      - "🇮🇷 IR🇮🇷+|+37.32.30.203-9147+|+222.09ms"
-      - "🇮🇷 IR🇮🇷+|+37.32.29.37-9147+|+234.59ms"
-      - "🇮🇷 IR🇮🇷+|+37.32.29.37-9147+|+221.38ms"
-      - "🇮🇷 IR🇮🇷+|+188.121.123.142-9118+|+225.02ms"
-      - "🇮🇷 IR🇮🇷+|+Eygelshoven-NL.mrapanel.shop-1080+|+274.21ms"
-      - "🇮🇷 IR🇮🇷+|+p1tun2.greewebservices.ir-2060+|+362.66ms"
-      - "🇮🇷 IR🇮🇷+|+iranspeedteststatus.10326.garqino.ir-10761+|+363.04ms"
-      - "🇮🇷 IR🇮🇷+|+p1tun2.greewebservices.ir-2060+|+350.87ms"
-      - "🇮🇷 IR🇮🇷+|+p2tun3.greewebservices.ir-1030+|+374.8ms"
-      - "🇮🇷 IR🇮🇷+|+iranivew.curtvip.ir-20410+|+361.56ms"
-      - "🇮🇷 IR🇮🇷+|+iranibestv1.pingxoxo.info-10210+|+237.85ms"
-      - "🇮🇷 IR🇮🇷+|+ipxvision.blazevx.ir-31913+|+364.23ms"
-      - "🇮🇷 IR🇮🇷+|+p2tun3.greewebservices.ir-1030+|+218.69ms"
-      - "🇮🇷 IR🇮🇷+|+trohop.sarzaminshadi13.ir-2060+|+779.76ms"
-      - "🇮🇷 IR🇮🇷+|+p2tun3.greewebservices.ir-1030+|+440.17ms"
-      - "🇮🇷 IR🇮🇷+|+mojif.fusetea.ir-2089+|+471.93ms"
+      - "🇮🇷 IR🇮🇷 | s1.connect.labex.pro-1007 | 178.69ms"
+      - "🇮🇷 IR🇮🇷 | s1.connect.labex.pro-1007 | 288.01ms"
+      - "🇮🇷 IR🇮🇷 | s1.connect.bloroxy.net-1074 | 209.18ms"
+      - "🇮🇷 IR🇮🇷 | ir.yzcq.ir-2050 | 336.34ms"
+      - "🇮🇷 IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 105.72ms"
+      - "🇮🇷 IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 101.51ms"
+      - "🇮🇷 IR🇮🇷 | dashboard.ojestore.top-5381 | 277.45ms"
+      - "🇮🇷 IR🇮🇷 | dashboard.ojeshop.top-5380 | 258.25ms"
+      - "🇮🇷 IR🇮🇷 | dashboard.ojedata.top-5382 | 416.7ms"
+      - "🇮🇷 IR🇮🇷 | NlS3.zelnora.ir-55306 | 253.97ms"
+      - "🇮🇷 RELAY🚩 | pages.dev-443 | 8.22ms"
+      - "🇮🇷 IR🇮🇷 | 185.126.6.177-5645 | 165.44ms"
+      - "🇮🇷 IR🇮🇷 | 62.220.121.35-443 | 160.81ms"
+      - "🇮🇷 IR🇮🇷 | soft98.ir-443 | 494.92ms"
+      - "🇮🇷 IR🇮🇷 | tun1.plasmoon.ir-2026 | 526.81ms"
+      - "🇮🇷 IR🇮🇷 | webassets.cafebazaar.ir-443 | 907.15ms"
+      - "🇮🇷 TELEGRAM---MARAMBASHI---MARAMBASHI---MARAMBASHI---MARAMBASHI&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#RELAY🚩 | lucasjow.us.ci-443 | 2.51ms"
+      - "🇮🇷 Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=serv2.servvadd.org&fp=chrome&type=ws&allowInsecure=0&sni=serv2.servvadd.org#IR🇮🇷 | serv2.servvadd.org-443 | 438.32ms"
+      - "🇮🇷 RELAY🚩 | SAnDWORm.pagEs.DEV-443 | 24.01ms"
+      - "🇮🇷 IR🇮🇷 | g1.sabet1.blazevx.ir-31913 | 326.51ms"
+      - "🇮🇷 RELAY🚩 | www.speedtest.net-2095 | 12.76ms"
+      - "🇮🇷 RELAY🚩 | p4r34m.hendevaneh.sbs-443 | 21.98ms"
+      - "🇮🇷 IR🇮🇷 | ask.w-ert.org-40289 | 174.15ms"
+      - "🇮🇷 RELAY🚩 | sslcert.okamii1.ir-2083 | 184.82ms"
+      - "🇮🇷 IR🇮🇷 | 010uk.nimhub.ir-1024 | 565.66ms"
+      - "🇮🇷 IR🇮🇷 | s2.zynetraq.ir-2087 | 329.92ms"
+      - "🇮🇷 IR🇮🇷 | dl3.gooniforoshi.fun-443 | 218.34ms"
+      - "🇮🇷 RELAY🚩 | test-teSt-tEsT-teSt.pagES.DEv-443 | 28.79ms"
+      - "🇮🇷 IR🇮🇷 | kaveh4.gofuc7f.ir-2096 | 496.77ms"
+      - "🇮🇷 IR🇮🇷 | iron4.gofuc7f.ir-2083 | 502.03ms"
+      - "🇮🇷 IR🇮🇷 | ffd7d2055bc64724.2f6.ir-8001 | 428.04ms"
+      - "🇮🇷 IR🇮🇷 | s3.lemvuno.ir-2087 | 336.81ms"
+      - "🇮🇷 IR🇮🇷 | skyroom.online-443 | 199.87ms"
+      - "🇮🇷 IR🇮🇷 | tun1.plasmoon.ir-2050 | 510.98ms"
+      - "🇮🇷 IR🇮🇷+|+87.107.114.36-8445+|+156.77ms"
+      - "🇮🇷 IR🇮🇷+|+87.107.114.36-8445+|+156.38ms"
+      - "🇮🇷 IR🇮🇷+|+37.32.29.37-9147+|+168.57ms"
+      - "🇮🇷 IR🇮🇷+|+185.126.3.131-8080+|+159.72ms"
+      - "🇮🇷 IR🇮🇷+|+185.126.3.131-8080+|+160.09ms"
+      - "🇮🇷 IR🇮🇷+|+Eygelshoven-NL.mrapanel.shop-1080+|+122ms"
+      - "🇮🇷 IR🇮🇷+|+p1tun2.greewebservices.ir-2060+|+285.98ms"
+      - "🇮🇷 IR🇮🇷+|+p1tun2.greewebservices.ir-2060+|+342.26ms"
+      - "🇮🇷 IR🇮🇷+|+iranivew.curtvip.ir-20410+|+427.65ms"
+      - "🇮🇷 IR🇮🇷+|+iranibestv1.pingxoxo.info-10210+|+238.59ms"
+      - "🇮🇷 IR🇮🇷+|+ipxvision.blazevx.ir-31913+|+337.91ms"
+      - "🇮🇷 IR🇮🇷+|+ser2.plasmoon.ir-2027+|+436.31ms"
+      - "🇮🇷 IR🇮🇷+|+ser2.plasmoon.ir-2027+|+681.12ms"
+      - "🇮🇷 IR🇮🇷+|+ukohop.sarzaminshadi13.ir-6606+|+443.87ms"
+      - "🇮🇷 IR🇮🇷+|+trohop.sarzaminshadi13.ir-2060+|+660.59ms"
+      - "🇮🇷 IR🇮🇷+|+ddehop.sarzaminshadi13.ir-1990+|+710.98ms"
+      - "🇮🇷 IR🇮🇷+|+185.126.6.177-8080+|+164.79ms"
+      - "🇮🇷 IR🇮🇷+|+ser1.plasmoon.ir-2028+|+534.75ms"
       - "🇮🇷 🔒 VL-TCP-RLT 🇮🇷 IR-62.60.146.58:28820-1"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.66:1080"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.68:1074"
@@ -4234,33 +4255,23 @@ proxy-groups:
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.67:1170"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.67:1074"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.139.183.66:1170"
-      - "🇮🇷 🆔soskeynet 🔓 VM-TCP-N/A 🇮🇷 IR 236ms"
-      - "🇮🇷 🆔capoit 🔒 VL-XHTTP-N/A 🇮🇷 IR 440ms"
-      - "🇮🇷 🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 396ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VM-GRPC- ❔ XX 219ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-WS-N/A 🇮🇷 IR 650ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 225ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 268ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 279ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 249ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 229ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 241ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 260ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 248ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 555ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 387ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 324ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 415ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 407ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 274ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-XHTTP- ❔ XX 385ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-XHTTP- 🇮🇷 IR 224ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-XHTTP- 🇮🇷 IR 503ms"
-      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- 🇮🇷 IR 474ms"
-      - "🇮🇷 🆔v2ray1_ng 🔒 VL-GRPC- 🇮🇷 IR down"
-      - "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 686ms"
-      - "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 708ms"
-      - "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 682ms"
+      - "🇮🇷 🆔soskeynet 🔓 VM-TCP-N/A 🇮🇷 IR 347ms"
+      - "🇮🇷 🆔capoit 🔒 VL-XHTTP-N/A ❔ XX 362ms"
+      - "🇮🇷 🆔ar14n24b 🔒 VM-TCP- ❔ XX 349ms"
+      - "🇮🇷 🆔ar14n24b 🔓 VL--N/A ❔ XX 354ms"
+      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 365ms"
+      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 238ms"
+      - "🇮🇷 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 258ms"
+      - "🇮🇷 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 426ms"
+      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX down"
+      - "🇮🇷 🆔ar14n24b 🔒 VL-TCP-N/A ❔ XX 353ms"
+      - "🇮🇷 🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A ❔ XX 485ms"
+      - "🇮🇷 🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A ❔ XX 459ms"
+      - "🇮🇷 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX 346ms"
+      - "🇮🇷 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX down"
+      - "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 549ms"
+      - "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 542ms"
+      - "🇮🇷 🆔madshopx 🔓 VL-WS-N/A ❔ XX 530ms"
       - "🇮🇷 @DeltaKroneckerGithub"
       - "🇮🇷 @DeltaKroneckerGithub-1"
       - "🇮🇷 @DeltaKroneckerGithub-2"
@@ -4272,6 +4283,7 @@ proxy-groups:
       - "🇮🇷 @DeltaKroneckerGithub-8"
       - "🇮🇷 @DeltaKroneckerGithub-9"
       - "🇮🇷 @DeltaKroneckerGithub-10"
+      - "🇮🇷 vmess-92.42.203.240:2052"
       - "🇮🇷 🍄 - Tel:  @Hddify - 9"
       - "🇮🇷 🍄 - Tel:  @Hddify - 11"
       - "🇮🇷 🍄 - Tel:  @Hddify - 13"
@@ -4281,13 +4293,11 @@ proxy-groups:
       - "🇮🇷 072-ws-tls ✂️@GheychiAmoozesh"
       - "🇮🇷 🔒 VL-XHTTP-TLS 🇮🇷 IR-212.80.9.153:2087-1"
       - "🇮🇷 @DeltaKroneckerGithub-11"
-      - "🇮🇷 @DeltaKroneckerGithub-12"
       - "🇮🇷 🚀 - @Hddify - 1"
       - "🇮🇷 🚀 - @Hddify - 4"
       - "🇮🇷 🚀 - @Hddify - 8"
       - "🇮🇷 🚀 - @Hddify - 14"
       - "🇮🇷 🚀 - @Hddify - 19"
-      - "🇮🇷 🇩🇪 | @WhiteDNS | DE258|1.3MB/s|DNSOK|GPT⁺-DE"
       - "🇮🇷 VLESS 111 t.me/iProxyChannel"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"

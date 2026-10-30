@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -696,21 +730,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇹🇷 REALITY|TR🇹🇷 | tr.zanzelo.ir-3022 | 400.14ms"
-    type: "vless"
-    server: "tr.zanzelo.ir"
-    port: 3022
-    uuid: "ce334334-3ab8-45a2-8af7-f151f413e402"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "play.google.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "KVrKzcMWnFc8-s2Cre3PUS3ojMvugd1BxS9on54vBW0"
-      short-id: "f2e1c0296f7f5a8a"
-  - name: "🇹🇷 REALITY|TR🇹🇷 | 193.223.107.107-1932 | 148.91ms"
+  - name: "🇹🇷 REALITY|TR🇹🇷 | 193.223.107.107-1932 | 93.54ms"
     type: "vless"
     server: "193.223.107.107"
     port: 1932
@@ -722,7 +742,7 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
-  - name: "🇹🇷 REALITY|TR🇹🇷 | 185.98.63.6-8443 | 144.96ms"
+  - name: "🇹🇷 REALITY|TR🇹🇷 | 185.98.63.6-8443 | 83.94ms"
     type: "vless"
     server: "185.98.63.6"
     port: 8443
@@ -735,21 +755,7 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
-  - name: "🇹🇷 REALITY|TR🇹🇷 | trn26.mobileemdad.top-443 | 313.93ms"
-    type: "vless"
-    server: "trn26.mobileemdad.top"
-    port: 443
-    uuid: "50742bb0-dbde-4e66-a0f2-72c721d57ad6"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "delivery.mp.microsoft.com"
-    client-fingerprint: "edge"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "PjR-SM4fOm2fY4mTqWoqZDRyxontvpailM0gBqUxlUQ"
-      short-id: "aefc7f3722"
-  - name: "🇹🇷 REALITY|TR🇹🇷 | 138.249.20.37-443 | 179.42ms"
+  - name: "🇹🇷 REALITY|TR🇹🇷 | 138.249.20.37-443 | 137.78ms"
     type: "vless"
     server: "138.249.20.37"
     port: 443
@@ -763,18 +769,6 @@ proxies:
     reality-opts:
       public-key: "b-Cm9hX-3UHsS1L_lnUB6AMjuKhlN1IDdBbZ506itjI"
       short-id: "00bca5982f82d083"
-  - name: "🇹🇷 REALITY|TR🇹🇷 | 107.161.174.26-443 | 172.87ms"
-    type: "vless"
-    server: "107.161.174.26"
-    port: 443
-    uuid: "069ba4cf-e8af-4561-b11e-18bd07b0dbd3"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "books.blackbigdog.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "N8tPKh6gTyc6L5GOmBn_3wIy707a-5QYB0FrF2HigUc"
   - name: "🇹🇷 🔒 VL-TCP-RLT 🇹🇷 TR-202.78.174.198:443"
     type: "vless"
     server: "202.78.174.198"
@@ -1031,6 +1025,77 @@ proxies:
     reality-opts:
       public-key: "RVqny9xY821kUGqKQMzAWHeWjt_OrYw2Hn5poqH0lAs"
       short-id: "6318bc577da67e29"
+  - name: "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.9:3090"
+    type: "vless"
+    server: "93.190.9.9"
+    port: 3090
+    uuid: "c4a36c29-39db-4782-b7cb-6e391461a999"
+    udp: true
+    tls: false
+    network: "grpc"
+    grpc-opts:
+      grpc-service-name: "vless"
+  - name: "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.63:3090"
+    type: "vless"
+    server: "93.190.9.63"
+    port: 3090
+    uuid: "37fc3a9f-72e0-4b15-84ab-1455f028147a"
+    udp: true
+    tls: false
+    network: "grpc"
+    grpc-opts:
+      grpc-service-name: "vless"
+  - name: "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.138:3090"
+    type: "vless"
+    server: "93.190.9.138"
+    port: 3090
+    uuid: "37fc3a9f-72e0-4b15-84ab-1455f028147a"
+    udp: true
+    tls: false
+    network: "grpc"
+    grpc-opts:
+      grpc-service-name: "vless"
+  - name: "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.8.149:3090"
+    type: "vless"
+    server: "93.190.8.149"
+    port: 3090
+    uuid: "37fc3a9f-72e0-4b15-84ab-1455f028147a"
+    udp: true
+    tls: false
+    network: "grpc"
+    grpc-opts:
+      grpc-service-name: "vless"
+  - name: "🇹🇷 TR🇹🇷 | 206.1.101.85-42654 | 136.61ms"
+    type: "vless"
+    server: "206.1.101.85"
+    port: 42654
+    uuid: "893845c5-8e4a-48d5-8a85-622f5b7ea950"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "206.1.101.85"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/"
+  - name: "🇹🇷 TR🇹🇷 | trn.ulanbatur.pineaple.ir-8080 | 465.99ms"
+    type: "vless"
+    server: "trn.ulanbatur.pineaple.ir"
+    port: 8080
+    uuid: "38d7d915-6d4f-4149-b8f3-10e4c29a9dca"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+  - name: "🇹🇷 TR🇹🇷+|+istanbul07.npvnot.com-995+|+180.69ms"
+    type: "ss"
+    server: "istanbul07.npvnot.com"
+    port: 995
+    cipher: "aes-256-gcm"
+    password: "OWJjMTUwNTNmZjhlZjk2ODNjYjBiZjRiNzRlM2Zj"
+    udp: true
   - name: "🇹🇷 🔒 VL-TCP-TLS 🇹🇷 TR-169.150.215.80:8443"
     type: "vless"
     server: "169.150.215.80"
@@ -1051,36 +1116,13 @@ proxies:
     network: "tcp"
     servername: "ams1.fromblancwithlove.com"
     client-fingerprint: "chrome"
-  - name: "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.9:3090"
-    type: "vless"
-    server: "93.190.9.9"
-    port: 3090
-    uuid: "c4a36c29-39db-4782-b7cb-6e391461a999"
+  - name: "🇹🇷 🔒 SS-TCP-NA 🇹🇷 TR-194.116.236.3:995"
+    type: "ss"
+    server: "194.116.236.3"
+    port: 995
+    cipher: "aes-256-gcm"
+    password: "OWJjMTUwNTNmZjhlZjk2ODNjYjBiZjRiNzRlM2Zj"
     udp: true
-    tls: false
-    network: "grpc"
-    grpc-opts:
-      grpc-service-name: "vless"
-  - name: "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.8.149:3090"
-    type: "vless"
-    server: "93.190.8.149"
-    port: 3090
-    uuid: "37fc3a9f-72e0-4b15-84ab-1455f028147a"
-    udp: true
-    tls: false
-    network: "grpc"
-    grpc-opts:
-      grpc-service-name: "vless"
-  - name: "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.138:3090"
-    type: "vless"
-    server: "93.190.9.138"
-    port: 3090
-    uuid: "37fc3a9f-72e0-4b15-84ab-1455f028147a"
-    udp: true
-    tls: false
-    network: "grpc"
-    grpc-opts:
-      grpc-service-name: "vless"
   - name: "🇹🇷 🔒 VL-TCP-NONE 🇹🇷 TR-206.1.100.133:8080"
     type: "vless"
     server: "206.1.100.133"
@@ -1089,16 +1131,6 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.63:3090"
-    type: "vless"
-    server: "93.190.9.63"
-    port: 3090
-    uuid: "37fc3a9f-72e0-4b15-84ab-1455f028147a"
-    udp: true
-    tls: false
-    network: "grpc"
-    grpc-opts:
-      grpc-service-name: "vless"
   - name: "🇹🇷 🔒 VL-TCP-TLS 🇹🇷 TR-87.249.139.244:8443"
     type: "vless"
     server: "87.249.139.244"
@@ -1108,49 +1140,6 @@ proxies:
     tls: true
     network: "tcp"
     servername: "ams1.fromblancwithlove.com"
-  - name: "🇹🇷 TR🇹🇷 | free.ertebatgoostar.ir-443 | 393.29ms"
-    type: "vmess"
-    server: "free.ertebatgoostar.ir"
-    port: 443
-    uuid: "c9eab439-53bf-46e4-ba58-fc368ae1ee8c"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇹🇷 RELAY🚩 | ccc.010304.xyz-443 | 21.39ms"
-    type: "vless"
-    server: "203.202.232.211"
-    port: 443
-    uuid: "d342d11e-d224-4463-b982-532309285094"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "ccc.010304.xyz"
-    ws-opts:
-      path: "/fp=chrome"
-      headers:
-        Host: "ccc.010304.xyz"
-  - name: "🇹🇷 TR🇹🇷+|+vip.brelux.ir-1080+|+315.47ms"
-    type: "ss"
-    server: "vip.brelux.ir"
-    port: 1080
-    cipher: "chacha20-ietf-poly1305"
-    password: "gCs4favaVa7ErDOoQ2AMpc-QVxA4Q4Jy"
-    udp: true
-  - name: "🇹🇷 🔒 SS-TCP-NA 🇹🇷 TR-194.116.236.3:995"
-    type: "ss"
-    server: "194.116.236.3"
-    port: 995
-    cipher: "aes-256-gcm"
-    password: "OWJjMTUwNTNmZjhlZjk2ODNjYjBiZjRiNzRlM2Zj"
-    udp: true
-  - name: "🇹🇷 🆔soskeynet 🔓 VL-TCP-N/A 🇹🇷 TR 264ms"
-    type: "vless"
-    server: "torwe.dtgitar.com"
-    port: 6055
-    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
-    udp: true
-    tls: false
-    network: "tcp"
   - name: "🇹🇷 🆔configfa 🔒 VL-TCP- 🇹🇷 TR down"
     type: "vless"
     server: "germany24kvlcvkzcxvlqwe312adscrfsdcrc234cef.soft421.ir"
@@ -1164,33 +1153,19 @@ proxies:
     reality-opts:
       public-key: "24qgQiNdIzdKYtFOQDFtB6kN9WKx0gviKirv8Bb4hhI"
       short-id: "86a68a48b7d45f43"
-  - name: "🇹🇷 🆔ar14n24b 🔓 VM-WS-N/A 🇹🇷 TR 189ms"
-    type: "vmess"
-    server: "153.52.92.43"
-    port: 443
-    uuid: "2dd46701-dc47-5cad-997e-0a770090b178"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇹🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 184ms"
+  - name: "🇹🇷 🆔ar14n24b 🔓 VL-TCP-N/A ❔ XX down"
     type: "vless"
-    server: "185.227.137.69"
+    server: "185.71.219.188"
     port: 443
-    uuid: "d7d39bfb-f9e2-4e50-bb72-35dfb9f03db6"
+    uuid: "2107ea1e-26fb-4831-8c3f-fb190bea79f7"
     udp: true
-    tls: true
+    tls: false
     network: "tcp"
-    servername: "www.digiturunc.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "D0XU_vaxhJewIPzWLbXIVHfoq68Jcu48HUp9I4r30xU"
-      short-id: "d211e464747fdf2c"
-  - name: "🇹🇷 🆔ar14n24b 🔒 VL-WS-N/A 🇹🇷 TR 198ms"
+  - name: "🇹🇷 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 168ms"
     type: "vless"
     server: "206.1.101.85"
     port: 42654
-    uuid: "893845c5-8e4a-48d5-8a85-622f5b7ea950"
+    uuid: "5a82be1c-ed6a-4f98-a767-05df0f7be3e7"
     udp: true
     tls: true
     network: "ws"
@@ -1200,18 +1175,14 @@ proxies:
       - "http/1.1"
     ws-opts:
       path: "/"
-  - name: "🇹🇷 🆔ar14n24b 🔓 VL-WS-N/A 🇹🇷 TR 228ms"
-    type: "vless"
-    server: "fqwra.dtgitar.com"
-    port: 20201
-    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
+  - name: "🇹🇷 🆔v2ray1_ng 🔓 VM-WS-N/A ❔ XX down"
+    type: "vmess"
+    server: "153.52.92.43"
+    port: 443
+    uuid: "@Nitro_Skybot@Nitro_Skybot"
+    alterId: 0
+    cipher: "auto"
     udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "play.google.com"
   - name: "🇹🇷 @DeltaKroneckerGithub"
     type: "trojan"
     server: "194.146.26.40"
@@ -1268,11 +1239,11 @@ proxies:
     servername: "www.calmlunch.com"
     ws-opts:
       path: "/assignment"
-  - name: "🇹🇷 vmess-free.ertebatgoostar.ir:443"
+  - name: "🇹🇷 vmess-206.1.101.44:443"
     type: "vmess"
-    server: "free.ertebatgoostar.ir"
+    server: "206.1.101.44"
     port: 443
-    uuid: "118b0abc-c8f6-476a-9777-bc73f6e2548b"
+    uuid: "@Nitro_Skybot@Nitro_Skybot"
     alterId: 0
     cipher: "auto"
     udp: true
@@ -1382,20 +1353,6 @@ proxies:
     reality-opts:
       public-key: "bWIOrQAqUWCrz6BGdwaG42xaV-HEo8sUdGqVktUh0XU"
       short-id: "cc80ef"
-  - name: "🇹🇷 @DeltaKroneckerGithub-11"
-    type: "vless"
-    server: "tr2.h1cloud.net"
-    port: 25021
-    uuid: "2446e2e2-1ce3-4502-9050-1dd32bacc68c"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.samsung.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "od79bUkYtqQtsGrrTdhmkDflx5c9al4vqxwWApvc-Dg"
-      short-id: "17fa3af0924c88b3"
   - name: "🇹🇷 >>@configV2rayNG::TR"
     type: "vless"
     server: "185.123.100.56"
@@ -1422,6 +1379,14 @@ proxies:
     ws-opts:
       headers:
         Host: "www.nihaoyun.top"
+  - name: "🇹🇷 @DeltaKroneckerGithub-11"
+    type: "vmess"
+    server: "free.ertebatgoostar.ir"
+    port: 443
+    uuid: "118b0abc-c8f6-476a-9777-bc73f6e2548b"
+    alterId: 0
+    cipher: "auto"
+    udp: true
   - name: "🇹🇷 VLESS 177 t.me/iProxyChannel"
     type: "vless"
     server: "141.98.118.70"
@@ -1471,12 +1436,9 @@ proxy-groups:
       - "🇹🇷 🔒 SS-TCP-NA 🇹🇷 TR-87.236.166.215:56134"
       - "🇹🇷 🔒 SS-TCP-NA 🇹🇷 TR-87.236.166.166:56137"
       - "🇹🇷 🔒 VM-TCP-NA 🇹🇷 TR-176.53.17.12:443"
-      - "🇹🇷 REALITY|TR🇹🇷 | tr.zanzelo.ir-3022 | 400.14ms"
-      - "🇹🇷 REALITY|TR🇹🇷 | 193.223.107.107-1932 | 148.91ms"
-      - "🇹🇷 REALITY|TR🇹🇷 | 185.98.63.6-8443 | 144.96ms"
-      - "🇹🇷 REALITY|TR🇹🇷 | trn26.mobileemdad.top-443 | 313.93ms"
-      - "🇹🇷 REALITY|TR🇹🇷 | 138.249.20.37-443 | 179.42ms"
-      - "🇹🇷 REALITY|TR🇹🇷 | 107.161.174.26-443 | 172.87ms"
+      - "🇹🇷 REALITY|TR🇹🇷 | 193.223.107.107-1932 | 93.54ms"
+      - "🇹🇷 REALITY|TR🇹🇷 | 185.98.63.6-8443 | 83.94ms"
+      - "🇹🇷 REALITY|TR🇹🇷 | 138.249.20.37-443 | 137.78ms"
       - "🇹🇷 🔒 VL-TCP-RLT 🇹🇷 TR-202.78.174.198:443"
       - "🇹🇷 🔒 VL-TCP-RLT 🇹🇷 TR-151.241.226.201:2053"
       - "🇹🇷 🔒 VL-TCP-RLT 🇹🇷 TR-62.60.233.30:443"
@@ -1496,30 +1458,28 @@ proxy-groups:
       - "🇹🇷 🔒 VL-TCP-RLT 🇹🇷 TR-83.217.9.181:1003"
       - "🇹🇷 🔒 VL-XHTTP-RLT 🇹🇷 TR-83.217.9.220:8443"
       - "🇹🇷 🔒 VL-TCP-RLT 🇹🇷 TR-206.1.96.108:443"
+      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.9:3090"
+      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.63:3090"
+      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.138:3090"
+      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.8.149:3090"
+      - "🇹🇷 TR🇹🇷 | 206.1.101.85-42654 | 136.61ms"
+      - "🇹🇷 TR🇹🇷 | trn.ulanbatur.pineaple.ir-8080 | 465.99ms"
+      - "🇹🇷 TR🇹🇷+|+istanbul07.npvnot.com-995+|+180.69ms"
       - "🇹🇷 🔒 VL-TCP-TLS 🇹🇷 TR-169.150.215.80:8443"
       - "🇹🇷 🔒 VL-TCP-TLS 🇹🇷 TR-169.150.215.77:8443"
-      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.9:3090"
-      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.8.149:3090"
-      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.138:3090"
-      - "🇹🇷 🔒 VL-TCP-NONE 🇹🇷 TR-206.1.100.133:8080"
-      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.63:3090"
-      - "🇹🇷 🔒 VL-TCP-TLS 🇹🇷 TR-87.249.139.244:8443"
-      - "🇹🇷 TR🇹🇷 | free.ertebatgoostar.ir-443 | 393.29ms"
-      - "🇹🇷 RELAY🚩 | ccc.010304.xyz-443 | 21.39ms"
-      - "🇹🇷 TR🇹🇷+|+vip.brelux.ir-1080+|+315.47ms"
       - "🇹🇷 🔒 SS-TCP-NA 🇹🇷 TR-194.116.236.3:995"
-      - "🇹🇷 🆔soskeynet 🔓 VL-TCP-N/A 🇹🇷 TR 264ms"
+      - "🇹🇷 🔒 VL-TCP-NONE 🇹🇷 TR-206.1.100.133:8080"
+      - "🇹🇷 🔒 VL-TCP-TLS 🇹🇷 TR-87.249.139.244:8443"
       - "🇹🇷 🆔configfa 🔒 VL-TCP- 🇹🇷 TR down"
-      - "🇹🇷 🆔ar14n24b 🔓 VM-WS-N/A 🇹🇷 TR 189ms"
-      - "🇹🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 184ms"
-      - "🇹🇷 🆔ar14n24b 🔒 VL-WS-N/A 🇹🇷 TR 198ms"
-      - "🇹🇷 🆔ar14n24b 🔓 VL-WS-N/A 🇹🇷 TR 228ms"
+      - "🇹🇷 🆔ar14n24b 🔓 VL-TCP-N/A ❔ XX down"
+      - "🇹🇷 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 168ms"
+      - "🇹🇷 🆔v2ray1_ng 🔓 VM-WS-N/A ❔ XX down"
       - "🇹🇷 @DeltaKroneckerGithub"
       - "🇹🇷 @DeltaKroneckerGithub-1"
       - "🇹🇷 @DeltaKroneckerGithub-2"
       - "🇹🇷 Türkiye"
       - "🇹🇷 United States"
-      - "🇹🇷 vmess-free.ertebatgoostar.ir:443"
+      - "🇹🇷 vmess-206.1.101.44:443"
       - "🇹🇷 @DeltaKroneckerGithub-3"
       - "🇹🇷 @DeltaKroneckerGithub-4"
       - "🇹🇷 @DeltaKroneckerGithub-5"
@@ -1528,9 +1488,9 @@ proxy-groups:
       - "🇹🇷 @DeltaKroneckerGithub-8"
       - "🇹🇷 @DeltaKroneckerGithub-9"
       - "🇹🇷 @DeltaKroneckerGithub-10"
-      - "🇹🇷 @DeltaKroneckerGithub-11"
       - "🇹🇷 >>@configV2rayNG::TR"
       - "🇹🇷 45. 🇹🇷 Turkey"
+      - "🇹🇷 @DeltaKroneckerGithub-11"
       - "🇹🇷 VLESS 177 t.me/iProxyChannel"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
@@ -1562,12 +1522,9 @@ proxy-groups:
       - "🇹🇷 🔒 SS-TCP-NA 🇹🇷 TR-87.236.166.215:56134"
       - "🇹🇷 🔒 SS-TCP-NA 🇹🇷 TR-87.236.166.166:56137"
       - "🇹🇷 🔒 VM-TCP-NA 🇹🇷 TR-176.53.17.12:443"
-      - "🇹🇷 REALITY|TR🇹🇷 | tr.zanzelo.ir-3022 | 400.14ms"
-      - "🇹🇷 REALITY|TR🇹🇷 | 193.223.107.107-1932 | 148.91ms"
-      - "🇹🇷 REALITY|TR🇹🇷 | 185.98.63.6-8443 | 144.96ms"
-      - "🇹🇷 REALITY|TR🇹🇷 | trn26.mobileemdad.top-443 | 313.93ms"
-      - "🇹🇷 REALITY|TR🇹🇷 | 138.249.20.37-443 | 179.42ms"
-      - "🇹🇷 REALITY|TR🇹🇷 | 107.161.174.26-443 | 172.87ms"
+      - "🇹🇷 REALITY|TR🇹🇷 | 193.223.107.107-1932 | 93.54ms"
+      - "🇹🇷 REALITY|TR🇹🇷 | 185.98.63.6-8443 | 83.94ms"
+      - "🇹🇷 REALITY|TR🇹🇷 | 138.249.20.37-443 | 137.78ms"
       - "🇹🇷 🔒 VL-TCP-RLT 🇹🇷 TR-202.78.174.198:443"
       - "🇹🇷 🔒 VL-TCP-RLT 🇹🇷 TR-151.241.226.201:2053"
       - "🇹🇷 🔒 VL-TCP-RLT 🇹🇷 TR-62.60.233.30:443"
@@ -1587,30 +1544,28 @@ proxy-groups:
       - "🇹🇷 🔒 VL-TCP-RLT 🇹🇷 TR-83.217.9.181:1003"
       - "🇹🇷 🔒 VL-XHTTP-RLT 🇹🇷 TR-83.217.9.220:8443"
       - "🇹🇷 🔒 VL-TCP-RLT 🇹🇷 TR-206.1.96.108:443"
+      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.9:3090"
+      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.63:3090"
+      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.138:3090"
+      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.8.149:3090"
+      - "🇹🇷 TR🇹🇷 | 206.1.101.85-42654 | 136.61ms"
+      - "🇹🇷 TR🇹🇷 | trn.ulanbatur.pineaple.ir-8080 | 465.99ms"
+      - "🇹🇷 TR🇹🇷+|+istanbul07.npvnot.com-995+|+180.69ms"
       - "🇹🇷 🔒 VL-TCP-TLS 🇹🇷 TR-169.150.215.80:8443"
       - "🇹🇷 🔒 VL-TCP-TLS 🇹🇷 TR-169.150.215.77:8443"
-      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.9:3090"
-      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.8.149:3090"
-      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.138:3090"
-      - "🇹🇷 🔒 VL-TCP-NONE 🇹🇷 TR-206.1.100.133:8080"
-      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.63:3090"
-      - "🇹🇷 🔒 VL-TCP-TLS 🇹🇷 TR-87.249.139.244:8443"
-      - "🇹🇷 TR🇹🇷 | free.ertebatgoostar.ir-443 | 393.29ms"
-      - "🇹🇷 RELAY🚩 | ccc.010304.xyz-443 | 21.39ms"
-      - "🇹🇷 TR🇹🇷+|+vip.brelux.ir-1080+|+315.47ms"
       - "🇹🇷 🔒 SS-TCP-NA 🇹🇷 TR-194.116.236.3:995"
-      - "🇹🇷 🆔soskeynet 🔓 VL-TCP-N/A 🇹🇷 TR 264ms"
+      - "🇹🇷 🔒 VL-TCP-NONE 🇹🇷 TR-206.1.100.133:8080"
+      - "🇹🇷 🔒 VL-TCP-TLS 🇹🇷 TR-87.249.139.244:8443"
       - "🇹🇷 🆔configfa 🔒 VL-TCP- 🇹🇷 TR down"
-      - "🇹🇷 🆔ar14n24b 🔓 VM-WS-N/A 🇹🇷 TR 189ms"
-      - "🇹🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 184ms"
-      - "🇹🇷 🆔ar14n24b 🔒 VL-WS-N/A 🇹🇷 TR 198ms"
-      - "🇹🇷 🆔ar14n24b 🔓 VL-WS-N/A 🇹🇷 TR 228ms"
+      - "🇹🇷 🆔ar14n24b 🔓 VL-TCP-N/A ❔ XX down"
+      - "🇹🇷 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 168ms"
+      - "🇹🇷 🆔v2ray1_ng 🔓 VM-WS-N/A ❔ XX down"
       - "🇹🇷 @DeltaKroneckerGithub"
       - "🇹🇷 @DeltaKroneckerGithub-1"
       - "🇹🇷 @DeltaKroneckerGithub-2"
       - "🇹🇷 Türkiye"
       - "🇹🇷 United States"
-      - "🇹🇷 vmess-free.ertebatgoostar.ir:443"
+      - "🇹🇷 vmess-206.1.101.44:443"
       - "🇹🇷 @DeltaKroneckerGithub-3"
       - "🇹🇷 @DeltaKroneckerGithub-4"
       - "🇹🇷 @DeltaKroneckerGithub-5"
@@ -1619,9 +1574,9 @@ proxy-groups:
       - "🇹🇷 @DeltaKroneckerGithub-8"
       - "🇹🇷 @DeltaKroneckerGithub-9"
       - "🇹🇷 @DeltaKroneckerGithub-10"
-      - "🇹🇷 @DeltaKroneckerGithub-11"
       - "🇹🇷 >>@configV2rayNG::TR"
       - "🇹🇷 45. 🇹🇷 Turkey"
+      - "🇹🇷 @DeltaKroneckerGithub-11"
       - "🇹🇷 VLESS 177 t.me/iProxyChannel"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
@@ -1654,12 +1609,9 @@ proxy-groups:
       - "🇹🇷 🔒 SS-TCP-NA 🇹🇷 TR-87.236.166.215:56134"
       - "🇹🇷 🔒 SS-TCP-NA 🇹🇷 TR-87.236.166.166:56137"
       - "🇹🇷 🔒 VM-TCP-NA 🇹🇷 TR-176.53.17.12:443"
-      - "🇹🇷 REALITY|TR🇹🇷 | tr.zanzelo.ir-3022 | 400.14ms"
-      - "🇹🇷 REALITY|TR🇹🇷 | 193.223.107.107-1932 | 148.91ms"
-      - "🇹🇷 REALITY|TR🇹🇷 | 185.98.63.6-8443 | 144.96ms"
-      - "🇹🇷 REALITY|TR🇹🇷 | trn26.mobileemdad.top-443 | 313.93ms"
-      - "🇹🇷 REALITY|TR🇹🇷 | 138.249.20.37-443 | 179.42ms"
-      - "🇹🇷 REALITY|TR🇹🇷 | 107.161.174.26-443 | 172.87ms"
+      - "🇹🇷 REALITY|TR🇹🇷 | 193.223.107.107-1932 | 93.54ms"
+      - "🇹🇷 REALITY|TR🇹🇷 | 185.98.63.6-8443 | 83.94ms"
+      - "🇹🇷 REALITY|TR🇹🇷 | 138.249.20.37-443 | 137.78ms"
       - "🇹🇷 🔒 VL-TCP-RLT 🇹🇷 TR-202.78.174.198:443"
       - "🇹🇷 🔒 VL-TCP-RLT 🇹🇷 TR-151.241.226.201:2053"
       - "🇹🇷 🔒 VL-TCP-RLT 🇹🇷 TR-62.60.233.30:443"
@@ -1679,30 +1631,28 @@ proxy-groups:
       - "🇹🇷 🔒 VL-TCP-RLT 🇹🇷 TR-83.217.9.181:1003"
       - "🇹🇷 🔒 VL-XHTTP-RLT 🇹🇷 TR-83.217.9.220:8443"
       - "🇹🇷 🔒 VL-TCP-RLT 🇹🇷 TR-206.1.96.108:443"
+      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.9:3090"
+      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.63:3090"
+      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.138:3090"
+      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.8.149:3090"
+      - "🇹🇷 TR🇹🇷 | 206.1.101.85-42654 | 136.61ms"
+      - "🇹🇷 TR🇹🇷 | trn.ulanbatur.pineaple.ir-8080 | 465.99ms"
+      - "🇹🇷 TR🇹🇷+|+istanbul07.npvnot.com-995+|+180.69ms"
       - "🇹🇷 🔒 VL-TCP-TLS 🇹🇷 TR-169.150.215.80:8443"
       - "🇹🇷 🔒 VL-TCP-TLS 🇹🇷 TR-169.150.215.77:8443"
-      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.9:3090"
-      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.8.149:3090"
-      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.138:3090"
-      - "🇹🇷 🔒 VL-TCP-NONE 🇹🇷 TR-206.1.100.133:8080"
-      - "🇹🇷 🔒 VL-GRPC-NONE 🇹🇷 TR-93.190.9.63:3090"
-      - "🇹🇷 🔒 VL-TCP-TLS 🇹🇷 TR-87.249.139.244:8443"
-      - "🇹🇷 TR🇹🇷 | free.ertebatgoostar.ir-443 | 393.29ms"
-      - "🇹🇷 RELAY🚩 | ccc.010304.xyz-443 | 21.39ms"
-      - "🇹🇷 TR🇹🇷+|+vip.brelux.ir-1080+|+315.47ms"
       - "🇹🇷 🔒 SS-TCP-NA 🇹🇷 TR-194.116.236.3:995"
-      - "🇹🇷 🆔soskeynet 🔓 VL-TCP-N/A 🇹🇷 TR 264ms"
+      - "🇹🇷 🔒 VL-TCP-NONE 🇹🇷 TR-206.1.100.133:8080"
+      - "🇹🇷 🔒 VL-TCP-TLS 🇹🇷 TR-87.249.139.244:8443"
       - "🇹🇷 🆔configfa 🔒 VL-TCP- 🇹🇷 TR down"
-      - "🇹🇷 🆔ar14n24b 🔓 VM-WS-N/A 🇹🇷 TR 189ms"
-      - "🇹🇷 🆔ar14n24b 🔒 VL-TCP- ❔ XX 184ms"
-      - "🇹🇷 🆔ar14n24b 🔒 VL-WS-N/A 🇹🇷 TR 198ms"
-      - "🇹🇷 🆔ar14n24b 🔓 VL-WS-N/A 🇹🇷 TR 228ms"
+      - "🇹🇷 🆔ar14n24b 🔓 VL-TCP-N/A ❔ XX down"
+      - "🇹🇷 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 168ms"
+      - "🇹🇷 🆔v2ray1_ng 🔓 VM-WS-N/A ❔ XX down"
       - "🇹🇷 @DeltaKroneckerGithub"
       - "🇹🇷 @DeltaKroneckerGithub-1"
       - "🇹🇷 @DeltaKroneckerGithub-2"
       - "🇹🇷 Türkiye"
       - "🇹🇷 United States"
-      - "🇹🇷 vmess-free.ertebatgoostar.ir:443"
+      - "🇹🇷 vmess-206.1.101.44:443"
       - "🇹🇷 @DeltaKroneckerGithub-3"
       - "🇹🇷 @DeltaKroneckerGithub-4"
       - "🇹🇷 @DeltaKroneckerGithub-5"
@@ -1711,9 +1661,9 @@ proxy-groups:
       - "🇹🇷 @DeltaKroneckerGithub-8"
       - "🇹🇷 @DeltaKroneckerGithub-9"
       - "🇹🇷 @DeltaKroneckerGithub-10"
-      - "🇹🇷 @DeltaKroneckerGithub-11"
       - "🇹🇷 >>@configV2rayNG::TR"
       - "🇹🇷 45. 🇹🇷 Turkey"
+      - "🇹🇷 @DeltaKroneckerGithub-11"
       - "🇹🇷 VLESS 177 t.me/iProxyChannel"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"

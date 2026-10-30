@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -581,14 +615,7 @@ proxies:
     cipher: "aes-256-cfb"
     password: "aLpQtfEZe445QyHk"
     udp: true
-  - name: "🇧🇬 6.bmi.ir.asopardaz.ir"
-    type: "ss"
-    server: "6.bmi.ir.asopardaz.ir"
-    port: 35176
-    cipher: "2022-blake3-aes-256-gcm"
-    password: "NjcyNmVjMTU1ZWU5NDA5ZDk0ODg1NWM1MzJjZTE3NDk=:MmRhODU5Mzc5M2Q5NDUwOTg0OTE2M2IxOTIxY2Y0NDc="
-    udp: true
-  - name: "🇧🇬 REALITY|BG🇧🇬 | nl1.cleanset.net-45821 | 245.93ms"
+  - name: "🇧🇬 REALITY|BG🇧🇬 | nl1.cleanset.net-45821 | 164.1ms"
     type: "vless"
     server: "nl1.cleanset.net"
     port: 45821
@@ -601,21 +628,20 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "RymFn9pFlHaMQpps5joHsmg0fOeWcaQiMOLR5IIfuWY"
-  - name: "🇧🇬 REALITY|BG🇧🇬 | 6.bmi.ir.asopardaz.ir-8443 | 451.53ms"
+  - name: "🇧🇬 REALITY|BG🇧🇬 | p11real3.greewebservices.ir-2202 | 283.69ms"
     type: "vless"
-    server: "6.bmi.ir.asopardaz.ir"
-    port: 8443
-    uuid: "b223d6cf-6f94-4889-8bcf-263c15881006"
+    server: "p11real3.greewebservices.ir"
+    port: 2202
+    uuid: "f234330e-f9df-46e3-8f60-b2af5173c147"
     udp: true
     tls: true
     network: "tcp"
-    servername: "timeline.www.cloudflare.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
+    servername: "play.googleapis.com"
+    client-fingerprint: "ios"
     reality-opts:
-      public-key: "JtA0d5K6Jnmg35oWP9SDOsc1ceuqaxOsNg33fiPHJQs"
-      short-id: "e915"
-  - name: "🇧🇬 REALITY|BG🇧🇬 | areal1.greewebservices.ir-2425 | 378.9ms"
+      public-key: "xQnXh5EfPDhcEBB7rRiLca33GYrMEeUa35domLL_yA8"
+      short-id: "e3085d4fc679ba12"
+  - name: "🇧🇬 REALITY|BG🇧🇬 | areal1.greewebservices.ir-2425 | 220.4ms"
     type: "vless"
     server: "areal1.greewebservices.ir"
     port: 2425
@@ -628,7 +654,7 @@ proxies:
     reality-opts:
       public-key: "MnPGY1Vo4ZbYdpLRTYHoolv5s_pwO41karyJfnQ0F3o"
       short-id: "9b60d3"
-  - name: "🇧🇬 REALITY|BG🇧🇬 | p2real33.greewebservices.ir-1330 | 320.15ms"
+  - name: "🇧🇬 REALITY|BG🇧🇬 | p2real33.greewebservices.ir-1330 | 122.7ms"
     type: "vless"
     server: "p2real33.greewebservices.ir"
     port: 1330
@@ -641,7 +667,7 @@ proxies:
     reality-opts:
       public-key: "xQnXh5EfPDhcEBB7rRiLca33GYrMEeUa35domLL_yA8"
       short-id: "9b60d3"
-  - name: "🇧🇬 REALITY|BG🇧🇬 | p1real4.greewebservices.ir-1260 | 312.08ms"
+  - name: "🇧🇬 REALITY|BG🇧🇬 | p1real4.greewebservices.ir-1260 | 124.27ms"
     type: "vless"
     server: "p1real4.greewebservices.ir"
     port: 1260
@@ -654,7 +680,7 @@ proxies:
     reality-opts:
       public-key: "xQnXh5EfPDhcEBB7rRiLca33GYrMEeUa35domLL_yA8"
       short-id: "9b60d3"
-  - name: "🇧🇬 REALITY|BG🇧🇬 | p11real1.greewebservices.ir-1020 | 317ms"
+  - name: "🇧🇬 REALITY|BG🇧🇬 | p11real1.greewebservices.ir-1020 | 300.5ms"
     type: "vless"
     server: "p11real1.greewebservices.ir"
     port: 1020
@@ -667,38 +693,9 @@ proxies:
     reality-opts:
       public-key: "GzjL8Jq6iNwatTxuqL9gXElWIUgtOfbbCDaZ_wHG5SY"
       short-id: "9b60d3"
-  - name: "🇧🇬 REALITY|BG🇧🇬 | 93.152.214.248-443 | 56.85ms"
+  - name: "🇧🇬 REALITY|BG🇧🇬 | bg5.univesalsrv.com-443 | 162.6ms"
     type: "vless"
-    server: "93.152.214.248"
-    port: 443
-    uuid: "4b1be712-774c-4b65-8491-a3339e124a70"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "us5.pc-peervax.top"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "v36yrZJ-5Zikx9eh_SXaoDS2GuobOA4_WLagBVO0vxk"
-      short-id: "a9c3f7e2"
-  - name: "🇧🇬 REALITY|BG🇧🇬 | 45.9.156.42-443 | 176.86ms"
-    type: "vless"
-    server: "45.9.156.42"
-    port: 443
-    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "bg5.univesalsrv.com"
-    client-fingerprint: "firefox"
-    reality-opts:
-      public-key: "RDWvDEygSk1eyAQhIK95H9EteFbrS2d9JEjBrco54Bw"
-      short-id: "1a3102bb8e51399e"
-    grpc-opts:
-      grpc-service-name: "gw.v2.RelayService"
-  - name: "🇧🇬 REALITY|BG🇧🇬 | 45.9.156.42-443 | 177.68ms"
-    type: "vless"
-    server: "45.9.156.42"
+    server: "bg5.univesalsrv.com"
     port: 443
     uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
     udp: true
@@ -711,19 +708,20 @@ proxies:
       short-id: "1a3102bb8e51399e"
     grpc-opts:
       grpc-service-name: "gw.v2.RelayService"
-  - name: "🇧🇬 REALITY|BG🇧🇬 | p2real4.greewebservices.ir-1340 | 387.63ms"
+  - name: "🇧🇬 REALITY|BG🇧🇬 | 6.bmi.ir.asopardaz.ir-8443 | 359.02ms"
     type: "vless"
-    server: "p2real4.greewebservices.ir"
-    port: 1340
-    uuid: "2582857a-632b-4c4e-9b67-96213cbaf58c"
+    server: "6.bmi.ir.asopardaz.ir"
+    port: 8443
+    uuid: "2da85937-93d9-4509-8491-63b1921cf447"
     udp: true
     tls: true
     network: "tcp"
-    servername: "play.googleapis.com"
-    client-fingerprint: "ios"
+    servername: "hostgator.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "xQnXh5EfPDhcEBB7rRiLca33GYrMEeUa35domLL_yA8"
-      short-id: "9b60d3"
+      public-key: "JtA0d5K6Jnmg35oWP9SDOsc1ceuqaxOsNg33fiPHJQs"
+      short-id: "e915"
   - name: "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-23.137.251.236:45821"
     type: "vless"
     server: "23.137.251.236"
@@ -793,6 +791,21 @@ proxies:
       short-id: "1be1bd931c98c84a"
     grpc-opts:
       grpc-service-name: "home.v1.ApiService"
+  - name: "🇧🇬 🔒 VL-GRPC-RLT 🇧🇬 BG-45.9.156.42:443"
+    type: "vless"
+    server: "45.9.156.42"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "bg5.univesalsrv.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "RDWvDEygSk1eyAQhIK95H9EteFbrS2d9JEjBrco54Bw"
+      short-id: "1a3102bb8e51399e"
+    grpc-opts:
+      grpc-service-name: "gw.v2.RelayService"
   - name: "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-131.123.37.116:2425"
     type: "vless"
     server: "131.123.37.116"
@@ -806,6 +819,20 @@ proxies:
     reality-opts:
       public-key: "MnPGY1Vo4ZbYdpLRTYHoolv5s_pwO41karyJfnQ0F3o"
       short-id: "9b60d3"
+  - name: "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-93.152.214.248:443"
+    type: "vless"
+    server: "93.152.214.248"
+    port: 443
+    uuid: "4b1be712-774c-4b65-8491-a3339e124a70"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "us5.pc-peervax.top"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "v36yrZJ-5Zikx9eh_SXaoDS2GuobOA4_WLagBVO0vxk"
+      short-id: "a9c3f7e2"
   - name: "🇧🇬 🔒 VL-GRPC-RLT 🇧🇬 BG-45.9.156.28:443"
     type: "vless"
     server: "45.9.156.28"
@@ -914,20 +941,25 @@ proxies:
     reality-opts:
       public-key: "xQnXh5EfPDhcEBB7rRiLca33GYrMEeUa35domLL_yA8"
       short-id: "9b60d3"
-  - name: "🇧🇬 🆔ar14n24b 🔒 VL-TCP- ❔ XX 410ms"
+  - name: "🇧🇬 RELAY🚩 | sourceforge.net-443 | 3.08ms"
     type: "vless"
-    server: "p1real4.greewebservices.ir"
-    port: 1260
-    uuid: "f234330e-f9df-46e3-8f60-b2af5173c147"
+    server: "95.164.36.59"
+    port: 443
+    uuid: "a6b5e86d-248d-4313-bc1f-716baf350ef8"
     udp: true
     tls: true
     network: "tcp"
-    servername: "play.googleapis.com"
-    client-fingerprint: "ios"
-    reality-opts:
-      public-key: "xQnXh5EfPDhcEBB7rRiLca33GYrMEeUa35domLL_yA8"
-      short-id: "9b60d3"
-  - name: "🇧🇬 🆔ar14n24b 🔒 VL-GRPC- ❔ XX down"
+    servername: "sourceforge.net"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+  - name: "🇧🇬 BG🇧🇬+|+6.bmi.ir.asopardaz.ir-35176+|+349.68ms"
+    type: "ss"
+    server: "6.bmi.ir.asopardaz.ir"
+    port: 35176
+    cipher: "2022-blake3-aes-256-gcm"
+    password: "NjcyNmVjMTU1ZWU5NDA5ZDk0ODg1NWM1MzJjZTE3NDk="
+    udp: true
+  - name: "🇧🇬 🆔vpnbaz 🔒 VL-GRPC- ❔ XX 202ms"
     type: "vless"
     server: "bg5.univesalsrv.com"
     port: 443
@@ -935,13 +967,27 @@ proxies:
     udp: true
     tls: true
     network: "grpc"
-    servername: "bg5.univesalsrv.com"
     client-fingerprint: "chrome"
     reality-opts:
       public-key: "RDWvDEygSk1eyAQhIK95H9EteFbrS2d9JEjBrco54Bw"
       short-id: "1a3102bb8e51399e"
     grpc-opts:
       grpc-service-name: "gw.v2.RelayService"
+  - name: "🇧🇬 🆔ar14n24b 🔒 VL-GRPC- ❔ XX 231ms"
+    type: "vless"
+    server: "bg4.univesalsrv.com"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "bg4.univesalsrv.com"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "k-vH6pkyAv26L1_dXKOFhp0Kesur9-FCUDoj-IIpVhc"
+      short-id: "51f45d4fd58cc319"
+    grpc-opts:
+      grpc-service-name: "cloud.v1.RelayService"
   - name: "🇧🇬 @DeltaKroneckerGithub"
     type: "trojan"
     server: "192.145.30.27"
@@ -1055,23 +1101,22 @@ proxy-groups:
       - "🇧🇬 🔒 SS-TCP-NA 🇧🇬 BG-213.183.63.60:9061"
       - "🇧🇬 🔒 SS-TCP-NA 🇧🇬 BG-131.123.42.250:35176"
       - "🇧🇬 🔒 SS-TCP-NA 🇧🇬 BG-213.183.63.60:9098"
-      - "🇧🇬 6.bmi.ir.asopardaz.ir"
-      - "🇧🇬 REALITY|BG🇧🇬 | nl1.cleanset.net-45821 | 245.93ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | 6.bmi.ir.asopardaz.ir-8443 | 451.53ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | areal1.greewebservices.ir-2425 | 378.9ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | p2real33.greewebservices.ir-1330 | 320.15ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | p1real4.greewebservices.ir-1260 | 312.08ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | p11real1.greewebservices.ir-1020 | 317ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | 93.152.214.248-443 | 56.85ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | 45.9.156.42-443 | 176.86ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | 45.9.156.42-443 | 177.68ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | p2real4.greewebservices.ir-1340 | 387.63ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | nl1.cleanset.net-45821 | 164.1ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | p11real3.greewebservices.ir-2202 | 283.69ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | areal1.greewebservices.ir-2425 | 220.4ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | p2real33.greewebservices.ir-1330 | 122.7ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | p1real4.greewebservices.ir-1260 | 124.27ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | p11real1.greewebservices.ir-1020 | 300.5ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | bg5.univesalsrv.com-443 | 162.6ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | 6.bmi.ir.asopardaz.ir-8443 | 359.02ms"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-23.137.251.236:45821"
       - "🇧🇬 🔒 VL-GRPC-RLT 🇧🇬 BG-45.9.156.24:443"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-131.123.41.168:1260"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-131.123.43.87:1020"
       - "🇧🇬 🔒 VL-GRPC-RLT 🇧🇬 BG-45.9.156.27:443"
+      - "🇧🇬 🔒 VL-GRPC-RLT 🇧🇬 BG-45.9.156.42:443"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-131.123.37.116:2425"
+      - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-93.152.214.248:443"
       - "🇧🇬 🔒 VL-GRPC-RLT 🇧🇬 BG-45.9.156.28:443"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-93.152.223.244:443"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-131.123.43.87:2202"
@@ -1080,8 +1125,10 @@ proxy-groups:
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-2.59.218.23:443"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-131.123.42.80:1260"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-131.123.37.152:1330"
-      - "🇧🇬 🆔ar14n24b 🔒 VL-TCP- ❔ XX 410ms"
-      - "🇧🇬 🆔ar14n24b 🔒 VL-GRPC- ❔ XX down"
+      - "🇧🇬 RELAY🚩 | sourceforge.net-443 | 3.08ms"
+      - "🇧🇬 BG🇧🇬+|+6.bmi.ir.asopardaz.ir-35176+|+349.68ms"
+      - "🇧🇬 🆔vpnbaz 🔒 VL-GRPC- ❔ XX 202ms"
+      - "🇧🇬 🆔ar14n24b 🔒 VL-GRPC- ❔ XX 231ms"
       - "🇧🇬 @DeltaKroneckerGithub"
       - "🇧🇬 @DeltaKroneckerGithub-1"
       - "🇧🇬 @DeltaKroneckerGithub-2"
@@ -1107,23 +1154,22 @@ proxy-groups:
       - "🇧🇬 🔒 SS-TCP-NA 🇧🇬 BG-213.183.63.60:9061"
       - "🇧🇬 🔒 SS-TCP-NA 🇧🇬 BG-131.123.42.250:35176"
       - "🇧🇬 🔒 SS-TCP-NA 🇧🇬 BG-213.183.63.60:9098"
-      - "🇧🇬 6.bmi.ir.asopardaz.ir"
-      - "🇧🇬 REALITY|BG🇧🇬 | nl1.cleanset.net-45821 | 245.93ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | 6.bmi.ir.asopardaz.ir-8443 | 451.53ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | areal1.greewebservices.ir-2425 | 378.9ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | p2real33.greewebservices.ir-1330 | 320.15ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | p1real4.greewebservices.ir-1260 | 312.08ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | p11real1.greewebservices.ir-1020 | 317ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | 93.152.214.248-443 | 56.85ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | 45.9.156.42-443 | 176.86ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | 45.9.156.42-443 | 177.68ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | p2real4.greewebservices.ir-1340 | 387.63ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | nl1.cleanset.net-45821 | 164.1ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | p11real3.greewebservices.ir-2202 | 283.69ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | areal1.greewebservices.ir-2425 | 220.4ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | p2real33.greewebservices.ir-1330 | 122.7ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | p1real4.greewebservices.ir-1260 | 124.27ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | p11real1.greewebservices.ir-1020 | 300.5ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | bg5.univesalsrv.com-443 | 162.6ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | 6.bmi.ir.asopardaz.ir-8443 | 359.02ms"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-23.137.251.236:45821"
       - "🇧🇬 🔒 VL-GRPC-RLT 🇧🇬 BG-45.9.156.24:443"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-131.123.41.168:1260"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-131.123.43.87:1020"
       - "🇧🇬 🔒 VL-GRPC-RLT 🇧🇬 BG-45.9.156.27:443"
+      - "🇧🇬 🔒 VL-GRPC-RLT 🇧🇬 BG-45.9.156.42:443"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-131.123.37.116:2425"
+      - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-93.152.214.248:443"
       - "🇧🇬 🔒 VL-GRPC-RLT 🇧🇬 BG-45.9.156.28:443"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-93.152.223.244:443"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-131.123.43.87:2202"
@@ -1132,8 +1178,10 @@ proxy-groups:
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-2.59.218.23:443"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-131.123.42.80:1260"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-131.123.37.152:1330"
-      - "🇧🇬 🆔ar14n24b 🔒 VL-TCP- ❔ XX 410ms"
-      - "🇧🇬 🆔ar14n24b 🔒 VL-GRPC- ❔ XX down"
+      - "🇧🇬 RELAY🚩 | sourceforge.net-443 | 3.08ms"
+      - "🇧🇬 BG🇧🇬+|+6.bmi.ir.asopardaz.ir-35176+|+349.68ms"
+      - "🇧🇬 🆔vpnbaz 🔒 VL-GRPC- ❔ XX 202ms"
+      - "🇧🇬 🆔ar14n24b 🔒 VL-GRPC- ❔ XX 231ms"
       - "🇧🇬 @DeltaKroneckerGithub"
       - "🇧🇬 @DeltaKroneckerGithub-1"
       - "🇧🇬 @DeltaKroneckerGithub-2"
@@ -1160,23 +1208,22 @@ proxy-groups:
       - "🇧🇬 🔒 SS-TCP-NA 🇧🇬 BG-213.183.63.60:9061"
       - "🇧🇬 🔒 SS-TCP-NA 🇧🇬 BG-131.123.42.250:35176"
       - "🇧🇬 🔒 SS-TCP-NA 🇧🇬 BG-213.183.63.60:9098"
-      - "🇧🇬 6.bmi.ir.asopardaz.ir"
-      - "🇧🇬 REALITY|BG🇧🇬 | nl1.cleanset.net-45821 | 245.93ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | 6.bmi.ir.asopardaz.ir-8443 | 451.53ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | areal1.greewebservices.ir-2425 | 378.9ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | p2real33.greewebservices.ir-1330 | 320.15ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | p1real4.greewebservices.ir-1260 | 312.08ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | p11real1.greewebservices.ir-1020 | 317ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | 93.152.214.248-443 | 56.85ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | 45.9.156.42-443 | 176.86ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | 45.9.156.42-443 | 177.68ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | p2real4.greewebservices.ir-1340 | 387.63ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | nl1.cleanset.net-45821 | 164.1ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | p11real3.greewebservices.ir-2202 | 283.69ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | areal1.greewebservices.ir-2425 | 220.4ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | p2real33.greewebservices.ir-1330 | 122.7ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | p1real4.greewebservices.ir-1260 | 124.27ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | p11real1.greewebservices.ir-1020 | 300.5ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | bg5.univesalsrv.com-443 | 162.6ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | 6.bmi.ir.asopardaz.ir-8443 | 359.02ms"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-23.137.251.236:45821"
       - "🇧🇬 🔒 VL-GRPC-RLT 🇧🇬 BG-45.9.156.24:443"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-131.123.41.168:1260"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-131.123.43.87:1020"
       - "🇧🇬 🔒 VL-GRPC-RLT 🇧🇬 BG-45.9.156.27:443"
+      - "🇧🇬 🔒 VL-GRPC-RLT 🇧🇬 BG-45.9.156.42:443"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-131.123.37.116:2425"
+      - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-93.152.214.248:443"
       - "🇧🇬 🔒 VL-GRPC-RLT 🇧🇬 BG-45.9.156.28:443"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-93.152.223.244:443"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-131.123.43.87:2202"
@@ -1185,8 +1232,10 @@ proxy-groups:
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-2.59.218.23:443"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-131.123.42.80:1260"
       - "🇧🇬 🔒 VL-TCP-RLT 🇧🇬 BG-131.123.37.152:1330"
-      - "🇧🇬 🆔ar14n24b 🔒 VL-TCP- ❔ XX 410ms"
-      - "🇧🇬 🆔ar14n24b 🔒 VL-GRPC- ❔ XX down"
+      - "🇧🇬 RELAY🚩 | sourceforge.net-443 | 3.08ms"
+      - "🇧🇬 BG🇧🇬+|+6.bmi.ir.asopardaz.ir-35176+|+349.68ms"
+      - "🇧🇬 🆔vpnbaz 🔒 VL-GRPC- ❔ XX 202ms"
+      - "🇧🇬 🆔ar14n24b 🔒 VL-GRPC- ❔ XX 231ms"
       - "🇧🇬 @DeltaKroneckerGithub"
       - "🇧🇬 @DeltaKroneckerGithub-1"
       - "🇧🇬 @DeltaKroneckerGithub-2"

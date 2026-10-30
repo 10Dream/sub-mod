@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -531,6 +565,14 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
+  - name: "🇨🇳 CN🇨🇳 | ja304.magiclampcloud.cn-59443 | 614.98ms"
+    type: "trojan"
+    server: "ja304.magiclampcloud.cn"
+    port: 59443
+    password: "06cf12a7fab279375e55e2f0cfdef381"
+    udp: true
+    tls: true
+    network: "tcp"
   - name: "🇨🇳 🔒 VM-TCP-NA 🇨🇳 CN-112.132.215.108:50002"
     type: "vmess"
     server: "112.132.215.108"
@@ -539,6 +581,22 @@ proxies:
     alterId: 64
     cipher: "auto"
     udp: true
+  - name: "🇨🇳 CN🇨🇳 | 120.48.133.162-10086 | 265.62ms"
+    type: "vmess"
+    server: "120.48.133.162"
+    port: 10086
+    uuid: "f81d0fc9-c6b0-4dab-a270-6e697e0a367f"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇨🇳 🆔ar14n24b 🔓 VL-TCP-N/A ❔ XX down"
+    type: "vless"
+    server: "jp.sofast.live"
+    port: 52683
+    uuid: "399b6b23-cc40-4831-a494-61948e2df133"
+    udp: true
+    tls: false
+    network: "tcp"
   - name: "🇨🇳 @DeltaKroneckerGithub"
     type: "trojan"
     server: "ja304.magiclampcloud.cn"
@@ -1887,7 +1945,10 @@ proxy-groups:
       - "🇨🇳 🔒 VM-WS-NA 🇨🇳 CN-120.48.133.162:10086"
       - "🇨🇳 🔒 VM-WS-NA 🇨🇳 CN-120.48.133.162:10086-1"
       - "🇨🇳 🔒 TR-TCP-NA 🇨🇳 CN-171.15.37.203:59443"
+      - "🇨🇳 CN🇨🇳 | ja304.magiclampcloud.cn-59443 | 614.98ms"
       - "🇨🇳 🔒 VM-TCP-NA 🇨🇳 CN-112.132.215.108:50002"
+      - "🇨🇳 CN🇨🇳 | 120.48.133.162-10086 | 265.62ms"
+      - "🇨🇳 🆔ar14n24b 🔓 VL-TCP-N/A ❔ XX down"
       - "🇨🇳 @DeltaKroneckerGithub"
       - "🇨🇳 @DeltaKroneckerGithub-1"
       - "🇨🇳 @DeltaKroneckerGithub-2"
@@ -2051,7 +2112,10 @@ proxy-groups:
       - "🇨🇳 🔒 VM-WS-NA 🇨🇳 CN-120.48.133.162:10086"
       - "🇨🇳 🔒 VM-WS-NA 🇨🇳 CN-120.48.133.162:10086-1"
       - "🇨🇳 🔒 TR-TCP-NA 🇨🇳 CN-171.15.37.203:59443"
+      - "🇨🇳 CN🇨🇳 | ja304.magiclampcloud.cn-59443 | 614.98ms"
       - "🇨🇳 🔒 VM-TCP-NA 🇨🇳 CN-112.132.215.108:50002"
+      - "🇨🇳 CN🇨🇳 | 120.48.133.162-10086 | 265.62ms"
+      - "🇨🇳 🆔ar14n24b 🔓 VL-TCP-N/A ❔ XX down"
       - "🇨🇳 @DeltaKroneckerGithub"
       - "🇨🇳 @DeltaKroneckerGithub-1"
       - "🇨🇳 @DeltaKroneckerGithub-2"
@@ -2216,7 +2280,10 @@ proxy-groups:
       - "🇨🇳 🔒 VM-WS-NA 🇨🇳 CN-120.48.133.162:10086"
       - "🇨🇳 🔒 VM-WS-NA 🇨🇳 CN-120.48.133.162:10086-1"
       - "🇨🇳 🔒 TR-TCP-NA 🇨🇳 CN-171.15.37.203:59443"
+      - "🇨🇳 CN🇨🇳 | ja304.magiclampcloud.cn-59443 | 614.98ms"
       - "🇨🇳 🔒 VM-TCP-NA 🇨🇳 CN-112.132.215.108:50002"
+      - "🇨🇳 CN🇨🇳 | 120.48.133.162-10086 | 265.62ms"
+      - "🇨🇳 🆔ar14n24b 🔓 VL-TCP-N/A ❔ XX down"
       - "🇨🇳 @DeltaKroneckerGithub"
       - "🇨🇳 @DeltaKroneckerGithub-1"
       - "🇨🇳 @DeltaKroneckerGithub-2"

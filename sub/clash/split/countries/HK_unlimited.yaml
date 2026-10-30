@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -1132,7 +1166,7 @@ proxies:
     cipher: "aes-128-gcm"
     password: "b61ca706-e2e9-4f6b-bd1e-0f0534a2fc41"
     udp: true
-  - name: "🇭🇰 HK🇭🇰 | 119.246.1.143-443 | 154.75ms"
+  - name: "🇭🇰 HK🇭🇰 | 119.246.1.143-443 | 197.08ms"
     type: "trojan"
     server: "119.246.1.143"
     port: 443
@@ -1388,47 +1422,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇭🇰 REALITY|HK🇭🇰 | 165.154.63.139-443 | 159.79ms"
-    type: "vless"
-    server: "165.154.63.139"
-    port: 443
-    uuid: "91ad30e9-ab06-4b4c-9fb9-1c2aa97d8b3a"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.amazon.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "AE81BrwMc8-kwGEIA1LhzaL03er0Qwt2V-fFy76F5jQ"
-      short-id: "ca4aedd4"
-  - name: "🇭🇰 REALITY|HK🇭🇰 | hk6.oh-node.com-443 | 359.19ms"
-    type: "vless"
-    server: "hk6.oh-node.com"
-    port: 443
-    uuid: "7cfd34ae-edad-4cc5-9d6f-066f7add7829"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.hsbc.com.hk"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "2kl8isq7ajNv3BR6Z1EPag_LqJHmsfo2pn0dA7yetko"
-      short-id: "a2d13d677624197e"
-  - name: "🇭🇰 REALITY|HK🇭🇰 | hk4.oh-node.com-443 | 375.36ms"
-    type: "vless"
-    server: "hk4.oh-node.com"
-    port: 443
-    uuid: "7cfd34ae-edad-4cc5-9d6f-066f7add7829"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "hk4e-launcher-static.hoyoverse.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "KhRbgahSFqlPKB6QNp9QYb4oXMy2SIgi440tm6iFZHA"
-      short-id: "ea6b43"
-  - name: "🇭🇰 REALITY|HK🇭🇰 | hk3.oh-node.com-443 | 331.18ms"
+  - name: "🇭🇰 REALITY|HK🇭🇰 | hk3.oh-node.com-443 | 459.49ms"
     type: "vless"
     server: "hk3.oh-node.com"
     port: 443
@@ -1441,58 +1435,6 @@ proxies:
     reality-opts:
       public-key: "zV4Sja0iajpdzkR1iBMbI7RRWL2nlpgwGOtirQSG-zc"
       short-id: "b81edf7fdee4"
-  - name: "🇭🇰 REALITY|HK🇭🇰 | 526.150333.xyz-21004 | 882.81ms"
-    type: "vless"
-    server: "526.150333.xyz"
-    port: 21004
-    uuid: "52d2187c-34e1-40fd-a6f5-0a74ff7d3e9a"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "EXU8eOS1kf_ROqC68NO-zbzRFGx7U5zE6WvjxRzYeTo"
-      short-id: "2f34703f16523c80"
-  - name: "🇭🇰 REALITY|HK🇭🇰 | 526.150333.xyz-21003 | 863.61ms"
-    type: "vless"
-    server: "526.150333.xyz"
-    port: 21003
-    uuid: "52d2187c-34e1-40fd-a6f5-0a74ff7d3e9a"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "EXU8eOS1kf_ROqC68NO-zbzRFGx7U5zE6WvjxRzYeTo"
-      short-id: "eb9539689690d35c"
-  - name: "🇭🇰 REALITY|HK🇭🇰 | 526.150333.xyz-21001 | 2635.44ms"
-    type: "vless"
-    server: "526.150333.xyz"
-    port: 21001
-    uuid: "52d2187c-34e1-40fd-a6f5-0a74ff7d3e9a"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "EXU8eOS1kf_ROqC68NO-zbzRFGx7U5zE6WvjxRzYeTo"
-      short-id: "b6dfd5c750351c57"
-  - name: "🇭🇰 REALITY|HK🇭🇰 | 66.90.115.124-2090 | 204.6ms"
-    type: "vless"
-    server: "66.90.115.124"
-    port: 2090
-    uuid: "3644635c-f8c4-449c-a665-fce1897a7bf3"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.apple.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "qBobe6KSNkFLqTPCffcJo0nXgxy-3JKru9WRqY9rkjk"
-      short-id: "bb472a184677af64"
   - name: "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-154.21.203.106:21033"
     type: "vless"
     server: "154.21.203.106"
@@ -1739,6 +1681,19 @@ proxies:
     reality-opts:
       public-key: "AE81BrwMc8-kwGEIA1LhzaL03er0Qwt2V-fFy76F5jQ"
       short-id: "ca4aedd4"
+  - name: "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-66.90.115.124:2090"
+    type: "vless"
+    server: "66.90.115.124"
+    port: 2090
+    uuid: "3644635c-f8c4-449c-a665-fce1897a7bf3"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.apple.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "qBobe6KSNkFLqTPCffcJo0nXgxy-3JKru9WRqY9rkjk"
+      short-id: "bb472a184677af64"
   - name: "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-103.238.227.211:21001"
     type: "vless"
     server: "103.238.227.211"
@@ -1780,26 +1735,6 @@ proxies:
     reality-opts:
       public-key: "4ubYp4HaBJgn1qXwfo0hiejncurXCckII-O_FMDXTgI"
       short-id: "3b74d85e"
-  - name: "🇭🇰 🔒 VL-TCP-TLS 🇭🇰 HK-152.175.6.229:31884"
-    type: "vless"
-    server: "152.175.6.229"
-    port: 31884
-    uuid: "e9a8144e-5237-488a-afb1-9ca3d8d54c80"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "hk010.zestapp778.com"
-    client-fingerprint: "firefox"
-  - name: "🇭🇰 🔒 VL-TCP-TLS 🇭🇰 HK-152.175.8.61:36155"
-    type: "vless"
-    server: "152.175.8.61"
-    port: 36155
-    uuid: "e9a8144e-5237-488a-afb1-9ca3d8d54c80"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "hk014.zestapp778.com"
-    client-fingerprint: "firefox"
   - name: "🇭🇰 🔒 HYSTERIA-UDP 🇭🇰 HK-212.192.15.53:24591"
     type: "hysteria2"
     server: "212.192.15.53"
@@ -1807,28 +1742,6 @@ proxies:
     password: "ae845cbd-08fb-4346-929a-e28a6f3960a8"
     sni: "hk1.shiyuandian.shop"
     skip-cert-verify: true
-  - name: "🇭🇰 HK🇭🇰 | loudarch.net-443 | 227.82ms"
-    type: "vless"
-    server: "45.133.73.114"
-    port: 443
-    uuid: "ef328563-cda1-4530-9b0a-988cc5a74d78"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "loudarch.net"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-  - name: "🇭🇰 HK🇭🇰 | loudarch.net-443 | 211.46ms"
-    type: "vless"
-    server: "45.133.73.113"
-    port: 443
-    uuid: "ef328563-cda1-4530-9b0a-988cc5a74d78"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "loudarch.net"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
   - name: "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-103.238.227.211:21003-1"
     type: "vless"
     server: "103.238.227.211"
@@ -1842,6 +1755,16 @@ proxies:
     reality-opts:
       public-key: "EXU8eOS1kf_ROqC68NO-zbzRFGx7U5zE6WvjxRzYeTo"
       short-id: "eb9539689690d35c"
+  - name: "🇭🇰 🔒 VL-TCP-TLS 🇭🇰 HK-152.175.6.229:31884"
+    type: "vless"
+    server: "152.175.6.229"
+    port: 31884
+    uuid: "e9a8144e-5237-488a-afb1-9ca3d8d54c80"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "hk010.zestapp778.com"
+    client-fingerprint: "firefox"
   - name: "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-95.40.59.134:443-1"
     type: "vless"
     server: "95.40.59.134"
@@ -1868,7 +1791,34 @@ proxies:
     reality-opts:
       public-key: "EXU8eOS1kf_ROqC68NO-zbzRFGx7U5zE6WvjxRzYeTo"
       short-id: "eb9539689690d35c"
-  - name: "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX 2275ms"
+  - name: "🇭🇰 🔒 VL-TCP-TLS 🇭🇰 HK-152.175.8.61:36155"
+    type: "vless"
+    server: "152.175.8.61"
+    port: 36155
+    uuid: "e9a8144e-5237-488a-afb1-9ca3d8d54c80"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "hk014.zestapp778.com"
+    client-fingerprint: "firefox"
+  - name: "🇭🇰 🆔soskeynet 🔒 VM-WS-TLS 🇭🇰 HK 187ms"
+    type: "vmess"
+    server: "euu1yalfmcqvljex.v.3dns.vip"
+    port: 443
+    uuid: "d237ab38-1974-4b36-94a3-0665ce8587b9"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰 🆔ar14n24b 🔓 TR--N/A ❔ XX 221ms"
+    type: "trojan"
+    server: "tjadly.m2k699.com"
+    port: 24999
+    password: "29086912-33e4-4e06-ba2b-60f1a195864f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.itunes.com"
+  - name: "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX down"
     type: "vless"
     server: "526.150333.xyz"
     port: 21002
@@ -1881,7 +1831,20 @@ proxies:
     reality-opts:
       public-key: "EXU8eOS1kf_ROqC68NO-zbzRFGx7U5zE6WvjxRzYeTo"
       short-id: "f0e6a8bb98db3efd"
-  - name: "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX 239ms"
+  - name: "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX down-1"
+    type: "vless"
+    server: "526.150333.xyz"
+    port: 21003
+    uuid: "52d2187c-34e1-40fd-a6f5-0a74ff7d3e9a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "EXU8eOS1kf_ROqC68NO-zbzRFGx7U5zE6WvjxRzYeTo"
+      short-id: "eb9539689690d35c"
+  - name: "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX down-2"
     type: "vless"
     server: "526.150333.xyz"
     port: 21003
@@ -1893,7 +1856,7 @@ proxies:
     reality-opts:
       public-key: "EXU8eOS1kf_ROqC68NO-zbzRFGx7U5zE6WvjxRzYeTo"
       short-id: "eb9539689690d35c"
-  - name: "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX 816ms"
+  - name: "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX down-3"
     type: "vless"
     server: "526.150333.xyz"
     port: 21004
@@ -2303,13 +2266,19 @@ proxies:
     cipher: "auto"
     udp: true
   - name: "🇭🇰 Hong Kong-10"
-    type: "vmess"
-    server: "euu1yalfmcqvljex.v.3dns.vip"
+    type: "vless"
+    server: "165.154.63.139"
     port: 443
-    uuid: "d237ab38-1974-4b36-94a3-0665ce8587b9"
-    alterId: 0
-    cipher: "auto"
+    uuid: "91ad30e9-ab06-4b4c-9fb9-1c2aa97d8b3a"
     udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.amazon.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "AE81BrwMc8-kwGEIA1LhzaL03er0Qwt2V-fFy76F5jQ"
+      short-id: "ca4aedd4"
   - name: "🇭🇰 Chile"
     type: "vless"
     server: "152.175.6.229"
@@ -2365,6 +2334,22 @@ proxies:
     cipher: "none"
     password: "59fc5f8c-5697-4eb8-acf2-8ae363f203a2"
     udp: true
+  - name: "🇭🇰 vmess-vah4urdzl3jdx5r2.v.3dns.vip:443"
+    type: "vmess"
+    server: "vah4urdzl3jdx5r2.v.3dns.vip"
+    port: 443
+    uuid: "f23bb427-c1f9-4373-876c-2f43e9f790f3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰 vmess-47.243.167.44:443"
+    type: "vmess"
+    server: "47.243.167.44"
+    port: 443
+    uuid: "78b3f149-f037-465d-b2fb-11adb6f73ff8"
+    alterId: 0
+    cipher: "auto"
+    udp: true
   - name: "🇭🇰 @DeltaKroneckerGithub-37"
     type: "vless"
     server: "152.175.6.229"
@@ -2377,6 +2362,19 @@ proxies:
     client-fingerprint: "chrome"
   - name: "🇭🇰 @DeltaKroneckerGithub-38"
     type: "vless"
+    server: "526.150333.xyz"
+    port: 21001
+    uuid: "52d2187c-34e1-40fd-a6f5-0a74ff7d3e9a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "EXU8eOS1kf_ROqC68NO-zbzRFGx7U5zE6WvjxRzYeTo"
+      short-id: "b6dfd5c750351c57"
+  - name: "🇭🇰 @DeltaKroneckerGithub-39"
+    type: "vless"
     server: "195.58.144.56"
     port: 11907
     uuid: "07cb07b9-0c4d-46c1-a15a-b147511b6b07"
@@ -2387,7 +2385,20 @@ proxies:
     alpn:
       - "h2"
       - "http/1.1"
-  - name: "🇭🇰 @DeltaKroneckerGithub-39"
+  - name: "🇭🇰 @DeltaKroneckerGithub-40"
+    type: "vless"
+    server: "526.150333.xyz"
+    port: 21004
+    uuid: "52d2187c-34e1-40fd-a6f5-0a74ff7d3e9a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "EXU8eOS1kf_ROqC68NO-zbzRFGx7U5zE6WvjxRzYeTo"
+      short-id: "2f34703f16523c80"
+  - name: "🇭🇰 @DeltaKroneckerGithub-41"
     type: "vless"
     server: "103.180.20.108"
     port: 8443
@@ -2395,7 +2406,7 @@ proxies:
     udp: true
     tls: false
     network: "ws"
-  - name: "🇭🇰 @DeltaKroneckerGithub-40"
+  - name: "🇭🇰 @DeltaKroneckerGithub-42"
     type: "vless"
     server: "103.148.73.173"
     port: 8443
@@ -2408,7 +2419,7 @@ proxies:
       path: "/81574b6b-c9d7-44a0-b83d-dad56e8cb530"
       headers:
         Host: "ty986gfazs.cainiaohub.xyz"
-  - name: "🇭🇰 @DeltaKroneckerGithub-41"
+  - name: "🇭🇰 @DeltaKroneckerGithub-43"
     type: "vless"
     server: "103.148.73.167"
     port: 8443
@@ -2421,7 +2432,7 @@ proxies:
       path: "/81574b6b-c9d7-44a0-b83d-dad56e8cb530"
       headers:
         Host: "tse1.mm.bing.net"
-  - name: "🇭🇰 @DeltaKroneckerGithub-42"
+  - name: "🇭🇰 @DeltaKroneckerGithub-44"
     type: "vless"
     server: "141.98.234.161"
     port: 43000
@@ -2434,7 +2445,7 @@ proxies:
     reality-opts:
       public-key: "xRcuZo5R0Vd-gmNtY-GPt4JZDDr_oBy-wjuQ0OYoV0s"
       short-id: "cd8e2082"
-  - name: "🇭🇰 @DeltaKroneckerGithub-43"
+  - name: "🇭🇰 @DeltaKroneckerGithub-45"
     type: "vless"
     server: "hk010.zestapp778.com"
     port: 31884
@@ -2444,7 +2455,7 @@ proxies:
     network: "tcp"
     servername: "hk010.zestapp778.com"
     client-fingerprint: "chrome"
-  - name: "🇭🇰 @DeltaKroneckerGithub-44"
+  - name: "🇭🇰 @DeltaKroneckerGithub-46"
     type: "vless"
     server: "38.76.180.144"
     port: 1443
@@ -2546,7 +2557,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇭🇰 @DeltaKroneckerGithub-45"
+  - name: "🇭🇰 @DeltaKroneckerGithub-47"
     type: "vmess"
     server: "zfd-boardv2.kunlun01dns.com"
     port: 16322
@@ -2554,7 +2565,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇭🇰 @DeltaKroneckerGithub-46"
+  - name: "🇭🇰 @DeltaKroneckerGithub-48"
     type: "vmess"
     server: "47.243.153.153"
     port: 443
@@ -2562,7 +2573,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇭🇰 @DeltaKroneckerGithub-47"
+  - name: "🇭🇰 @DeltaKroneckerGithub-49"
     type: "vmess"
     server: "47.243.194.125"
     port: 443
@@ -2570,7 +2581,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇭🇰 @DeltaKroneckerGithub-48"
+  - name: "🇭🇰 @DeltaKroneckerGithub-50"
     type: "vmess"
     server: "6JDvArazgU3qQR6Q.v.3dns.vip"
     port: 443
@@ -2578,7 +2589,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇭🇰 @DeltaKroneckerGithub-49"
+  - name: "🇭🇰 @DeltaKroneckerGithub-51"
     type: "vmess"
     server: "8.217.186.60"
     port: 443
@@ -2586,7 +2597,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇭🇰 @DeltaKroneckerGithub-50"
+  - name: "🇭🇰 @DeltaKroneckerGithub-52"
     type: "vmess"
     server: "rhhierkwrf6fhs2h.v.3dns.vip"
     port: 443
@@ -2594,7 +2605,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇭🇰 @DeltaKroneckerGithub-51"
+  - name: "🇭🇰 @DeltaKroneckerGithub-53"
     type: "vmess"
     server: "8.210.24.181"
     port: 443
@@ -2602,7 +2613,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇭🇰 @DeltaKroneckerGithub-52"
+  - name: "🇭🇰 @DeltaKroneckerGithub-54"
     type: "vmess"
     server: "47.76.57.83"
     port: 443
@@ -2610,7 +2621,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇭🇰 @DeltaKroneckerGithub-53"
+  - name: "🇭🇰 @DeltaKroneckerGithub-55"
     type: "vmess"
     server: "dog-hk.kunlun01dns.com"
     port: 21020
@@ -2618,7 +2629,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇭🇰 @DeltaKroneckerGithub-54"
+  - name: "🇭🇰 @DeltaKroneckerGithub-56"
     type: "vmess"
     server: "47.243.194.125"
     port: 443
@@ -2626,15 +2637,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇭🇰 @DeltaKroneckerGithub-55"
-    type: "vmess"
-    server: "47.243.167.44"
-    port: 443
-    uuid: "78b3f149-f037-465d-b2fb-11adb6f73ff8"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇭🇰 @DeltaKroneckerGithub-56"
+  - name: "🇭🇰 @DeltaKroneckerGithub-57"
     type: "vmess"
     server: "i2psm3knof5qjjix.v.3dns.vip"
     port: 443
@@ -2642,7 +2645,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇭🇰 @DeltaKroneckerGithub-57"
+  - name: "🇭🇰 @DeltaKroneckerGithub-58"
     type: "vmess"
     server: "6jdvarazgu3qqr6q.v.3dns.vip"
     port: 443
@@ -2650,7 +2653,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇭🇰 @DeltaKroneckerGithub-58"
+  - name: "🇭🇰 @DeltaKroneckerGithub-59"
     type: "vmess"
     server: "ex1ogt73nzpqkac2.v.3dns.vip"
     port: 443
@@ -2767,7 +2770,7 @@ proxy-groups:
       - "🇭🇰 🔒 SS-TCP-NA 🇭🇰 HK-16.106.11.110:28006"
       - "🇭🇰 🔒 SS-TCP-NA 🇭🇰 HK-16.106.11.110:28025"
       - "🇭🇰 🔒 SS-TCP-NA 🇭🇰 HK-16.106.11.110:28004"
-      - "🇭🇰 HK🇭🇰 | 119.246.1.143-443 | 154.75ms"
+      - "🇭🇰 HK🇭🇰 | 119.246.1.143-443 | 197.08ms"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-43.199.62.116:21034"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-43.199.62.116:21018"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-43.199.62.116:16113"
@@ -2799,14 +2802,7 @@ proxy-groups:
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-43.199.62.116:21019"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-43.199.62.116:16284"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.29.203:9039"
-      - "🇭🇰 REALITY|HK🇭🇰 | 165.154.63.139-443 | 159.79ms"
-      - "🇭🇰 REALITY|HK🇭🇰 | hk6.oh-node.com-443 | 359.19ms"
-      - "🇭🇰 REALITY|HK🇭🇰 | hk4.oh-node.com-443 | 375.36ms"
-      - "🇭🇰 REALITY|HK🇭🇰 | hk3.oh-node.com-443 | 331.18ms"
-      - "🇭🇰 REALITY|HK🇭🇰 | 526.150333.xyz-21004 | 882.81ms"
-      - "🇭🇰 REALITY|HK🇭🇰 | 526.150333.xyz-21003 | 863.61ms"
-      - "🇭🇰 REALITY|HK🇭🇰 | 526.150333.xyz-21001 | 2635.44ms"
-      - "🇭🇰 REALITY|HK🇭🇰 | 66.90.115.124-2090 | 204.6ms"
+      - "🇭🇰 REALITY|HK🇭🇰 | hk3.oh-node.com-443 | 459.49ms"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-154.21.203.106:21033"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-42.200.230.167:443"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-18.166.236.175:443"
@@ -2825,20 +2821,22 @@ proxy-groups:
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-47.238.210.5:13779"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-16.106.11.20:443"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-165.154.63.139:443"
+      - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-66.90.115.124:2090"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-103.238.227.211:21001"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-95.40.25.210:443"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-82.25.46.55:443"
-      - "🇭🇰 🔒 VL-TCP-TLS 🇭🇰 HK-152.175.6.229:31884"
-      - "🇭🇰 🔒 VL-TCP-TLS 🇭🇰 HK-152.175.8.61:36155"
       - "🇭🇰 🔒 HYSTERIA-UDP 🇭🇰 HK-212.192.15.53:24591"
-      - "🇭🇰 HK🇭🇰 | loudarch.net-443 | 227.82ms"
-      - "🇭🇰 HK🇭🇰 | loudarch.net-443 | 211.46ms"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-103.238.227.211:21003-1"
+      - "🇭🇰 🔒 VL-TCP-TLS 🇭🇰 HK-152.175.6.229:31884"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-95.40.59.134:443-1"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-103.238.227.211:21003-2"
-      - "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX 2275ms"
-      - "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX 239ms"
-      - "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX 816ms"
+      - "🇭🇰 🔒 VL-TCP-TLS 🇭🇰 HK-152.175.8.61:36155"
+      - "🇭🇰 🆔soskeynet 🔒 VM-WS-TLS 🇭🇰 HK 187ms"
+      - "🇭🇰 🆔ar14n24b 🔓 TR--N/A ❔ XX 221ms"
+      - "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX down"
+      - "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX down-1"
+      - "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX down-2"
+      - "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX down-3"
       - "🇭🇰 @DeltaKroneckerGithub"
       - "🇭🇰 @DeltaKroneckerGithub-1"
       - "🇭🇰 @DeltaKroneckerGithub-2"
@@ -2893,6 +2891,8 @@ proxy-groups:
       - "🇭🇰 Hong Kong-13"
       - "🇭🇰 @DeltaKroneckerGithub-35"
       - "🇭🇰 @DeltaKroneckerGithub-36"
+      - "🇭🇰 vmess-vah4urdzl3jdx5r2.v.3dns.vip:443"
+      - "🇭🇰 vmess-47.243.167.44:443"
       - "🇭🇰 @DeltaKroneckerGithub-37"
       - "🇭🇰 @DeltaKroneckerGithub-38"
       - "🇭🇰 @DeltaKroneckerGithub-39"
@@ -2901,6 +2901,8 @@ proxy-groups:
       - "🇭🇰 @DeltaKroneckerGithub-42"
       - "🇭🇰 @DeltaKroneckerGithub-43"
       - "🇭🇰 @DeltaKroneckerGithub-44"
+      - "🇭🇰 @DeltaKroneckerGithub-45"
+      - "🇭🇰 @DeltaKroneckerGithub-46"
       - "🇭🇰 >>@oneclickvpnkeys::HK"
       - "🇭🇰 83. 🇭🇰 Hong Kong"
       - "🇭🇰 109. 🇭🇰 Hong Kong"
@@ -2910,8 +2912,6 @@ proxy-groups:
       - "🇭🇰 010-🇭🇰 HK tcp-reality ✂️@GheychiAmoozesh"
       - "🇭🇰 054-ws-tls ✂️@GheychiAmoozesh"
       - "🇭🇰 078-ws-tls ✂️@GheychiAmoozesh"
-      - "🇭🇰 @DeltaKroneckerGithub-45"
-      - "🇭🇰 @DeltaKroneckerGithub-46"
       - "🇭🇰 @DeltaKroneckerGithub-47"
       - "🇭🇰 @DeltaKroneckerGithub-48"
       - "🇭🇰 @DeltaKroneckerGithub-49"
@@ -2924,6 +2924,7 @@ proxy-groups:
       - "🇭🇰 @DeltaKroneckerGithub-56"
       - "🇭🇰 @DeltaKroneckerGithub-57"
       - "🇭🇰 @DeltaKroneckerGithub-58"
+      - "🇭🇰 @DeltaKroneckerGithub-59"
       - "🇭🇰 VLESS 162 t.me/iProxyChannel"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
@@ -3014,7 +3015,7 @@ proxy-groups:
       - "🇭🇰 🔒 SS-TCP-NA 🇭🇰 HK-16.106.11.110:28006"
       - "🇭🇰 🔒 SS-TCP-NA 🇭🇰 HK-16.106.11.110:28025"
       - "🇭🇰 🔒 SS-TCP-NA 🇭🇰 HK-16.106.11.110:28004"
-      - "🇭🇰 HK🇭🇰 | 119.246.1.143-443 | 154.75ms"
+      - "🇭🇰 HK🇭🇰 | 119.246.1.143-443 | 197.08ms"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-43.199.62.116:21034"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-43.199.62.116:21018"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-43.199.62.116:16113"
@@ -3046,14 +3047,7 @@ proxy-groups:
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-43.199.62.116:21019"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-43.199.62.116:16284"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.29.203:9039"
-      - "🇭🇰 REALITY|HK🇭🇰 | 165.154.63.139-443 | 159.79ms"
-      - "🇭🇰 REALITY|HK🇭🇰 | hk6.oh-node.com-443 | 359.19ms"
-      - "🇭🇰 REALITY|HK🇭🇰 | hk4.oh-node.com-443 | 375.36ms"
-      - "🇭🇰 REALITY|HK🇭🇰 | hk3.oh-node.com-443 | 331.18ms"
-      - "🇭🇰 REALITY|HK🇭🇰 | 526.150333.xyz-21004 | 882.81ms"
-      - "🇭🇰 REALITY|HK🇭🇰 | 526.150333.xyz-21003 | 863.61ms"
-      - "🇭🇰 REALITY|HK🇭🇰 | 526.150333.xyz-21001 | 2635.44ms"
-      - "🇭🇰 REALITY|HK🇭🇰 | 66.90.115.124-2090 | 204.6ms"
+      - "🇭🇰 REALITY|HK🇭🇰 | hk3.oh-node.com-443 | 459.49ms"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-154.21.203.106:21033"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-42.200.230.167:443"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-18.166.236.175:443"
@@ -3072,20 +3066,22 @@ proxy-groups:
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-47.238.210.5:13779"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-16.106.11.20:443"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-165.154.63.139:443"
+      - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-66.90.115.124:2090"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-103.238.227.211:21001"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-95.40.25.210:443"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-82.25.46.55:443"
-      - "🇭🇰 🔒 VL-TCP-TLS 🇭🇰 HK-152.175.6.229:31884"
-      - "🇭🇰 🔒 VL-TCP-TLS 🇭🇰 HK-152.175.8.61:36155"
       - "🇭🇰 🔒 HYSTERIA-UDP 🇭🇰 HK-212.192.15.53:24591"
-      - "🇭🇰 HK🇭🇰 | loudarch.net-443 | 227.82ms"
-      - "🇭🇰 HK🇭🇰 | loudarch.net-443 | 211.46ms"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-103.238.227.211:21003-1"
+      - "🇭🇰 🔒 VL-TCP-TLS 🇭🇰 HK-152.175.6.229:31884"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-95.40.59.134:443-1"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-103.238.227.211:21003-2"
-      - "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX 2275ms"
-      - "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX 239ms"
-      - "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX 816ms"
+      - "🇭🇰 🔒 VL-TCP-TLS 🇭🇰 HK-152.175.8.61:36155"
+      - "🇭🇰 🆔soskeynet 🔒 VM-WS-TLS 🇭🇰 HK 187ms"
+      - "🇭🇰 🆔ar14n24b 🔓 TR--N/A ❔ XX 221ms"
+      - "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX down"
+      - "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX down-1"
+      - "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX down-2"
+      - "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX down-3"
       - "🇭🇰 @DeltaKroneckerGithub"
       - "🇭🇰 @DeltaKroneckerGithub-1"
       - "🇭🇰 @DeltaKroneckerGithub-2"
@@ -3140,6 +3136,8 @@ proxy-groups:
       - "🇭🇰 Hong Kong-13"
       - "🇭🇰 @DeltaKroneckerGithub-35"
       - "🇭🇰 @DeltaKroneckerGithub-36"
+      - "🇭🇰 vmess-vah4urdzl3jdx5r2.v.3dns.vip:443"
+      - "🇭🇰 vmess-47.243.167.44:443"
       - "🇭🇰 @DeltaKroneckerGithub-37"
       - "🇭🇰 @DeltaKroneckerGithub-38"
       - "🇭🇰 @DeltaKroneckerGithub-39"
@@ -3148,6 +3146,8 @@ proxy-groups:
       - "🇭🇰 @DeltaKroneckerGithub-42"
       - "🇭🇰 @DeltaKroneckerGithub-43"
       - "🇭🇰 @DeltaKroneckerGithub-44"
+      - "🇭🇰 @DeltaKroneckerGithub-45"
+      - "🇭🇰 @DeltaKroneckerGithub-46"
       - "🇭🇰 >>@oneclickvpnkeys::HK"
       - "🇭🇰 83. 🇭🇰 Hong Kong"
       - "🇭🇰 109. 🇭🇰 Hong Kong"
@@ -3157,8 +3157,6 @@ proxy-groups:
       - "🇭🇰 010-🇭🇰 HK tcp-reality ✂️@GheychiAmoozesh"
       - "🇭🇰 054-ws-tls ✂️@GheychiAmoozesh"
       - "🇭🇰 078-ws-tls ✂️@GheychiAmoozesh"
-      - "🇭🇰 @DeltaKroneckerGithub-45"
-      - "🇭🇰 @DeltaKroneckerGithub-46"
       - "🇭🇰 @DeltaKroneckerGithub-47"
       - "🇭🇰 @DeltaKroneckerGithub-48"
       - "🇭🇰 @DeltaKroneckerGithub-49"
@@ -3171,6 +3169,7 @@ proxy-groups:
       - "🇭🇰 @DeltaKroneckerGithub-56"
       - "🇭🇰 @DeltaKroneckerGithub-57"
       - "🇭🇰 @DeltaKroneckerGithub-58"
+      - "🇭🇰 @DeltaKroneckerGithub-59"
       - "🇭🇰 VLESS 162 t.me/iProxyChannel"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
@@ -3262,7 +3261,7 @@ proxy-groups:
       - "🇭🇰 🔒 SS-TCP-NA 🇭🇰 HK-16.106.11.110:28006"
       - "🇭🇰 🔒 SS-TCP-NA 🇭🇰 HK-16.106.11.110:28025"
       - "🇭🇰 🔒 SS-TCP-NA 🇭🇰 HK-16.106.11.110:28004"
-      - "🇭🇰 HK🇭🇰 | 119.246.1.143-443 | 154.75ms"
+      - "🇭🇰 HK🇭🇰 | 119.246.1.143-443 | 197.08ms"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-43.199.62.116:21034"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-43.199.62.116:21018"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-43.199.62.116:16113"
@@ -3294,14 +3293,7 @@ proxy-groups:
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-43.199.62.116:21019"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-43.199.62.116:16284"
       - "🇭🇰 🔒 VM-TCP-NA 🇭🇰 HK-16.106.29.203:9039"
-      - "🇭🇰 REALITY|HK🇭🇰 | 165.154.63.139-443 | 159.79ms"
-      - "🇭🇰 REALITY|HK🇭🇰 | hk6.oh-node.com-443 | 359.19ms"
-      - "🇭🇰 REALITY|HK🇭🇰 | hk4.oh-node.com-443 | 375.36ms"
-      - "🇭🇰 REALITY|HK🇭🇰 | hk3.oh-node.com-443 | 331.18ms"
-      - "🇭🇰 REALITY|HK🇭🇰 | 526.150333.xyz-21004 | 882.81ms"
-      - "🇭🇰 REALITY|HK🇭🇰 | 526.150333.xyz-21003 | 863.61ms"
-      - "🇭🇰 REALITY|HK🇭🇰 | 526.150333.xyz-21001 | 2635.44ms"
-      - "🇭🇰 REALITY|HK🇭🇰 | 66.90.115.124-2090 | 204.6ms"
+      - "🇭🇰 REALITY|HK🇭🇰 | hk3.oh-node.com-443 | 459.49ms"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-154.21.203.106:21033"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-42.200.230.167:443"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-18.166.236.175:443"
@@ -3320,20 +3312,22 @@ proxy-groups:
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-47.238.210.5:13779"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-16.106.11.20:443"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-165.154.63.139:443"
+      - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-66.90.115.124:2090"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-103.238.227.211:21001"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-95.40.25.210:443"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-82.25.46.55:443"
-      - "🇭🇰 🔒 VL-TCP-TLS 🇭🇰 HK-152.175.6.229:31884"
-      - "🇭🇰 🔒 VL-TCP-TLS 🇭🇰 HK-152.175.8.61:36155"
       - "🇭🇰 🔒 HYSTERIA-UDP 🇭🇰 HK-212.192.15.53:24591"
-      - "🇭🇰 HK🇭🇰 | loudarch.net-443 | 227.82ms"
-      - "🇭🇰 HK🇭🇰 | loudarch.net-443 | 211.46ms"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-103.238.227.211:21003-1"
+      - "🇭🇰 🔒 VL-TCP-TLS 🇭🇰 HK-152.175.6.229:31884"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-95.40.59.134:443-1"
       - "🇭🇰 🔒 VL-TCP-RLT 🇭🇰 HK-103.238.227.211:21003-2"
-      - "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX 2275ms"
-      - "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX 239ms"
-      - "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX 816ms"
+      - "🇭🇰 🔒 VL-TCP-TLS 🇭🇰 HK-152.175.8.61:36155"
+      - "🇭🇰 🆔soskeynet 🔒 VM-WS-TLS 🇭🇰 HK 187ms"
+      - "🇭🇰 🆔ar14n24b 🔓 TR--N/A ❔ XX 221ms"
+      - "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX down"
+      - "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX down-1"
+      - "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX down-2"
+      - "🇭🇰 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX down-3"
       - "🇭🇰 @DeltaKroneckerGithub"
       - "🇭🇰 @DeltaKroneckerGithub-1"
       - "🇭🇰 @DeltaKroneckerGithub-2"
@@ -3388,6 +3382,8 @@ proxy-groups:
       - "🇭🇰 Hong Kong-13"
       - "🇭🇰 @DeltaKroneckerGithub-35"
       - "🇭🇰 @DeltaKroneckerGithub-36"
+      - "🇭🇰 vmess-vah4urdzl3jdx5r2.v.3dns.vip:443"
+      - "🇭🇰 vmess-47.243.167.44:443"
       - "🇭🇰 @DeltaKroneckerGithub-37"
       - "🇭🇰 @DeltaKroneckerGithub-38"
       - "🇭🇰 @DeltaKroneckerGithub-39"
@@ -3396,6 +3392,8 @@ proxy-groups:
       - "🇭🇰 @DeltaKroneckerGithub-42"
       - "🇭🇰 @DeltaKroneckerGithub-43"
       - "🇭🇰 @DeltaKroneckerGithub-44"
+      - "🇭🇰 @DeltaKroneckerGithub-45"
+      - "🇭🇰 @DeltaKroneckerGithub-46"
       - "🇭🇰 >>@oneclickvpnkeys::HK"
       - "🇭🇰 83. 🇭🇰 Hong Kong"
       - "🇭🇰 109. 🇭🇰 Hong Kong"
@@ -3405,8 +3403,6 @@ proxy-groups:
       - "🇭🇰 010-🇭🇰 HK tcp-reality ✂️@GheychiAmoozesh"
       - "🇭🇰 054-ws-tls ✂️@GheychiAmoozesh"
       - "🇭🇰 078-ws-tls ✂️@GheychiAmoozesh"
-      - "🇭🇰 @DeltaKroneckerGithub-45"
-      - "🇭🇰 @DeltaKroneckerGithub-46"
       - "🇭🇰 @DeltaKroneckerGithub-47"
       - "🇭🇰 @DeltaKroneckerGithub-48"
       - "🇭🇰 @DeltaKroneckerGithub-49"
@@ -3419,6 +3415,7 @@ proxy-groups:
       - "🇭🇰 @DeltaKroneckerGithub-56"
       - "🇭🇰 @DeltaKroneckerGithub-57"
       - "🇭🇰 @DeltaKroneckerGithub-58"
+      - "🇭🇰 @DeltaKroneckerGithub-59"
       - "🇭🇰 VLESS 162 t.me/iProxyChannel"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"

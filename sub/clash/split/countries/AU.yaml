@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -590,93 +624,7 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "XF0klw7870vXn3uQIxe19Q"
     udp: true
-  - name: "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 204.91ms"
-    type: "vless"
-    server: "leg.goodmaximum.com"
-    port: 443
-    uuid: "e653f585-9924-002d-8d5d-c15c3ab95270"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "workspace.sablefrost.com"
-    client-fingerprint: "firefox"
-    reality-opts:
-      public-key: "fPSR5GZpxhOV6Rh7VzMtS4AeRN7ipyNX4waG9JzJzxQ"
-    grpc-opts:
-      grpc-service-name: "QToNrKDvQT5AfnFM"
-  - name: "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 197.69ms"
-    type: "vless"
-    server: "leg.goodmaximum.com"
-    port: 443
-    uuid: "e653f585-9924-000f-8d5d-c15c3ab95270"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "cloud.nimhogoa.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "fPSR5GZpxhOV6Rh7VzMtS4AeRN7ipyNX4waG9JzJzxQ"
-      short-id: "99181028b56c8702"
-    grpc-opts:
-      grpc-service-name: "QToNrKDvQT5AfnFM"
-  - name: "🇦🇺 REALITY|AU🇦🇺 | 51.161.204.242-443 | 146.26ms"
-    type: "vless"
-    server: "51.161.204.242"
-    port: 443
-    uuid: "a14b736b-a92a-48d6-a596-5d31f7378ded"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "a2qGjvUPq6Nz5FTbn_MSHp-055q2h8YXqIL5VIJ5zwE"
-      short-id: "d15c17cef9b2e456"
-  - name: "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 215.89ms"
-    type: "vless"
-    server: "leg.goodmaximum.com"
-    port: 443
-    uuid: "62c82c17-c70f-002d-95e4-e52a67a435ef"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "workspace.sablefrost.com"
-    client-fingerprint: "firefox"
-    reality-opts:
-      public-key: "fPSR5GZpxhOV6Rh7VzMtS4AeRN7ipyNX4waG9JzJzxQ"
-    grpc-opts:
-      grpc-service-name: "QToNrKDvQT5AfnFM"
-  - name: "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 203.93ms"
-    type: "vless"
-    server: "leg.goodmaximum.com"
-    port: 443
-    uuid: "62c82c17-c70f-002d-95e4-e52a67a435ef"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "workspace.sablefrost.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "fPSR5GZpxhOV6Rh7VzMtS4AeRN7ipyNX4waG9JzJzxQ"
-      short-id: "99181028b56c8702"
-    grpc-opts:
-      grpc-service-name: "QToNrKDvQT5AfnFM"
-  - name: "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 202.26ms"
-    type: "vless"
-    server: "leg.goodmaximum.com"
-    port: 443
-    uuid: "62c82c17-c70f-0019-95e4-e52a67a435ef"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "archive.glimmerhouse.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "fPSR5GZpxhOV6Rh7VzMtS4AeRN7ipyNX4waG9JzJzxQ"
-    grpc-opts:
-      grpc-service-name: "QToNrKDvQT5AfnFM"
-  - name: "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 206.02ms"
+  - name: "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 133.81ms"
     type: "vless"
     server: "leg.goodmaximum.com"
     port: 443
@@ -691,6 +639,34 @@ proxies:
       short-id: "99181028b56c8702"
     grpc-opts:
       grpc-service-name: "QToNrKDvQT5AfnFM"
+  - name: "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 127.22ms"
+    type: "vless"
+    server: "leg.goodmaximum.com"
+    port: 443
+    uuid: "62c82c17-c70f-000f-95e4-e52a67a435ef"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "cloud.nimhogoa.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "fPSR5GZpxhOV6Rh7VzMtS4AeRN7ipyNX4waG9JzJzxQ"
+    grpc-opts:
+      grpc-service-name: "QToNrKDvQT5AfnFM"
+  - name: "🇦🇺 🔒 VL-TCP-RLT 🇦🇺 AU-51.161.204.242:443"
+    type: "vless"
+    server: "51.161.204.242"
+    port: 443
+    uuid: "a14b736b-a92a-48d6-a596-5d31f7378ded"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "a2qGjvUPq6Nz5FTbn_MSHp-055q2h8YXqIL5VIJ5zwE"
+      short-id: "d15c17cef9b2e456"
   - name: "🇦🇺 🔒 VL-GRPC-RLT 🇦🇺 AU-103.147.152.23:443"
     type: "vless"
     server: "103.147.152.23"
@@ -815,15 +791,6 @@ proxies:
       path: "/"
       headers:
         Host: "vms.lifetime38.workers.dev"
-  - name: "🇦🇺 🇦🇺 | @WhiteDNS | AU11|1.8MB/s|DNSOK|GPT⁺-AU"
-    type: "hysteria2"
-    server: "158.178.137.129"
-    port: 20000
-    password: "b42d90fa667942aebc734d60"
-    sni: "rmgyvpn.rest"
-    skip-cert-verify: true
-    obfs: "salamander"
-    obfs-password: "b42d90fa667942aebc734d60"
   - name: "🇦🇺 [OpenRay] 🇺🇸 US-15264"
     type: "vmess"
     server: "usaapp2.jisuyun.top"
@@ -855,13 +822,9 @@ proxy-groups:
       - "🇦🇺 🔒 TR-TCP-TLS 🇦🇺 AU-45.63.30.142:443"
       - "🇦🇺 🔒 SS-TCP-NA 🇦🇺 AU-45.32.246.180:8388"
       - "🇦🇺 🔒 SS-TCP-NA 🇦🇺 AU-95.173.193.201:1080"
-      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 204.91ms"
-      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 197.69ms"
-      - "🇦🇺 REALITY|AU🇦🇺 | 51.161.204.242-443 | 146.26ms"
-      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 215.89ms"
-      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 203.93ms"
-      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 202.26ms"
-      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 206.02ms"
+      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 133.81ms"
+      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 127.22ms"
+      - "🇦🇺 🔒 VL-TCP-RLT 🇦🇺 AU-51.161.204.242:443"
       - "🇦🇺 🔒 VL-GRPC-RLT 🇦🇺 AU-103.147.152.23:443"
       - "🇦🇺 🔒 VL-TCP-RLT 🇦🇺 AU-51.161.204.244:443"
       - "🇦🇺 @DeltaKroneckerGithub"
@@ -874,7 +837,6 @@ proxy-groups:
       - "🇦🇺 @DeltaKroneckerGithub-7"
       - "🇦🇺 @DeltaKroneckerGithub-8"
       - "🇦🇺 @DeltaKroneckerGithub-9"
-      - "🇦🇺 🇦🇺 | @WhiteDNS | AU11|1.8MB/s|DNSOK|GPT⁺-AU"
       - "🇦🇺 [OpenRay] 🇺🇸 US-15264"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
@@ -893,13 +855,9 @@ proxy-groups:
       - "🇦🇺 🔒 TR-TCP-TLS 🇦🇺 AU-45.63.30.142:443"
       - "🇦🇺 🔒 SS-TCP-NA 🇦🇺 AU-45.32.246.180:8388"
       - "🇦🇺 🔒 SS-TCP-NA 🇦🇺 AU-95.173.193.201:1080"
-      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 204.91ms"
-      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 197.69ms"
-      - "🇦🇺 REALITY|AU🇦🇺 | 51.161.204.242-443 | 146.26ms"
-      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 215.89ms"
-      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 203.93ms"
-      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 202.26ms"
-      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 206.02ms"
+      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 133.81ms"
+      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 127.22ms"
+      - "🇦🇺 🔒 VL-TCP-RLT 🇦🇺 AU-51.161.204.242:443"
       - "🇦🇺 🔒 VL-GRPC-RLT 🇦🇺 AU-103.147.152.23:443"
       - "🇦🇺 🔒 VL-TCP-RLT 🇦🇺 AU-51.161.204.244:443"
       - "🇦🇺 @DeltaKroneckerGithub"
@@ -912,7 +870,6 @@ proxy-groups:
       - "🇦🇺 @DeltaKroneckerGithub-7"
       - "🇦🇺 @DeltaKroneckerGithub-8"
       - "🇦🇺 @DeltaKroneckerGithub-9"
-      - "🇦🇺 🇦🇺 | @WhiteDNS | AU11|1.8MB/s|DNSOK|GPT⁺-AU"
       - "🇦🇺 [OpenRay] 🇺🇸 US-15264"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
@@ -932,13 +889,9 @@ proxy-groups:
       - "🇦🇺 🔒 TR-TCP-TLS 🇦🇺 AU-45.63.30.142:443"
       - "🇦🇺 🔒 SS-TCP-NA 🇦🇺 AU-45.32.246.180:8388"
       - "🇦🇺 🔒 SS-TCP-NA 🇦🇺 AU-95.173.193.201:1080"
-      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 204.91ms"
-      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 197.69ms"
-      - "🇦🇺 REALITY|AU🇦🇺 | 51.161.204.242-443 | 146.26ms"
-      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 215.89ms"
-      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 203.93ms"
-      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 202.26ms"
-      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 206.02ms"
+      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 133.81ms"
+      - "🇦🇺 REALITY|AU🇦🇺 | leg.goodmaximum.com-443 | 127.22ms"
+      - "🇦🇺 🔒 VL-TCP-RLT 🇦🇺 AU-51.161.204.242:443"
       - "🇦🇺 🔒 VL-GRPC-RLT 🇦🇺 AU-103.147.152.23:443"
       - "🇦🇺 🔒 VL-TCP-RLT 🇦🇺 AU-51.161.204.244:443"
       - "🇦🇺 @DeltaKroneckerGithub"
@@ -951,7 +904,6 @@ proxy-groups:
       - "🇦🇺 @DeltaKroneckerGithub-7"
       - "🇦🇺 @DeltaKroneckerGithub-8"
       - "🇦🇺 @DeltaKroneckerGithub-9"
-      - "🇦🇺 🇦🇺 | @WhiteDNS | AU11|1.8MB/s|DNSOK|GPT⁺-AU"
       - "🇦🇺 [OpenRay] 🇺🇸 US-15264"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"

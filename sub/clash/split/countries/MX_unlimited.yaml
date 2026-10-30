@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -550,31 +584,7 @@ proxies:
     network: "tcp"
     servername: "mx001.zestapp778.com"
     client-fingerprint: "chrome"
-  - name: "🇲🇽 MX🇲🇽+|+64.177.90.30-8388+|+46.85ms"
-    type: "ss"
-    server: "64.177.90.30"
-    port: 8388
-    cipher: "aes-256-gcm"
-    password: "BWyPPTusFKhGgzKh"
-    udp: true
-  - name: "🇲🇽 🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX down"
-    type: "vmess"
-    server: "38.60.224.173"
-    port: 32153
-    uuid: "5cf1f470-3f70-4589-a2a4-4657ea3a1edf"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇲🇽 @DeltaKroneckerGithub"
-    type: "trojan"
-    server: "mx001.zestapp778.com"
-    port: 15083
-    password: "5t6i121em5lkmsmk"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "mx001.zestapp778.com"
-  - name: "🇲🇽 @DeltaKroneckerGithub-1"
+  - name: "🇲🇽 🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 64ms"
     type: "trojan"
     server: "131.196.254.151"
     port: 443
@@ -587,7 +597,16 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.pleadcourt.org"
-  - name: "🇲🇽 @DeltaKroneckerGithub-2"
+  - name: "🇲🇽 @DeltaKroneckerGithub"
+    type: "trojan"
+    server: "mx001.zestapp778.com"
+    port: 15083
+    password: "5t6i121em5lkmsmk"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "mx001.zestapp778.com"
+  - name: "🇲🇽 @DeltaKroneckerGithub-1"
     type: "trojan"
     server: "154.205.152.109"
     port: 443
@@ -596,7 +615,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "154.205.152.109"
-  - name: "🇲🇽 @DeltaKroneckerGithub-3"
+  - name: "🇲🇽 @DeltaKroneckerGithub-2"
     type: "vless"
     server: "45.134.9.133"
     port: 8443
@@ -654,12 +673,10 @@ proxy-groups:
       - "🇲🇽 🔒 TR-WS-TLS 🇲🇽 MX-131.196.254.151:443"
       - "🇲🇽 🔒 TR-TCP-NA 🇲🇽 MX-216.238.80.100:443"
       - "🇲🇽 🔒 VL-TCP-TLS 🇲🇽 MX-149.104.90.184:19167"
-      - "🇲🇽 MX🇲🇽+|+64.177.90.30-8388+|+46.85ms"
-      - "🇲🇽 🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX down"
+      - "🇲🇽 🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 64ms"
       - "🇲🇽 @DeltaKroneckerGithub"
       - "🇲🇽 @DeltaKroneckerGithub-1"
       - "🇲🇽 @DeltaKroneckerGithub-2"
-      - "🇲🇽 @DeltaKroneckerGithub-3"
       - "🇲🇽 65. 🇲🇽 Mexico"
       - "🇲🇽 72. 🇲🇽 Mexico"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
@@ -675,12 +692,10 @@ proxy-groups:
       - "🇲🇽 🔒 TR-WS-TLS 🇲🇽 MX-131.196.254.151:443"
       - "🇲🇽 🔒 TR-TCP-NA 🇲🇽 MX-216.238.80.100:443"
       - "🇲🇽 🔒 VL-TCP-TLS 🇲🇽 MX-149.104.90.184:19167"
-      - "🇲🇽 MX🇲🇽+|+64.177.90.30-8388+|+46.85ms"
-      - "🇲🇽 🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX down"
+      - "🇲🇽 🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 64ms"
       - "🇲🇽 @DeltaKroneckerGithub"
       - "🇲🇽 @DeltaKroneckerGithub-1"
       - "🇲🇽 @DeltaKroneckerGithub-2"
-      - "🇲🇽 @DeltaKroneckerGithub-3"
       - "🇲🇽 65. 🇲🇽 Mexico"
       - "🇲🇽 72. 🇲🇽 Mexico"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
@@ -697,12 +712,10 @@ proxy-groups:
       - "🇲🇽 🔒 TR-WS-TLS 🇲🇽 MX-131.196.254.151:443"
       - "🇲🇽 🔒 TR-TCP-NA 🇲🇽 MX-216.238.80.100:443"
       - "🇲🇽 🔒 VL-TCP-TLS 🇲🇽 MX-149.104.90.184:19167"
-      - "🇲🇽 MX🇲🇽+|+64.177.90.30-8388+|+46.85ms"
-      - "🇲🇽 🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX down"
+      - "🇲🇽 🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 64ms"
       - "🇲🇽 @DeltaKroneckerGithub"
       - "🇲🇽 @DeltaKroneckerGithub-1"
       - "🇲🇽 @DeltaKroneckerGithub-2"
-      - "🇲🇽 @DeltaKroneckerGithub-3"
       - "🇲🇽 65. 🇲🇽 Mexico"
       - "🇲🇽 72. 🇲🇽 Mexico"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"

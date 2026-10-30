@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -507,66 +541,6 @@ proxies:
       path: "/"
       headers:
         Host: "shuma.ccwu.cc"
-  - name: "🇲🇩 REALITY|MD🇲🇩 | md5.univesalsrv.com-443 | 249.99ms"
-    type: "vless"
-    server: "md5.univesalsrv.com"
-    port: 443
-    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "md5.univesalsrv.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "99MRki6b93wC-hhDHe9yq3IXE3KtPGw4RkFAnpI-8gg"
-      short-id: "aa9884f2982b7d3c"
-    grpc-opts:
-      grpc-service-name: "app.v1.PushService"
-  - name: "🇲🇩 REALITY|MD🇲🇩 | md1.univesalsrv.com-443 | 250.66ms"
-    type: "vless"
-    server: "md1.univesalsrv.com"
-    port: 443
-    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "md1.univesalsrv.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "xWejOQUn2koOUorUPSrHMLM-lyHlZ441KzxKc9bLmkY"
-      short-id: "221ba6174224ca5b"
-    grpc-opts:
-      grpc-service-name: "hub.v1.RelayService"
-  - name: "🇲🇩 REALITY|MD🇲🇩 | 89.35.14.34-443 | 194.24ms"
-    type: "vless"
-    server: "89.35.14.34"
-    port: 443
-    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "md5.univesalsrv.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "99MRki6b93wC-hhDHe9yq3IXE3KtPGw4RkFAnpI-8gg"
-      short-id: "aa9884f2982b7d3c"
-    grpc-opts:
-      grpc-service-name: "app.v1.PushService"
-  - name: "🇲🇩 REALITY|MD🇲🇩 | 89.35.14.31-443 | 238.1ms"
-    type: "vless"
-    server: "89.35.14.31"
-    port: 443
-    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "md2.univesalsrv.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "JXFsWHYjhAcR-7yz9tuCTMdcfuiyC9a-C9ewA55Z63o"
-      short-id: "d36a38659ce106cb"
-    grpc-opts:
-      grpc-service-name: "hub.v1.SyncService"
   - name: "🇲🇩 🔒 VL-GRPC-RLT 🇲🇩 MD-89.35.14.31:443"
     type: "vless"
     server: "89.35.14.31"
@@ -582,6 +556,21 @@ proxies:
       short-id: "d36a38659ce106cb"
     grpc-opts:
       grpc-service-name: "hub.v1.SyncService"
+  - name: "🇲🇩 🔒 VL-GRPC-RLT 🇲🇩 MD-89.35.14.34:443"
+    type: "vless"
+    server: "89.35.14.34"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "md5.univesalsrv.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "99MRki6b93wC-hhDHe9yq3IXE3KtPGw4RkFAnpI-8gg"
+      short-id: "aa9884f2982b7d3c"
+    grpc-opts:
+      grpc-service-name: "app.v1.PushService"
   - name: "🇲🇩 🔒 VL-GRPC-RLT 🇲🇩 MD-89.35.14.33:443"
     type: "vless"
     server: "89.35.14.33"
@@ -612,6 +601,49 @@ proxies:
       short-id: "221ba6174224ca5b"
     grpc-opts:
       grpc-service-name: "hub.v1.RelayService"
+  - name: "🇲🇩 🔒 VL-GRPC-RLT 🇲🇩 MD-89.35.14.31:443-1"
+    type: "vless"
+    server: "89.35.14.31"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "md2.univesalsrv.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "JXFsWHYjhAcR-7yz9tuCTMdcfuiyC9a-C9ewA55Z63o"
+      short-id: "d36a38659ce106cb"
+    grpc-opts:
+      grpc-service-name: "hub.v1.SyncService"
+  - name: "🇲🇩 🆔ar14n24b 🔒 VL-GRPC- ❔ XX 232ms"
+    type: "vless"
+    server: "md5.univesalsrv.com"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "99MRki6b93wC-hhDHe9yq3IXE3KtPGw4RkFAnpI-8gg"
+      short-id: "aa9884f2982b7d3c"
+    grpc-opts:
+      grpc-service-name: "app.v1.PushService"
+  - name: "🇲🇩 🆔ar14n24b 🔒 VL-TCP- ❔ XX 148ms"
+    type: "vless"
+    server: "131.123.25.54"
+    port: 443
+    uuid: "ce8fbdea-c3c3-0008-9658-32599d1f853f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "last.syoknew.work"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "8ZYjmjb0b2QJKCGMrcdhQNV28jZZPCKgIQbIdqChQ0w"
+      short-id: "02acb11712403c6c"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -627,13 +659,13 @@ proxy-groups:
     lazy: true
     proxies:
       - "🇲🇩 🔒 VL-WS-TLS 🇲🇩 MD-185.153.198.86:443"
-      - "🇲🇩 REALITY|MD🇲🇩 | md5.univesalsrv.com-443 | 249.99ms"
-      - "🇲🇩 REALITY|MD🇲🇩 | md1.univesalsrv.com-443 | 250.66ms"
-      - "🇲🇩 REALITY|MD🇲🇩 | 89.35.14.34-443 | 194.24ms"
-      - "🇲🇩 REALITY|MD🇲🇩 | 89.35.14.31-443 | 238.1ms"
       - "🇲🇩 🔒 VL-GRPC-RLT 🇲🇩 MD-89.35.14.31:443"
+      - "🇲🇩 🔒 VL-GRPC-RLT 🇲🇩 MD-89.35.14.34:443"
       - "🇲🇩 🔒 VL-GRPC-RLT 🇲🇩 MD-89.35.14.33:443"
       - "🇲🇩 🔒 VL-GRPC-RLT 🇲🇩 MD-89.35.14.30:443"
+      - "🇲🇩 🔒 VL-GRPC-RLT 🇲🇩 MD-89.35.14.31:443-1"
+      - "🇲🇩 🆔ar14n24b 🔒 VL-GRPC- ❔ XX 232ms"
+      - "🇲🇩 🆔ar14n24b 🔒 VL-TCP- ❔ XX 148ms"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -643,13 +675,13 @@ proxy-groups:
     lazy: true
     proxies:
       - "🇲🇩 🔒 VL-WS-TLS 🇲🇩 MD-185.153.198.86:443"
-      - "🇲🇩 REALITY|MD🇲🇩 | md5.univesalsrv.com-443 | 249.99ms"
-      - "🇲🇩 REALITY|MD🇲🇩 | md1.univesalsrv.com-443 | 250.66ms"
-      - "🇲🇩 REALITY|MD🇲🇩 | 89.35.14.34-443 | 194.24ms"
-      - "🇲🇩 REALITY|MD🇲🇩 | 89.35.14.31-443 | 238.1ms"
       - "🇲🇩 🔒 VL-GRPC-RLT 🇲🇩 MD-89.35.14.31:443"
+      - "🇲🇩 🔒 VL-GRPC-RLT 🇲🇩 MD-89.35.14.34:443"
       - "🇲🇩 🔒 VL-GRPC-RLT 🇲🇩 MD-89.35.14.33:443"
       - "🇲🇩 🔒 VL-GRPC-RLT 🇲🇩 MD-89.35.14.30:443"
+      - "🇲🇩 🔒 VL-GRPC-RLT 🇲🇩 MD-89.35.14.31:443-1"
+      - "🇲🇩 🆔ar14n24b 🔒 VL-GRPC- ❔ XX 232ms"
+      - "🇲🇩 🆔ar14n24b 🔒 VL-TCP- ❔ XX 148ms"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -660,13 +692,13 @@ proxy-groups:
     timeout: 1500
     proxies:
       - "🇲🇩 🔒 VL-WS-TLS 🇲🇩 MD-185.153.198.86:443"
-      - "🇲🇩 REALITY|MD🇲🇩 | md5.univesalsrv.com-443 | 249.99ms"
-      - "🇲🇩 REALITY|MD🇲🇩 | md1.univesalsrv.com-443 | 250.66ms"
-      - "🇲🇩 REALITY|MD🇲🇩 | 89.35.14.34-443 | 194.24ms"
-      - "🇲🇩 REALITY|MD🇲🇩 | 89.35.14.31-443 | 238.1ms"
       - "🇲🇩 🔒 VL-GRPC-RLT 🇲🇩 MD-89.35.14.31:443"
+      - "🇲🇩 🔒 VL-GRPC-RLT 🇲🇩 MD-89.35.14.34:443"
       - "🇲🇩 🔒 VL-GRPC-RLT 🇲🇩 MD-89.35.14.33:443"
       - "🇲🇩 🔒 VL-GRPC-RLT 🇲🇩 MD-89.35.14.30:443"
+      - "🇲🇩 🔒 VL-GRPC-RLT 🇲🇩 MD-89.35.14.31:443-1"
+      - "🇲🇩 🆔ar14n24b 🔒 VL-GRPC- ❔ XX 232ms"
+      - "🇲🇩 🆔ar14n24b 🔒 VL-TCP- ❔ XX 148ms"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"

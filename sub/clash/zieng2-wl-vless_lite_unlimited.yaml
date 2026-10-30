@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -493,27 +527,20 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "🇷🇺 VK — #1"
+  - name: "🇷🇺 Beget — #1"
     type: "vless"
-    server: "37.18.14.43"
-    port: 2053
-    uuid: "7dd69047-047e-422e-a2ba-ed773c34fd1a"
+    server: "45.12.75.242"
+    port: 26424
+    uuid: "633f424e-2b11-48da-a6b3-a849dd71456f"
     udp: true
     tls: true
-    network: "xhttp"
-    servername: "flatcrest.net"
-    client-fingerprint: "edge"
-  - name: "🇷🇺 VK — #2"
-    type: "vless"
-    server: "37.18.14.43"
-    port: 2053
-    uuid: "7dd69047-047e-422e-a2ba-ed773c34fd1a"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "flatcrest.net"
-    client-fingerprint: "ios"
-  - name: "🇷🇺 Beget — #4"
+    network: "raw"
+    servername: "ya.ru"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "l8AubqcxQO-HRFJy4pZL1vbLOo-eXit69s-XulSELE0"
+      short-id: "23103e1e"
+  - name: "🇷🇺 Beget — #2"
     type: "vless"
     server: "45.12.75.242"
     port: 26424
@@ -526,7 +553,7 @@ proxies:
     reality-opts:
       public-key: "l8AubqcxQO-HRFJy4pZL1vbLOo-eXit69s-XulSELE0"
       short-id: "23103e1e"
-  - name: "🇷🇺 Beget — #5"
+  - name: "🇷🇺 Beget — #3"
     type: "vless"
     server: "45.12.75.242"
     port: 26424
@@ -538,7 +565,7 @@ proxies:
     reality-opts:
       public-key: "l8AubqcxQO-HRFJy4pZL1vbLOo-eXit69s-XulSELE0"
       short-id: "23103e1e"
-  - name: "🇷🇺 Beget — #6"
+  - name: "🇷🇺 Beget — #4"
     type: "vless"
     server: "45.12.75.242"
     port: 26424
@@ -551,89 +578,137 @@ proxies:
     reality-opts:
       public-key: "l8AubqcxQO-HRFJy4pZL1vbLOo-eXit69s-XulSELE0"
       short-id: "23103e1e"
-  - name: "🇷🇺 IHC — #7"
+  - name: "🇷🇺 Delta — #5"
     type: "vless"
-    server: "46.254.19.164"
+    server: "185.229.9.135"
     port: 443
-    uuid: "a5212bcb-ab85-459a-bec6-9f259eeeebfa"
+    uuid: "8f763a7f-4cda-4db1-90e3-9aeae0860dc0"
     udp: true
     tls: true
-    network: "raw"
-    servername: "wtb.tems.bet"
-    client-fingerprint: "firefox"
-    reality-opts:
-      public-key: "3qgZ9UlB-y1i9jx_zQQBgiNgFHz6fPQdP9gMMl4zXiM"
-      short-id: "8937c9ed2d470352"
-  - name: "🇷🇺 Selectel — #8"
+    network: "ws"
+    servername: "business.lesotorg-kirov.ru"
+    ws-opts:
+      path: "/chws"
+      headers:
+        Host: "business.lesotorg-kirov.ru"
+  - name: "🇷🇺 Delta — #6"
     type: "vless"
-    server: "188.72.103.4"
+    server: "185.229.9.135"
     port: 443
-    uuid: "9737cc16-7266-45ce-94d9-6e05a45e0b9c"
+    uuid: "8f763a7f-4cda-4db1-90e3-9aeae0860dc0"
     udp: true
     tls: true
-    network: "xhttp"
-    servername: "ru.nnight.cfd"
+    network: "ws"
+    servername: "business.lesotorg-kirov.ru"
+    client-fingerprint: "android"
+    ws-opts:
+      path: "/chws"
+      headers:
+        Host: "business.lesotorg-kirov.ru"
+  - name: "🇷🇺 Delta — #7"
+    type: "vless"
+    server: "185.229.9.135"
+    port: 443
+    uuid: "8f763a7f-4cda-4db1-90e3-9aeae0860dc0"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "business.lesotorg-kirov.ru"
+    client-fingerprint: "safari"
+    ws-opts:
+      path: "/chws"
+      headers:
+        Host: "business.lesotorg-kirov.ru"
+  - name: "🇩🇪 Germany — #8"
+    type: "vless"
+    server: "217.19.122.156"
+    port: 443
+    uuid: "c720cb74-4c84-4fce-b8ae-637dbaa16199"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "z1q3pv4g78.rucdncomp.pro"
+    client-fingerprint: "safari"
+    ws-opts:
+      path: "/useraction/events/b892639b7195/"
+      headers:
+        Host: "z1q3pv4g78.rucdncomp.pro"
+  - name: "🇩🇪 Germany — #9"
+    type: "vless"
+    server: "217.19.122.156"
+    port: 443
+    uuid: "c720cb74-4c84-4fce-b8ae-637dbaa16199"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "z1q3pv4g78.rucdncomp.pro"
     client-fingerprint: "firefox"
-    alpn:
-      - "h2"
-  - name: "🇧🇬 Bulgaria — #9"
+    ws-opts:
+      path: "/useraction/events/b892639b7195/"
+      headers:
+        Host: "z1q3pv4g78.rucdncomp.pro"
+  - name: "🇩🇪 Germany — #10"
     type: "vless"
-    server: "37.18.14.43"
-    port: 8443
-    uuid: "7dd69047-047e-422e-a2ba-ed773c34fd1a"
+    server: "217.19.122.156"
+    port: 443
+    uuid: "c720cb74-4c84-4fce-b8ae-637dbaa16199"
     udp: true
     tls: true
-    network: "xhttp"
-    servername: "flatcrest.net"
-    client-fingerprint: "safari"
-  - name: "🇧🇬 Bulgaria — #10"
+    network: "ws"
+    servername: "z1q3pv4g78.rucdncomp.pro"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/useraction/events/b892639b7195/"
+      headers:
+        Host: "z1q3pv4g78.rucdncomp.pro"
+  - name: "🇩🇪 Germany — #11"
     type: "vless"
-    server: "37.18.14.43"
-    port: 8443
-    uuid: "7dd69047-047e-422e-a2ba-ed773c34fd1a"
+    server: "217.19.122.156"
+    port: 443
+    uuid: "c720cb74-4c84-4fce-b8ae-637dbaa16199"
     udp: true
     tls: true
-    network: "xhttp"
-    servername: "flatcrest.net"
-    client-fingerprint: "safari"
-    alpn:
-      - "http/1.1"
-      - "h2"
-  - name: "🇧🇬 Bulgaria — #11"
-    type: "vless"
-    server: "37.18.14.43"
-    port: 8443
-    uuid: "7dd69047-047e-422e-a2ba-ed773c34fd1a"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "flatcrest.net"
+    network: "ws"
+    servername: "z1q3pv4g78.rucdncomp.pro"
     client-fingerprint: "chrome"
     alpn:
       - "http/1.1"
-      - "h2"
-  - name: "🇧🇬 Bulgaria — #12"
+    ws-opts:
+      path: "/useraction/events/b892639b7195/"
+      headers:
+        Host: "z1q3pv4g78.rucdncomp.pro"
+  - name: "🇩🇪 Germany — #12"
     type: "vless"
-    server: "37.18.14.43"
-    port: 8443
-    uuid: "7dd69047-047e-422e-a2ba-ed773c34fd1a"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "flatcrest.net"
-    client-fingerprint: "firefox"
-  - name: "🇨🇿 Czechia — #13"
-    type: "vless"
-    server: "188.72.103.4"
+    server: "217.19.122.156"
     port: 443
-    uuid: "9737cc16-7266-45ce-94d9-6e05a45e0b9c"
+    uuid: "c720cb74-4c84-4fce-b8ae-637dbaa16199"
     udp: true
     tls: true
-    network: "xhttp"
-    servername: "czech.nnight.cfd"
+    network: "ws"
+    servername: "z1q3pv4g78.rucdncomp.pro"
     client-fingerprint: "firefox"
     alpn:
-      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/useraction/events/b892639b7195/"
+      headers:
+        Host: "z1q3pv4g78.rucdncomp.pro"
+  - name: "🇩🇪 Germany — #13"
+    type: "vless"
+    server: "217.19.122.156"
+    port: 443
+    uuid: "c720cb74-4c84-4fce-b8ae-637dbaa16199"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "z1q3pv4g78.rucdncomp.pro"
+    client-fingerprint: "ios"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/useraction/events/b892639b7195/"
+      headers:
+        Host: "z1q3pv4g78.rucdncomp.pro"
   - name: "🇩🇪 Germany — #14"
     type: "vless"
     server: "217.19.122.156"
@@ -644,6 +719,8 @@ proxies:
     network: "ws"
     servername: "z1q3pv4g78.rucdncomp.pro"
     client-fingerprint: "safari"
+    alpn:
+      - "http/1.1"
     ws-opts:
       path: "/useraction/events/b892639b7195/"
       headers:
@@ -657,27 +734,25 @@ proxies:
     tls: true
     network: "ws"
     servername: "z1q3pv4g78.rucdncomp.pro"
-    client-fingerprint: "firefox"
-    ws-opts:
-      path: "/useraction/events/b892639b7195/"
-      headers:
-        Host: "z1q3pv4g78.rucdncomp.pro"
-  - name: "🇩🇪 Germany — #16"
-    type: "vless"
-    server: "217.19.122.156"
-    port: 443
-    uuid: "c720cb74-4c84-4fce-b8ae-637dbaa16199"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "z1q3pv4g78.rucdncomp.pro"
-    client-fingerprint: "chrome"
+    client-fingerprint: "random"
     alpn:
       - "http/1.1"
     ws-opts:
       path: "/useraction/events/b892639b7195/"
       headers:
         Host: "z1q3pv4g78.rucdncomp.pro"
+  - name: "🇩🇪 Germany — #16"
+    type: "vless"
+    server: "188.72.103.4"
+    port: 443
+    uuid: "9737cc16-7266-45ce-94d9-6e05a45e0b9c"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "swit.nnight.sbs"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
   - name: "🇩🇪 Germany — #17"
     type: "vless"
     server: "217.19.122.156"
@@ -687,9 +762,7 @@ proxies:
     tls: true
     network: "ws"
     servername: "z1q3pv4g78.rucdncomp.pro"
-    client-fingerprint: "safari"
-    alpn:
-      - "http/1.1"
+    client-fingerprint: "random"
     ws-opts:
       path: "/useraction/events/b892639b7195/"
       headers:
@@ -703,83 +776,25 @@ proxies:
     tls: true
     network: "ws"
     servername: "z1q3pv4g78.rucdncomp.pro"
-    client-fingerprint: "random"
-    alpn:
-      - "http/1.1"
+    client-fingerprint: "ios"
     ws-opts:
       path: "/useraction/events/b892639b7195/"
       headers:
         Host: "z1q3pv4g78.rucdncomp.pro"
   - name: "🇩🇪 Germany — #19"
     type: "vless"
-    server: "188.72.103.4"
+    server: "217.19.122.156"
     port: 443
-    uuid: "9737cc16-7266-45ce-94d9-6e05a45e0b9c"
+    uuid: "c720cb74-4c84-4fce-b8ae-637dbaa16199"
     udp: true
     tls: true
-    network: "xhttp"
-    servername: "swit.nnight.sbs"
-    client-fingerprint: "firefox"
+    network: "ws"
+    servername: "z1q3pv4g78.rucdncomp.pro"
     alpn:
-      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/useraction/events/b892639b7195/"
   - name: "🇩🇪 Germany — #20"
-    type: "vless"
-    server: "217.19.122.156"
-    port: 443
-    uuid: "c720cb74-4c84-4fce-b8ae-637dbaa16199"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "z1q3pv4g78.rucdncomp.pro"
-    client-fingerprint: "firefox"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/useraction/events/b892639b7195/"
-      headers:
-        Host: "z1q3pv4g78.rucdncomp.pro"
-  - name: "🇩🇪 Germany — #21"
-    type: "vless"
-    server: "217.19.122.156"
-    port: 443
-    uuid: "c720cb74-4c84-4fce-b8ae-637dbaa16199"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "z1q3pv4g78.rucdncomp.pro"
-    client-fingerprint: "ios"
-    ws-opts:
-      path: "/useraction/events/b892639b7195/"
-      headers:
-        Host: "z1q3pv4g78.rucdncomp.pro"
-  - name: "🇩🇪 Germany — #22"
-    type: "vless"
-    server: "217.19.122.156"
-    port: 443
-    uuid: "c720cb74-4c84-4fce-b8ae-637dbaa16199"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "z1q3pv4g78.rucdncomp.pro"
-    client-fingerprint: "random"
-    ws-opts:
-      path: "/useraction/events/b892639b7195/"
-      headers:
-        Host: "z1q3pv4g78.rucdncomp.pro"
-  - name: "🇩🇪 Germany — #23"
-    type: "vless"
-    server: "217.19.122.156"
-    port: 443
-    uuid: "c720cb74-4c84-4fce-b8ae-637dbaa16199"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "z1q3pv4g78.rucdncomp.pro"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/useraction/events/b892639b7195/"
-  - name: "🇩🇪 Germany — #24"
     type: "vless"
     server: "217.19.122.156"
     port: 443
@@ -791,51 +806,167 @@ proxies:
     client-fingerprint: "chrome"
     ws-opts:
       path: "/useraction/events/b892639b7195/"
-      headers:
-        Host: "z1q3pv4g78.rucdncomp.pro"
-  - name: "🇩🇪 Germany — #25"
+  - name: "🇩🇪 Germany — #21"
     type: "vless"
-    server: "188.225.57.220"
+    server: "82.202.178.145"
     port: 443
-    uuid: "7955bf18-35c4-412d-aabd-c0b36c793063"
+    uuid: "8822fe1c-7a83-49c0-af96-c2027cb6ddd5"
     udp: true
     tls: true
-    network: "ws"
-    servername: "r02q7fmndn.rucdncomp.pro"
+    network: "grpc"
+    servername: "h12.smart-life.agency"
     client-fingerprint: "firefox"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/useraction/collect/1b0df6f70c37/"
-      headers:
-        Host: "r02q7fmndn.rucdncomp.pro"
-  - name: "🇩🇪 Germany — #26"
+    reality-opts:
+      public-key: "1A9loATtqTbKfErpj24clMebWdbmBRDgUIADwtlvtAw"
+      short-id: "70c20a2f5a7d542e"
+    grpc-opts:
+      grpc-service-name: "google.storage.v2.Storage"
+  - name: "🇩🇪 Germany — #22"
     type: "vless"
-    server: "188.225.57.220"
+    server: "82.202.178.145"
     port: 443
-    uuid: "c720cb74-4c84-4fce-b8ae-637dbaa16199"
+    uuid: "3eb47299-50cd-46ee-9511-49115c56ed37"
     udp: true
     tls: true
-    network: "ws"
-    servername: "r02q7fmndn.rucdncomp.pro"
+    network: "grpc"
+    servername: "h12.smart-life.agency"
     client-fingerprint: "firefox"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/useraction/collect/1b0df6f70c37/"
-      headers:
-        Host: "r02q7fmndn.rucdncomp.pro"
-  - name: "🇪🇪 Estonia — #27"
+    reality-opts:
+      public-key: "1A9loATtqTbKfErpj24clMebWdbmBRDgUIADwtlvtAw"
+      short-id: "70c20a2f5a7d542e"
+    grpc-opts:
+      grpc-service-name: "google.storage.v2.Storage"
+  - name: "🇩🇪 Germany — #23"
     type: "vless"
-    server: "188.72.103.4"
+    server: "82.202.178.145"
     port: 443
-    uuid: "000187a2-924b-8be4-b475-485a4699c80d"
+    uuid: "1ba0439d-384c-4a6e-9560-0439698beb2a"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "h12.smart-life.agency"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "1A9loATtqTbKfErpj24clMebWdbmBRDgUIADwtlvtAw"
+      short-id: "70c20a2f5a7d542e"
+    grpc-opts:
+      grpc-service-name: "google.storage.v2.Storage"
+  - name: "🇩🇪 Germany — #24"
+    type: "vless"
+    server: "82.202.178.145"
+    port: 443
+    uuid: "928a3079-7c20-40cc-9c92-e878ba959dcd"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "h12.smart-life.agency"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "1A9loATtqTbKfErpj24clMebWdbmBRDgUIADwtlvtAw"
+      short-id: "70c20a2f5a7d542e"
+    grpc-opts:
+      grpc-service-name: "google.storage.v2.Storage"
+  - name: "🇪🇪 Estonia — #25"
+    type: "vless"
+    server: "188.72.110.3"
+    port: 443
+    uuid: "092573fd-82d0-4ac2-bc85-7813dfaa884c"
     udp: true
     tls: true
     network: "xhttp"
-    servername: "ee-cdn.fius.dev"
+    servername: "rsvnor.6924l9t655.h1cloud.lol"
     client-fingerprint: "firefox"
+  - name: "🇫🇷 France — #26"
+    type: "vless"
+    server: "82.202.178.142"
+    port: 443
+    uuid: "1ba0439d-384c-4a6e-9560-0439698beb2a"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "h9.smart-life.agency"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "1A9loATtqTbKfErpj24clMebWdbmBRDgUIADwtlvtAw"
+      short-id: "70c20a2f5a7d542e"
+    grpc-opts:
+      grpc-service-name: "google.storage.v2.Storage"
+  - name: "🇫🇷 France — #27"
+    type: "vless"
+    server: "82.202.178.141"
+    port: 443
+    uuid: "928a3079-7c20-40cc-9c92-e878ba959dcd"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "h8.smart-life.agency"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "w_hrubefrDzoh5rEB3jFTx4j-t7o1HMyyo1bAE1a8D0"
+      short-id: "316d0a3751f3122d"
+    grpc-opts:
+      grpc-service-name: "google.storage.v2.Storage"
   - name: "🇫🇷 France — #28"
+    type: "vless"
+    server: "82.202.178.141"
+    port: 443
+    uuid: "1ba0439d-384c-4a6e-9560-0439698beb2a"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "h8.smart-life.agency"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "w_hrubefrDzoh5rEB3jFTx4j-t7o1HMyyo1bAE1a8D0"
+      short-id: "316d0a3751f3122d"
+    grpc-opts:
+      grpc-service-name: "google.storage.v2.Storage"
+  - name: "🇫🇷 France — #29"
+    type: "vless"
+    server: "82.202.178.142"
+    port: 443
+    uuid: "8822fe1c-7a83-49c0-af96-c2027cb6ddd5"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "h9.smart-life.agency"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "1A9loATtqTbKfErpj24clMebWdbmBRDgUIADwtlvtAw"
+      short-id: "70c20a2f5a7d542e"
+    grpc-opts:
+      grpc-service-name: "google.storage.v2.Storage"
+  - name: "🇫🇷 France — #30"
+    type: "vless"
+    server: "82.202.178.140"
+    port: 443
+    uuid: "1ba0439d-384c-4a6e-9560-0439698beb2a"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "h7.smart-life.agency"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "w_hrubefrDzoh5rEB3jFTx4j-t7o1HMyyo1bAE1a8D0"
+      short-id: "316d0a3751f3122d"
+    grpc-opts:
+      grpc-service-name: "google.storage.v2.Storage"
+  - name: "🇫🇷 France — #31"
+    type: "vless"
+    server: "82.202.178.140"
+    port: 443
+    uuid: "928a3079-7c20-40cc-9c92-e878ba959dcd"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "h7.smart-life.agency"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "w_hrubefrDzoh5rEB3jFTx4j-t7o1HMyyo1bAE1a8D0"
+      short-id: "316d0a3751f3122d"
+    grpc-opts:
+      grpc-service-name: "google.storage.v2.Storage"
+  - name: "🇫🇷 France — #32"
     type: "vless"
     server: "82.202.178.139"
     port: 443
@@ -850,7 +981,22 @@ proxies:
       short-id: "316d0a3751f3122d"
     grpc-opts:
       grpc-service-name: "google.storage.v2.Storage"
-  - name: "🇫🇷 France — #29"
+  - name: "🇫🇷 France — #33"
+    type: "vless"
+    server: "82.202.178.140"
+    port: 443
+    uuid: "3eb47299-50cd-46ee-9511-49115c56ed37"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "h7.smart-life.agency"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "w_hrubefrDzoh5rEB3jFTx4j-t7o1HMyyo1bAE1a8D0"
+      short-id: "316d0a3751f3122d"
+    grpc-opts:
+      grpc-service-name: "google.storage.v2.Storage"
+  - name: "🇫🇷 France — #34"
     type: "vless"
     server: "82.202.178.139"
     port: 443
@@ -865,7 +1011,7 @@ proxies:
       short-id: "316d0a3751f3122d"
     grpc-opts:
       grpc-service-name: "google.storage.v2.Storage"
-  - name: "🇫🇷 France — #30"
+  - name: "🇫🇷 France — #35"
     type: "vless"
     server: "82.202.178.138"
     port: 443
@@ -880,7 +1026,7 @@ proxies:
       short-id: "316d0a3751f3122d"
     grpc-opts:
       grpc-service-name: "google.storage.v2.Storage"
-  - name: "🇫🇷 France — #31"
+  - name: "🇫🇷 France — #36"
     type: "vless"
     server: "82.202.178.138"
     port: 443
@@ -895,7 +1041,7 @@ proxies:
       short-id: "316d0a3751f3122d"
     grpc-opts:
       grpc-service-name: "google.storage.v2.Storage"
-  - name: "🇫🇷 France — #32"
+  - name: "🇫🇷 France — #37"
     type: "vless"
     server: "82.202.178.139"
     port: 443
@@ -910,7 +1056,112 @@ proxies:
       short-id: "316d0a3751f3122d"
     grpc-opts:
       grpc-service-name: "google.storage.v2.Storage"
-  - name: "🇬🇧 United Kingdom — #33"
+  - name: "🇫🇷 France — #38"
+    type: "vless"
+    server: "82.202.178.142"
+    port: 443
+    uuid: "928a3079-7c20-40cc-9c92-e878ba959dcd"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "h9.smart-life.agency"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "1A9loATtqTbKfErpj24clMebWdbmBRDgUIADwtlvtAw"
+      short-id: "70c20a2f5a7d542e"
+    grpc-opts:
+      grpc-service-name: "google.storage.v2.Storage"
+  - name: "🇫🇷 France — #39"
+    type: "vless"
+    server: "82.202.178.140"
+    port: 443
+    uuid: "8822fe1c-7a83-49c0-af96-c2027cb6ddd5"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "h7.smart-life.agency"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "w_hrubefrDzoh5rEB3jFTx4j-t7o1HMyyo1bAE1a8D0"
+      short-id: "316d0a3751f3122d"
+    grpc-opts:
+      grpc-service-name: "google.storage.v2.Storage"
+  - name: "🇫🇷 France — #40"
+    type: "vless"
+    server: "82.202.178.139"
+    port: 443
+    uuid: "8822fe1c-7a83-49c0-af96-c2027cb6ddd5"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "h6.smart-life.agency"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "w_hrubefrDzoh5rEB3jFTx4j-t7o1HMyyo1bAE1a8D0"
+      short-id: "316d0a3751f3122d"
+    grpc-opts:
+      grpc-service-name: "google.storage.v2.Storage"
+  - name: "🇫🇷 France — #41"
+    type: "vless"
+    server: "82.202.178.138"
+    port: 443
+    uuid: "8822fe1c-7a83-49c0-af96-c2027cb6ddd5"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "h5.smart-life.agency"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "w_hrubefrDzoh5rEB3jFTx4j-t7o1HMyyo1bAE1a8D0"
+      short-id: "316d0a3751f3122d"
+    grpc-opts:
+      grpc-service-name: "google.storage.v2.Storage"
+  - name: "🇫🇷 France — #42"
+    type: "vless"
+    server: "82.202.178.138"
+    port: 443
+    uuid: "3eb47299-50cd-46ee-9511-49115c56ed37"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "h5.smart-life.agency"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "w_hrubefrDzoh5rEB3jFTx4j-t7o1HMyyo1bAE1a8D0"
+      short-id: "316d0a3751f3122d"
+    grpc-opts:
+      grpc-service-name: "google.storage.v2.Storage"
+  - name: "🇫🇷 France — #43"
+    type: "vless"
+    server: "82.202.178.141"
+    port: 443
+    uuid: "3eb47299-50cd-46ee-9511-49115c56ed37"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "h8.smart-life.agency"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "w_hrubefrDzoh5rEB3jFTx4j-t7o1HMyyo1bAE1a8D0"
+      short-id: "316d0a3751f3122d"
+    grpc-opts:
+      grpc-service-name: "google.storage.v2.Storage"
+  - name: "🇫🇷 France — #44"
+    type: "vless"
+    server: "82.202.178.142"
+    port: 443
+    uuid: "3eb47299-50cd-46ee-9511-49115c56ed37"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "h9.smart-life.agency"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "1A9loATtqTbKfErpj24clMebWdbmBRDgUIADwtlvtAw"
+      short-id: "70c20a2f5a7d542e"
+    grpc-opts:
+      grpc-service-name: "google.storage.v2.Storage"
+  - name: "🇬🇧 United Kingdom — #45"
     type: "vless"
     server: "82.202.183.9"
     port: 443
@@ -925,7 +1176,7 @@ proxies:
       short-id: "70c20a2f5a7d542e"
     grpc-opts:
       grpc-service-name: "google.storage.v2.Storage"
-  - name: "🇬🇧 United Kingdom — #34"
+  - name: "🇬🇧 United Kingdom — #46"
     type: "vless"
     server: "82.202.183.9"
     port: 443
@@ -940,7 +1191,7 @@ proxies:
       short-id: "70c20a2f5a7d542e"
     grpc-opts:
       grpc-service-name: "google.storage.v2.Storage"
-  - name: "🇬🇧 United Kingdom — #35"
+  - name: "🇬🇧 United Kingdom — #47"
     type: "vless"
     server: "82.202.183.9"
     port: 443
@@ -955,129 +1206,132 @@ proxies:
       short-id: "70c20a2f5a7d542e"
     grpc-opts:
       grpc-service-name: "google.storage.v2.Storage"
-  - name: "🇳🇱 The Netherlands — #36"
+  - name: "🇬🇧 United Kingdom — #48"
     type: "vless"
-    server: "188.72.103.4"
+    server: "82.202.183.9"
     port: 443
-    uuid: "721e0fec-e964-4b21-a59e-3eb26288e18f"
+    uuid: "3eb47299-50cd-46ee-9511-49115c56ed37"
     udp: true
     tls: true
-    network: "xhttp"
-    servername: "yandex.lent.pro"
+    network: "grpc"
+    servername: "h4.smart-life.agency"
     client-fingerprint: "firefox"
-    alpn:
-      - "h2"
-  - name: "🇵🇱 Poland — #37"
-    type: "vless"
-    server: "185.178.208.140"
-    port: 443
-    uuid: "ea277838-a188-44f1-a2e8-94aa110c4f27"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "static.bakarova-top.ru"
-    client-fingerprint: "firefox"
-  - name: "🇵🇱 Poland — #38"
-    type: "vless"
-    server: "185.178.208.140"
-    port: 443
-    uuid: "ea277838-a188-44f1-a2e8-94aa110c4f27"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "static.bakarova-top.ru"
-    client-fingerprint: "firefox"
-    alpn:
-      - "h2"
-  - name: "🇵🇱 Poland — #39"
-    type: "vless"
-    server: "185.178.208.140"
-    port: 443
-    uuid: "ea277838-a188-44f1-a2e8-94aa110c4f27"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "static.bakarova-top.ru"
-    client-fingerprint: "qq"
-    alpn:
-      - "h2"
-  - name: "🇵🇱 Poland — #40"
-    type: "vless"
-    server: "185.178.208.140"
-    port: 443
-    uuid: "ea277838-a188-44f1-a2e8-94aa110c4f27"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "static.bakarova-top.ru"
-    client-fingerprint: "ios"
-  - name: "🇵🇱 Poland — #42"
-    type: "vless"
-    server: "185.178.208.140"
-    port: 443
-    uuid: "ea277838-a188-44f1-a2e8-94aa110c4f27"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "static.bakarova-top.ru"
-    client-fingerprint: "qq"
-  - name: "🇵🇱 Poland — #43"
-    type: "vless"
-    server: "185.178.208.140"
-    port: 443
-    uuid: "ea277838-a188-44f1-a2e8-94aa110c4f27"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "static.bakarova-top.ru"
-    client-fingerprint: "chrome"
-  - name: "🇵🇱 Poland — #44"
-    type: "vless"
-    server: "185.178.208.140"
-    port: 443
-    uuid: "ea277838-a188-44f1-a2e8-94aa110c4f27"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "static.bakarova-top.ru"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-  - name: "🇵🇱 Poland — #45"
-    type: "vless"
-    server: "185.178.208.140"
-    port: 443
-    uuid: "ea277838-a188-44f1-a2e8-94aa110c4f27"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "static.bakarova-top.ru"
-    client-fingerprint: "edge"
-    alpn:
-      - "h2"
-  - name: "🇵🇱 Poland — #47"
-    type: "vless"
-    server: "185.178.208.140"
-    port: 443
-    uuid: "ea277838-a188-44f1-a2e8-94aa110c4f27"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "static.bakarova-top.ru"
-    client-fingerprint: "edge"
-  - name: "🇵🇱 Poland — #48"
-    type: "vless"
-    server: "185.178.208.140"
-    port: 443
-    uuid: "ea277838-a188-44f1-a2e8-94aa110c4f27"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "static.bakarova-top.ru"
-    client-fingerprint: "ios"
-    alpn:
-      - "h2"
+    reality-opts:
+      public-key: "1A9loATtqTbKfErpj24clMebWdbmBRDgUIADwtlvtAw"
+      short-id: "70c20a2f5a7d542e"
+    grpc-opts:
+      grpc-service-name: "google.storage.v2.Storage"
   - name: "🇵🇱 Poland — #49"
+    type: "vless"
+    server: "185.178.208.140"
+    port: 443
+    uuid: "ea277838-a188-44f1-a2e8-94aa110c4f27"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "static.bakarova-top.ru"
+    client-fingerprint: "firefox"
+  - name: "🇵🇱 Poland — #50"
+    type: "vless"
+    server: "185.178.208.140"
+    port: 443
+    uuid: "ea277838-a188-44f1-a2e8-94aa110c4f27"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "static.bakarova-top.ru"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
+  - name: "🇵🇱 Poland — #51"
+    type: "vless"
+    server: "185.178.208.140"
+    port: 443
+    uuid: "ea277838-a188-44f1-a2e8-94aa110c4f27"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "static.bakarova-top.ru"
+    client-fingerprint: "qq"
+    alpn:
+      - "h2"
+  - name: "🇵🇱 Poland — #52"
+    type: "vless"
+    server: "185.178.208.140"
+    port: 443
+    uuid: "ea277838-a188-44f1-a2e8-94aa110c4f27"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "static.bakarova-top.ru"
+    client-fingerprint: "ios"
+  - name: "🇵🇱 Poland — #54"
+    type: "vless"
+    server: "185.178.208.140"
+    port: 443
+    uuid: "ea277838-a188-44f1-a2e8-94aa110c4f27"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "static.bakarova-top.ru"
+    client-fingerprint: "qq"
+  - name: "🇵🇱 Poland — #55"
+    type: "vless"
+    server: "185.178.208.140"
+    port: 443
+    uuid: "ea277838-a188-44f1-a2e8-94aa110c4f27"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "static.bakarova-top.ru"
+    client-fingerprint: "chrome"
+  - name: "🇵🇱 Poland — #56"
+    type: "vless"
+    server: "185.178.208.140"
+    port: 443
+    uuid: "ea277838-a188-44f1-a2e8-94aa110c4f27"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "static.bakarova-top.ru"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+  - name: "🇵🇱 Poland — #57"
+    type: "vless"
+    server: "185.178.208.140"
+    port: 443
+    uuid: "ea277838-a188-44f1-a2e8-94aa110c4f27"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "static.bakarova-top.ru"
+    client-fingerprint: "edge"
+    alpn:
+      - "h2"
+  - name: "🇵🇱 Poland — #59"
+    type: "vless"
+    server: "185.178.208.140"
+    port: 443
+    uuid: "ea277838-a188-44f1-a2e8-94aa110c4f27"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "static.bakarova-top.ru"
+    client-fingerprint: "edge"
+  - name: "🇵🇱 Poland — #60"
+    type: "vless"
+    server: "185.178.208.140"
+    port: 443
+    uuid: "ea277838-a188-44f1-a2e8-94aa110c4f27"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "static.bakarova-top.ru"
+    client-fingerprint: "ios"
+    alpn:
+      - "h2"
+  - name: "🇵🇱 Poland — #61"
     type: "vless"
     server: "185.178.208.140"
     port: 443
@@ -1089,7 +1343,7 @@ proxies:
     client-fingerprint: "safari"
     alpn:
       - "h2"
-  - name: "🇵🇱 Poland — #50"
+  - name: "🇵🇱 Poland — #62"
     type: "vless"
     server: "185.178.208.140"
     port: 443
@@ -1100,7 +1354,7 @@ proxies:
     servername: "static.bakarova-top.ru"
     alpn:
       - "h2"
-  - name: "🇵🇱 Poland — #59"
+  - name: "🇵🇱 Poland — #69"
     type: "vless"
     server: "188.72.103.4"
     port: 443
@@ -1109,16 +1363,6 @@ proxies:
     tls: true
     network: "xhttp"
     servername: "poland.nnight.cfd"
-    client-fingerprint: "firefox"
-  - name: "🇺🇸 United States — #62"
-    type: "vless"
-    server: "188.72.103.4"
-    port: 443
-    uuid: "000187a2-924b-8be4-b475-485a4699c80d"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "ch-cdn.fius.dev"
     client-fingerprint: "firefox"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
@@ -1134,18 +1378,19 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "🇷🇺 VK — #1"
-      - "🇷🇺 VK — #2"
+      - "🇷🇺 Beget — #1"
+      - "🇷🇺 Beget — #2"
+      - "🇷🇺 Beget — #3"
       - "🇷🇺 Beget — #4"
-      - "🇷🇺 Beget — #5"
-      - "🇷🇺 Beget — #6"
-      - "🇷🇺 IHC — #7"
-      - "🇷🇺 Selectel — #8"
-      - "🇧🇬 Bulgaria — #9"
-      - "🇧🇬 Bulgaria — #10"
-      - "🇧🇬 Bulgaria — #11"
-      - "🇧🇬 Bulgaria — #12"
-      - "🇨🇿 Czechia — #13"
+      - "🇷🇺 Delta — #5"
+      - "🇷🇺 Delta — #6"
+      - "🇷🇺 Delta — #7"
+      - "🇩🇪 Germany — #8"
+      - "🇩🇪 Germany — #9"
+      - "🇩🇪 Germany — #10"
+      - "🇩🇪 Germany — #11"
+      - "🇩🇪 Germany — #12"
+      - "🇩🇪 Germany — #13"
       - "🇩🇪 Germany — #14"
       - "🇩🇪 Germany — #15"
       - "🇩🇪 Germany — #16"
@@ -1157,32 +1402,43 @@ proxy-groups:
       - "🇩🇪 Germany — #22"
       - "🇩🇪 Germany — #23"
       - "🇩🇪 Germany — #24"
-      - "🇩🇪 Germany — #25"
-      - "🇩🇪 Germany — #26"
-      - "🇪🇪 Estonia — #27"
+      - "🇪🇪 Estonia — #25"
+      - "🇫🇷 France — #26"
+      - "🇫🇷 France — #27"
       - "🇫🇷 France — #28"
       - "🇫🇷 France — #29"
       - "🇫🇷 France — #30"
       - "🇫🇷 France — #31"
       - "🇫🇷 France — #32"
-      - "🇬🇧 United Kingdom — #33"
-      - "🇬🇧 United Kingdom — #34"
-      - "🇬🇧 United Kingdom — #35"
-      - "🇳🇱 The Netherlands — #36"
-      - "🇵🇱 Poland — #37"
-      - "🇵🇱 Poland — #38"
-      - "🇵🇱 Poland — #39"
-      - "🇵🇱 Poland — #40"
-      - "🇵🇱 Poland — #42"
-      - "🇵🇱 Poland — #43"
-      - "🇵🇱 Poland — #44"
-      - "🇵🇱 Poland — #45"
-      - "🇵🇱 Poland — #47"
-      - "🇵🇱 Poland — #48"
+      - "🇫🇷 France — #33"
+      - "🇫🇷 France — #34"
+      - "🇫🇷 France — #35"
+      - "🇫🇷 France — #36"
+      - "🇫🇷 France — #37"
+      - "🇫🇷 France — #38"
+      - "🇫🇷 France — #39"
+      - "🇫🇷 France — #40"
+      - "🇫🇷 France — #41"
+      - "🇫🇷 France — #42"
+      - "🇫🇷 France — #43"
+      - "🇫🇷 France — #44"
+      - "🇬🇧 United Kingdom — #45"
+      - "🇬🇧 United Kingdom — #46"
+      - "🇬🇧 United Kingdom — #47"
+      - "🇬🇧 United Kingdom — #48"
       - "🇵🇱 Poland — #49"
       - "🇵🇱 Poland — #50"
+      - "🇵🇱 Poland — #51"
+      - "🇵🇱 Poland — #52"
+      - "🇵🇱 Poland — #54"
+      - "🇵🇱 Poland — #55"
+      - "🇵🇱 Poland — #56"
+      - "🇵🇱 Poland — #57"
       - "🇵🇱 Poland — #59"
-      - "🇺🇸 United States — #62"
+      - "🇵🇱 Poland — #60"
+      - "🇵🇱 Poland — #61"
+      - "🇵🇱 Poland — #62"
+      - "🇵🇱 Poland — #69"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -1191,18 +1447,19 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "🇷🇺 VK — #1"
-      - "🇷🇺 VK — #2"
+      - "🇷🇺 Beget — #1"
+      - "🇷🇺 Beget — #2"
+      - "🇷🇺 Beget — #3"
       - "🇷🇺 Beget — #4"
-      - "🇷🇺 Beget — #5"
-      - "🇷🇺 Beget — #6"
-      - "🇷🇺 IHC — #7"
-      - "🇷🇺 Selectel — #8"
-      - "🇧🇬 Bulgaria — #9"
-      - "🇧🇬 Bulgaria — #10"
-      - "🇧🇬 Bulgaria — #11"
-      - "🇧🇬 Bulgaria — #12"
-      - "🇨🇿 Czechia — #13"
+      - "🇷🇺 Delta — #5"
+      - "🇷🇺 Delta — #6"
+      - "🇷🇺 Delta — #7"
+      - "🇩🇪 Germany — #8"
+      - "🇩🇪 Germany — #9"
+      - "🇩🇪 Germany — #10"
+      - "🇩🇪 Germany — #11"
+      - "🇩🇪 Germany — #12"
+      - "🇩🇪 Germany — #13"
       - "🇩🇪 Germany — #14"
       - "🇩🇪 Germany — #15"
       - "🇩🇪 Germany — #16"
@@ -1214,32 +1471,43 @@ proxy-groups:
       - "🇩🇪 Germany — #22"
       - "🇩🇪 Germany — #23"
       - "🇩🇪 Germany — #24"
-      - "🇩🇪 Germany — #25"
-      - "🇩🇪 Germany — #26"
-      - "🇪🇪 Estonia — #27"
+      - "🇪🇪 Estonia — #25"
+      - "🇫🇷 France — #26"
+      - "🇫🇷 France — #27"
       - "🇫🇷 France — #28"
       - "🇫🇷 France — #29"
       - "🇫🇷 France — #30"
       - "🇫🇷 France — #31"
       - "🇫🇷 France — #32"
-      - "🇬🇧 United Kingdom — #33"
-      - "🇬🇧 United Kingdom — #34"
-      - "🇬🇧 United Kingdom — #35"
-      - "🇳🇱 The Netherlands — #36"
-      - "🇵🇱 Poland — #37"
-      - "🇵🇱 Poland — #38"
-      - "🇵🇱 Poland — #39"
-      - "🇵🇱 Poland — #40"
-      - "🇵🇱 Poland — #42"
-      - "🇵🇱 Poland — #43"
-      - "🇵🇱 Poland — #44"
-      - "🇵🇱 Poland — #45"
-      - "🇵🇱 Poland — #47"
-      - "🇵🇱 Poland — #48"
+      - "🇫🇷 France — #33"
+      - "🇫🇷 France — #34"
+      - "🇫🇷 France — #35"
+      - "🇫🇷 France — #36"
+      - "🇫🇷 France — #37"
+      - "🇫🇷 France — #38"
+      - "🇫🇷 France — #39"
+      - "🇫🇷 France — #40"
+      - "🇫🇷 France — #41"
+      - "🇫🇷 France — #42"
+      - "🇫🇷 France — #43"
+      - "🇫🇷 France — #44"
+      - "🇬🇧 United Kingdom — #45"
+      - "🇬🇧 United Kingdom — #46"
+      - "🇬🇧 United Kingdom — #47"
+      - "🇬🇧 United Kingdom — #48"
       - "🇵🇱 Poland — #49"
       - "🇵🇱 Poland — #50"
+      - "🇵🇱 Poland — #51"
+      - "🇵🇱 Poland — #52"
+      - "🇵🇱 Poland — #54"
+      - "🇵🇱 Poland — #55"
+      - "🇵🇱 Poland — #56"
+      - "🇵🇱 Poland — #57"
       - "🇵🇱 Poland — #59"
-      - "🇺🇸 United States — #62"
+      - "🇵🇱 Poland — #60"
+      - "🇵🇱 Poland — #61"
+      - "🇵🇱 Poland — #62"
+      - "🇵🇱 Poland — #69"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -1249,18 +1517,19 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "🇷🇺 VK — #1"
-      - "🇷🇺 VK — #2"
+      - "🇷🇺 Beget — #1"
+      - "🇷🇺 Beget — #2"
+      - "🇷🇺 Beget — #3"
       - "🇷🇺 Beget — #4"
-      - "🇷🇺 Beget — #5"
-      - "🇷🇺 Beget — #6"
-      - "🇷🇺 IHC — #7"
-      - "🇷🇺 Selectel — #8"
-      - "🇧🇬 Bulgaria — #9"
-      - "🇧🇬 Bulgaria — #10"
-      - "🇧🇬 Bulgaria — #11"
-      - "🇧🇬 Bulgaria — #12"
-      - "🇨🇿 Czechia — #13"
+      - "🇷🇺 Delta — #5"
+      - "🇷🇺 Delta — #6"
+      - "🇷🇺 Delta — #7"
+      - "🇩🇪 Germany — #8"
+      - "🇩🇪 Germany — #9"
+      - "🇩🇪 Germany — #10"
+      - "🇩🇪 Germany — #11"
+      - "🇩🇪 Germany — #12"
+      - "🇩🇪 Germany — #13"
       - "🇩🇪 Germany — #14"
       - "🇩🇪 Germany — #15"
       - "🇩🇪 Germany — #16"
@@ -1272,32 +1541,43 @@ proxy-groups:
       - "🇩🇪 Germany — #22"
       - "🇩🇪 Germany — #23"
       - "🇩🇪 Germany — #24"
-      - "🇩🇪 Germany — #25"
-      - "🇩🇪 Germany — #26"
-      - "🇪🇪 Estonia — #27"
+      - "🇪🇪 Estonia — #25"
+      - "🇫🇷 France — #26"
+      - "🇫🇷 France — #27"
       - "🇫🇷 France — #28"
       - "🇫🇷 France — #29"
       - "🇫🇷 France — #30"
       - "🇫🇷 France — #31"
       - "🇫🇷 France — #32"
-      - "🇬🇧 United Kingdom — #33"
-      - "🇬🇧 United Kingdom — #34"
-      - "🇬🇧 United Kingdom — #35"
-      - "🇳🇱 The Netherlands — #36"
-      - "🇵🇱 Poland — #37"
-      - "🇵🇱 Poland — #38"
-      - "🇵🇱 Poland — #39"
-      - "🇵🇱 Poland — #40"
-      - "🇵🇱 Poland — #42"
-      - "🇵🇱 Poland — #43"
-      - "🇵🇱 Poland — #44"
-      - "🇵🇱 Poland — #45"
-      - "🇵🇱 Poland — #47"
-      - "🇵🇱 Poland — #48"
+      - "🇫🇷 France — #33"
+      - "🇫🇷 France — #34"
+      - "🇫🇷 France — #35"
+      - "🇫🇷 France — #36"
+      - "🇫🇷 France — #37"
+      - "🇫🇷 France — #38"
+      - "🇫🇷 France — #39"
+      - "🇫🇷 France — #40"
+      - "🇫🇷 France — #41"
+      - "🇫🇷 France — #42"
+      - "🇫🇷 France — #43"
+      - "🇫🇷 France — #44"
+      - "🇬🇧 United Kingdom — #45"
+      - "🇬🇧 United Kingdom — #46"
+      - "🇬🇧 United Kingdom — #47"
+      - "🇬🇧 United Kingdom — #48"
       - "🇵🇱 Poland — #49"
       - "🇵🇱 Poland — #50"
+      - "🇵🇱 Poland — #51"
+      - "🇵🇱 Poland — #52"
+      - "🇵🇱 Poland — #54"
+      - "🇵🇱 Poland — #55"
+      - "🇵🇱 Poland — #56"
+      - "🇵🇱 Poland — #57"
       - "🇵🇱 Poland — #59"
-      - "🇺🇸 United States — #62"
+      - "🇵🇱 Poland — #60"
+      - "🇵🇱 Poland — #61"
+      - "🇵🇱 Poland — #62"
+      - "🇵🇱 Poland — #69"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"

@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -1685,15 +1719,15 @@ proxies:
     tls: true
     network: "tcp"
     servername: "resources.findconnectwithemployersandbuildprofessionalnetwork.com"
-  - name: "🇺🇸 216.152.155.54"
+  - name: "🇪🇸 66.163.118.166"
     type: "trojan"
-    server: "216.152.155.54"
+    server: "66.163.118.166"
     port: 443
     password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
     udp: true
     tls: true
     network: "tcp"
-    servername: "learn.nextjobopportunityandclaimyouridealrole.com"
+    servername: "learn.discovergreatjobsandadvanceyourcareer.com"
   - name: "🇳🇱 🇳🇱 Rose—01"
     type: "ss"
     server: "109.201.152.181"
@@ -5396,26 +5430,12 @@ proxies:
     cipher: "aes-128-gcm"
     password: "b61ca706-e2e9-4f6b-bd1e-0f0534a2fc41"
     udp: true
-  - name: "🇺🇸 216.105.168.18"
+  - name: "🇺🇸 107.172.219.230"
     type: "ss"
-    server: "216.105.168.18"
-    port: 443
+    server: "107.172.219.230"
+    port: 2096
     cipher: "chacha20-ietf-poly1305"
-    password: "bQZl7HDxSabr1FurTYQHFU"
-    udp: true
-  - name: "🇬🇧 158.173.24.73"
-    type: "ss"
-    server: "158.173.24.73"
-    port: 443
-    cipher: "aes-128-gcm"
-    password: "shadowsocks"
-    udp: true
-  - name: "🇸🇪 70.34.212.124"
-    type: "ss"
-    server: "70.34.212.124"
-    port: 8388
-    cipher: "aes-256-gcm"
-    password: "AxIYWtskJWIIaefW"
+    password: "456c497e-02bc-4b46-883f-06747cabdfbd"
     udp: true
   - name: "🇬🇧 82.38.31.198"
     type: "ss"
@@ -5424,26 +5444,19 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
     udp: true
-  - name: "🇮🇹 202.50.253.72"
-    type: "ss"
-    server: "202.50.253.72"
-    port: 19999
-    cipher: "aes-256-gcm"
-    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
-    udp: true
-  - name: "🇮🇹 202.50.253.45"
-    type: "ss"
-    server: "202.50.253.45"
-    port: 19999
-    cipher: "aes-256-gcm"
-    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
-    udp: true
   - name: "🇫🇷 54.36.174.140"
     type: "ss"
     server: "54.36.174.140"
     port: 443
     cipher: "chacha20-ietf-poly1305"
     password: "6heexyz"
+    udp: true
+  - name: "🇵🇱 185.223.57.174"
+    type: "ss"
+    server: "185.223.57.174"
+    port: 8388
+    cipher: "chacha20-ietf-poly1305"
+    password: "8z2OB_gvFvpKgjFi8s9Cvw"
     udp: true
   - name: "🇫🇷 pl134.vpnbook.com"
     type: "ss"
@@ -5452,47 +5465,33 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "6heexyz"
     udp: true
+  - name: "🇫🇷 51.77.216.96"
+    type: "ss"
+    server: "51.77.216.96"
+    port: 53567
+    cipher: "aes-256-gcm"
+    password: "SnOSRfo0h6mnWehTG_Xang"
+    udp: true
+  - name: "🇰🇷 141.164.45.187"
+    type: "ss"
+    server: "141.164.45.187"
+    port: 8888
+    cipher: "aes-256-gcm"
+    password: "Y6R9pAtvxxzmGC"
+    udp: true
+  - name: "🇰🇷 141.164.45.187-1"
+    type: "ss"
+    server: "141.164.45.187"
+    port: 6697
+    cipher: "aes-256-gcm"
+    password: "TEzjfAYq2IjtuoS"
+    udp: true
   - name: "🇫🇷 pl140.vpnbook.com"
     type: "ss"
     server: "pl140.vpnbook.com"
     port: 443
     cipher: "chacha20-ietf-poly1305"
     password: "6heexyz"
-    udp: true
-  - name: "🇵🇱 pol.rvpn.app"
-    type: "ss"
-    server: "pol.rvpn.app"
-    port: 8388
-    cipher: "chacha20-ietf-poly1305"
-    password: "8z2OB_gvFvpKgjFi8s9Cvw"
-    udp: true
-  - name: "🇷🇺 159.194.251.76"
-    type: "ss"
-    server: "159.194.251.76"
-    port: 8388
-    cipher: "chacha20-ietf-poly1305"
-    password: "MODziWLa9qMuW-4yPa0rfw"
-    udp: true
-  - name: "🇷🇺 msk2.rvpn.app"
-    type: "ss"
-    server: "msk2.rvpn.app"
-    port: 8388
-    cipher: "chacha20-ietf-poly1305"
-    password: "MODziWLa9qMuW-4yPa0rfw"
-    udp: true
-  - name: "🇰🇷 141.164.45.187"
-    type: "ss"
-    server: "141.164.45.187"
-    port: 8008
-    cipher: "aes-256-gcm"
-    password: "XKFKl2rULjIp74"
-    udp: true
-  - name: "🇰🇷 141.164.45.187-1"
-    type: "ss"
-    server: "141.164.45.187"
-    port: 8888
-    cipher: "aes-256-gcm"
-    password: "Y6R9pAtvxxzmGC"
     udp: true
   - name: "🇸🇬 129.150.59.74"
     type: "ss"
@@ -5501,12 +5500,47 @@ proxies:
     cipher: "2022-blake3-aes-256-gcm"
     password: "sUR6Ny8Y6PSvHhl/DUxconwxg6VZyFdsdfaVCvEatJo=:7bTEhHgpErKiRjE1ega+H6pcpJsNLFB0CjQseujAHrA="
     udp: true
-  - name: "🇰🇷 141.164.45.187-2"
+  - name: "🇲🇾 130.94.69.15"
     type: "ss"
-    server: "141.164.45.187"
-    port: 9101
+    server: "130.94.69.15"
+    port: 7001
     cipher: "aes-256-gcm"
-    password: "e4FCWrgpkji3QY"
+    password: "RexnBgU7EV5ADxG"
+    udp: true
+  - name: "🇷🇺 130.49.189.158"
+    type: "ss"
+    server: "130.49.189.158"
+    port: 43558
+    cipher: "chacha20-ietf-poly1305"
+    password: "lsu1v/3iNERwDDVwxCu5033KCUqQOoElYQul63kmqJ8="
+    udp: true
+  - name: "🇷🇺 185.22.155.121"
+    type: "ss"
+    server: "185.22.155.121"
+    port: 18443
+    cipher: "aes-256-gcm"
+    password: "NTiHBg64fsY8u8DbGrtypD9gPGSL386p"
+    udp: true
+  - name: "🇫🇷 node11.botkeep.cloud"
+    type: "ss"
+    server: "node11.botkeep.cloud"
+    port: 53567
+    cipher: "aes-256-gcm"
+    password: "SnOSRfo0h6mnWehTG_Xang"
+    udp: true
+  - name: "🇵🇱 pol.rvpn.app"
+    type: "ss"
+    server: "pol.rvpn.app"
+    port: 8388
+    cipher: "chacha20-ietf-poly1305"
+    password: "8z2OB_gvFvpKgjFi8s9Cvw"
+    udp: true
+  - name: "🇷🇺 130.49.189.54"
+    type: "ss"
+    server: "130.49.189.54"
+    port: 8388
+    cipher: "chacha20-ietf-poly1305"
+    password: "hTTg7lwQMzpaF7KXpY3A8w"
     udp: true
   - name: "🇿🇦 20.87.213.148"
     type: "ss"
@@ -5515,42 +5549,42 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "KpIjwx8W2MbSzezl"
     udp: true
-  - name: "🇧🇬 6.bmi.ir.asopardaz.ir"
+  - name: "🇮🇹 202.50.253.45"
     type: "ss"
-    server: "6.bmi.ir.asopardaz.ir"
-    port: 35176
-    cipher: "2022-blake3-aes-256-gcm"
-    password: "NjcyNmVjMTU1ZWU5NDA5ZDk0ODg1NWM1MzJjZTE3NDk=:MmRhODU5Mzc5M2Q5NDUwOTg0OTE2M2IxOTIxY2Y0NDc="
+    server: "202.50.253.45"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
-  - name: "🇬🇷 ams1.rvpn.app"
+  - name: "🇷🇺 159.194.251.76"
     type: "ss"
-    server: "ams1.rvpn.app"
+    server: "159.194.251.76"
     port: 8388
     cipher: "chacha20-ietf-poly1305"
-    password: "x2A6AsyZ-rAllz0wbKHzWA"
+    password: "MODziWLa9qMuW-4yPa0rfw"
     udp: true
-  - name: "🇺🇸 130.94.16.109"
+  - name: "🇷🇴 194.68.44.42"
     type: "ss"
-    server: "130.94.16.109"
-    port: 8388
-    cipher: "2022-blake3-aes-128-gcm"
-    password: "CNongHrmKObCxalqw4w0Hw=="
+    server: "194.68.44.42"
+    port: 64546
+    cipher: "chacha20-ietf-poly1305"
+    password: "U83u9OGpvSatIUW7LsWffr"
     udp: true
-  - name: "🇩🇪 169.40.42.235"
+  - name: "🇷🇺 tgfree.rush-server.com"
     type: "vless"
-    server: "169.40.42.235"
+    server: "tgfree.rush-server.com"
     port: 443
-    uuid: "d65cc14c-f53f-4fe2-b262-97856601319c"
+    uuid: "ebd1c0d6-7ff4-4b9f-8692-237517a27a64"
     udp: true
     tls: true
     network: "tcp"
-    servername: "yahoo.com"
-    client-fingerprint: "chrome"
+    servername: "anyfile2file.com"
+    client-fingerprint: "ios"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
-      short-id: "c39cc7310a"
-  - name: "🇫🇷 US🇺🇸 | google.com-443 | 24.12ms"
+      public-key: "mza5Hn1aolSz65qu-UwvBP3oesxMe25r11o4nxvikF0"
+      short-id: "64c1fe36c7846400"
+  - name: "🇫🇷 US🇺🇸 | google.com-443 | 5.19ms"
     type: "trojan"
     server: "45.76.47.77"
     port: 443
@@ -5559,7 +5593,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "google.com"
-  - name: "🇺🇸 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&host=www.ignitelimit.com&type=ws&sni=www.ignitelimit.com#RELAY🚩 | www.ignitelimit.com-443 | 10.74ms"
+  - name: "🇺🇸 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&host=www.ignitelimit.com&type=ws&sni=www.ignitelimit.com#RELAY🚩 | www.ignitelimit.com-443 | 3.11ms"
     type: "trojan"
     server: "render.com"
     port: 443
@@ -5567,7 +5601,7 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
-  - name: "🇱🇺 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.volumeroot.com&type=ws&allowInsecure=0&sni=www.volumeroot.com#RELAY🚩 | www.volumeroot.com-443 | 13.27ms"
+  - name: "🇱🇺 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.volumeroot.com&type=ws&allowInsecure=0&sni=www.volumeroot.com#RELAY🚩 | www.volumeroot.com-443 | 2.17ms"
     type: "trojan"
     server: "188.42.145.180"
     port: 443
@@ -5575,7 +5609,7 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
-  - name: "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&type=ws&sni=www.ignitelimit.com#RELAY🚩 | www.ignitelimit.com-443 | 15.48ms"
+  - name: "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&type=ws&sni=www.ignitelimit.com#RELAY🚩 | www.ignitelimit.com-443 | 3.08ms"
     type: "trojan"
     server: "188.114.97.7"
     port: 443
@@ -5583,7 +5617,7 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
-  - name: "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.calmlunch.com&ech=ip.gs+udp://8.8.8.8&type=ws&allowInsecure=0&sni=www.calmlunch.com#RELAY🚩 | www.calmlunch.com-443 | 15.14ms"
+  - name: "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.calmlunch.com&ech=ip.gs+udp://8.8.8.8&type=ws&allowInsecure=0&sni=www.calmlunch.com#RELAY🚩 | www.calmlunch.com-443 | 2.43ms"
     type: "trojan"
     server: "188.114.97.6"
     port: 443
@@ -5591,7 +5625,7 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
-  - name: "🇷🇺 RU🇷🇺 | de-bots4.h1cloud.net-25267 | 327.07ms"
+  - name: "🇷🇺 RU🇷🇺 | de-bots4.h1cloud.net-25267 | 243.05ms"
     type: "trojan"
     server: "de-bots4.h1cloud.net"
     port: 25267
@@ -5599,7 +5633,16 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
-  - name: "🇺🇸 US🇺🇸 | blog.findlocaljobnetworkandbuildcommunityconnections.com-443 | 85.59ms"
+  - name: "🇺🇸 US🇺🇸 | resources.findlocaljobnetworkandbuildcommunityconnections.com-443 | 110.12ms"
+    type: "trojan"
+    server: "resources.findlocaljobnetworkandbuildcommunityconnections.com"
+    port: 443
+    password: "f0eb8c92ce8946aaba856569cff1a16b"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "resources.findlocaljobnetworkandbuildcommunityconnections.com"
+  - name: "🇺🇸 US🇺🇸 | blog.findlocaljobnetworkandbuildcommunityconnections.com-443 | 73.02ms"
     type: "trojan"
     server: "blog.findlocaljobnetworkandbuildcommunityconnections.com"
     port: 443
@@ -5608,7 +5651,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "blog.findlocaljobnetworkandbuildcommunityconnections.com"
-  - name: "🇫🇮 FI🇫🇮 | fi.zhabulik.ru-443 | 346.23ms"
+  - name: "🇫🇮 FI🇫🇮 | fi.zhabulik.ru-443 | 184.24ms"
     type: "trojan"
     server: "fi.zhabulik.ru"
     port: 443
@@ -5617,7 +5660,15 @@ proxies:
     tls: true
     network: "tcp"
     servername: "fi.zhabulik.ru"
-  - name: "🇬🇧 AU🇦🇺 | scarily.golfland.club-443 | 56.08ms"
+  - name: "🇵🇱 PL🇵🇱 | pl.tronsg.com-443 | 168.02ms"
+    type: "trojan"
+    server: "pl.tronsg.com"
+    port: 443
+    password: "Trojan@82164024"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "🇬🇧 AU🇦🇺 | scarily.golfland.club-443 | 127.78ms"
     type: "trojan"
     server: "23.106.32.171"
     port: 443
@@ -5626,7 +5677,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "scarily.golfland.club"
-  - name: "🇭🇰 HK🇭🇰 | 119.246.1.143-443 | 154.75ms"
+  - name: "🇭🇰 HK🇭🇰 | 119.246.1.143-443 | 197.08ms"
     type: "trojan"
     server: "119.246.1.143"
     port: 443
@@ -5634,15 +5685,7 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
-  - name: "🇲🇾 MY🇲🇾 | 47.250.84.25-443 | 180.02ms"
-    type: "trojan"
-    server: "47.250.84.25"
-    port: 443
-    password: "5931134d1cde66bf83a54acdfebe7ab2"
-    udp: true
-    tls: true
-    network: "tcp"
-  - name: "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 190.12ms"
+  - name: "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 128.39ms"
     type: "trojan"
     server: "lv1.dedushka.top"
     port: 443
@@ -5650,7 +5693,7 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
-  - name: "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 183.19ms"
+  - name: "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 126.11ms"
     type: "trojan"
     server: "lv1.dedushka.top"
     port: 443
@@ -5659,25 +5702,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "lv1.dedushka.top"
-  - name: "🇩🇪 DE🇩🇪 | de9.dedushka.top-443 | 179.88ms"
-    type: "trojan"
-    server: "de9.dedushka.top"
-    port: 443
-    password: "4_VfP9fKaM-3LpSVvoZuc_WUzLoCdHaA"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "de9.dedushka.top"
-  - name: "🇩🇪 DE🇩🇪 | de8.dedushka.top-443 | 223.41ms"
-    type: "trojan"
-    server: "de8.dedushka.top"
-    port: 443
-    password: "4_VfP9fKaM-3LpSVvoZuc_WUzLoCdHaA"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "de8.dedushka.top"
-  - name: "🇩🇪 DE🇩🇪 | de7.dedushka.top-443 | 172.46ms"
+  - name: "🇩🇪 DE🇩🇪 | de7.dedushka.top-443 | 105.72ms"
     type: "trojan"
     server: "de7.dedushka.top"
     port: 443
@@ -5686,7 +5711,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "de7.dedushka.top"
-  - name: "🇩🇪 DE🇩🇪 | de6.dedushka.top-443 | 175.22ms"
+  - name: "🇩🇪 DE🇩🇪 | de6.dedushka.top-443 | 108.34ms"
     type: "trojan"
     server: "de6.dedushka.top"
     port: 443
@@ -5695,15 +5720,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "de6.dedushka.top"
-  - name: "🇩🇪 DE🇩🇪 | de6.dedushka.top-443 | 153.2ms"
-    type: "trojan"
-    server: "de6.dedushka.top"
-    port: 443
-    password: "4_VfP9fKaM-3LpSVvoZuc_WUzLoCdHaA"
-    udp: true
-    tls: true
-    network: "tcp"
-  - name: "🇩🇪 DE🇩🇪 | de5.dedushka.top-443 | 169.21ms"
+  - name: "🇩🇪 DE🇩🇪 | de5.dedushka.top-443 | 99.2ms"
     type: "trojan"
     server: "de5.dedushka.top"
     port: 443
@@ -5712,7 +5729,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "de5.dedushka.top"
-  - name: "🇩🇪 DE🇩🇪 | de3.dedushka.top-443 | 186.99ms"
+  - name: "🇩🇪 DE🇩🇪 | de3.dedushka.top-443 | 109.21ms"
     type: "trojan"
     server: "de3.dedushka.top"
     port: 443
@@ -5720,7 +5737,7 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
-  - name: "🇩🇪 DE🇩🇪 | de2.dedushka.top-443 | 177.02ms"
+  - name: "🇩🇪 DE🇩🇪 | de2.dedushka.top-443 | 113.05ms"
     type: "trojan"
     server: "de2.dedushka.top"
     port: 443
@@ -5729,7 +5746,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "de2.dedushka.top"
-  - name: "🇩🇪 DE🇩🇪 | de12.dedushka.top-443 | 178.21ms"
+  - name: "🇩🇪 DE🇩🇪 | de12.dedushka.top-443 | 105.95ms"
     type: "trojan"
     server: "de12.dedushka.top"
     port: 443
@@ -5738,16 +5755,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "de12.dedushka.top"
-  - name: "🇩🇪 DE🇩🇪 | de10.dedushka.top-443 | 165.63ms"
-    type: "trojan"
-    server: "de10.dedushka.top"
-    port: 443
-    password: "4_VfP9fKaM-3LpSVvoZuc_WUzLoCdHaA"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "de10.dedushka.top"
-  - name: "🇺🇸 US🇺🇸 | www.findlocaljobnetworkandbuildcommunityconnections.com-443 | 93.62ms"
+  - name: "🇺🇸 US🇺🇸 | www.findlocaljobnetworkandbuildcommunityconnections.com-443 | 105.19ms"
     type: "trojan"
     server: "www.findlocaljobnetworkandbuildcommunityconnections.com"
     port: 443
@@ -5756,42 +5764,32 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.findlocaljobnetworkandbuildcommunityconnections.com"
-  - name: "🇺🇸 US🇺🇸 | courses.searchnationwidecareerchangehelperandguidancetoday.com-443 | 144.25ms"
+  - name: "🇵🇱 PL🇵🇱 | browseexecutivejobopeningsandenhanceleadershipcareer.com-443 | 141.51ms"
     type: "trojan"
-    server: "66.163.122.81"
+    server: "70.34.252.255"
     port: 443
     password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
     udp: true
     tls: true
     network: "tcp"
-    servername: "courses.searchnationwidecareerchangehelperandguidancetoday.com"
-  - name: "🇪🇸 ES🇪🇸 | resources.discovergreatjobsandadvanceyourcareer.com-443 | 201.32ms"
+    servername: "browseexecutivejobopeningsandenhanceleadershipcareer.com"
+  - name: "🇺🇸 US🇺🇸 | learn.nextjobopportunityandclaimyouridealrole.com-443 | 34.72ms"
     type: "trojan"
-    server: "66.163.118.251"
+    server: "216.152.155.54"
     port: 443
     password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
     udp: true
     tls: true
     network: "tcp"
-    servername: "resources.discovergreatjobsandadvanceyourcareer.com"
-  - name: "🇪🇸 ES🇪🇸 | www.discovergreatjobsandadvanceyourcareer.com-443 | 187.01ms"
+    servername: "learn.nextjobopportunityandclaimyouridealrole.com"
+  - name: "🇨🇳 CN🇨🇳 | ja304.magiclampcloud.cn-59443 | 614.98ms"
     type: "trojan"
-    server: "66.163.118.131"
-    port: 443
-    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    server: "ja304.magiclampcloud.cn"
+    port: 59443
+    password: "06cf12a7fab279375e55e2f0cfdef381"
     udp: true
     tls: true
     network: "tcp"
-    servername: "www.discovergreatjobsandadvanceyourcareer.com"
-  - name: "🇺🇸 US🇺🇸 | unlockyourfuturefindyourperfectcareer.com-443 | 74.23ms"
-    type: "trojan"
-    server: "66.163.112.31"
-    port: 443
-    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "unlockyourfuturefindyourperfectcareer.com"
   - name: "🇩🇪 👽 - Tel:  @Hddify - 2"
     type: "vless"
     server: "64.188.91.26"
@@ -6342,55 +6340,69 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇫🇷 🆔ar14n24b 🔒 SS-TCP-TLS 🇵🇱 PL down"
+  - name: "🇷🇺 🆔ar14n24b 🔒 SS-TCP-TLS ❔ XX 765ms"
     type: "ss"
-    server: "54.36.174.134"
-    port: 443
+    server: "msk2.rvpn.app"
+    port: 8388
     cipher: "chacha20-ietf-poly1305"
-    password: "ytw2awn"
+    password: "MODziWLa9qMuW-4yPa0rfw"
     udp: true
-  - name: "🇿🇦 🆔v2ray1_ng 🔒 SS-TCP-TLS 🇿🇦 ZA down"
+  - name: "🇿🇦 🆔v2ray1_ng 🔒 SS-TCP-TLS ❔ XX down"
     type: "ss"
     server: "20.164.212.103"
     port: 443
     cipher: "chacha20-ietf-poly1305"
     password: "b39m1ZYI0Hkk8ieb"
     udp: true
-  - name: "🇩🇪 🆔v2ray1_ng 🔒 SS-TCP-TLS ❔ XX 436ms"
+  - name: "🇩🇪 🆔v2ray1_ng 🔒 SS-TCP-TLS ❔ XX 449ms"
     type: "ss"
     server: "location8.cpanel-host10.ir"
     port: 56134
     cipher: "chacha20-ietf-poly1305"
     password: "uvKNudV-N8AUCrykPiyznA"
     udp: true
-  - name: "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 83.17ms"
+  - name: "🇩🇪 REALITY|DE🇩🇪 | 194.59.9.25-443 | 89ms"
     type: "vless"
-    server: "xray1-direct-mci1-fs-ce.freesocks.work"
+    server: "194.59.9.25"
     port: 443
-    uuid: "fecf5a65-59b7-4efc-8193-f14f0ae6ea24"
+    uuid: "ffd57de6-db06-475c-9a4b-11d27432ff25"
     udp: true
     tls: true
     network: "tcp"
-    servername: "dl.google.com"
-    client-fingerprint: "chrome"
+    servername: "cdn.cloudflare.steamstatic.com"
+    client-fingerprint: "firefox"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "7j3hmlHrEDk3Kjx-dFG3E3jf0c6PZF45trIPFsuKWmI"
-  - name: "🇫🇮 REALITY|FI🇫🇮 | 31.76.8.154-443 | 153.97ms"
+      public-key: "YcVdYV6VTyAYBWd-CnCa1L0PMIqjLWmcdh-A5gvVGDo"
+      short-id: "dbf156f058f98611"
+  - name: "🇷🇺 REALITY|RU🇷🇺 | 176.98.176.86-9543 | 124.97ms"
     type: "vless"
-    server: "31.76.8.154"
-    port: 443
-    uuid: "fd260c22-c5a9-47fc-bb68-5b3e890ee7c4"
+    server: "176.98.176.86"
+    port: 9543
+    uuid: "ff6d2dda-7b90-404e-9951-34b3124bfdfa"
     udp: true
     tls: true
     network: "tcp"
-    servername: "fi2.yservice.help"
-    client-fingerprint: "chrome"
+    servername: "storage.yandexcloud.net"
+    client-fingerprint: "safari"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "-qLezG1nUEtvOJi-Ra7WRYv-aHkv3PSefEuXpWV2G04"
-      short-id: "abcd1234"
-  - name: "🇺🇸 REALITY|US🇺🇸 | xray2-direct-mci1-fs-ce.freesocks.work-443 | 74.81ms"
+      public-key: "M6Ck7wUfOLhQl4582CBnaXwscPEP6SCpdEkUDzoj4Fc"
+      short-id: "123abcdf"
+  - name: "🇮🇷 REALITY|IR🇮🇷 | srv1.segara.ir-8443 | 331.03ms"
+    type: "vless"
+    server: "srv1.segara.ir"
+    port: 8443
+    uuid: "fcadb901-a3e1-425c-bbb5-229c4d45ef7a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "play-apps-features.googleusercontent.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "bpqWvZAEHPgZ-kGrJDu6INWZ6InPJxXdJei3VxcAJR8"
+      short-id: "ae4931ddfcb70677"
+  - name: "🇺🇸 REALITY|US🇺🇸 | xray2-direct-mci1-fs-ce.freesocks.work-443 | 47.53ms"
     type: "vless"
     server: "xray2-direct-mci1-fs-ce.freesocks.work"
     port: 443
@@ -6403,20 +6415,21 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "7j3hmlHrEDk3Kjx-dFG3E3jf0c6PZF45trIPFsuKWmI"
-  - name: "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 51.51ms"
+  - name: "🇨🇿 REALITY|CZ🇨🇿 | server.slavkiti.monster-443 | 289.44ms"
     type: "vless"
-    server: "xray1-direct-mci1-fs-ce.freesocks.work"
+    server: "server.slavkiti.monster"
     port: 443
-    uuid: "fa92c1a9-d3fe-4318-b1a5-6276c4429a68"
+    uuid: "fad0b9a6-187d-4fcc-96fc-498bc5b3135a"
     udp: true
     tls: true
     network: "tcp"
-    servername: "dl.google.com"
+    servername: "www.foxsports.com"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "7j3hmlHrEDk3Kjx-dFG3E3jf0c6PZF45trIPFsuKWmI"
-  - name: "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 52.49ms"
+      public-key: "J-dv-HrWfQ_IOoyutv0Kg-rO8QwoRwc02dS1dS_tblk"
+      short-id: "8325360e8bd2"
+  - name: "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 44.92ms"
     type: "vless"
     server: "xray1-direct-mci1-fs-ce.freesocks.work"
     port: 443
@@ -6429,7 +6442,7 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "7j3hmlHrEDk3Kjx-dFG3E3jf0c6PZF45trIPFsuKWmI"
-  - name: "🇺🇸 REALITY|US🇺🇸 | 31.76.68.245-443 | 158.86ms"
+  - name: "🇺🇸 REALITY|US🇺🇸 | 31.76.68.245-443 | 99.52ms"
     type: "vless"
     server: "31.76.68.245"
     port: 443
@@ -6443,19 +6456,48 @@ proxies:
     reality-opts:
       public-key: "INbgA5nXpjZ2P1f6lY7sMBlDM3ZMV8RX3cw-RRGM0mM"
       short-id: "f22e97cfd4d9"
-  - name: "🇦🇪 REALITY|AE🇦🇪 | uk-tube-01.stre4m.net-443 | 205.08ms"
+  - name: "🇪🇪 REALITY|EE🇪🇪 | ee.h1cloud.net-25895 | 198.9ms"
     type: "vless"
-    server: "uk-tube-01.stre4m.net"
-    port: 443
-    uuid: "f85ba8bb-a3da-4389-a67a-2b0afde7bbc1"
+    server: "ee.h1cloud.net"
+    port: 25895
+    uuid: "f90b7d43-69e2-4b46-a672-8029bc6796a2"
     udp: true
     tls: true
     network: "tcp"
-    servername: "jobinvest.ru"
+    servername: "www.samsung.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "jOVKSP-bS9OkILJ8Epz8hadh6qhavCrOiJYeF0NCn0k"
+      short-id: "a73f0410d728c823"
+  - name: "🇳🇱 REALITY|NL🇳🇱 | sw.golangwikito.cfd-443 | 100.93ms"
+    type: "vless"
+    server: "sw.golangwikito.cfd"
+    port: 443
+    uuid: "f8d52ece-fad4-478d-875d-df6eed3befa7"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "sw.golangwikito.cfd"
+    client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
-  - name: "🇧🇬 REALITY|BG🇧🇬 | nl1.cleanset.net-45821 | 245.93ms"
+      public-key: "Kb8SsVPprs46BJSUNp5JvWLI-TFEiHmlBOXLQd37Glg"
+      short-id: "a1037b25dcef6aa7"
+  - name: "🇳🇱 REALITY|NL🇳🇱 | 84.32.189.22-443 | 82.31ms"
+    type: "vless"
+    server: "84.32.189.22"
+    port: 443
+    uuid: "f73681a4-1654-446f-a7eb-bda3bfd9e521"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "app23.jarvestip.ru"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "2zLFL9xRZ_hAqBHIUpZrj3z5o5Bvt3OAFy5yDat7h0U"
+      short-id: "2aef5875"
+  - name: "🇧🇬 REALITY|BG🇧🇬 | nl1.cleanset.net-45821 | 164.1ms"
     type: "vless"
     server: "nl1.cleanset.net"
     port: 45821
@@ -6468,19 +6510,7 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "RymFn9pFlHaMQpps5joHsmg0fOeWcaQiMOLR5IIfuWY"
-  - name: "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 273.95ms"
-    type: "vless"
-    server: "77.91.68.70"
-    port: 55983
-    uuid: "f667a096-5231-4cfb-8759-92bb32473139"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "yahoo.com"
-    reality-opts:
-      public-key: "nWQ7b9l9X6N3PrXLgIzOvMM8iSYrqjVHEb9ikWxqYSg"
-      short-id: "0e"
-  - name: "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 261.51ms"
+  - name: "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 262.3ms"
     type: "vless"
     server: "77.91.68.70"
     port: 55983
@@ -6493,20 +6523,19 @@ proxies:
     reality-opts:
       public-key: "nWQ7b9l9X6N3PrXLgIzOvMM8iSYrqjVHEb9ikWxqYSg"
       short-id: "0e"
-  - name: "🇩🇪 REALITY|DE🇩🇪 | 87.120.126.12-443 | 145.44ms"
+  - name: "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 254.05ms"
     type: "vless"
-    server: "87.120.126.12"
-    port: 443
-    uuid: "f5e70ce3-cfb4-4df1-b25c-d19bfae627c0"
+    server: "77.91.68.70"
+    port: 55983
+    uuid: "f667a096-5231-4cfb-8759-92bb32473139"
     udp: true
     tls: true
     network: "tcp"
-    servername: "twitch.tv"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
+    servername: "yahoo.com"
     reality-opts:
-      public-key: "1ICPOmjNd4sps44xtIF3CggFUMC2XITPoF6IBOqir3E"
-  - name: "🇨🇭 REALITY|CH🇨🇭 | 45.90.57.119-8443 | 147.2ms"
+      public-key: "nWQ7b9l9X6N3PrXLgIzOvMM8iSYrqjVHEb9ikWxqYSg"
+      short-id: "0e"
+  - name: "🇨🇭 REALITY|CH🇨🇭 | 45.90.57.119-8443 | 101.71ms"
     type: "vless"
     server: "45.90.57.119"
     port: 8443
@@ -6519,7 +6548,7 @@ proxies:
     reality-opts:
       public-key: "L6DeK_a25_ZjPKFOrQLoCPWuXi5KCIH_EcRpARmCwkI"
       short-id: "16036bbef04d0509"
-  - name: "🇳🇱 REALITY|NL🇳🇱 | 213.152.165.205-2095 | 183.09ms"
+  - name: "🇳🇱 REALITY|NL🇳🇱 | 213.152.165.205-2095 | 131.93ms"
     type: "vless"
     server: "213.152.165.205"
     port: 2095
@@ -6532,50 +6561,11 @@ proxies:
     reality-opts:
       public-key: "OKksVHWL5JepTv7if7Ta_L_7vn8OxW0INwV71HJM1jI"
       short-id: "3869d49a9a79e06a"
-  - name: "🇮🇷 REALITY|IR🇮🇷 | p1tun0.greewebservices.ir-38820 | 371.53ms"
-    type: "vless"
-    server: "p1tun0.greewebservices.ir"
-    port: 38820
-    uuid: "f234330e-f9df-46e3-8f60-b2af5173c147"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "play.google.com"
-    client-fingerprint: "ios"
-    reality-opts:
-      public-key: "xQnXh5EfPDhcEBB7rRiLca33GYrMEeUa35domLL_yA8"
-      short-id: "66ded2"
-  - name: "🇩🇪 REALITY|DE🇩🇪 | p1real2.greewebservices.ir-1240 | 309ms"
-    type: "vless"
-    server: "p1real2.greewebservices.ir"
-    port: 1240
-    uuid: "f234330e-f9df-46e3-8f60-b2af5173c147"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "play.googleapis.com"
-    client-fingerprint: "ios"
-    reality-opts:
-      public-key: "xQnXh5EfPDhcEBB7rRiLca33GYrMEeUa35domLL_yA8"
-      short-id: "9b60d3"
-  - name: "🇷🇺 REALITY|RU🇷🇺 | 193.160.141.81-8443 | 140.67ms"
-    type: "vless"
-    server: "193.160.141.81"
-    port: 8443
-    uuid: "ee82f319-ab92-425d-8e04-28a29f33f670"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "apple.com"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
-  - name: "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 55.27ms"
+  - name: "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 32.98ms"
     type: "vless"
     server: "xray1-direct-mci1-fs-ce.freesocks.work"
     port: 443
-    uuid: "eccd70d1-ee28-4123-a1dd-4cac94c7139c"
+    uuid: "f32a4611-b192-483c-989b-11895163565a"
     udp: true
     tls: true
     network: "tcp"
@@ -6584,7 +6574,47 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "7j3hmlHrEDk3Kjx-dFG3E3jf0c6PZF45trIPFsuKWmI"
-  - name: "🇷🇺 REALITY|RU🇷🇺 | tgfree.rush-server.com-443 | 270.14ms"
+  - name: "🇧🇬 REALITY|BG🇧🇬 | p11real3.greewebservices.ir-2202 | 283.69ms"
+    type: "vless"
+    server: "p11real3.greewebservices.ir"
+    port: 2202
+    uuid: "f234330e-f9df-46e3-8f60-b2af5173c147"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "play.googleapis.com"
+    client-fingerprint: "ios"
+    reality-opts:
+      public-key: "xQnXh5EfPDhcEBB7rRiLca33GYrMEeUa35domLL_yA8"
+      short-id: "e3085d4fc679ba12"
+  - name: "🇮🇱 REALITY|IL🇮🇱 | 77.91.69.169-19226 | 118.99ms"
+    type: "vless"
+    server: "77.91.69.169"
+    port: 19226
+    uuid: "f0b144bd-4c44-440d-b630-d79ec82cad3a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yahoo.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "PQjgf7GxBd2tDXf0zl9Z5rTZo7LdsWj0hGZLH-lJ-Uk"
+      short-id: "7c"
+  - name: "🇫🇷 REALITY|FR🇫🇷 | 145.223.68.58-443 | 86.62ms"
+    type: "vless"
+    server: "145.223.68.58"
+    port: 443
+    uuid: "edb50d20-2d3e-4c1e-8a75-a17168a89aa5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "qc2DcqT9zPPZr6ePZ7ukxACWrYhRNIBjDIjCK7veyQg"
+      short-id: "a44ff7d2e80213c2"
+  - name: "🇷🇺 REALITY|RU🇷🇺 | tgfree.rush-server.com-443 | 127.83ms"
     type: "vless"
     server: "tgfree.rush-server.com"
     port: 443
@@ -6593,11 +6623,38 @@ proxies:
     tls: true
     network: "tcp"
     servername: "anyfile2file.com"
-    client-fingerprint: "ios"
+    client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "mza5Hn1aolSz65qu-UwvBP3oesxMe25r11o4nxvikF0"
       short-id: "64c1fe36c7846400"
+  - name: "🇷🇺 REALITY|RU🇷🇺 | 104.171.133.209-443 | 120.32ms"
+    type: "vless"
+    server: "104.171.133.209"
+    port: 443
+    uuid: "ebd1c0d6-7ff4-4b9f-8692-237517a27a64"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "anyfile2file.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "mza5Hn1aolSz65qu-UwvBP3oesxMe25r11o4nxvikF0"
+      short-id: "64c1fe36c7846400"
+  - name: "🇳🇱 REALITY|NL🇳🇱 | 89.124.82.95-443 | 83.05ms"
+    type: "vless"
+    server: "89.124.82.95"
+    port: 443
+    uuid: "ea484535-0170-4ec8-bb3c-a9dbaa7412d7"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "nl4.panel11.ru"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "n4TFeuXAigmWJ9sXqnyicRkw3vcXy27ARfvhhsA61kI"
+      short-id: "0bd0285f0c4f8f05"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -6746,7 +6803,7 @@ proxy-groups:
       - "🇺🇸 🔒 TR-TCP-TLS 🇺🇸 US-66.163.112.142:443"
       - "🇺🇸 🔒 TR-TCP-NA 🇺🇸 US-216.152.156.42:443"
       - "🇺🇸 🔒 TR-TCP-TLS 🇺🇸 US-66.163.114.126:443"
-      - "🇺🇸 216.152.155.54"
+      - "🇪🇸 66.163.118.166"
       - "🇳🇱 🇳🇱 Rose—01"
       - "🇬🇧 🇬🇧 Rose—02"
       - "🇬🇧 🇬🇧 Rose—03"
@@ -7276,55 +7333,51 @@ proxy-groups:
       - "🇬🇧 🔒 SS-TCP-NA 🇬🇧 GB-82.38.31.202:8080"
       - "🇲🇰 🔒 SS-TCP-NA 🇲🇰 MK-46.183.185.37:990"
       - "🇭🇰 🔒 SS-TCP-NA 🇭🇰 HK-16.106.11.110:28004"
-      - "🇺🇸 216.105.168.18"
-      - "🇬🇧 158.173.24.73"
-      - "🇸🇪 70.34.212.124"
+      - "🇺🇸 107.172.219.230"
       - "🇬🇧 82.38.31.198"
-      - "🇮🇹 202.50.253.72"
-      - "🇮🇹 202.50.253.45"
       - "🇫🇷 54.36.174.140"
+      - "🇵🇱 185.223.57.174"
       - "🇫🇷 pl134.vpnbook.com"
-      - "🇫🇷 pl140.vpnbook.com"
-      - "🇵🇱 pol.rvpn.app"
-      - "🇷🇺 159.194.251.76"
-      - "🇷🇺 msk2.rvpn.app"
+      - "🇫🇷 51.77.216.96"
       - "🇰🇷 141.164.45.187"
       - "🇰🇷 141.164.45.187-1"
+      - "🇫🇷 pl140.vpnbook.com"
       - "🇸🇬 129.150.59.74"
-      - "🇰🇷 141.164.45.187-2"
+      - "🇲🇾 130.94.69.15"
+      - "🇷🇺 130.49.189.158"
+      - "🇷🇺 185.22.155.121"
+      - "🇫🇷 node11.botkeep.cloud"
+      - "🇵🇱 pol.rvpn.app"
+      - "🇷🇺 130.49.189.54"
       - "🇿🇦 20.87.213.148"
-      - "🇧🇬 6.bmi.ir.asopardaz.ir"
-      - "🇬🇷 ams1.rvpn.app"
-      - "🇺🇸 130.94.16.109"
-      - "🇩🇪 169.40.42.235"
-      - "🇫🇷 US🇺🇸 | google.com-443 | 24.12ms"
-      - "🇺🇸 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&host=www.ignitelimit.com&type=ws&sni=www.ignitelimit.com#RELAY🚩 | www.ignitelimit.com-443 | 10.74ms"
-      - "🇱🇺 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.volumeroot.com&type=ws&allowInsecure=0&sni=www.volumeroot.com#RELAY🚩 | www.volumeroot.com-443 | 13.27ms"
-      - "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&type=ws&sni=www.ignitelimit.com#RELAY🚩 | www.ignitelimit.com-443 | 15.48ms"
-      - "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.calmlunch.com&ech=ip.gs+udp://8.8.8.8&type=ws&allowInsecure=0&sni=www.calmlunch.com#RELAY🚩 | www.calmlunch.com-443 | 15.14ms"
-      - "🇷🇺 RU🇷🇺 | de-bots4.h1cloud.net-25267 | 327.07ms"
-      - "🇺🇸 US🇺🇸 | blog.findlocaljobnetworkandbuildcommunityconnections.com-443 | 85.59ms"
-      - "🇫🇮 FI🇫🇮 | fi.zhabulik.ru-443 | 346.23ms"
-      - "🇬🇧 AU🇦🇺 | scarily.golfland.club-443 | 56.08ms"
-      - "🇭🇰 HK🇭🇰 | 119.246.1.143-443 | 154.75ms"
-      - "🇲🇾 MY🇲🇾 | 47.250.84.25-443 | 180.02ms"
-      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 190.12ms"
-      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 183.19ms"
-      - "🇩🇪 DE🇩🇪 | de9.dedushka.top-443 | 179.88ms"
-      - "🇩🇪 DE🇩🇪 | de8.dedushka.top-443 | 223.41ms"
-      - "🇩🇪 DE🇩🇪 | de7.dedushka.top-443 | 172.46ms"
-      - "🇩🇪 DE🇩🇪 | de6.dedushka.top-443 | 175.22ms"
-      - "🇩🇪 DE🇩🇪 | de6.dedushka.top-443 | 153.2ms"
-      - "🇩🇪 DE🇩🇪 | de5.dedushka.top-443 | 169.21ms"
-      - "🇩🇪 DE🇩🇪 | de3.dedushka.top-443 | 186.99ms"
-      - "🇩🇪 DE🇩🇪 | de2.dedushka.top-443 | 177.02ms"
-      - "🇩🇪 DE🇩🇪 | de12.dedushka.top-443 | 178.21ms"
-      - "🇩🇪 DE🇩🇪 | de10.dedushka.top-443 | 165.63ms"
-      - "🇺🇸 US🇺🇸 | www.findlocaljobnetworkandbuildcommunityconnections.com-443 | 93.62ms"
-      - "🇺🇸 US🇺🇸 | courses.searchnationwidecareerchangehelperandguidancetoday.com-443 | 144.25ms"
-      - "🇪🇸 ES🇪🇸 | resources.discovergreatjobsandadvanceyourcareer.com-443 | 201.32ms"
-      - "🇪🇸 ES🇪🇸 | www.discovergreatjobsandadvanceyourcareer.com-443 | 187.01ms"
-      - "🇺🇸 US🇺🇸 | unlockyourfuturefindyourperfectcareer.com-443 | 74.23ms"
+      - "🇮🇹 202.50.253.45"
+      - "🇷🇺 159.194.251.76"
+      - "🇷🇴 194.68.44.42"
+      - "🇷🇺 tgfree.rush-server.com"
+      - "🇫🇷 US🇺🇸 | google.com-443 | 5.19ms"
+      - "🇺🇸 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&host=www.ignitelimit.com&type=ws&sni=www.ignitelimit.com#RELAY🚩 | www.ignitelimit.com-443 | 3.11ms"
+      - "🇱🇺 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.volumeroot.com&type=ws&allowInsecure=0&sni=www.volumeroot.com#RELAY🚩 | www.volumeroot.com-443 | 2.17ms"
+      - "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&type=ws&sni=www.ignitelimit.com#RELAY🚩 | www.ignitelimit.com-443 | 3.08ms"
+      - "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.calmlunch.com&ech=ip.gs+udp://8.8.8.8&type=ws&allowInsecure=0&sni=www.calmlunch.com#RELAY🚩 | www.calmlunch.com-443 | 2.43ms"
+      - "🇷🇺 RU🇷🇺 | de-bots4.h1cloud.net-25267 | 243.05ms"
+      - "🇺🇸 US🇺🇸 | resources.findlocaljobnetworkandbuildcommunityconnections.com-443 | 110.12ms"
+      - "🇺🇸 US🇺🇸 | blog.findlocaljobnetworkandbuildcommunityconnections.com-443 | 73.02ms"
+      - "🇫🇮 FI🇫🇮 | fi.zhabulik.ru-443 | 184.24ms"
+      - "🇵🇱 PL🇵🇱 | pl.tronsg.com-443 | 168.02ms"
+      - "🇬🇧 AU🇦🇺 | scarily.golfland.club-443 | 127.78ms"
+      - "🇭🇰 HK🇭🇰 | 119.246.1.143-443 | 197.08ms"
+      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 128.39ms"
+      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 126.11ms"
+      - "🇩🇪 DE🇩🇪 | de7.dedushka.top-443 | 105.72ms"
+      - "🇩🇪 DE🇩🇪 | de6.dedushka.top-443 | 108.34ms"
+      - "🇩🇪 DE🇩🇪 | de5.dedushka.top-443 | 99.2ms"
+      - "🇩🇪 DE🇩🇪 | de3.dedushka.top-443 | 109.21ms"
+      - "🇩🇪 DE🇩🇪 | de2.dedushka.top-443 | 113.05ms"
+      - "🇩🇪 DE🇩🇪 | de12.dedushka.top-443 | 105.95ms"
+      - "🇺🇸 US🇺🇸 | www.findlocaljobnetworkandbuildcommunityconnections.com-443 | 105.19ms"
+      - "🇵🇱 PL🇵🇱 | browseexecutivejobopeningsandenhanceleadershipcareer.com-443 | 141.51ms"
+      - "🇺🇸 US🇺🇸 | learn.nextjobopportunityandclaimyouridealrole.com-443 | 34.72ms"
+      - "🇨🇳 CN🇨🇳 | ja304.magiclampcloud.cn-59443 | 614.98ms"
       - "🇩🇪 👽 - Tel:  @Hddify - 2"
       - "🇳🇱 👽 - Tel:  @Hddify - 4"
       - "🇫🇮 👽 - Tel:  @Hddify - 6"
@@ -7391,27 +7444,31 @@ proxy-groups:
       - "🇺🇸 🔒 VM-TCP-NA 🇺🇸 US-129.146.143.80:48111"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-37.202.225.110:5380"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.182.151.218:5381"
-      - "🇫🇷 🆔ar14n24b 🔒 SS-TCP-TLS 🇵🇱 PL down"
-      - "🇿🇦 🆔v2ray1_ng 🔒 SS-TCP-TLS 🇿🇦 ZA down"
-      - "🇩🇪 🆔v2ray1_ng 🔒 SS-TCP-TLS ❔ XX 436ms"
-      - "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 83.17ms"
-      - "🇫🇮 REALITY|FI🇫🇮 | 31.76.8.154-443 | 153.97ms"
-      - "🇺🇸 REALITY|US🇺🇸 | xray2-direct-mci1-fs-ce.freesocks.work-443 | 74.81ms"
-      - "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 51.51ms"
-      - "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 52.49ms"
-      - "🇺🇸 REALITY|US🇺🇸 | 31.76.68.245-443 | 158.86ms"
-      - "🇦🇪 REALITY|AE🇦🇪 | uk-tube-01.stre4m.net-443 | 205.08ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | nl1.cleanset.net-45821 | 245.93ms"
-      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 273.95ms"
-      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 261.51ms"
-      - "🇩🇪 REALITY|DE🇩🇪 | 87.120.126.12-443 | 145.44ms"
-      - "🇨🇭 REALITY|CH🇨🇭 | 45.90.57.119-8443 | 147.2ms"
-      - "🇳🇱 REALITY|NL🇳🇱 | 213.152.165.205-2095 | 183.09ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | p1tun0.greewebservices.ir-38820 | 371.53ms"
-      - "🇩🇪 REALITY|DE🇩🇪 | p1real2.greewebservices.ir-1240 | 309ms"
-      - "🇷🇺 REALITY|RU🇷🇺 | 193.160.141.81-8443 | 140.67ms"
-      - "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 55.27ms"
-      - "🇷🇺 REALITY|RU🇷🇺 | tgfree.rush-server.com-443 | 270.14ms"
+      - "🇷🇺 🆔ar14n24b 🔒 SS-TCP-TLS ❔ XX 765ms"
+      - "🇿🇦 🆔v2ray1_ng 🔒 SS-TCP-TLS ❔ XX down"
+      - "🇩🇪 🆔v2ray1_ng 🔒 SS-TCP-TLS ❔ XX 449ms"
+      - "🇩🇪 REALITY|DE🇩🇪 | 194.59.9.25-443 | 89ms"
+      - "🇷🇺 REALITY|RU🇷🇺 | 176.98.176.86-9543 | 124.97ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | srv1.segara.ir-8443 | 331.03ms"
+      - "🇺🇸 REALITY|US🇺🇸 | xray2-direct-mci1-fs-ce.freesocks.work-443 | 47.53ms"
+      - "🇨🇿 REALITY|CZ🇨🇿 | server.slavkiti.monster-443 | 289.44ms"
+      - "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 44.92ms"
+      - "🇺🇸 REALITY|US🇺🇸 | 31.76.68.245-443 | 99.52ms"
+      - "🇪🇪 REALITY|EE🇪🇪 | ee.h1cloud.net-25895 | 198.9ms"
+      - "🇳🇱 REALITY|NL🇳🇱 | sw.golangwikito.cfd-443 | 100.93ms"
+      - "🇳🇱 REALITY|NL🇳🇱 | 84.32.189.22-443 | 82.31ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | nl1.cleanset.net-45821 | 164.1ms"
+      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 262.3ms"
+      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 254.05ms"
+      - "🇨🇭 REALITY|CH🇨🇭 | 45.90.57.119-8443 | 101.71ms"
+      - "🇳🇱 REALITY|NL🇳🇱 | 213.152.165.205-2095 | 131.93ms"
+      - "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 32.98ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | p11real3.greewebservices.ir-2202 | 283.69ms"
+      - "🇮🇱 REALITY|IL🇮🇱 | 77.91.69.169-19226 | 118.99ms"
+      - "🇫🇷 REALITY|FR🇫🇷 | 145.223.68.58-443 | 86.62ms"
+      - "🇷🇺 REALITY|RU🇷🇺 | tgfree.rush-server.com-443 | 127.83ms"
+      - "🇷🇺 REALITY|RU🇷🇺 | 104.171.133.209-443 | 120.32ms"
+      - "🇳🇱 REALITY|NL🇳🇱 | 89.124.82.95-443 | 83.05ms"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -7554,7 +7611,7 @@ proxy-groups:
       - "🇺🇸 🔒 TR-TCP-TLS 🇺🇸 US-66.163.112.142:443"
       - "🇺🇸 🔒 TR-TCP-NA 🇺🇸 US-216.152.156.42:443"
       - "🇺🇸 🔒 TR-TCP-TLS 🇺🇸 US-66.163.114.126:443"
-      - "🇺🇸 216.152.155.54"
+      - "🇪🇸 66.163.118.166"
       - "🇳🇱 🇳🇱 Rose—01"
       - "🇬🇧 🇬🇧 Rose—02"
       - "🇬🇧 🇬🇧 Rose—03"
@@ -8084,55 +8141,51 @@ proxy-groups:
       - "🇬🇧 🔒 SS-TCP-NA 🇬🇧 GB-82.38.31.202:8080"
       - "🇲🇰 🔒 SS-TCP-NA 🇲🇰 MK-46.183.185.37:990"
       - "🇭🇰 🔒 SS-TCP-NA 🇭🇰 HK-16.106.11.110:28004"
-      - "🇺🇸 216.105.168.18"
-      - "🇬🇧 158.173.24.73"
-      - "🇸🇪 70.34.212.124"
+      - "🇺🇸 107.172.219.230"
       - "🇬🇧 82.38.31.198"
-      - "🇮🇹 202.50.253.72"
-      - "🇮🇹 202.50.253.45"
       - "🇫🇷 54.36.174.140"
+      - "🇵🇱 185.223.57.174"
       - "🇫🇷 pl134.vpnbook.com"
-      - "🇫🇷 pl140.vpnbook.com"
-      - "🇵🇱 pol.rvpn.app"
-      - "🇷🇺 159.194.251.76"
-      - "🇷🇺 msk2.rvpn.app"
+      - "🇫🇷 51.77.216.96"
       - "🇰🇷 141.164.45.187"
       - "🇰🇷 141.164.45.187-1"
+      - "🇫🇷 pl140.vpnbook.com"
       - "🇸🇬 129.150.59.74"
-      - "🇰🇷 141.164.45.187-2"
+      - "🇲🇾 130.94.69.15"
+      - "🇷🇺 130.49.189.158"
+      - "🇷🇺 185.22.155.121"
+      - "🇫🇷 node11.botkeep.cloud"
+      - "🇵🇱 pol.rvpn.app"
+      - "🇷🇺 130.49.189.54"
       - "🇿🇦 20.87.213.148"
-      - "🇧🇬 6.bmi.ir.asopardaz.ir"
-      - "🇬🇷 ams1.rvpn.app"
-      - "🇺🇸 130.94.16.109"
-      - "🇩🇪 169.40.42.235"
-      - "🇫🇷 US🇺🇸 | google.com-443 | 24.12ms"
-      - "🇺🇸 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&host=www.ignitelimit.com&type=ws&sni=www.ignitelimit.com#RELAY🚩 | www.ignitelimit.com-443 | 10.74ms"
-      - "🇱🇺 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.volumeroot.com&type=ws&allowInsecure=0&sni=www.volumeroot.com#RELAY🚩 | www.volumeroot.com-443 | 13.27ms"
-      - "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&type=ws&sni=www.ignitelimit.com#RELAY🚩 | www.ignitelimit.com-443 | 15.48ms"
-      - "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.calmlunch.com&ech=ip.gs+udp://8.8.8.8&type=ws&allowInsecure=0&sni=www.calmlunch.com#RELAY🚩 | www.calmlunch.com-443 | 15.14ms"
-      - "🇷🇺 RU🇷🇺 | de-bots4.h1cloud.net-25267 | 327.07ms"
-      - "🇺🇸 US🇺🇸 | blog.findlocaljobnetworkandbuildcommunityconnections.com-443 | 85.59ms"
-      - "🇫🇮 FI🇫🇮 | fi.zhabulik.ru-443 | 346.23ms"
-      - "🇬🇧 AU🇦🇺 | scarily.golfland.club-443 | 56.08ms"
-      - "🇭🇰 HK🇭🇰 | 119.246.1.143-443 | 154.75ms"
-      - "🇲🇾 MY🇲🇾 | 47.250.84.25-443 | 180.02ms"
-      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 190.12ms"
-      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 183.19ms"
-      - "🇩🇪 DE🇩🇪 | de9.dedushka.top-443 | 179.88ms"
-      - "🇩🇪 DE🇩🇪 | de8.dedushka.top-443 | 223.41ms"
-      - "🇩🇪 DE🇩🇪 | de7.dedushka.top-443 | 172.46ms"
-      - "🇩🇪 DE🇩🇪 | de6.dedushka.top-443 | 175.22ms"
-      - "🇩🇪 DE🇩🇪 | de6.dedushka.top-443 | 153.2ms"
-      - "🇩🇪 DE🇩🇪 | de5.dedushka.top-443 | 169.21ms"
-      - "🇩🇪 DE🇩🇪 | de3.dedushka.top-443 | 186.99ms"
-      - "🇩🇪 DE🇩🇪 | de2.dedushka.top-443 | 177.02ms"
-      - "🇩🇪 DE🇩🇪 | de12.dedushka.top-443 | 178.21ms"
-      - "🇩🇪 DE🇩🇪 | de10.dedushka.top-443 | 165.63ms"
-      - "🇺🇸 US🇺🇸 | www.findlocaljobnetworkandbuildcommunityconnections.com-443 | 93.62ms"
-      - "🇺🇸 US🇺🇸 | courses.searchnationwidecareerchangehelperandguidancetoday.com-443 | 144.25ms"
-      - "🇪🇸 ES🇪🇸 | resources.discovergreatjobsandadvanceyourcareer.com-443 | 201.32ms"
-      - "🇪🇸 ES🇪🇸 | www.discovergreatjobsandadvanceyourcareer.com-443 | 187.01ms"
-      - "🇺🇸 US🇺🇸 | unlockyourfuturefindyourperfectcareer.com-443 | 74.23ms"
+      - "🇮🇹 202.50.253.45"
+      - "🇷🇺 159.194.251.76"
+      - "🇷🇴 194.68.44.42"
+      - "🇷🇺 tgfree.rush-server.com"
+      - "🇫🇷 US🇺🇸 | google.com-443 | 5.19ms"
+      - "🇺🇸 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&host=www.ignitelimit.com&type=ws&sni=www.ignitelimit.com#RELAY🚩 | www.ignitelimit.com-443 | 3.11ms"
+      - "🇱🇺 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.volumeroot.com&type=ws&allowInsecure=0&sni=www.volumeroot.com#RELAY🚩 | www.volumeroot.com-443 | 2.17ms"
+      - "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&type=ws&sni=www.ignitelimit.com#RELAY🚩 | www.ignitelimit.com-443 | 3.08ms"
+      - "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.calmlunch.com&ech=ip.gs+udp://8.8.8.8&type=ws&allowInsecure=0&sni=www.calmlunch.com#RELAY🚩 | www.calmlunch.com-443 | 2.43ms"
+      - "🇷🇺 RU🇷🇺 | de-bots4.h1cloud.net-25267 | 243.05ms"
+      - "🇺🇸 US🇺🇸 | resources.findlocaljobnetworkandbuildcommunityconnections.com-443 | 110.12ms"
+      - "🇺🇸 US🇺🇸 | blog.findlocaljobnetworkandbuildcommunityconnections.com-443 | 73.02ms"
+      - "🇫🇮 FI🇫🇮 | fi.zhabulik.ru-443 | 184.24ms"
+      - "🇵🇱 PL🇵🇱 | pl.tronsg.com-443 | 168.02ms"
+      - "🇬🇧 AU🇦🇺 | scarily.golfland.club-443 | 127.78ms"
+      - "🇭🇰 HK🇭🇰 | 119.246.1.143-443 | 197.08ms"
+      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 128.39ms"
+      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 126.11ms"
+      - "🇩🇪 DE🇩🇪 | de7.dedushka.top-443 | 105.72ms"
+      - "🇩🇪 DE🇩🇪 | de6.dedushka.top-443 | 108.34ms"
+      - "🇩🇪 DE🇩🇪 | de5.dedushka.top-443 | 99.2ms"
+      - "🇩🇪 DE🇩🇪 | de3.dedushka.top-443 | 109.21ms"
+      - "🇩🇪 DE🇩🇪 | de2.dedushka.top-443 | 113.05ms"
+      - "🇩🇪 DE🇩🇪 | de12.dedushka.top-443 | 105.95ms"
+      - "🇺🇸 US🇺🇸 | www.findlocaljobnetworkandbuildcommunityconnections.com-443 | 105.19ms"
+      - "🇵🇱 PL🇵🇱 | browseexecutivejobopeningsandenhanceleadershipcareer.com-443 | 141.51ms"
+      - "🇺🇸 US🇺🇸 | learn.nextjobopportunityandclaimyouridealrole.com-443 | 34.72ms"
+      - "🇨🇳 CN🇨🇳 | ja304.magiclampcloud.cn-59443 | 614.98ms"
       - "🇩🇪 👽 - Tel:  @Hddify - 2"
       - "🇳🇱 👽 - Tel:  @Hddify - 4"
       - "🇫🇮 👽 - Tel:  @Hddify - 6"
@@ -8199,27 +8252,31 @@ proxy-groups:
       - "🇺🇸 🔒 VM-TCP-NA 🇺🇸 US-129.146.143.80:48111"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-37.202.225.110:5380"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.182.151.218:5381"
-      - "🇫🇷 🆔ar14n24b 🔒 SS-TCP-TLS 🇵🇱 PL down"
-      - "🇿🇦 🆔v2ray1_ng 🔒 SS-TCP-TLS 🇿🇦 ZA down"
-      - "🇩🇪 🆔v2ray1_ng 🔒 SS-TCP-TLS ❔ XX 436ms"
-      - "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 83.17ms"
-      - "🇫🇮 REALITY|FI🇫🇮 | 31.76.8.154-443 | 153.97ms"
-      - "🇺🇸 REALITY|US🇺🇸 | xray2-direct-mci1-fs-ce.freesocks.work-443 | 74.81ms"
-      - "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 51.51ms"
-      - "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 52.49ms"
-      - "🇺🇸 REALITY|US🇺🇸 | 31.76.68.245-443 | 158.86ms"
-      - "🇦🇪 REALITY|AE🇦🇪 | uk-tube-01.stre4m.net-443 | 205.08ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | nl1.cleanset.net-45821 | 245.93ms"
-      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 273.95ms"
-      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 261.51ms"
-      - "🇩🇪 REALITY|DE🇩🇪 | 87.120.126.12-443 | 145.44ms"
-      - "🇨🇭 REALITY|CH🇨🇭 | 45.90.57.119-8443 | 147.2ms"
-      - "🇳🇱 REALITY|NL🇳🇱 | 213.152.165.205-2095 | 183.09ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | p1tun0.greewebservices.ir-38820 | 371.53ms"
-      - "🇩🇪 REALITY|DE🇩🇪 | p1real2.greewebservices.ir-1240 | 309ms"
-      - "🇷🇺 REALITY|RU🇷🇺 | 193.160.141.81-8443 | 140.67ms"
-      - "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 55.27ms"
-      - "🇷🇺 REALITY|RU🇷🇺 | tgfree.rush-server.com-443 | 270.14ms"
+      - "🇷🇺 🆔ar14n24b 🔒 SS-TCP-TLS ❔ XX 765ms"
+      - "🇿🇦 🆔v2ray1_ng 🔒 SS-TCP-TLS ❔ XX down"
+      - "🇩🇪 🆔v2ray1_ng 🔒 SS-TCP-TLS ❔ XX 449ms"
+      - "🇩🇪 REALITY|DE🇩🇪 | 194.59.9.25-443 | 89ms"
+      - "🇷🇺 REALITY|RU🇷🇺 | 176.98.176.86-9543 | 124.97ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | srv1.segara.ir-8443 | 331.03ms"
+      - "🇺🇸 REALITY|US🇺🇸 | xray2-direct-mci1-fs-ce.freesocks.work-443 | 47.53ms"
+      - "🇨🇿 REALITY|CZ🇨🇿 | server.slavkiti.monster-443 | 289.44ms"
+      - "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 44.92ms"
+      - "🇺🇸 REALITY|US🇺🇸 | 31.76.68.245-443 | 99.52ms"
+      - "🇪🇪 REALITY|EE🇪🇪 | ee.h1cloud.net-25895 | 198.9ms"
+      - "🇳🇱 REALITY|NL🇳🇱 | sw.golangwikito.cfd-443 | 100.93ms"
+      - "🇳🇱 REALITY|NL🇳🇱 | 84.32.189.22-443 | 82.31ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | nl1.cleanset.net-45821 | 164.1ms"
+      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 262.3ms"
+      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 254.05ms"
+      - "🇨🇭 REALITY|CH🇨🇭 | 45.90.57.119-8443 | 101.71ms"
+      - "🇳🇱 REALITY|NL🇳🇱 | 213.152.165.205-2095 | 131.93ms"
+      - "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 32.98ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | p11real3.greewebservices.ir-2202 | 283.69ms"
+      - "🇮🇱 REALITY|IL🇮🇱 | 77.91.69.169-19226 | 118.99ms"
+      - "🇫🇷 REALITY|FR🇫🇷 | 145.223.68.58-443 | 86.62ms"
+      - "🇷🇺 REALITY|RU🇷🇺 | tgfree.rush-server.com-443 | 127.83ms"
+      - "🇷🇺 REALITY|RU🇷🇺 | 104.171.133.209-443 | 120.32ms"
+      - "🇳🇱 REALITY|NL🇳🇱 | 89.124.82.95-443 | 83.05ms"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -8363,7 +8420,7 @@ proxy-groups:
       - "🇺🇸 🔒 TR-TCP-TLS 🇺🇸 US-66.163.112.142:443"
       - "🇺🇸 🔒 TR-TCP-NA 🇺🇸 US-216.152.156.42:443"
       - "🇺🇸 🔒 TR-TCP-TLS 🇺🇸 US-66.163.114.126:443"
-      - "🇺🇸 216.152.155.54"
+      - "🇪🇸 66.163.118.166"
       - "🇳🇱 🇳🇱 Rose—01"
       - "🇬🇧 🇬🇧 Rose—02"
       - "🇬🇧 🇬🇧 Rose—03"
@@ -8893,55 +8950,51 @@ proxy-groups:
       - "🇬🇧 🔒 SS-TCP-NA 🇬🇧 GB-82.38.31.202:8080"
       - "🇲🇰 🔒 SS-TCP-NA 🇲🇰 MK-46.183.185.37:990"
       - "🇭🇰 🔒 SS-TCP-NA 🇭🇰 HK-16.106.11.110:28004"
-      - "🇺🇸 216.105.168.18"
-      - "🇬🇧 158.173.24.73"
-      - "🇸🇪 70.34.212.124"
+      - "🇺🇸 107.172.219.230"
       - "🇬🇧 82.38.31.198"
-      - "🇮🇹 202.50.253.72"
-      - "🇮🇹 202.50.253.45"
       - "🇫🇷 54.36.174.140"
+      - "🇵🇱 185.223.57.174"
       - "🇫🇷 pl134.vpnbook.com"
-      - "🇫🇷 pl140.vpnbook.com"
-      - "🇵🇱 pol.rvpn.app"
-      - "🇷🇺 159.194.251.76"
-      - "🇷🇺 msk2.rvpn.app"
+      - "🇫🇷 51.77.216.96"
       - "🇰🇷 141.164.45.187"
       - "🇰🇷 141.164.45.187-1"
+      - "🇫🇷 pl140.vpnbook.com"
       - "🇸🇬 129.150.59.74"
-      - "🇰🇷 141.164.45.187-2"
+      - "🇲🇾 130.94.69.15"
+      - "🇷🇺 130.49.189.158"
+      - "🇷🇺 185.22.155.121"
+      - "🇫🇷 node11.botkeep.cloud"
+      - "🇵🇱 pol.rvpn.app"
+      - "🇷🇺 130.49.189.54"
       - "🇿🇦 20.87.213.148"
-      - "🇧🇬 6.bmi.ir.asopardaz.ir"
-      - "🇬🇷 ams1.rvpn.app"
-      - "🇺🇸 130.94.16.109"
-      - "🇩🇪 169.40.42.235"
-      - "🇫🇷 US🇺🇸 | google.com-443 | 24.12ms"
-      - "🇺🇸 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&host=www.ignitelimit.com&type=ws&sni=www.ignitelimit.com#RELAY🚩 | www.ignitelimit.com-443 | 10.74ms"
-      - "🇱🇺 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.volumeroot.com&type=ws&allowInsecure=0&sni=www.volumeroot.com#RELAY🚩 | www.volumeroot.com-443 | 13.27ms"
-      - "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&type=ws&sni=www.ignitelimit.com#RELAY🚩 | www.ignitelimit.com-443 | 15.48ms"
-      - "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.calmlunch.com&ech=ip.gs+udp://8.8.8.8&type=ws&allowInsecure=0&sni=www.calmlunch.com#RELAY🚩 | www.calmlunch.com-443 | 15.14ms"
-      - "🇷🇺 RU🇷🇺 | de-bots4.h1cloud.net-25267 | 327.07ms"
-      - "🇺🇸 US🇺🇸 | blog.findlocaljobnetworkandbuildcommunityconnections.com-443 | 85.59ms"
-      - "🇫🇮 FI🇫🇮 | fi.zhabulik.ru-443 | 346.23ms"
-      - "🇬🇧 AU🇦🇺 | scarily.golfland.club-443 | 56.08ms"
-      - "🇭🇰 HK🇭🇰 | 119.246.1.143-443 | 154.75ms"
-      - "🇲🇾 MY🇲🇾 | 47.250.84.25-443 | 180.02ms"
-      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 190.12ms"
-      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 183.19ms"
-      - "🇩🇪 DE🇩🇪 | de9.dedushka.top-443 | 179.88ms"
-      - "🇩🇪 DE🇩🇪 | de8.dedushka.top-443 | 223.41ms"
-      - "🇩🇪 DE🇩🇪 | de7.dedushka.top-443 | 172.46ms"
-      - "🇩🇪 DE🇩🇪 | de6.dedushka.top-443 | 175.22ms"
-      - "🇩🇪 DE🇩🇪 | de6.dedushka.top-443 | 153.2ms"
-      - "🇩🇪 DE🇩🇪 | de5.dedushka.top-443 | 169.21ms"
-      - "🇩🇪 DE🇩🇪 | de3.dedushka.top-443 | 186.99ms"
-      - "🇩🇪 DE🇩🇪 | de2.dedushka.top-443 | 177.02ms"
-      - "🇩🇪 DE🇩🇪 | de12.dedushka.top-443 | 178.21ms"
-      - "🇩🇪 DE🇩🇪 | de10.dedushka.top-443 | 165.63ms"
-      - "🇺🇸 US🇺🇸 | www.findlocaljobnetworkandbuildcommunityconnections.com-443 | 93.62ms"
-      - "🇺🇸 US🇺🇸 | courses.searchnationwidecareerchangehelperandguidancetoday.com-443 | 144.25ms"
-      - "🇪🇸 ES🇪🇸 | resources.discovergreatjobsandadvanceyourcareer.com-443 | 201.32ms"
-      - "🇪🇸 ES🇪🇸 | www.discovergreatjobsandadvanceyourcareer.com-443 | 187.01ms"
-      - "🇺🇸 US🇺🇸 | unlockyourfuturefindyourperfectcareer.com-443 | 74.23ms"
+      - "🇮🇹 202.50.253.45"
+      - "🇷🇺 159.194.251.76"
+      - "🇷🇴 194.68.44.42"
+      - "🇷🇺 tgfree.rush-server.com"
+      - "🇫🇷 US🇺🇸 | google.com-443 | 5.19ms"
+      - "🇺🇸 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&host=www.ignitelimit.com&type=ws&sni=www.ignitelimit.com#RELAY🚩 | www.ignitelimit.com-443 | 3.11ms"
+      - "🇱🇺 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.volumeroot.com&type=ws&allowInsecure=0&sni=www.volumeroot.com#RELAY🚩 | www.volumeroot.com-443 | 2.17ms"
+      - "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&type=ws&sni=www.ignitelimit.com#RELAY🚩 | www.ignitelimit.com-443 | 3.08ms"
+      - "🏳️ Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.calmlunch.com&ech=ip.gs+udp://8.8.8.8&type=ws&allowInsecure=0&sni=www.calmlunch.com#RELAY🚩 | www.calmlunch.com-443 | 2.43ms"
+      - "🇷🇺 RU🇷🇺 | de-bots4.h1cloud.net-25267 | 243.05ms"
+      - "🇺🇸 US🇺🇸 | resources.findlocaljobnetworkandbuildcommunityconnections.com-443 | 110.12ms"
+      - "🇺🇸 US🇺🇸 | blog.findlocaljobnetworkandbuildcommunityconnections.com-443 | 73.02ms"
+      - "🇫🇮 FI🇫🇮 | fi.zhabulik.ru-443 | 184.24ms"
+      - "🇵🇱 PL🇵🇱 | pl.tronsg.com-443 | 168.02ms"
+      - "🇬🇧 AU🇦🇺 | scarily.golfland.club-443 | 127.78ms"
+      - "🇭🇰 HK🇭🇰 | 119.246.1.143-443 | 197.08ms"
+      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 128.39ms"
+      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 126.11ms"
+      - "🇩🇪 DE🇩🇪 | de7.dedushka.top-443 | 105.72ms"
+      - "🇩🇪 DE🇩🇪 | de6.dedushka.top-443 | 108.34ms"
+      - "🇩🇪 DE🇩🇪 | de5.dedushka.top-443 | 99.2ms"
+      - "🇩🇪 DE🇩🇪 | de3.dedushka.top-443 | 109.21ms"
+      - "🇩🇪 DE🇩🇪 | de2.dedushka.top-443 | 113.05ms"
+      - "🇩🇪 DE🇩🇪 | de12.dedushka.top-443 | 105.95ms"
+      - "🇺🇸 US🇺🇸 | www.findlocaljobnetworkandbuildcommunityconnections.com-443 | 105.19ms"
+      - "🇵🇱 PL🇵🇱 | browseexecutivejobopeningsandenhanceleadershipcareer.com-443 | 141.51ms"
+      - "🇺🇸 US🇺🇸 | learn.nextjobopportunityandclaimyouridealrole.com-443 | 34.72ms"
+      - "🇨🇳 CN🇨🇳 | ja304.magiclampcloud.cn-59443 | 614.98ms"
       - "🇩🇪 👽 - Tel:  @Hddify - 2"
       - "🇳🇱 👽 - Tel:  @Hddify - 4"
       - "🇫🇮 👽 - Tel:  @Hddify - 6"
@@ -9008,27 +9061,31 @@ proxy-groups:
       - "🇺🇸 🔒 VM-TCP-NA 🇺🇸 US-129.146.143.80:48111"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-37.202.225.110:5380"
       - "🇮🇷 🔒 VM-TCP-NA 🇮🇷 IR-94.182.151.218:5381"
-      - "🇫🇷 🆔ar14n24b 🔒 SS-TCP-TLS 🇵🇱 PL down"
-      - "🇿🇦 🆔v2ray1_ng 🔒 SS-TCP-TLS 🇿🇦 ZA down"
-      - "🇩🇪 🆔v2ray1_ng 🔒 SS-TCP-TLS ❔ XX 436ms"
-      - "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 83.17ms"
-      - "🇫🇮 REALITY|FI🇫🇮 | 31.76.8.154-443 | 153.97ms"
-      - "🇺🇸 REALITY|US🇺🇸 | xray2-direct-mci1-fs-ce.freesocks.work-443 | 74.81ms"
-      - "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 51.51ms"
-      - "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 52.49ms"
-      - "🇺🇸 REALITY|US🇺🇸 | 31.76.68.245-443 | 158.86ms"
-      - "🇦🇪 REALITY|AE🇦🇪 | uk-tube-01.stre4m.net-443 | 205.08ms"
-      - "🇧🇬 REALITY|BG🇧🇬 | nl1.cleanset.net-45821 | 245.93ms"
-      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 273.95ms"
-      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 261.51ms"
-      - "🇩🇪 REALITY|DE🇩🇪 | 87.120.126.12-443 | 145.44ms"
-      - "🇨🇭 REALITY|CH🇨🇭 | 45.90.57.119-8443 | 147.2ms"
-      - "🇳🇱 REALITY|NL🇳🇱 | 213.152.165.205-2095 | 183.09ms"
-      - "🇮🇷 REALITY|IR🇮🇷 | p1tun0.greewebservices.ir-38820 | 371.53ms"
-      - "🇩🇪 REALITY|DE🇩🇪 | p1real2.greewebservices.ir-1240 | 309ms"
-      - "🇷🇺 REALITY|RU🇷🇺 | 193.160.141.81-8443 | 140.67ms"
-      - "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 55.27ms"
-      - "🇷🇺 REALITY|RU🇷🇺 | tgfree.rush-server.com-443 | 270.14ms"
+      - "🇷🇺 🆔ar14n24b 🔒 SS-TCP-TLS ❔ XX 765ms"
+      - "🇿🇦 🆔v2ray1_ng 🔒 SS-TCP-TLS ❔ XX down"
+      - "🇩🇪 🆔v2ray1_ng 🔒 SS-TCP-TLS ❔ XX 449ms"
+      - "🇩🇪 REALITY|DE🇩🇪 | 194.59.9.25-443 | 89ms"
+      - "🇷🇺 REALITY|RU🇷🇺 | 176.98.176.86-9543 | 124.97ms"
+      - "🇮🇷 REALITY|IR🇮🇷 | srv1.segara.ir-8443 | 331.03ms"
+      - "🇺🇸 REALITY|US🇺🇸 | xray2-direct-mci1-fs-ce.freesocks.work-443 | 47.53ms"
+      - "🇨🇿 REALITY|CZ🇨🇿 | server.slavkiti.monster-443 | 289.44ms"
+      - "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 44.92ms"
+      - "🇺🇸 REALITY|US🇺🇸 | 31.76.68.245-443 | 99.52ms"
+      - "🇪🇪 REALITY|EE🇪🇪 | ee.h1cloud.net-25895 | 198.9ms"
+      - "🇳🇱 REALITY|NL🇳🇱 | sw.golangwikito.cfd-443 | 100.93ms"
+      - "🇳🇱 REALITY|NL🇳🇱 | 84.32.189.22-443 | 82.31ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | nl1.cleanset.net-45821 | 164.1ms"
+      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 262.3ms"
+      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 254.05ms"
+      - "🇨🇭 REALITY|CH🇨🇭 | 45.90.57.119-8443 | 101.71ms"
+      - "🇳🇱 REALITY|NL🇳🇱 | 213.152.165.205-2095 | 131.93ms"
+      - "🇺🇸 REALITY|US🇺🇸 | xray1-direct-mci1-fs-ce.freesocks.work-443 | 32.98ms"
+      - "🇧🇬 REALITY|BG🇧🇬 | p11real3.greewebservices.ir-2202 | 283.69ms"
+      - "🇮🇱 REALITY|IL🇮🇱 | 77.91.69.169-19226 | 118.99ms"
+      - "🇫🇷 REALITY|FR🇫🇷 | 145.223.68.58-443 | 86.62ms"
+      - "🇷🇺 REALITY|RU🇷🇺 | tgfree.rush-server.com-443 | 127.83ms"
+      - "🇷🇺 REALITY|RU🇷🇺 | 104.171.133.209-443 | 120.32ms"
+      - "🇳🇱 REALITY|NL🇳🇱 | 89.124.82.95-443 | 83.05ms"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"

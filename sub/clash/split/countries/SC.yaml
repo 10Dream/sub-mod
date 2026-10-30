@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -944,17 +978,6 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.pleadcourt.org"
-  - name: "🇸🇨 45.130.125.160"
-    type: "trojan"
-    server: "45.130.125.160"
-    port: 443
-    password: "humanity"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "www.calmlunch.com"
-    ws-opts:
-      path: "/assignment"
   - name: "🇸🇨 🔒 SS-TCP-NA 🇸🇨 SC-45.207.207.25:443"
     type: "ss"
     server: "45.207.207.25"
@@ -962,7 +985,7 @@ proxies:
     cipher: "aes-256-gcm"
     password: "gj1+XKulKV0nmw6IThckOkkJh5DSM7+C"
     udp: true
-  - name: "🇸🇨 US🇺🇸 | trojan.freenods.sbs-443 | 40.56ms"
+  - name: "🇸🇨 US🇺🇸 | trojan.freenods.sbs-443 | 256.87ms"
     type: "trojan"
     server: "154.197.121.253"
     port: 443
@@ -975,7 +998,61 @@ proxies:
       path: "/?ed=2560"
       headers:
         Host: "trojan.freenods.sbs"
-  - name: "🇸🇨 REALITY|SC🇸🇨 | 45.95.96.236-443 | 155.58ms"
+  - name: "🇸🇨 RELAY🚩 | www.calmlunch.com-443 | 2.69ms"
+    type: "trojan"
+    server: "45.130.125.69"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "%2Fassignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "🇸🇨 REALITY|SC🇸🇨 | 201.51.10.240-443 | 87.59ms"
+    type: "vless"
+    server: "201.51.10.240"
+    port: 443
+    uuid: "e580c6ba-f942-49d2-a224-bf07fbff9b96"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn6.goonars.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "VWDBW2RS3o-oFBrSNdpncoaVVU8KixbPNHoj4-Wy7lM"
+      short-id: "04a69fc6"
+  - name: "🇸🇨 REALITY|SC🇸🇨 | gesmankos.sadiepinki.com-443 | 132.49ms"
+    type: "vless"
+    server: "gesmankos.sadiepinki.com"
+    port: 443
+    uuid: "c5694dc5-39fd-4a92-8430-3837baa522a3"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "gesmankos.sadiepinki.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "rCkSHJ7goy7ZvSlau4LfXF-QLloOJMNeMxpeeQtwtVs"
+      short-id: "4fa44664f6a566d3"
+  - name: "🇸🇨 REALITY|SC🇸🇨 | 45.95.96.236-443 | 93.7ms"
+    type: "vless"
+    server: "45.95.96.236"
+    port: 443
+    uuid: "c5694dc5-39fd-4a92-8430-3837baa522a3"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "gesmankos.sadiepinki.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "rCkSHJ7goy7ZvSlau4LfXF-QLloOJMNeMxpeeQtwtVs"
+      short-id: "4fa44664f6a566d3"
+  - name: "🇸🇨 REALITY|SC🇸🇨 | 45.95.96.236-443 | 91.5ms"
     type: "vless"
     server: "45.95.96.236"
     port: 443
@@ -988,20 +1065,22 @@ proxies:
     reality-opts:
       public-key: "rCkSHJ7goy7ZvSlau4LfXF-QLloOJMNeMxpeeQtwtVs"
       short-id: "4fa44664f6a566d3"
-  - name: "🇸🇨 REALITY|SC🇸🇨 | 45.145.56.163-443 | 149.23ms"
+  - name: "🇸🇨 REALITY|SC🇸🇨 | 45.145.12.148-443 | 110.89ms"
     type: "vless"
-    server: "45.145.56.163"
+    server: "45.145.12.148"
     port: 443
-    uuid: "76713d07-5a6b-49c2-abd8-bc450a2fa7fc"
+    uuid: "b869a8d0-0733-4346-8d1c-c1230a78651c"
     udp: true
     tls: true
-    network: "tcp"
-    servername: "de2.spectrum.vu"
-    flow: "xtls-rprx-vision"
+    network: "grpc"
+    servername: "max.ru"
+    client-fingerprint: "firefox"
     reality-opts:
-      public-key: "Vci2ab6lM0ezoLBj2LgE-ynvakjbWOqUUSZmk5vcNjE"
-      short-id: "44d44d1c625a13aa"
-  - name: "🇸🇨 REALITY|SC🇸🇨 | 156.252.229.11-8443 | 156.27ms"
+      public-key: "OOI0p2vKjr8xdwcVCzxcd3rAxmMr7XRA0wMk14IXaFM"
+      short-id: "35debf0dc757d053"
+    grpc-opts:
+      grpc-service-name: "grpc"
+  - name: "🇸🇨 REALITY|SC🇸🇨 | 156.252.229.11-8443 | 94.57ms"
     type: "vless"
     server: "156.252.229.11"
     port: 8443
@@ -1014,20 +1093,6 @@ proxies:
     reality-opts:
       public-key: "7jPluypHwPilf_Mq7JOY96SwKkbK35WuIlN1HwGQ_0A"
       short-id: "974f7f8f"
-  - name: "🇸🇨 REALITY|SC🇸🇨 | 45.95.96.198-443 | 144.87ms"
-    type: "vless"
-    server: "45.95.96.198"
-    port: 443
-    uuid: "2f5cfa10-43e5-4912-800d-557308a26a29"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "yw0ein72.cloudydigital.net"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "8RfEuI1RxxW1dqq2nbt6ssKwx7UdmgKW1nKL9OuilGs"
-      short-id: "0492eabdb9"
   - name: "🇸🇨 🔒 VL-RAW-RLT 🇸🇨 SC-156.226.168.221:35193"
     type: "vless"
     server: "156.226.168.221"
@@ -1042,6 +1107,20 @@ proxies:
     reality-opts:
       public-key: "d_pn_DMaIxhCkNh80h0Mc7nP94hrlN--I8liOIREDxE"
       short-id: "e8daed2d"
+  - name: "🇸🇨 🔒 VL-TCP-RLT 🇸🇨 SC-45.95.96.198:443"
+    type: "vless"
+    server: "45.95.96.198"
+    port: 443
+    uuid: "2f5cfa10-43e5-4912-800d-557308a26a29"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yw0ein72.cloudydigital.net"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "8RfEuI1RxxW1dqq2nbt6ssKwx7UdmgKW1nKL9OuilGs"
+      short-id: "0492eabdb9"
   - name: "🇸🇨 🔒 VL-TCP-RLT 🇸🇨 SC-45.95.96.236:443"
     type: "vless"
     server: "45.95.96.236"
@@ -1056,66 +1135,6 @@ proxies:
     reality-opts:
       public-key: "rCkSHJ7goy7ZvSlau4LfXF-QLloOJMNeMxpeeQtwtVs"
       short-id: "4fa44664f6a566d3"
-  - name: "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.194:8443"
-    type: "vless"
-    server: "45.130.125.194"
-    port: 8443
-    uuid: "d4eb1900-6515-494e-85c5-306bb9594f56"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "vo.new-persian-song.ir"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h3"
-      - "h2"
-  - name: "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.193:8443"
-    type: "vless"
-    server: "45.130.125.193"
-    port: 8443
-    uuid: "5960576d-829e-4d09-8232-0e80121a6fe4"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "ssj.new-persian-song.ir"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-  - name: "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.192:8443"
-    type: "vless"
-    server: "45.130.125.192"
-    port: 8443
-    uuid: "5960576d-829e-4d09-8232-0e80121a6fe4"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "vh.mojaz-persian-music.ir"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-  - name: "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.162:8443"
-    type: "vless"
-    server: "45.130.125.162"
-    port: 8443
-    uuid: "5960576d-829e-4d09-8232-0e80121a6fe4"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "vi.mojaz-persian-music.ir"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-  - name: "🇸🇨 🔒 VL-TCP-TLS 🇸🇨 SC-45.95.96.236:443"
-    type: "vless"
-    server: "45.95.96.236"
-    port: 443
-    uuid: "c5694dc5-39fd-4a92-8430-3837baa522a3"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "gesmankos.sadiepinki.com"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
   - name: "🇸🇨 🌱 - Tel:  @Hddify - 2"
     type: "vless"
     server: "154.197.64.127"
@@ -1130,22 +1149,18 @@ proxies:
       path: "/proxyip=147.90.26.66,31.56.48.183,51.91.248.253,104.252.30.243,51.91.248.99,51.91.249.22,51.91.251.37,173.212.218.109"
       headers:
         Host: "tel-bobbyv2.alvlirm2023.workers.dev"
-  - name: "🇸🇨 RELAY🚩 | cdn-no.lopzo.ir-443 | 261.91ms"
+  - name: "🇸🇨 SC🇸🇨 | edge-lab-b.10media.top-443 | 155.01ms"
     type: "vless"
-    server: "45.130.125.107"
+    server: "edge-lab-b.10media.top"
     port: 443
-    uuid: "bdf97c06-ae1f-47e9-b47a-9d9ff47b5820"
+    uuid: "9cb8d71c-fe06-4402-a591-eaa1f173b890"
     udp: true
     tls: true
-    network: "ws"
-    servername: "cdn-no.lopzo.ir"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-      - "http/1.1"
-    ws-opts:
-      path: "/"
-  - name: "🇸🇨 RELAY🚩 | vms.lifetime37.workers.dev-8880 | 54.3ms"
+    network: "grpc"
+    servername: "edge-lab-b.10media.top"
+    grpc-opts:
+      grpc-service-name: "swedenfeed"
+  - name: "🇸🇨 RELAY🚩 | vms.lifetime37.workers.dev-8880 | 16.79ms"
     type: "vless"
     server: "154.197.75.40"
     port: 8880
@@ -1156,6 +1171,17 @@ proxies:
     ws-opts:
       headers:
         Host: "vms.lifetime37.workers.dev"
+  - name: "🇸🇨 🔒 VL-TCP-TLS 🇸🇨 SC-45.95.96.236:443"
+    type: "vless"
+    server: "45.95.96.236"
+    port: 443
+    uuid: "c5694dc5-39fd-4a92-8430-3837baa522a3"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "gesmankos.sadiepinki.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
   - name: "🇸🇨 🔒 VL-TCP-RLT 🇸🇨 SC-156.252.229.11:8443"
     type: "vless"
     server: "156.252.229.11"
@@ -1169,7 +1195,7 @@ proxies:
     reality-opts:
       public-key: "7jPluypHwPilf_Mq7JOY96SwKkbK35WuIlN1HwGQ_0A"
       short-id: "974f7f8f"
-  - name: "🇸🇨 🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE 12ms"
+  - name: "🇸🇨 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 13ms"
     type: "trojan"
     server: "45.128.76.242"
     port: 443
@@ -1194,7 +1220,7 @@ proxies:
       path: "/---@VPNine1---@VPNine1/---@VPNine1---@VPNine1/---@VPNine1---@VPNine1/--@VPNine1---@VPNine1/---@VPNine1---@VPNine1/---@VPNine1---@VPNine1"
       headers:
         Host: "de.mitivpn.in.net"
-  - name: "🇸🇨 🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE 11ms"
+  - name: "🇸🇨 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-1"
     type: "trojan"
     server: "45.128.76.242"
     port: 443
@@ -1207,6 +1233,20 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/--@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "de.mitivpn.in.net"
+  - name: "🇸🇨 🆔ar14n24b 🔒 VL-TCP- ❔ XX down"
+    type: "vless"
+    server: "45.198.96.210"
+    port: 443
+    uuid: "19b64e79-73b4-4478-bbfc-fb57737b94f8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "storage.yandex.net"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "9Y-_jCI3Z1x6SXK2tHdZ6V1CN9IJPNPnoxSW0cbXxD8"
+      short-id: "764f497dda21c4fc"
   - name: "🇸🇨 @DeltaKroneckerGithub"
     type: "trojan"
     server: "45.130.125.160"
@@ -1340,6 +1380,17 @@ proxies:
       headers:
         Host: "fancy-mouse-6aff.wixit71180.workers.dev"
   - name: "🇸🇨 Seychelles-1"
+    type: "trojan"
+    server: "45.130.125.160"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "🇸🇨 Seychelles-2"
     type: "trojan"
     server: "45.128.76.242"
     port: 443
@@ -1480,6 +1531,55 @@ proxies:
       path: "/eyJqdW5rIjoiY0U2T212Y21yeEhUZHRKYSIsInByb3RvY29sIjoidmwiLCJtb2RlIjoicHJveHlpcCIsInBhbmVsSVBzIjpbXX0"
       headers:
         Host: "BItter-CreDIT-61b8.b76EbA0aBb.wORkerS.dEv"
+  - name: "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.194:8443"
+    type: "vless"
+    server: "45.130.125.194"
+    port: 8443
+    uuid: "d4eb1900-6515-494e-85c5-306bb9594f56"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "vo.new-persian-song.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+  - name: "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.193:8443"
+    type: "vless"
+    server: "45.130.125.193"
+    port: 8443
+    uuid: "5960576d-829e-4d09-8232-0e80121a6fe4"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "ssj.new-persian-song.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+  - name: "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.192:8443"
+    type: "vless"
+    server: "45.130.125.192"
+    port: 8443
+    uuid: "5960576d-829e-4d09-8232-0e80121a6fe4"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "vh.mojaz-persian-music.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+  - name: "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.162:8443"
+    type: "vless"
+    server: "45.130.125.162"
+    port: 8443
+    uuid: "5960576d-829e-4d09-8232-0e80121a6fe4"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "vi.mojaz-persian-music.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
   - name: "🇸🇨 095-ws ✂️@GheychiAmoozesh"
     type: "vmess"
     server: "154.83.2.156"
@@ -1550,27 +1650,27 @@ proxy-groups:
       - "🇸🇨 🔒 VL-WS-NONE 🇸🇨 SC-154.81.141.2:8880"
       - "🇸🇨 🔒 VL-WS-NONE 🇸🇨 SC-154.83.2.30:8880"
       - "🇸🇨 🔒 TR-WS-TLS 🇸🇨 SC-45.128.76.242:443-1"
-      - "🇸🇨 45.130.125.160"
       - "🇸🇨 🔒 SS-TCP-NA 🇸🇨 SC-45.207.207.25:443"
-      - "🇸🇨 US🇺🇸 | trojan.freenods.sbs-443 | 40.56ms"
-      - "🇸🇨 REALITY|SC🇸🇨 | 45.95.96.236-443 | 155.58ms"
-      - "🇸🇨 REALITY|SC🇸🇨 | 45.145.56.163-443 | 149.23ms"
-      - "🇸🇨 REALITY|SC🇸🇨 | 156.252.229.11-8443 | 156.27ms"
-      - "🇸🇨 REALITY|SC🇸🇨 | 45.95.96.198-443 | 144.87ms"
+      - "🇸🇨 US🇺🇸 | trojan.freenods.sbs-443 | 256.87ms"
+      - "🇸🇨 RELAY🚩 | www.calmlunch.com-443 | 2.69ms"
+      - "🇸🇨 REALITY|SC🇸🇨 | 201.51.10.240-443 | 87.59ms"
+      - "🇸🇨 REALITY|SC🇸🇨 | gesmankos.sadiepinki.com-443 | 132.49ms"
+      - "🇸🇨 REALITY|SC🇸🇨 | 45.95.96.236-443 | 93.7ms"
+      - "🇸🇨 REALITY|SC🇸🇨 | 45.95.96.236-443 | 91.5ms"
+      - "🇸🇨 REALITY|SC🇸🇨 | 45.145.12.148-443 | 110.89ms"
+      - "🇸🇨 REALITY|SC🇸🇨 | 156.252.229.11-8443 | 94.57ms"
       - "🇸🇨 🔒 VL-RAW-RLT 🇸🇨 SC-156.226.168.221:35193"
+      - "🇸🇨 🔒 VL-TCP-RLT 🇸🇨 SC-45.95.96.198:443"
       - "🇸🇨 🔒 VL-TCP-RLT 🇸🇨 SC-45.95.96.236:443"
-      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.194:8443"
-      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.193:8443"
-      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.192:8443"
-      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.162:8443"
-      - "🇸🇨 🔒 VL-TCP-TLS 🇸🇨 SC-45.95.96.236:443"
       - "🇸🇨 🌱 - Tel:  @Hddify - 2"
-      - "🇸🇨 RELAY🚩 | cdn-no.lopzo.ir-443 | 261.91ms"
-      - "🇸🇨 RELAY🚩 | vms.lifetime37.workers.dev-8880 | 54.3ms"
+      - "🇸🇨 SC🇸🇨 | edge-lab-b.10media.top-443 | 155.01ms"
+      - "🇸🇨 RELAY🚩 | vms.lifetime37.workers.dev-8880 | 16.79ms"
+      - "🇸🇨 🔒 VL-TCP-TLS 🇸🇨 SC-45.95.96.236:443"
       - "🇸🇨 🔒 VL-TCP-RLT 🇸🇨 SC-156.252.229.11:8443"
-      - "🇸🇨 🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE 12ms"
+      - "🇸🇨 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 13ms"
       - "🇸🇨 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms"
-      - "🇸🇨 🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE 11ms"
+      - "🇸🇨 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-1"
+      - "🇸🇨 🆔ar14n24b 🔒 VL-TCP- ❔ XX down"
       - "🇸🇨 @DeltaKroneckerGithub"
       - "🇸🇨 @DeltaKroneckerGithub-1"
       - "🇸🇨 @DeltaKroneckerGithub-2"
@@ -1582,6 +1682,7 @@ proxy-groups:
       - "🇸🇨 United States-2"
       - "🇸🇨 Seychelles"
       - "🇸🇨 Seychelles-1"
+      - "🇸🇨 Seychelles-2"
       - "🇸🇨 @DeltaKroneckerGithub-6"
       - "🇸🇨 @DeltaKroneckerGithub-7"
       - "🇸🇨 @DeltaKroneckerGithub-8"
@@ -1592,6 +1693,10 @@ proxy-groups:
       - "🇸🇨 🍄 - Tel:  @Hddify - 15"
       - "🇸🇨 🍄 - Tel:  @Hddify - 16"
       - "🇸🇨 >>@oneclickvpnkeys::US"
+      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.194:8443"
+      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.193:8443"
+      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.192:8443"
+      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.162:8443"
       - "🇸🇨 095-ws ✂️@GheychiAmoozesh"
       - "🇸🇨 @DeltaKroneckerGithub-11"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
@@ -1638,27 +1743,27 @@ proxy-groups:
       - "🇸🇨 🔒 VL-WS-NONE 🇸🇨 SC-154.81.141.2:8880"
       - "🇸🇨 🔒 VL-WS-NONE 🇸🇨 SC-154.83.2.30:8880"
       - "🇸🇨 🔒 TR-WS-TLS 🇸🇨 SC-45.128.76.242:443-1"
-      - "🇸🇨 45.130.125.160"
       - "🇸🇨 🔒 SS-TCP-NA 🇸🇨 SC-45.207.207.25:443"
-      - "🇸🇨 US🇺🇸 | trojan.freenods.sbs-443 | 40.56ms"
-      - "🇸🇨 REALITY|SC🇸🇨 | 45.95.96.236-443 | 155.58ms"
-      - "🇸🇨 REALITY|SC🇸🇨 | 45.145.56.163-443 | 149.23ms"
-      - "🇸🇨 REALITY|SC🇸🇨 | 156.252.229.11-8443 | 156.27ms"
-      - "🇸🇨 REALITY|SC🇸🇨 | 45.95.96.198-443 | 144.87ms"
+      - "🇸🇨 US🇺🇸 | trojan.freenods.sbs-443 | 256.87ms"
+      - "🇸🇨 RELAY🚩 | www.calmlunch.com-443 | 2.69ms"
+      - "🇸🇨 REALITY|SC🇸🇨 | 201.51.10.240-443 | 87.59ms"
+      - "🇸🇨 REALITY|SC🇸🇨 | gesmankos.sadiepinki.com-443 | 132.49ms"
+      - "🇸🇨 REALITY|SC🇸🇨 | 45.95.96.236-443 | 93.7ms"
+      - "🇸🇨 REALITY|SC🇸🇨 | 45.95.96.236-443 | 91.5ms"
+      - "🇸🇨 REALITY|SC🇸🇨 | 45.145.12.148-443 | 110.89ms"
+      - "🇸🇨 REALITY|SC🇸🇨 | 156.252.229.11-8443 | 94.57ms"
       - "🇸🇨 🔒 VL-RAW-RLT 🇸🇨 SC-156.226.168.221:35193"
+      - "🇸🇨 🔒 VL-TCP-RLT 🇸🇨 SC-45.95.96.198:443"
       - "🇸🇨 🔒 VL-TCP-RLT 🇸🇨 SC-45.95.96.236:443"
-      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.194:8443"
-      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.193:8443"
-      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.192:8443"
-      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.162:8443"
-      - "🇸🇨 🔒 VL-TCP-TLS 🇸🇨 SC-45.95.96.236:443"
       - "🇸🇨 🌱 - Tel:  @Hddify - 2"
-      - "🇸🇨 RELAY🚩 | cdn-no.lopzo.ir-443 | 261.91ms"
-      - "🇸🇨 RELAY🚩 | vms.lifetime37.workers.dev-8880 | 54.3ms"
+      - "🇸🇨 SC🇸🇨 | edge-lab-b.10media.top-443 | 155.01ms"
+      - "🇸🇨 RELAY🚩 | vms.lifetime37.workers.dev-8880 | 16.79ms"
+      - "🇸🇨 🔒 VL-TCP-TLS 🇸🇨 SC-45.95.96.236:443"
       - "🇸🇨 🔒 VL-TCP-RLT 🇸🇨 SC-156.252.229.11:8443"
-      - "🇸🇨 🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE 12ms"
+      - "🇸🇨 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 13ms"
       - "🇸🇨 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms"
-      - "🇸🇨 🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE 11ms"
+      - "🇸🇨 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-1"
+      - "🇸🇨 🆔ar14n24b 🔒 VL-TCP- ❔ XX down"
       - "🇸🇨 @DeltaKroneckerGithub"
       - "🇸🇨 @DeltaKroneckerGithub-1"
       - "🇸🇨 @DeltaKroneckerGithub-2"
@@ -1670,6 +1775,7 @@ proxy-groups:
       - "🇸🇨 United States-2"
       - "🇸🇨 Seychelles"
       - "🇸🇨 Seychelles-1"
+      - "🇸🇨 Seychelles-2"
       - "🇸🇨 @DeltaKroneckerGithub-6"
       - "🇸🇨 @DeltaKroneckerGithub-7"
       - "🇸🇨 @DeltaKroneckerGithub-8"
@@ -1680,6 +1786,10 @@ proxy-groups:
       - "🇸🇨 🍄 - Tel:  @Hddify - 15"
       - "🇸🇨 🍄 - Tel:  @Hddify - 16"
       - "🇸🇨 >>@oneclickvpnkeys::US"
+      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.194:8443"
+      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.193:8443"
+      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.192:8443"
+      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.162:8443"
       - "🇸🇨 095-ws ✂️@GheychiAmoozesh"
       - "🇸🇨 @DeltaKroneckerGithub-11"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
@@ -1727,27 +1837,27 @@ proxy-groups:
       - "🇸🇨 🔒 VL-WS-NONE 🇸🇨 SC-154.81.141.2:8880"
       - "🇸🇨 🔒 VL-WS-NONE 🇸🇨 SC-154.83.2.30:8880"
       - "🇸🇨 🔒 TR-WS-TLS 🇸🇨 SC-45.128.76.242:443-1"
-      - "🇸🇨 45.130.125.160"
       - "🇸🇨 🔒 SS-TCP-NA 🇸🇨 SC-45.207.207.25:443"
-      - "🇸🇨 US🇺🇸 | trojan.freenods.sbs-443 | 40.56ms"
-      - "🇸🇨 REALITY|SC🇸🇨 | 45.95.96.236-443 | 155.58ms"
-      - "🇸🇨 REALITY|SC🇸🇨 | 45.145.56.163-443 | 149.23ms"
-      - "🇸🇨 REALITY|SC🇸🇨 | 156.252.229.11-8443 | 156.27ms"
-      - "🇸🇨 REALITY|SC🇸🇨 | 45.95.96.198-443 | 144.87ms"
+      - "🇸🇨 US🇺🇸 | trojan.freenods.sbs-443 | 256.87ms"
+      - "🇸🇨 RELAY🚩 | www.calmlunch.com-443 | 2.69ms"
+      - "🇸🇨 REALITY|SC🇸🇨 | 201.51.10.240-443 | 87.59ms"
+      - "🇸🇨 REALITY|SC🇸🇨 | gesmankos.sadiepinki.com-443 | 132.49ms"
+      - "🇸🇨 REALITY|SC🇸🇨 | 45.95.96.236-443 | 93.7ms"
+      - "🇸🇨 REALITY|SC🇸🇨 | 45.95.96.236-443 | 91.5ms"
+      - "🇸🇨 REALITY|SC🇸🇨 | 45.145.12.148-443 | 110.89ms"
+      - "🇸🇨 REALITY|SC🇸🇨 | 156.252.229.11-8443 | 94.57ms"
       - "🇸🇨 🔒 VL-RAW-RLT 🇸🇨 SC-156.226.168.221:35193"
+      - "🇸🇨 🔒 VL-TCP-RLT 🇸🇨 SC-45.95.96.198:443"
       - "🇸🇨 🔒 VL-TCP-RLT 🇸🇨 SC-45.95.96.236:443"
-      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.194:8443"
-      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.193:8443"
-      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.192:8443"
-      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.162:8443"
-      - "🇸🇨 🔒 VL-TCP-TLS 🇸🇨 SC-45.95.96.236:443"
       - "🇸🇨 🌱 - Tel:  @Hddify - 2"
-      - "🇸🇨 RELAY🚩 | cdn-no.lopzo.ir-443 | 261.91ms"
-      - "🇸🇨 RELAY🚩 | vms.lifetime37.workers.dev-8880 | 54.3ms"
+      - "🇸🇨 SC🇸🇨 | edge-lab-b.10media.top-443 | 155.01ms"
+      - "🇸🇨 RELAY🚩 | vms.lifetime37.workers.dev-8880 | 16.79ms"
+      - "🇸🇨 🔒 VL-TCP-TLS 🇸🇨 SC-45.95.96.236:443"
       - "🇸🇨 🔒 VL-TCP-RLT 🇸🇨 SC-156.252.229.11:8443"
-      - "🇸🇨 🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE 12ms"
+      - "🇸🇨 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 13ms"
       - "🇸🇨 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms"
-      - "🇸🇨 🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE 11ms"
+      - "🇸🇨 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-1"
+      - "🇸🇨 🆔ar14n24b 🔒 VL-TCP- ❔ XX down"
       - "🇸🇨 @DeltaKroneckerGithub"
       - "🇸🇨 @DeltaKroneckerGithub-1"
       - "🇸🇨 @DeltaKroneckerGithub-2"
@@ -1759,6 +1869,7 @@ proxy-groups:
       - "🇸🇨 United States-2"
       - "🇸🇨 Seychelles"
       - "🇸🇨 Seychelles-1"
+      - "🇸🇨 Seychelles-2"
       - "🇸🇨 @DeltaKroneckerGithub-6"
       - "🇸🇨 @DeltaKroneckerGithub-7"
       - "🇸🇨 @DeltaKroneckerGithub-8"
@@ -1769,6 +1880,10 @@ proxy-groups:
       - "🇸🇨 🍄 - Tel:  @Hddify - 15"
       - "🇸🇨 🍄 - Tel:  @Hddify - 16"
       - "🇸🇨 >>@oneclickvpnkeys::US"
+      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.194:8443"
+      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.193:8443"
+      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.192:8443"
+      - "🇸🇨 🔒 VL-XHTTP-TLS 🇸🇨 SC-45.130.125.162:8443"
       - "🇸🇨 095-ws ✂️@GheychiAmoozesh"
       - "🇸🇨 @DeltaKroneckerGithub-11"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"

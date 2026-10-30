@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -493,20 +527,36 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "169.40.42.235"
+  - name: "hw7.divarkhaghazi.com"
     type: "vless"
-    server: "169.40.42.235"
+    server: "hw7.divarkhaghazi.com"
+    port: 465
+    uuid: "d0d3d49c-56e8-40e1-9e83-793d03f83d93"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "hw7.divarkhaghazi.com."
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "hw7.divarkhaghazi.com."
+  - name: "tgfree.rush-server.com"
+    type: "vless"
+    server: "tgfree.rush-server.com"
     port: 443
-    uuid: "d65cc14c-f53f-4fe2-b262-97856601319c"
+    uuid: "ebd1c0d6-7ff4-4b9f-8692-237517a27a64"
     udp: true
     tls: true
     network: "tcp"
-    servername: "yahoo.com"
-    client-fingerprint: "chrome"
+    servername: "anyfile2file.com"
+    client-fingerprint: "ios"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
-      short-id: "c39cc7310a"
+      public-key: "mza5Hn1aolSz65qu-UwvBP3oesxMe25r11o4nxvikF0"
+      short-id: "64c1fe36c7846400"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -521,7 +571,8 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "169.40.42.235"
+      - "hw7.divarkhaghazi.com"
+      - "tgfree.rush-server.com"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -530,7 +581,8 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "169.40.42.235"
+      - "hw7.divarkhaghazi.com"
+      - "tgfree.rush-server.com"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -540,7 +592,8 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "169.40.42.235"
+      - "hw7.divarkhaghazi.com"
+      - "tgfree.rush-server.com"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"

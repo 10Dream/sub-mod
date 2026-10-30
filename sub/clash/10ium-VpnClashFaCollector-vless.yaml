@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -493,7 +527,20 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "🇺🇸202429 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "bored_vpn"
+    type: "vless"
+    server: "199.232.78.170"
+    port: 443
+    uuid: "%58pnTeam-65"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cdn.akamai.steamstatic.com"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "Appxdn.global.ssl.fastly.net"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 158ms | VLESS"
     type: "vless"
     server: "167.17.69.171"
     port: 443
@@ -502,7 +549,9 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.cloudflare.com"
-    client-fingerprint: "firefox"
+    client-fingerprint: "chrome"
+    alpn:
+      - "channel@networld_vpn-channel@networld_vpn-channel@networld_vpn-channel@networld_vpn-channel@networld_vpn-channel@networld_vpn-channel@networld_vpn-channel@networld_vpnù"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "ALT8hIGeZEhi0sQFbXP_ntBg8Xo-v7i0YCLrqTnBxRk"
@@ -528,7 +577,7 @@ proxies:
     network: "ws"
     ws-opts:
       path: "/"
-  - name: "konglam.goodphilips.ir"
+  - name: "@filembad`"
     type: "vless"
     server: "konglam.goodphilips.ir"
     port: 443
@@ -541,37 +590,7 @@ proxies:
     reality-opts:
       public-key: "x1K53K_cLlg8QvxQhDnfRvMkQbtWkdzKdmaeYCIo4Hc"
       short-id: "e85705ad62739603"
-  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 99ms | VLESS"
-    type: "vless"
-    server: "172.67.114.165"
-    port: 443
-    uuid: "024cf4e8-fa64-44ea-b22f-c28437120563"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "ded1ws.samcdn.shop"
-    client-fingerprint: "unsafe"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/51544/ws"
-      headers:
-        Host: "ded1ws.samcdn.shop"
-  - name: "43.174.247.63"
-    type: "vless"
-    server: "43.174.247.63"
-    port: 443
-    uuid: "024cf4e8-fa64-44ea-b22f-c28437120563"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "msydjt.com"
-    client-fingerprint: "firefox"
-    ws-opts:
-      path: "/51544/ws"
-      headers:
-        Host: "ded1ws.samcdn.shop"
-  - name: "@meliproxyy`"
+  - name: "***⚡***@V2ray_official"
     type: "vless"
     server: "msydjt.com"
     port: 443
@@ -599,6 +618,19 @@ proxies:
       path: "/51544/ws"
       headers:
         Host: "ded1ws.samcdn.shop"
+  - name: "195.123.213.28"
+    type: "vless"
+    server: "195.123.213.28"
+    port: 443
+    uuid: "02fcc1a4-ee90-4970-8bbb-4ffaa8109d24"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "NMgy1XgCSXExOg6Tg8xG9lCWttMF6sjdpB41lZy6FWo"
+      short-id: "5c256336e3b673fa"
   - name: "@IranProxyPlus`-1"
     type: "vless"
     server: "91.107.191.12"
@@ -607,7 +639,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 73ms | VLESS"
+  - name: "@filembad`-1"
     type: "vless"
     server: "45.43.79.92"
     port: 443
@@ -652,6 +684,19 @@ proxies:
     ws-opts:
       headers:
         Host: "d756111e9a489eee.rainzone.ir"
+  - name: "45.151.71.145"
+    type: "vless"
+    server: "45.151.71.145"
+    port: 443
+    uuid: "04edf721-b2b7-4a80-9fbd-c949438c58c9"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "abuse.ozon.ru"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
   - name: "199.232.239.239"
     type: "vless"
     server: "199.232.239.239"
@@ -668,82 +713,60 @@ proxies:
       path: "/@CloudVPNchannel/@CloudVPNchannel/@CloudVPNchannel/@CloudVPNchannel/@CloudVPNchannel/@CloudVPNchannel?ed=2056"
       headers:
         Host: "mpkoe7ypcibr80p102020123.global.ssl.fastly.net"
-  - name: "🇷🇺29@exclavevpn`"
+  - name: "China 🇨🇳"
     type: "vless"
-    server: "149.33.15.213"
+    server: "47.253.226.114"
     port: 443
-    uuid: "054362fb-e485-4a3f-9568-4c5b0f60e074"
+    uuid: "055a1ce8-2a16-4a0d-a2c2-22826c9b2413"
     udp: true
     tls: true
     network: "tcp"
-    servername: "swz.proxyplankton.ru"
+    servername: "www.cloudflare.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "Svl81isn16RPAFnjtmYw7A6TPnsEPLHuYYaJht65Rzc"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 209ms | VLESS"
+    type: "vless"
+    server: "47.253.226.114"
+    port: 443
+    uuid: "055a1ce8-2a16-4a0d-a2c2-22826c9b2413"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
     client-fingerprint: "firefox"
-  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 184ms | VLESS"
-    type: "vless"
-    server: "47.253.226.114"
-    port: 443
-    uuid: "055a1ce8-2a16-4a0d-a2c2-22826c9b2413"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "Svl81isn16RPAFnjtmYw7A6TPnsEPLHuYYaJht65Rzc"
-  - name: "@filembad`"
+  - name: "45.133.151.170"
     type: "vless"
-    server: "47.253.226.114"
-    port: 443
-    uuid: "055a1ce8-2a16-4a0d-a2c2-22826c9b2413"
-    udp: true
-    tls: true
-    network: "raw"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "Svl81isn16RPAFnjtmYw7A6TPnsEPLHuYYaJht65Rzc"
-  - name: "@filembad`-1"
-    type: "vless"
-    server: "47.253.226.114"
-    port: 443
-    uuid: "055a1ce8-2a16-4a0d-a2c2-22826c9b2413"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "Svl81isn16RPAFnjtmYw7A6TPnsEPLHuYYaJht65Rzc"
-  - name: "🇫🇮202448 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "196.196.204.174"
+    server: "45.133.151.170"
     port: 443
     uuid: "056405e8-de9f-4d0d-8145-956f13cc34da"
     udp: true
     tls: true
     network: "tcp"
-    servername: "263651t.fi3.h1clayd.click"
+    servername: "a0688bt.us4.h1clayd.click"
     client-fingerprint: "firefox"
     reality-opts:
-      public-key: "nNe5Y8_G7L0_VO5lqlee3h5UmRH4RXjaRYGCDUkbQz4"
-      short-id: "2892e611785bafd1"
-  - name: "🇫🇮202433 | ⚡️Telegram = t.me/SOSkeyNET"
+      public-key: "5-9YzvyXcZ4J5Z4OaVTUbxUU2InvnwT17m0XY-Jse1E"
+      short-id: "257420d9d430152a"
+  - name: "188.114.98.0"
     type: "vless"
-    server: "77.42.12.225"
+    server: "188.114.98.0"
     port: 443
-    uuid: "056405e8-de9f-4d0d-8145-956f13cc34da"
+    uuid: "05c66efe-4f1e-4df9-99e6-2b1b624fa7ae"
     udp: true
     tls: true
-    network: "grpc"
-    servername: "8fc752g.fi3.h1clayd.click"
-    client-fingerprint: "firefox"
-    reality-opts:
-      public-key: "GJzag9Wrvz_bO9AQaA-Oq0P1kV9btmxxAdzPV-uQB18"
-      short-id: "09d0a94a1c6fc9d5"
-    grpc-opts:
-      grpc-service-name: "f345a414c040"
+    network: "ws"
+    servername: "sg.jinggai.online"
+    client-fingerprint: "unsafe"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/connect/01"
+      headers:
+        Host: "sg.jinggai.online"
   - name: "***🐦🔥***-@SPEEDS_VPN-1"
     type: "vless"
     server: "de-1-tun-single.starping1.fun"
@@ -888,22 +911,6 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "194.55.239.89"
-    type: "vless"
-    server: "194.55.239.89"
-    port: 443
-    uuid: "073b7df7-5527-45a2-ba29-183b85c39071"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "broadcast.liveflow.space"
-    client-fingerprint: "android"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/live.stream.v1.Broadcast/"
-      headers:
-        Host: "broadcast.liveflow.space"
   - name: "@IranProxyPlus`-4"
     type: "vless"
     server: "snapp.ir"
@@ -915,31 +922,6 @@ proxies:
     ws-opts:
       headers:
         Host: "api.aramonlineshop.ir"
-  - name: "🇫🇷202535 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "ai.smrtai.top"
-    port: 443
-    uuid: "086bf957-9cd0-4e55-8280-bbef10435b41"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "R-w7BpNgtryZRBMyRoHx81OnjzAwrKhVtV1EUKLFJzc"
-      short-id: "086bf957"
-  - name: "YFZ 205 @Outline_Vpn"
-    type: "vless"
-    server: "ai.smrtai.top"
-    port: 443
-    uuid: "086bf957-9cd0-4e55-8280-bbef10435b41"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    reality-opts:
-      public-key: "R-w7BpNgtryZRBMyRoHx81OnjzAwrKhVtV1EUKLFJzc"
-      short-id: "086bf957"
   - name: "srv2-germany.hajimamadcloud.com.tr"
     type: "vless"
     server: "srv2-germany.hajimamadcloud.com.tr"
@@ -948,7 +930,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "65.109.211.81"
+  - name: "🇫🇮202868 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "65.109.211.81"
     port: 465
@@ -962,7 +944,7 @@ proxies:
       path: "/"
       headers:
         Host: "hw6.divarkhaghazi.com."
-  - name: "🤖67@oneclickvpnkeys"
+  - name: "***⚡***@V2ray_official-1"
     type: "vless"
     server: "hw6.divarkhaghazi.com"
     port: 465
@@ -978,7 +960,7 @@ proxies:
       path: "/"
       headers:
         Host: "hw6.divarkhaghazi.com."
-  - name: "🤖66@oneclickvpnkeys"
+  - name: "@Vpn_Tehran 💛 کانال تلگرام"
     type: "vless"
     server: "hw6.divarkhaghazi.com"
     port: 465
@@ -991,50 +973,6 @@ proxies:
       path: "/"
       headers:
         Host: "hw6.divarkhaghazi.com."
-  - name: "goold.zovip2.ir"
-    type: "vless"
-    server: "goold.zovip2.ir"
-    port: 443
-    uuid: "0a302734-fe85-4636-b929-74d4108b078d"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "goold.zovip2.ir"
-    client-fingerprint: "chrome"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/api/v3/pulse"
-      headers:
-        Host: "goold.zovip2.ir"
-  - name: "213.152.180.55"
-    type: "vless"
-    server: "213.152.180.55"
-    port: 2088
-    uuid: "0ac16dd6-2f00-4e35-9a4d-479fd2755475"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.apple.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "bvG7GBU_gOKuBuAagnC07EbQZ_2tJ8OhBNSVGkHSugo"
-      short-id: "66d62ef550107695"
-  - name: "67.159.49.36"
-    type: "vless"
-    server: "67.159.49.36"
-    port: 2093
-    uuid: "0b418782-e023-447e-ba99-e66b84ff118d"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.apple.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "C_GA8wVjeLmyqLK6em5OHn4WPlsbndA-RyvyNU1aGFM"
-      short-id: "8a9725533854a7e8"
   - name: "@IranProxyPlus`-5"
     type: "vless"
     server: "bot-exit-i4k38s.samanidempire.org"
@@ -1049,32 +987,6 @@ proxies:
       path: "d1571a25"
       headers:
         Host: "bot-exit-i4k38s.samanidempire.org"
-  - name: "178.17.52.234"
-    type: "vless"
-    server: "178.17.52.234"
-    port: 443
-    uuid: "0bf8538b-6299-46b0-9775-8b00939dccb5"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "static.blog-forme.ru"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "CgbJG-9Wv2NW-cuS1ZIaCAenRUZbxGFt5EjLkFCUcWs"
-      short-id: "627da539c308202e"
-  - name: "برای اتصال دائمی جوین شو🪻 TelegramID ⌲Express_freevpn 🪩"
-    type: "vless"
-    server: "static.blog-forme.ru"
-    port: 443
-    uuid: "0bf8538b-6299-46b0-9775-8b00939dccb5"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "static.blog-forme.ru"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "CgbJG-9Wv2NW-cuS1ZIaCAenRUZbxGFt5EjLkFCUcWs"
-      short-id: "627da539c308202e"
   - name: "@IranProxyPlus`-6"
     type: "vless"
     server: "185.128.139.11"
@@ -1083,20 +995,21 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇮🇷202452 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "185.227.137.69"
     type: "vless"
-    server: "ddehop.sarzaminshadi13.ir"
-    port: 1980
-    uuid: "0da85837-8c60-4ff8-a41a-e5a12333e8e6"
+    server: "185.227.137.69"
+    port: 443
+    uuid: "0ea8616c-2db9-472c-95d7-38527657e89d"
     udp: true
     tls: true
-    network: "xhttp"
-    servername: "play.google.com"
+    network: "tcp"
+    servername: "www.digiturunc.com"
     client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "nul73yl3xabE3lUOu9JZpYNE2ahSuPmcuuYcY_OecQo"
-      short-id: "0ab72b7d6710b4f8"
-  - name: "91.107.247.174"
+      public-key: "D0XU_vaxhJewIPzWLbXIVHfoq68Jcu48HUp9I4r30xU"
+      short-id: "d211e464747fdf2c"
+  - name: "🇩🇪202826 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "91.107.247.174"
     port: 443
@@ -1109,30 +1022,6 @@ proxies:
     reality-opts:
       public-key: "MjBRMMMBFIu4jSHSdDzdK4VPczAVkC1GHhHvugU3myI"
       short-id: "b263a86044be000e"
-  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 1ms | VLESS"
-    type: "vless"
-    server: "goold.zovip2.ir"
-    port: 443
-    uuid: "0f21994e-f41c-4cb0-965b-4f3d588ccd26"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "goold.zovip2.ir"
-    client-fingerprint: "chrome"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/api/v3/pulse"
-      headers:
-        Host: "goold.zovip2.ir"
-  - name: "81.7.11.36"
-    type: "vless"
-    server: "81.7.11.36"
-    port: 8080
-    uuid: "0fa49871-9df0-44f6-ad8e-514317cbb364"
-    udp: true
-    tls: false
-    network: "tcp"
   - name: "@IranProxyPlus`-7"
     type: "vless"
     server: "104.27.66.214"
@@ -1161,67 +1050,7 @@ proxies:
       path: "download.php"
       headers:
         Host: "sertraline.adaspoloandco.com"
-  - name: "31.57.250.144"
-    type: "vless"
-    server: "31.57.250.144"
-    port: 10575
-    uuid: "12b67bfa-7b15-48cf-a706-e44bb8e7d597"
-    udp: true
-    tls: false
-    network: "tcp"
-  - name: "31.57.250.144-1"
-    type: "vless"
-    server: "31.57.250.144"
-    port: 23472
-    uuid: "12b67bfa-7b15-48cf-a706-e44bb8e7d597"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "shield.nvidia.co.kr"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "3fWlTmnB_Fqm5yEkrTCGrtPRn5ShsKlgyGUtGagff0c"
-      short-id: "f900f8de79"
-  - name: "31.57.250.144-2"
-    type: "vless"
-    server: "31.57.250.144"
-    port: 53831
-    uuid: "12b67bfa-7b15-48cf-a706-e44bb8e7d597"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "COV59gfc5yL6qwdFLw93SZcA_2sTwtXWWKlRpOPNDUk"
-      short-id: "7f76"
-  - name: "31.57.250.144-3"
-    type: "vless"
-    server: "31.57.250.144"
-    port: 56348
-    uuid: "12b67bfa-7b15-48cf-a706-e44bb8e7d597"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "android.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "WscLvvPAYD3E3fflqAkjaifs10BhSWt4jQGX3vMAgyQ"
-      short-id: "6743782e"
-  - name: "31.57.250.144-4"
-    type: "vless"
-    server: "31.57.250.144"
-    port: 56358
-    uuid: "12b67bfa-7b15-48cf-a706-e44bb8e7d597"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "31.57.250.144"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-      - "http/1.1"
-  - name: "🇨🇦203063 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "cdn1.ir53.indevs.in"
     type: "vless"
     server: "cdn1.ir53.indevs.in"
     port: 443
@@ -1247,21 +1076,19 @@ proxies:
     network: "ws"
     ws-opts:
       path: "/"
-  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 104ms | VLESS"
+  - name: "89.144.30.154"
     type: "vless"
-    server: "138.16.140.168"
+    server: "89.144.30.154"
     port: 443
-    uuid: "13bf9403-22d1-4221-939b-f6606c423139"
+    uuid: "14b48651-3738-4926-bc09-4c04e87ff80b"
     udp: true
     tls: true
-    network: "tcp"
-    servername: "steamcommunity.com"
-    client-fingerprint: "edge"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "HyVJj9KuPfDV5lOLEkMeVmYFZoFMQid6eiLC_6Yf1mQ"
-      short-id: "5c56a4cfea5866c0"
-  - name: "@IranProxyPlus`-9"
+    network: "xhttp"
+    servername: "static.lotussec.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | VLESS"
     type: "vless"
     server: "159.89.87.21"
     port: 28190
@@ -1274,7 +1101,102 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "ZJRnFU-1s1JOnO8E9uZ7b00l1fPEh63fGRbdBANFRno"
-  - name: "@IranProxyPlus`-10"
+  - name: "353e8a5e93f2e082.bluebleu.ir"
+    type: "vless"
+    server: "353e8a5e93f2e082.bluebleu.ir"
+    port: 25813
+    uuid: "15c69d65-fcf9-456c-a778-85e674dd14e8"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "6b3443242f617955.monqela.ir"
+    type: "vless"
+    server: "6b3443242f617955.monqela.ir"
+    port: 2053
+    uuid: "15c69d65-fcf9-456c-a778-85e674dd14e8"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "b5e3b3d591d783f9.monqela.ir"
+    type: "vless"
+    server: "b5e3b3d591d783f9.monqela.ir"
+    port: 63581
+    uuid: "15c69d65-fcf9-456c-a778-85e674dd14e8"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "ca259eb335992e65.monqela.ir"
+    type: "vless"
+    server: "ca259eb335992e65.monqela.ir"
+    port: 46729
+    uuid: "15c69d65-fcf9-456c-a778-85e674dd14e8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "play.google.com"
+    client-fingerprint: "edge"
+    reality-opts:
+      public-key: "mDRc_ekh3WzhU1OEYOd2pOWYDKEyq5HN5fQe-JAJVQc"
+      short-id: "85ecb8764c90e7fb"
+  - name: "@filembad`-2"
+    type: "vless"
+    server: "withc.monqela.ir"
+    port: 443
+    uuid: "15c69d65-fcf9-456c-a778-85e674dd14e8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "play.google.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "EoSG1_L14Zuly6JXyCLWPAFnMzezw6WexY0JQm6_Nyw"
+      short-id: "b3e87aa66bd5614c"
+  - name: "tus.hemad.qzz.io"
+    type: "vless"
+    server: "tus.hemad.qzz.io"
+    port: 2053
+    uuid: "16423c7c-2c18-435b-8bbd-2bd3d5700628"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "tus.tun257xr.cfd"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/speed"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 96ms | VLESS"
+    type: "vless"
+    server: "tus.hemad.qzz.io"
+    port: 2053
+    uuid: "16423c7c-2c18-435b-8bbd-2bd3d5700628"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "tus.tun257xr.cfd"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/speed"
+      headers:
+        Host: "tus.tun257xr.cfd"
+  - name: "tus.velqarion.ir"
+    type: "vless"
+    server: "tus.velqarion.ir"
+    port: 2053
+    uuid: "16423c7c-2c18-435b-8bbd-2bd3d5700628"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "tus.qorvantis.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/speed"
+  - name: "@IranProxyPlus`-9"
     type: "vless"
     server: "cd.land4k.com"
     port: 443
@@ -1291,7 +1213,7 @@ proxies:
       path: "news"
       headers:
         Host: "cdn-pro4.postshup.ir."
-  - name: "@IranProxyPlus`-11"
+  - name: "@IranProxyPlus`-10"
     type: "vless"
     server: "forallpanel.srtongston.ir"
     port: 8880
@@ -1299,6 +1221,41 @@ proxies:
     udp: true
     tls: false
     network: "httpupgrade"
+  - name: "104.21.48.1"
+    type: "vless"
+    server: "104.21.48.1"
+    port: 8080
+    uuid: "1737df47-a4b2-4096-9fc3-1d869aa50c08"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/S0dQP0TopmwsC1K3?ed=2560"
+      headers:
+        Host: "cxrolvpn.freev2-edb.workers.dev"
+  - name: "bs.cexora.ir"
+    type: "vless"
+    server: "bs.cexora.ir"
+    port: 2087
+    uuid: "17a6d68f-76ef-4d98-5f5b-0cce58fd96b1"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "bs.cexora.ir"
+    client-fingerprint: "chrome"
+  - name: "bigshagy.zqpm.ir"
+    type: "vless"
+    server: "bigshagy.zqpm.ir"
+    port: 20727
+    uuid: "1804c56d-3302-4d9b-917c-ef5f2e0b00e8"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yahoo.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "PF8LdirtBEOQ_w9-1-i3mhgeFYbIQ1iOu1FPCfxUHQo"
+      short-id: "2efbb0033df59520"
   - name: "***🐦🔥***-@SPEEDS_VPN`-1"
     type: "vless"
     server: "ir-www-germani1.khabarkamkwww.fun"
@@ -1307,7 +1264,19 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 271ms | VLESS"
+  - name: "@filembad`-3"
+    type: "vless"
+    server: "ov-germany1.09vpn.com"
+    port: 80
+    uuid: "18535741-e8b3-4b43-9348-785b55936751"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/vless/"
+      headers:
+        Host: "ov-germany1.09vpn.com"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 231ms | VLESS"
     type: "vless"
     server: "47.251.25.74"
     port: 443
@@ -1320,7 +1289,7 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "H56cOJhw0xw76lDEpt7IuJJmVGemK6_CK34KtHwDMX8"
-  - name: "@filembad`-2"
+  - name: "47.251.25.74"
     type: "vless"
     server: "47.251.25.74"
     port: 443
@@ -1340,7 +1309,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "🇩🇪203061 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "91.98.202.214"
     type: "vless"
     server: "91.98.202.214"
     port: 1373
@@ -1348,48 +1317,105 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 193ms | VLESS"
+  - name: "89.167.17.75"
     type: "vless"
-    server: "195.211.98.43"
+    server: "89.167.17.75"
     port: 443
-    uuid: "1b4b11d5-4c2d-4533-9a55-636757cdee94"
+    uuid: "19773cc6-89a3-47c6-bc10-885460cd2b7b"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "45.198.96.210"
+    type: "vless"
+    server: "45.198.96.210"
+    port: 443
+    uuid: "19b64e79-73b4-4478-bbfc-fb57737b94f8"
     udp: true
     tls: true
     network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "random"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "xPnpkXu5qfwIArlHKvJsqKJnGdGbJK1tT2GzWMyLohA"
-      short-id: "9c56fddf237e8eaf"
-  - name: "🌟 @MTproxy22_v2ray"
-    type: "vless"
-    server: "195.211.98.43"
-    port: 443
-    uuid: "1b4b11d5-4c2d-4533-9a55-636757cdee94"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
+    servername: "storage.yandex.net"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "xPnpkXu5qfwIArlHKvJsqKJnGdGbJK1tT2GzWMyLohA"
-      short-id: "9c56fddf237e8eaf"
-  - name: "@v2ray_free_config_iran | 🇮🇷 80ms | VLESS"
+      public-key: "9Y-_jCI3Z1x6SXK2tHdZ6V1CN9IJPNPnoxSW0cbXxD8"
+      short-id: "764f497dda21c4fc"
+  - name: "🇦🇺203552 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
-    server: "45.132.176.176"
+    server: "103.18.49.100"
     port: 443
-    uuid: "1b7ee703-fa08-4305-8469-ae3e30e61e44"
+    uuid: "1a5b24bc-6180-4fa7-922d-ba7ee8a7a2b7"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "support.zoom.us.cyylr.eu.cc"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/id-pusat"
+      headers:
+        Host: "support.zoom.us.cyylr.eu.cc"
+  - name: "167.233.182.218"
+    type: "vless"
+    server: "167.233.182.218"
+    port: 80
+    uuid: "1a64c956-522f-44ea-8e7e-f4a909a40ec5"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+  - name: "178.172.227.124"
+    type: "vless"
+    server: "178.172.227.124"
+    port: 14430
+    uuid: "1af36694-b548-4b18-89a0-bc076eab4ed7"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/vless"
+      headers:
+        Host: "178.172.227.124"
+  - name: "94.249.195.31"
+    type: "vless"
+    server: "94.249.195.31"
+    port: 43000
+    uuid: "1b3b5bc6-cbd4-4bd4-8b98-a4a742d2186b"
     udp: true
     tls: true
     network: "tcp"
-    servername: "sisipisi.yandex-api.com"
+    client-fingerprint: "firefox"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "_qSbW4JL4Ffqvj25vX-6a2ul9Qlj6PBdlF0ghsf_0RQ"
-      short-id: "a9dc98a7dc87a7dc"
-  - name: "@IranProxyPlus`-12"
+      public-key: "zOu3OvSP0TQgIrk_2gFh4UKH5KSKHbmgY_w6R94v5Ew"
+      short-id: "815e6c09"
+  - name: "@filembad`-4"
+    type: "vless"
+    server: "94.249.195.31"
+    port: 43000
+    uuid: "1b3b5bc6-cbd4-4bd4-8b98-a4a742d2186b"
+    udp: true
+    tls: true
+    network: "tcp"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "zOu3OvSP0TQgIrk_2gFh4UKH5KSKHbmgY_w6R94v5Ew"
+      short-id: "815e6c09"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 183ms | VLESS"
+    type: "vless"
+    server: "195.211.98.43"
+    port: 443
+    uuid: "1b4b11d5-4c2d-4533-9a55-636757cdee94"
+    udp: true
+    tls: true
+    network: "raw"
+    servername: "www.cloudflare.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "xPnpkXu5qfwIArlHKvJsqKJnGdGbJK1tT2GzWMyLohA"
+      short-id: "9c56fddf237e8eaf"
+  - name: "@IranProxyPlus`-11"
     type: "vless"
     server: "fi2.vitok.cc"
     port: 443
@@ -1402,6 +1428,21 @@ proxies:
     reality-opts:
       public-key: "3LUIM_6cYceTgNt6LWnR8YSVrenpLsh-FIGDrmfjjwc"
       short-id: "5e841fab"
+  - name: "82.202.183.9"
+    type: "vless"
+    server: "82.202.183.9"
+    port: 443
+    uuid: "1ba0439d-384c-4a6e-9560-0439698beb2a"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "h4.smart-life.agency"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "1A9loATtqTbKfErpj24clMebWdbmBRDgUIADwtlvtAw"
+      short-id: "70c20a2f5a7d542e"
+    grpc-opts:
+      grpc-service-name: "google.storage.v2.Storage"
   - name: "***🐦🔥***-@SPEEDS_VPN`-3"
     type: "vless"
     server: "194.60.228.73"
@@ -1410,80 +1451,47 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "72.56.38.83"
+  - name: "206.206.76.75"
     type: "vless"
-    server: "72.56.38.83"
+    server: "206.206.76.75"
     port: 443
-    uuid: "1e2b9c0c-4f9b-56f5-a062-1c4f2d2aa200"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "absolute-disaster.org"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "ZzIetLcQtENjIXQ9XZqFo8p3J81p8Emj0wi51Uy07n8"
-  - name: "13.140.80.133"
-    type: "vless"
-    server: "13.140.80.133"
-    port: 29178
-    uuid: "1f2f1d33-b861-4639-b483-9ebbab2f25fa"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "13.140.80.133"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-      - "http/1.1"
-  - name: "13.140.80.133-1"
-    type: "vless"
-    server: "13.140.80.133"
-    port: 35908
-    uuid: "1f2f1d33-b861-4639-b483-9ebbab2f25fa"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "android.clients.google.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "nWaLkX9LTCdxeDFUWKNefx2gMtEk0Tmo0CeAcCtyKW0"
-      short-id: "b69518"
-  - name: "13.140.80.133-2"
-    type: "vless"
-    server: "13.140.80.133"
-    port: 37602
-    uuid: "1f2f1d33-b861-4639-b483-9ebbab2f25fa"
-    udp: true
-    tls: false
-    network: "tcp"
-  - name: "13.140.80.133-3"
-    type: "vless"
-    server: "13.140.80.133"
-    port: 44152
-    uuid: "1f2f1d33-b861-4639-b483-9ebbab2f25fa"
+    uuid: "1e3d3634-36ac-43ac-a439-9665d885238f"
     udp: true
     tls: true
     network: "tcp"
     servername: "www.cloudflare.com"
     client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "XprhtKYpHARD25PIMNC2rwRaXlnKLFt8FQghdKL18WY"
-      short-id: "d8b9"
-  - name: "🇺🇸202416 | ⚡️Telegram = t.me/SOSkeyNET"
+      public-key: "TqIFzUEEI1pIOR8BEpkNKEXcJ6cPfE5EzHb5joIivig"
+      short-id: "9930177816ab09da"
+  - name: "hikvision-plus.com"
     type: "vless"
-    server: "185.95.231.156"
+    server: "hikvision-plus.com"
+    port: 2052
+    uuid: "1f61ccc1-cd38-49cd-97aa-a71771433976"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "api-v1"
+      headers:
+        Host: "uwu.blueknightnet.qzz.io"
+  - name: "195.254.165.243"
+    type: "vless"
+    server: "195.254.165.243"
     port: 443
-    uuid: "1f8cf47a-b66a-4916-979f-26edfcf44eea"
+    uuid: "1f6531a1-a6eb-4274-9f51-4a0899456fcf"
     udp: true
     tls: true
     network: "tcp"
-    servername: "www.apple.com"
-    client-fingerprint: "firefox"
+    servername: "play.google.com"
+    client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "8eXftARun6KH38UZhuqIfPR1VF2DLS9RMBZEnF5k6To"
-      short-id: "a3a578ab"
-  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 231ms | VLESS"
+      public-key: "zSjG6wndmLAzE8ykCBXpAm2eh0viWVSy3gt2juXF4EE"
+      short-id: "eaa8"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 214ms | VLESS"
     type: "vless"
     server: "185.95.231.156"
     port: 443
@@ -1497,7 +1505,7 @@ proxies:
     reality-opts:
       public-key: "8eXftARun6KH38UZhuqIfPR1VF2DLS9RMBZEnF5k6To"
       short-id: "a3a578ab"
-  - name: "185.168.208.190"
+  - name: "@filembad`-5"
     type: "vless"
     server: "185.168.208.190"
     port: 47443
@@ -1506,12 +1514,26 @@ proxies:
     tls: true
     network: "tcp"
     servername: "us-1.waspguard.ru"
-    client-fingerprint: "firefox"
+    client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "hz7rzdHvTAVwfy48pa6313yBF-sV7V0svvPVnl95bgY"
       short-id: "ae97246a8f799854"
-  - name: "@filembad`-3"
+  - name: "@filembad`-6"
+    type: "vless"
+    server: "185.168.208.190"
+    port: 47443
+    uuid: "1fe01c8a-ab37-4e95-bbfc-95d4a608931e"
+    udp: true
+    tls: true
+    network: "raw"
+    servername: "us-1.waspguard.ru"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "hz7rzdHvTAVwfy48pa6313yBF-sV7V0svvPVnl95bgY"
+      short-id: "ae97246a8f799854"
+  - name: "@filembad`-7"
     type: "vless"
     server: "185.168.208.190"
     port: 47443
@@ -1525,7 +1547,48 @@ proxies:
     reality-opts:
       public-key: "hz7rzdHvTAVwfy48pa6313yBF-sV7V0svvPVnl95bgY"
       short-id: "ae97246a8f799854"
-  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 135ms | VLESS"
+  - name: "@filembad`-8"
+    type: "vless"
+    server: "185.168.208.190"
+    port: 47443
+    uuid: "1fe01c8a-ab37-4e95-bbfc-95d4a608931e"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "us-1.waspguard.ru"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "hz7rzdHvTAVwfy48pa6313yBF-sV7V0svvPVnl95bgY"
+      short-id: "ae97246a8f799854"
+  - name: "187.52.44.20"
+    type: "vless"
+    server: "187.52.44.20"
+    port: 47443
+    uuid: "1fe01c8a-ab37-4e95-bbfc-95d4a608931e"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "nl4.waspnest.space"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "g5am2VhZkx_xH2TSKfUU8OYLxAzFrmcszNQg8AbOenE"
+      short-id: "ae97223a8f799872"
+  - name: "👾33@oneclickvpnkeys"
+    type: "vless"
+    server: "187.52.44.20"
+    port: 47443
+    uuid: "1fe01c8a-ab37-4e95-bbfc-95d4a608931e"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "nl4.waspnest.space"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "g5am2VhZkx_xH2TSKfUU8OYLxAzFrmcszNQg8AbOenE"
+      short-id: "ae97223a8f799872"
+  - name: "95.56.251.12"
     type: "vless"
     server: "95.56.251.12"
     port: 47443
@@ -1534,12 +1597,11 @@ proxies:
     tls: true
     network: "tcp"
     servername: "kz1.waspnest.space"
-    client-fingerprint: "firefox"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "z1GSwCEACvO9RLcMVpcURiT8er4oeIdeSJhraw_0cGU"
       short-id: "ae97223a8f799877"
-  - name: "@IranProxyPlus`-13"
+  - name: "@IranProxyPlus`-12"
     type: "vless"
     server: "greb.loralden.com"
     port: 443
@@ -1566,6 +1628,45 @@ proxies:
     reality-opts:
       public-key: "k9srkQedwHsZGJP-R-GGwDOGok05gk23s8d4mtidMC4"
       short-id: "835391010667297d"
+  - name: "185.71.219.188"
+    type: "vless"
+    server: "185.71.219.188"
+    port: 443
+    uuid: "2107ea1e-26fb-4831-8c3f-fb190bea79f7"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇮🇷203557 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "89.42.196.92"
+    port: 1819
+    uuid: "212b2c89-b62d-4a21-bb80-747c3b30218a"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "WczyJ2T78CnXB9GT4mD3GdpWtWMrPYxsdlKw4yBMZxQ"
+      short-id: "e2df69a59b"
+  - name: "147.135.213.72"
+    type: "vless"
+    server: "147.135.213.72"
+    port: 20236
+    uuid: "2225ad93-b018-464c-8ec3-b33022668c80"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/vless-ws"
+  - name: "216.24.57.1"
+    type: "vless"
+    server: "216.24.57.1"
+    port: 2095
+    uuid: "226498aa-adf7-4077-a099-d44e8be694f8"
+    udp: true
+    tls: false
+    network: "httpupgrade"
   - name: "love.ns.cloudflare.com"
     type: "vless"
     server: "love.ns.cloudflare.com"
@@ -1577,6 +1678,18 @@ proxies:
     ws-opts:
       headers:
         Host: "sRv80.hAMiIbaR.CoM"
+  - name: "s2.zynetraq.ir"
+    type: "vless"
+    server: "s2.zynetraq.ir"
+    port: 2087
+    uuid: "22c6684b-cd4f-4c8e-62e3-a17fc698471f"
+    udp: true
+    tls: false
+    network: "tcp"
+    alpn:
+      - "h2"
+      - "http/1.1"
+      - "h3"
   - name: "***🌪***-@SPEEDS_VPN1`-1"
     type: "vless"
     server: "185.136.135.172"
@@ -1585,20 +1698,19 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "konglam.goodphilips.ir-1"
+  - name: "104.27.2.172"
     type: "vless"
-    server: "konglam.goodphilips.ir"
-    port: 443
-    uuid: "23daba1e-a056-4aba-b1a4-fdec9997039a"
+    server: "104.27.2.172"
+    port: 80
+    uuid: "234c52f2-0d7b-dc4a-0d6b-b0b300000025"
     udp: true
-    tls: true
-    network: "grpc"
-    servername: "amp-api-edge.apps.apple.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "x1K53K_cLlg8QvxQhDnfRvMkQbtWkdzKdmaeYCIo4Hc"
-      short-id: "e85705ad62739603"
-  - name: "@IranProxyPlus`-14"
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/sync"
+      headers:
+        Host: "billowing-surf-d251.netizo06.workers.dev"
+  - name: "@IranProxyPlus`-13"
     type: "vless"
     server: "188.114.97.6"
     port: 80
@@ -1609,7 +1721,7 @@ proxies:
     ws-opts:
       headers:
         Host: "free.simorgh.online"
-  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 142ms | VLESS"
+  - name: "@filembad`-9"
     type: "vless"
     server: "tr2.h1cloud.net"
     port: 25021
@@ -1623,6 +1735,17 @@ proxies:
     reality-opts:
       public-key: "od79bUkYtqQtsGrrTdhmkDflx5c9al4vqxwWApvc-Dg"
       short-id: "17fa3af0924c88b3"
+  - name: "@filembad`-10"
+    type: "vless"
+    server: "104.19.173.68"
+    port: 8080
+    uuid: "2500e602-671c-4654-a602-c518b7282167"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      headers:
+        Host: "2639w-throbbing-band-3840.xphnn6jp.workers.dev"
   - name: "***🐦🔥***-@SPEEDS_VPN`-4"
     type: "vless"
     server: "link.mizbanertebatfarda.site"
@@ -1650,7 +1773,21 @@ proxies:
       - "h2"
       - "http/1.1"
     flow: "xtls-rprx-vision"
-  - name: "51.38.127.93"
+  - name: "🇫🇮203564 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "2389eeb055f6.salzivo.ir"
+    port: 8080
+    uuid: "25c01338-44fd-4cd7-9256-bfced738f0e3"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "support.jivqor.ir"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "5M8dZvtIjvmCHyXhJRtoZXzv7ofTQrsZUDKHfo6QByc"
+      short-id: "78c6a5b4"
+  - name: "🇩🇪202969 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "51.38.127.93"
     port: 8080
@@ -1664,6 +1801,37 @@ proxies:
     reality-opts:
       public-key: "vKnJBC8MN4hGDqu7_C6luBwjVnhq9Wjb6BWkuK_8_z0"
       short-id: "dee5ab9e"
+  - name: "S1"
+    type: "vless"
+    server: "xray2-direct-mci1-fs-ce.freesocks.work"
+    port: 443
+    uuid: "266154bf-22e8-41a6-9571-d9f6aa3cd96c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "dl.google.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "7j3hmlHrEDk3Kjx-dFG3E3jf0c6PZF45trIPFsuKWmI"
+  - name: "xray2-direct-mci1-fs-ce.freesocks.work"
+    type: "vless"
+    server: "xray2-direct-mci1-fs-ce.freesocks.work"
+    port: 443
+    uuid: "266154bf-22e8-41a6-9571-d9f6aa3cd96c"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "@filembad`-11"
+    type: "vless"
+    server: "104.225.155.57"
+    port: 25555
+    uuid: "27c5483f-17f4-48ae-9a04-def53d88440d"
+    udp: true
+    tls: false
+    network: "ws"
+    servername: "104.225.155.57"
+    client-fingerprint: "chrome"
   - name: "***🌪***-@SPEEDS_VPN1"
     type: "vless"
     server: "s3.tomandjery.eu"
@@ -1690,47 +1858,7 @@ proxies:
     reality-opts:
       public-key: "3LRzcL17BaZqZ-I7kZ6HtRGPPhxAubqCprP_USHd_g4"
       short-id: "6ba85179e30d4fc2"
-  - name: "🇭🇰202420 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "66.90.115.125"
-    port: 2093
-    uuid: "28d7a636-fd0b-489e-bf99-baa5b1bf9f15"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.apple.com"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "C_GA8wVjeLmyqLK6em5OHn4WPlsbndA-RyvyNU1aGFM"
-      short-id: "8a9725533854a7e8"
-  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 354ms | VLESS"
-    type: "vless"
-    server: "46.137.202.178"
-    port: 12512
-    uuid: "2a6c617d-98e4-49c3-95ab-76f02fcf0150"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.intel.com"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "sO0RBMr_l8TLtZaYBX8n3NdI9AtaugUqJpCR1szNsyA"
-      short-id: "e692a8250d2e2fd0"
-  - name: "au5.pad-sservice.lat"
-    type: "vless"
-    server: "au5.pad-sservice.lat"
-    port: 8443
-    uuid: "2b0e5676-fb62-4bf0-9607-6e7818421e8e"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "au5.pad-sservice.lat"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/AU5W"
-  - name: "104.16.7.70"
+  - name: "🇨🇦202886 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "104.16.7.70"
     port: 2095
@@ -1742,20 +1870,7 @@ proxies:
       path: "/XnXnXnXnXnXnXnXnXnXnXnXnXnXnXnXnXnXnXnXnXnXnXnXnXnXnXnXn?ed=2560"
       headers:
         Host: "sni.111000.dynv6.azazilvpn.sbs"
-  - name: "78.159.246.179"
-    type: "vless"
-    server: "78.159.246.179"
-    port: 8443
-    uuid: "2c634977-584e-4e1f-b501-1b70c77a6743"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "randomquaint.net"
-    client-fingerprint: "firefox"
-    alpn:
-      - "h2"
-      - "http/1.1"
-  - name: "78.159.246.85"
+  - name: "🇳🇱202873 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "78.159.246.85"
     port: 2053
@@ -1768,87 +1883,29 @@ proxies:
     alpn:
       - "h2"
       - "http/1.1"
-  - name: "140.248.185.253"
+  - name: "199.232.20.113"
     type: "vless"
-    server: "140.248.185.253"
+    server: "199.232.20.113"
     port: 443
     uuid: "2c665ae0-9611-4a12-83e1-47a3ce9468b5"
     udp: true
     tls: true
     network: "xhttp"
-    servername: "cdn.akamai.steamstatic.com"
-    client-fingerprint: "firefox"
-  - name: "146.75.56.210"
-    type: "vless"
-    server: "146.75.56.210"
-    port: 443
-    uuid: "2c665ae0-9611-4a12-83e1-47a3ce9468b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "cdn.akamai.steamstatic.com"
-    client-fingerprint: "firefox"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "Rastgubash-tarast-shi.global.ssl.fastly.net"
-  - name: "146.75.57.238"
-    type: "vless"
-    server: "146.75.57.238"
-    port: 443
-    uuid: "2c665ae0-9611-4a12-83e1-47a3ce9468b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "cdn.akamai.steamstatic.com"
-    client-fingerprint: "firefox"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "azadi-gk-nasim.global.ssl.fastly.net"
-  - name: "146.75.59.186"
-    type: "vless"
-    server: "146.75.59.186"
-    port: 443
-    uuid: "2c665ae0-9611-4a12-83e1-47a3ce9468b5"
-    udp: true
-    tls: true
-    network: "ws"
     servername: "www.firefox.com"
-    client-fingerprint: "firefox"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "takidopower-point.global.ssl.fastly.net"
-  - name: "199.232.129.192"
+    client-fingerprint: "safari"
+  - name: "web-tomcat.pages.dev"
     type: "vless"
-    server: "199.232.129.192"
+    server: "web-tomcat.pages.dev"
     port: 443
-    uuid: "2c665ae0-9611-4a12-83e1-47a3ce9468b5"
+    uuid: "2cf94f4d-9d5b-49ca-81a3-ddc0529a2dac"
     udp: true
     tls: true
     network: "ws"
-    servername: "www.firefox.com"
-    client-fingerprint: "firefox"
+    servername: "web-tomcat.pages.dev"
+    client-fingerprint: "chrome"
     ws-opts:
       path: "/"
-      headers:
-        Host: "xmit-pakari-nanistam.global.ssl.fastly.net"
-  - name: "199.232.246.236"
-    type: "vless"
-    server: "199.232.246.236"
-    port: 443
-    uuid: "2c665ae0-9611-4a12-83e1-47a3ce9468b5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "cdn.akamai.steamstatic.com"
-    client-fingerprint: "firefox"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "trfas-mohamdrogh-paki.global.ssl.fastly.net"
-  - name: "@IranProxyPlus`-15"
+  - name: "@IranProxyPlus`-14"
     type: "vless"
     server: "45.130.125.194"
     port: 8443
@@ -1861,21 +1918,7 @@ proxies:
     alpn:
       - "h3"
       - "h2"
-  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 177ms | VLESS"
-    type: "vless"
-    server: "6.bmi.ir.asopardaz.ir"
-    port: 8443
-    uuid: "2da85937-93d9-4509-8491-63b1921cf447"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "hostgator.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "JtA0d5K6Jnmg35oWP9SDOsc1ceuqaxOsNg33fiPHJQs"
-      short-id: "e915"
-  - name: "89.42.196.237"
+  - name: "@flyv2ray"
     type: "vless"
     server: "89.42.196.237"
     port: 2030
@@ -1888,33 +1931,20 @@ proxies:
     reality-opts:
       public-key: "3mA0RBw4RFVbXJN3RbtA4U0TsaD4EtVELLyQ9K8xww8"
       short-id: "135ce189ff681b18"
-  - name: "@filembad`-4"
+  - name: "🇺🇸203562 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
-    server: "docs.asasin4.ir"
-    port: 30940
-    uuid: "2eb8223c-1392-4e4a-ad75-d61a88e1b490"
+    server: "23.191.200.207"
+    port: 443
+    uuid: "2efb2403-a285-424e-933e-2aae2a9d4bc6"
     udp: true
     tls: true
     network: "tcp"
     servername: "dl.google.com"
-    client-fingerprint: "random"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "pu8u1rdI0UHQfAppyMwbKmKQjTIS0HXmGNUG3UzEdy0"
-      short-id: "d9cc6f4a"
-  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 100ms | VLESS"
-    type: "vless"
-    server: "gr.edge-cache.davzura.ir"
-    port: 8887
-    uuid: "2f358bd2-f55b-4735-aeae-2a6f4eea4880"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "nytimes.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "B0q7cY2yDjgCheCSdnydRAimkLbNwZAX28yFTXWOVgk"
-      short-id: "9262c6710896560f"
-  - name: "static.melzumo.ir"
+      public-key: "7j3hmlHrEDk3Kjx-dFG3E3jf0c6PZF45trIPFsuKWmI"
+  - name: "🇮🇷202865 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "static.melzumo.ir"
     port: 444
@@ -1928,21 +1958,21 @@ proxies:
     reality-opts:
       public-key: "TCiH-81qivOC6XSb54cdXEWWALuXFMcT7B38vHzuEX4"
       short-id: "586b3940a7d5c987"
-  - name: "150.40.126.19"
+  - name: "150.40.126.22"
     type: "vless"
-    server: "150.40.126.19"
+    server: "150.40.126.22"
     port: 443
     uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
     udp: true
     tls: true
     network: "grpc"
-    servername: "rs2.univesalsrv.com"
+    servername: "rs4.univesalsrv.com"
     client-fingerprint: "firefox"
     reality-opts:
-      public-key: "tL16MVY08r-7YDXb1_gxuBBWInpSFp97ZLJ_ax3R2iE"
-      short-id: "1469af2040b7c323"
+      public-key: "sXsJ4ET-50TYqlhKZf03nPQr2JIy1F0D4m6lOsI0cAs"
+      short-id: "861ac7d66953e55f"
     grpc-opts:
-      grpc-service-name: "media.v1.ObjectService"
+      grpc-service-name: "media.v1.StreamService"
   - name: "Tel@MARAMBASHI 🇨🇦"
     type: "vless"
     server: "150.40.126.24"
@@ -1988,6 +2018,51 @@ proxies:
       short-id: "51f45d4fd58cc319"
     grpc-opts:
       grpc-service-name: "cloud.v1.RelayService"
+  - name: "45.9.156.42"
+    type: "vless"
+    server: "45.9.156.42"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "bg5.univesalsrv.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "RDWvDEygSk1eyAQhIK95H9EteFbrS2d9JEjBrco54Bw"
+      short-id: "1a3102bb8e51399e"
+    grpc-opts:
+      grpc-service-name: "gw.v2.RelayService"
+  - name: "@filembad`-12"
+    type: "vless"
+    server: "89.35.14.30"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "md1.univesalsrv.com"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "xWejOQUn2koOUorUPSrHMLM-lyHlZ441KzxKc9bLmkY"
+      short-id: "221ba6174224ca5b"
+    grpc-opts:
+      grpc-service-name: "hub.v1.RelayService"
+  - name: "🇲🇩203555 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "89.35.14.31"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "md2.univesalsrv.com"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "JXFsWHYjhAcR-7yz9tuCTMdcfuiyC9a-C9ewA55Z63o"
+      short-id: "d36a38659ce106cb"
+    grpc-opts:
+      grpc-service-name: "hub.v1.SyncService"
   - name: "Tel@MARAMBASHI 🇨🇦-1"
     type: "vless"
     server: "89.35.14.34"
@@ -2003,7 +2078,22 @@ proxies:
       short-id: "aa9884f2982b7d3c"
     grpc-opts:
       grpc-service-name: "app.v1.PushService"
-  - name: "@filembad`-5"
+  - name: "bg4.univesalsrv.com"
+    type: "vless"
+    server: "bg4.univesalsrv.com"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "bg4.univesalsrv.com"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "k-vH6pkyAv26L1_dXKOFhp0Kesur9-FCUDoj-IIpVhc"
+      short-id: "51f45d4fd58cc319"
+    grpc-opts:
+      grpc-service-name: "cloud.v1.RelayService"
+  - name: "@filembad`-13"
     type: "vless"
     server: "bg5.univesalsrv.com"
     port: 443
@@ -2017,22 +2107,65 @@ proxies:
       short-id: "1a3102bb8e51399e"
     grpc-opts:
       grpc-service-name: "gw.v2.RelayService"
-  - name: "bg5.univesalsrv.com"
+  - name: "md5.univesalsrv.com"
     type: "vless"
-    server: "bg5.univesalsrv.com"
+    server: "md5.univesalsrv.com"
     port: 443
     uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
     udp: true
     tls: true
     network: "grpc"
-    servername: "bg5.univesalsrv.com"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "99MRki6b93wC-hhDHe9yq3IXE3KtPGw4RkFAnpI-8gg"
+      short-id: "aa9884f2982b7d3c"
+    grpc-opts:
+      grpc-service-name: "app.v1.PushService"
+  - name: "rs1.univesalsrv.com"
+    type: "vless"
+    server: "rs1.univesalsrv.com"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "rs1.univesalsrv.com"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "upIzyaSbVz2ZK6KfGtXmPl_-sCwn8XLDyFDH5CsL9iY"
+      short-id: "ed0cd5cc2e26e6e7"
+    grpc-opts:
+      grpc-service-name: "node.v2.ObjectService"
+  - name: "rs2.univesalsrv.com"
+    type: "vless"
+    server: "rs2.univesalsrv.com"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
     client-fingerprint: "chrome"
     reality-opts:
-      public-key: "RDWvDEygSk1eyAQhIK95H9EteFbrS2d9JEjBrco54Bw"
-      short-id: "1a3102bb8e51399e"
+      public-key: "tL16MVY08r-7YDXb1_gxuBBWInpSFp97ZLJ_ax3R2iE"
+      short-id: "1469af2040b7c323"
     grpc-opts:
-      grpc-service-name: "gw.v2.RelayService"
-  - name: "@filembad`-6"
+      grpc-service-name: "media.v1.ObjectService"
+  - name: "rs3.univesalsrv.com"
+    type: "vless"
+    server: "rs3.univesalsrv.com"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "rs3.univesalsrv.com"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "gHDoSWGWMVZKWNKONWHw-Cpl0-bdI6GaKusgJIQ-vWQ"
+      short-id: "35d05b666e2c6cdf"
+    grpc-opts:
+      grpc-service-name: "edge.v2.FeedService"
+  - name: "🇷🇸203553 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "rs4.univesalsrv.com"
     port: 443
@@ -2047,7 +2180,7 @@ proxies:
       short-id: "861ac7d66953e55f"
     grpc-opts:
       grpc-service-name: "media.v1.StreamService"
-  - name: "@IranProxyPlus`-16"
+  - name: "@IranProxyPlus`-15"
     type: "vless"
     server: "193.233.23.196"
     port: 26048
@@ -2055,6 +2188,45 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
+  - name: "46.29.255.123"
+    type: "vless"
+    server: "46.29.255.123"
+    port: 59539
+    uuid: "30572b57-f5ab-4eb8-82d4-a24d399b99f6"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cloudflare-dns.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "R6mPqCsjZMWauci4LHw7Qp1LGKmBd-sxMXplyOn9bSQ"
+  - name: "94.249.187.43"
+    type: "vless"
+    server: "94.249.187.43"
+    port: 43000
+    uuid: "30b08c3d-f208-4993-91c9-af86a5f4a2f0"
+    udp: true
+    tls: true
+    network: "tcp"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "cVy14rseOu0oTTXUjxSTcedkkxEJfH9XCdxFW3fT92k"
+      short-id: "6fa3822e"
+  - name: "docs.asasin4.ir"
+    type: "vless"
+    server: "docs.asasin4.ir"
+    port: 30940
+    uuid: "30dc547e-d790-46b9-999b-9600324aba1a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "dl.google.com"
+    client-fingerprint: "random"
+    reality-opts:
+      public-key: "pu8u1rdI0UHQfAppyMwbKmKQjTIS0HXmGNUG3UzEdy0"
+      short-id: "d9cc6f4a"
   - name: "***🐦🔥***-@SPEEDS_VPN`-5"
     type: "vless"
     server: "94.183.172.26"
@@ -2075,20 +2247,7 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "MN2XIVlIusdWaGwyyrGZ7Ti3jzqjDlpMmc12WcrV1nU"
-  - name: "🇯🇵202486 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "155.248.166.225"
-    port: 8443
-    uuid: "3305c285-8d55-4f52-a3b0-2a582f5ffd59"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "sdwf-amq.pages.dev"
-    ws-opts:
-      path: "/?ed=2048"
-      headers:
-        Host: "sdwf-amq.pages.dev"
-  - name: "@IranProxyPlus`-17"
+  - name: "@IranProxyPlus`-16"
     type: "vless"
     server: "167.172.108.83"
     port: 8443
@@ -2102,34 +2261,20 @@ proxies:
     reality-opts:
       public-key: "W1WyujNVPZxiopd9Kpz6fPnWeAxvqvBISoviFDZElGc"
       short-id: "07e7652d"
-  - name: "🇨🇦202464 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "213.108.198.158"
     type: "vless"
-    server: "104.18.47.140"
-    port: 2096
-    uuid: "341832cc-ba98-425b-8225-b3db621a0da3"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "rainfall0705.cc.cd"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "rainfall0705.cc.cd"
-  - name: "🇺🇸202445 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "23.95.222.127"
-    port: 8443
-    uuid: "352ff568-f971-4613-bf48-92997a5d44ed"
+    server: "213.108.198.158"
+    port: 8442
+    uuid: "35352039-3820-4532-a031-303120313030"
     udp: true
     tls: true
     network: "tcp"
-    servername: "www.apple.com"
-    client-fingerprint: "firefox"
+    servername: "creativecommons.org"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "ribQDOlZ69PzvZ1EDF0EcmMvbq_T5RQrVRBSGUU2riU"
-      short-id: "35cd899f8de04801"
-  - name: "fl.privatevip.ir"
+      public-key: "pFRfJJDY6TYJq-OVgAqFXhdaeur7gJWJM-RZT8g8yAA"
+      short-id: "59b75803"
+  - name: "🇸🇬202910 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "fl.privatevip.ir"
     port: 27039
@@ -2137,32 +2282,18 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "@v2ray_free_config_iran | 🇮🇷 96ms | VLESS"
+  - name: "104.20.61.103"
     type: "vless"
-    server: "157.90.175.178"
-    port: 1222
-    uuid: "36c3dcc2-17b6-4478-b8a7-3978e6d5afe9"
+    server: "104.20.61.103"
+    port: 2083
+    uuid: "36592d47-b9f5-4e8f-949e-45ac05472aab"
     udp: true
     tls: true
-    network: "tcp"
-    servername: "play.google.com"
-    client-fingerprint: "firefox"
-    reality-opts:
-      public-key: "zpLKK8HuwXJDH9D0O3t5Z_tO3ajkj7VRtXdr6UGy1zE"
-      short-id: "a25d0f"
-  - name: "🇩🇪202423 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "157.90.175.178"
-    port: 2112
-    uuid: "36c3dcc2-17b6-4478-b8a7-3978e6d5afe9"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "play.google.com"
-    client-fingerprint: "firefox"
-    reality-opts:
-      public-key: "p8pUe3hwND5rhAti-yRQ5qMaIkNdhxOV1K1jpbtJlEQ"
-      short-id: "125ba3"
+    network: "ws"
+    servername: "site.check-looks.space"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
   - name: "23.81.36.148"
     type: "vless"
     server: "23.81.36.148"
@@ -2173,49 +2304,67 @@ proxies:
     network: "tcp"
     reality-opts:
       public-key: "zpLKK8HuwXJDH9D0O3t5Z_tO3ajkj7VRtXdr6UGy1zE"
-  - name: "🇳🇱202441 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "91.99.171.12"
     type: "vless"
-    server: "213.152.165.202"
-    port: 2094
-    uuid: "372af4ce-2153-4061-822c-b657172308f6"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.apple.com"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "jHtC6ayzhkd_GVNF5TIGPu9iVpqUltBAQj1dpGJHwxs"
-      short-id: "55986a94e2228791"
-  - name: "@Vpn_Tehran 🩵 کانال تلگرام"
-    type: "vless"
-    server: "94.228.167.12"
+    server: "91.99.171.12"
     port: 443
-    uuid: "37ca5f34-2531-4fda-a781-20f3845fea88"
+    uuid: "36ee3f5a-3816-4c03-a324-47531167e53b"
     udp: true
-    tls: true
+    tls: false
     network: "tcp"
-    servername: "washingphonicseatable.solsticedigest.me"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "dCaQHVtwEPBeiH3ivVU9ycGJZ8uCO2JaIVjYBnfaTWY"
-      short-id: "c13c9bd7bd45847d"
-  - name: "213.152.180.55-1"
+  - name: "193.148.253.194"
     type: "vless"
-    server: "213.152.180.55"
-    port: 2089
-    uuid: "38d3d211-cc9f-491a-a8ab-9a5be57bb712"
+    server: "193.148.253.194"
+    port: 25362
+    uuid: "36fb6650-8a50-42b5-9f66-06538806f32c"
     udp: true
     tls: true
     network: "tcp"
-    servername: "www.apple.com"
+    servername: "www.chip.de"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "hFee7zTreqlv_wccK_8zxN5v23hj9u-DshByvGf-KAA"
+      short-id: "23732d14a527990d"
+  - name: "@filembad`-14"
+    type: "vless"
+    server: "94.249.187.88"
+    port: 43000
+    uuid: "390c7bd2-d83c-49b6-a6d5-c454583bbb2d"
+    udp: true
+    tls: true
+    network: "tcp"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "oRmj7gTi5H2oIClNYxxgOjqp8-j5kFYtGFU8CNuMj34"
-      short-id: "deccc6fac1ddb0ff"
-  - name: "@IranProxyPlus`-18"
+      public-key: "r710c3Is-baifKzevzR4GKPnWOdolchLdP1NoOOtK2A"
+      short-id: "ecef9d30"
+  - name: "94.249.187.88"
+    type: "vless"
+    server: "94.249.187.88"
+    port: 43000
+    uuid: "390c7bd2-d83c-49b6-a6d5-c454583bbb2d"
+    udp: true
+    tls: true
+    network: "tcp"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "r710c3Is-baifKzevzR4GKPnWOdolchLdP1NoOOtK2A"
+      short-id: "ecef9d30"
+  - name: "@filembad`-15"
+    type: "vless"
+    server: "195.26.26.56"
+    port: 443
+    uuid: "3932510d-f490-4c6e-8bd4-73757ae9490a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.sony.co.in"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "ebu4fMRt44lcyq5jaBuHTyay54XscBWrNyyzCXjOTF4"
+      short-id: "54c4c369aa76f802"
+  - name: "@IranProxyPlus`-17"
     type: "vless"
     server: "152.233.35.228"
     port: 8443
@@ -2224,33 +2373,15 @@ proxies:
     tls: true
     network: "tcp"
     servername: "de1.fromblancwithlove.com"
-  - name: "app.wingerdt.com"
+  - name: "jp.sofast.live"
     type: "vless"
-    server: "app.wingerdt.com"
-    port: 18191
-    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
+    server: "jp.sofast.live"
+    port: 52683
+    uuid: "399b6b23-cc40-4831-a494-61948e2df133"
     udp: true
-    tls: true
+    tls: false
     network: "tcp"
-    servername: "www.aparat.com"
-    client-fingerprint: "ios"
-    reality-opts:
-      public-key: "W_0O5fiA1zi8nXHksSKSTLzwLPyjECWNES5-gDAbQRY"
-      short-id: "197fe3f584bc15f3"
-  - name: "dashboard.wingerdt.com"
-    type: "vless"
-    server: "dashboard.wingerdt.com"
-    port: 11147
-    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.aparat.com"
-    client-fingerprint: "ios"
-    reality-opts:
-      public-key: "W_0O5fiA1zi8nXHksSKSTLzwLPyjECWNES5-gDAbQRY"
-      short-id: "197fe3f584bc15f3"
-  - name: "@filembad`-7"
+  - name: "@filembad`-16"
     type: "vless"
     server: "fqwra.dtgitar.com"
     port: 20201
@@ -2262,72 +2393,7 @@ proxies:
       path: "/"
       headers:
         Host: "play.google.com"
-  - name: "iugbnm.varqino.ir"
-    type: "vless"
-    server: "iugbnm.varqino.ir"
-    port: 29572
-    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "play.google.com"
-    client-fingerprint: "ios"
-    reality-opts:
-      public-key: "W_0O5fiA1zi8nXHksSKSTLzwLPyjECWNES5-gDAbQRY"
-      short-id: "197fe3f584bc15f3"
-  - name: "nzidam.zelmuro.ir"
-    type: "vless"
-    server: "nzidam.zelmuro.ir"
-    port: 437
-    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "play.google.com"
-    client-fingerprint: "ios"
-    reality-opts:
-      public-key: "W_0O5fiA1zi8nXHksSKSTLzwLPyjECWNES5-gDAbQRY"
-      short-id: "197fe3f584bc15f3"
-  - name: "odinnda.hospitaldt.ir"
-    type: "vless"
-    server: "odinnda.hospitaldt.ir"
-    port: 5273
-    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.aparat.com"
-    client-fingerprint: "ios"
-    reality-opts:
-      public-key: "W_0O5fiA1zi8nXHksSKSTLzwLPyjECWNES5-gDAbQRY"
-      short-id: "197fe3f584bc15f3"
-  - name: "opiugjk.nationalldt.com"
-    type: "vless"
-    server: "opiugjk.nationalldt.com"
-    port: 45785
-    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "play.google.com"
-    client-fingerprint: "edge"
-    reality-opts:
-      public-key: "W_0O5fiA1zi8nXHksSKSTLzwLPyjECWNES5-gDAbQRY"
-      short-id: "197fe3f584bc15f3"
-  - name: "orovxe.varqino.ir"
-    type: "vless"
-    server: "orovxe.varqino.ir"
-    port: 20891
-    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "play.google.com"
-    client-fingerprint: "ios"
-    reality-opts:
-      public-key: "W_0O5fiA1zi8nXHksSKSTLzwLPyjECWNES5-gDAbQRY"
-      short-id: "197fe3f584bc15f3"
-  - name: "playaudio.zelmuro.ir"
+  - name: "@filembad`-17"
     type: "vless"
     server: "playaudio.zelmuro.ir"
     port: 26183
@@ -2340,40 +2406,6 @@ proxies:
     reality-opts:
       public-key: "W_0O5fiA1zi8nXHksSKSTLzwLPyjECWNES5-gDAbQRY"
       short-id: "197fe3f584bc15f3"
-  - name: "qtavbvc.varqino.ir"
-    type: "vless"
-    server: "qtavbvc.varqino.ir"
-    port: 52764
-    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "play.google.com"
-    client-fingerprint: "ios"
-    reality-opts:
-      public-key: "W_0O5fiA1zi8nXHksSKSTLzwLPyjECWNES5-gDAbQRY"
-      short-id: "197fe3f584bc15f3"
-  - name: "rurbsnd.zelmuro.ir"
-    type: "vless"
-    server: "rurbsnd.zelmuro.ir"
-    port: 19238
-    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "play.google.com"
-    client-fingerprint: "ios"
-    reality-opts:
-      public-key: "W_0O5fiA1zi8nXHksSKSTLzwLPyjECWNES5-gDAbQRY"
-      short-id: "197fe3f584bc15f3"
-  - name: "torwe.dtgitar.com"
-    type: "vless"
-    server: "torwe.dtgitar.com"
-    port: 6055
-    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
-    udp: true
-    tls: false
-    network: "tcp"
   - name: "uogtyf.speedtrade.top"
     type: "vless"
     server: "uogtyf.speedtrade.top"
@@ -2387,36 +2419,7 @@ proxies:
     reality-opts:
       public-key: "W_0O5fiA1zi8nXHksSKSTLzwLPyjECWNES5-gDAbQRY"
       short-id: "197fe3f584bc15f3"
-  - name: "uyrsdfdfxg.zelmuro.ir"
-    type: "vless"
-    server: "uyrsdfdfxg.zelmuro.ir"
-    port: 21451
-    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
-    udp: true
-    tls: false
-    network: "tcp"
-  - name: "wsfdje.hospitaldt.ir"
-    type: "vless"
-    server: "wsfdje.hospitaldt.ir"
-    port: 15222
-    uuid: "3a24f714-5585-4103-9291-6ae21f11c10d"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.aparat.com"
-    client-fingerprint: "ios"
-    reality-opts:
-      public-key: "W_0O5fiA1zi8nXHksSKSTLzwLPyjECWNES5-gDAbQRY"
-      short-id: "197fe3f584bc15f3"
-  - name: "🏠202506 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "cd3.postshup.ir"
-    port: 2086
-    uuid: "3b715892-8610-4fdc-9086-647b36af5443"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "216.24.57.225"
+  - name: "🇺🇸202897 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "216.24.57.225"
     port: 2083
@@ -2446,9 +2449,9 @@ proxies:
       path: "/sun"
       headers:
         Host: "Sun.senboonzakara.ir"
-  - name: "@filembad`-8"
+  - name: "@filembad`-18"
     type: "vless"
-    server: "104.26.13.31"
+    server: "ip.sb"
     port: 8080
     uuid: "3e06b1db-2efb-446e-ba2d-68850dfd2f9d"
     udp: true
@@ -2456,9 +2459,10 @@ proxies:
     network: "ws"
     servername: "ip.sb"
     ws-opts:
+      path: "/"
       headers:
         Host: "bdfba-cool-tree-b580.v8fz4kbv.workers.dev"
-  - name: "🇲🇽202450 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 299ms | VLESS"
     type: "vless"
     server: "156.252.229.11"
     port: 8443
@@ -2467,11 +2471,63 @@ proxies:
     tls: true
     network: "tcp"
     servername: "play.googleapis.com"
-    client-fingerprint: "firefox"
+    client-fingerprint: "chrome"
     reality-opts:
       public-key: "7jPluypHwPilf_Mq7JOY96SwKkbK35WuIlN1HwGQ_0A"
       short-id: "974f7f8f"
-  - name: "177.3.214.133"
+  - name: "94.249.186.139"
+    type: "vless"
+    server: "94.249.186.139"
+    port: 43000
+    uuid: "3ec60ed4-df40-483d-bbf9-33f65ce9c3e7"
+    udp: true
+    tls: true
+    network: "tcp"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "QUXt6kRkacRqiqckfCYCoEqzFHBlM69HRypO6asSTGI"
+      short-id: "36cbbcaf"
+  - name: "94.249.186.139-1"
+    type: "vless"
+    server: "94.249.186.139"
+    port: 43000
+    uuid: "3ec60ed4-df40-483d-bbf9-33f65ce9c3e7"
+    udp: true
+    tls: true
+    network: "tcp"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "QUXt6kRkacRqiqckfCYCoEqzFHBlM69HRypO6asSTGI"
+      short-id: "36cbbcaf"
+  - name: "31.76.91.142"
+    type: "vless"
+    server: "31.76.91.142"
+    port: 443
+    uuid: "3f044365-9592-4301-8291-f2d93fcc2570"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "jp.launch.tel"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "Su5ULcRQKF-0DJIHZeTNEnXHBpyQtizmUrcNIYhZI0E"
+      short-id: "afee962d"
+  - name: "gcore.com"
+    type: "vless"
+    server: "gcore.com"
+    port: 443
+    uuid: "3fccf1f5-dd4b-4527-a0e6-392719d6aa0d"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "img.jsdelivr.com"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
+  - name: "🇫🇮202965 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "177.3.214.133"
     port: 443
@@ -2480,49 +2536,7 @@ proxies:
     tls: true
     network: "xhttp"
     servername: "planktonmanager.xyz"
-  - name: "78.159.250.214"
-    type: "vless"
-    server: "78.159.250.214"
-    port: 443
-    uuid: "4054fdc2-ee80-4419-8a8e-d937df4719e2"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "qq.utiltools.site"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "drY21DHNOr6ezJLA2B10mzTExeJ9-gVBfTBNLwVBtWI"
-      short-id: "00000000"
-  - name: "🇮🇳202432 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "5.253.28.240"
-    port: 40443
-    uuid: "405b964e-a2d2-454f-aaaa-711cc218897c"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "deepl.com"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "cwmcqsfS7klQlkcoUNuATEk0NiPY-NnRb9z8rCJDQw0"
-      short-id: "88b6"
-  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 249ms | VLESS"
-    type: "vless"
-    server: "hydra.yokkastars.com"
-    port: 40443
-    uuid: "405b964e-a2d2-454f-aaaa-711cc218897c"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "deepl.com"
-    client-fingerprint: "qq"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "cwmcqsfS7klQlkcoUNuATEk0NiPY-NnRb9z8rCJDQw0"
-      short-id: "88b6"
-  - name: "@IranProxyPlus`-19"
+  - name: "@IranProxyPlus`-18"
     type: "vless"
     server: "104.16.7.70"
     port: 443
@@ -2532,7 +2546,17 @@ proxies:
     network: "xhttp"
     servername: "de.xn-q9jyb4c.online"
     client-fingerprint: "chrome"
-  - name: "@IranProxyPlus`-20"
+  - name: "@filembad`-19"
+    type: "vless"
+    server: "163.172.214.188"
+    port: 80
+    uuid: "40cc9b52-25b8-4cd5-8b45-715ae26e6baf"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/vless/"
+  - name: "@IranProxyPlus`-19"
     type: "vless"
     server: "217.179.221.234"
     port: 24986
@@ -2552,19 +2576,7 @@ proxies:
       path: "/parham-confing-ws?u=4WntJ-DcaeXJ"
       headers:
         Host: "51.75.118.5"
-  - name: "🇫🇷202499 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "51.75.118.5"
-    port: 20222
-    uuid: "418ddc75-aa9c-4e5d-a9a3-82c50a5a02b6"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/parham-confing-ws?u=Scnqz84F-E2l"
-      headers:
-        Host: "51.75.118.5"
-  - name: "iruae.netbazshop.ir"
+  - name: "🇮🇷202964 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "iruae.netbazshop.ir"
     port: 2083
@@ -2573,7 +2585,7 @@ proxies:
     tls: true
     network: "xhttp"
     servername: "sslcert.okamii1.ir"
-  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 104ms | VLESS"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 302ms | VLESS"
     type: "vless"
     server: "2.26.55.145"
     port: 1443
@@ -2600,7 +2612,7 @@ proxies:
     reality-opts:
       public-key: "PUj1la__ltNjv_ASE5n4HJY7GiRs--N-0aYhkcAApCI"
       short-id: "7b6803a79bba5c52"
-  - name: "@IranProxyPlus`-21"
+  - name: "@IranProxyPlus`-20"
     type: "vless"
     server: "193.151.129.116"
     port: 443
@@ -2612,7 +2624,7 @@ proxies:
     client-fingerprint: "chrome"
     ws-opts:
       path: "ws?ed=500"
-  - name: "S4"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 146ms | VLESS"
     type: "vless"
     server: "xray2-direct-mci1-fs-ce.freesocks.work"
     port: 443
@@ -2625,20 +2637,20 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "7j3hmlHrEDk3Kjx-dFG3E3jf0c6PZF45trIPFsuKWmI"
-  - name: "@filembad`-9"
+  - name: "94.249.186.64"
     type: "vless"
-    server: "xray1-direct-mci1-fs-ce.freesocks.work"
-    port: 443
-    uuid: "44358811-41ae-4061-815c-161b4d8291c9"
+    server: "94.249.186.64"
+    port: 43000
+    uuid: "4421e4d5-6869-4a45-a76b-5c822aac776d"
     udp: true
     tls: true
     network: "tcp"
-    servername: "dl.google.com"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "7j3hmlHrEDk3Kjx-dFG3E3jf0c6PZF45trIPFsuKWmI"
-  - name: "@IranProxyPlus`-22"
+      public-key: "QaPoY-5W4Z7NA_LUG37yjYNy3JWg53Ru7eWLTzec-nE"
+      short-id: "b62ac375"
+  - name: "@IranProxyPlus`-21"
     type: "vless"
     server: "54.36.162.217"
     port: 443
@@ -2654,7 +2666,7 @@ proxies:
     reality-opts:
       public-key: "upTVUrc_t7xF1ULni8pHRDhRES1sT4BDm1r8rugTzyQ"
       short-id: "ff815f58c7e77aa9"
-  - name: "@IranProxyPlus`-23"
+  - name: "@IranProxyPlus`-22"
     type: "vless"
     server: "54.36.162.217"
     port: 443
@@ -2676,7 +2688,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "146.75.59.186-1"
+  - name: "🇺🇸202938 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -2688,7 +2700,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
-  - name: "199.232.78.160"
+  - name: "🇺🇸202936 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "199.232.78.160"
     port: 443
@@ -2700,7 +2712,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_10i.global.ssl.fastly.net."
-  - name: "wwww.qarvian.ir"
+  - name: "🇺🇸202937 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
@@ -2712,9 +2724,9 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net."
-  - name: "146.75.59.186-2"
+  - name: "wwww.qarvian.ir"
     type: "vless"
-    server: "146.75.59.186"
+    server: "wwww.qarvian.ir"
     port: 443
     uuid: "4718b360-7f15-42d3-9b82-ebc20c427c93"
     udp: true
@@ -2723,28 +2735,22 @@ proxies:
     servername: "firefox.com"
     ws-opts:
       headers:
-        Host: "looabnetheroijji.global.ssl.fastly.net."
-  - name: "199.232.78.159"
+        Host: "albaniaoijji.global.ssl.fastly.net"
+  - name: "167.233.147.148"
     type: "vless"
-    server: "199.232.78.159"
+    server: "167.233.147.148"
     port: 443
-    uuid: "4718b360-7f15-42d3-9b82-ebc20c427c93"
+    uuid: "47e7e14d-2519-4146-aa2f-6eaa52c0a908"
     udp: true
     tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      headers:
-        Host: "looabgermanyoijji.global.ssl.fastly.net"
-  - name: "216.24.57.1"
-    type: "vless"
-    server: "216.24.57.1"
-    port: 2095
-    uuid: "4718b360-7f15-42d3-9b82-ebc20c427c93"
-    udp: true
-    tls: false
-    network: "httpupgrade"
-  - name: "@IranProxyPlus`-24"
+    network: "tcp"
+    servername: "dynu.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "0E-OTXVHsukKvwgwynrI49nTaT5m6rxdaFPg4D_UszI"
+      short-id: "9cc0"
+  - name: "@IranProxyPlus`-23"
     type: "vless"
     server: "34.213.172.16"
     port: 22189
@@ -2758,20 +2764,19 @@ proxies:
     reality-opts:
       public-key: "5tUZskKOCKpjz3j7hmuYaQHNfE1QRtZI9P62qvSs1GY"
       short-id: "47b6d14ff477fe59"
-  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 242ms | VLESS"
+  - name: "@filembad`-20"
     type: "vless"
-    server: "15.204.97.195"
-    port: 23576
-    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    server: "78.17.27.137"
+    port: 8443
+    uuid: "48d9a277-776b-4ab8-a357-88a1958beed8"
     udp: true
     tls: true
     network: "tcp"
-    servername: "fuck.rkn"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
+    servername: "www.aalto.fi"
+    client-fingerprint: "firefox"
     reality-opts:
-      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-  - name: "@filembad`-10"
+      public-key: "DZ0BYEIHEe9KmJzM_j5EAN0t3_BTcfO63P7x6SRCeQM"
+  - name: "@filembad`-21"
     type: "vless"
     server: "15.204.97.206"
     port: 23576
@@ -2785,7 +2790,21 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "@v2ray_free_config_iran | 🇮🇷 285ms | VLESS"
+  - name: "15.204.97.206"
+    type: "vless"
+    server: "15.204.97.206"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "15.204.97.209"
     type: "vless"
     server: "15.204.97.209"
     port: 23576
@@ -2794,11 +2813,39 @@ proxies:
     tls: true
     network: "tcp"
     servername: "fuck.rkn"
-    client-fingerprint: "random"
+    client-fingerprint: "firefox"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 249ms | VLESS-1"
+      short-id: "01"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 133ms | VLESS"
+    type: "vless"
+    server: "15.204.97.209"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "raw"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@filembad`-22"
+    type: "vless"
+    server: "15.204.97.214"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@filembad`-23"
     type: "vless"
     server: "15.204.97.214"
     port: 23576
@@ -2811,7 +2858,8 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-  - name: "15.204.97.216"
+      short-id: "01"
+  - name: "@filembad`-24"
     type: "vless"
     server: "15.204.97.216"
     port: 23576
@@ -2825,7 +2873,7 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "@filembad`-11"
+  - name: "@filembad`-25"
     type: "vless"
     server: "15.204.97.219"
     port: 23576
@@ -2851,7 +2899,21 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-  - name: "@filembad`-12"
+  - name: "@filembad`-26"
+    type: "vless"
+    server: "51.158.206.103"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "51.158.206.12"
     type: "vless"
     server: "51.158.206.12"
     port: 23576
@@ -2865,7 +2927,21 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "51.158.206.19"
+  - name: "@filembad`-27"
+    type: "vless"
+    server: "51.158.206.19"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@FarazV2ray"
     type: "vless"
     server: "51.158.206.19"
     port: 23576
@@ -2878,7 +2954,7 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "@filembad`-13"
+  - name: "51.158.206.20"
     type: "vless"
     server: "51.158.206.20"
     port: 23576
@@ -2892,20 +2968,7 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "@filembad`-14"
-    type: "vless"
-    server: "51.158.206.20"
-    port: 23576
-    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "fuck.rkn"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-      short-id: "01"
-  - name: "@filembad`-15"
+  - name: "@filembad`-28"
     type: "vless"
     server: "51.158.206.25"
     port: 23576
@@ -2919,7 +2982,7 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 86ms | VLESS"
+  - name: "@filembad`-29"
     type: "vless"
     server: "51.158.206.25"
     port: 23576
@@ -2932,7 +2995,7 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "@filembad`-16"
+  - name: "@filembad`-30"
     type: "vless"
     server: "51.158.206.26"
     port: 23576
@@ -2945,7 +3008,7 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "🇳🇱202536 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "@filembad`-31"
     type: "vless"
     server: "51.158.206.29"
     port: 23576
@@ -2958,7 +3021,7 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 94ms | VLESS"
+  - name: "@filembad`-32"
     type: "vless"
     server: "51.158.206.34"
     port: 23576
@@ -2971,20 +3034,7 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 91ms | VLESS"
-    type: "vless"
-    server: "51.158.206.80"
-    port: 23576
-    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "fuck.rkn"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-      short-id: "01"
-  - name: "@filembad`-17"
+  - name: "@filembad`-33"
     type: "vless"
     server: "51.158.206.80"
     port: 23576
@@ -2998,7 +3048,20 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "@filembad`-18"
+  - name: "@filembad`-34"
+    type: "vless"
+    server: "51.158.206.80"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@filembad`-35"
     type: "vless"
     server: "51.158.206.86"
     port: 23576
@@ -3011,7 +3074,21 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "@filembad`-19"
+  - name: "@filembad`-36"
+    type: "vless"
+    server: "51.158.206.86"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@filembad`-37"
     type: "vless"
     server: "51.158.206.87"
     port: 23576
@@ -3024,7 +3101,21 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-  - name: "51.158.206.87"
+  - name: "@filembad`-38"
+    type: "vless"
+    server: "51.158.206.87"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@FarazV2ray-1"
     type: "vless"
     server: "51.158.206.87"
     port: 23576
@@ -3037,7 +3128,7 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "@filembad`-20"
+  - name: "@filembad`-39"
     type: "vless"
     server: "51.158.206.8"
     port: 23576
@@ -3051,7 +3142,7 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "51.158.206.8"
+  - name: "@filembad`-40"
     type: "vless"
     server: "51.158.206.8"
     port: 23576
@@ -3064,7 +3155,7 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "@filembad`-21"
+  - name: "@filembad`-41"
     type: "vless"
     server: "51.158.206.93"
     port: 23576
@@ -3078,7 +3169,7 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 67ms | VLESS"
+  - name: "@filembad`-42"
     type: "vless"
     server: "51.158.206.93"
     port: 23576
@@ -3091,7 +3182,7 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "@filembad`-22"
+  - name: "51.158.206.96"
     type: "vless"
     server: "51.158.206.96"
     port: 23576
@@ -3105,7 +3196,7 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "@filembad`-23"
+  - name: "@filembad`-43"
     type: "vless"
     server: "51.158.206.97"
     port: 23576
@@ -3118,7 +3209,7 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 84ms | VLESS"
+  - name: "@filembad`-44"
     type: "vless"
     server: "51.158.206.98"
     port: 23576
@@ -3132,7 +3223,7 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "@filembad`-24"
+  - name: "@filembad`-45"
     type: "vless"
     server: "51.158.206.98"
     port: 23576
@@ -3145,7 +3236,7 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "62.210.91.10"
+  - name: "@FarazV2ray-2"
     type: "vless"
     server: "62.210.91.10"
     port: 23576
@@ -3158,20 +3249,7 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "@filembad`-25"
-    type: "vless"
-    server: "62.210.91.2"
-    port: 23576
-    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "fuck.rkn"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-      short-id: "01"
-  - name: "@filembad`-26"
+  - name: "@filembad`-46"
     type: "vless"
     server: "62.210.91.2"
     port: 23576
@@ -3185,7 +3263,34 @@ proxies:
     reality-opts:
       public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
       short-id: "01"
-  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 234ms | VLESS"
+  - name: "@filembad`-47"
+    type: "vless"
+    server: "62.210.91.2"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 317ms | VLESS"
+    type: "vless"
+    server: "ww13.levikogjgfdd.ir"
+    port: 23576
+    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fuck.rkn"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
+      short-id: "01"
+  - name: "@filembad`-48"
     type: "vless"
     server: "ww13.levikogjgfdd.ir"
     port: 23576
@@ -3281,94 +3386,220 @@ proxies:
     reality-opts:
       public-key: "u5knrbBXZBNgN5arqtNRcwpzHZUoT1wGBRNnQnnmpAI"
       short-id: "192ed02c5442290d"
-  - name: "🇺🇸202479 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "@v2ray_free_config_iran | Argo VPN | 🇮🇷 98ms | VLESS"
     type: "vless"
-    server: "201.8.87.14"
+    server: "108.165.236.229"
     port: 443
-    uuid: "4c9f78a0-5ff8-485d-b783-e8672d566dc3"
+    uuid: "49996e29-93c5-4975-b56f-792acbbf3444"
     udp: true
     tls: true
-    network: "xhttp"
-    servername: "seso.underground.company"
-    client-fingerprint: "firefox"
-  - name: "🇩🇪202476 | ⚡️Telegram = t.me/SOSkeyNET"
+    network: "ws"
+    servername: "jyfrj1cims.dev.onappjet.com"
+    ws-opts:
+      path: "/jx-yjkteysq815pzp"
+      headers:
+        Host: "jyfrj1cims.dev.onappjet.com"
+  - name: "108.165.236.229"
     type: "vless"
-    server: "31.56.18.67"
+    server: "108.165.236.229"
     port: 443
-    uuid: "4c9f78a0-5ff8-485d-b783-e8672d566dc3"
+    uuid: "49996e29-93c5-4975-b56f-792acbbf3444"
     udp: true
     tls: true
-    network: "xhttp"
-    servername: "dege.underground.company"
+    network: "ws"
+    ws-opts:
+      path: "/jx-yjkteysq815pzp"
+      headers:
+        Host: "jyfrj1cims.dev.onappjet.com"
+  - name: "2.58.113.192"
+    type: "vless"
+    server: "2.58.113.192"
+    port: 443
+    uuid: "49996e29-93c5-4975-b56f-792acbbf3444"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/jx-yjkteysq815pzp"
+      headers:
+        Host: "jyfrj1cims.dev.onappjet.com"
+  - name: "72.56.31.206"
+    type: "vless"
+    server: "72.56.31.206"
+    port: 443
+    uuid: "49996e29-93c5-4975-b56f-792acbbf3444"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/jx-yjkteysq815pzp"
+      headers:
+        Host: "jyfrj1cims.dev.onappjet.com"
+  - name: "89.191.226.252"
+    type: "vless"
+    server: "89.191.226.252"
+    port: 443
+    uuid: "49996e29-93c5-4975-b56f-792acbbf3444"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/jx-yjkteysq815pzp"
+      headers:
+        Host: "jyfrj1cims.dev.onappjet.com"
+  - name: "5.149.249.94"
+    type: "vless"
+    server: "5.149.249.94"
+    port: 443
+    uuid: "4a140c2f-5b0c-4524-950c-026de74fcf69"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "nlb.kosmosapp.net"
+    reality-opts:
+      public-key: "pR39Vv5qhk8r6akOicoy6mMs4-ppSWUez8MyAXG7wwQ"
+      short-id: "27350908de933e09"
+    grpc-opts:
+      grpc-service-name: "neurex"
+  - name: "@filembad`-49"
+    type: "vless"
+    server: "5.149.249.94"
+    port: 443
+    uuid: "4a140c2f-5b0c-4524-950c-026de74fcf69"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "nlb.kosmosapp.net"
     client-fingerprint: "firefox"
-  - name: "🌍202481 | ⚡️Telegram = t.me/SOSkeyNET"
+    reality-opts:
+      public-key: "pR39Vv5qhk8r6akOicoy6mMs4-ppSWUez8MyAXG7wwQ"
+      short-id: "27350908de933e09"
+    grpc-opts:
+      grpc-service-name: "neurex"
+  - name: "45.9.12.110"
     type: "vless"
-    server: "sosk.sorix-home.ir"
-    port: 60231
-    uuid: "4d7d1add-0a51-4887-b10a-07c68df24f7e"
-    udp: true
-    tls: false
-    network: "tcp"
-  - name: "🇳🇱202422 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "213.152.165.202"
-    port: 2092
-    uuid: "4d8cc1c2-2605-43c4-8e17-dcafa86d9757"
+    server: "45.9.12.110"
+    port: 443
+    uuid: "4b1be712-774c-4b65-8491-a3339e124a70"
     udp: true
     tls: true
     network: "tcp"
-    servername: "www.apple.com"
+    servername: "ru.letsconnectpoint.com"
     client-fingerprint: "firefox"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "zeyIqmHylDrPbbtdG9BleBt0-fqKCHpZ0OZ9OY2_WUI"
-      short-id: "716b7eba38125f3a"
-  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 87ms | VLESS"
+      public-key: "myIjvlXZS0rm1eg4q2w5WsQBuj80i2rBA0HpRGCUg1w"
+      short-id: "86d1efde"
+  - name: "ru.letsconnectpoint.com"
     type: "vless"
-    server: "104.16.111.102"
+    server: "ru.letsconnectpoint.com"
     port: 443
-    uuid: "4e4f1f70-5e56-4a76-bb9d-db087f4690c4"
+    uuid: "4b1be712-774c-4b65-8491-a3339e124a70"
     udp: true
     tls: true
-    network: "ws"
-    servername: "jp3.yohototo.top"
-    client-fingerprint: "unsafe"
-    ws-opts:
-      path: "/tyxyws"
-      headers:
-        Host: "jp3.yohototo.top"
-  - name: "172.67.156.147"
+    network: "tcp"
+    servername: "ru.letsconnectpoint.com"
+    client-fingerprint: "random"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "myIjvlXZS0rm1eg4q2w5WsQBuj80i2rBA0HpRGCUg1w"
+      short-id: "86d1efde"
+  - name: "net.port1.etsal1.sbs"
     type: "vless"
-    server: "172.67.156.147"
-    port: 443
-    uuid: "4e4f1f70-5e56-4a76-bb9d-db087f4690c4"
+    server: "net.port1.etsal1.sbs"
+    port: 1012
+    uuid: "4bad8c34-2978-43ed-8d65-88a2a28b9802"
     udp: true
     tls: true
-    network: "ws"
-    servername: "jp3.yohototo.top"
-    ws-opts:
-      path: "/tyxyws"
-      headers:
-        Host: "jp3.yohototo.top"
-  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 232ms | VLESS"
+    network: "xhttp"
+    servername: "aparat.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "TlzSVgo7YzN1KB3BFb6R6uN25KK57VP63Jg57JlBil4"
+      short-id: "b7e56c01a9d4f230"
+  - name: "net.port1.etsal1.sbs-1"
     type: "vless"
-    server: "188.114.98.0"
-    port: 443
-    uuid: "4e4f1f70-5e56-4a76-bb9d-db087f4690c4"
+    server: "net.port1.etsal1.sbs"
+    port: 1013
+    uuid: "4bad8c34-2978-43ed-8d65-88a2a28b9802"
     udp: true
     tls: true
-    network: "ws"
-    servername: "jp3.yohototo.top"
-    client-fingerprint: "unsafe"
+    network: "xhttp"
+    servername: "aparat.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "TlzSVgo7YzN1KB3BFb6R6uN25KK57VP63Jg57JlBil4"
+      short-id: "b7e56c01a9d4f230"
+  - name: "net.port1.etsal1.sbs-2"
+    type: "vless"
+    server: "net.port1.etsal1.sbs"
+    port: 1014
+    uuid: "4bad8c34-2978-43ed-8d65-88a2a28b9802"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "aparat.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "TlzSVgo7YzN1KB3BFb6R6uN25KK57VP63Jg57JlBil4"
+      short-id: "b7e56c01a9d4f230"
+  - name: "net.port1.etsal1.sbs-3"
+    type: "vless"
+    server: "net.port1.etsal1.sbs"
+    port: 1016
+    uuid: "4bad8c34-2978-43ed-8d65-88a2a28b9802"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "aparat.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "TlzSVgo7YzN1KB3BFb6R6uN25KK57VP63Jg57JlBil4"
+      short-id: "b7e56c01a9d4f230"
+  - name: "net.port1.etsal1.sbs-4"
+    type: "vless"
+    server: "net.port1.etsal1.sbs"
+    port: 1019
+    uuid: "4bad8c34-2978-43ed-8d65-88a2a28b9802"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "aparat.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "TlzSVgo7YzN1KB3BFb6R6uN25KK57VP63Jg57JlBil4"
+      short-id: "b7e56c01a9d4f230"
+  - name: "static.173.117.201.138.clients.your-server.de"
+    type: "vless"
+    server: "static.173.117.201.138.clients.your-server.de"
+    port: 8443
+    uuid: "4bad8c34-2978-43ed-8d65-88a2a28b9802"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "static.173.117.201.138.clients.your-server.de"
+    client-fingerprint: "chrome"
     alpn:
+      - "h2"
       - "http/1.1"
-    ws-opts:
-      path: "/tyxyws"
-      headers:
-        Host: "jp3.yohototo.top"
-  - name: "43.170.8.95"
+    flow: "xtls-rprx-vision"
+  - name: "www.buydomains.com"
     type: "vless"
-    server: "43.170.8.95"
+    server: "www.buydomains.com"
+    port: 443
+    uuid: "4d945644-69ab-47e0-98b3-d43a6313135d"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "mhoX6Xz96zGe3qv5HISuFj9B.paGeS.DEV"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/vl/SaXqikbSPA3ImtmZKAFin?ed=2560"
+      headers:
+        Host: "mhoX6Xz96zGe3qv5HISuFj9B.paGeS.DEV"
+  - name: "🇨🇦203556 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "104.16.10.104"
     port: 443
     uuid: "4e4f1f70-5e56-4a76-bb9d-db087f4690c4"
     udp: true
@@ -3380,118 +3611,6 @@ proxies:
       path: "/tyxyws"
       headers:
         Host: "jp3.yohototo.top"
-  - name: "79.175.189.121"
-    type: "vless"
-    server: "79.175.189.121"
-    port: 40021
-    uuid: "4e8e5f05-5c8a-4f53-ba16-1ed044ed0df8"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "digikala.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "ioucvr6V3ToaaU3dmWhIDT6UiS_jnL8t0AXaQQNfDwQ"
-      short-id: "5276"
-  - name: "al3.irgemini.sbs"
-    type: "vless"
-    server: "al3.irgemini.sbs"
-    port: 22542
-    uuid: "4e8e5f05-5c8a-4f53-ba16-1ed044ed0df8"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "digikala.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "5HFT7xa6H2zRUNDR0c-MNYH4DM_clxtV5nuSwtwBhzc"
-      short-id: "a1c8"
-  - name: "fr3.irgemini.sbs"
-    type: "vless"
-    server: "fr3.irgemini.sbs"
-    port: 21038
-    uuid: "4e8e5f05-5c8a-4f53-ba16-1ed044ed0df8"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "digikala.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "b8quWnq43DQ0wM9SlkP9GttSlhWFyUcUGyyF8sJE5l4"
-      short-id: "d1"
-  - name: "nl3.irgemini.sbs"
-    type: "vless"
-    server: "nl3.irgemini.sbs"
-    port: 26917
-    uuid: "4e8e5f05-5c8a-4f53-ba16-1ed044ed0df8"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "digikala.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "utIPSHmW0u_sRmKzSEB3PeSsGZ3wzjf8egEn-A6Fi08"
-      short-id: "d97b"
-  - name: "real3.irgemini.sbs"
-    type: "vless"
-    server: "real3.irgemini.sbs"
-    port: 40021
-    uuid: "4e8e5f05-5c8a-4f53-ba16-1ed044ed0df8"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "digikala.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "ioucvr6V3ToaaU3dmWhIDT6UiS_jnL8t0AXaQQNfDwQ"
-      short-id: "4b148366dd"
-  - name: "tr3.irgemini.sbs"
-    type: "vless"
-    server: "tr3.irgemini.sbs"
-    port: 21766
-    uuid: "4e8e5f05-5c8a-4f53-ba16-1ed044ed0df8"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "digikala.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "TqxtumkJnsoAEXZPgugXosvWu0vpbwXwBR9K1NN_nko"
-      short-id: "2c"
-  - name: "uk3.irgemini.sbs"
-    type: "vless"
-    server: "uk3.irgemini.sbs"
-    port: 25962
-    uuid: "4e8e5f05-5c8a-4f53-ba16-1ed044ed0df8"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "digikala.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "drcdyyhvM-Oh1G4TZIdAGzFp3HaiDLLEhiPOF8rGwm4"
-      short-id: "5a1b24a42e39a0"
-  - name: "usa3.irgemini.sbs"
-    type: "vless"
-    server: "usa3.irgemini.sbs"
-    port: 20888
-    uuid: "4e8e5f05-5c8a-4f53-ba16-1ed044ed0df8"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "digikala.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "-Yy-3m0zbnI32OBg2iHwdODDIOQSff4pNFCRGtQiwUo"
-      short-id: "bbde95"
   - name: "173.245.58.75"
     type: "vless"
     server: "173.245.58.75"
@@ -3506,19 +3625,19 @@ proxies:
       path: "/poiuyws@ThePackageCom"
       headers:
         Host: "amoosamiii.net"
-  - name: "@filembad`-27"
+  - name: "ro-xh02.tcp-reset-club.net"
     type: "vless"
-    server: "83.217.9.230"
-    port: 43000
-    uuid: "4f8493b1-9876-46c4-8ded-01cafb22cee0"
+    server: "ro-xh02.tcp-reset-club.net"
+    port: 8443
+    uuid: "4fb82973-a7f1-4fc2-9958-cb21f5162f06"
     udp: true
     tls: true
-    network: "tcp"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
+    network: "xhttp"
+    servername: "s3.netavex.com"
+    client-fingerprint: "chrome"
     reality-opts:
-      public-key: "ptE_QnAka3pXNEf8BYKpA9CHdgj4U4xXTixjYWOji0U"
-      short-id: "68d2eb23"
+      public-key: "Gu_QdtOX6E8pZcYvDWgHKA5dxcit7hrpU27sizCEWXg"
+      short-id: "e0"
   - name: "45.197.134.49"
     type: "vless"
     server: "45.197.134.49"
@@ -3532,21 +3651,7 @@ proxies:
     reality-opts:
       public-key: "8qHRGcCezzSu4S-Cz9l19BNRLWm4MkaSwZV3dNrLEwc"
       short-id: "d515d6cfdfe60b02"
-  - name: "@v2ray_free_config_iran | 🇮🇷 110ms | VLESS"
-    type: "vless"
-    server: "87.199.205.28"
-    port: 443
-    uuid: "501a2da5-cb22-4a3f-915e-e3b821d1d62d"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "vkvd754.okcdn.ru"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "W-9zyiOq287RtXVTZlTFbSDJ0Mx8joyBLJoA7ZE7eBw"
-      short-id: "ef1d3554c652a436"
-  - name: "87.199.205.28"
+  - name: "@filembad`-50"
     type: "vless"
     server: "87.199.205.28"
     port: 443
@@ -3560,6 +3665,33 @@ proxies:
     reality-opts:
       public-key: "W-9zyiOq287RtXVTZlTFbSDJ0Mx8joyBLJoA7ZE7eBw"
       short-id: "ef1d3554c652a436"
+  - name: "@filembad`-51"
+    type: "vless"
+    server: "104.25.199.149"
+    port: 80
+    uuid: "50414e45-4c5f-5a45-5553-5dd075c8ae9b"
+    udp: true
+    tls: false
+    network: "ws"
+    servername: "web-app-gjn19f.z0zxy6ehuwgs.workers.dev"
+    ws-opts:
+      path: "/api/ws"
+      headers:
+        Host: "web-app-gjn19f.z0zxy6ehuwgs.workers.dev"
+  - name: "@filembad`-52"
+    type: "vless"
+    server: "aslanbilit.ir"
+    port: 80
+    uuid: "50414e45-4c5f-5a45-5553-7bac159e3b40"
+    udp: true
+    tls: false
+    network: "ws"
+    servername: "web-app-ji3j1z.app-wuuhuw.workers.dev"
+    client-fingerprint: "unsafe"
+    ws-opts:
+      path: "/api/ws"
+      headers:
+        Host: "web-app-ji3j1z.app-wuuhuw.workers.dev"
   - name: "Finland 🇫🇮"
     type: "vless"
     server: "177.3.214.156"
@@ -3573,7 +3705,45 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "6lZ5dkQN2sH9tYca374W4N1n9eCanD_F2FfghcksKSo"
-  - name: "@v2ray_free_config_iran | 🇮🇷 224ms | VLESS"
+  - name: "201.58.183.42"
+    type: "vless"
+    server: "201.58.183.42"
+    port: 443
+    uuid: "50a87e21-f0e2-4b53-a787-91adfe748f63"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "13oktober.live"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "y0wgEdmPNIKlAMJHeC0teOW_fBnX8tmRE8n1CwOZSwU"
+  - name: "72.56.41.232"
+    type: "vless"
+    server: "72.56.41.232"
+    port: 443
+    uuid: "50a87e21-f0e2-4b53-a787-91adfe748f63"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "usatimewebnew.space"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "FFsBozg2vRN-wNNsv6Y97sbr4EF5aIHiYF7-xHa_9Fk"
+  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 178ms | VLESS"
+    type: "vless"
+    server: "swedenafteraventura.space"
+    port: 443
+    uuid: "50a87e21-f0e2-4b53-a787-91adfe748f63"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "swedenafteraventura.space"
+    client-fingerprint: "ios"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "TyuIIquHoesD9YwMQJHda0YZ3Hy9Dh123dQ00iGK0QY"
+  - name: "@hamedvpns 🇮🇳1"
     type: "vless"
     server: "5.253.30.99"
     port: 40443
@@ -3587,9 +3757,72 @@ proxies:
     reality-opts:
       public-key: "cwmcqsfS7klQlkcoUNuATEk0NiPY-NnRb9z8rCJDQw0"
       short-id: "88b6"
-  - name: "@filembad`-28"
+  - name: "gcore.com-1"
+    type: "vless"
+    server: "gcore.com"
+    port: 443
+    uuid: "5125b5f4-12a5-41a0-9437-1fba29381977"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "img.jsdelivr.com"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
+  - name: "138.124.39.251"
+    type: "vless"
+    server: "138.124.39.251"
+    port: 443
+    uuid: "5254c281-3bc1-40ee-ba89-1aaf8c251402"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "nl-modx-prime.storagedirectguide.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "node0aB_7yyVADkeieiBBpxqIlxNLQcvgotRClh0QXQ"
+  - name: "@filembad`-53"
+    type: "vless"
+    server: "88.216.70.92"
+    port: 443
+    uuid: "5254c281-3bc1-40ee-ba89-1aaf8c251402"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "nl-modx-prime.storagedirectguide.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "node0aB_7yyVADkeieiBBpxqIlxNLQcvgotRClh0QXQ"
+  - name: "nl-modx-prime.storagedirectguide.com"
+    type: "vless"
+    server: "nl-modx-prime.storagedirectguide.com"
+    port: 443
+    uuid: "5254c281-3bc1-40ee-ba89-1aaf8c251402"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "nl-modx-prime.storagedirectguide.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "node0aB_7yyVADkeieiBBpxqIlxNLQcvgotRClh0QXQ"
+  - name: "103.238.227.211"
     type: "vless"
     server: "103.238.227.211"
+    port: 21003
+    uuid: "52d2187c-34e1-40fd-a6f5-0a74ff7d3e9a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    reality-opts:
+      public-key: "EXU8eOS1kf_ROqC68NO-zbzRFGx7U5zE6WvjxRzYeTo"
+      short-id: "eb9539689690d35c"
+  - name: "@filembad`-54"
+    type: "vless"
+    server: "526.150333.xyz"
     port: 21002
     uuid: "52d2187c-34e1-40fd-a6f5-0a74ff7d3e9a"
     udp: true
@@ -3600,32 +3833,7 @@ proxies:
     reality-opts:
       public-key: "EXU8eOS1kf_ROqC68NO-zbzRFGx7U5zE6WvjxRzYeTo"
       short-id: "f0e6a8bb98db3efd"
-  - name: "@filembad`-29"
-    type: "vless"
-    server: "103.238.227.211"
-    port: 21003
-    uuid: "52d2187c-34e1-40fd-a6f5-0a74ff7d3e9a"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    reality-opts:
-      public-key: "EXU8eOS1kf_ROqC68NO-zbzRFGx7U5zE6WvjxRzYeTo"
-      short-id: "eb9539689690d35c"
-  - name: "@filembad`-30"
-    type: "vless"
-    server: "526.150333.xyz"
-    port: 21002
-    uuid: "52d2187c-34e1-40fd-a6f5-0a74ff7d3e9a"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "EXU8eOS1kf_ROqC68NO-zbzRFGx7U5zE6WvjxRzYeTo"
-      short-id: "f0e6a8bb98db3efd"
-  - name: "@filembad`-31"
+  - name: "@Vpn_Tehran 🤍 کانال تلگرام"
     type: "vless"
     server: "526.150333.xyz"
     port: 21003
@@ -3638,19 +3846,7 @@ proxies:
     reality-opts:
       public-key: "EXU8eOS1kf_ROqC68NO-zbzRFGx7U5zE6WvjxRzYeTo"
       short-id: "eb9539689690d35c"
-  - name: "@filembad`-32"
-    type: "vless"
-    server: "526.150333.xyz"
-    port: 21003
-    uuid: "52d2187c-34e1-40fd-a6f5-0a74ff7d3e9a"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    reality-opts:
-      public-key: "EXU8eOS1kf_ROqC68NO-zbzRFGx7U5zE6WvjxRzYeTo"
-      short-id: "eb9539689690d35c"
-  - name: "@filembad`-33"
+  - name: "@filembad`-55"
     type: "vless"
     server: "526.150333.xyz"
     port: 21004
@@ -3662,20 +3858,60 @@ proxies:
     reality-opts:
       public-key: "EXU8eOS1kf_ROqC68NO-zbzRFGx7U5zE6WvjxRzYeTo"
       short-id: "2f34703f16523c80"
-  - name: "@filembad`-34"
+  - name: "51.68.34.78"
     type: "vless"
-    server: "526.150333.xyz"
-    port: 21004
-    uuid: "52d2187c-34e1-40fd-a6f5-0a74ff7d3e9a"
+    server: "51.68.34.78"
+    port: 20155
+    uuid: "5365cb12-83e2-4e12-8098-c9673ed7f540"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/bp-vless"
+  - name: "@filembad`-56"
+    type: "vless"
+    server: "51.68.34.78"
+    port: 20155
+    uuid: "5365cb12-83e2-4e12-8098-c9673ed7f540"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "@filembad`-57"
+    type: "vless"
+    server: "51.68.34.78"
+    port: 20155
+    uuid: "5365cb12-83e2-4e12-8098-c9673ed7f540"
+    udp: true
+    tls: false
+    network: "grpc"
+    grpc-opts:
+      grpc-service-name: "bpgrpc"
+  - name: "👾36@oneclickvpnkeys"
+    type: "vless"
+    server: "94.249.187.46"
+    port: 43000
+    uuid: "53e31ee1-0a75-48c8-82fd-a54c8728ed9d"
     udp: true
     tls: true
     network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "EXU8eOS1kf_ROqC68NO-zbzRFGx7U5zE6WvjxRzYeTo"
-      short-id: "2f34703f16523c80"
-  - name: "@IranProxyPlus`-25"
+      public-key: "9JxTswHvWeq5349tgvXL7fDWaWuCb3jstVS7e6daAD4"
+      short-id: "81a5b989"
+  - name: "94.249.187.46"
+    type: "vless"
+    server: "94.249.187.46"
+    port: 43000
+    uuid: "53e31ee1-0a75-48c8-82fd-a54c8728ed9d"
+    udp: true
+    tls: true
+    network: "tcp"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "9JxTswHvWeq5349tgvXL7fDWaWuCb3jstVS7e6daAD4"
+      short-id: "81a5b989"
+  - name: "@IranProxyPlus`-24"
     type: "vless"
     server: "167.172.108.83"
     port: 2053
@@ -3689,21 +3925,7 @@ proxies:
     reality-opts:
       public-key: "stPZw-ywGM1TL2lW0AnMj1yr1r0cBrqfLQ2S5Ak72QU"
       short-id: "d8b0298b"
-  - name: "148.253.210.191"
-    type: "vless"
-    server: "148.253.210.191"
-    port: 443
-    uuid: "53f03acd-fec1-6685-fc8f-03baf9550cb8"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "148-253-210-191.sslip.io"
-    client-fingerprint: "firefox"
-    ws-opts:
-      path: "/test-ws"
-      headers:
-        Host: "148-253-210-191.sslip.io"
-  - name: "static.162.97.119.168.clients.your-server.de"
+  - name: "🇩🇪202952 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "static.162.97.119.168.clients.your-server.de"
     port: 8443
@@ -3717,7 +3939,7 @@ proxies:
       - "h2"
       - "http/1.1"
     flow: "xtls-rprx-vision"
-  - name: "static.189.124.140.128.clients.your-server.de"
+  - name: "🇩🇪202950 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "static.189.124.140.128.clients.your-server.de"
     port: 8443
@@ -3731,7 +3953,7 @@ proxies:
       - "h2"
       - "http/1.1"
     flow: "xtls-rprx-vision"
-  - name: "static.19.212.12.49.clients.your-server.de"
+  - name: "🇩🇪202955 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "static.19.212.12.49.clients.your-server.de"
     port: 8443
@@ -3745,7 +3967,7 @@ proxies:
       - "h2"
       - "http/1.1"
     flow: "xtls-rprx-vision"
-  - name: "static.197.56.233.167.clients.your-server.de"
+  - name: "🇩🇪202951 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "static.197.56.233.167.clients.your-server.de"
     port: 8443
@@ -3759,7 +3981,7 @@ proxies:
       - "h2"
       - "http/1.1"
     flow: "xtls-rprx-vision"
-  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 202ms | VLESS"
+  - name: "🇩🇪202954 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "static.216.7.245.188.clients.your-server.de"
     port: 8443
@@ -3773,7 +3995,7 @@ proxies:
       - "h2"
       - "http/1.1"
     flow: "xtls-rprx-vision"
-  - name: "@v2ray_free_config_iran | V2Ray | 🇮🇷 201ms | VLESS"
+  - name: "🇩🇪202953 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "vless"
     server: "static.229.163.46.78.clients.your-server.de"
     port: 8443
@@ -3782,6 +4004,90 @@ proxies:
     tls: true
     network: "tcp"
     servername: "static.250.14.28.2.clients.your-server.de"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    flow: "xtls-rprx-vision"
+  - name: "🇩🇪203541 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "static.173.117.201.138.clients.your-server.de"
+    port: 8443
+    uuid: "555f5ec1-6e33-4b05-9cb9-8c8dbcb49c6a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "static.162.97.119.168.clients.your-server.de"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    flow: "xtls-rprx-vision"
+  - name: "🇩🇪203540 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "static.189.124.140.128.clients.your-server.de"
+    port: 8443
+    uuid: "555f5ec1-6e33-4b05-9cb9-8c8dbcb49c6a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "static.105.32.99.88.clients.your-server.de"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    flow: "xtls-rprx-vision"
+  - name: "🇩🇪203543 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "static.197.56.233.167.clients.your-server.de"
+    port: 8443
+    uuid: "555f5ec1-6e33-4b05-9cb9-8c8dbcb49c6a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "static.77.119.140.128.clients.your-server.de"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    flow: "xtls-rprx-vision"
+  - name: "🇩🇪203544 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "static.220.97.224.46.clients.your-server.de"
+    port: 8443
+    uuid: "555f5ec1-6e33-4b05-9cb9-8c8dbcb49c6a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "static.216.7.245.188.clients.your-server.de"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    flow: "xtls-rprx-vision"
+  - name: "🇩🇪203542 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "static.229.163.46.78.clients.your-server.de"
+    port: 8443
+    uuid: "555f5ec1-6e33-4b05-9cb9-8c8dbcb49c6a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "static.250.14.28.2.clients.your-server.de"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    flow: "xtls-rprx-vision"
+  - name: "🇫🇮203545 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "vless"
+    server: "static.83.65.31.2.clients.your-server.de"
+    port: 8443
+    uuid: "555f5ec1-6e33-4b05-9cb9-8c8dbcb49c6a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "static.83.65.31.2.clients.your-server.de"
     client-fingerprint: "chrome"
     alpn:
       - "h2"
@@ -3801,28 +4107,34 @@ proxies:
     reality-opts:
       public-key: "jwLEnDwGROadL1ax-SrVC50sE5slaP7TbGQtBxkcTws"
       short-id: "8c9ab0f7b293f9ef"
-  - name: "de.vfzq.ir"
+  - name: "191.44.108.30"
     type: "vless"
-    server: "de.vfzq.ir"
-    port: 8080
-    uuid: "55d7adf5-4121-43de-9331-7550413e257a"
+    server: "191.44.108.30"
+    port: 443
+    uuid: "558b26f6-061b-4079-9b84-ca13b3e90ae3"
     udp: true
     tls: true
-    network: "grpc"
-    servername: "play.google.com"
-    client-fingerprint: "firefox"
+    network: "tcp"
+    servername: "c8.qwyak.ru"
+    flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "0qvmRtNP46Lxa4VNRDiBtZpPXxIyzMzDpju7wvSreQg"
-      short-id: "eee4b95d3c557317"
-  - name: "www.speedtest.net"
+      public-key: "3pBHfffYFRPpe8Lt47cLSSgCgwNR-70blFzpEbm11AE"
+      short-id: "b2baf331493d3de1"
+  - name: "191.44.108.31"
     type: "vless"
-    server: "www.speedtest.net"
-    port: 2086
-    uuid: "55d7adf5-4121-43de-9331-7550413e257a"
+    server: "191.44.108.31"
+    port: 443
+    uuid: "558b26f6-061b-4079-9b84-ca13b3e90ae3"
     udp: true
-    tls: false
-    network: "xhttp"
-  - name: "@IranProxyPlus`-26"
+    tls: true
+    network: "tcp"
+    servername: "www.google.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "QLh2Y5Ig7pncEIvOYpZlLH2rUHZ3CRuyAo1A_emWZQU"
+      short-id: "3ba10d9ce34380c9"
+  - name: "@IranProxyPlus`-25"
     type: "vless"
     server: "79.127.196.11"
     port: 8443
@@ -3834,29 +4146,61 @@ proxies:
     client-fingerprint: "chrome"
     alpn:
       - "h2"
-  - name: "🇷🇺202482 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "برای اتصال دائمی جوین شو🪭 TelegramID ⌲Express_freevpn 🪩`"
     type: "vless"
-    server: "135.106.168.250"
-    port: 443
-    uuid: "56ff50da-a238-0002-95ab-dd159634bd87"
+    server: "154.21.203.106"
+    port: 51279
+    uuid: "57beeeb0-03fc-4fc9-94da-7604488a7134"
     udp: true
     tls: true
     network: "tcp"
-    servername: "ru01.arpanet-cdn.com"
+    servername: "www.tesla.com"
+    client-fingerprint: "random"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "f6Tj8-uvWsLv3V-lGLuPciArp5oKqUImBg-U7-WJ-0A"
+      short-id: "bb82c8"
+  - name: "179.255.186.102"
+    type: "vless"
+    server: "179.255.186.102"
+    port: 443
+    uuid: "58647a59-0097-495e-9185-bc4be0390b32"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "decf01.sonicservice.digital"
     client-fingerprint: "firefox"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "9NcV9b86R2Cje-HiChBt8D-2vWWqg1pEvS26aXtMgCk"
-      short-id: "c1069a934648869a"
-  - name: "ffd7d2055bc64724.2f6.ir"
+      public-key: "z-TKWOWgZLfzQ-wNdwXQqVwaUgCmbchM2Xtrk1NGynU"
+  - name: "95.85.228.79"
     type: "vless"
-    server: "ffd7d2055bc64724.2f6.ir"
-    port: 8001
-    uuid: "580fbc4b-2290-4128-a630-be6b1cc7a4a7"
+    server: "95.85.228.79"
+    port: 443
+    uuid: "58647a59-0097-495e-9185-bc4be0390b32"
     udp: true
-    tls: false
+    tls: true
     network: "tcp"
-  - name: "@IranProxyPlus`-27"
+    servername: "necf01.sonicservice.digital"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "z-TKWOWgZLfzQ-wNdwXQqVwaUgCmbchM2Xtrk1NGynU"
+  - name: "51.77.144.182"
+    type: "vless"
+    server: "51.77.144.182"
+    port: 8080
+    uuid: "58ec8bba-fb99-4840-805c-1871cbec26f3"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "icloud.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "twCZ2ZSURqQA2oUep4h2aj_3yJEEagFSQByn26bWWkI"
+      short-id: "94d9456c33"
+  - name: "@IranProxyPlus`-26"
     type: "vless"
     server: "45.130.125.162"
     port: 8443
@@ -3868,7 +4212,7 @@ proxies:
     client-fingerprint: "chrome"
     alpn:
       - "h2"
-  - name: "@IranProxyPlus`-28"
+  - name: "@IranProxyPlus`-27"
     type: "vless"
     server: "45.130.125.192"
     port: 8443
@@ -3880,7 +4224,7 @@ proxies:
     client-fingerprint: "chrome"
     alpn:
       - "h2"
-  - name: "@IranProxyPlus`-29"
+  - name: "@IranProxyPlus`-28"
     type: "vless"
     server: "45.130.125.193"
     port: 8443
@@ -3892,7 +4236,7 @@ proxies:
     client-fingerprint: "chrome"
     alpn:
       - "h2"
-  - name: "@IranProxyPlus`-30"
+  - name: "@IranProxyPlus`-29"
     type: "vless"
     server: "45.130.125.194"
     port: 8443
@@ -3914,328 +4258,27 @@ proxies:
     tls: false
     network: "tcp"
     servername: "titan.socialxxmedia.pro"
-  - name: "@meliproxyy"
+  - name: "206.1.101.85"
     type: "vless"
-    server: "79.182.39.35"
-    port: 25548
-    uuid: "5a519754-a673-4462-83f6-5eb25d2af141"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "firefox"
-    reality-opts:
-      public-key: "lceynvFy326oU4ew9OPR7079m-L5ZcFELgCl0sqxU2M"
-      short-id: "bceb5b2197b76818"
-  - name: "🇮🇱202417 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "79.182.39.45"
-    port: 25172
-    uuid: "5a519754-a673-4462-83f6-5eb25d2af141"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "firefox"
-    reality-opts:
-      public-key: "Xr55Hig_JTeUluiGfSnma6zMHG2Uv5Xu30ZODGF5xGA"
-      short-id: "f09ac427e1abd14b"
-  - name: "de12b.h1cloud.net"
-    type: "vless"
-    server: "de12b.h1cloud.net"
-    port: 25172
-    uuid: "5a519754-a673-4462-83f6-5eb25d2af141"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "edge"
-    reality-opts:
-      public-key: "Xr55Hig_JTeUluiGfSnma6zMHG2Uv5Xu30ZODGF5xGA"
-      short-id: "f09ac427e1abd14b"
-  - name: "@filembad`-35"
-    type: "vless"
-    server: "de12b.h1cloud.net"
-    port: 25172
-    uuid: "5a519754-a673-4462-83f6-5eb25d2af141"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "safari"
-    reality-opts:
-      public-key: "Xr55Hig_JTeUluiGfSnma6zMHG2Uv5Xu30ZODGF5xGA"
-      short-id: "f09ac427e1abd14b"
-  - name: "@filembad`-36"
-    type: "vless"
-    server: "nl2.h1cloud.net"
-    port: 25445
-    uuid: "5a519754-a673-4462-83f6-5eb25d2af141"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "wkpC2kKl2gNMM6uOP-K1__k70YUKS8c5t7aFW_PF7UM"
-      short-id: "e891838a8cb32dbf"
-  - name: "pl5.h1cloud.net"
-    type: "vless"
-    server: "pl5.h1cloud.net"
-    port: 25548
-    uuid: "5a519754-a673-4462-83f6-5eb25d2af141"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "lceynvFy326oU4ew9OPR7079m-L5ZcFELgCl0sqxU2M"
-      short-id: "bceb5b2197b76818"
-  - name: "@filembad`-37"
-    type: "vless"
-    server: "185.227.137.69"
-    port: 443
-    uuid: "5b32557c-a67b-415b-97b2-a43290ab71c5"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.digiturunc.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "D0XU_vaxhJewIPzWLbXIVHfoq68Jcu48HUp9I4r30xU"
-      short-id: "d211e464747fdf2c"
-  - name: "@IranProxyPlus`-31"
-    type: "vless"
-    server: "151.101.193.57"
-    port: 80
-    uuid: "5cdf99d3-a51b-570e-8245-f87d674dc652"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "@filembad`-38"
-    type: "vless"
-    server: "193.160.140.168"
-    port: 8443
-    uuid: "5ce803ae-a81c-4276-b1f8-ee3b845c5c4b"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "apple.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
-  - name: "saas.sin.fan"
-    type: "vless"
-    server: "saas.sin.fan"
-    port: 2096
-    uuid: "5d7b401c-78fa-4254-872e-6d42bf7e75ec"
+    server: "206.1.101.85"
+    port: 42654
+    uuid: "5a82be1c-ed6a-4f98-a767-05df0f7be3e7"
     udp: true
     tls: true
     network: "ws"
-    servername: "vp8.1145678.xyz"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/p"
-      headers:
-        Host: "vp8.1145678.xyz"
-  - name: "saas.sin.fan-1"
-    type: "vless"
-    server: "saas.sin.fan"
-    port: 443
-    uuid: "5d7b401c-78fa-4254-872e-6d42bf7e75ec"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "vp.1145678.xyz"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/course/app/album"
-      headers:
-        Host: "vp.1145678.xyz"
-  - name: "ee-2e06d85dc0.shamanapp.online"
-    type: "vless"
-    server: "ee-2e06d85dc0.shamanapp.online"
-    port: 34451
-    uuid: "5d9fb46f-c4bc-4d6e-9a26-a4d5f51abd28"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "ee-2e06d85dc0.shamanapp.online"
-  - name: "83.147.18.75"
-    type: "vless"
-    server: "83.147.18.75"
-    port: 443
-    uuid: "5de0c218-0138-45d8-94d2-c2c3f37a1a6d"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.bing.com"
-    client-fingerprint: "qq"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "tfFzmbVByvoZxxIEUiHMv22_k0-nQz00L0XjU0bd_Fc"
-      short-id: "7f1e29593aa94ad1"
-  - name: "🇮🇷202407 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "2.144.22.87"
-    port: 443
-    uuid: "5e9d217c-0f9f-4c8c-aa79-a600baa8765b"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "api.bgp6.ir"
+    servername: "206.1.101.85"
     client-fingerprint: "chrome"
     alpn:
-      - "h2"
-      - "http/1.1"
-    flow: "xtls-rprx-vision"
-  - name: "flo-datarelay.com"
-    type: "vless"
-    server: "flo-datarelay.com"
-    port: 443
-    uuid: "5f09ffe7-fbff-411f-b68f-2a0677626a44"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "flo-datarelay.com"
-    client-fingerprint: "qq"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "mk-fkkWvUHz2ubIOkr8kfDeglXowdCI3Z4OssjWIIwg"
-      short-id: "2b145d99dc39e2cc"
-  - name: "🇨🇦202540 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "104.21.13.229"
-    port: 443
-    uuid: "5f11c240-89df-494c-9c81-8b619023bb58"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "789156.xyz"
-    ws-opts:
-      headers:
-        Host: "789156.xyz"
-  - name: "@IranProxyPlus`-32"
-    type: "vless"
-    server: "104.17.3.1"
-    port: 443
-    uuid: "5f97d63f-ef61-4bad-a403-477b00b069ee"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "cdn.parsclad.ir"
-    client-fingerprint: "randomized"
-    alpn:
-      - "h2"
       - "http/1.1"
     ws-opts:
-      path: "dan"
-      headers:
-        Host: "cdn.parsclad.ir"
-  - name: "91.107.180.202"
-    type: "vless"
-    server: "91.107.180.202"
-    port: 9090
-    uuid: "5fc513f9-e834-40e1-9ab2-a601f03c4cf7"
-    udp: true
-    tls: false
-    network: "tcp"
-  - name: "@meliproxyy-1"
-    type: "vless"
-    server: "146.75.57.238"
-    port: 443
-    uuid: "606047d0-56ec-4152-8d3b-13c5d4adef03"
-    udp: true
+      path: "/"
+  - name: "👾38@oneclickvpnkeys"
+    type: "http"
+    server: "fr017.freeconnect.link"
+    port: 9251
     tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      headers:
-        Host: "usaaaaboijji.global.ssl.fastly.net"
-  - name: "🇺🇸202918 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "146.75.57.238"
-    port: 443
-    uuid: "606047d0-56ec-4152-8d3b-13c5d4adef03"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "google.com"
-    ws-opts:
-      headers:
-        Host: "canadaboijji.global.ssl.fastly.net"
-  - name: "@meliproxyy-2"
-    type: "vless"
-    server: "146.75.59.186"
-    port: 443
-    uuid: "606047d0-56ec-4152-8d3b-13c5d4adef03"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      headers:
-        Host: "frenchanjaai.global.ssl.fastly.net"
-  - name: "🇺🇸202919 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "146.75.59.186"
-    port: 443
-    uuid: "606047d0-56ec-4152-8d3b-13c5d4adef03"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      headers:
-        Host: "looabturkeyeoijji.global.ssl.fastly.net."
-  - name: "Tel@MARAMBASHI 🇩🇪"
-    type: "vless"
-    server: "146.75.59.186"
-    port: 443
-    uuid: "606047d0-56ec-4152-8d3b-13c5d4adef03"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2560"
-      headers:
-        Host: "looabturkeyeoijji.global.ssl.fastly.net."
-  - name: "@meliproxyy-3"
-    type: "vless"
-    server: "146.75.59.186"
-    port: 443
-    uuid: "606047d0-56ec-4152-8d3b-13c5d4adef03"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
-      headers:
-        Host: "frenchanjaai.global.ssl.fastly.net"
-  - name: "199.232.78.159-1"
-    type: "vless"
-    server: "199.232.78.159"
-    port: 443
-    uuid: "606047d0-56ec-4152-8d3b-13c5d4adef03"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      headers:
-        Host: "looabgermanyoijji.global.ssl.fastly.net"
-  - name: "🇺🇸202920 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "vless"
-    server: "216.24.57.1"
-    port: 2095
-    uuid: "606047d0-56ec-4152-8d3b-13c5d4adef03"
-    udp: true
-    tls: false
-    network: "httpupgrade"
+    username: "freeuser1"
+    password: "freeuser1"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -4250,25 +4293,24 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "🇺🇸202429 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "bored_vpn"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 158ms | VLESS"
       - "@IranProxyPlus`"
       - "***🐦🔥***-@SPEEDS_VPN"
-      - "konglam.goodphilips.ir"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 99ms | VLESS"
-      - "43.174.247.63"
-      - "@meliproxyy`"
+      - "@filembad`"
+      - "***⚡***@V2ray_official"
       - "www.naviga-ting.com"
+      - "195.123.213.28"
       - "@IranProxyPlus`-1"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 73ms | VLESS"
+      - "@filembad`-1"
       - "@IranProxyPlus`-2"
       - "@IranProxyPlus`-3"
+      - "45.151.71.145"
       - "199.232.239.239"
-      - "🇷🇺29@exclavevpn`"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 184ms | VLESS"
-      - "@filembad`"
-      - "@filembad`-1"
-      - "🇫🇮202448 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇫🇮202433 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "China 🇨🇳"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 209ms | VLESS"
+      - "45.133.151.170"
+      - "188.114.98.0"
       - "***🐦🔥***-@SPEEDS_VPN-1"
       - "***🐦🔥***-@SPEEDS_VPN-2"
       - "***🐦🔥***-@SPEEDS_VPN-3"
@@ -4287,217 +4329,171 @@ proxy-groups:
       - "***🐦🔥***-@SPEEDS_VPN-15"
       - "***🐦🔥***-@SPEEDS_VPN-16"
       - "***🌪***-@SPEEDS_VPN1`"
-      - "194.55.239.89"
       - "@IranProxyPlus`-4"
-      - "🇫🇷202535 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "YFZ 205 @Outline_Vpn"
       - "srv2-germany.hajimamadcloud.com.tr"
-      - "65.109.211.81"
-      - "🤖67@oneclickvpnkeys"
-      - "🤖66@oneclickvpnkeys"
-      - "goold.zovip2.ir"
-      - "213.152.180.55"
-      - "67.159.49.36"
+      - "🇫🇮202868 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "***⚡***@V2ray_official-1"
+      - "@Vpn_Tehran 💛 کانال تلگرام"
       - "@IranProxyPlus`-5"
-      - "178.17.52.234"
-      - "برای اتصال دائمی جوین شو🪻 TelegramID ⌲Express_freevpn 🪩"
       - "@IranProxyPlus`-6"
-      - "🇮🇷202452 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "91.107.247.174"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 1ms | VLESS"
-      - "81.7.11.36"
+      - "185.227.137.69"
+      - "🇩🇪202826 | ⚡️Telegram = t.me/SOSkeyNET"
       - "@IranProxyPlus`-7"
       - "@IranProxyPlus`-8"
-      - "31.57.250.144"
-      - "31.57.250.144-1"
-      - "31.57.250.144-2"
-      - "31.57.250.144-3"
-      - "31.57.250.144-4"
-      - "🇨🇦203063 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "cdn1.ir53.indevs.in"
       - "cdn-waw.edgeptr.org"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 104ms | VLESS"
+      - "89.144.30.154"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | VLESS"
+      - "353e8a5e93f2e082.bluebleu.ir"
+      - "6b3443242f617955.monqela.ir"
+      - "b5e3b3d591d783f9.monqela.ir"
+      - "ca259eb335992e65.monqela.ir"
+      - "@filembad`-2"
+      - "tus.hemad.qzz.io"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 96ms | VLESS"
+      - "tus.velqarion.ir"
       - "@IranProxyPlus`-9"
       - "@IranProxyPlus`-10"
-      - "@IranProxyPlus`-11"
+      - "104.21.48.1"
+      - "bs.cexora.ir"
+      - "bigshagy.zqpm.ir"
       - "***🐦🔥***-@SPEEDS_VPN`-1"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 271ms | VLESS"
-      - "@filembad`-2"
-      - "***🐦🔥***-@SPEEDS_VPN`-2"
-      - "🇩🇪203061 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 193ms | VLESS"
-      - "🌟 @MTproxy22_v2ray"
-      - "@v2ray_free_config_iran | 🇮🇷 80ms | VLESS"
-      - "@IranProxyPlus`-12"
-      - "***🐦🔥***-@SPEEDS_VPN`-3"
-      - "72.56.38.83"
-      - "13.140.80.133"
-      - "13.140.80.133-1"
-      - "13.140.80.133-2"
-      - "13.140.80.133-3"
-      - "🇺🇸202416 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 231ms | VLESS"
-      - "185.168.208.190"
       - "@filembad`-3"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 135ms | VLESS"
-      - "@IranProxyPlus`-13"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 231ms | VLESS"
+      - "47.251.25.74"
+      - "***🐦🔥***-@SPEEDS_VPN`-2"
+      - "91.98.202.214"
+      - "89.167.17.75"
+      - "45.198.96.210"
+      - "🇦🇺203552 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "167.233.182.218"
+      - "178.172.227.124"
+      - "94.249.195.31"
+      - "@filembad`-4"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 183ms | VLESS"
+      - "@IranProxyPlus`-11"
+      - "82.202.183.9"
+      - "***🐦🔥***-@SPEEDS_VPN`-3"
+      - "206.206.76.75"
+      - "hikvision-plus.com"
+      - "195.254.165.243"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 214ms | VLESS"
+      - "@filembad`-5"
+      - "@filembad`-6"
+      - "@filembad`-7"
+      - "@filembad`-8"
+      - "187.52.44.20"
+      - "👾33@oneclickvpnkeys"
+      - "95.56.251.12"
+      - "@IranProxyPlus`-12"
       - "The Netherlands 🇳🇱"
+      - "185.71.219.188"
+      - "🇮🇷203557 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "147.135.213.72"
+      - "216.24.57.1"
       - "love.ns.cloudflare.com"
+      - "s2.zynetraq.ir"
       - "***🌪***-@SPEEDS_VPN1`-1"
-      - "konglam.goodphilips.ir-1"
-      - "@IranProxyPlus`-14"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 142ms | VLESS"
+      - "104.27.2.172"
+      - "@IranProxyPlus`-13"
+      - "@filembad`-9"
+      - "@filembad`-10"
       - "***🐦🔥***-@SPEEDS_VPN`-4"
       - "🇫🇮202917 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "51.38.127.93"
+      - "🇫🇮203564 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪202969 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "S1"
+      - "xray2-direct-mci1-fs-ce.freesocks.work"
+      - "@filembad`-11"
       - "***🌪***-@SPEEDS_VPN1"
       - "***🌪***-@SPEEDS_VPN1`-2"
-      - "🇭🇰202420 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 354ms | VLESS"
-      - "au5.pad-sservice.lat"
-      - "104.16.7.70"
-      - "78.159.246.179"
-      - "78.159.246.85"
-      - "140.248.185.253"
-      - "146.75.56.210"
-      - "146.75.57.238"
-      - "146.75.59.186"
-      - "199.232.129.192"
-      - "199.232.246.236"
-      - "@IranProxyPlus`-15"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 177ms | VLESS"
-      - "89.42.196.237"
-      - "@filembad`-4"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 100ms | VLESS"
-      - "static.melzumo.ir"
-      - "150.40.126.19"
+      - "🇨🇦202886 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱202873 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "199.232.20.113"
+      - "web-tomcat.pages.dev"
+      - "@IranProxyPlus`-14"
+      - "@flyv2ray"
+      - "🇺🇸203562 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇮🇷202865 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "150.40.126.22"
       - "Tel@MARAMBASHI 🇨🇦"
       - "Bulgaria 🇧🇬"
       - "Bulgaria 🇧🇬-1"
+      - "45.9.156.42"
+      - "@filembad`-12"
+      - "🇲🇩203555 | ⚡️Telegram = t.me/SOSkeyNET"
       - "Tel@MARAMBASHI 🇨🇦-1"
-      - "@filembad`-5"
-      - "bg5.univesalsrv.com"
-      - "@filembad`-6"
-      - "@IranProxyPlus`-16"
+      - "bg4.univesalsrv.com"
+      - "@filembad`-13"
+      - "md5.univesalsrv.com"
+      - "rs1.univesalsrv.com"
+      - "rs2.univesalsrv.com"
+      - "rs3.univesalsrv.com"
+      - "🇷🇸203553 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@IranProxyPlus`-15"
+      - "46.29.255.123"
+      - "94.249.187.43"
+      - "docs.asasin4.ir"
       - "***🐦🔥***-@SPEEDS_VPN`-5"
       - "Seychelles 🇸🇨"
-      - "🇯🇵202486 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@IranProxyPlus`-17"
-      - "🇨🇦202464 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸202445 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "fl.privatevip.ir"
-      - "@v2ray_free_config_iran | 🇮🇷 96ms | VLESS"
-      - "🇩🇪202423 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@IranProxyPlus`-16"
+      - "213.108.198.158"
+      - "🇸🇬202910 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "104.20.61.103"
       - "23.81.36.148"
-      - "🇳🇱202441 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@Vpn_Tehran 🩵 کانال تلگرام"
-      - "213.152.180.55-1"
-      - "@IranProxyPlus`-18"
-      - "app.wingerdt.com"
-      - "dashboard.wingerdt.com"
-      - "@filembad`-7"
-      - "iugbnm.varqino.ir"
-      - "nzidam.zelmuro.ir"
-      - "odinnda.hospitaldt.ir"
-      - "opiugjk.nationalldt.com"
-      - "orovxe.varqino.ir"
-      - "playaudio.zelmuro.ir"
-      - "qtavbvc.varqino.ir"
-      - "rurbsnd.zelmuro.ir"
-      - "torwe.dtgitar.com"
-      - "uogtyf.speedtrade.top"
-      - "uyrsdfdfxg.zelmuro.ir"
-      - "wsfdje.hospitaldt.ir"
-      - "🏠202506 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "216.24.57.225"
-      - "***🐦🔥***-@SPEEDS_VPN-17"
-      - "@filembad`-8"
-      - "🇲🇽202450 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "177.3.214.133"
-      - "78.159.250.214"
-      - "🇮🇳202432 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 249ms | VLESS"
-      - "@IranProxyPlus`-19"
-      - "@IranProxyPlus`-20"
-      - "51.75.118.5"
-      - "🇫🇷202499 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "iruae.netbazshop.ir"
-      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 104ms | VLESS"
-      - "pl.peregrine-sub.net"
-      - "@IranProxyPlus`-21"
-      - "S4"
-      - "@filembad`-9"
-      - "@IranProxyPlus`-22"
-      - "@IranProxyPlus`-23"
-      - "168.119.103.176"
-      - "146.75.59.186-1"
-      - "199.232.78.160"
-      - "wwww.qarvian.ir"
-      - "146.75.59.186-2"
-      - "199.232.78.159"
-      - "216.24.57.1"
-      - "@IranProxyPlus`-24"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 242ms | VLESS"
-      - "@filembad`-10"
-      - "@v2ray_free_config_iran | 🇮🇷 285ms | VLESS"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 249ms | VLESS-1"
-      - "15.204.97.216"
-      - "@filembad`-11"
-      - "15.204.97.219"
-      - "@filembad`-12"
-      - "51.158.206.19"
-      - "@filembad`-13"
+      - "91.99.171.12"
+      - "193.148.253.194"
       - "@filembad`-14"
+      - "94.249.187.88"
       - "@filembad`-15"
-      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 86ms | VLESS"
+      - "@IranProxyPlus`-17"
+      - "jp.sofast.live"
       - "@filembad`-16"
-      - "🇳🇱202536 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 94ms | VLESS"
-      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 91ms | VLESS"
       - "@filembad`-17"
+      - "uogtyf.speedtrade.top"
+      - "🇺🇸202897 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "***🐦🔥***-@SPEEDS_VPN-17"
       - "@filembad`-18"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 299ms | VLESS"
+      - "94.249.186.139"
+      - "94.249.186.139-1"
+      - "31.76.91.142"
+      - "gcore.com"
+      - "🇫🇮202965 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@IranProxyPlus`-18"
       - "@filembad`-19"
-      - "51.158.206.87"
+      - "@IranProxyPlus`-19"
+      - "51.75.118.5"
+      - "🇮🇷202964 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 302ms | VLESS"
+      - "pl.peregrine-sub.net"
+      - "@IranProxyPlus`-20"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 146ms | VLESS"
+      - "94.249.186.64"
+      - "@IranProxyPlus`-21"
+      - "@IranProxyPlus`-22"
+      - "168.119.103.176"
+      - "🇺🇸202938 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸202936 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸202937 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "wwww.qarvian.ir"
+      - "167.233.147.148"
+      - "@IranProxyPlus`-23"
       - "@filembad`-20"
-      - "51.158.206.8"
       - "@filembad`-21"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 67ms | VLESS"
+      - "15.204.97.206"
+      - "15.204.97.209"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 133ms | VLESS"
       - "@filembad`-22"
       - "@filembad`-23"
-      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 84ms | VLESS"
       - "@filembad`-24"
-      - "62.210.91.10"
       - "@filembad`-25"
+      - "15.204.97.219"
       - "@filembad`-26"
-      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 234ms | VLESS"
-      - "@V2_MOD_SHOP-🇨🇭 🔥"
-      - "@V2_MOD_SHOP-🇨🇭"
-      - "@V2_MOD_SHOP-🇸🇪 🔥"
-      - "@V2_MOD_SHOP-🇩🇪 🔥`"
-      - "@V2_MOD_SHOP-🇵🇱 🔥"
-      - "@V2_MOD_SHOP-🇩🇪 1🔥"
-      - "🇺🇸202479 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇩🇪202476 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🌍202481 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇳🇱202422 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 87ms | VLESS"
-      - "172.67.156.147"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 232ms | VLESS"
-      - "43.170.8.95"
-      - "79.175.189.121"
-      - "al3.irgemini.sbs"
-      - "fr3.irgemini.sbs"
-      - "nl3.irgemini.sbs"
-      - "real3.irgemini.sbs"
-      - "tr3.irgemini.sbs"
-      - "uk3.irgemini.sbs"
-      - "usa3.irgemini.sbs"
-      - "173.245.58.75"
+      - "51.158.206.12"
       - "@filembad`-27"
-      - "45.197.134.49"
-      - "@v2ray_free_config_iran | 🇮🇷 110ms | VLESS"
-      - "87.199.205.28"
-      - "Finland 🇫🇮"
-      - "@v2ray_free_config_iran | 🇮🇷 224ms | VLESS"
+      - "@FarazV2ray"
+      - "51.158.206.20"
       - "@filembad`-28"
       - "@filembad`-29"
       - "@filembad`-30"
@@ -4505,51 +4501,99 @@ proxy-groups:
       - "@filembad`-32"
       - "@filembad`-33"
       - "@filembad`-34"
-      - "@IranProxyPlus`-25"
-      - "148.253.210.191"
-      - "static.162.97.119.168.clients.your-server.de"
-      - "static.189.124.140.128.clients.your-server.de"
-      - "static.19.212.12.49.clients.your-server.de"
-      - "static.197.56.233.167.clients.your-server.de"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 202ms | VLESS"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 201ms | VLESS"
+      - "@filembad`-35"
+      - "@filembad`-36"
+      - "@filembad`-37"
+      - "@filembad`-38"
+      - "@FarazV2ray-1"
+      - "@filembad`-39"
+      - "@filembad`-40"
+      - "@filembad`-41"
+      - "@filembad`-42"
+      - "51.158.206.96"
+      - "@filembad`-43"
+      - "@filembad`-44"
+      - "@filembad`-45"
+      - "@FarazV2ray-2"
+      - "@filembad`-46"
+      - "@filembad`-47"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 317ms | VLESS"
+      - "@filembad`-48"
+      - "@V2_MOD_SHOP-🇨🇭 🔥"
+      - "@V2_MOD_SHOP-🇨🇭"
+      - "@V2_MOD_SHOP-🇸🇪 🔥"
+      - "@V2_MOD_SHOP-🇩🇪 🔥`"
+      - "@V2_MOD_SHOP-🇵🇱 🔥"
+      - "@V2_MOD_SHOP-🇩🇪 1🔥"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 98ms | VLESS"
+      - "108.165.236.229"
+      - "2.58.113.192"
+      - "72.56.31.206"
+      - "89.191.226.252"
+      - "5.149.249.94"
+      - "@filembad`-49"
+      - "45.9.12.110"
+      - "ru.letsconnectpoint.com"
+      - "net.port1.etsal1.sbs"
+      - "net.port1.etsal1.sbs-1"
+      - "net.port1.etsal1.sbs-2"
+      - "net.port1.etsal1.sbs-3"
+      - "net.port1.etsal1.sbs-4"
+      - "static.173.117.201.138.clients.your-server.de"
+      - "www.buydomains.com"
+      - "🇨🇦203556 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "173.245.58.75"
+      - "ro-xh02.tcp-reset-club.net"
+      - "45.197.134.49"
+      - "@filembad`-50"
+      - "@filembad`-51"
+      - "@filembad`-52"
+      - "Finland 🇫🇮"
+      - "201.58.183.42"
+      - "72.56.41.232"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 178ms | VLESS"
+      - "@hamedvpns 🇮🇳1"
+      - "gcore.com-1"
+      - "138.124.39.251"
+      - "@filembad`-53"
+      - "nl-modx-prime.storagedirectguide.com"
+      - "103.238.227.211"
+      - "@filembad`-54"
+      - "@Vpn_Tehran 🤍 کانال تلگرام"
+      - "@filembad`-55"
+      - "51.68.34.78"
+      - "@filembad`-56"
+      - "@filembad`-57"
+      - "👾36@oneclickvpnkeys"
+      - "94.249.187.46"
+      - "@IranProxyPlus`-24"
+      - "🇩🇪202952 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪202950 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪202955 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪202951 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪202954 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪202953 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪203541 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪203540 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪203543 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪203544 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪203542 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇮203545 | ⚡️Telegram = t.me/SOSkeyNET"
       - "Germany 🇩🇪"
-      - "de.vfzq.ir"
-      - "www.speedtest.net"
+      - "191.44.108.30"
+      - "191.44.108.31"
+      - "@IranProxyPlus`-25"
+      - "برای اتصال دائمی جوین شو🪭 TelegramID ⌲Express_freevpn 🪩`"
+      - "179.255.186.102"
+      - "95.85.228.79"
+      - "51.77.144.182"
       - "@IranProxyPlus`-26"
-      - "🇷🇺202482 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "ffd7d2055bc64724.2f6.ir"
       - "@IranProxyPlus`-27"
       - "@IranProxyPlus`-28"
       - "@IranProxyPlus`-29"
-      - "@IranProxyPlus`-30"
       - "***🌪***-@SPEEDS_VPN1`-3"
-      - "@meliproxyy"
-      - "🇮🇱202417 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "de12b.h1cloud.net"
-      - "@filembad`-35"
-      - "@filembad`-36"
-      - "pl5.h1cloud.net"
-      - "@filembad`-37"
-      - "@IranProxyPlus`-31"
-      - "@filembad`-38"
-      - "saas.sin.fan"
-      - "saas.sin.fan-1"
-      - "ee-2e06d85dc0.shamanapp.online"
-      - "83.147.18.75"
-      - "🇮🇷202407 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "flo-datarelay.com"
-      - "🇨🇦202540 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@IranProxyPlus`-32"
-      - "91.107.180.202"
-      - "@meliproxyy-1"
-      - "🇺🇸202918 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@meliproxyy-2"
-      - "🇺🇸202919 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "Tel@MARAMBASHI 🇩🇪"
-      - "@meliproxyy-3"
-      - "199.232.78.159-1"
-      - "🇺🇸202920 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "206.1.101.85"
+      - "👾38@oneclickvpnkeys"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -4558,25 +4602,24 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "🇺🇸202429 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "bored_vpn"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 158ms | VLESS"
       - "@IranProxyPlus`"
       - "***🐦🔥***-@SPEEDS_VPN"
-      - "konglam.goodphilips.ir"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 99ms | VLESS"
-      - "43.174.247.63"
-      - "@meliproxyy`"
+      - "@filembad`"
+      - "***⚡***@V2ray_official"
       - "www.naviga-ting.com"
+      - "195.123.213.28"
       - "@IranProxyPlus`-1"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 73ms | VLESS"
+      - "@filembad`-1"
       - "@IranProxyPlus`-2"
       - "@IranProxyPlus`-3"
+      - "45.151.71.145"
       - "199.232.239.239"
-      - "🇷🇺29@exclavevpn`"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 184ms | VLESS"
-      - "@filembad`"
-      - "@filembad`-1"
-      - "🇫🇮202448 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇫🇮202433 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "China 🇨🇳"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 209ms | VLESS"
+      - "45.133.151.170"
+      - "188.114.98.0"
       - "***🐦🔥***-@SPEEDS_VPN-1"
       - "***🐦🔥***-@SPEEDS_VPN-2"
       - "***🐦🔥***-@SPEEDS_VPN-3"
@@ -4595,217 +4638,171 @@ proxy-groups:
       - "***🐦🔥***-@SPEEDS_VPN-15"
       - "***🐦🔥***-@SPEEDS_VPN-16"
       - "***🌪***-@SPEEDS_VPN1`"
-      - "194.55.239.89"
       - "@IranProxyPlus`-4"
-      - "🇫🇷202535 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "YFZ 205 @Outline_Vpn"
       - "srv2-germany.hajimamadcloud.com.tr"
-      - "65.109.211.81"
-      - "🤖67@oneclickvpnkeys"
-      - "🤖66@oneclickvpnkeys"
-      - "goold.zovip2.ir"
-      - "213.152.180.55"
-      - "67.159.49.36"
+      - "🇫🇮202868 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "***⚡***@V2ray_official-1"
+      - "@Vpn_Tehran 💛 کانال تلگرام"
       - "@IranProxyPlus`-5"
-      - "178.17.52.234"
-      - "برای اتصال دائمی جوین شو🪻 TelegramID ⌲Express_freevpn 🪩"
       - "@IranProxyPlus`-6"
-      - "🇮🇷202452 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "91.107.247.174"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 1ms | VLESS"
-      - "81.7.11.36"
+      - "185.227.137.69"
+      - "🇩🇪202826 | ⚡️Telegram = t.me/SOSkeyNET"
       - "@IranProxyPlus`-7"
       - "@IranProxyPlus`-8"
-      - "31.57.250.144"
-      - "31.57.250.144-1"
-      - "31.57.250.144-2"
-      - "31.57.250.144-3"
-      - "31.57.250.144-4"
-      - "🇨🇦203063 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "cdn1.ir53.indevs.in"
       - "cdn-waw.edgeptr.org"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 104ms | VLESS"
+      - "89.144.30.154"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | VLESS"
+      - "353e8a5e93f2e082.bluebleu.ir"
+      - "6b3443242f617955.monqela.ir"
+      - "b5e3b3d591d783f9.monqela.ir"
+      - "ca259eb335992e65.monqela.ir"
+      - "@filembad`-2"
+      - "tus.hemad.qzz.io"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 96ms | VLESS"
+      - "tus.velqarion.ir"
       - "@IranProxyPlus`-9"
       - "@IranProxyPlus`-10"
-      - "@IranProxyPlus`-11"
+      - "104.21.48.1"
+      - "bs.cexora.ir"
+      - "bigshagy.zqpm.ir"
       - "***🐦🔥***-@SPEEDS_VPN`-1"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 271ms | VLESS"
-      - "@filembad`-2"
-      - "***🐦🔥***-@SPEEDS_VPN`-2"
-      - "🇩🇪203061 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 193ms | VLESS"
-      - "🌟 @MTproxy22_v2ray"
-      - "@v2ray_free_config_iran | 🇮🇷 80ms | VLESS"
-      - "@IranProxyPlus`-12"
-      - "***🐦🔥***-@SPEEDS_VPN`-3"
-      - "72.56.38.83"
-      - "13.140.80.133"
-      - "13.140.80.133-1"
-      - "13.140.80.133-2"
-      - "13.140.80.133-3"
-      - "🇺🇸202416 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 231ms | VLESS"
-      - "185.168.208.190"
       - "@filembad`-3"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 135ms | VLESS"
-      - "@IranProxyPlus`-13"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 231ms | VLESS"
+      - "47.251.25.74"
+      - "***🐦🔥***-@SPEEDS_VPN`-2"
+      - "91.98.202.214"
+      - "89.167.17.75"
+      - "45.198.96.210"
+      - "🇦🇺203552 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "167.233.182.218"
+      - "178.172.227.124"
+      - "94.249.195.31"
+      - "@filembad`-4"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 183ms | VLESS"
+      - "@IranProxyPlus`-11"
+      - "82.202.183.9"
+      - "***🐦🔥***-@SPEEDS_VPN`-3"
+      - "206.206.76.75"
+      - "hikvision-plus.com"
+      - "195.254.165.243"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 214ms | VLESS"
+      - "@filembad`-5"
+      - "@filembad`-6"
+      - "@filembad`-7"
+      - "@filembad`-8"
+      - "187.52.44.20"
+      - "👾33@oneclickvpnkeys"
+      - "95.56.251.12"
+      - "@IranProxyPlus`-12"
       - "The Netherlands 🇳🇱"
+      - "185.71.219.188"
+      - "🇮🇷203557 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "147.135.213.72"
+      - "216.24.57.1"
       - "love.ns.cloudflare.com"
+      - "s2.zynetraq.ir"
       - "***🌪***-@SPEEDS_VPN1`-1"
-      - "konglam.goodphilips.ir-1"
-      - "@IranProxyPlus`-14"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 142ms | VLESS"
+      - "104.27.2.172"
+      - "@IranProxyPlus`-13"
+      - "@filembad`-9"
+      - "@filembad`-10"
       - "***🐦🔥***-@SPEEDS_VPN`-4"
       - "🇫🇮202917 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "51.38.127.93"
+      - "🇫🇮203564 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪202969 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "S1"
+      - "xray2-direct-mci1-fs-ce.freesocks.work"
+      - "@filembad`-11"
       - "***🌪***-@SPEEDS_VPN1"
       - "***🌪***-@SPEEDS_VPN1`-2"
-      - "🇭🇰202420 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 354ms | VLESS"
-      - "au5.pad-sservice.lat"
-      - "104.16.7.70"
-      - "78.159.246.179"
-      - "78.159.246.85"
-      - "140.248.185.253"
-      - "146.75.56.210"
-      - "146.75.57.238"
-      - "146.75.59.186"
-      - "199.232.129.192"
-      - "199.232.246.236"
-      - "@IranProxyPlus`-15"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 177ms | VLESS"
-      - "89.42.196.237"
-      - "@filembad`-4"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 100ms | VLESS"
-      - "static.melzumo.ir"
-      - "150.40.126.19"
+      - "🇨🇦202886 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱202873 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "199.232.20.113"
+      - "web-tomcat.pages.dev"
+      - "@IranProxyPlus`-14"
+      - "@flyv2ray"
+      - "🇺🇸203562 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇮🇷202865 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "150.40.126.22"
       - "Tel@MARAMBASHI 🇨🇦"
       - "Bulgaria 🇧🇬"
       - "Bulgaria 🇧🇬-1"
+      - "45.9.156.42"
+      - "@filembad`-12"
+      - "🇲🇩203555 | ⚡️Telegram = t.me/SOSkeyNET"
       - "Tel@MARAMBASHI 🇨🇦-1"
-      - "@filembad`-5"
-      - "bg5.univesalsrv.com"
-      - "@filembad`-6"
-      - "@IranProxyPlus`-16"
+      - "bg4.univesalsrv.com"
+      - "@filembad`-13"
+      - "md5.univesalsrv.com"
+      - "rs1.univesalsrv.com"
+      - "rs2.univesalsrv.com"
+      - "rs3.univesalsrv.com"
+      - "🇷🇸203553 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@IranProxyPlus`-15"
+      - "46.29.255.123"
+      - "94.249.187.43"
+      - "docs.asasin4.ir"
       - "***🐦🔥***-@SPEEDS_VPN`-5"
       - "Seychelles 🇸🇨"
-      - "🇯🇵202486 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@IranProxyPlus`-17"
-      - "🇨🇦202464 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸202445 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "fl.privatevip.ir"
-      - "@v2ray_free_config_iran | 🇮🇷 96ms | VLESS"
-      - "🇩🇪202423 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@IranProxyPlus`-16"
+      - "213.108.198.158"
+      - "🇸🇬202910 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "104.20.61.103"
       - "23.81.36.148"
-      - "🇳🇱202441 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@Vpn_Tehran 🩵 کانال تلگرام"
-      - "213.152.180.55-1"
-      - "@IranProxyPlus`-18"
-      - "app.wingerdt.com"
-      - "dashboard.wingerdt.com"
-      - "@filembad`-7"
-      - "iugbnm.varqino.ir"
-      - "nzidam.zelmuro.ir"
-      - "odinnda.hospitaldt.ir"
-      - "opiugjk.nationalldt.com"
-      - "orovxe.varqino.ir"
-      - "playaudio.zelmuro.ir"
-      - "qtavbvc.varqino.ir"
-      - "rurbsnd.zelmuro.ir"
-      - "torwe.dtgitar.com"
-      - "uogtyf.speedtrade.top"
-      - "uyrsdfdfxg.zelmuro.ir"
-      - "wsfdje.hospitaldt.ir"
-      - "🏠202506 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "216.24.57.225"
-      - "***🐦🔥***-@SPEEDS_VPN-17"
-      - "@filembad`-8"
-      - "🇲🇽202450 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "177.3.214.133"
-      - "78.159.250.214"
-      - "🇮🇳202432 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 249ms | VLESS"
-      - "@IranProxyPlus`-19"
-      - "@IranProxyPlus`-20"
-      - "51.75.118.5"
-      - "🇫🇷202499 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "iruae.netbazshop.ir"
-      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 104ms | VLESS"
-      - "pl.peregrine-sub.net"
-      - "@IranProxyPlus`-21"
-      - "S4"
-      - "@filembad`-9"
-      - "@IranProxyPlus`-22"
-      - "@IranProxyPlus`-23"
-      - "168.119.103.176"
-      - "146.75.59.186-1"
-      - "199.232.78.160"
-      - "wwww.qarvian.ir"
-      - "146.75.59.186-2"
-      - "199.232.78.159"
-      - "216.24.57.1"
-      - "@IranProxyPlus`-24"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 242ms | VLESS"
-      - "@filembad`-10"
-      - "@v2ray_free_config_iran | 🇮🇷 285ms | VLESS"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 249ms | VLESS-1"
-      - "15.204.97.216"
-      - "@filembad`-11"
-      - "15.204.97.219"
-      - "@filembad`-12"
-      - "51.158.206.19"
-      - "@filembad`-13"
+      - "91.99.171.12"
+      - "193.148.253.194"
       - "@filembad`-14"
+      - "94.249.187.88"
       - "@filembad`-15"
-      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 86ms | VLESS"
+      - "@IranProxyPlus`-17"
+      - "jp.sofast.live"
       - "@filembad`-16"
-      - "🇳🇱202536 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 94ms | VLESS"
-      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 91ms | VLESS"
       - "@filembad`-17"
+      - "uogtyf.speedtrade.top"
+      - "🇺🇸202897 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "***🐦🔥***-@SPEEDS_VPN-17"
       - "@filembad`-18"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 299ms | VLESS"
+      - "94.249.186.139"
+      - "94.249.186.139-1"
+      - "31.76.91.142"
+      - "gcore.com"
+      - "🇫🇮202965 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@IranProxyPlus`-18"
       - "@filembad`-19"
-      - "51.158.206.87"
+      - "@IranProxyPlus`-19"
+      - "51.75.118.5"
+      - "🇮🇷202964 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 302ms | VLESS"
+      - "pl.peregrine-sub.net"
+      - "@IranProxyPlus`-20"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 146ms | VLESS"
+      - "94.249.186.64"
+      - "@IranProxyPlus`-21"
+      - "@IranProxyPlus`-22"
+      - "168.119.103.176"
+      - "🇺🇸202938 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸202936 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸202937 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "wwww.qarvian.ir"
+      - "167.233.147.148"
+      - "@IranProxyPlus`-23"
       - "@filembad`-20"
-      - "51.158.206.8"
       - "@filembad`-21"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 67ms | VLESS"
+      - "15.204.97.206"
+      - "15.204.97.209"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 133ms | VLESS"
       - "@filembad`-22"
       - "@filembad`-23"
-      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 84ms | VLESS"
       - "@filembad`-24"
-      - "62.210.91.10"
       - "@filembad`-25"
+      - "15.204.97.219"
       - "@filembad`-26"
-      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 234ms | VLESS"
-      - "@V2_MOD_SHOP-🇨🇭 🔥"
-      - "@V2_MOD_SHOP-🇨🇭"
-      - "@V2_MOD_SHOP-🇸🇪 🔥"
-      - "@V2_MOD_SHOP-🇩🇪 🔥`"
-      - "@V2_MOD_SHOP-🇵🇱 🔥"
-      - "@V2_MOD_SHOP-🇩🇪 1🔥"
-      - "🇺🇸202479 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇩🇪202476 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🌍202481 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇳🇱202422 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 87ms | VLESS"
-      - "172.67.156.147"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 232ms | VLESS"
-      - "43.170.8.95"
-      - "79.175.189.121"
-      - "al3.irgemini.sbs"
-      - "fr3.irgemini.sbs"
-      - "nl3.irgemini.sbs"
-      - "real3.irgemini.sbs"
-      - "tr3.irgemini.sbs"
-      - "uk3.irgemini.sbs"
-      - "usa3.irgemini.sbs"
-      - "173.245.58.75"
+      - "51.158.206.12"
       - "@filembad`-27"
-      - "45.197.134.49"
-      - "@v2ray_free_config_iran | 🇮🇷 110ms | VLESS"
-      - "87.199.205.28"
-      - "Finland 🇫🇮"
-      - "@v2ray_free_config_iran | 🇮🇷 224ms | VLESS"
+      - "@FarazV2ray"
+      - "51.158.206.20"
       - "@filembad`-28"
       - "@filembad`-29"
       - "@filembad`-30"
@@ -4813,51 +4810,99 @@ proxy-groups:
       - "@filembad`-32"
       - "@filembad`-33"
       - "@filembad`-34"
-      - "@IranProxyPlus`-25"
-      - "148.253.210.191"
-      - "static.162.97.119.168.clients.your-server.de"
-      - "static.189.124.140.128.clients.your-server.de"
-      - "static.19.212.12.49.clients.your-server.de"
-      - "static.197.56.233.167.clients.your-server.de"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 202ms | VLESS"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 201ms | VLESS"
+      - "@filembad`-35"
+      - "@filembad`-36"
+      - "@filembad`-37"
+      - "@filembad`-38"
+      - "@FarazV2ray-1"
+      - "@filembad`-39"
+      - "@filembad`-40"
+      - "@filembad`-41"
+      - "@filembad`-42"
+      - "51.158.206.96"
+      - "@filembad`-43"
+      - "@filembad`-44"
+      - "@filembad`-45"
+      - "@FarazV2ray-2"
+      - "@filembad`-46"
+      - "@filembad`-47"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 317ms | VLESS"
+      - "@filembad`-48"
+      - "@V2_MOD_SHOP-🇨🇭 🔥"
+      - "@V2_MOD_SHOP-🇨🇭"
+      - "@V2_MOD_SHOP-🇸🇪 🔥"
+      - "@V2_MOD_SHOP-🇩🇪 🔥`"
+      - "@V2_MOD_SHOP-🇵🇱 🔥"
+      - "@V2_MOD_SHOP-🇩🇪 1🔥"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 98ms | VLESS"
+      - "108.165.236.229"
+      - "2.58.113.192"
+      - "72.56.31.206"
+      - "89.191.226.252"
+      - "5.149.249.94"
+      - "@filembad`-49"
+      - "45.9.12.110"
+      - "ru.letsconnectpoint.com"
+      - "net.port1.etsal1.sbs"
+      - "net.port1.etsal1.sbs-1"
+      - "net.port1.etsal1.sbs-2"
+      - "net.port1.etsal1.sbs-3"
+      - "net.port1.etsal1.sbs-4"
+      - "static.173.117.201.138.clients.your-server.de"
+      - "www.buydomains.com"
+      - "🇨🇦203556 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "173.245.58.75"
+      - "ro-xh02.tcp-reset-club.net"
+      - "45.197.134.49"
+      - "@filembad`-50"
+      - "@filembad`-51"
+      - "@filembad`-52"
+      - "Finland 🇫🇮"
+      - "201.58.183.42"
+      - "72.56.41.232"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 178ms | VLESS"
+      - "@hamedvpns 🇮🇳1"
+      - "gcore.com-1"
+      - "138.124.39.251"
+      - "@filembad`-53"
+      - "nl-modx-prime.storagedirectguide.com"
+      - "103.238.227.211"
+      - "@filembad`-54"
+      - "@Vpn_Tehran 🤍 کانال تلگرام"
+      - "@filembad`-55"
+      - "51.68.34.78"
+      - "@filembad`-56"
+      - "@filembad`-57"
+      - "👾36@oneclickvpnkeys"
+      - "94.249.187.46"
+      - "@IranProxyPlus`-24"
+      - "🇩🇪202952 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪202950 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪202955 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪202951 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪202954 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪202953 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪203541 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪203540 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪203543 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪203544 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪203542 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇮203545 | ⚡️Telegram = t.me/SOSkeyNET"
       - "Germany 🇩🇪"
-      - "de.vfzq.ir"
-      - "www.speedtest.net"
+      - "191.44.108.30"
+      - "191.44.108.31"
+      - "@IranProxyPlus`-25"
+      - "برای اتصال دائمی جوین شو🪭 TelegramID ⌲Express_freevpn 🪩`"
+      - "179.255.186.102"
+      - "95.85.228.79"
+      - "51.77.144.182"
       - "@IranProxyPlus`-26"
-      - "🇷🇺202482 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "ffd7d2055bc64724.2f6.ir"
       - "@IranProxyPlus`-27"
       - "@IranProxyPlus`-28"
       - "@IranProxyPlus`-29"
-      - "@IranProxyPlus`-30"
       - "***🌪***-@SPEEDS_VPN1`-3"
-      - "@meliproxyy"
-      - "🇮🇱202417 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "de12b.h1cloud.net"
-      - "@filembad`-35"
-      - "@filembad`-36"
-      - "pl5.h1cloud.net"
-      - "@filembad`-37"
-      - "@IranProxyPlus`-31"
-      - "@filembad`-38"
-      - "saas.sin.fan"
-      - "saas.sin.fan-1"
-      - "ee-2e06d85dc0.shamanapp.online"
-      - "83.147.18.75"
-      - "🇮🇷202407 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "flo-datarelay.com"
-      - "🇨🇦202540 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@IranProxyPlus`-32"
-      - "91.107.180.202"
-      - "@meliproxyy-1"
-      - "🇺🇸202918 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@meliproxyy-2"
-      - "🇺🇸202919 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "Tel@MARAMBASHI 🇩🇪"
-      - "@meliproxyy-3"
-      - "199.232.78.159-1"
-      - "🇺🇸202920 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "206.1.101.85"
+      - "👾38@oneclickvpnkeys"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -4867,25 +4912,24 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "🇺🇸202429 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "bored_vpn"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 158ms | VLESS"
       - "@IranProxyPlus`"
       - "***🐦🔥***-@SPEEDS_VPN"
-      - "konglam.goodphilips.ir"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 99ms | VLESS"
-      - "43.174.247.63"
-      - "@meliproxyy`"
+      - "@filembad`"
+      - "***⚡***@V2ray_official"
       - "www.naviga-ting.com"
+      - "195.123.213.28"
       - "@IranProxyPlus`-1"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 73ms | VLESS"
+      - "@filembad`-1"
       - "@IranProxyPlus`-2"
       - "@IranProxyPlus`-3"
+      - "45.151.71.145"
       - "199.232.239.239"
-      - "🇷🇺29@exclavevpn`"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 184ms | VLESS"
-      - "@filembad`"
-      - "@filembad`-1"
-      - "🇫🇮202448 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇫🇮202433 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "China 🇨🇳"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 209ms | VLESS"
+      - "45.133.151.170"
+      - "188.114.98.0"
       - "***🐦🔥***-@SPEEDS_VPN-1"
       - "***🐦🔥***-@SPEEDS_VPN-2"
       - "***🐦🔥***-@SPEEDS_VPN-3"
@@ -4904,217 +4948,171 @@ proxy-groups:
       - "***🐦🔥***-@SPEEDS_VPN-15"
       - "***🐦🔥***-@SPEEDS_VPN-16"
       - "***🌪***-@SPEEDS_VPN1`"
-      - "194.55.239.89"
       - "@IranProxyPlus`-4"
-      - "🇫🇷202535 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "YFZ 205 @Outline_Vpn"
       - "srv2-germany.hajimamadcloud.com.tr"
-      - "65.109.211.81"
-      - "🤖67@oneclickvpnkeys"
-      - "🤖66@oneclickvpnkeys"
-      - "goold.zovip2.ir"
-      - "213.152.180.55"
-      - "67.159.49.36"
+      - "🇫🇮202868 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "***⚡***@V2ray_official-1"
+      - "@Vpn_Tehran 💛 کانال تلگرام"
       - "@IranProxyPlus`-5"
-      - "178.17.52.234"
-      - "برای اتصال دائمی جوین شو🪻 TelegramID ⌲Express_freevpn 🪩"
       - "@IranProxyPlus`-6"
-      - "🇮🇷202452 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "91.107.247.174"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 1ms | VLESS"
-      - "81.7.11.36"
+      - "185.227.137.69"
+      - "🇩🇪202826 | ⚡️Telegram = t.me/SOSkeyNET"
       - "@IranProxyPlus`-7"
       - "@IranProxyPlus`-8"
-      - "31.57.250.144"
-      - "31.57.250.144-1"
-      - "31.57.250.144-2"
-      - "31.57.250.144-3"
-      - "31.57.250.144-4"
-      - "🇨🇦203063 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "cdn1.ir53.indevs.in"
       - "cdn-waw.edgeptr.org"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 104ms | VLESS"
+      - "89.144.30.154"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 68ms | VLESS"
+      - "353e8a5e93f2e082.bluebleu.ir"
+      - "6b3443242f617955.monqela.ir"
+      - "b5e3b3d591d783f9.monqela.ir"
+      - "ca259eb335992e65.monqela.ir"
+      - "@filembad`-2"
+      - "tus.hemad.qzz.io"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 96ms | VLESS"
+      - "tus.velqarion.ir"
       - "@IranProxyPlus`-9"
       - "@IranProxyPlus`-10"
-      - "@IranProxyPlus`-11"
+      - "104.21.48.1"
+      - "bs.cexora.ir"
+      - "bigshagy.zqpm.ir"
       - "***🐦🔥***-@SPEEDS_VPN`-1"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 271ms | VLESS"
-      - "@filembad`-2"
-      - "***🐦🔥***-@SPEEDS_VPN`-2"
-      - "🇩🇪203061 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 193ms | VLESS"
-      - "🌟 @MTproxy22_v2ray"
-      - "@v2ray_free_config_iran | 🇮🇷 80ms | VLESS"
-      - "@IranProxyPlus`-12"
-      - "***🐦🔥***-@SPEEDS_VPN`-3"
-      - "72.56.38.83"
-      - "13.140.80.133"
-      - "13.140.80.133-1"
-      - "13.140.80.133-2"
-      - "13.140.80.133-3"
-      - "🇺🇸202416 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 231ms | VLESS"
-      - "185.168.208.190"
       - "@filembad`-3"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 135ms | VLESS"
-      - "@IranProxyPlus`-13"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 231ms | VLESS"
+      - "47.251.25.74"
+      - "***🐦🔥***-@SPEEDS_VPN`-2"
+      - "91.98.202.214"
+      - "89.167.17.75"
+      - "45.198.96.210"
+      - "🇦🇺203552 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "167.233.182.218"
+      - "178.172.227.124"
+      - "94.249.195.31"
+      - "@filembad`-4"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 183ms | VLESS"
+      - "@IranProxyPlus`-11"
+      - "82.202.183.9"
+      - "***🐦🔥***-@SPEEDS_VPN`-3"
+      - "206.206.76.75"
+      - "hikvision-plus.com"
+      - "195.254.165.243"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 214ms | VLESS"
+      - "@filembad`-5"
+      - "@filembad`-6"
+      - "@filembad`-7"
+      - "@filembad`-8"
+      - "187.52.44.20"
+      - "👾33@oneclickvpnkeys"
+      - "95.56.251.12"
+      - "@IranProxyPlus`-12"
       - "The Netherlands 🇳🇱"
+      - "185.71.219.188"
+      - "🇮🇷203557 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "147.135.213.72"
+      - "216.24.57.1"
       - "love.ns.cloudflare.com"
+      - "s2.zynetraq.ir"
       - "***🌪***-@SPEEDS_VPN1`-1"
-      - "konglam.goodphilips.ir-1"
-      - "@IranProxyPlus`-14"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 142ms | VLESS"
+      - "104.27.2.172"
+      - "@IranProxyPlus`-13"
+      - "@filembad`-9"
+      - "@filembad`-10"
       - "***🐦🔥***-@SPEEDS_VPN`-4"
       - "🇫🇮202917 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "51.38.127.93"
+      - "🇫🇮203564 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪202969 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "S1"
+      - "xray2-direct-mci1-fs-ce.freesocks.work"
+      - "@filembad`-11"
       - "***🌪***-@SPEEDS_VPN1"
       - "***🌪***-@SPEEDS_VPN1`-2"
-      - "🇭🇰202420 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 354ms | VLESS"
-      - "au5.pad-sservice.lat"
-      - "104.16.7.70"
-      - "78.159.246.179"
-      - "78.159.246.85"
-      - "140.248.185.253"
-      - "146.75.56.210"
-      - "146.75.57.238"
-      - "146.75.59.186"
-      - "199.232.129.192"
-      - "199.232.246.236"
-      - "@IranProxyPlus`-15"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 177ms | VLESS"
-      - "89.42.196.237"
-      - "@filembad`-4"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 100ms | VLESS"
-      - "static.melzumo.ir"
-      - "150.40.126.19"
+      - "🇨🇦202886 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱202873 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "199.232.20.113"
+      - "web-tomcat.pages.dev"
+      - "@IranProxyPlus`-14"
+      - "@flyv2ray"
+      - "🇺🇸203562 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇮🇷202865 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "150.40.126.22"
       - "Tel@MARAMBASHI 🇨🇦"
       - "Bulgaria 🇧🇬"
       - "Bulgaria 🇧🇬-1"
+      - "45.9.156.42"
+      - "@filembad`-12"
+      - "🇲🇩203555 | ⚡️Telegram = t.me/SOSkeyNET"
       - "Tel@MARAMBASHI 🇨🇦-1"
-      - "@filembad`-5"
-      - "bg5.univesalsrv.com"
-      - "@filembad`-6"
-      - "@IranProxyPlus`-16"
+      - "bg4.univesalsrv.com"
+      - "@filembad`-13"
+      - "md5.univesalsrv.com"
+      - "rs1.univesalsrv.com"
+      - "rs2.univesalsrv.com"
+      - "rs3.univesalsrv.com"
+      - "🇷🇸203553 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@IranProxyPlus`-15"
+      - "46.29.255.123"
+      - "94.249.187.43"
+      - "docs.asasin4.ir"
       - "***🐦🔥***-@SPEEDS_VPN`-5"
       - "Seychelles 🇸🇨"
-      - "🇯🇵202486 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@IranProxyPlus`-17"
-      - "🇨🇦202464 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇺🇸202445 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "fl.privatevip.ir"
-      - "@v2ray_free_config_iran | 🇮🇷 96ms | VLESS"
-      - "🇩🇪202423 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@IranProxyPlus`-16"
+      - "213.108.198.158"
+      - "🇸🇬202910 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "104.20.61.103"
       - "23.81.36.148"
-      - "🇳🇱202441 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@Vpn_Tehran 🩵 کانال تلگرام"
-      - "213.152.180.55-1"
-      - "@IranProxyPlus`-18"
-      - "app.wingerdt.com"
-      - "dashboard.wingerdt.com"
-      - "@filembad`-7"
-      - "iugbnm.varqino.ir"
-      - "nzidam.zelmuro.ir"
-      - "odinnda.hospitaldt.ir"
-      - "opiugjk.nationalldt.com"
-      - "orovxe.varqino.ir"
-      - "playaudio.zelmuro.ir"
-      - "qtavbvc.varqino.ir"
-      - "rurbsnd.zelmuro.ir"
-      - "torwe.dtgitar.com"
-      - "uogtyf.speedtrade.top"
-      - "uyrsdfdfxg.zelmuro.ir"
-      - "wsfdje.hospitaldt.ir"
-      - "🏠202506 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "216.24.57.225"
-      - "***🐦🔥***-@SPEEDS_VPN-17"
-      - "@filembad`-8"
-      - "🇲🇽202450 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "177.3.214.133"
-      - "78.159.250.214"
-      - "🇮🇳202432 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 249ms | VLESS"
-      - "@IranProxyPlus`-19"
-      - "@IranProxyPlus`-20"
-      - "51.75.118.5"
-      - "🇫🇷202499 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "iruae.netbazshop.ir"
-      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 104ms | VLESS"
-      - "pl.peregrine-sub.net"
-      - "@IranProxyPlus`-21"
-      - "S4"
-      - "@filembad`-9"
-      - "@IranProxyPlus`-22"
-      - "@IranProxyPlus`-23"
-      - "168.119.103.176"
-      - "146.75.59.186-1"
-      - "199.232.78.160"
-      - "wwww.qarvian.ir"
-      - "146.75.59.186-2"
-      - "199.232.78.159"
-      - "216.24.57.1"
-      - "@IranProxyPlus`-24"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 242ms | VLESS"
-      - "@filembad`-10"
-      - "@v2ray_free_config_iran | 🇮🇷 285ms | VLESS"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 249ms | VLESS-1"
-      - "15.204.97.216"
-      - "@filembad`-11"
-      - "15.204.97.219"
-      - "@filembad`-12"
-      - "51.158.206.19"
-      - "@filembad`-13"
+      - "91.99.171.12"
+      - "193.148.253.194"
       - "@filembad`-14"
+      - "94.249.187.88"
       - "@filembad`-15"
-      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 86ms | VLESS"
+      - "@IranProxyPlus`-17"
+      - "jp.sofast.live"
       - "@filembad`-16"
-      - "🇳🇱202536 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 94ms | VLESS"
-      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 91ms | VLESS"
       - "@filembad`-17"
+      - "uogtyf.speedtrade.top"
+      - "🇺🇸202897 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "***🐦🔥***-@SPEEDS_VPN-17"
       - "@filembad`-18"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 299ms | VLESS"
+      - "94.249.186.139"
+      - "94.249.186.139-1"
+      - "31.76.91.142"
+      - "gcore.com"
+      - "🇫🇮202965 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@IranProxyPlus`-18"
       - "@filembad`-19"
-      - "51.158.206.87"
+      - "@IranProxyPlus`-19"
+      - "51.75.118.5"
+      - "🇮🇷202964 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 302ms | VLESS"
+      - "pl.peregrine-sub.net"
+      - "@IranProxyPlus`-20"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 146ms | VLESS"
+      - "94.249.186.64"
+      - "@IranProxyPlus`-21"
+      - "@IranProxyPlus`-22"
+      - "168.119.103.176"
+      - "🇺🇸202938 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸202936 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇺🇸202937 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "wwww.qarvian.ir"
+      - "167.233.147.148"
+      - "@IranProxyPlus`-23"
       - "@filembad`-20"
-      - "51.158.206.8"
       - "@filembad`-21"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 67ms | VLESS"
+      - "15.204.97.206"
+      - "15.204.97.209"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 133ms | VLESS"
       - "@filembad`-22"
       - "@filembad`-23"
-      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 84ms | VLESS"
       - "@filembad`-24"
-      - "62.210.91.10"
       - "@filembad`-25"
+      - "15.204.97.219"
       - "@filembad`-26"
-      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 234ms | VLESS"
-      - "@V2_MOD_SHOP-🇨🇭 🔥"
-      - "@V2_MOD_SHOP-🇨🇭"
-      - "@V2_MOD_SHOP-🇸🇪 🔥"
-      - "@V2_MOD_SHOP-🇩🇪 🔥`"
-      - "@V2_MOD_SHOP-🇵🇱 🔥"
-      - "@V2_MOD_SHOP-🇩🇪 1🔥"
-      - "🇺🇸202479 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇩🇪202476 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🌍202481 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇳🇱202422 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 87ms | VLESS"
-      - "172.67.156.147"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 232ms | VLESS"
-      - "43.170.8.95"
-      - "79.175.189.121"
-      - "al3.irgemini.sbs"
-      - "fr3.irgemini.sbs"
-      - "nl3.irgemini.sbs"
-      - "real3.irgemini.sbs"
-      - "tr3.irgemini.sbs"
-      - "uk3.irgemini.sbs"
-      - "usa3.irgemini.sbs"
-      - "173.245.58.75"
+      - "51.158.206.12"
       - "@filembad`-27"
-      - "45.197.134.49"
-      - "@v2ray_free_config_iran | 🇮🇷 110ms | VLESS"
-      - "87.199.205.28"
-      - "Finland 🇫🇮"
-      - "@v2ray_free_config_iran | 🇮🇷 224ms | VLESS"
+      - "@FarazV2ray"
+      - "51.158.206.20"
       - "@filembad`-28"
       - "@filembad`-29"
       - "@filembad`-30"
@@ -5122,51 +5120,99 @@ proxy-groups:
       - "@filembad`-32"
       - "@filembad`-33"
       - "@filembad`-34"
-      - "@IranProxyPlus`-25"
-      - "148.253.210.191"
-      - "static.162.97.119.168.clients.your-server.de"
-      - "static.189.124.140.128.clients.your-server.de"
-      - "static.19.212.12.49.clients.your-server.de"
-      - "static.197.56.233.167.clients.your-server.de"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 202ms | VLESS"
-      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 201ms | VLESS"
+      - "@filembad`-35"
+      - "@filembad`-36"
+      - "@filembad`-37"
+      - "@filembad`-38"
+      - "@FarazV2ray-1"
+      - "@filembad`-39"
+      - "@filembad`-40"
+      - "@filembad`-41"
+      - "@filembad`-42"
+      - "51.158.206.96"
+      - "@filembad`-43"
+      - "@filembad`-44"
+      - "@filembad`-45"
+      - "@FarazV2ray-2"
+      - "@filembad`-46"
+      - "@filembad`-47"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 317ms | VLESS"
+      - "@filembad`-48"
+      - "@V2_MOD_SHOP-🇨🇭 🔥"
+      - "@V2_MOD_SHOP-🇨🇭"
+      - "@V2_MOD_SHOP-🇸🇪 🔥"
+      - "@V2_MOD_SHOP-🇩🇪 🔥`"
+      - "@V2_MOD_SHOP-🇵🇱 🔥"
+      - "@V2_MOD_SHOP-🇩🇪 1🔥"
+      - "@v2ray_free_config_iran | Argo VPN | 🇮🇷 98ms | VLESS"
+      - "108.165.236.229"
+      - "2.58.113.192"
+      - "72.56.31.206"
+      - "89.191.226.252"
+      - "5.149.249.94"
+      - "@filembad`-49"
+      - "45.9.12.110"
+      - "ru.letsconnectpoint.com"
+      - "net.port1.etsal1.sbs"
+      - "net.port1.etsal1.sbs-1"
+      - "net.port1.etsal1.sbs-2"
+      - "net.port1.etsal1.sbs-3"
+      - "net.port1.etsal1.sbs-4"
+      - "static.173.117.201.138.clients.your-server.de"
+      - "www.buydomains.com"
+      - "🇨🇦203556 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "173.245.58.75"
+      - "ro-xh02.tcp-reset-club.net"
+      - "45.197.134.49"
+      - "@filembad`-50"
+      - "@filembad`-51"
+      - "@filembad`-52"
+      - "Finland 🇫🇮"
+      - "201.58.183.42"
+      - "72.56.41.232"
+      - "@v2ray_free_config_iran | V2Ray | 🇮🇷 178ms | VLESS"
+      - "@hamedvpns 🇮🇳1"
+      - "gcore.com-1"
+      - "138.124.39.251"
+      - "@filembad`-53"
+      - "nl-modx-prime.storagedirectguide.com"
+      - "103.238.227.211"
+      - "@filembad`-54"
+      - "@Vpn_Tehran 🤍 کانال تلگرام"
+      - "@filembad`-55"
+      - "51.68.34.78"
+      - "@filembad`-56"
+      - "@filembad`-57"
+      - "👾36@oneclickvpnkeys"
+      - "94.249.187.46"
+      - "@IranProxyPlus`-24"
+      - "🇩🇪202952 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪202950 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪202955 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪202951 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪202954 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪202953 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪203541 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪203540 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪203543 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪203544 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇩🇪203542 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇫🇮203545 | ⚡️Telegram = t.me/SOSkeyNET"
       - "Germany 🇩🇪"
-      - "de.vfzq.ir"
-      - "www.speedtest.net"
+      - "191.44.108.30"
+      - "191.44.108.31"
+      - "@IranProxyPlus`-25"
+      - "برای اتصال دائمی جوین شو🪭 TelegramID ⌲Express_freevpn 🪩`"
+      - "179.255.186.102"
+      - "95.85.228.79"
+      - "51.77.144.182"
       - "@IranProxyPlus`-26"
-      - "🇷🇺202482 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "ffd7d2055bc64724.2f6.ir"
       - "@IranProxyPlus`-27"
       - "@IranProxyPlus`-28"
       - "@IranProxyPlus`-29"
-      - "@IranProxyPlus`-30"
       - "***🌪***-@SPEEDS_VPN1`-3"
-      - "@meliproxyy"
-      - "🇮🇱202417 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "de12b.h1cloud.net"
-      - "@filembad`-35"
-      - "@filembad`-36"
-      - "pl5.h1cloud.net"
-      - "@filembad`-37"
-      - "@IranProxyPlus`-31"
-      - "@filembad`-38"
-      - "saas.sin.fan"
-      - "saas.sin.fan-1"
-      - "ee-2e06d85dc0.shamanapp.online"
-      - "83.147.18.75"
-      - "🇮🇷202407 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "flo-datarelay.com"
-      - "🇨🇦202540 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@IranProxyPlus`-32"
-      - "91.107.180.202"
-      - "@meliproxyy-1"
-      - "🇺🇸202918 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "@meliproxyy-2"
-      - "🇺🇸202919 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "Tel@MARAMBASHI 🇩🇪"
-      - "@meliproxyy-3"
-      - "199.232.78.159-1"
-      - "🇺🇸202920 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "206.1.101.85"
+      - "👾38@oneclickvpnkeys"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"

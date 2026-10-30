@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -1686,7 +1720,7 @@ proxies:
       path: "/"
       headers:
         Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 99.36ms"
+  - name: "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 12.57ms"
     type: "trojan"
     server: "199.232.78.160"
     port: 443
@@ -1699,7 +1733,7 @@ proxies:
       path: "/?Telegram---DailyConfigs---DailyConfigs---DailyConfigs---DailyConfigs"
       headers:
         Host: "mitivpn-mitivpn.ac.ir"
-  - name: "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 23.88ms"
+  - name: "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 5.63ms"
     type: "trojan"
     server: "199.232.78.160"
     port: 443
@@ -1712,7 +1746,7 @@ proxies:
       path: "/MTMVPN---MTMVPN---MTMVPN---MTMVPN---MTMVPN---MTMVPN---MTMVPN---MTMVPN"
       headers:
         Host: "mitivpn-mitivpn.ac.ir"
-  - name: "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 21ms"
+  - name: "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 5.77ms"
     type: "trojan"
     server: "199.232.78.160"
     port: 443
@@ -1725,7 +1759,7 @@ proxies:
       path: "/---@"
       headers:
         Host: "mitivpn-mitivpn.ac.ir"
-  - name: "🇺🇸 US🇺🇸 | www.google.com-443 | 26.09ms"
+  - name: "🇺🇸 US🇺🇸 | www.google.com-443 | 5.41ms"
     type: "trojan"
     server: "199.232.78.160"
     port: 443
@@ -1738,7 +1772,7 @@ proxies:
       path: "/+mehrosaboran"
       headers:
         Host: "mitivpn-s1.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 10.24ms"
+  - name: "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 3.42ms"
     type: "trojan"
     server: "199.232.78.160"
     port: 443
@@ -1751,7 +1785,20 @@ proxies:
       path: "/"
       headers:
         Host: "mitivpn-mitivpn.ac.ir"
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 55.46ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 7.62ms"
+    type: "trojan"
+    server: "167.82.64.46"
+    port: 443
+    password: "mitivpn"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "mitivpn-mitivpn.ac.ir"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.17ms"
     type: "trojan"
     server: "167.82.64.46"
     port: 443
@@ -1764,20 +1811,7 @@ proxies:
       path: "/?Telegram---DailyConfigs---DailyConfigs---DailyConfigs---DailyConfigs"
       headers:
         Host: "mitivpn-mitivpn.ac.ir"
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.18ms"
-    type: "trojan"
-    server: "167.82.64.46"
-    port: 443
-    password: "mitivpn"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "mitivpn-mitivpn.ac.ir"
-  - name: "🇺🇸 US🇺🇸 | play.google.com-443 | 24.49ms"
+  - name: "🇺🇸 US🇺🇸 | play.google.com-443 | 16.62ms"
     type: "trojan"
     server: "167.82.64.46"
     port: 443
@@ -1790,7 +1824,7 @@ proxies:
       path: "/+mehrosaboran"
       headers:
         Host: "mitivpn-s1.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | play.google.com-443 | 8.98ms"
+  - name: "🇺🇸 US🇺🇸 | play.google.com-443 | 3.03ms"
     type: "trojan"
     server: "167.82.64.46"
     port: 443
@@ -1803,7 +1837,7 @@ proxies:
       path: "/ mehrosaboran"
       headers:
         Host: "mitivpn-s1.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.61ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.49ms"
     type: "trojan"
     server: "167.82.64.46"
     port: 443
@@ -1816,7 +1850,7 @@ proxies:
       path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
       headers:
         Host: "mitivpn-mitivpn.ac.ir"
-  - name: "🇺🇸 US🇺🇸 | www.google.com-443 | 3.9ms"
+  - name: "🇺🇸 US🇺🇸 | www.google.com-443 | 3.6ms"
     type: "trojan"
     server: "146.75.57.238"
     port: 443
@@ -1828,7 +1862,7 @@ proxies:
     ws-opts:
       headers:
         Host: "mitivpn--s3.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | google.com-443 | 14.97ms"
+  - name: "🇺🇸 US🇺🇸 | google.com-443 | 3.28ms"
     type: "trojan"
     server: "146.75.57.238"
     port: 443
@@ -1841,7 +1875,7 @@ proxies:
       path: "/+mehrosaboran"
       headers:
         Host: "mitivpn-s1.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | google.com-443 | 11.31ms"
+  - name: "🇺🇸 US🇺🇸 | google.com-443 | 3.61ms"
     type: "trojan"
     server: "146.75.57.238"
     port: 443
@@ -1854,7 +1888,45 @@ proxies:
       path: "/ mehrosaboran"
       headers:
         Host: "mitivpn-s1.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 84.81ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.56ms"
+    type: "trojan"
+    server: "167.82.64.120"
+    port: 443
+    password: "MiTiVPN"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSus---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
+      headers:
+        Host: "mitivpn--mitivpn.ac.ir"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 1.93ms"
+    type: "trojan"
+    server: "151.101.36.120"
+    port: 443
+    password: "MiTiVPN"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSus---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
+      headers:
+        Host: "mitivpn--mitivpn.ac.ir"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.3ms"
+    type: "trojan"
+    server: "146.75.57.120"
+    port: 443
+    password: "MiTiVPN"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      headers:
+        Host: "mitivpn--mitivpn.ac.ir"
+  - name: "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 4.88ms"
     type: "trojan"
     server: "199.232.78.160"
     port: 443
@@ -1867,7 +1939,7 @@ proxies:
       path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
       headers:
         Host: "mitivpn-mitivpn.ac.ir"
-  - name: "🇺🇸 US🇺🇸 | google.com-443 | 10.8ms"
+  - name: "🇺🇸 US🇺🇸 | google.com-443 | 3.11ms"
     type: "trojan"
     server: "199.232.78.160"
     port: 443
@@ -1880,350 +1952,58 @@ proxies:
       path: "/?Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN"
       headers:
         Host: "mitivpn--s2.global.ssl.fastly.net"
-  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.76.31:443"
-    type: "vless"
-    server: "167.82.76.31"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 2.82ms"
+    type: "trojan"
+    server: "wwww.qarvian.ir"
     port: 443
-    uuid: "a7e9fc98-25a2-4801-961c-7a6ed9d69328"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "default.ssl.fastly.net"
-    client-fingerprint: "random"
-    alpn:
-      - "h3"
-      - "h2"
-      - "http/1.1"
-  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.2.5:80"
-    type: "vless"
-    server: "151.101.2.5"
-    port: 80
-    uuid: "edbd7b0b-225c-4595-a18c-6eeb5b5fb791"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "🇺🇸 🔒 VL-XHTTP-NA 🇺🇸 US-151.101.193.164:80"
-    type: "vless"
-    server: "151.101.193.164"
-    port: 80
-    uuid: "da48859d-edf9-4a8c-a026-80910591f284"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-151.101.36.99:443"
-    type: "vless"
-    server: "151.101.36.99"
-    port: 443
-    uuid: "5bd8679a-d15b-48b7-82f2-8b726d57701a"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "cdn.akamai.steamstatic.com"
-    client-fingerprint: "firefox"
-    alpn:
-      - "h3"
-      - "h2"
-      - "http/1.1"
-  - name: "🇺🇸 🔒 VL-TCP-TLS 🇺🇸 US-199.232.20.113:443"
-    type: "vless"
-    server: "199.232.20.113"
-    port: 443
-    uuid: "d0136cca-a5a5-4c70-87dd-ce2ef76b7f82"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.firefox.com"
-  - name: "🇺🇸 🔒 VL-XHTTP-NA 🇺🇸 US-151.101.129.164:80"
-    type: "vless"
-    server: "151.101.129.164"
-    port: 80
-    uuid: "da48859d-edf9-4a8c-a026-80910591f284"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "🇺🇸 🔒 VL-TCP-TLS 🇺🇸 US-146.75.57.111:443"
-    type: "vless"
-    server: "146.75.57.111"
-    port: 443
-    uuid: "7623b717-29f8-4f76-9a9a-eec96d92dba9"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "firefox.com"
-  - name: "🇺🇸 🔒 VL-TCP-TLS 🇺🇸 US-146.75.57.238:443"
-    type: "vless"
-    server: "146.75.57.238"
-    port: 443
-    uuid: "fcdfed39-51aa-4bb5-beb7-61b0357e36b9"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn.akamai.steamstatic.com"
-  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.78.160:443"
-    type: "vless"
-    server: "199.232.78.160"
-    port: 443
-    uuid: "08dd79b8-8eab-45e7-815b-29bb7ea35a61"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "speedtest.net"
-    client-fingerprint: "firefox"
-    alpn:
-      - "h2"
-      - "http/1.1"
-  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.192.204:80"
-    type: "vless"
-    server: "151.101.192.204"
-    port: 80
-    uuid: "edbd7b0b-225c-4595-a18c-6eeb5b5fb791"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.79.164:443"
-    type: "vless"
-    server: "167.82.79.164"
-    port: 443
-    uuid: "3ca21a1e-5ec3-4724-9890-8c28e22bdbb2"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "google.com"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h3"
-      - "h2"
-  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.3.8:80"
-    type: "vless"
-    server: "151.101.3.8"
-    port: 80
-    uuid: "6cb2562a-47c2-4a24-91f3-01a9e8c9f825"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "🇺🇸 🔒 VL-XHTTP-NA 🇺🇸 US-151.101.1.164:80"
-    type: "vless"
-    server: "151.101.1.164"
-    port: 80
-    uuid: "da48859d-edf9-4a8c-a026-80910591f284"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "🇺🇸 🔒 VL-XHTTP-NA 🇺🇸 US-151.101.65.164:80"
-    type: "vless"
-    server: "151.101.65.164"
-    port: 80
-    uuid: "da48859d-edf9-4a8c-a026-80910591f284"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.2.219:80"
-    type: "vless"
-    server: "151.101.2.219"
-    port: 80
-    uuid: "81a75e30-1223-4076-9fb8-775df00c6665"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.66.219:80"
-    type: "vless"
-    server: "151.101.66.219"
-    port: 80
-    uuid: "81a75e30-1223-4076-9fb8-775df00c6665"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-151.101.69.253:443"
-    type: "vless"
-    server: "151.101.69.253"
-    port: 443
-    uuid: "884f23e9-caab-4775-9ed9-6a3a9cae677f"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "accaunt.fastly.com"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h3"
-  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.78.159:443"
-    type: "vless"
-    server: "199.232.78.159"
-    port: 443
-    uuid: "410bc842-c3df-4fc5-9e11-0feab5c97d64"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "google.com"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-23.235.42.205:80"
-    type: "vless"
-    server: "23.235.42.205"
-    port: 80
-    uuid: "96eec36e-2c44-5b09-898e-6f0f0526e57f"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.239.2:443"
-    type: "vless"
-    server: "199.232.239.2"
-    port: 443
-    uuid: "f3ac6161-3592-43ed-82f2-daf9c97806aa"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "accounts.fastly.com"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h3"
-  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.128.204:80"
-    type: "vless"
-    server: "151.101.128.204"
-    port: 80
-    uuid: "edbd7b0b-225c-4595-a18c-6eeb5b5fb791"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.9.254:443"
-    type: "vless"
-    server: "199.232.9.254"
-    port: 443
-    uuid: "92630838-a2ed-40ea-ae4a-2a8f5e6956e1"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "speedtest.net"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.250.173:443"
-    type: "vless"
-    server: "199.232.250.173"
-    port: 443
-    uuid: "6c6a0458-6f25-4b9e-853c-bf6d461fdc8b"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "firefox.com"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.0.204:80"
-    type: "vless"
-    server: "151.101.0.204"
-    port: 80
-    uuid: "edbd7b0b-225c-4595-a18c-6eeb5b5fb791"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.101.119:443"
-    type: "vless"
-    server: "167.82.101.119"
-    port: 443
-    uuid: "ea1fb226-a033-4999-9f86-49ec57629c0d"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "iran.ir"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.64.204:80"
-    type: "vless"
-    server: "151.101.64.204"
-    port: 80
-    uuid: "edbd7b0b-225c-4595-a18c-6eeb5b5fb791"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-146.75.56.210:443"
-    type: "vless"
-    server: "146.75.56.210"
-    port: 443
-    uuid: "7684d613-0ae9-41d2-9a38-66752ae680b4"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "speedtest.net"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h3"
-      - "h2"
-      - "http/1.1"
-  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-151.101.119.41:443"
-    type: "vless"
-    server: "151.101.119.41"
-    port: 443
-    uuid: "e19d4671-94d7-497a-a5e1-3e84250ea00a"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "www.fastly.com"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h3"
-  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-23.235.33.4:80"
-    type: "vless"
-    server: "23.235.33.4"
-    port: 80
-    uuid: "edbd7b0b-225c-4595-a18c-6eeb5b5fb791"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.3.147:80"
-    type: "vless"
-    server: "151.101.3.147"
-    port: 80
-    uuid: "9d468e0a-01ca-41a2-a89b-73b2756f91ec"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.193.194:80"
-    type: "vless"
-    server: "151.101.193.194"
-    port: 80
-    uuid: "76083baf-1fb7-44d0-b241-2d9af1191621"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.78.143:443"
-    type: "vless"
-    server: "199.232.78.143"
-    port: 443
-    uuid: "854860c4-b5e8-453c-a047-90d451fe9c58"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "default.ssl.fastly.net"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-      - "http/1.1"
-  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.130.219:80"
-    type: "vless"
-    server: "151.101.130.219"
-    port: 80
-    uuid: "81a75e30-1223-4076-9fb8-775df00c6665"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "🇺🇸 🆔️ | @Eag1e_YT『🇩🇪』"
-    type: "vless"
-    server: "199.232.239.239"
-    port: 443
-    uuid: "36805edb-1e85-4199-a59f-117010b70017"
+    password: "MiTiVPN"
     udp: true
     tls: true
     network: "ws"
     servername: "firefox.com"
-    client-fingerprint: "firefox"
-    alpn:
-      - "h2"
     ws-opts:
-      path: "/@CloudVPNchannel/@CloudVPNchannel/@CloudVPNchannel/@CloudVPNchannel/@CloudVPNchannel/@CloudVPNchannel?ed=2056"
+      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
       headers:
-        Host: "mpkoe7ypcibr80p102020123.global.ssl.fastly.net"
+        Host: "mitivpn--mitivpn.ac.ir"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.42ms"
+    type: "trojan"
+    server: "wwww.qarvian.ir"
+    port: 443
+    password: "MiTiVPN"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      path: "/?Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN"
+      headers:
+        Host: "mitivpn--mitivpn.ac.ir"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 2.88ms"
+    type: "trojan"
+    server: "167.82.64.120"
+    port: 443
+    password: "MiTiVPN"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      path: "/?Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN"
+      headers:
+        Host: "mitivpn--mitivpn.ac.ir"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 7.83ms"
+    type: "trojan"
+    server: "146.75.57.120"
+    port: 443
+    password: "MiTiVPN"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      path: "/?Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN"
+      headers:
+        Host: "mitivpn--mitivpn.ac.ir"
   - name: "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』"
     type: "trojan"
     server: "199.232.78.120"
@@ -2239,19 +2019,6 @@ proxies:
         Host: "mitivpn--mitivpn.ac.ir"
   - name: "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-1"
     type: "trojan"
-    server: "151.101.36.120"
-    port: 443
-    password: "MiTiVPN"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSus---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
-      headers:
-        Host: "mitivpn--mitivpn.ac.ir"
-  - name: "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-2"
-    type: "trojan"
     server: "146.75.57.120"
     port: 443
     password: "MiTiVPN"
@@ -2263,24 +2030,27 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSus---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn--mitivpn.ac.ir"
-  - name: "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-3"
-    type: "trojan"
-    server: "167.82.64.120"
+  - name: "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-2"
+    type: "vless"
+    server: "199.232.239.239"
     port: 443
-    password: "MiTiVPN"
+    uuid: "40694ced-9a8c-42fd-f5f8-3ac3c8b27fc2"
     udp: true
     tls: true
     network: "ws"
     servername: "firefox.com"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
     ws-opts:
-      path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSus---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
+      path: "/@CloudVPNchannel/@CloudVPNchannel/@CloudVPNchannel/@CloudVPNchannel/@CloudVPNchannel/@CloudVPNchannel?ed=2056"
       headers:
-        Host: "mitivpn--mitivpn.ac.ir"
-  - name: "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-4"
+        Host: "mpkoe7ypcibr80p102020123.global.ssl.fastly.net"
+  - name: "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-3"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
-    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
+    uuid: "780aa2f6-1a02-4fa2-bcd0-fa7d469bdff7"
     udp: true
     tls: true
     network: "ws"
@@ -2288,11 +2058,11 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_17i.global.ssl.fastly.net."
-  - name: "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-5"
+  - name: "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-4"
     type: "vless"
     server: "199.232.78.160"
     port: 443
-    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
+    uuid: "780aa2f6-1a02-4fa2-bcd0-fa7d469bdff7"
     udp: true
     tls: true
     network: "ws"
@@ -2300,11 +2070,11 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_10i.global.ssl.fastly.net."
-  - name: "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-6"
+  - name: "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-5"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
-    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
+    uuid: "780aa2f6-1a02-4fa2-bcd0-fa7d469bdff7"
     udp: true
     tls: true
     network: "ws"
@@ -2312,11 +2082,11 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net."
-  - name: "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-7"
+  - name: "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-6"
     type: "vless"
     server: "146.75.59.186"
     port: 443
-    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
+    uuid: "780aa2f6-1a02-4fa2-bcd0-fa7d469bdff7"
     udp: true
     tls: true
     network: "ws"
@@ -2324,11 +2094,11 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
-  - name: "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-8"
+  - name: "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-7"
     type: "vless"
     server: "199.232.78.159"
     port: 443
-    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
+    uuid: "780aa2f6-1a02-4fa2-bcd0-fa7d469bdff7"
     udp: true
     tls: true
     network: "ws"
@@ -2336,7 +2106,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_8i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | Sudoos.global.ssl.fastly.net-80 | 40.12ms"
+  - name: "🇺🇸 US🇺🇸 | Sudoos.global.ssl.fastly.net-80 | 5.32ms"
     type: "vless"
     server: "speedtest.net"
     port: 80
@@ -2348,7 +2118,7 @@ proxies:
       path: "/-Arfilter-TEL--@Arfilter-TEL--@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEl--@Arfilter?ed=80"
       headers:
         Host: "Sudoos.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | Sudo.global.ssl.fastly.net-80 | 133.27ms"
+  - name: "🇺🇸 US🇺🇸 | Sudo.global.ssl.fastly.net-80 | 7.65ms"
     type: "vless"
     server: "speedtest.net"
     port: 80
@@ -2360,7 +2130,7 @@ proxies:
       path: "/-Arfilter-TEL--@Arfilter-TEL--@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEl--@Arfilter?ed=80"
       headers:
         Host: "Sudo.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | Sudo.global.ssl.fastly.net-80 | 22.88ms"
+  - name: "🇺🇸 US🇺🇸 | Sudo.global.ssl.fastly.net-80 | 4.59ms"
     type: "vless"
     server: "speedtest.net"
     port: 80
@@ -2372,7 +2142,7 @@ proxies:
       path: "/-Arfilter-TEL--@Arfilter-TEL--@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEL--@Arfilter?ed=80"
       headers:
         Host: "Sudo.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | google.com-443 | 10.37ms"
+  - name: "🇺🇸 US🇺🇸 | google.com-443 | 3.21ms"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -2385,7 +2155,26 @@ proxies:
       path: "/"
       headers:
         Host: "swedwneeji.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | www.firefox.com-443 | 9.93ms"
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 25.62ms"
+    type: "vless"
+    server: "tulip.amydoodles.com"
+    port: 443
+    uuid: "fd65fd49-beaf-4dbf-b689-bcc53595bd89"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "cdn.akamai.steamstatic.com"
+    client-fingerprint: "firefox"
+  - name: "🇺🇸 US🇺🇸 | www.firefox.com-443 | 2.6ms"
+    type: "vless"
+    server: "199.232.20.113"
+    port: 443
+    uuid: "fcdfed39-51aa-4bb5-beb7-61b0357e36b9"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.firefox.com"
+  - name: "🇺🇸 US🇺🇸 | www.firefox.com-443 | 1.93ms"
     type: "vless"
     server: "199.232.20.113"
     port: 443
@@ -2397,19 +2186,33 @@ proxies:
     client-fingerprint: "chrome"
     alpn:
       - "h2"
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 35.45ms"
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 13.33ms"
     type: "vless"
     server: "146.75.57.238"
     port: 443
     uuid: "fcdfed39-51aa-4bb5-beb7-61b0357e36b9"
     udp: true
     tls: true
-    network: "xhttp"
+    network: "tcp"
     servername: "cdn.akamai.steamstatic.com"
-    client-fingerprint: "chrome"
+  - name: "🇺🇸 US🇺🇸 | live.wkrq.com-443 | 37.06ms"
+    type: "vless"
+    server: "live.wkrq.com"
+    port: 443
+    uuid: "fb789853-e3f3-450f-9289-78e3e9f3d3e2"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "live.wkrq.com"
+    client-fingerprint: "firefox"
     alpn:
       - "h2"
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 33.24ms"
+      - "http/1.1"
+    ws-opts:
+      path: "/@custom_config?ed=2560"
+      headers:
+        Host: "downloadlynet.ir."
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 11.04ms"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
@@ -2421,7 +2224,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_17i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 23.71ms"
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 4.73ms"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
@@ -2434,7 +2237,7 @@ proxies:
       path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
       headers:
         Host: "copy_az_channel_NUFiLTER_17i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 54.82ms"
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 34.62ms"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
@@ -2447,7 +2250,7 @@ proxies:
       path: "/"
       headers:
         Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 13.3ms"
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 9.38ms"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
@@ -2460,7 +2263,33 @@ proxies:
       path: "/"
       headers:
         Host: "copy_az_channel_NUFiLTER_17i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 11.3ms"
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 13.01ms"
+    type: "vless"
+    server: "www.qarvian.ir"
+    port: 443
+    uuid: "f9a9aa1f-75fb-4490-9155-85567af7a0ff"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cdn.akamai.steamstatic.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/?TELEGRAM--B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub--TELEGRAM"
+      headers:
+        Host: "copy_az_channel_NUFiLTER_17i.global.ssl.fastly.net."
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 2.65ms"
+    type: "vless"
+    server: "199.232.78.160"
+    port: 443
+    uuid: "f9a9aa1f-75fb-4490-9155-85567af7a0ff"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      headers:
+        Host: "copy_az_channel_NUFiLTER_10i.global.ssl.fastly.net."
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 2.96ms"
     type: "vless"
     server: "199.232.78.160"
     port: 443
@@ -2473,20 +2302,7 @@ proxies:
       path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
       headers:
         Host: "copy_az_channel_NUFiLTER_10i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.52ms"
-    type: "vless"
-    server: "199.232.78.160"
-    port: 443
-    uuid: "f9a9aa1f-75fb-4490-9155-85567af7a0ff"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/?Telegram---DailyConfigs---DailyConfigs---DailyConfigs---DailyConfigs"
-      headers:
-        Host: "copy_az_channel_NUFiLTER_10i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 42.36ms"
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 12.26ms"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -2498,7 +2314,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_8i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 17.47ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.07ms"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -2510,7 +2326,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.79ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.85ms"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -2523,22 +2339,43 @@ proxies:
       path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
       headers:
         Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 10.45ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.1ms"
     type: "vless"
-    server: "wwww.qarvian.ir"
+    server: "199.232.96.150"
     port: 443
-    uuid: "f2a1f964-7cfb-435f-abb2-2969bd595c75"
+    uuid: "f9991b8e-7d19-49e7-ae1d-70ce37d7ca16"
     udp: true
     tls: true
-    network: "ws"
+    network: "xhttp"
     servername: "firefox.com"
+    client-fingerprint: "firefox"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.22ms"
+    type: "vless"
+    server: "167.82.76.31"
+    port: 443
+    uuid: "f9991b8e-7d19-49e7-ae1d-70ce37d7ca16"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "firefox.com"
+    client-fingerprint: "safari"
     alpn:
+      - "h3"
       - "h2"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "albaniji.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | play.google.com-443 | 11.7ms"
+  - name: "🇺🇸 US🇺🇸 | speedtest.net-443 | 2.53ms"
+    type: "vless"
+    server: "167.82.76.31"
+    port: 443
+    uuid: "f9991b8e-7d19-49e7-ae1d-70ce37d7ca16"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "speedtest.net"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h3"
+      - "h2"
+  - name: "🇺🇸 US🇺🇸 | play.google.com-443 | 3.35ms"
     type: "vless"
     server: "146.75.57.111"
     port: 443
@@ -2550,19 +2387,24 @@ proxies:
     client-fingerprint: "chrome"
     alpn:
       - "h2"
-  - name: "🇺🇸 US🇺🇸 | speedtest.net-443 | 28.92ms"
+  - name: "🇺🇸 US🇺🇸 | Zmaoz.Faculty.Ucdavis.Edu-443 | 18.65ms"
     type: "vless"
-    server: "199.232.78.159"
+    server: "zmaoz.faculty.ucdavis.edu"
     port: 443
-    uuid: "eea97160-a606-4552-97ad-8acc1ce863e1"
+    uuid: "f13b0d60-ab23-49c3-8e4f-fc31ca6fbeca"
     udp: true
     tls: true
     network: "ws"
-    servername: "speedtest.net"
+    servername: "Zmaoz.Faculty.Ucdavis.Edu"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
+      - "http/1.1"
     ws-opts:
+      path: "/@custom_config?ed=2560"
       headers:
-        Host: "azdddaiji5.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 11.55ms"
+        Host: "downloadlynet.ir."
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 2.8ms"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -2575,7 +2417,7 @@ proxies:
       path: "/?TELEGRAM-TOOTFFARANGI"
       headers:
         Host: "copy_az_channel_NUFiLTER_5i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.63ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.19ms"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -2588,7 +2430,7 @@ proxies:
       path: "/?TELEGRAM-DailyConfigs"
       headers:
         Host: "copy_az_channel_NUFiLTER_5i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.92ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.61ms"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -2601,7 +2443,7 @@ proxies:
       path: "/"
       headers:
         Host: "copy_az_channel_NUFiLTER_3i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.06ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 5.02ms"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -2614,7 +2456,7 @@ proxies:
       path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
       headers:
         Host: "copy_az_channel_NUFiLTER_5i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 4.89ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 2.88ms-1"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -2627,20 +2469,7 @@ proxies:
       path: "/?TELEGRAM-MUSICLOVERS85"
       headers:
         Host: "copy_az_channel_NUFiLTER_4i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 5.94ms"
-    type: "vless"
-    server: "146.75.59.186"
-    port: 443
-    uuid: "eccc053a-7196-47cb-a4b5-f4b8bfd743d9"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/?TELEGRAM-DailyConfigs"
-      headers:
-        Host: "copy_az_channel_NUFiLTER_4i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 5.12ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 2.67ms"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -2653,7 +2482,93 @@ proxies:
       path: "/?TELEGRAM-DailyConfigs"
       headers:
         Host: "copy_az_channel_NUFiLTER_3i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 82.98ms"
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 11.37ms"
+    type: "vless"
+    server: "wwww.qarvian.ir"
+    port: 443
+    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cdn.akamai.steamstatic.com"
+    ws-opts:
+      headers:
+        Host: "copy_az_channel_NUFiLTER_17i.global.ssl.fastly.net."
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 7.71ms"
+    type: "vless"
+    server: "wwww.qarvian.ir"
+    port: 443
+    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cdn.akamai.steamstatic.com"
+    ws-opts:
+      path: "/?TELEGRAM---------TOOTFFARANGI"
+      headers:
+        Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net."
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.71ms"
+    type: "vless"
+    server: "199.232.78.160"
+    port: 443
+    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      headers:
+        Host: "copy_az_channel_NUFiLTER_10i.global.ssl.fastly.net."
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 5.26ms"
+    type: "vless"
+    server: "199.232.78.159"
+    port: 443
+    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cdn.akamai.steamstatic.com"
+    ws-opts:
+      headers:
+        Host: "copy_az_channel_NUFiLTER_8i.global.ssl.fastly.net."
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.35ms"
+    type: "vless"
+    server: "146.75.59.186"
+    port: 443
+    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      headers:
+        Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.4ms"
+    type: "vless"
+    server: "146.75.59.186"
+    port: 443
+    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      path: "/?TELEGRAM---------TOOTFFARANGI"
+      headers:
+        Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
+  - name: "🇺🇸 US🇺🇸 | www.fastly.com-443 | 72.42ms"
+    type: "vless"
+    server: "151.101.119.41"
+    port: 443
+    uuid: "e19d4671-94d7-497a-a5e1-3e84250ea00a"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "www.fastly.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 12.34ms"
     type: "vless"
     server: "146.75.57.238"
     port: 443
@@ -2667,7 +2582,7 @@ proxies:
       path: "/"
       headers:
         Host: "looaloooibamoooijji.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | google.com-443 | 15.84ms"
+  - name: "🇺🇸 US🇺🇸 | google.com-443 | 4.88ms"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -2677,10 +2592,10 @@ proxies:
     network: "ws"
     servername: "google.com"
     ws-opts:
-      path: "/?Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN"
+      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
       headers:
         Host: "pan2e.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | Maryshuponlinr.global.ssl.fastly.net-80 | 40.65ms"
+  - name: "🇺🇸 US🇺🇸 | Maryshuponlinr.global.ssl.fastly.net-80 | 6.45ms"
     type: "vless"
     server: "fastly.videobazi.com"
     port: 80
@@ -2688,7 +2603,7 @@ proxies:
     udp: true
     tls: false
     network: "xhttp"
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 10.85ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.09ms"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
@@ -2700,7 +2615,20 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_a11ia.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 4.83ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.1ms-1"
+    type: "vless"
+    server: "wwww.qarvian.ir"
+    port: 443
+    uuid: "dc7d45c9-c942-41e3-b880-9a7fd5b64e2f"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "copy_az_channel_NUFiLTER_a11ia.global.ssl.fastly.net."
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.02ms"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -2712,7 +2640,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_a1ia.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 10.82ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.34ms"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -2725,7 +2653,7 @@ proxies:
       path: "/"
       headers:
         Host: "copy_az_channel_NUFiLTER_a1ia.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.84ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.35ms-1"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -2737,20 +2665,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_a1i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.43ms"
-    type: "vless"
-    server: "146.75.59.186"
-    port: 443
-    uuid: "dc7d45c9-c942-41e3-b880-9a7fd5b64e2f"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/?DailYCOnfIGs"
-      headers:
-        Host: "copy_az_channel_NUFiLTER_a1i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | tignaltofansv8.global.ssl.fastly.net-80 | 33.04ms"
+  - name: "🇺🇸 US🇺🇸 | tignaltofansv8.global.ssl.fastly.net-80 | 6.63ms"
     type: "vless"
     server: "fastly.com"
     port: 80
@@ -2758,7 +2673,41 @@ proxies:
     udp: true
     tls: false
     network: "xhttp"
-  - name: "🇺🇸 US🇺🇸 | google.com-443 | 12.44ms"
+  - name: "🇺🇸 US🇺🇸 | live.skornorth.com-443 | 7.27ms"
+    type: "vless"
+    server: "live.skornorth.com"
+    port: 443
+    uuid: "d6252cc5-2f53-4966-ad3b-99285b891879"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "live.skornorth.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/@custom_config?ed=2048"
+      headers:
+        Host: "soft-sun.com"
+  - name: "🇺🇸 US🇺🇸 | live.skornorth.com-443 | 6.31ms"
+    type: "vless"
+    server: "live.skornorth.com"
+    port: 443
+    uuid: "d6252cc5-2f53-4966-ad3b-99285b891879"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "live.skornorth.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/@custom_config?ed=2048"
+      headers:
+        Host: "custom-config.ir"
+  - name: "🇺🇸 US🇺🇸 | google.com-443 | 3.18ms"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
@@ -2770,7 +2719,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | google.com-443 | 10.21ms"
+  - name: "🇺🇸 US🇺🇸 | google.com-443 | 3.35ms"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -2782,20 +2731,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | google.com-443 | 16.22ms"
-    type: "vless"
-    server: "199.232.78.159"
-    port: 443
-    uuid: "d1cafeeb-2861-4d1e-a462-38f16442f5b2"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "google.com"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "copy_az_channel_NUFiLTER_i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | google.com-443 | 11.29ms"
+  - name: "🇺🇸 US🇺🇸 | google.com-443 | 2.9ms"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -2807,7 +2743,16 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | www.firefox.com-443 | 10.49ms"
+  - name: "🇺🇸 US🇺🇸 | www.firefox.com-443 | 3.13ms"
+    type: "vless"
+    server: "199.232.20.113"
+    port: 443
+    uuid: "d0136cca-a5a5-4c70-87dd-ce2ef76b7f82"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.firefox.com"
+  - name: "🇺🇸 US🇺🇸 | www.firefox.com-443 | 2.5ms"
     type: "vless"
     server: "199.232.20.113"
     port: 443
@@ -2819,7 +2764,7 @@ proxies:
     client-fingerprint: "chrome"
     alpn:
       - "h2"
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 100.82ms"
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 11.01ms"
     type: "vless"
     server: "146.75.57.238"
     port: 443
@@ -2831,37 +2776,7 @@ proxies:
     client-fingerprint: "chrome"
     alpn:
       - "h2"
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 10.14ms"
-    type: "vless"
-    server: "146.75.59.186"
-    port: 443
-    uuid: "ce7f8f1a-e4c5-4802-9ff5-ccd2b821362a"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "cdn.akamai.steamstatic.com"
-    alpn:
-      - "h2"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "germanyi.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 4.31ms"
-    type: "vless"
-    server: "146.75.57.238"
-    port: 443
-    uuid: "ce7f8f1a-e4c5-4802-9ff5-ccd2b821362a"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    alpn:
-      - "h2"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "azarbaii.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 12.07ms"
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 9.94ms"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
@@ -2873,7 +2788,20 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 6.16ms"
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 7.29ms"
+    type: "vless"
+    server: "wwww.qarvian.ir"
+    port: 443
+    uuid: "cd07ae0d-f31d-4209-a0a4-d9d9cfcca1ad"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cdn.akamai.steamstatic.com"
+    ws-opts:
+      path: "/?Telegram---proxy_mtm---proxy_mtm---proxy_mtm---proxy_mtm"
+      headers:
+        Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net."
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 2.69ms"
     type: "vless"
     server: "199.232.78.160"
     port: 443
@@ -2885,7 +2813,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_10i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 4.43ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.15ms"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -2897,9 +2825,21 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_8i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 67.5ms"
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 6.8ms"
     type: "vless"
-    server: "167.82.64.64"
+    server: "146.75.59.186"
+    port: 443
+    uuid: "cd07ae0d-f31d-4209-a0a4-d9d9cfcca1ad"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cdn.akamai.steamstatic.com"
+    ws-opts:
+      headers:
+        Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 4.64ms"
+    type: "vless"
+    server: "146.75.59.186"
     port: 443
     uuid: "cd07ae0d-f31d-4209-a0a4-d9d9cfcca1ad"
     udp: true
@@ -2909,33 +2849,25 @@ proxies:
     ws-opts:
       path: "/"
       headers:
-        Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 38.53ms"
+        Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
+  - name: "🇺🇸 US🇺🇸 | live.wkrq.com-443 | 57.66ms"
     type: "vless"
-    server: "146.75.59.186"
+    server: "live.wkrq.com"
     port: 443
-    uuid: "cd07ae0d-f31d-4209-a0a4-d9d9cfcca1ad"
+    uuid: "cc35f6ba-be03-4d1e-b229-db443b5a7ce7"
     udp: true
     tls: true
     network: "ws"
-    servername: "cdn.akamai.steamstatic.com"
+    servername: "live.wkrq.com"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
+      - "http/1.1"
     ws-opts:
+      path: "/@custom_config?ed=2560"
       headers:
-        Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 44.82ms"
-    type: "vless"
-    server: "146.75.59.186"
-    port: 443
-    uuid: "cd07ae0d-f31d-4209-a0a4-d9d9cfcca1ad"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "cdn.akamai.steamstatic.com"
-    ws-opts:
-      path: "/?Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN"
-      headers:
-        Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | max-gb1.global.ssl.fastly.net-80 | 36ms"
+        Host: "downloadlynet.ir."
+  - name: "🇺🇸 US🇺🇸 | max-gb1.global.ssl.fastly.net-80 | 4.38ms"
     type: "vless"
     server: "167.82.0.1"
     port: 80
@@ -2947,7 +2879,20 @@ proxies:
       path: "/"
       headers:
         Host: "max-gb1.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | api.fastly.com-443 | 36.26ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.12ms"
+    type: "vless"
+    server: "199.232.78.159"
+    port: 443
+    uuid: "c48e280e-e85b-48a9-b5cf-c0572e1ae9bd"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "frenchji.global.ssl.fastly.net."
+  - name: "🇺🇸 US🇺🇸 | api.fastly.com-443 | 13.62ms"
     type: "vless"
     server: "simpleto.asan-ps.ir"
     port: 443
@@ -2959,7 +2904,7 @@ proxies:
     ws-opts:
       headers:
         Host: "omeninasab.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | google.com-443 | 14.73ms"
+  - name: "🇺🇸 US🇺🇸 | google.com-443 | 3.49ms"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -2972,7 +2917,7 @@ proxies:
       path: "/"
       headers:
         Host: "az_man-eski_naro_Pesar_jOon.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | google.com-443 | 16.46ms"
+  - name: "🇺🇸 US🇺🇸 | google.com-443 | 3.17ms"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -2985,16 +2930,7 @@ proxies:
       path: "/"
       headers:
         Host: "looaboijjnetheri.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | Google.com-443 | 11.45ms"
-    type: "vless"
-    server: "199.232.78.160"
-    port: 443
-    uuid: "bf9688e7-cdde-4a18-810e-1ec506326fb7"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "Google.com"
-  - name: "🇺🇸 US🇺🇸 | Google.com-443 | 10.29ms"
+  - name: "🇺🇸 US🇺🇸 | Google.com-443 | 3.19ms"
     type: "vless"
     server: "199.232.78.160"
     port: 443
@@ -3006,68 +2942,7 @@ proxies:
     client-fingerprint: "chrome"
     alpn:
       - "h2"
-  - name: "🇺🇸 US🇺🇸 | speedtest.net-443 | 12.04ms"
-    type: "vless"
-    server: "199.232.239.239"
-    port: 443
-    uuid: "b020c472-934e-4d99-e8f8-3851c001683a"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "speedtest.net"
-    client-fingerprint: "firefox"
-    alpn:
-      - "h2"
-    ws-opts:
-      path: "/?ed=2056?/TELEGRAM--BYA--CHANEL---@SIL3NTVPN---@SIL3NTVPN---@SIL3NTVPN---@SIL3NTVPN---@SIL3NTVPN---@SIL3NTVPN---@SIL3NTVPN---@SIL3NTVPN---@SIL3NTVPN---@SIL3NTVPN---@SIL3NTVPN---@SIL3NTVPN---"
-      headers:
-        Host: "mr_anonoijji.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | speedtest.net-443 | 9.26ms"
-    type: "vless"
-    server: "speedtest.net"
-    port: 443
-    uuid: "af0d204d-18f8-434d-bea2-2bcc0df86d9f"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "speedtest.net"
-    client-fingerprint: "firefox"
-    alpn:
-      - "h2"
-      - "http/1.1"
-    ws-opts:
-      path: "/@custom_config?ed=2560"
-      headers:
-        Host: "downloadlynet.ir."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.29ms"
-    type: "vless"
-    server: "146.75.59.186"
-    port: 443
-    uuid: "a788913b-ea27-4198-8024-e69919916516"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    alpn:
-      - "h2"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "germanyi.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 102.9ms"
-    type: "vless"
-    server: "199.232.78.160"
-    port: 443
-    uuid: "XpnTeam-52"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "cdn.akamai.steamstatic.com"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "Appxdn.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 105.29ms"
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 11.73ms"
     type: "vless"
     server: "199.232.78.160"
     port: 443
@@ -3080,15 +2955,7 @@ proxies:
       path: "/"
       headers:
         Host: "Appxdn.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | tignaltofan.global.ssl.fastly.net-80 | 32.16ms"
-    type: "vless"
-    server: "fastly.com"
-    port: 80
-    uuid: "InternetAzadRobot"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "🇺🇸 US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 30.54ms"
+  - name: "🇺🇸 US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 6.1ms"
     type: "vless"
     server: "151.101.25.242"
     port: 80
@@ -3096,7 +2963,7 @@ proxies:
     udp: true
     tls: false
     network: "xhttp"
-  - name: "🇺🇸 US🇺🇸 | Firefox.com-443 | 74.64ms"
+  - name: "🇺🇸 US🇺🇸 | Firefox.com-443 | 2.96ms"
     type: "vless"
     server: "199.232.78.160"
     port: 443
@@ -3108,7 +2975,43 @@ proxies:
     client-fingerprint: "chrome"
     alpn:
       - "h2"
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 11.38ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3ms"
+    type: "vless"
+    server: "199.232.78.159"
+    port: 443
+    uuid: "85656e50-ee8d-4266-8b48-b99833c090dd"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      headers:
+        Host: "looabgermanyoijji.global.ssl.fastly.net"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.46ms"
+    type: "vless"
+    server: "146.75.59.186"
+    port: 443
+    uuid: "85656e50-ee8d-4266-8b48-b99833c090dd"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      headers:
+        Host: "frenchanjaai.global.ssl.fastly.net"
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 7.91ms"
+    type: "vless"
+    server: "146.75.57.238"
+    port: 443
+    uuid: "85656e50-ee8d-4266-8b48-b99833c090dd"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cdn.akamai.steamstatic.com"
+    ws-opts:
+      headers:
+        Host: "canadaboijji.global.ssl.fastly.net"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.86ms"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -3121,33 +3024,15 @@ proxies:
       path: "/"
       headers:
         Host: "frenchji.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 5.04ms"
+  - name: "🇺🇸 US🇺🇸 | filmographie.org-80 | 223.29ms"
     type: "vless"
-    server: "wwww.qarvian.ir"
-    port: 443
-    uuid: "7dee06cc-4bc8-43ca-a6c2-59f81107f2e3"
+    server: "speedtest.net"
+    port: 80
+    uuid: "81a75e30-1223-4076-9fb8-775df00c6665"
     udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
-      headers:
-        Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 4.05ms"
-    type: "vless"
-    server: "wwww.qarvian.ir"
-    port: 443
-    uuid: "7dee06cc-4bc8-43ca-a6c2-59f81107f2e3"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/?TELEGRAM--BYA--CHANEL---@V2ray_AM---@V2ray_AM---@V2ray_AM---@V2ray_AM---@V2ray_AM---@V2ray_AM---@V2ray_AM"
-      headers:
-        Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 6.06ms"
+    tls: false
+    network: "xhttp"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 2.97ms"
     type: "vless"
     server: "www.qarvian.ir"
     port: 443
@@ -3160,33 +3045,7 @@ proxies:
       path: "/?TELEGRAM--FaraGATE-FaraGATE-FaraGATE-FaraGATE-FaraGATE-FaraGATE-FaraGATE-FaraGATE-FaraGATE-FaraGATE--TELEGRAM"
       headers:
         Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.4ms"
-    type: "vless"
-    server: "199.232.78.160"
-    port: 443
-    uuid: "7dee06cc-4bc8-43ca-a6c2-59f81107f2e3"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
-      headers:
-        Host: "copy_az_channel_NUFiLTER_10i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 4.19ms"
-    type: "vless"
-    server: "199.232.78.159"
-    port: 443
-    uuid: "7dee06cc-4bc8-43ca-a6c2-59f81107f2e3"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
-      headers:
-        Host: "copy_az_channel_NUFiLTER_8i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 7.63ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.07ms-1"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -3199,7 +3058,7 @@ proxies:
       path: "/?TELEGRAM--BYA--CHANEL---@V2ray_AM---@V2ray_AM---@V2ray_AM---@V2ray_AM---@V2ray_AM---@V2ray_AM---@V2ray_AM"
       headers:
         Host: "copy_az_channel_NUFiLTER_8i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 5.17ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 2.76ms"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -3212,20 +3071,40 @@ proxies:
       path: "/"
       headers:
         Host: "copy_az_channel_NUFiLTER_8i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 4.26ms"
+  - name: "🇺🇸 US🇺🇸 | grimness-backlogs.cdn-content.com-443 | 66.77ms"
     type: "vless"
-    server: "146.75.59.186"
+    server: "grimness-backlogs.cdn-content.com"
     port: 443
-    uuid: "7dee06cc-4bc8-43ca-a6c2-59f81107f2e3"
+    uuid: "7ca746f8-4b6d-48f6-a344-aff7bf836388"
     udp: true
     tls: true
     network: "ws"
-    servername: "firefox.com"
+    servername: "grimness-backlogs.cdn-content.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
     ws-opts:
-      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
+      path: "/ws"
       headers:
-        Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | play.google.com-443 | 17.87ms"
+        Host: "grimness-backlogs.cdn-content.com"
+  - name: "🇺🇸 US🇺🇸 | live.skornorth.com-443 | 101.27ms"
+    type: "vless"
+    server: "live.skornorth.com"
+    port: 443
+    uuid: "787cbde8-126c-4c39-93f7-56cfe44527c0"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "live.skornorth.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/@custom_config?ed=2048"
+      headers:
+        Host: "custom-config.ir"
+  - name: "🇺🇸 US🇺🇸 | play.google.com-443 | 6.33ms"
     type: "vless"
     server: "199.232.237.79"
     port: 443
@@ -3238,7 +3117,7 @@ proxies:
       path: "/"
       headers:
         Host: "Spectrally-timablesn-ibis-kepler.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | play.google.com-443 | 7.12ms"
+  - name: "🇺🇸 US🇺🇸 | play.google.com-443 | 3.66ms"
     type: "vless"
     server: "199.232.237.79"
     port: 443
@@ -3252,30 +3131,20 @@ proxies:
       path: "/"
       headers:
         Host: "Spectrally-timablesn-ibis-kepler.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 104.43ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 8.46ms"
     type: "vless"
-    server: "pp-fx2.firelinkservers.ir"
+    server: "199.232.78.159"
     port: 443
-    uuid: "66940b5a-1b86-4950-ae28-387e60e898d0"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "cdn.akamai.steamstatic.com"
-    client-fingerprint: "firefox"
-  - name: "🇺🇸 US🇺🇸 | speedtest.net-443 | 11.96ms"
-    type: "vless"
-    server: "vxc.galardoxtn.ir"
-    port: 443
-    uuid: "5f65c1ae-9e7a-48ea-8ecf-6822365cd177"
+    uuid: "5ec50dc8-fba8-42ad-b427-e51193bc5c2a"
     udp: true
     tls: true
     network: "ws"
-    servername: "speedtest.net"
+    servername: "firefox.com"
     ws-opts:
       path: "/"
       headers:
-        Host: "apiv2.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 47.24ms"
+        Host: "ussman.global.ssl.fastly.net."
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 36.9ms"
     type: "vless"
     server: "146.75.57.238"
     port: 443
@@ -3289,22 +3158,33 @@ proxies:
       path: "/"
       headers:
         Host: "looaloooibamoooijji.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.8ms"
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 4.35ms"
     type: "vless"
-    server: "146.75.59.186"
+    server: "151.101.36.99"
     port: 443
-    uuid: "5db16cc8-23be-4b09-ade8-38b847a3c9cb"
+    uuid: "5bd8679a-d15b-48b7-82f2-8b726d57701a"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "cdn.akamai.steamstatic.com"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+  - name: "🇺🇸 US🇺🇸 | google.com-443 | 5.89ms"
+    type: "vless"
+    server: "199.232.78.159"
+    port: 443
+    uuid: "5abd299c-59e8-46e1-98ec-fec6ea20bec3"
     udp: true
     tls: true
     network: "ws"
-    servername: "firefox.com"
-    alpn:
-      - "h2"
+    servername: "google.com"
     ws-opts:
-      path: "/"
       headers:
-        Host: "germanyi.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | google.com-443 | 18.57ms"
+        Host: "pan2e.global.ssl.fastly.net"
+  - name: "🇺🇸 US🇺🇸 | google.com-443 | 3.17ms-1"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -3317,32 +3197,24 @@ proxies:
       path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
       headers:
         Host: "pan2e.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | google.com-443 | 16.78ms"
+  - name: "🇺🇸 US🇺🇸 | live.skornorth.com-80 | 9.24ms"
     type: "vless"
-    server: "199.232.78.159"
-    port: 443
-    uuid: "517736fa-17b6-4fc5-a77a-43627e3f526b"
+    server: "151.101.2.216"
+    port: 80
+    uuid: "5801ebec-b1b3-496e-9088-7858e006f0e9"
     udp: true
-    tls: true
+    tls: false
     network: "ws"
-    servername: "google.com"
+    servername: "live.skornorth.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
     ws-opts:
-      path: "/?TELEGRAM----@JKVPN----@JKVPN----@JKVPN----@JKVPN----@JKVPN----@JKVPN----@JKVPN----@JKVPN----@JKVPN----@JKVPN----@JKVPN"
+      path: "/@custom_config?ed=2048"
       headers:
-        Host: "pannn1.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 5.85ms"
-    type: "vless"
-    server: "wwww.qarvian.ir"
-    port: 443
-    uuid: "4718b360-7f15-42d3-9b82-ebc20c427c93"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      headers:
-        Host: "albaniaoijji.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 92.85ms"
+        Host: "leader-of-www.com"
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 33.64ms"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
@@ -3354,7 +3226,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 7.08ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.22ms-1"
     type: "vless"
     server: "199.232.78.160"
     port: 443
@@ -3366,19 +3238,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_10i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 85.04ms"
-    type: "vless"
-    server: "199.232.78.159"
-    port: 443
-    uuid: "46cb8a26-0712-4e85-89bf-2538a2788652"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "cdn.akamai.steamstatic.com"
-    ws-opts:
-      headers:
-        Host: "copy_az_channel_NUFiLTER_8i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 9.65ms"
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 8.24ms"
     type: "vless"
     server: "167.82.64.64"
     port: 443
@@ -3391,7 +3251,7 @@ proxies:
       path: "/"
       headers:
         Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 9.85ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.47ms"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -3403,7 +3263,19 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 9.85ms-1"
+  - name: "🇺🇸 US🇺🇸 | google.com-443 | 3.37ms"
+    type: "vless"
+    server: "3873e70a3b17.salzivo.ir"
+    port: 443
+    uuid: "410bc842-c3df-4fc5-9e11-0feab5c97d64"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "google.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 2.97ms-1"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
@@ -3418,7 +3290,7 @@ proxies:
       path: "/"
       headers:
         Host: "albaniji.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 9.34ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 2.87ms"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -3431,7 +3303,7 @@ proxies:
       path: "/"
       headers:
         Host: "italyma.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 5.64ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 2.92ms"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -3445,9 +3317,9 @@ proxies:
       path: "/"
       headers:
         Host: "netheri.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | google.com-443 | 12.67ms"
+  - name: "🇺🇸 US🇺🇸 | google.com-443 | 3.53ms"
     type: "vless"
-    server: "199.232.20.113"
+    server: "167.82.79.164"
     port: 443
     uuid: "3ca21a1e-5ec3-4724-9890-8c28e22bdbb2"
     udp: true
@@ -3458,7 +3330,7 @@ proxies:
     alpn:
       - "h3"
       - "h2"
-  - name: "🇺🇸 US🇺🇸 | google.com-443 | 17.59ms"
+  - name: "🇺🇸 US🇺🇸 | google.com-443 | 3.31ms"
     type: "vless"
     server: "167.82.79.164"
     port: 443
@@ -3471,19 +3343,7 @@ proxies:
     alpn:
       - "h3"
       - " h2"
-  - name: "🇺🇸 US🇺🇸 | gemini.google.com-443 | 39.3ms"
-    type: "vless"
-    server: "146.75.59.186"
-    port: 443
-    uuid: "3ca21a1e-5ec3-4724-9890-8c28e22bdbb2"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "gemini.google.com"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-  - name: "🇺🇸 US🇺🇸 | google.com-443 | 13.8ms"
+  - name: "🇺🇸 US🇺🇸 | google.com-443 | 3.41ms"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
@@ -3496,7 +3356,7 @@ proxies:
       path: "/"
       headers:
         Host: "azdddaiji5.global.ssl.fastly.net."
-  - name: "🇺🇸 IR🇮🇷 | stigmata.ir-80 | 831.58ms"
+  - name: "🇺🇸 IR🇮🇷 | stigmata.ir-80 | 659.19ms"
     type: "vless"
     server: "psf-2.weedly.top"
     port: 80
@@ -3508,7 +3368,7 @@ proxies:
       path: "/"
       headers:
         Host: "stigmata.ir"
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.89ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.11ms"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -3521,7 +3381,7 @@ proxies:
       path: "/"
       headers:
         Host: "italyma.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 4.78ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 2.51ms"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -3534,7 +3394,22 @@ proxies:
       path: "/"
       headers:
         Host: "frenchji.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | www.firefox.com-443 | 54.21ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 2.92ms-1"
+    type: "vless"
+    server: "146.75.59.186"
+    port: 443
+    uuid: "31f1db9f-2708-48f2-b1ba-f1d6e0098409"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    alpn:
+      - "h2"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "germanyi.global.ssl.fastly.net."
+  - name: "🇺🇸 US🇺🇸 | www.firefox.com-443 | 6.6ms"
     type: "vless"
     server: "199.232.78.160"
     port: 443
@@ -3546,44 +3421,24 @@ proxies:
     client-fingerprint: "chrome"
     alpn:
       - "h2"
-  - name: "🇺🇸 US🇺🇸 | google.com-443 | 12.54ms"
+  - name: "🇺🇸 US🇺🇸 | Zmaoz.Faculty.Ucdavis.Edu-443 | 18.85ms"
     type: "vless"
-    server: "199.232.20.113"
+    server: "zmaoz.faculty.ucdavis.edu"
     port: 443
-    uuid: "30ed2f7b-35c1-49ca-8d9f-687983382360"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "google.com"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h3"
-      - "h2"
-      - "http/1.1"
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 5.83ms"
-    type: "vless"
-    server: "199.232.78.159"
-    port: 443
-    uuid: "30d27765-07a2-49a4-9afa-ab6252e60448"
+    uuid: "2ee1ec37-c543-47ce-946c-2f689b20af86"
     udp: true
     tls: true
     network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "looabgermanyoijji.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | apple.com-443 | 9.09ms"
-    type: "vless"
-    server: "pp-fx2.firelinkservers.ir"
-    port: 443
-    uuid: "2d7977e4-e4eb-4ff2-a35f-f4e765480e58"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "apple.com"
+    servername: "Zmaoz.Faculty.Ucdavis.Edu"
     client-fingerprint: "firefox"
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 43.45ms"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/@custom_config?ed=2560"
+      headers:
+        Host: "downloadlynet.ir."
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 14.91ms"
     type: "vless"
     server: "pp-fx2.firelinkservers.ir"
     port: 443
@@ -3593,27 +3448,19 @@ proxies:
     network: "xhttp"
     servername: "cdn.akamai.steamstatic.com"
     client-fingerprint: "firefox"
-  - name: "🇺🇸 US🇺🇸 | play.google.com-443 | 20.63ms"
+  - name: "🇺🇸 US🇺🇸 | www.firefox.com-443 | 1.87ms"
     type: "vless"
-    server: "199.232.78.159"
+    server: "199.232.20.113"
     port: 443
-    uuid: "2ba70d96-2a73-4b5c-9939-c43685dbac65"
+    uuid: "2373eb03-66b2-4f42-bb40-95db8b210877"
     udp: true
     tls: true
-    network: "ws"
-    servername: "play.google.com"
-    ws-opts:
-      headers:
-        Host: "azdddaiji5.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | baharishomalyour-name.global.ssl.fastly.net-80 | 29.52ms"
-    type: "vless"
-    server: "151.101.3.147"
-    port: 80
-    uuid: "24d49ddd-67c1-4821-b5b9-f12107366978"
-    udp: true
-    tls: false
     network: "xhttp"
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 36.17ms"
+    servername: "www.firefox.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 7.74ms"
     type: "vless"
     server: "146.75.57.238"
     port: 443
@@ -3625,34 +3472,7 @@ proxies:
     client-fingerprint: "chrome"
     alpn:
       - "h2"
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 9.88ms"
-    type: "vless"
-    server: "199.232.78.159"
-    port: 443
-    uuid: "236ab0d4-7d11-4d33-94c1-f271072d8c58"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "frenchji.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 43.15ms"
-    type: "vless"
-    server: "146.75.57.238"
-    port: 443
-    uuid: "236ab0d4-7d11-4d33-94c1-f271072d8c58"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "cdn.akamai.steamstatic.com"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "looaloooibamoooijji.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 5.56ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.76ms"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
@@ -3664,9 +3484,9 @@ proxies:
     ws-opts:
       headers:
         Host: "albaniaoijji.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 4.19ms-1"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.44ms"
     type: "vless"
-    server: "199.232.78.159"
+    server: "146.75.59.186"
     port: 443
     uuid: "226498aa-adf7-4077-a099-d44e8be694f8"
     udp: true
@@ -3674,22 +3494,26 @@ proxies:
     network: "ws"
     servername: "firefox.com"
     ws-opts:
-      path: "/"
       headers:
-        Host: "looabgermanyoijji.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | google.com-443 | 20.67ms"
+        Host: "looabnetheroijji.global.ssl.fastly.net."
+  - name: "🇺🇸 US🇺🇸 | live.skornorth.com-443 | 6.36ms"
     type: "vless"
-    server: "146.75.57.238"
+    server: "live.skornorth.com"
     port: 443
-    uuid: "226498aa-adf7-4077-a099-d44e8be694f8"
+    uuid: "20ee9d1e-3dac-4027-97ab-bc8548f4ca2e"
     udp: true
     tls: true
     network: "ws"
-    servername: "google.com"
+    servername: "live.skornorth.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
     ws-opts:
+      path: "/@custom_config?ed=2048"
       headers:
-        Host: "canadaboijji.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 6.23ms"
+        Host: "crypto-custom.ir"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 2.99ms"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
@@ -3701,7 +3525,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 5.07ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 2.54ms"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -3713,7 +3537,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_8i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 9.27ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.26ms"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -3725,7 +3549,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 10.31ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 2.77ms"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -3739,21 +3563,19 @@ proxies:
       path: "/"
       headers:
         Host: "netheri.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 92.94ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 2.74ms"
     type: "vless"
-    server: "146.75.57.238"
+    server: "wwww.qarvian.ir"
     port: 443
-    uuid: "1450b9fa-aa7e-4ccd-b2a7-956aec6a1ec4"
+    uuid: "08902a33-9968-4e5c-a0fa-52ff6a734eb3"
     udp: true
     tls: true
     network: "ws"
-    servername: "cdn.akamai.steamstatic.com"
-    client-fingerprint: "chrome"
+    servername: "firefox.com"
     ws-opts:
-      path: "/"
       headers:
-        Host: "looaloooibamoooijji.global.ssl.fastly.net."
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 5.21ms"
+        Host: "snaanjaai.global.ssl.fastly.net"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.49ms-1"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -3765,7 +3587,19 @@ proxies:
     ws-opts:
       headers:
         Host: "looabgermanyoijji.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.03ms"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.54ms"
+    type: "vless"
+    server: "146.75.59.186"
+    port: 443
+    uuid: "08902a33-9968-4e5c-a0fa-52ff6a734eb3"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      headers:
+        Host: "frenchanjaai.global.ssl.fastly.net"
+  - name: "🇺🇸 US🇺🇸 | firefox.com-443 | 3.39ms"
     type: "vless"
     server: "146.75.57.238"
     port: 443
@@ -3777,7 +3611,7 @@ proxies:
     ws-opts:
       headers:
         Host: "polandboijji.global.ssl.fastly.net"
-  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 44.75ms"
+  - name: "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 11.18ms"
     type: "vless"
     server: "146.75.57.111"
     port: 443
@@ -3789,7 +3623,20 @@ proxies:
     client-fingerprint: "chrome"
     alpn:
       - "h2"
-  - name: "🇺🇸 US🇺🇸 | max-gb1.global.ssl.fastly.net-80 | 18.67ms"
+  - name: "🇺🇸 US🇺🇸 | speedtest.net-443 | 2.36ms"
+    type: "vless"
+    server: "199.232.239.239"
+    port: 443
+    uuid: "0617eade-fb92-422f-9b59-c9a4b65b2906"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "speedtest.net"
+    ws-opts:
+      path: "/?Telegram---pirozi_ArGaP---pirozi_ArGaP---pirozi_ArGaP---pirozi_ArGaP?ed=2056"
+      headers:
+        Host: "mr_anonoijji.global.ssl.fastly.net"
+  - name: "🇺🇸 US🇺🇸 | max-gb1.global.ssl.fastly.net-80 | 4.89ms"
     type: "vless"
     server: "199.232.197.131"
     port: 80
@@ -3801,7 +3648,28 @@ proxies:
       path: "/"
       headers:
         Host: "max-gb1.global.ssl.fastly.net"
-  - name: "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms"
+  - name: "🇺🇸 🔒 VL-TCP-TLS 🇺🇸 US-146.75.57.111:443"
+    type: "vless"
+    server: "146.75.57.111"
+    port: 443
+    uuid: "7623b717-29f8-4f76-9a9a-eec96d92dba9"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "firefox.com"
+  - name: "🇺🇸 🆔soskeynet 🔒 VL-XHTTP-N/A 🇺🇸 US 2ms"
+    type: "vless"
+    server: "167.82.64.46"
+    port: 443
+    uuid: "8ac2a0c1-43d7-442c-a2a0-c1ef6758a063"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "firefox.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+  - name: "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms"
     type: "trojan"
     server: "199.232.78.160"
     port: 443
@@ -3814,7 +3682,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSs---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "1--2---3--mitivpn.global.ssl.fastly.net"
-  - name: "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 15ms"
+  - name: "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-1"
     type: "trojan"
     server: "151.101.56.7"
     port: 443
@@ -3827,7 +3695,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/D-e2@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn-ss-ss.global.ssl.fastly.net"
-  - name: "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms-1"
+  - name: "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-2"
     type: "trojan"
     server: "199.232.78.160"
     port: 443
@@ -3840,7 +3708,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSs---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn-mitivpn-mitivpn---mitivpn--mitivpn.global.ssl.fastly.net"
-  - name: "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 13ms"
+  - name: "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-3"
     type: "trojan"
     server: "151.101.56.7"
     port: 443
@@ -3853,7 +3721,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/D-e2@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn-mitivpn-mitivpn---mitivpn--mitivpn.global.ssl.fastly.net"
-  - name: "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms-2"
+  - name: "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-4"
     type: "trojan"
     server: "199.232.78.160"
     port: 443
@@ -3866,7 +3734,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSs---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn-ss-mitivpn-----mitivpn.global.ssl.fastly.net"
-  - name: "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 6ms"
+  - name: "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 3ms"
     type: "trojan"
     server: "199.232.78.160"
     port: 443
@@ -3879,7 +3747,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSs---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn-ss-mitivpn---mitivpn--mitivpn.global.ssl.fastly.net"
-  - name: "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 6ms-1"
+  - name: "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-5"
     type: "trojan"
     server: "151.101.56.6"
     port: 443
@@ -3892,7 +3760,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSus---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn---ss--s---mitivpn-1.global.ssl.fastly.net"
-  - name: "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 10ms"
+  - name: "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-6"
     type: "trojan"
     server: "199.232.78.160"
     port: 443
@@ -3905,7 +3773,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/D-e1i@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn---ss--s---mitivpn-4.global.ssl.fastly.net"
-  - name: "🇺🇸 🆔capoit 🔒 VL-XHTTP-N/A 🇺🇸 US 7ms"
+  - name: "🇺🇸 🆔capoit 🔒 VL-XHTTP-N/A ❔ XX 2ms"
     type: "vless"
     server: "146.75.57.111"
     port: 443
@@ -3917,7 +3785,7 @@ proxies:
     client-fingerprint: "chrome"
     alpn:
       - "h2"
-  - name: "🇺🇸 🆔capoit 🔒 VL-WS-N/A 🇺🇸 US 6ms"
+  - name: "🇺🇸 🆔capoit 🔒 VL-WS-N/A ❔ XX 2ms"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -3930,7 +3798,7 @@ proxies:
       path: "/"
       headers:
         Host: "italyma.global.ssl.fastly.net."
-  - name: "🇺🇸 🆔capoit 🔒 VL-WS-N/A 🇺🇸 US 11ms"
+  - name: "🇺🇸 🆔capoit 🔒 VL-WS-N/A ❔ XX 2ms-1"
     type: "vless"
     server: "199.232.78.160"
     port: 443
@@ -3943,7 +3811,7 @@ proxies:
       path: "/"
       headers:
         Host: "Appxdn.global.ssl.fastly.net"
-  - name: "🇺🇸 🆔capoit 🔒 VL-WS-N/A 🇺🇸 US 9ms"
+  - name: "🇺🇸 🆔capoit 🔒 VL-WS-N/A ❔ XX 2ms-2"
     type: "vless"
     server: "167.82.64.64"
     port: 443
@@ -3956,34 +3824,9 @@ proxies:
       path: "/?TELEGRAM--B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub--TELEGRAM"
       headers:
         Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net."
-  - name: "🇺🇸 🆔capoit 🔒 VL-WS-N/A 🇺🇸 US 15ms"
+  - name: "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 14ms"
     type: "vless"
-    server: "199.232.78.159"
-    port: 443
-    uuid: "5ec50dc8-fba8-42ad-b427-e51193bc5c2a"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "ussman.global.ssl.fastly.net."
-  - name: "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 5ms"
-    type: "vless"
-    server: "199.232.78.159"
-    port: 443
-    uuid: "85656e50-ee8d-4266-8b48-b99833c090dd"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      headers:
-        Host: "looabgermanyoijji.global.ssl.fastly.net"
-  - name: "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇺🇸 US 10ms"
-    type: "vless"
-    server: "199.232.78.159"
+    server: "wwww.qarvian.ir"
     port: 443
     uuid: "4718b360-7f15-42d3-9b82-ebc20c427c93"
     udp: true
@@ -3992,36 +3835,26 @@ proxies:
     servername: "firefox.com"
     ws-opts:
       headers:
-        Host: "looabgermanyoijji.global.ssl.fastly.net"
-  - name: "🇺🇸 🆔ar14n24b 🔒 VL-XHTTP-N/A ❔ XX 163ms"
-    type: "vless"
-    server: "avr.rlrlco.ir"
-    port: 443
-    uuid: "fd65fd49-beaf-4dbf-b689-bcc53595bd89"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "cdn.akamai.steamstatic.com"
-    client-fingerprint: "firefox"
-  - name: "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇸🇪 SE 5ms"
+        Host: "albaniaoijji.global.ssl.fastly.net"
+  - name: "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 2ms"
     type: "vless"
     server: "146.75.57.238"
     port: 443
-    uuid: "c48e280e-e85b-48a9-b5cf-c0572e1ae9bd"
+    uuid: "8a940430-555c-4047-928a-d896e0397b5f"
     udp: true
     tls: true
     network: "ws"
-    servername: "cdn.akamai.steamstatic.com"
+    servername: "firefox.com"
     client-fingerprint: "chrome"
     ws-opts:
       path: "/"
       headers:
         Host: "looaloooibamoooijji.global.ssl.fastly.net."
-  - name: "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 6ms"
+  - name: "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 3ms"
     type: "vless"
     server: "199.232.78.159"
     port: 443
-    uuid: "c48e280e-e85b-48a9-b5cf-c0572e1ae9bd"
+    uuid: "8a940430-555c-4047-928a-d896e0397b5f"
     udp: true
     tls: true
     network: "ws"
@@ -4029,24 +3862,12 @@ proxies:
     ws-opts:
       path: "/"
       headers:
-        Host: "frenchji.global.ssl.fastly.net."
-  - name: "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇸🇪 SE 11ms"
-    type: "vless"
-    server: "146.75.59.186"
-    port: 443
-    uuid: "4718b360-7f15-42d3-9b82-ebc20c427c93"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      headers:
-        Host: "looabnetheroijji.global.ssl.fastly.net."
-  - name: "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇸🇪 SE 6ms"
+        Host: "swedish.global.ssl.fastly.net."
+  - name: "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 2ms-1"
     type: "vless"
     server: "146.75.57.238"
     port: 443
-    uuid: "85656e50-ee8d-4266-8b48-b99833c090dd"
+    uuid: "c1a3a6ee-34d3-4fcd-8763-c2231adabed6"
     udp: true
     tls: true
     network: "ws"
@@ -4054,35 +3875,95 @@ proxies:
     ws-opts:
       headers:
         Host: "canadaboijji.global.ssl.fastly.net"
-  - name: "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇺🇸 US 8ms"
+  - name: "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 2ms-2"
     type: "vless"
-    server: "146.75.56.210"
+    server: "146.75.59.186"
     port: 443
-    uuid: "2c665ae0-9611-4a12-83e1-47a3ce9468b5"
+    uuid: "c1a3a6ee-34d3-4fcd-8763-c2231adabed6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      headers:
+        Host: "frenchanjaai.global.ssl.fastly.net"
+  - name: "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 2ms-3"
+    type: "vless"
+    server: "199.232.78.159"
+    port: 443
+    uuid: "c1a3a6ee-34d3-4fcd-8763-c2231adabed6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      headers:
+        Host: "looggg2aboijji.global.ssl.fastly.net"
+  - name: "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 14ms-1"
+    type: "vless"
+    server: "wwww.qarvian.ir"
+    port: 443
+    uuid: "c1a3a6ee-34d3-4fcd-8763-c2231adabed6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      headers:
+        Host: "albaniaoijji.global.ssl.fastly.net"
+  - name: "🇺🇸 🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 2ms"
+    type: "trojan"
+    server: "199.232.78.160"
+    port: 443
+    password: "MiTiVPN"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ssl.fastly.com"
+    ws-opts:
+      path: "@mehrosaboran"
+      headers:
+        Host: "mitivpn---ss--s---mitivpn-44.global.ssl.fastly.net"
+  - name: "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 153ms"
+    type: "vless"
+    server: "wwww.qarvian.ir"
+    port: 443
+    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
     udp: true
     tls: true
     network: "ws"
     servername: "cdn.akamai.steamstatic.com"
-    client-fingerprint: "firefox"
     ws-opts:
-      path: "/"
+      path: "/?TELEGRAM---------TOOTFFARANGI "
       headers:
-        Host: "Rastgubash-tarast-shi.global.ssl.fastly.net"
-  - name: "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇺🇸 US 14ms"
+        Host: "copy_az_channel_NUFiLTER_17i.global.ssl.fastly.net."
+  - name: "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms"
     type: "vless"
-    server: "146.75.57.238"
+    server: "199.232.78.160"
     port: 443
-    uuid: "2c665ae0-9611-4a12-83e1-47a3ce9468b5"
+    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      path: "/?TELEGRAM---------TOOTFFARANGI"
+      headers:
+        Host: "copy_az_channel_NUFiLTER_10i.global.ssl.fastly.net."
+  - name: "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-1"
+    type: "vless"
+    server: "199.232.78.159"
+    port: 443
+    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
     udp: true
     tls: true
     network: "ws"
     servername: "cdn.akamai.steamstatic.com"
-    client-fingerprint: "firefox"
     ws-opts:
-      path: "/"
+      path: "/?TELEGRAM---------TOOTFFARANGI"
       headers:
-        Host: "azadi-gk-nasim.global.ssl.fastly.net"
-  - name: "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇸🇪 SE 8ms"
+        Host: "copy_az_channel_NUFiLTER_8i.global.ssl.fastly.net."
+  - name: "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-2"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -4096,7 +3977,17 @@ proxies:
       path: "/"
       headers:
         Host: "takidopower-point.global.ssl.fastly.net"
-  - name: "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇺🇸 US 10ms-1"
+  - name: "🇺🇸 🆔madshopx 🔒 VL-XHTTP-N/A ❔ XX 3ms"
+    type: "vless"
+    server: "199.232.20.113"
+    port: 443
+    uuid: "2c665ae0-9611-4a12-83e1-47a3ce9468b5"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "www.firefox.com"
+    client-fingerprint: "safari"
+  - name: "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 4ms"
     type: "vless"
     server: "199.232.129.192"
     port: 443
@@ -4110,7 +4001,7 @@ proxies:
       path: "/"
       headers:
         Host: "xmit-pakari-nanistam.global.ssl.fastly.net"
-  - name: "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 6ms-1"
+  - name: "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 4ms-1"
     type: "vless"
     server: "199.232.246.236"
     port: 443
@@ -4124,128 +4015,103 @@ proxies:
       path: "/"
       headers:
         Host: "trfas-mohamdrogh-paki.global.ssl.fastly.net"
-  - name: "🇺🇸 🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 158ms"
-    type: "trojan"
-    server: "wwww.qarvian.ir"
+  - name: "🇺🇸 🆔madshopx 🔒 VL-XHTTP-N/A ❔ XX 3ms-1"
+    type: "vless"
+    server: "146.75.57.238"
     port: 443
-    password: "MiTiVPN"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
-      headers:
-        Host: "mitivpn--mitivpn.ac.ir"
-  - name: "🇺🇸 🆔ar14n24b 🔒 TR-XHTTP-N/A 🇺🇸 US 7ms"
-    type: "trojan"
-    server: "199.232.8.223"
-    port: 443
-    password: "bY9Tn8mwn4tx9_-L7jqmnETp7DO1UoVu"
+    uuid: "b59d913d-e686-4e89-b37b-00b56de6f7ba"
     udp: true
     tls: true
     network: "xhttp"
-    servername: "www.firefox.com"
-  - name: "🇺🇸 🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 9ms"
-    type: "trojan"
-    server: "167.82.64.46"
-    port: 443
-    password: "mitivpn"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      headers:
-        Host: "mitivpn-mitivpn.ac.ir"
-  - name: "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 249ms"
-    type: "vless"
-    server: "wwww.qarvian.ir"
-    port: 443
-    uuid: "46cb8a26-0712-4e85-89bf-2538a2788652"
-    udp: true
-    tls: true
-    network: "ws"
     servername: "cdn.akamai.steamstatic.com"
-    ws-opts:
-      headers:
-        Host: "copy_az_channel_NUFiLTER_17i.global.ssl.fastly.net."
-  - name: "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 30ms"
-    type: "vless"
-    server: "wwww.qarvian.ir"
-    port: 443
-    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "cdn.akamai.steamstatic.com"
-    ws-opts:
-      path: "/?TELEGRAM---------TOOTFFARANGI "
-      headers:
-        Host: "copy_az_channel_NUFiLTER_17i.global.ssl.fastly.net."
-  - name: "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 8ms"
-    type: "vless"
-    server: "199.232.78.160"
-    port: 443
-    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/?TELEGRAM---------TOOTFFARANGI"
-      headers:
-        Host: "copy_az_channel_NUFiLTER_10i.global.ssl.fastly.net."
-  - name: "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 247ms"
-    type: "vless"
-    server: "wwww.qarvian.ir"
-    port: 443
-    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "cdn.akamai.steamstatic.com"
-    ws-opts:
-      path: "/?TELEGRAM---------TOOTFFARANGI"
-      headers:
-        Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net."
-  - name: "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 9ms"
-    type: "vless"
-    server: "146.75.59.186"
-    port: 443
-    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/?TELEGRAM---------TOOTFFARANGI"
-      headers:
-        Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
-  - name: "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 5ms"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+  - name: "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-3"
     type: "vless"
     server: "199.232.78.159"
     port: 443
-    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
+    uuid: "c1a3a6ee-34d3-4fcd-8763-c2231adabed6"
     udp: true
     tls: true
     network: "ws"
-    servername: "cdn.akamai.steamstatic.com"
+    servername: "firefox.com"
     ws-opts:
-      path: "/?TELEGRAM---------TOOTFFARANGI"
       headers:
-        Host: "copy_az_channel_NUFiLTER_8i.global.ssl.fastly.net."
-  - name: "🇺🇸 🆔madshopx 🔒 VL-XHTTP-N/A ❔ XX 11ms"
+        Host: "lofinlaoijji.global.ssl.fastly.net"
+  - name: "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 3ms"
     type: "vless"
-    server: "199.232.20.113"
+    server: "146.75.59.186"
     port: 443
-    uuid: "2c665ae0-9611-4a12-83e1-47a3ce9468b5"
+    uuid: "c1a3a6ee-34d3-4fcd-8763-c2231adabed6"
     udp: true
     tls: true
-    network: "xhttp"
-    servername: "www.firefox.com"
-    client-fingerprint: "safari"
-  - name: "🇺🇸 🆔madshopx 🔒 TR-WS-N/A ❔ XX 8ms"
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      headers:
+        Host: "lrussiaaboijji.global.ssl.fastly.net."
+  - name: "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-4"
+    type: "vless"
+    server: "146.75.59.186"
+    port: 443
+    uuid: "c1a3a6ee-34d3-4fcd-8763-c2231adabed6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      headers:
+        Host: "looabnetheroijji.global.ssl.fastly.net."
+  - name: "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-5"
+    type: "vless"
+    server: "146.75.59.186"
+    port: 443
+    uuid: "c1a3a6ee-34d3-4fcd-8763-c2231adabed6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      headers:
+        Host: "looabturkeyeoijji.global.ssl.fastly.net."
+  - name: "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-6"
+    type: "vless"
+    server: "146.75.57.238"
+    port: 443
+    uuid: "c1a3a6ee-34d3-4fcd-8763-c2231adabed6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      headers:
+        Host: "usaaaaboijji.global.ssl.fastly.net"
+  - name: "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-7"
+    type: "vless"
+    server: "146.75.57.238"
+    port: 443
+    uuid: "c1a3a6ee-34d3-4fcd-8763-c2231adabed6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      headers:
+        Host: "canadaboijji.global.ssl.fastly.net"
+  - name: "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-8"
+    type: "vless"
+    server: "146.75.57.238"
+    port: 443
+    uuid: "c1a3a6ee-34d3-4fcd-8763-c2231adabed6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      headers:
+        Host: "polandboijji.global.ssl.fastly.net"
+  - name: "🇺🇸 🆔madshopx 🔒 TR-WS-N/A ❔ XX 2ms"
     type: "trojan"
     server: "146.75.57.120"
     port: 443
@@ -4258,31 +4124,7 @@ proxies:
       path: "/?TELEGRAM------TOOTFFARANGI "
       headers:
         Host: "mitivpn--mitivpn.ac.ir"
-  - name: "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 7ms"
-    type: "vless"
-    server: "199.232.78.159"
-    port: 80
-    uuid: "3027d7e0-201d-4e78-863b-f4dbe51ab96f"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "ws/?ed=2048/@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr/?2048"
-      headers:
-        Host: "rb24.ir"
   - name: "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 5ms"
-    type: "vless"
-    server: "199.232.78.159"
-    port: 80
-    uuid: "c54cb5e4-09b0-42be-94a0-c1eb2e5d2ea5"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "ws/?ed=2048/@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr/?2048"
-      headers:
-        Host: "rb24.ir"
-  - name: "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A 🇺🇸 US 12ms"
     type: "vless"
     server: "199.232.78.159"
     port: 80
@@ -4294,7 +4136,7 @@ proxies:
       path: "ws/?ed=2048/@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr/?2048"
       headers:
         Host: "rb24.ir"
-  - name: "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 5ms-1"
+  - name: "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms"
     type: "vless"
     server: "199.232.78.159"
     port: 80
@@ -4306,7 +4148,7 @@ proxies:
       path: "ws/?ed=2048/@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr/?2048"
       headers:
         Host: "rb24.ir"
-  - name: "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 6ms"
+  - name: "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-1"
     type: "vless"
     server: "199.232.78.159"
     port: 80
@@ -4318,7 +4160,7 @@ proxies:
       path: "ws/?ed=2048/@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr/?2048"
       headers:
         Host: "rb24.ir"
-  - name: "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 17ms"
+  - name: "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-2"
     type: "vless"
     server: "199.232.78.159"
     port: 80
@@ -4330,7 +4172,7 @@ proxies:
       path: "ws/?ed=2048/@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr/?2048"
       headers:
         Host: "rb24.ir"
-  - name: "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 8ms"
+  - name: "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-3"
     type: "vless"
     server: "199.232.78.159"
     port: 80
@@ -4342,7 +4184,7 @@ proxies:
       path: "ws/?ed=2048/@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr/?2048"
       headers:
         Host: "rb24.ir"
-  - name: "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 6ms-1"
+  - name: "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-4"
     type: "vless"
     server: "199.232.78.159"
     port: 80
@@ -4354,7 +4196,7 @@ proxies:
       path: "ws/?ed=2048/@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr/?2048"
       headers:
         Host: "rb24.ir"
-  - name: "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 6ms-2"
+  - name: "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-5"
     type: "vless"
     server: "199.232.78.159"
     port: 80
@@ -4366,6 +4208,54 @@ proxies:
       path: "ws/?ed=2048/@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr/?2048"
       headers:
         Host: "rb24.ir"
+  - name: "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-6"
+    type: "vless"
+    server: "199.232.78.159"
+    port: 80
+    uuid: "b91915bf-7dc2-4971-8c05-2fc4f5da3f08"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "ws/?ed=2048/@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr@vpnserverrr/?2048"
+      headers:
+        Host: "rb24.ir"
+  - name: "🇺🇸 🆔configx2ray 🔒 VL-WS-N/A ❔ XX 233ms"
+    type: "vless"
+    server: "wwww.qarvian.ir"
+    port: 443
+    uuid: "46cb8a26-0712-4e85-89bf-2538a2788652"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cdn.akamai.steamstatic.com"
+    ws-opts:
+      headers:
+        Host: "copy_az_channel_NUFiLTER_17i.global.ssl.fastly.net."
+  - name: "🇺🇸 🆔configx2ray 🔒 VL-WS-N/A ❔ XX 2ms"
+    type: "vless"
+    server: "199.232.78.159"
+    port: 443
+    uuid: "46cb8a26-0712-4e85-89bf-2538a2788652"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cdn.akamai.steamstatic.com"
+    ws-opts:
+      headers:
+        Host: "copy_az_channel_NUFiLTER_8i.global.ssl.fastly.net."
+  - name: "🇺🇸 🆔configx2ray 🔒 VL-WS-N/A ❔ XX 146ms"
+    type: "vless"
+    server: "wwww.qarvian.ir"
+    port: 443
+    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cdn.akamai.steamstatic.com"
+    ws-opts:
+      headers:
+        Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net."
   - name: "🇺🇸 @DeltaKroneckerGithub"
     type: "trojan"
     server: "151.101.201.194"
@@ -4546,6 +4436,268 @@ proxies:
       path: "/TELEGRAM_NUFiLTER,TELEGRAM_NUFiLTER,TELEGRAM_NUFiLTER,TELEGRAM_NUFiLTER,TELEGRAM_NUFiLTER,TELEGRAM_NUFiLTER,TELEGRAM_NUFiLTER?ed=2053"
       headers:
         Host: "pan1.global.ssl.fastly.net"
+  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.76.31:443"
+    type: "vless"
+    server: "167.82.76.31"
+    port: 443
+    uuid: "a7e9fc98-25a2-4801-961c-7a6ed9d69328"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "default.ssl.fastly.net"
+    client-fingerprint: "random"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.2.5:80"
+    type: "vless"
+    server: "151.101.2.5"
+    port: 80
+    uuid: "edbd7b0b-225c-4595-a18c-6eeb5b5fb791"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "🇺🇸 🔒 VL-XHTTP-NA 🇺🇸 US-151.101.193.164:80"
+    type: "vless"
+    server: "151.101.193.164"
+    port: 80
+    uuid: "da48859d-edf9-4a8c-a026-80910591f284"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "🇺🇸 🔒 VL-XHTTP-NA 🇺🇸 US-151.101.129.164:80"
+    type: "vless"
+    server: "151.101.129.164"
+    port: 80
+    uuid: "da48859d-edf9-4a8c-a026-80910591f284"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.78.160:443"
+    type: "vless"
+    server: "199.232.78.160"
+    port: 443
+    uuid: "08dd79b8-8eab-45e7-815b-29bb7ea35a61"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "speedtest.net"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
+      - "http/1.1"
+  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.192.204:80"
+    type: "vless"
+    server: "151.101.192.204"
+    port: 80
+    uuid: "edbd7b0b-225c-4595-a18c-6eeb5b5fb791"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.3.8:80"
+    type: "vless"
+    server: "151.101.3.8"
+    port: 80
+    uuid: "6cb2562a-47c2-4a24-91f3-01a9e8c9f825"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "🇺🇸 🔒 VL-XHTTP-NA 🇺🇸 US-151.101.1.164:80"
+    type: "vless"
+    server: "151.101.1.164"
+    port: 80
+    uuid: "da48859d-edf9-4a8c-a026-80910591f284"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "🇺🇸 🔒 VL-XHTTP-NA 🇺🇸 US-151.101.65.164:80"
+    type: "vless"
+    server: "151.101.65.164"
+    port: 80
+    uuid: "da48859d-edf9-4a8c-a026-80910591f284"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.2.219:80"
+    type: "vless"
+    server: "151.101.2.219"
+    port: 80
+    uuid: "81a75e30-1223-4076-9fb8-775df00c6665"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.66.219:80"
+    type: "vless"
+    server: "151.101.66.219"
+    port: 80
+    uuid: "81a75e30-1223-4076-9fb8-775df00c6665"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-151.101.69.253:443"
+    type: "vless"
+    server: "151.101.69.253"
+    port: 443
+    uuid: "884f23e9-caab-4775-9ed9-6a3a9cae677f"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "accaunt.fastly.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.78.159:443"
+    type: "vless"
+    server: "199.232.78.159"
+    port: 443
+    uuid: "410bc842-c3df-4fc5-9e11-0feab5c97d64"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "google.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-23.235.42.205:80"
+    type: "vless"
+    server: "23.235.42.205"
+    port: 80
+    uuid: "96eec36e-2c44-5b09-898e-6f0f0526e57f"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.239.2:443"
+    type: "vless"
+    server: "199.232.239.2"
+    port: 443
+    uuid: "f3ac6161-3592-43ed-82f2-daf9c97806aa"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "accounts.fastly.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.128.204:80"
+    type: "vless"
+    server: "151.101.128.204"
+    port: 80
+    uuid: "edbd7b0b-225c-4595-a18c-6eeb5b5fb791"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.9.254:443"
+    type: "vless"
+    server: "199.232.9.254"
+    port: 443
+    uuid: "92630838-a2ed-40ea-ae4a-2a8f5e6956e1"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "speedtest.net"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.250.173:443"
+    type: "vless"
+    server: "199.232.250.173"
+    port: 443
+    uuid: "6c6a0458-6f25-4b9e-853c-bf6d461fdc8b"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "firefox.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.0.204:80"
+    type: "vless"
+    server: "151.101.0.204"
+    port: 80
+    uuid: "edbd7b0b-225c-4595-a18c-6eeb5b5fb791"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.101.119:443"
+    type: "vless"
+    server: "167.82.101.119"
+    port: 443
+    uuid: "ea1fb226-a033-4999-9f86-49ec57629c0d"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "iran.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.64.204:80"
+    type: "vless"
+    server: "151.101.64.204"
+    port: 80
+    uuid: "edbd7b0b-225c-4595-a18c-6eeb5b5fb791"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-146.75.56.210:443"
+    type: "vless"
+    server: "146.75.56.210"
+    port: 443
+    uuid: "7684d613-0ae9-41d2-9a38-66752ae680b4"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "speedtest.net"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-23.235.33.4:80"
+    type: "vless"
+    server: "23.235.33.4"
+    port: 80
+    uuid: "edbd7b0b-225c-4595-a18c-6eeb5b5fb791"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.3.147:80"
+    type: "vless"
+    server: "151.101.3.147"
+    port: 80
+    uuid: "9d468e0a-01ca-41a2-a89b-73b2756f91ec"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.193.194:80"
+    type: "vless"
+    server: "151.101.193.194"
+    port: 80
+    uuid: "76083baf-1fb7-44d0-b241-2d9af1191621"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.78.143:443"
+    type: "vless"
+    server: "199.232.78.143"
+    port: 443
+    uuid: "854860c4-b5e8-453c-a047-90d451fe9c58"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "default.ssl.fastly.net"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+  - name: "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.130.219:80"
+    type: "vless"
+    server: "151.101.130.219"
+    port: 80
+    uuid: "81a75e30-1223-4076-9fb8-775df00c6665"
+    udp: true
+    tls: false
+    network: "xhttp"
   - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.76.31:443-1"
     type: "vless"
     server: "167.82.76.31"
@@ -4555,18 +4707,6 @@ proxies:
     tls: true
     network: "xhttp"
     servername: "firefox.com"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-  - name: "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.20.113:443"
-    type: "vless"
-    server: "199.232.20.113"
-    port: 443
-    uuid: "2373eb03-66b2-4f42-bb40-95db8b210877"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "www.firefox.com"
     client-fingerprint: "chrome"
     alpn:
       - "h2"
@@ -4612,11 +4752,23 @@ proxies:
     network: "xhttp"
     servername: "cdn.akamai.steamstatic.com"
     client-fingerprint: "firefox"
-  - name: "🇺🇸 🇫🇷 | @WhiteDNS | FR171|17.8MB/s|DNSOK|GPT⁺-FR"
+  - name: "🇺🇸 🇩🇪 | @WhiteDNS | DE219|23.0MB/s|DNSOK|GPT⁺-DE"
     type: "vless"
-    server: "146.75.59.186"
+    server: "146.75.57.238"
     port: 443
-    uuid: "606047d0-56ec-4152-8d3b-13c5d4adef03"
+    uuid: "5a4c5d55-fa3c-40a8-af42-0047e7b37176"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "community.fastly.steamstatic.com"
+    client-fingerprint: "qq"
+    alpn:
+      - "h2"
+  - name: "🇺🇸 🇺🇸 | @WhiteDNS | US586|5.2MB/s|DNSOK|GPT⁺-US"
+    type: "vless"
+    server: "146.75.57.238"
+    port: 443
+    uuid: "c1a3a6ee-34d3-4fcd-8763-c2231adabed6"
     udp: true
     tls: true
     network: "ws"
@@ -4625,10 +4777,66 @@ proxies:
     ws-opts:
       path: "/"
       headers:
-        Host: "frenchanjaai.global.ssl.fastly.net"
-  - name: "🇺🇸 🇺🇸 | @WhiteDNS | US636|5.4MB/s|DNSOK|GPT⁺-US"
+        Host: "canadaboijji.global.ssl.fastly.net"
+  - name: "🇺🇸 🇺🇸 | @WhiteDNS | US587|4.6MB/s|DNSOK|GPT⁺-US"
     type: "vless"
-    server: "wwww.qarvian.ir"
+    server: "146.75.57.238"
+    port: 443
+    uuid: "c1a3a6ee-34d3-4fcd-8763-c2231adabed6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "google.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "canadaboijji.global.ssl.fastly.net"
+  - name: "🇺🇸 🇺🇸 | @WhiteDNS | US588|4.6MB/s|DNSOK|GPT⁺-US"
+    type: "vless"
+    server: "146.75.57.238"
+    port: 443
+    uuid: "c1a3a6ee-34d3-4fcd-8763-c2231adabed6"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cdn.akamai.steamstatic.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "canadaboijji.global.ssl.fastly.net"
+  - name: "🇺🇸 🇺🇸 | @WhiteDNS | US651|1.4MB/s|DNSOK|GPT⁺-US"
+    type: "vless"
+    server: "199.232.78.160"
+    port: 443
+    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "copy_az_channel_NUFiLTER_10i.global.ssl.fastly.net."
+  - name: "🇺🇸 🇺🇸 | @WhiteDNS | US660|1.2MB/s|DNSOK|GPT⁺"
+    type: "vless"
+    server: "146.75.57.238"
+    port: 443
+    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cdn.akamai.steamstatic.com"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "copy_az_channel_NUFiLTER_17i.global.ssl.fastly.net."
+  - name: "🇺🇸 🇺🇸 | @WhiteDNS | US661|1.2MB/s|DNSOK|GPT⁺-US"
+    type: "vless"
+    server: "199.232.78.159"
     port: 443
     uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
     udp: true
@@ -4639,8 +4847,8 @@ proxies:
     ws-opts:
       path: "/?TELEGRAM---------TOOTFFARANGI"
       headers:
-        Host: "copy_az_channel_NUFiLTER_17i.global.ssl.fastly.net."
-  - name: "🇺🇸 🇺🇸 | @WhiteDNS | US638|5.4MB/s|DNSOK|GPT⁺-US"
+        Host: "copy_az_channel_NUFiLTER_8i.global.ssl.fastly.net."
+  - name: "🇺🇸 🇺🇸 | @WhiteDNS | US663|1023KB/s|DNSOK|GPT⁺-US"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -4654,76 +4862,20 @@ proxies:
       path: "/"
       headers:
         Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
-  - name: "🇺🇸 🇺🇸 | @WhiteDNS | US639|5.2MB/s|DNSOK|GPT⁺-US"
+  - name: "🇺🇸 🇺🇸 | @WhiteDNS | US665|784KB/s|DNSOK|GPT⁺-US"
     type: "vless"
-    server: "199.232.78.159"
+    server: "wwww.qarvian.ir"
     port: 443
     uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
     udp: true
     tls: true
     network: "ws"
     servername: "cdn.akamai.steamstatic.com"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "copy_az_channel_NUFiLTER_8i.global.ssl.fastly.net."
-  - name: "🇺🇸 🇺🇸 | @WhiteDNS | US641|4.5MB/s|DNSOK|GPT⁺-US"
-    type: "vless"
-    server: "146.75.57.238"
-    port: 443
-    uuid: "606047d0-56ec-4152-8d3b-13c5d4adef03"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "usaaaaboijji.global.ssl.fastly.net"
-  - name: "🇺🇸 🇺🇸 | @WhiteDNS | US642|4.5MB/s|DNSOK|GPT⁺-US"
-    type: "vless"
-    server: "199.232.78.160"
-    port: 443
-    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
     client-fingerprint: "chrome"
     ws-opts:
       path: "/?TELEGRAM---------TOOTFFARANGI"
       headers:
-        Host: "copy_az_channel_NUFiLTER_10i.global.ssl.fastly.net."
-  - name: "🇺🇸 🇺🇸 | @WhiteDNS | US652|2.9MB/s|DNSOK|GPT⁺-US"
-    type: "vless"
-    server: "146.75.57.238"
-    port: 443
-    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "cdn.akamai.steamstatic.com"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "copy_az_channel_NUFiLTER_17i.global.ssl.fastly.net."
-  - name: "🇺🇸 🇺🇸 | @WhiteDNS | US653|2.8MB/s|DNSOK|GPT⁺-US"
-    type: "vless"
-    server: "146.75.57.238"
-    port: 443
-    uuid: "606047d0-56ec-4152-8d3b-13c5d4adef03"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "google.com"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "canadaboijji.global.ssl.fastly.net"
+        Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net."
   - name: "🇺🇸 👉🆔@v2ray_configs_pool📡🇨🇦®️Canada©️Montreal🅿️ping:67.79ms"
     type: "vless"
     server: "fastly.com"
@@ -4745,6 +4897,14 @@ proxies:
     server: "146.75.117.91"
     port: 80
     uuid: "96eec36e-2c44-5b09-898e-6f0f0526e57f"
+    udp: true
+    tls: false
+    network: "xhttp"
+  - name: "🇺🇸 46. 🇮🇹 Italy"
+    type: "vless"
+    server: "fastly.com"
+    port: 80
+    uuid: "InternetAzadRobot"
     udp: true
     tls: false
     network: "xhttp"
@@ -4954,32 +5114,227 @@ proxy-groups:
       - "🇺🇸 🔒 VL-WS-TLS 🇺🇸 US-151.101.194.133:443-1"
       - "🇺🇸 🔒 TR-WS-NONE 🇺🇸 US-151.101.194.172:80"
       - "🇺🇸 🔒 VL-WS-TLS 🇺🇸 US-146.75.59.186:443-1"
-      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 99.36ms"
-      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 23.88ms"
-      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 21ms"
-      - "🇺🇸 US🇺🇸 | www.google.com-443 | 26.09ms"
-      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 10.24ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 55.46ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.18ms"
-      - "🇺🇸 US🇺🇸 | play.google.com-443 | 24.49ms"
-      - "🇺🇸 US🇺🇸 | play.google.com-443 | 8.98ms"
+      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 12.57ms"
+      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 5.63ms"
+      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 5.77ms"
+      - "🇺🇸 US🇺🇸 | www.google.com-443 | 5.41ms"
+      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 3.42ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 7.62ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.17ms"
+      - "🇺🇸 US🇺🇸 | play.google.com-443 | 16.62ms"
+      - "🇺🇸 US🇺🇸 | play.google.com-443 | 3.03ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.49ms"
+      - "🇺🇸 US🇺🇸 | www.google.com-443 | 3.6ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.28ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.61ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.56ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 1.93ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.3ms"
+      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 4.88ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.11ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.82ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.42ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.88ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 7.83ms"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-1"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-2"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-3"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-4"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-5"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-6"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-7"
+      - "🇺🇸 US🇺🇸 | Sudoos.global.ssl.fastly.net-80 | 5.32ms"
+      - "🇺🇸 US🇺🇸 | Sudo.global.ssl.fastly.net-80 | 7.65ms"
+      - "🇺🇸 US🇺🇸 | Sudo.global.ssl.fastly.net-80 | 4.59ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.21ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 25.62ms"
+      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 2.6ms"
+      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 1.93ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 13.33ms"
+      - "🇺🇸 US🇺🇸 | live.wkrq.com-443 | 37.06ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 11.04ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 4.73ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 34.62ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 9.38ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 13.01ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.65ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.96ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 12.26ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.07ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.85ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.1ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.22ms"
+      - "🇺🇸 US🇺🇸 | speedtest.net-443 | 2.53ms"
+      - "🇺🇸 US🇺🇸 | play.google.com-443 | 3.35ms"
+      - "🇺🇸 US🇺🇸 | Zmaoz.Faculty.Ucdavis.Edu-443 | 18.65ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.8ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.19ms"
       - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.61ms"
-      - "🇺🇸 US🇺🇸 | www.google.com-443 | 3.9ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 14.97ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 11.31ms"
-      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 84.81ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 10.8ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.02ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.88ms-1"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.67ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 11.37ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 7.71ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.71ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 5.26ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.35ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.4ms"
+      - "🇺🇸 US🇺🇸 | www.fastly.com-443 | 72.42ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 12.34ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 4.88ms"
+      - "🇺🇸 US🇺🇸 | Maryshuponlinr.global.ssl.fastly.net-80 | 6.45ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.09ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.1ms-1"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.02ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.34ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.35ms-1"
+      - "🇺🇸 US🇺🇸 | tignaltofansv8.global.ssl.fastly.net-80 | 6.63ms"
+      - "🇺🇸 US🇺🇸 | live.skornorth.com-443 | 7.27ms"
+      - "🇺🇸 US🇺🇸 | live.skornorth.com-443 | 6.31ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.18ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.35ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 2.9ms"
+      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 3.13ms"
+      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 2.5ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 11.01ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 9.94ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 7.29ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.69ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.15ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 6.8ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 4.64ms"
+      - "🇺🇸 US🇺🇸 | live.wkrq.com-443 | 57.66ms"
+      - "🇺🇸 US🇺🇸 | max-gb1.global.ssl.fastly.net-80 | 4.38ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.12ms"
+      - "🇺🇸 US🇺🇸 | api.fastly.com-443 | 13.62ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.49ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.17ms"
+      - "🇺🇸 US🇺🇸 | Google.com-443 | 3.19ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 11.73ms"
+      - "🇺🇸 US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 6.1ms"
+      - "🇺🇸 US🇺🇸 | Firefox.com-443 | 2.96ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.46ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 7.91ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.86ms"
+      - "🇺🇸 US🇺🇸 | filmographie.org-80 | 223.29ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.97ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.07ms-1"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.76ms"
+      - "🇺🇸 US🇺🇸 | grimness-backlogs.cdn-content.com-443 | 66.77ms"
+      - "🇺🇸 US🇺🇸 | live.skornorth.com-443 | 101.27ms"
+      - "🇺🇸 US🇺🇸 | play.google.com-443 | 6.33ms"
+      - "🇺🇸 US🇺🇸 | play.google.com-443 | 3.66ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 8.46ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 36.9ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 4.35ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 5.89ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.17ms-1"
+      - "🇺🇸 US🇺🇸 | live.skornorth.com-80 | 9.24ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 33.64ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.22ms-1"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 8.24ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.47ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.37ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.97ms-1"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.87ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.92ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.53ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.31ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.41ms"
+      - "🇺🇸 IR🇮🇷 | stigmata.ir-80 | 659.19ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.11ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.51ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.92ms-1"
+      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 6.6ms"
+      - "🇺🇸 US🇺🇸 | Zmaoz.Faculty.Ucdavis.Edu-443 | 18.85ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 14.91ms"
+      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 1.87ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 7.74ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.76ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.44ms"
+      - "🇺🇸 US🇺🇸 | live.skornorth.com-443 | 6.36ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.99ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.54ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.26ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.77ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.74ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.49ms-1"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.54ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.39ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 11.18ms"
+      - "🇺🇸 US🇺🇸 | speedtest.net-443 | 2.36ms"
+      - "🇺🇸 US🇺🇸 | max-gb1.global.ssl.fastly.net-80 | 4.89ms"
+      - "🇺🇸 🔒 VL-TCP-TLS 🇺🇸 US-146.75.57.111:443"
+      - "🇺🇸 🆔soskeynet 🔒 VL-XHTTP-N/A 🇺🇸 US 2ms"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-1"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-2"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-3"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-4"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 3ms"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-5"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-6"
+      - "🇺🇸 🆔capoit 🔒 VL-XHTTP-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔capoit 🔒 VL-WS-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔capoit 🔒 VL-WS-N/A ❔ XX 2ms-1"
+      - "🇺🇸 🆔capoit 🔒 VL-WS-N/A ❔ XX 2ms-2"
+      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 14ms"
+      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 3ms"
+      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 2ms-1"
+      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 2ms-2"
+      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 2ms-3"
+      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 14ms-1"
+      - "🇺🇸 🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 153ms"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-1"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-2"
+      - "🇺🇸 🆔madshopx 🔒 VL-XHTTP-N/A ❔ XX 3ms"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 4ms"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 4ms-1"
+      - "🇺🇸 🆔madshopx 🔒 VL-XHTTP-N/A ❔ XX 3ms-1"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-3"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 3ms"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-4"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-5"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-6"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-7"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-8"
+      - "🇺🇸 🆔madshopx 🔒 TR-WS-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 5ms"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-1"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-2"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-3"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-4"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-5"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-6"
+      - "🇺🇸 🆔configx2ray 🔒 VL-WS-N/A ❔ XX 233ms"
+      - "🇺🇸 🆔configx2ray 🔒 VL-WS-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔configx2ray 🔒 VL-WS-N/A ❔ XX 146ms"
+      - "🇺🇸 @DeltaKroneckerGithub"
+      - "🇺🇸 @DeltaKroneckerGithub-1"
+      - "🇺🇸 @DeltaKroneckerGithub-2"
+      - "🇺🇸 @DeltaKroneckerGithub-3"
+      - "🇺🇸 @DeltaKroneckerGithub-4"
+      - "🇺🇸 @DeltaKroneckerGithub-5"
+      - "🇺🇸 @DeltaKroneckerGithub-6"
+      - "🇺🇸 @DeltaKroneckerGithub-7"
+      - "🇺🇸 @DeltaKroneckerGithub-8"
+      - "🇺🇸 @DeltaKroneckerGithub-9"
+      - "🇺🇸 @DeltaKroneckerGithub-10"
+      - "🇺🇸 🍄 - Tel:  @Hddify - 7"
+      - "🇺🇸 >>@configV2rayNG::FI"
+      - "🇺🇸 >>@configV2rayNG::XX"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.76.31:443"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.2.5:80"
       - "🇺🇸 🔒 VL-XHTTP-NA 🇺🇸 US-151.101.193.164:80"
-      - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-151.101.36.99:443"
-      - "🇺🇸 🔒 VL-TCP-TLS 🇺🇸 US-199.232.20.113:443"
       - "🇺🇸 🔒 VL-XHTTP-NA 🇺🇸 US-151.101.129.164:80"
-      - "🇺🇸 🔒 VL-TCP-TLS 🇺🇸 US-146.75.57.111:443"
-      - "🇺🇸 🔒 VL-TCP-TLS 🇺🇸 US-146.75.57.238:443"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.78.160:443"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.192.204:80"
-      - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.79.164:443"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.3.8:80"
       - "🇺🇸 🔒 VL-XHTTP-NA 🇺🇸 US-151.101.1.164:80"
       - "🇺🇸 🔒 VL-XHTTP-NA 🇺🇸 US-151.101.65.164:80"
@@ -4996,215 +5351,29 @@ proxy-groups:
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.101.119:443"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.64.204:80"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-146.75.56.210:443"
-      - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-151.101.119.41:443"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-23.235.33.4:80"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.3.147:80"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.193.194:80"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.78.143:443"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.130.219:80"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇩🇪』"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-1"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-2"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-3"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-4"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-5"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-6"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-7"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-8"
-      - "🇺🇸 US🇺🇸 | Sudoos.global.ssl.fastly.net-80 | 40.12ms"
-      - "🇺🇸 US🇺🇸 | Sudo.global.ssl.fastly.net-80 | 133.27ms"
-      - "🇺🇸 US🇺🇸 | Sudo.global.ssl.fastly.net-80 | 22.88ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 10.37ms"
-      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 9.93ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 35.45ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 33.24ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 23.71ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 54.82ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 13.3ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 11.3ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.52ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 42.36ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 17.47ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.79ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 10.45ms"
-      - "🇺🇸 US🇺🇸 | play.google.com-443 | 11.7ms"
-      - "🇺🇸 US🇺🇸 | speedtest.net-443 | 28.92ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 11.55ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.63ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.92ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.06ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.89ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.94ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.12ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 82.98ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 15.84ms"
-      - "🇺🇸 US🇺🇸 | Maryshuponlinr.global.ssl.fastly.net-80 | 40.65ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 10.85ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.83ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 10.82ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.84ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.43ms"
-      - "🇺🇸 US🇺🇸 | tignaltofansv8.global.ssl.fastly.net-80 | 33.04ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 12.44ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 10.21ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 16.22ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 11.29ms"
-      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 10.49ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 100.82ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 10.14ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.31ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 12.07ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 6.16ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.43ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 67.5ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 38.53ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 44.82ms"
-      - "🇺🇸 US🇺🇸 | max-gb1.global.ssl.fastly.net-80 | 36ms"
-      - "🇺🇸 US🇺🇸 | api.fastly.com-443 | 36.26ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 14.73ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 16.46ms"
-      - "🇺🇸 US🇺🇸 | Google.com-443 | 11.45ms"
-      - "🇺🇸 US🇺🇸 | Google.com-443 | 10.29ms"
-      - "🇺🇸 US🇺🇸 | speedtest.net-443 | 12.04ms"
-      - "🇺🇸 US🇺🇸 | speedtest.net-443 | 9.26ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.29ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 102.9ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 105.29ms"
-      - "🇺🇸 US🇺🇸 | tignaltofan.global.ssl.fastly.net-80 | 32.16ms"
-      - "🇺🇸 US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 30.54ms"
-      - "🇺🇸 US🇺🇸 | Firefox.com-443 | 74.64ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 11.38ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.04ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.05ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 6.06ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.4ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.19ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 7.63ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.17ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.26ms"
-      - "🇺🇸 US🇺🇸 | play.google.com-443 | 17.87ms"
-      - "🇺🇸 US🇺🇸 | play.google.com-443 | 7.12ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 104.43ms"
-      - "🇺🇸 US🇺🇸 | speedtest.net-443 | 11.96ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 47.24ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.8ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 18.57ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 16.78ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.85ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 92.85ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 7.08ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 85.04ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 9.65ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 9.85ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 9.85ms-1"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 9.34ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.64ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 12.67ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 17.59ms"
-      - "🇺🇸 US🇺🇸 | gemini.google.com-443 | 39.3ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 13.8ms"
-      - "🇺🇸 IR🇮🇷 | stigmata.ir-80 | 831.58ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.89ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.78ms"
-      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 54.21ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 12.54ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.83ms"
-      - "🇺🇸 US🇺🇸 | apple.com-443 | 9.09ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 43.45ms"
-      - "🇺🇸 US🇺🇸 | play.google.com-443 | 20.63ms"
-      - "🇺🇸 US🇺🇸 | baharishomalyour-name.global.ssl.fastly.net-80 | 29.52ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 36.17ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 9.88ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 43.15ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.56ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.19ms-1"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 20.67ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 6.23ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.07ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 9.27ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 10.31ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 92.94ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.21ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.03ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 44.75ms"
-      - "🇺🇸 US🇺🇸 | max-gb1.global.ssl.fastly.net-80 | 18.67ms"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 15ms"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms-1"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 13ms"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms-2"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 6ms"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 6ms-1"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 10ms"
-      - "🇺🇸 🆔capoit 🔒 VL-XHTTP-N/A 🇺🇸 US 7ms"
-      - "🇺🇸 🆔capoit 🔒 VL-WS-N/A 🇺🇸 US 6ms"
-      - "🇺🇸 🆔capoit 🔒 VL-WS-N/A 🇺🇸 US 11ms"
-      - "🇺🇸 🆔capoit 🔒 VL-WS-N/A 🇺🇸 US 9ms"
-      - "🇺🇸 🆔capoit 🔒 VL-WS-N/A 🇺🇸 US 15ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 5ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇺🇸 US 10ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-XHTTP-N/A ❔ XX 163ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇸🇪 SE 5ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 6ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇸🇪 SE 11ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇸🇪 SE 6ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇺🇸 US 8ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇺🇸 US 14ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇸🇪 SE 8ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇺🇸 US 10ms-1"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 6ms-1"
-      - "🇺🇸 🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 158ms"
-      - "🇺🇸 🆔ar14n24b 🔒 TR-XHTTP-N/A 🇺🇸 US 7ms"
-      - "🇺🇸 🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 9ms"
-      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 249ms"
-      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 30ms"
-      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 8ms"
-      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 247ms"
-      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 9ms"
-      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 5ms"
-      - "🇺🇸 🆔madshopx 🔒 VL-XHTTP-N/A ❔ XX 11ms"
-      - "🇺🇸 🆔madshopx 🔒 TR-WS-N/A ❔ XX 8ms"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 7ms"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 5ms"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A 🇺🇸 US 12ms"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 5ms-1"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 6ms"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 17ms"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 8ms"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 6ms-1"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 6ms-2"
-      - "🇺🇸 @DeltaKroneckerGithub"
-      - "🇺🇸 @DeltaKroneckerGithub-1"
-      - "🇺🇸 @DeltaKroneckerGithub-2"
-      - "🇺🇸 @DeltaKroneckerGithub-3"
-      - "🇺🇸 @DeltaKroneckerGithub-4"
-      - "🇺🇸 @DeltaKroneckerGithub-5"
-      - "🇺🇸 @DeltaKroneckerGithub-6"
-      - "🇺🇸 @DeltaKroneckerGithub-7"
-      - "🇺🇸 @DeltaKroneckerGithub-8"
-      - "🇺🇸 @DeltaKroneckerGithub-9"
-      - "🇺🇸 @DeltaKroneckerGithub-10"
-      - "🇺🇸 🍄 - Tel:  @Hddify - 7"
-      - "🇺🇸 >>@configV2rayNG::FI"
-      - "🇺🇸 >>@configV2rayNG::XX"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.76.31:443-1"
-      - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.20.113:443"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.76.31:443-2"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-146.75.57.111:443"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.78.159:443-1"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.76.31:443-3"
-      - "🇺🇸 🇫🇷 | @WhiteDNS | FR171|17.8MB/s|DNSOK|GPT⁺-FR"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US636|5.4MB/s|DNSOK|GPT⁺-US"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US638|5.4MB/s|DNSOK|GPT⁺-US"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US639|5.2MB/s|DNSOK|GPT⁺-US"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US641|4.5MB/s|DNSOK|GPT⁺-US"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US642|4.5MB/s|DNSOK|GPT⁺-US"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US652|2.9MB/s|DNSOK|GPT⁺-US"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US653|2.8MB/s|DNSOK|GPT⁺-US"
+      - "🇺🇸 🇩🇪 | @WhiteDNS | DE219|23.0MB/s|DNSOK|GPT⁺-DE"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US586|5.2MB/s|DNSOK|GPT⁺-US"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US587|4.6MB/s|DNSOK|GPT⁺-US"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US588|4.6MB/s|DNSOK|GPT⁺-US"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US651|1.4MB/s|DNSOK|GPT⁺-US"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US660|1.2MB/s|DNSOK|GPT⁺"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US661|1.2MB/s|DNSOK|GPT⁺-US"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US663|1023KB/s|DNSOK|GPT⁺-US"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US665|784KB/s|DNSOK|GPT⁺-US"
       - "🇺🇸 👉🆔@v2ray_configs_pool📡🇨🇦®️Canada©️Montreal🅿️ping:67.79ms"
       - "🇩🇪 @iProxyChannel 11"
       - "🇩🇪 👉🆔@v2ray_configs_pool📡🇩🇪®️Germany©️Frankfurt am Main🅿️ping:23.3ms"
+      - "🇺🇸 46. 🇮🇹 Italy"
       - "🇺🇸 VLESS 175 t.me/iProxyChannel"
       - "🇺🇸 VLESS 197 t.me/iProxyChannel"
       - "🇺🇸 VLESS 212 t.me/iProxyChannel"
@@ -5314,32 +5483,227 @@ proxy-groups:
       - "🇺🇸 🔒 VL-WS-TLS 🇺🇸 US-151.101.194.133:443-1"
       - "🇺🇸 🔒 TR-WS-NONE 🇺🇸 US-151.101.194.172:80"
       - "🇺🇸 🔒 VL-WS-TLS 🇺🇸 US-146.75.59.186:443-1"
-      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 99.36ms"
-      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 23.88ms"
-      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 21ms"
-      - "🇺🇸 US🇺🇸 | www.google.com-443 | 26.09ms"
-      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 10.24ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 55.46ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.18ms"
-      - "🇺🇸 US🇺🇸 | play.google.com-443 | 24.49ms"
-      - "🇺🇸 US🇺🇸 | play.google.com-443 | 8.98ms"
+      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 12.57ms"
+      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 5.63ms"
+      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 5.77ms"
+      - "🇺🇸 US🇺🇸 | www.google.com-443 | 5.41ms"
+      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 3.42ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 7.62ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.17ms"
+      - "🇺🇸 US🇺🇸 | play.google.com-443 | 16.62ms"
+      - "🇺🇸 US🇺🇸 | play.google.com-443 | 3.03ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.49ms"
+      - "🇺🇸 US🇺🇸 | www.google.com-443 | 3.6ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.28ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.61ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.56ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 1.93ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.3ms"
+      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 4.88ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.11ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.82ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.42ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.88ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 7.83ms"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-1"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-2"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-3"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-4"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-5"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-6"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-7"
+      - "🇺🇸 US🇺🇸 | Sudoos.global.ssl.fastly.net-80 | 5.32ms"
+      - "🇺🇸 US🇺🇸 | Sudo.global.ssl.fastly.net-80 | 7.65ms"
+      - "🇺🇸 US🇺🇸 | Sudo.global.ssl.fastly.net-80 | 4.59ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.21ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 25.62ms"
+      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 2.6ms"
+      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 1.93ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 13.33ms"
+      - "🇺🇸 US🇺🇸 | live.wkrq.com-443 | 37.06ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 11.04ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 4.73ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 34.62ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 9.38ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 13.01ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.65ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.96ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 12.26ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.07ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.85ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.1ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.22ms"
+      - "🇺🇸 US🇺🇸 | speedtest.net-443 | 2.53ms"
+      - "🇺🇸 US🇺🇸 | play.google.com-443 | 3.35ms"
+      - "🇺🇸 US🇺🇸 | Zmaoz.Faculty.Ucdavis.Edu-443 | 18.65ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.8ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.19ms"
       - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.61ms"
-      - "🇺🇸 US🇺🇸 | www.google.com-443 | 3.9ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 14.97ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 11.31ms"
-      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 84.81ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 10.8ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.02ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.88ms-1"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.67ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 11.37ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 7.71ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.71ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 5.26ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.35ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.4ms"
+      - "🇺🇸 US🇺🇸 | www.fastly.com-443 | 72.42ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 12.34ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 4.88ms"
+      - "🇺🇸 US🇺🇸 | Maryshuponlinr.global.ssl.fastly.net-80 | 6.45ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.09ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.1ms-1"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.02ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.34ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.35ms-1"
+      - "🇺🇸 US🇺🇸 | tignaltofansv8.global.ssl.fastly.net-80 | 6.63ms"
+      - "🇺🇸 US🇺🇸 | live.skornorth.com-443 | 7.27ms"
+      - "🇺🇸 US🇺🇸 | live.skornorth.com-443 | 6.31ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.18ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.35ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 2.9ms"
+      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 3.13ms"
+      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 2.5ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 11.01ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 9.94ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 7.29ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.69ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.15ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 6.8ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 4.64ms"
+      - "🇺🇸 US🇺🇸 | live.wkrq.com-443 | 57.66ms"
+      - "🇺🇸 US🇺🇸 | max-gb1.global.ssl.fastly.net-80 | 4.38ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.12ms"
+      - "🇺🇸 US🇺🇸 | api.fastly.com-443 | 13.62ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.49ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.17ms"
+      - "🇺🇸 US🇺🇸 | Google.com-443 | 3.19ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 11.73ms"
+      - "🇺🇸 US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 6.1ms"
+      - "🇺🇸 US🇺🇸 | Firefox.com-443 | 2.96ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.46ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 7.91ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.86ms"
+      - "🇺🇸 US🇺🇸 | filmographie.org-80 | 223.29ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.97ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.07ms-1"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.76ms"
+      - "🇺🇸 US🇺🇸 | grimness-backlogs.cdn-content.com-443 | 66.77ms"
+      - "🇺🇸 US🇺🇸 | live.skornorth.com-443 | 101.27ms"
+      - "🇺🇸 US🇺🇸 | play.google.com-443 | 6.33ms"
+      - "🇺🇸 US🇺🇸 | play.google.com-443 | 3.66ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 8.46ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 36.9ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 4.35ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 5.89ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.17ms-1"
+      - "🇺🇸 US🇺🇸 | live.skornorth.com-80 | 9.24ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 33.64ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.22ms-1"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 8.24ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.47ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.37ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.97ms-1"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.87ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.92ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.53ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.31ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.41ms"
+      - "🇺🇸 IR🇮🇷 | stigmata.ir-80 | 659.19ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.11ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.51ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.92ms-1"
+      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 6.6ms"
+      - "🇺🇸 US🇺🇸 | Zmaoz.Faculty.Ucdavis.Edu-443 | 18.85ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 14.91ms"
+      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 1.87ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 7.74ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.76ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.44ms"
+      - "🇺🇸 US🇺🇸 | live.skornorth.com-443 | 6.36ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.99ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.54ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.26ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.77ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.74ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.49ms-1"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.54ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.39ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 11.18ms"
+      - "🇺🇸 US🇺🇸 | speedtest.net-443 | 2.36ms"
+      - "🇺🇸 US🇺🇸 | max-gb1.global.ssl.fastly.net-80 | 4.89ms"
+      - "🇺🇸 🔒 VL-TCP-TLS 🇺🇸 US-146.75.57.111:443"
+      - "🇺🇸 🆔soskeynet 🔒 VL-XHTTP-N/A 🇺🇸 US 2ms"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-1"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-2"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-3"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-4"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 3ms"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-5"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-6"
+      - "🇺🇸 🆔capoit 🔒 VL-XHTTP-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔capoit 🔒 VL-WS-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔capoit 🔒 VL-WS-N/A ❔ XX 2ms-1"
+      - "🇺🇸 🆔capoit 🔒 VL-WS-N/A ❔ XX 2ms-2"
+      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 14ms"
+      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 3ms"
+      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 2ms-1"
+      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 2ms-2"
+      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 2ms-3"
+      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 14ms-1"
+      - "🇺🇸 🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 153ms"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-1"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-2"
+      - "🇺🇸 🆔madshopx 🔒 VL-XHTTP-N/A ❔ XX 3ms"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 4ms"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 4ms-1"
+      - "🇺🇸 🆔madshopx 🔒 VL-XHTTP-N/A ❔ XX 3ms-1"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-3"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 3ms"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-4"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-5"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-6"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-7"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-8"
+      - "🇺🇸 🆔madshopx 🔒 TR-WS-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 5ms"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-1"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-2"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-3"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-4"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-5"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-6"
+      - "🇺🇸 🆔configx2ray 🔒 VL-WS-N/A ❔ XX 233ms"
+      - "🇺🇸 🆔configx2ray 🔒 VL-WS-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔configx2ray 🔒 VL-WS-N/A ❔ XX 146ms"
+      - "🇺🇸 @DeltaKroneckerGithub"
+      - "🇺🇸 @DeltaKroneckerGithub-1"
+      - "🇺🇸 @DeltaKroneckerGithub-2"
+      - "🇺🇸 @DeltaKroneckerGithub-3"
+      - "🇺🇸 @DeltaKroneckerGithub-4"
+      - "🇺🇸 @DeltaKroneckerGithub-5"
+      - "🇺🇸 @DeltaKroneckerGithub-6"
+      - "🇺🇸 @DeltaKroneckerGithub-7"
+      - "🇺🇸 @DeltaKroneckerGithub-8"
+      - "🇺🇸 @DeltaKroneckerGithub-9"
+      - "🇺🇸 @DeltaKroneckerGithub-10"
+      - "🇺🇸 🍄 - Tel:  @Hddify - 7"
+      - "🇺🇸 >>@configV2rayNG::FI"
+      - "🇺🇸 >>@configV2rayNG::XX"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.76.31:443"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.2.5:80"
       - "🇺🇸 🔒 VL-XHTTP-NA 🇺🇸 US-151.101.193.164:80"
-      - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-151.101.36.99:443"
-      - "🇺🇸 🔒 VL-TCP-TLS 🇺🇸 US-199.232.20.113:443"
       - "🇺🇸 🔒 VL-XHTTP-NA 🇺🇸 US-151.101.129.164:80"
-      - "🇺🇸 🔒 VL-TCP-TLS 🇺🇸 US-146.75.57.111:443"
-      - "🇺🇸 🔒 VL-TCP-TLS 🇺🇸 US-146.75.57.238:443"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.78.160:443"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.192.204:80"
-      - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.79.164:443"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.3.8:80"
       - "🇺🇸 🔒 VL-XHTTP-NA 🇺🇸 US-151.101.1.164:80"
       - "🇺🇸 🔒 VL-XHTTP-NA 🇺🇸 US-151.101.65.164:80"
@@ -5356,215 +5720,29 @@ proxy-groups:
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.101.119:443"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.64.204:80"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-146.75.56.210:443"
-      - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-151.101.119.41:443"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-23.235.33.4:80"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.3.147:80"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.193.194:80"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.78.143:443"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.130.219:80"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇩🇪』"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-1"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-2"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-3"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-4"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-5"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-6"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-7"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-8"
-      - "🇺🇸 US🇺🇸 | Sudoos.global.ssl.fastly.net-80 | 40.12ms"
-      - "🇺🇸 US🇺🇸 | Sudo.global.ssl.fastly.net-80 | 133.27ms"
-      - "🇺🇸 US🇺🇸 | Sudo.global.ssl.fastly.net-80 | 22.88ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 10.37ms"
-      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 9.93ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 35.45ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 33.24ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 23.71ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 54.82ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 13.3ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 11.3ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.52ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 42.36ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 17.47ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.79ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 10.45ms"
-      - "🇺🇸 US🇺🇸 | play.google.com-443 | 11.7ms"
-      - "🇺🇸 US🇺🇸 | speedtest.net-443 | 28.92ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 11.55ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.63ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.92ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.06ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.89ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.94ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.12ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 82.98ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 15.84ms"
-      - "🇺🇸 US🇺🇸 | Maryshuponlinr.global.ssl.fastly.net-80 | 40.65ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 10.85ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.83ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 10.82ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.84ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.43ms"
-      - "🇺🇸 US🇺🇸 | tignaltofansv8.global.ssl.fastly.net-80 | 33.04ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 12.44ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 10.21ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 16.22ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 11.29ms"
-      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 10.49ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 100.82ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 10.14ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.31ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 12.07ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 6.16ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.43ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 67.5ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 38.53ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 44.82ms"
-      - "🇺🇸 US🇺🇸 | max-gb1.global.ssl.fastly.net-80 | 36ms"
-      - "🇺🇸 US🇺🇸 | api.fastly.com-443 | 36.26ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 14.73ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 16.46ms"
-      - "🇺🇸 US🇺🇸 | Google.com-443 | 11.45ms"
-      - "🇺🇸 US🇺🇸 | Google.com-443 | 10.29ms"
-      - "🇺🇸 US🇺🇸 | speedtest.net-443 | 12.04ms"
-      - "🇺🇸 US🇺🇸 | speedtest.net-443 | 9.26ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.29ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 102.9ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 105.29ms"
-      - "🇺🇸 US🇺🇸 | tignaltofan.global.ssl.fastly.net-80 | 32.16ms"
-      - "🇺🇸 US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 30.54ms"
-      - "🇺🇸 US🇺🇸 | Firefox.com-443 | 74.64ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 11.38ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.04ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.05ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 6.06ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.4ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.19ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 7.63ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.17ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.26ms"
-      - "🇺🇸 US🇺🇸 | play.google.com-443 | 17.87ms"
-      - "🇺🇸 US🇺🇸 | play.google.com-443 | 7.12ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 104.43ms"
-      - "🇺🇸 US🇺🇸 | speedtest.net-443 | 11.96ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 47.24ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.8ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 18.57ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 16.78ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.85ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 92.85ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 7.08ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 85.04ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 9.65ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 9.85ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 9.85ms-1"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 9.34ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.64ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 12.67ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 17.59ms"
-      - "🇺🇸 US🇺🇸 | gemini.google.com-443 | 39.3ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 13.8ms"
-      - "🇺🇸 IR🇮🇷 | stigmata.ir-80 | 831.58ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.89ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.78ms"
-      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 54.21ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 12.54ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.83ms"
-      - "🇺🇸 US🇺🇸 | apple.com-443 | 9.09ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 43.45ms"
-      - "🇺🇸 US🇺🇸 | play.google.com-443 | 20.63ms"
-      - "🇺🇸 US🇺🇸 | baharishomalyour-name.global.ssl.fastly.net-80 | 29.52ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 36.17ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 9.88ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 43.15ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.56ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.19ms-1"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 20.67ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 6.23ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.07ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 9.27ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 10.31ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 92.94ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.21ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.03ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 44.75ms"
-      - "🇺🇸 US🇺🇸 | max-gb1.global.ssl.fastly.net-80 | 18.67ms"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 15ms"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms-1"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 13ms"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms-2"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 6ms"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 6ms-1"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 10ms"
-      - "🇺🇸 🆔capoit 🔒 VL-XHTTP-N/A 🇺🇸 US 7ms"
-      - "🇺🇸 🆔capoit 🔒 VL-WS-N/A 🇺🇸 US 6ms"
-      - "🇺🇸 🆔capoit 🔒 VL-WS-N/A 🇺🇸 US 11ms"
-      - "🇺🇸 🆔capoit 🔒 VL-WS-N/A 🇺🇸 US 9ms"
-      - "🇺🇸 🆔capoit 🔒 VL-WS-N/A 🇺🇸 US 15ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 5ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇺🇸 US 10ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-XHTTP-N/A ❔ XX 163ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇸🇪 SE 5ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 6ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇸🇪 SE 11ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇸🇪 SE 6ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇺🇸 US 8ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇺🇸 US 14ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇸🇪 SE 8ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇺🇸 US 10ms-1"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 6ms-1"
-      - "🇺🇸 🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 158ms"
-      - "🇺🇸 🆔ar14n24b 🔒 TR-XHTTP-N/A 🇺🇸 US 7ms"
-      - "🇺🇸 🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 9ms"
-      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 249ms"
-      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 30ms"
-      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 8ms"
-      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 247ms"
-      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 9ms"
-      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 5ms"
-      - "🇺🇸 🆔madshopx 🔒 VL-XHTTP-N/A ❔ XX 11ms"
-      - "🇺🇸 🆔madshopx 🔒 TR-WS-N/A ❔ XX 8ms"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 7ms"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 5ms"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A 🇺🇸 US 12ms"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 5ms-1"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 6ms"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 17ms"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 8ms"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 6ms-1"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 6ms-2"
-      - "🇺🇸 @DeltaKroneckerGithub"
-      - "🇺🇸 @DeltaKroneckerGithub-1"
-      - "🇺🇸 @DeltaKroneckerGithub-2"
-      - "🇺🇸 @DeltaKroneckerGithub-3"
-      - "🇺🇸 @DeltaKroneckerGithub-4"
-      - "🇺🇸 @DeltaKroneckerGithub-5"
-      - "🇺🇸 @DeltaKroneckerGithub-6"
-      - "🇺🇸 @DeltaKroneckerGithub-7"
-      - "🇺🇸 @DeltaKroneckerGithub-8"
-      - "🇺🇸 @DeltaKroneckerGithub-9"
-      - "🇺🇸 @DeltaKroneckerGithub-10"
-      - "🇺🇸 🍄 - Tel:  @Hddify - 7"
-      - "🇺🇸 >>@configV2rayNG::FI"
-      - "🇺🇸 >>@configV2rayNG::XX"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.76.31:443-1"
-      - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.20.113:443"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.76.31:443-2"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-146.75.57.111:443"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.78.159:443-1"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.76.31:443-3"
-      - "🇺🇸 🇫🇷 | @WhiteDNS | FR171|17.8MB/s|DNSOK|GPT⁺-FR"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US636|5.4MB/s|DNSOK|GPT⁺-US"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US638|5.4MB/s|DNSOK|GPT⁺-US"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US639|5.2MB/s|DNSOK|GPT⁺-US"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US641|4.5MB/s|DNSOK|GPT⁺-US"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US642|4.5MB/s|DNSOK|GPT⁺-US"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US652|2.9MB/s|DNSOK|GPT⁺-US"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US653|2.8MB/s|DNSOK|GPT⁺-US"
+      - "🇺🇸 🇩🇪 | @WhiteDNS | DE219|23.0MB/s|DNSOK|GPT⁺-DE"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US586|5.2MB/s|DNSOK|GPT⁺-US"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US587|4.6MB/s|DNSOK|GPT⁺-US"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US588|4.6MB/s|DNSOK|GPT⁺-US"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US651|1.4MB/s|DNSOK|GPT⁺-US"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US660|1.2MB/s|DNSOK|GPT⁺"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US661|1.2MB/s|DNSOK|GPT⁺-US"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US663|1023KB/s|DNSOK|GPT⁺-US"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US665|784KB/s|DNSOK|GPT⁺-US"
       - "🇺🇸 👉🆔@v2ray_configs_pool📡🇨🇦®️Canada©️Montreal🅿️ping:67.79ms"
       - "🇩🇪 @iProxyChannel 11"
       - "🇩🇪 👉🆔@v2ray_configs_pool📡🇩🇪®️Germany©️Frankfurt am Main🅿️ping:23.3ms"
+      - "🇺🇸 46. 🇮🇹 Italy"
       - "🇺🇸 VLESS 175 t.me/iProxyChannel"
       - "🇺🇸 VLESS 197 t.me/iProxyChannel"
       - "🇺🇸 VLESS 212 t.me/iProxyChannel"
@@ -5675,32 +5853,227 @@ proxy-groups:
       - "🇺🇸 🔒 VL-WS-TLS 🇺🇸 US-151.101.194.133:443-1"
       - "🇺🇸 🔒 TR-WS-NONE 🇺🇸 US-151.101.194.172:80"
       - "🇺🇸 🔒 VL-WS-TLS 🇺🇸 US-146.75.59.186:443-1"
-      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 99.36ms"
-      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 23.88ms"
-      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 21ms"
-      - "🇺🇸 US🇺🇸 | www.google.com-443 | 26.09ms"
-      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 10.24ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 55.46ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.18ms"
-      - "🇺🇸 US🇺🇸 | play.google.com-443 | 24.49ms"
-      - "🇺🇸 US🇺🇸 | play.google.com-443 | 8.98ms"
+      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 12.57ms"
+      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 5.63ms"
+      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 5.77ms"
+      - "🇺🇸 US🇺🇸 | www.google.com-443 | 5.41ms"
+      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 3.42ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 7.62ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.17ms"
+      - "🇺🇸 US🇺🇸 | play.google.com-443 | 16.62ms"
+      - "🇺🇸 US🇺🇸 | play.google.com-443 | 3.03ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.49ms"
+      - "🇺🇸 US🇺🇸 | www.google.com-443 | 3.6ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.28ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.61ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.56ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 1.93ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.3ms"
+      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 4.88ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.11ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.82ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.42ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.88ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 7.83ms"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-1"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-2"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-3"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-4"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-5"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-6"
+      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-7"
+      - "🇺🇸 US🇺🇸 | Sudoos.global.ssl.fastly.net-80 | 5.32ms"
+      - "🇺🇸 US🇺🇸 | Sudo.global.ssl.fastly.net-80 | 7.65ms"
+      - "🇺🇸 US🇺🇸 | Sudo.global.ssl.fastly.net-80 | 4.59ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.21ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 25.62ms"
+      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 2.6ms"
+      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 1.93ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 13.33ms"
+      - "🇺🇸 US🇺🇸 | live.wkrq.com-443 | 37.06ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 11.04ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 4.73ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 34.62ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 9.38ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 13.01ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.65ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.96ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 12.26ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.07ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.85ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.1ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.22ms"
+      - "🇺🇸 US🇺🇸 | speedtest.net-443 | 2.53ms"
+      - "🇺🇸 US🇺🇸 | play.google.com-443 | 3.35ms"
+      - "🇺🇸 US🇺🇸 | Zmaoz.Faculty.Ucdavis.Edu-443 | 18.65ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.8ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.19ms"
       - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.61ms"
-      - "🇺🇸 US🇺🇸 | www.google.com-443 | 3.9ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 14.97ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 11.31ms"
-      - "🇺🇸 US🇺🇸 | community.fastly.steamstatic.com-443 | 84.81ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 10.8ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.02ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.88ms-1"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.67ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 11.37ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 7.71ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.71ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 5.26ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.35ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.4ms"
+      - "🇺🇸 US🇺🇸 | www.fastly.com-443 | 72.42ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 12.34ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 4.88ms"
+      - "🇺🇸 US🇺🇸 | Maryshuponlinr.global.ssl.fastly.net-80 | 6.45ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.09ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.1ms-1"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.02ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.34ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.35ms-1"
+      - "🇺🇸 US🇺🇸 | tignaltofansv8.global.ssl.fastly.net-80 | 6.63ms"
+      - "🇺🇸 US🇺🇸 | live.skornorth.com-443 | 7.27ms"
+      - "🇺🇸 US🇺🇸 | live.skornorth.com-443 | 6.31ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.18ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.35ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 2.9ms"
+      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 3.13ms"
+      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 2.5ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 11.01ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 9.94ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 7.29ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.69ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.15ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 6.8ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 4.64ms"
+      - "🇺🇸 US🇺🇸 | live.wkrq.com-443 | 57.66ms"
+      - "🇺🇸 US🇺🇸 | max-gb1.global.ssl.fastly.net-80 | 4.38ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.12ms"
+      - "🇺🇸 US🇺🇸 | api.fastly.com-443 | 13.62ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.49ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.17ms"
+      - "🇺🇸 US🇺🇸 | Google.com-443 | 3.19ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 11.73ms"
+      - "🇺🇸 US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 6.1ms"
+      - "🇺🇸 US🇺🇸 | Firefox.com-443 | 2.96ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.46ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 7.91ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.86ms"
+      - "🇺🇸 US🇺🇸 | filmographie.org-80 | 223.29ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.97ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.07ms-1"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.76ms"
+      - "🇺🇸 US🇺🇸 | grimness-backlogs.cdn-content.com-443 | 66.77ms"
+      - "🇺🇸 US🇺🇸 | live.skornorth.com-443 | 101.27ms"
+      - "🇺🇸 US🇺🇸 | play.google.com-443 | 6.33ms"
+      - "🇺🇸 US🇺🇸 | play.google.com-443 | 3.66ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 8.46ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 36.9ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 4.35ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 5.89ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.17ms-1"
+      - "🇺🇸 US🇺🇸 | live.skornorth.com-80 | 9.24ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 33.64ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.22ms-1"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 8.24ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.47ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.37ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.97ms-1"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.87ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.92ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.53ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.31ms"
+      - "🇺🇸 US🇺🇸 | google.com-443 | 3.41ms"
+      - "🇺🇸 IR🇮🇷 | stigmata.ir-80 | 659.19ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.11ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.51ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.92ms-1"
+      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 6.6ms"
+      - "🇺🇸 US🇺🇸 | Zmaoz.Faculty.Ucdavis.Edu-443 | 18.85ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 14.91ms"
+      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 1.87ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 7.74ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.76ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.44ms"
+      - "🇺🇸 US🇺🇸 | live.skornorth.com-443 | 6.36ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.99ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.54ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.26ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.77ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 2.74ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.49ms-1"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.54ms"
+      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.39ms"
+      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 11.18ms"
+      - "🇺🇸 US🇺🇸 | speedtest.net-443 | 2.36ms"
+      - "🇺🇸 US🇺🇸 | max-gb1.global.ssl.fastly.net-80 | 4.89ms"
+      - "🇺🇸 🔒 VL-TCP-TLS 🇺🇸 US-146.75.57.111:443"
+      - "🇺🇸 🆔soskeynet 🔒 VL-XHTTP-N/A 🇺🇸 US 2ms"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-1"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-2"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-3"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-4"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 3ms"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-5"
+      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-6"
+      - "🇺🇸 🆔capoit 🔒 VL-XHTTP-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔capoit 🔒 VL-WS-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔capoit 🔒 VL-WS-N/A ❔ XX 2ms-1"
+      - "🇺🇸 🆔capoit 🔒 VL-WS-N/A ❔ XX 2ms-2"
+      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 14ms"
+      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 3ms"
+      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 2ms-1"
+      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 2ms-2"
+      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 2ms-3"
+      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 14ms-1"
+      - "🇺🇸 🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 153ms"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-1"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-2"
+      - "🇺🇸 🆔madshopx 🔒 VL-XHTTP-N/A ❔ XX 3ms"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 4ms"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 4ms-1"
+      - "🇺🇸 🆔madshopx 🔒 VL-XHTTP-N/A ❔ XX 3ms-1"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-3"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 3ms"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-4"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-5"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-6"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-7"
+      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 2ms-8"
+      - "🇺🇸 🆔madshopx 🔒 TR-WS-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 5ms"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-1"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-2"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-3"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-4"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-5"
+      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 2ms-6"
+      - "🇺🇸 🆔configx2ray 🔒 VL-WS-N/A ❔ XX 233ms"
+      - "🇺🇸 🆔configx2ray 🔒 VL-WS-N/A ❔ XX 2ms"
+      - "🇺🇸 🆔configx2ray 🔒 VL-WS-N/A ❔ XX 146ms"
+      - "🇺🇸 @DeltaKroneckerGithub"
+      - "🇺🇸 @DeltaKroneckerGithub-1"
+      - "🇺🇸 @DeltaKroneckerGithub-2"
+      - "🇺🇸 @DeltaKroneckerGithub-3"
+      - "🇺🇸 @DeltaKroneckerGithub-4"
+      - "🇺🇸 @DeltaKroneckerGithub-5"
+      - "🇺🇸 @DeltaKroneckerGithub-6"
+      - "🇺🇸 @DeltaKroneckerGithub-7"
+      - "🇺🇸 @DeltaKroneckerGithub-8"
+      - "🇺🇸 @DeltaKroneckerGithub-9"
+      - "🇺🇸 @DeltaKroneckerGithub-10"
+      - "🇺🇸 🍄 - Tel:  @Hddify - 7"
+      - "🇺🇸 >>@configV2rayNG::FI"
+      - "🇺🇸 >>@configV2rayNG::XX"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.76.31:443"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.2.5:80"
       - "🇺🇸 🔒 VL-XHTTP-NA 🇺🇸 US-151.101.193.164:80"
-      - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-151.101.36.99:443"
-      - "🇺🇸 🔒 VL-TCP-TLS 🇺🇸 US-199.232.20.113:443"
       - "🇺🇸 🔒 VL-XHTTP-NA 🇺🇸 US-151.101.129.164:80"
-      - "🇺🇸 🔒 VL-TCP-TLS 🇺🇸 US-146.75.57.111:443"
-      - "🇺🇸 🔒 VL-TCP-TLS 🇺🇸 US-146.75.57.238:443"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.78.160:443"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.192.204:80"
-      - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.79.164:443"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.3.8:80"
       - "🇺🇸 🔒 VL-XHTTP-NA 🇺🇸 US-151.101.1.164:80"
       - "🇺🇸 🔒 VL-XHTTP-NA 🇺🇸 US-151.101.65.164:80"
@@ -5717,215 +6090,29 @@ proxy-groups:
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.101.119:443"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.64.204:80"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-146.75.56.210:443"
-      - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-151.101.119.41:443"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-23.235.33.4:80"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.3.147:80"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.193.194:80"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.78.143:443"
       - "🇺🇸 🔒 VL-XHTTP-NONE 🇺🇸 US-151.101.130.219:80"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇩🇪』"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-1"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-2"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-3"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-4"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-5"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-6"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-7"
-      - "🇺🇸 🆔️ | @Eag1e_YT『🇺🇸』-8"
-      - "🇺🇸 US🇺🇸 | Sudoos.global.ssl.fastly.net-80 | 40.12ms"
-      - "🇺🇸 US🇺🇸 | Sudo.global.ssl.fastly.net-80 | 133.27ms"
-      - "🇺🇸 US🇺🇸 | Sudo.global.ssl.fastly.net-80 | 22.88ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 10.37ms"
-      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 9.93ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 35.45ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 33.24ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 23.71ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 54.82ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 13.3ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 11.3ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.52ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 42.36ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 17.47ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.79ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 10.45ms"
-      - "🇺🇸 US🇺🇸 | play.google.com-443 | 11.7ms"
-      - "🇺🇸 US🇺🇸 | speedtest.net-443 | 28.92ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 11.55ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.63ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.92ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.06ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.89ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.94ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.12ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 82.98ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 15.84ms"
-      - "🇺🇸 US🇺🇸 | Maryshuponlinr.global.ssl.fastly.net-80 | 40.65ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 10.85ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.83ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 10.82ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.84ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.43ms"
-      - "🇺🇸 US🇺🇸 | tignaltofansv8.global.ssl.fastly.net-80 | 33.04ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 12.44ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 10.21ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 16.22ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 11.29ms"
-      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 10.49ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 100.82ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 10.14ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.31ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 12.07ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 6.16ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.43ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 67.5ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 38.53ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 44.82ms"
-      - "🇺🇸 US🇺🇸 | max-gb1.global.ssl.fastly.net-80 | 36ms"
-      - "🇺🇸 US🇺🇸 | api.fastly.com-443 | 36.26ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 14.73ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 16.46ms"
-      - "🇺🇸 US🇺🇸 | Google.com-443 | 11.45ms"
-      - "🇺🇸 US🇺🇸 | Google.com-443 | 10.29ms"
-      - "🇺🇸 US🇺🇸 | speedtest.net-443 | 12.04ms"
-      - "🇺🇸 US🇺🇸 | speedtest.net-443 | 9.26ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.29ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 102.9ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 105.29ms"
-      - "🇺🇸 US🇺🇸 | tignaltofan.global.ssl.fastly.net-80 | 32.16ms"
-      - "🇺🇸 US🇺🇸 | cloud-mail-domian.global.ssl.fastly.net-80 | 30.54ms"
-      - "🇺🇸 US🇺🇸 | Firefox.com-443 | 74.64ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 11.38ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.04ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.05ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 6.06ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.4ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.19ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 7.63ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.17ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.26ms"
-      - "🇺🇸 US🇺🇸 | play.google.com-443 | 17.87ms"
-      - "🇺🇸 US🇺🇸 | play.google.com-443 | 7.12ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 104.43ms"
-      - "🇺🇸 US🇺🇸 | speedtest.net-443 | 11.96ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 47.24ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.8ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 18.57ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 16.78ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.85ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 92.85ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 7.08ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 85.04ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 9.65ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 9.85ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 9.85ms-1"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 9.34ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.64ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 12.67ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 17.59ms"
-      - "🇺🇸 US🇺🇸 | gemini.google.com-443 | 39.3ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 13.8ms"
-      - "🇺🇸 IR🇮🇷 | stigmata.ir-80 | 831.58ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.89ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.78ms"
-      - "🇺🇸 US🇺🇸 | www.firefox.com-443 | 54.21ms"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 12.54ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.83ms"
-      - "🇺🇸 US🇺🇸 | apple.com-443 | 9.09ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 43.45ms"
-      - "🇺🇸 US🇺🇸 | play.google.com-443 | 20.63ms"
-      - "🇺🇸 US🇺🇸 | baharishomalyour-name.global.ssl.fastly.net-80 | 29.52ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 36.17ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 9.88ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 43.15ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.56ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 4.19ms-1"
-      - "🇺🇸 US🇺🇸 | google.com-443 | 20.67ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 6.23ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.07ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 9.27ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 10.31ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 92.94ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 5.21ms"
-      - "🇺🇸 US🇺🇸 | firefox.com-443 | 3.03ms"
-      - "🇺🇸 US🇺🇸 | cdn.akamai.steamstatic.com-443 | 44.75ms"
-      - "🇺🇸 US🇺🇸 | max-gb1.global.ssl.fastly.net-80 | 18.67ms"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 15ms"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms-1"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 13ms"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms-2"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 6ms"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 6ms-1"
-      - "🇺🇸 🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 10ms"
-      - "🇺🇸 🆔capoit 🔒 VL-XHTTP-N/A 🇺🇸 US 7ms"
-      - "🇺🇸 🆔capoit 🔒 VL-WS-N/A 🇺🇸 US 6ms"
-      - "🇺🇸 🆔capoit 🔒 VL-WS-N/A 🇺🇸 US 11ms"
-      - "🇺🇸 🆔capoit 🔒 VL-WS-N/A 🇺🇸 US 9ms"
-      - "🇺🇸 🆔capoit 🔒 VL-WS-N/A 🇺🇸 US 15ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 5ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇺🇸 US 10ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-XHTTP-N/A ❔ XX 163ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇸🇪 SE 5ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 6ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇸🇪 SE 11ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇸🇪 SE 6ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇺🇸 US 8ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇺🇸 US 14ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇸🇪 SE 8ms"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A 🇺🇸 US 10ms-1"
-      - "🇺🇸 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX 6ms-1"
-      - "🇺🇸 🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 158ms"
-      - "🇺🇸 🆔ar14n24b 🔒 TR-XHTTP-N/A 🇺🇸 US 7ms"
-      - "🇺🇸 🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 9ms"
-      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 249ms"
-      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 30ms"
-      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 8ms"
-      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 247ms"
-      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 9ms"
-      - "🇺🇸 🆔madshopx 🔒 VL-WS-N/A ❔ XX 5ms"
-      - "🇺🇸 🆔madshopx 🔒 VL-XHTTP-N/A ❔ XX 11ms"
-      - "🇺🇸 🆔madshopx 🔒 TR-WS-N/A ❔ XX 8ms"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 7ms"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 5ms"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A 🇺🇸 US 12ms"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 5ms-1"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 6ms"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 17ms"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 8ms"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 6ms-1"
-      - "🇺🇸 🆔vpnserverrr 🔓 VL-WS-N/A ❔ XX 6ms-2"
-      - "🇺🇸 @DeltaKroneckerGithub"
-      - "🇺🇸 @DeltaKroneckerGithub-1"
-      - "🇺🇸 @DeltaKroneckerGithub-2"
-      - "🇺🇸 @DeltaKroneckerGithub-3"
-      - "🇺🇸 @DeltaKroneckerGithub-4"
-      - "🇺🇸 @DeltaKroneckerGithub-5"
-      - "🇺🇸 @DeltaKroneckerGithub-6"
-      - "🇺🇸 @DeltaKroneckerGithub-7"
-      - "🇺🇸 @DeltaKroneckerGithub-8"
-      - "🇺🇸 @DeltaKroneckerGithub-9"
-      - "🇺🇸 @DeltaKroneckerGithub-10"
-      - "🇺🇸 🍄 - Tel:  @Hddify - 7"
-      - "🇺🇸 >>@configV2rayNG::FI"
-      - "🇺🇸 >>@configV2rayNG::XX"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.76.31:443-1"
-      - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.20.113:443"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.76.31:443-2"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-146.75.57.111:443"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-199.232.78.159:443-1"
       - "🇺🇸 🔒 VL-XHTTP-TLS 🇺🇸 US-167.82.76.31:443-3"
-      - "🇺🇸 🇫🇷 | @WhiteDNS | FR171|17.8MB/s|DNSOK|GPT⁺-FR"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US636|5.4MB/s|DNSOK|GPT⁺-US"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US638|5.4MB/s|DNSOK|GPT⁺-US"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US639|5.2MB/s|DNSOK|GPT⁺-US"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US641|4.5MB/s|DNSOK|GPT⁺-US"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US642|4.5MB/s|DNSOK|GPT⁺-US"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US652|2.9MB/s|DNSOK|GPT⁺-US"
-      - "🇺🇸 🇺🇸 | @WhiteDNS | US653|2.8MB/s|DNSOK|GPT⁺-US"
+      - "🇺🇸 🇩🇪 | @WhiteDNS | DE219|23.0MB/s|DNSOK|GPT⁺-DE"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US586|5.2MB/s|DNSOK|GPT⁺-US"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US587|4.6MB/s|DNSOK|GPT⁺-US"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US588|4.6MB/s|DNSOK|GPT⁺-US"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US651|1.4MB/s|DNSOK|GPT⁺-US"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US660|1.2MB/s|DNSOK|GPT⁺"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US661|1.2MB/s|DNSOK|GPT⁺-US"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US663|1023KB/s|DNSOK|GPT⁺-US"
+      - "🇺🇸 🇺🇸 | @WhiteDNS | US665|784KB/s|DNSOK|GPT⁺-US"
       - "🇺🇸 👉🆔@v2ray_configs_pool📡🇨🇦®️Canada©️Montreal🅿️ping:67.79ms"
       - "🇩🇪 @iProxyChannel 11"
       - "🇩🇪 👉🆔@v2ray_configs_pool📡🇩🇪®️Germany©️Frankfurt am Main🅿️ping:23.3ms"
+      - "🇺🇸 46. 🇮🇹 Italy"
       - "🇺🇸 VLESS 175 t.me/iProxyChannel"
       - "🇺🇸 VLESS 197 t.me/iProxyChannel"
       - "🇺🇸 VLESS 212 t.me/iProxyChannel"

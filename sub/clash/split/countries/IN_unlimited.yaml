@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -558,6 +592,13 @@ proxies:
     reality-opts:
       public-key: "PuAGLfJy6cu1TNoHuKIKSxPetCbZI41fc8hQDjWPIAU"
       short-id: "9980e0609b0d3891"
+  - name: "🇮🇳 🇮🇳 Noida, UP, India"
+    type: "ss"
+    server: "139.84.166.47"
+    port: 8388
+    cipher: "aes-256-gcm"
+    password: "GEdoeeqLZtkJRgSa"
+    udp: true
   - name: "🇮🇳 🔒 VL-TCP-TLS 🇮🇳 IN-139.84.150.159:46362"
     type: "vless"
     server: "139.84.150.159"
@@ -568,31 +609,6 @@ proxies:
     network: "tcp"
     servername: "in002.zestapp778.com"
     client-fingerprint: "chrome"
-  - name: "🇮🇳 🇮🇳 Noida, UP, India"
-    type: "ss"
-    server: "139.84.166.47"
-    port: 8388
-    cipher: "aes-256-gcm"
-    password: "GEdoeeqLZtkJRgSa"
-    udp: true
-  - name: "🇮🇳 US🇺🇸 | play.google.com-443 | 6.44ms"
-    type: "vless"
-    server: "49.50.76.194"
-    port: 443
-    uuid: "a2d7890a-5451-4470-9300-a059792924bb"
-    udp: true
-    tls: false
-    network: "tcp"
-  - name: "🇮🇳 US🇺🇸 | in-full.privateip.net-443 | 39.56ms"
-    type: "vless"
-    server: "172.105.252.35"
-    port: 443
-    uuid: "99de7aac-d2a5-48fd-92cb-d1e6c3c719a4"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "in-full.privateip.net"
-    flow: "xtls-rprx-vision"
   - name: "🇮🇳 @DeltaKroneckerGithub"
     type: "trojan"
     server: "65.20.82.177"
@@ -738,7 +754,20 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇮🇳 🇮🇳 | @WhiteDNS | IN65|2.4MB/s|DNSOK|GPT⁺-IN"
+  - name: "🇮🇳 🇸🇬 | @WhiteDNS | SG156|2.7MB/s|DNSOK|GPT⁺-IN"
+    type: "vless"
+    server: "13.140.56.100"
+    port: 14430
+    uuid: "68512eac-cd53-4de3-8d1e-08f6e04af1a9"
+    udp: true
+    tls: false
+    network: "ws"
+    servername: "13.140.56.100"
+    ws-opts:
+      path: "/vless"
+      headers:
+        Host: "13.140.56.100"
+  - name: "🇮🇳 🇮🇳 | @WhiteDNS | IN67|2.7MB/s|DNSOK|GPT⁺-IN"
     type: "socks5"
     server: "140.238.243.61"
     port: 1080
@@ -764,10 +793,8 @@ proxy-groups:
       - "🇮🇳 🇮🇳 Rose—62"
       - "🇮🇳 🔒 SS-TCP-NA 🇮🇳 IN-134.209.147.198:990"
       - "🇮🇳 🔒 VL-TCP-RLT 🇮🇳 IN-194.61.31.126:2053"
-      - "🇮🇳 🔒 VL-TCP-TLS 🇮🇳 IN-139.84.150.159:46362"
       - "🇮🇳 🇮🇳 Noida, UP, India"
-      - "🇮🇳 US🇺🇸 | play.google.com-443 | 6.44ms"
-      - "🇮🇳 US🇺🇸 | in-full.privateip.net-443 | 39.56ms"
+      - "🇮🇳 🔒 VL-TCP-TLS 🇮🇳 IN-139.84.150.159:46362"
       - "🇮🇳 @DeltaKroneckerGithub"
       - "🇮🇳 @DeltaKroneckerGithub-1"
       - "🇮🇳 @DeltaKroneckerGithub-2"
@@ -782,7 +809,8 @@ proxy-groups:
       - "🇮🇳 India-1"
       - "🇮🇳 @DeltaKroneckerGithub-7"
       - "🇮🇳 @DeltaKroneckerGithub-8"
-      - "🇮🇳 🇮🇳 | @WhiteDNS | IN65|2.4MB/s|DNSOK|GPT⁺-IN"
+      - "🇮🇳 🇸🇬 | @WhiteDNS | SG156|2.7MB/s|DNSOK|GPT⁺-IN"
+      - "🇮🇳 🇮🇳 | @WhiteDNS | IN67|2.7MB/s|DNSOK|GPT⁺-IN"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -797,10 +825,8 @@ proxy-groups:
       - "🇮🇳 🇮🇳 Rose—62"
       - "🇮🇳 🔒 SS-TCP-NA 🇮🇳 IN-134.209.147.198:990"
       - "🇮🇳 🔒 VL-TCP-RLT 🇮🇳 IN-194.61.31.126:2053"
-      - "🇮🇳 🔒 VL-TCP-TLS 🇮🇳 IN-139.84.150.159:46362"
       - "🇮🇳 🇮🇳 Noida, UP, India"
-      - "🇮🇳 US🇺🇸 | play.google.com-443 | 6.44ms"
-      - "🇮🇳 US🇺🇸 | in-full.privateip.net-443 | 39.56ms"
+      - "🇮🇳 🔒 VL-TCP-TLS 🇮🇳 IN-139.84.150.159:46362"
       - "🇮🇳 @DeltaKroneckerGithub"
       - "🇮🇳 @DeltaKroneckerGithub-1"
       - "🇮🇳 @DeltaKroneckerGithub-2"
@@ -815,7 +841,8 @@ proxy-groups:
       - "🇮🇳 India-1"
       - "🇮🇳 @DeltaKroneckerGithub-7"
       - "🇮🇳 @DeltaKroneckerGithub-8"
-      - "🇮🇳 🇮🇳 | @WhiteDNS | IN65|2.4MB/s|DNSOK|GPT⁺-IN"
+      - "🇮🇳 🇸🇬 | @WhiteDNS | SG156|2.7MB/s|DNSOK|GPT⁺-IN"
+      - "🇮🇳 🇮🇳 | @WhiteDNS | IN67|2.7MB/s|DNSOK|GPT⁺-IN"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -831,10 +858,8 @@ proxy-groups:
       - "🇮🇳 🇮🇳 Rose—62"
       - "🇮🇳 🔒 SS-TCP-NA 🇮🇳 IN-134.209.147.198:990"
       - "🇮🇳 🔒 VL-TCP-RLT 🇮🇳 IN-194.61.31.126:2053"
-      - "🇮🇳 🔒 VL-TCP-TLS 🇮🇳 IN-139.84.150.159:46362"
       - "🇮🇳 🇮🇳 Noida, UP, India"
-      - "🇮🇳 US🇺🇸 | play.google.com-443 | 6.44ms"
-      - "🇮🇳 US🇺🇸 | in-full.privateip.net-443 | 39.56ms"
+      - "🇮🇳 🔒 VL-TCP-TLS 🇮🇳 IN-139.84.150.159:46362"
       - "🇮🇳 @DeltaKroneckerGithub"
       - "🇮🇳 @DeltaKroneckerGithub-1"
       - "🇮🇳 @DeltaKroneckerGithub-2"
@@ -849,7 +874,8 @@ proxy-groups:
       - "🇮🇳 India-1"
       - "🇮🇳 @DeltaKroneckerGithub-7"
       - "🇮🇳 @DeltaKroneckerGithub-8"
-      - "🇮🇳 🇮🇳 | @WhiteDNS | IN65|2.4MB/s|DNSOK|GPT⁺-IN"
+      - "🇮🇳 🇸🇬 | @WhiteDNS | SG156|2.7MB/s|DNSOK|GPT⁺-IN"
+      - "🇮🇳 🇮🇳 | @WhiteDNS | IN67|2.7MB/s|DNSOK|GPT⁺-IN"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"

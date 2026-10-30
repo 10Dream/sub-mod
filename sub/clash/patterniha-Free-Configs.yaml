@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -493,71 +527,39 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "F&F @DeltaKroneckerGithub | 890ca7"
+  - name: "F&F DE 🇩🇪 | @Raydikalx | DBA323 | 5ab41f"
     type: "vless"
     server: "188.114.98.0"
     port: 443
-    uuid: "d4733e5a-5850-4523-942e-f28f82ebf4a9"
+    uuid: "49996e29-93c5-4975-b56f-792acbbf3444"
     udp: true
     tls: true
     network: "ws"
-    servername: "party-5cn.pages.dev"
+    servername: "jyfrj1cims.dev.onappjet.com"
     client-fingerprint: "unsafe"
     alpn:
       - "http/1.1"
     ws-opts:
-      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2560"
+      path: "/jx-yjkteysq815pzp"
       headers:
-        Host: "party-5cn.pages.dev"
-  - name: "IPv6 @DeltaKroneckerGithub | c5bb23"
+        Host: "jyfrj1cims.dev.onappjet.com"
+  - name: "IPv6 DE 🇩🇪 | @Raydikalx | DBA323 | 2eef7b"
     type: "vless"
     server: "2a06:98c1:3101::6812:202f"
     port: 443
-    uuid: "d4733e5a-5850-4523-942e-f28f82ebf4a9"
+    uuid: "49996e29-93c5-4975-b56f-792acbbf3444"
     udp: true
     tls: true
     network: "ws"
-    servername: "party-5cn.pages.dev"
+    servername: "jyfrj1cims.dev.onappjet.com"
     client-fingerprint: "chrome"
     alpn:
       - "http/1.1"
     ws-opts:
-      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2560"
+      path: "/jx-yjkteysq815pzp"
       headers:
-        Host: "party-5cn.pages.dev"
-  - name: "F&F 🇸🇬170Mb | Akamai Connected Cloud | 244e33"
-    type: "vless"
-    server: "188.114.98.0"
-    port: 443
-    uuid: "aa05efe5-c34f-4880-b6e5-6b437ccffec5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "asia.csmaster.store"
-    client-fingerprint: "unsafe"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/cs"
-      headers:
-        Host: "asia.csmaster.store"
-  - name: "IPv6 🇸🇬170Mb | Akamai Connected Cloud | c5babc"
-    type: "vless"
-    server: "2a06:98c1:3101::6812:202f"
-    port: 443
-    uuid: "aa05efe5-c34f-4880-b6e5-6b437ccffec5"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "asia.csmaster.store"
-    client-fingerprint: "chrome"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/cs"
-      headers:
-        Host: "asia.csmaster.store"
-  - name: "F&F DE 🇩🇪 | @Raydikalx | 4591B3 | a5cc7a"
+        Host: "jyfrj1cims.dev.onappjet.com"
+  - name: "F&F United States | 8f0513"
     type: "vless"
     server: "188.114.98.0"
     port: 443
@@ -573,7 +575,7 @@ proxies:
       path: "/019bcbad-3813-7cce-8786-3ac0e418f128?ed=2560"
       headers:
         Host: "n.bitpulse.me"
-  - name: "IPv6 DE 🇩🇪 | @Raydikalx | 4591B3 | fa095d"
+  - name: "IPv6 United States | 3b5db4"
     type: "vless"
     server: "2a06:98c1:3101::6812:202f"
     port: 443
@@ -589,71 +591,135 @@ proxies:
       path: "/019bcbad-3813-7cce-8786-3ac0e418f128?ed=2560"
       headers:
         Host: "n.bitpulse.me"
-  - name: "F&F 未知_102919061 | eacc09"
+  - name: "F&F CF中转_1030191523 | 08bca2"
     type: "vless"
     server: "188.114.98.0"
     port: 443
-    uuid: "fc7d2cfe-f5ef-40c8-a848-a0bdc11f6349"
+    uuid: "f27b6f65-6e59-4f89-b929-afa397ca587f"
     udp: true
     tls: true
     network: "ws"
-    servername: "vpn.cintaku.qzz.io"
+    servername: "n.bitpulse.me"
     client-fingerprint: "unsafe"
     alpn:
       - "http/1.1"
     ws-opts:
-      path: "/vlessws"
+      path: "/019bcbad-3813-7cce-8786-3ac0e418f128?ed=2560fp=unsafe"
       headers:
-        Host: "vpn.cintaku.qzz.io"
-  - name: "IPv6 未知_102919061 | 23a378"
+        Host: "n.bitpulse.me"
+  - name: "IPv6 CF中转_1030191523 | 59476a"
     type: "vless"
     server: "2a06:98c1:3101::6812:202f"
     port: 443
-    uuid: "fc7d2cfe-f5ef-40c8-a848-a0bdc11f6349"
+    uuid: "f27b6f65-6e59-4f89-b929-afa397ca587f"
     udp: true
     tls: true
     network: "ws"
-    servername: "vpn.cintaku.qzz.io"
+    servername: "n.bitpulse.me"
     client-fingerprint: "chrome"
     alpn:
       - "http/1.1"
     ws-opts:
-      path: "/vlessws"
+      path: "/019bcbad-3813-7cce-8786-3ac0e418f128?ed=2560fp=unsafe"
       headers:
-        Host: "vpn.cintaku.qzz.io"
-  - name: "F&F CA 🇨🇦 | @Raydikalx | E092A5 | f06d9a"
+        Host: "n.bitpulse.me"
+  - name: "F&F 美国_103019119 | ba787e"
     type: "vless"
     server: "188.114.98.0"
     port: 443
-    uuid: "E221699D-E705-4664-9162-A75A82AA3997"
+    uuid: "f27b6f65-6e59-4f89-b929-afa397ca587f"
     udp: true
     tls: true
     network: "ws"
-    servername: "sg2-xr.zgrelay.com"
+    servername: "n.bitpulse.me"
     client-fingerprint: "unsafe"
     alpn:
       - "http/1.1"
     ws-opts:
-      path: "/700gvl-kr3"
+      path: "/019bcbad-3813-7cce-8786-3ac0e418f128?ed=2560fp=firefox"
       headers:
-        Host: "sg2-xr.zgrelay.com"
-  - name: "IPv6 CA 🇨🇦 | @Raydikalx | E092A5 | 12dc9a"
+        Host: "n.bitpulse.me"
+  - name: "IPv6 美国_103019119 | 9fb5d3"
     type: "vless"
     server: "2a06:98c1:3101::6812:202f"
     port: 443
-    uuid: "E221699D-E705-4664-9162-A75A82AA3997"
+    uuid: "f27b6f65-6e59-4f89-b929-afa397ca587f"
     udp: true
     tls: true
     network: "ws"
-    servername: "sg2-xr.zgrelay.com"
+    servername: "n.bitpulse.me"
     client-fingerprint: "chrome"
     alpn:
       - "http/1.1"
     ws-opts:
-      path: "/700gvl-kr3"
+      path: "/019bcbad-3813-7cce-8786-3ac0e418f128?ed=2560fp=firefox"
       headers:
-        Host: "sg2-xr.zgrelay.com"
-  - name: "F&F CA 🇨🇦 | @Raydikalx | FFCF2F | 209a41"
+        Host: "n.bitpulse.me"
+  - name: "F&F CA 🇨🇦 | @Raydikalx | FB6149 | 39a53b"
+    type: "vless"
+    server: "188.114.98.0"
+    port: 443
+    uuid: "91ad30e9-ab06-4b4c-9fb9-1c2aa97d8b3a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "n04.jinggai.online"
+    client-fingerprint: "unsafe"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/nvl-n04-ws/e0577fe8fd7c8823"
+      headers:
+        Host: "n04.jinggai.online"
+  - name: "IPv6 CA 🇨🇦 | @Raydikalx | FB6149 | f81e20"
+    type: "vless"
+    server: "2a06:98c1:3101::6812:202f"
+    port: 443
+    uuid: "91ad30e9-ab06-4b4c-9fb9-1c2aa97d8b3a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "n04.jinggai.online"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/nvl-n04-ws/e0577fe8fd7c8823"
+      headers:
+        Host: "n04.jinggai.online"
+  - name: "F&F @DeltaKroneckerGithub | 63ecdd"
+    type: "vless"
+    server: "188.114.98.0"
+    port: 443
+    uuid: "326227e2-f2d1-4f43-8715-9da854f5f4c0"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "px2.5ibtc.cn"
+    client-fingerprint: "unsafe"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/326227e2-f2d1-4f43-8715-9da854f5f4c0"
+      headers:
+        Host: "px2.5ibtc.cn"
+  - name: "IPv6 @DeltaKroneckerGithub | fbae8c"
+    type: "vless"
+    server: "2a06:98c1:3101::6812:202f"
+    port: 443
+    uuid: "326227e2-f2d1-4f43-8715-9da854f5f4c0"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "px2.5ibtc.cn"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/326227e2-f2d1-4f43-8715-9da854f5f4c0"
+      headers:
+        Host: "px2.5ibtc.cn"
+  - name: "F&F @DeltaKroneckerGithub | 90eb4d"
     type: "vless"
     server: "188.114.98.0"
     port: 443
@@ -669,7 +735,7 @@ proxies:
       path: "/tyxyws"
       headers:
         Host: "jp3.yohototo.top"
-  - name: "IPv6 CA 🇨🇦 | @Raydikalx | FFCF2F | 571952"
+  - name: "IPv6 @DeltaKroneckerGithub | 363952"
     type: "vless"
     server: "2a06:98c1:3101::6812:202f"
     port: 443
@@ -685,59 +751,7 @@ proxies:
       path: "/tyxyws"
       headers:
         Host: "jp3.yohototo.top"
-  - name: "F&F US 🇺🇸 | @Raydikalx | 7D4DDE | 3fdcb4"
-    type: "vless"
-    server: "188.114.98.0"
-    port: 443
-    uuid: "V2XNET"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "btc.sayhisname.dpdns.org"
-    client-fingerprint: "unsafe"
-    alpn:
-      - "h2"
-      - "h3"
-      - "http/1.1"
-  - name: "IPv6 US 🇺🇸 | @Raydikalx | 7D4DDE | 388ce7"
-    type: "vless"
-    server: "2a06:98c1:3101::6812:202f"
-    port: 443
-    uuid: "V2XNET"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "btc.sayhisname.dpdns.org"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-      - "h3"
-      - "http/1.1"
-  - name: "Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&sni=www.calmlunch.com&alpn=http/1.1&fp=unsafe&cs=TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256&fm={\"tcp\": [{\"type\": \"fragment\", \"settings\": {\"packets\": \"tlshello\", \"lengths\": [\"0\", \"104\", \"1\"], \"delays\": [\"0\"], \"maxSplit\": \"0\"}},{\"type\": \"fragment\", \"settings\": {\"packets\": \"1-1\", \"lengths\": [\"114\", \"1\"], \"delays\": [\"1\"], \"maxSplit\": \"11\"}}]}#F&F 🔥Join+Telegram:@Farah_VPN🟣 | b581d0"
-    type: "trojan"
-    server: "188.114.98.0"
-    port: 443
-    password: "humanity"
-    udp: true
-    tls: true
-    network: "ws"
-    ws-opts:
-      path: "/assignment?ed"
-      headers:
-        Host: "www.calmlunch.com"
-  - name: "Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&sni=www.calmlunch.com&alpn=http/1.1&fp=chrome#IPv6 🔥Join+Telegram:@Farah_VPN🟣 | 9c69d1"
-    type: "trojan"
-    server: "2a06:98c1:3101::6812:202f"
-    port: 443
-    password: "humanity"
-    udp: true
-    tls: true
-    network: "ws"
-    ws-opts:
-      path: "/assignment?ed"
-      headers:
-        Host: "www.calmlunch.com"
-  - name: "F&F @DeltaKroneckerGithub | bee106"
+  - name: "F&F CA 🇨🇦 | @Raydikalx | 8BEFD8 | dda5b6"
     type: "trojan"
     server: "188.114.98.0"
     port: 443
@@ -750,7 +764,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "IPv6 @DeltaKroneckerGithub | b7572f"
+  - name: "IPv6 CA 🇨🇦 | @Raydikalx | 8BEFD8 | 3ab42e"
     type: "trojan"
     server: "2a06:98c1:3101::6812:202f"
     port: 443
@@ -763,7 +777,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "F&F CA 🇨🇦 | @Raydikalx | 80527E | 8f70b3"
+  - name: "F&F United States | ec99c3"
     type: "trojan"
     server: "188.114.98.0"
     port: 443
@@ -773,10 +787,10 @@ proxies:
     network: "ws"
     servername: "www.calmlunch.com"
     ws-opts:
-      path: "/assignment?Telegram---Config7x--CONFIG7X"
+      path: "/%2Fassignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "IPv6 CA 🇨🇦 | @Raydikalx | 80527E | 96d6f7"
+  - name: "IPv6 United States | a4ee57"
     type: "trojan"
     server: "2a06:98c1:3101::6812:202f"
     port: 443
@@ -786,9 +800,57 @@ proxies:
     network: "ws"
     servername: "www.calmlunch.com"
     ws-opts:
-      path: "/assignment?Telegram---Config7x--CONFIG7X"
+      path: "/%2Fassignment"
       headers:
         Host: "www.calmlunch.com"
+  - name: "F&F CA 🇨🇦 | @Raydikalx | B9F5B6 | 8ae964"
+    type: "trojan"
+    server: "188.114.98.0"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "%2Fassignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "IPv6 CA 🇨🇦 | @Raydikalx | B9F5B6 | 3213f4"
+    type: "trojan"
+    server: "2a06:98c1:3101::6812:202f"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "%2Fassignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "F&F United States | 95ae1e"
+    type: "trojan"
+    server: "188.114.98.0"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.cordweave.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "IPv6 United States | 83df42"
+    type: "trojan"
+    server: "2a06:98c1:3101::6812:202f"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.cordweave.com"
+    ws-opts:
+      path: "/assignment"
   - name: "F&F CA 🇨🇦 | @Raydikalx | 4C51EA | 22a42a"
     type: "trojan"
     server: "188.114.98.0"
@@ -867,7 +929,7 @@ proxies:
       path: "//assignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "F&F DE 🇩🇪 | @Raydikalx | 557AB1 | c3d0f5"
+  - name: "F&F CA 🇨🇦 | @Raydikalx | 80527E | 8f70b3"
     type: "trojan"
     server: "188.114.98.0"
     port: 443
@@ -875,12 +937,12 @@ proxies:
     udp: true
     tls: true
     network: "ws"
-    servername: "www.trusteeforward.com"
+    servername: "www.calmlunch.com"
     ws-opts:
-      path: "/assignment?TELEGRAM--B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub--TELEGRAM"
+      path: "/assignment?Telegram---Config7x--CONFIG7X"
       headers:
-        Host: "www.trusteeforward.com"
-  - name: "IPv6 DE 🇩🇪 | @Raydikalx | 557AB1 | 76a2a0"
+        Host: "www.calmlunch.com"
+  - name: "IPv6 CA 🇨🇦 | @Raydikalx | 80527E | 96d6f7"
     type: "trojan"
     server: "2a06:98c1:3101::6812:202f"
     port: 443
@@ -888,11 +950,61 @@ proxies:
     udp: true
     tls: true
     network: "ws"
-    servername: "www.trusteeforward.com"
+    servername: "www.calmlunch.com"
     ws-opts:
-      path: "/assignment?TELEGRAM--B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub--TELEGRAM"
+      path: "/assignment?Telegram---Config7x--CONFIG7X"
       headers:
-        Host: "www.trusteeforward.com"
+        Host: "www.calmlunch.com"
+  - name: "Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&sni=www.calmlunch.com&alpn=http/1.1&fp=unsafe&cs=TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256&fm={\"tcp\": [{\"type\": \"fragment\", \"settings\": {\"packets\": \"tlshello\", \"lengths\": [\"0\", \"104\", \"1\"], \"delays\": [\"0\"], \"maxSplit\": \"0\"}},{\"type\": \"fragment\", \"settings\": {\"packets\": \"1-1\", \"lengths\": [\"114\", \"1\"], \"delays\": [\"1\"], \"maxSplit\": \"11\"}}]}#F&F 🔥Join+Telegram:@Farah_VPN🟣 | b581d0"
+    type: "trojan"
+    server: "188.114.98.0"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/assignment?ed"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&sni=www.calmlunch.com&alpn=http/1.1&fp=chrome#IPv6 🔥Join+Telegram:@Farah_VPN🟣 | 9c69d1"
+    type: "trojan"
+    server: "2a06:98c1:3101::6812:202f"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/assignment?ed"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "F&F CA 🇨🇦 | @Raydikalx | 22AE23 | 908357"
+    type: "trojan"
+    server: "188.114.98.0"
+    port: 443
+    password: "k3hlvcxvbol6p6dh"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "wenoos.pecasoou.ir"
+    ws-opts:
+      path: "/---@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY/--@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY"
+      headers:
+        Host: "wenoos.pecasoou.ir"
+  - name: "IPv6 CA 🇨🇦 | @Raydikalx | 22AE23 | 605fcf"
+    type: "trojan"
+    server: "2a06:98c1:3101::6812:202f"
+    port: 443
+    password: "k3hlvcxvbol6p6dh"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "wenoos.pecasoou.ir"
+    ws-opts:
+      path: "/---@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY/--@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY"
+      headers:
+        Host: "wenoos.pecasoou.ir"
   - name: "F&F CA 🇨🇦 | @Raydikalx | 37CED8 | 53d367"
     type: "trojan"
     server: "188.114.98.0"
@@ -919,32 +1031,32 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.trusteeforward.com"
-  - name: "F&F CA 🇨🇦 | @Raydikalx | F577D8 | 3561f8"
+  - name: "F&F DE 🇩🇪 | @Raydikalx | 557AB1 | c3d0f5"
     type: "trojan"
     server: "188.114.98.0"
     port: 443
-    password: "e57m7a2ayx98v1h6"
+    password: "humanity"
     udp: true
     tls: true
     network: "ws"
-    servername: "wenoos.pecasoou.ir"
+    servername: "www.trusteeforward.com"
     ws-opts:
-      path: "/---@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY/--@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY"
+      path: "/assignment?TELEGRAM--B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub--TELEGRAM"
       headers:
-        Host: "wenoos.pecasoou.ir"
-  - name: "IPv6 CA 🇨🇦 | @Raydikalx | F577D8 | 963fe4"
+        Host: "www.trusteeforward.com"
+  - name: "IPv6 DE 🇩🇪 | @Raydikalx | 557AB1 | 76a2a0"
     type: "trojan"
     server: "2a06:98c1:3101::6812:202f"
     port: 443
-    password: "e57m7a2ayx98v1h6"
+    password: "humanity"
     udp: true
     tls: true
     network: "ws"
-    servername: "wenoos.pecasoou.ir"
+    servername: "www.trusteeforward.com"
     ws-opts:
-      path: "/---@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY/--@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY"
+      path: "/assignment?TELEGRAM--B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub--TELEGRAM"
       headers:
-        Host: "wenoos.pecasoou.ir"
+        Host: "www.trusteeforward.com"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -959,38 +1071,44 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "F&F @DeltaKroneckerGithub | 890ca7"
-      - "IPv6 @DeltaKroneckerGithub | c5bb23"
-      - "F&F 🇸🇬170Mb | Akamai Connected Cloud | 244e33"
-      - "IPv6 🇸🇬170Mb | Akamai Connected Cloud | c5babc"
-      - "F&F DE 🇩🇪 | @Raydikalx | 4591B3 | a5cc7a"
-      - "IPv6 DE 🇩🇪 | @Raydikalx | 4591B3 | fa095d"
-      - "F&F 未知_102919061 | eacc09"
-      - "IPv6 未知_102919061 | 23a378"
-      - "F&F CA 🇨🇦 | @Raydikalx | E092A5 | f06d9a"
-      - "IPv6 CA 🇨🇦 | @Raydikalx | E092A5 | 12dc9a"
-      - "F&F CA 🇨🇦 | @Raydikalx | FFCF2F | 209a41"
-      - "IPv6 CA 🇨🇦 | @Raydikalx | FFCF2F | 571952"
-      - "F&F US 🇺🇸 | @Raydikalx | 7D4DDE | 3fdcb4"
-      - "IPv6 US 🇺🇸 | @Raydikalx | 7D4DDE | 388ce7"
-      - "Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&sni=www.calmlunch.com&alpn=http/1.1&fp=unsafe&cs=TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256&fm={\"tcp\": [{\"type\": \"fragment\", \"settings\": {\"packets\": \"tlshello\", \"lengths\": [\"0\", \"104\", \"1\"], \"delays\": [\"0\"], \"maxSplit\": \"0\"}},{\"type\": \"fragment\", \"settings\": {\"packets\": \"1-1\", \"lengths\": [\"114\", \"1\"], \"delays\": [\"1\"], \"maxSplit\": \"11\"}}]}#F&F 🔥Join+Telegram:@Farah_VPN🟣 | b581d0"
-      - "Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&sni=www.calmlunch.com&alpn=http/1.1&fp=chrome#IPv6 🔥Join+Telegram:@Farah_VPN🟣 | 9c69d1"
-      - "F&F @DeltaKroneckerGithub | bee106"
-      - "IPv6 @DeltaKroneckerGithub | b7572f"
-      - "F&F CA 🇨🇦 | @Raydikalx | 80527E | 8f70b3"
-      - "IPv6 CA 🇨🇦 | @Raydikalx | 80527E | 96d6f7"
+      - "F&F DE 🇩🇪 | @Raydikalx | DBA323 | 5ab41f"
+      - "IPv6 DE 🇩🇪 | @Raydikalx | DBA323 | 2eef7b"
+      - "F&F United States | 8f0513"
+      - "IPv6 United States | 3b5db4"
+      - "F&F CF中转_1030191523 | 08bca2"
+      - "IPv6 CF中转_1030191523 | 59476a"
+      - "F&F 美国_103019119 | ba787e"
+      - "IPv6 美国_103019119 | 9fb5d3"
+      - "F&F CA 🇨🇦 | @Raydikalx | FB6149 | 39a53b"
+      - "IPv6 CA 🇨🇦 | @Raydikalx | FB6149 | f81e20"
+      - "F&F @DeltaKroneckerGithub | 63ecdd"
+      - "IPv6 @DeltaKroneckerGithub | fbae8c"
+      - "F&F @DeltaKroneckerGithub | 90eb4d"
+      - "IPv6 @DeltaKroneckerGithub | 363952"
+      - "F&F CA 🇨🇦 | @Raydikalx | 8BEFD8 | dda5b6"
+      - "IPv6 CA 🇨🇦 | @Raydikalx | 8BEFD8 | 3ab42e"
+      - "F&F United States | ec99c3"
+      - "IPv6 United States | a4ee57"
+      - "F&F CA 🇨🇦 | @Raydikalx | B9F5B6 | 8ae964"
+      - "IPv6 CA 🇨🇦 | @Raydikalx | B9F5B6 | 3213f4"
+      - "F&F United States | 95ae1e"
+      - "IPv6 United States | 83df42"
       - "F&F CA 🇨🇦 | @Raydikalx | 4C51EA | 22a42a"
       - "IPv6 CA 🇨🇦 | @Raydikalx | 4C51EA | a702f8"
       - "F&F CA 🇨🇦 | @Raydikalx | 6E17C5 | 6182c7"
       - "IPv6 CA 🇨🇦 | @Raydikalx | 6E17C5 | 1e9d3d"
       - "F&F CA 🇨🇦 | @Raydikalx | B00480 | f91807"
       - "IPv6 CA 🇨🇦 | @Raydikalx | B00480 | 741250"
-      - "F&F DE 🇩🇪 | @Raydikalx | 557AB1 | c3d0f5"
-      - "IPv6 DE 🇩🇪 | @Raydikalx | 557AB1 | 76a2a0"
+      - "F&F CA 🇨🇦 | @Raydikalx | 80527E | 8f70b3"
+      - "IPv6 CA 🇨🇦 | @Raydikalx | 80527E | 96d6f7"
+      - "Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&sni=www.calmlunch.com&alpn=http/1.1&fp=unsafe&cs=TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256&fm={\"tcp\": [{\"type\": \"fragment\", \"settings\": {\"packets\": \"tlshello\", \"lengths\": [\"0\", \"104\", \"1\"], \"delays\": [\"0\"], \"maxSplit\": \"0\"}},{\"type\": \"fragment\", \"settings\": {\"packets\": \"1-1\", \"lengths\": [\"114\", \"1\"], \"delays\": [\"1\"], \"maxSplit\": \"11\"}}]}#F&F 🔥Join+Telegram:@Farah_VPN🟣 | b581d0"
+      - "Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&sni=www.calmlunch.com&alpn=http/1.1&fp=chrome#IPv6 🔥Join+Telegram:@Farah_VPN🟣 | 9c69d1"
+      - "F&F CA 🇨🇦 | @Raydikalx | 22AE23 | 908357"
+      - "IPv6 CA 🇨🇦 | @Raydikalx | 22AE23 | 605fcf"
       - "F&F CA 🇨🇦 | @Raydikalx | 37CED8 | 53d367"
       - "IPv6 CA 🇨🇦 | @Raydikalx | 37CED8 | c0883c"
-      - "F&F CA 🇨🇦 | @Raydikalx | F577D8 | 3561f8"
-      - "IPv6 CA 🇨🇦 | @Raydikalx | F577D8 | 963fe4"
+      - "F&F DE 🇩🇪 | @Raydikalx | 557AB1 | c3d0f5"
+      - "IPv6 DE 🇩🇪 | @Raydikalx | 557AB1 | 76a2a0"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -999,38 +1117,44 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "F&F @DeltaKroneckerGithub | 890ca7"
-      - "IPv6 @DeltaKroneckerGithub | c5bb23"
-      - "F&F 🇸🇬170Mb | Akamai Connected Cloud | 244e33"
-      - "IPv6 🇸🇬170Mb | Akamai Connected Cloud | c5babc"
-      - "F&F DE 🇩🇪 | @Raydikalx | 4591B3 | a5cc7a"
-      - "IPv6 DE 🇩🇪 | @Raydikalx | 4591B3 | fa095d"
-      - "F&F 未知_102919061 | eacc09"
-      - "IPv6 未知_102919061 | 23a378"
-      - "F&F CA 🇨🇦 | @Raydikalx | E092A5 | f06d9a"
-      - "IPv6 CA 🇨🇦 | @Raydikalx | E092A5 | 12dc9a"
-      - "F&F CA 🇨🇦 | @Raydikalx | FFCF2F | 209a41"
-      - "IPv6 CA 🇨🇦 | @Raydikalx | FFCF2F | 571952"
-      - "F&F US 🇺🇸 | @Raydikalx | 7D4DDE | 3fdcb4"
-      - "IPv6 US 🇺🇸 | @Raydikalx | 7D4DDE | 388ce7"
-      - "Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&sni=www.calmlunch.com&alpn=http/1.1&fp=unsafe&cs=TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256&fm={\"tcp\": [{\"type\": \"fragment\", \"settings\": {\"packets\": \"tlshello\", \"lengths\": [\"0\", \"104\", \"1\"], \"delays\": [\"0\"], \"maxSplit\": \"0\"}},{\"type\": \"fragment\", \"settings\": {\"packets\": \"1-1\", \"lengths\": [\"114\", \"1\"], \"delays\": [\"1\"], \"maxSplit\": \"11\"}}]}#F&F 🔥Join+Telegram:@Farah_VPN🟣 | b581d0"
-      - "Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&sni=www.calmlunch.com&alpn=http/1.1&fp=chrome#IPv6 🔥Join+Telegram:@Farah_VPN🟣 | 9c69d1"
-      - "F&F @DeltaKroneckerGithub | bee106"
-      - "IPv6 @DeltaKroneckerGithub | b7572f"
-      - "F&F CA 🇨🇦 | @Raydikalx | 80527E | 8f70b3"
-      - "IPv6 CA 🇨🇦 | @Raydikalx | 80527E | 96d6f7"
+      - "F&F DE 🇩🇪 | @Raydikalx | DBA323 | 5ab41f"
+      - "IPv6 DE 🇩🇪 | @Raydikalx | DBA323 | 2eef7b"
+      - "F&F United States | 8f0513"
+      - "IPv6 United States | 3b5db4"
+      - "F&F CF中转_1030191523 | 08bca2"
+      - "IPv6 CF中转_1030191523 | 59476a"
+      - "F&F 美国_103019119 | ba787e"
+      - "IPv6 美国_103019119 | 9fb5d3"
+      - "F&F CA 🇨🇦 | @Raydikalx | FB6149 | 39a53b"
+      - "IPv6 CA 🇨🇦 | @Raydikalx | FB6149 | f81e20"
+      - "F&F @DeltaKroneckerGithub | 63ecdd"
+      - "IPv6 @DeltaKroneckerGithub | fbae8c"
+      - "F&F @DeltaKroneckerGithub | 90eb4d"
+      - "IPv6 @DeltaKroneckerGithub | 363952"
+      - "F&F CA 🇨🇦 | @Raydikalx | 8BEFD8 | dda5b6"
+      - "IPv6 CA 🇨🇦 | @Raydikalx | 8BEFD8 | 3ab42e"
+      - "F&F United States | ec99c3"
+      - "IPv6 United States | a4ee57"
+      - "F&F CA 🇨🇦 | @Raydikalx | B9F5B6 | 8ae964"
+      - "IPv6 CA 🇨🇦 | @Raydikalx | B9F5B6 | 3213f4"
+      - "F&F United States | 95ae1e"
+      - "IPv6 United States | 83df42"
       - "F&F CA 🇨🇦 | @Raydikalx | 4C51EA | 22a42a"
       - "IPv6 CA 🇨🇦 | @Raydikalx | 4C51EA | a702f8"
       - "F&F CA 🇨🇦 | @Raydikalx | 6E17C5 | 6182c7"
       - "IPv6 CA 🇨🇦 | @Raydikalx | 6E17C5 | 1e9d3d"
       - "F&F CA 🇨🇦 | @Raydikalx | B00480 | f91807"
       - "IPv6 CA 🇨🇦 | @Raydikalx | B00480 | 741250"
-      - "F&F DE 🇩🇪 | @Raydikalx | 557AB1 | c3d0f5"
-      - "IPv6 DE 🇩🇪 | @Raydikalx | 557AB1 | 76a2a0"
+      - "F&F CA 🇨🇦 | @Raydikalx | 80527E | 8f70b3"
+      - "IPv6 CA 🇨🇦 | @Raydikalx | 80527E | 96d6f7"
+      - "Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&sni=www.calmlunch.com&alpn=http/1.1&fp=unsafe&cs=TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256&fm={\"tcp\": [{\"type\": \"fragment\", \"settings\": {\"packets\": \"tlshello\", \"lengths\": [\"0\", \"104\", \"1\"], \"delays\": [\"0\"], \"maxSplit\": \"0\"}},{\"type\": \"fragment\", \"settings\": {\"packets\": \"1-1\", \"lengths\": [\"114\", \"1\"], \"delays\": [\"1\"], \"maxSplit\": \"11\"}}]}#F&F 🔥Join+Telegram:@Farah_VPN🟣 | b581d0"
+      - "Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&sni=www.calmlunch.com&alpn=http/1.1&fp=chrome#IPv6 🔥Join+Telegram:@Farah_VPN🟣 | 9c69d1"
+      - "F&F CA 🇨🇦 | @Raydikalx | 22AE23 | 908357"
+      - "IPv6 CA 🇨🇦 | @Raydikalx | 22AE23 | 605fcf"
       - "F&F CA 🇨🇦 | @Raydikalx | 37CED8 | 53d367"
       - "IPv6 CA 🇨🇦 | @Raydikalx | 37CED8 | c0883c"
-      - "F&F CA 🇨🇦 | @Raydikalx | F577D8 | 3561f8"
-      - "IPv6 CA 🇨🇦 | @Raydikalx | F577D8 | 963fe4"
+      - "F&F DE 🇩🇪 | @Raydikalx | 557AB1 | c3d0f5"
+      - "IPv6 DE 🇩🇪 | @Raydikalx | 557AB1 | 76a2a0"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -1040,38 +1164,44 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "F&F @DeltaKroneckerGithub | 890ca7"
-      - "IPv6 @DeltaKroneckerGithub | c5bb23"
-      - "F&F 🇸🇬170Mb | Akamai Connected Cloud | 244e33"
-      - "IPv6 🇸🇬170Mb | Akamai Connected Cloud | c5babc"
-      - "F&F DE 🇩🇪 | @Raydikalx | 4591B3 | a5cc7a"
-      - "IPv6 DE 🇩🇪 | @Raydikalx | 4591B3 | fa095d"
-      - "F&F 未知_102919061 | eacc09"
-      - "IPv6 未知_102919061 | 23a378"
-      - "F&F CA 🇨🇦 | @Raydikalx | E092A5 | f06d9a"
-      - "IPv6 CA 🇨🇦 | @Raydikalx | E092A5 | 12dc9a"
-      - "F&F CA 🇨🇦 | @Raydikalx | FFCF2F | 209a41"
-      - "IPv6 CA 🇨🇦 | @Raydikalx | FFCF2F | 571952"
-      - "F&F US 🇺🇸 | @Raydikalx | 7D4DDE | 3fdcb4"
-      - "IPv6 US 🇺🇸 | @Raydikalx | 7D4DDE | 388ce7"
-      - "Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&sni=www.calmlunch.com&alpn=http/1.1&fp=unsafe&cs=TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256&fm={\"tcp\": [{\"type\": \"fragment\", \"settings\": {\"packets\": \"tlshello\", \"lengths\": [\"0\", \"104\", \"1\"], \"delays\": [\"0\"], \"maxSplit\": \"0\"}},{\"type\": \"fragment\", \"settings\": {\"packets\": \"1-1\", \"lengths\": [\"114\", \"1\"], \"delays\": [\"1\"], \"maxSplit\": \"11\"}}]}#F&F 🔥Join+Telegram:@Farah_VPN🟣 | b581d0"
-      - "Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&sni=www.calmlunch.com&alpn=http/1.1&fp=chrome#IPv6 🔥Join+Telegram:@Farah_VPN🟣 | 9c69d1"
-      - "F&F @DeltaKroneckerGithub | bee106"
-      - "IPv6 @DeltaKroneckerGithub | b7572f"
-      - "F&F CA 🇨🇦 | @Raydikalx | 80527E | 8f70b3"
-      - "IPv6 CA 🇨🇦 | @Raydikalx | 80527E | 96d6f7"
+      - "F&F DE 🇩🇪 | @Raydikalx | DBA323 | 5ab41f"
+      - "IPv6 DE 🇩🇪 | @Raydikalx | DBA323 | 2eef7b"
+      - "F&F United States | 8f0513"
+      - "IPv6 United States | 3b5db4"
+      - "F&F CF中转_1030191523 | 08bca2"
+      - "IPv6 CF中转_1030191523 | 59476a"
+      - "F&F 美国_103019119 | ba787e"
+      - "IPv6 美国_103019119 | 9fb5d3"
+      - "F&F CA 🇨🇦 | @Raydikalx | FB6149 | 39a53b"
+      - "IPv6 CA 🇨🇦 | @Raydikalx | FB6149 | f81e20"
+      - "F&F @DeltaKroneckerGithub | 63ecdd"
+      - "IPv6 @DeltaKroneckerGithub | fbae8c"
+      - "F&F @DeltaKroneckerGithub | 90eb4d"
+      - "IPv6 @DeltaKroneckerGithub | 363952"
+      - "F&F CA 🇨🇦 | @Raydikalx | 8BEFD8 | dda5b6"
+      - "IPv6 CA 🇨🇦 | @Raydikalx | 8BEFD8 | 3ab42e"
+      - "F&F United States | ec99c3"
+      - "IPv6 United States | a4ee57"
+      - "F&F CA 🇨🇦 | @Raydikalx | B9F5B6 | 8ae964"
+      - "IPv6 CA 🇨🇦 | @Raydikalx | B9F5B6 | 3213f4"
+      - "F&F United States | 95ae1e"
+      - "IPv6 United States | 83df42"
       - "F&F CA 🇨🇦 | @Raydikalx | 4C51EA | 22a42a"
       - "IPv6 CA 🇨🇦 | @Raydikalx | 4C51EA | a702f8"
       - "F&F CA 🇨🇦 | @Raydikalx | 6E17C5 | 6182c7"
       - "IPv6 CA 🇨🇦 | @Raydikalx | 6E17C5 | 1e9d3d"
       - "F&F CA 🇨🇦 | @Raydikalx | B00480 | f91807"
       - "IPv6 CA 🇨🇦 | @Raydikalx | B00480 | 741250"
-      - "F&F DE 🇩🇪 | @Raydikalx | 557AB1 | c3d0f5"
-      - "IPv6 DE 🇩🇪 | @Raydikalx | 557AB1 | 76a2a0"
+      - "F&F CA 🇨🇦 | @Raydikalx | 80527E | 8f70b3"
+      - "IPv6 CA 🇨🇦 | @Raydikalx | 80527E | 96d6f7"
+      - "Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&sni=www.calmlunch.com&alpn=http/1.1&fp=unsafe&cs=TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256&fm={\"tcp\": [{\"type\": \"fragment\", \"settings\": {\"packets\": \"tlshello\", \"lengths\": [\"0\", \"104\", \"1\"], \"delays\": [\"0\"], \"maxSplit\": \"0\"}},{\"type\": \"fragment\", \"settings\": {\"packets\": \"1-1\", \"lengths\": [\"114\", \"1\"], \"delays\": [\"1\"], \"maxSplit\": \"11\"}}]}#F&F 🔥Join+Telegram:@Farah_VPN🟣 | b581d0"
+      - "Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&sni=www.calmlunch.com&alpn=http/1.1&fp=chrome#IPv6 🔥Join+Telegram:@Farah_VPN🟣 | 9c69d1"
+      - "F&F CA 🇨🇦 | @Raydikalx | 22AE23 | 908357"
+      - "IPv6 CA 🇨🇦 | @Raydikalx | 22AE23 | 605fcf"
       - "F&F CA 🇨🇦 | @Raydikalx | 37CED8 | 53d367"
       - "IPv6 CA 🇨🇦 | @Raydikalx | 37CED8 | c0883c"
-      - "F&F CA 🇨🇦 | @Raydikalx | F577D8 | 3561f8"
-      - "IPv6 CA 🇨🇦 | @Raydikalx | F577D8 | 963fe4"
+      - "F&F DE 🇩🇪 | @Raydikalx | 557AB1 | c3d0f5"
+      - "IPv6 DE 🇩🇪 | @Raydikalx | 557AB1 | 76a2a0"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"

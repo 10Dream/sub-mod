@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -644,7 +678,20 @@ proxies:
       path: "/"
       headers:
         Host: "shuma.ccwu.cc"
-  - name: "🇰🇿 REALITY|KZ🇰🇿 | 178.236.16.98-35728 | 297.63ms"
+  - name: "🇰🇿 REALITY|KZ🇰🇿 | 178.236.16.98-35728 | 179.85ms"
+    type: "vless"
+    server: "178.236.16.98"
+    port: 35728
+    uuid: "a00d89f6-ab7e-4e30-a5e5-54c701d62c93"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "yahoo.com"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "vhUFNoFcvtZAVMo8y5K5eU2V43m5q6yjmWIhp5RkFng"
+      short-id: "69a2"
+  - name: "🇰🇿 REALITY|KZ🇰🇿 | 178.236.16.98-35728 | 179.12ms"
     type: "vless"
     server: "178.236.16.98"
     port: 35728
@@ -657,7 +704,7 @@ proxies:
     reality-opts:
       public-key: "vhUFNoFcvtZAVMo8y5K5eU2V43m5q6yjmWIhp5RkFng"
       short-id: "69a2"
-  - name: "🇰🇿 REALITY|KZ🇰🇿 | 46.8.43.125-443 | 224.06ms"
+  - name: "🇰🇿 REALITY|KZ🇰🇿 | 46.8.43.125-443 | 202.51ms"
     type: "vless"
     server: "46.8.43.125"
     port: 443
@@ -669,7 +716,7 @@ proxies:
     client-fingerprint: "firefox"
     reality-opts:
       public-key: "ER-T5En54-sn6IXy7jU8vQVcBbOiWvznnezf3qZ273w"
-  - name: "🇰🇿 REALITY|KZ🇰🇿 | 77.73.232.61-19747 | 443.75ms"
+  - name: "🇰🇿 REALITY|KZ🇰🇿 | 77.73.232.61-19747 | 498.17ms"
     type: "vless"
     server: "77.73.232.61"
     port: 19747
@@ -748,19 +795,19 @@ proxies:
     reality-opts:
       public-key: "_0wM2ep44eAcrgf5PflKaBivknCWT6kMvQBQUoScCkE"
       short-id: "83"
-  - name: "🇰🇿 🔒 VL-TCP-RLT 🇰🇿 KZ-178.236.16.98:35728"
+  - name: "🇰🇿 🆔ar14n24b 🔒 VL-TCP- ❔ XX 251ms"
     type: "vless"
-    server: "178.236.16.98"
-    port: 35728
-    uuid: "a00d89f6-ab7e-4e30-a5e5-54c701d62c93"
+    server: "95.56.251.12"
+    port: 47443
+    uuid: "1fe01c8a-ab37-4e95-bbfc-95d4a608931e"
     udp: true
     tls: true
     network: "tcp"
-    servername: "yahoo.com"
-    client-fingerprint: "firefox"
+    servername: "kz1.waspnest.space"
+    flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "vhUFNoFcvtZAVMo8y5K5eU2V43m5q6yjmWIhp5RkFng"
-      short-id: "69a2"
+      public-key: "z1GSwCEACvO9RLcMVpcURiT8er4oeIdeSJhraw_0cGU"
+      short-id: "ae97223a8f799877"
   - name: "🇰🇿 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX 215ms"
     type: "vless"
     server: "45.136.59.28"
@@ -799,6 +846,22 @@ proxies:
     reality-opts:
       public-key: "_0wM2ep44eAcrgf5PflKaBivknCWT6kMvQBQUoScCkE"
       short-id: "83"
+  - name: "🇰🇿 vmess-3h-kazakhstan1.09vpn.com:80"
+    type: "vmess"
+    server: "3h-kazakhstan1.09vpn.com"
+    port: 80
+    uuid: "567f4be5-12ab-42e1-b8d9-db6fd1fdd31c"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇰🇿 vmess-38.107.234.57:80"
+    type: "vmess"
+    server: "38.107.234.57"
+    port: 80
+    uuid: "567f4be5-12ab-42e1-b8d9-db6fd1fdd31c"
+    alterId: 0
+    cipher: "auto"
+    udp: true
   - name: "🇰🇿 @DeltaKroneckerGithub"
     type: "vless"
     server: "109.248.198.219"
@@ -883,22 +946,6 @@ proxies:
     reality-opts:
       public-key: "Qddpg8luihgzgx4g4uMJklXzlrMCd8L1igJSWrRUvSc"
       short-id: "1929ef620e9b34f5"
-  - name: "🇰🇿 @DeltaKroneckerGithub-3"
-    type: "vmess"
-    server: "3h-kazakhstan1.09vpn.com"
-    port: 80
-    uuid: "567f4be5-12ab-42e1-b8d9-db6fd1fdd31c"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🇰🇿 @DeltaKroneckerGithub-4"
-    type: "vmess"
-    server: "38.107.234.57"
-    port: 80
-    uuid: "567f4be5-12ab-42e1-b8d9-db6fd1fdd31c"
-    alterId: 0
-    cipher: "auto"
-    udp: true
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -925,18 +972,21 @@ proxy-groups:
       - "🇰🇿 🔒 VL-WS-NONE 🇰🇿 KZ-194.76.18.2:8880"
       - "🇰🇿 🔒 VL-WS-TLS 🇰🇿 KZ-31.43.179.8:443"
       - "🇰🇿 🔒 VL-WS-TLS 🇰🇿 KZ-104.238.24.152:443"
-      - "🇰🇿 REALITY|KZ🇰🇿 | 178.236.16.98-35728 | 297.63ms"
-      - "🇰🇿 REALITY|KZ🇰🇿 | 46.8.43.125-443 | 224.06ms"
-      - "🇰🇿 REALITY|KZ🇰🇿 | 77.73.232.61-19747 | 443.75ms"
+      - "🇰🇿 REALITY|KZ🇰🇿 | 178.236.16.98-35728 | 179.85ms"
+      - "🇰🇿 REALITY|KZ🇰🇿 | 178.236.16.98-35728 | 179.12ms"
+      - "🇰🇿 REALITY|KZ🇰🇿 | 46.8.43.125-443 | 202.51ms"
+      - "🇰🇿 REALITY|KZ🇰🇿 | 77.73.232.61-19747 | 498.17ms"
       - "🇰🇿 🔒 VL-TCP-RLT 🇰🇿 KZ-185.136.12.24:443"
       - "🇰🇿 🔒 VL-TCP-RLT 🇰🇿 KZ-109.248.170.119:13447"
       - "🇰🇿 🔒 VL-TCP-RLT 🇰🇿 KZ-5.180.42.57:443"
       - "🇰🇿 🔒 VL-TCP-RLT 🇰🇿 KZ-178.236.17.86:443"
       - "🇰🇿 🔒 VL-TCP-RLT 🇰🇿 KZ-109.248.170.119:13447-1"
-      - "🇰🇿 🔒 VL-TCP-RLT 🇰🇿 KZ-178.236.16.98:35728"
+      - "🇰🇿 🆔ar14n24b 🔒 VL-TCP- ❔ XX 251ms"
       - "🇰🇿 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX 215ms"
       - "🇰🇿 Kazakhstan"
       - "🇰🇿 Kazakhstan-1"
+      - "🇰🇿 vmess-3h-kazakhstan1.09vpn.com:80"
+      - "🇰🇿 vmess-38.107.234.57:80"
       - "🇰🇿 @DeltaKroneckerGithub"
       - "🇰🇿 @DeltaKroneckerGithub-1"
       - "🇰🇿 @DeltaKroneckerGithub-2"
@@ -944,8 +994,6 @@ proxy-groups:
       - "🇰🇿 >>@oneclickvpnkeys::KZ"
       - "🇰🇿 024-🇰🇿 KZ tcp-reality ✂️@GheychiAmoozesh"
       - "🇰🇿 063-tcp-reality ✂️@GheychiAmoozesh"
-      - "🇰🇿 @DeltaKroneckerGithub-3"
-      - "🇰🇿 @DeltaKroneckerGithub-4"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -966,18 +1014,21 @@ proxy-groups:
       - "🇰🇿 🔒 VL-WS-NONE 🇰🇿 KZ-194.76.18.2:8880"
       - "🇰🇿 🔒 VL-WS-TLS 🇰🇿 KZ-31.43.179.8:443"
       - "🇰🇿 🔒 VL-WS-TLS 🇰🇿 KZ-104.238.24.152:443"
-      - "🇰🇿 REALITY|KZ🇰🇿 | 178.236.16.98-35728 | 297.63ms"
-      - "🇰🇿 REALITY|KZ🇰🇿 | 46.8.43.125-443 | 224.06ms"
-      - "🇰🇿 REALITY|KZ🇰🇿 | 77.73.232.61-19747 | 443.75ms"
+      - "🇰🇿 REALITY|KZ🇰🇿 | 178.236.16.98-35728 | 179.85ms"
+      - "🇰🇿 REALITY|KZ🇰🇿 | 178.236.16.98-35728 | 179.12ms"
+      - "🇰🇿 REALITY|KZ🇰🇿 | 46.8.43.125-443 | 202.51ms"
+      - "🇰🇿 REALITY|KZ🇰🇿 | 77.73.232.61-19747 | 498.17ms"
       - "🇰🇿 🔒 VL-TCP-RLT 🇰🇿 KZ-185.136.12.24:443"
       - "🇰🇿 🔒 VL-TCP-RLT 🇰🇿 KZ-109.248.170.119:13447"
       - "🇰🇿 🔒 VL-TCP-RLT 🇰🇿 KZ-5.180.42.57:443"
       - "🇰🇿 🔒 VL-TCP-RLT 🇰🇿 KZ-178.236.17.86:443"
       - "🇰🇿 🔒 VL-TCP-RLT 🇰🇿 KZ-109.248.170.119:13447-1"
-      - "🇰🇿 🔒 VL-TCP-RLT 🇰🇿 KZ-178.236.16.98:35728"
+      - "🇰🇿 🆔ar14n24b 🔒 VL-TCP- ❔ XX 251ms"
       - "🇰🇿 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX 215ms"
       - "🇰🇿 Kazakhstan"
       - "🇰🇿 Kazakhstan-1"
+      - "🇰🇿 vmess-3h-kazakhstan1.09vpn.com:80"
+      - "🇰🇿 vmess-38.107.234.57:80"
       - "🇰🇿 @DeltaKroneckerGithub"
       - "🇰🇿 @DeltaKroneckerGithub-1"
       - "🇰🇿 @DeltaKroneckerGithub-2"
@@ -985,8 +1036,6 @@ proxy-groups:
       - "🇰🇿 >>@oneclickvpnkeys::KZ"
       - "🇰🇿 024-🇰🇿 KZ tcp-reality ✂️@GheychiAmoozesh"
       - "🇰🇿 063-tcp-reality ✂️@GheychiAmoozesh"
-      - "🇰🇿 @DeltaKroneckerGithub-3"
-      - "🇰🇿 @DeltaKroneckerGithub-4"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -1008,18 +1057,21 @@ proxy-groups:
       - "🇰🇿 🔒 VL-WS-NONE 🇰🇿 KZ-194.76.18.2:8880"
       - "🇰🇿 🔒 VL-WS-TLS 🇰🇿 KZ-31.43.179.8:443"
       - "🇰🇿 🔒 VL-WS-TLS 🇰🇿 KZ-104.238.24.152:443"
-      - "🇰🇿 REALITY|KZ🇰🇿 | 178.236.16.98-35728 | 297.63ms"
-      - "🇰🇿 REALITY|KZ🇰🇿 | 46.8.43.125-443 | 224.06ms"
-      - "🇰🇿 REALITY|KZ🇰🇿 | 77.73.232.61-19747 | 443.75ms"
+      - "🇰🇿 REALITY|KZ🇰🇿 | 178.236.16.98-35728 | 179.85ms"
+      - "🇰🇿 REALITY|KZ🇰🇿 | 178.236.16.98-35728 | 179.12ms"
+      - "🇰🇿 REALITY|KZ🇰🇿 | 46.8.43.125-443 | 202.51ms"
+      - "🇰🇿 REALITY|KZ🇰🇿 | 77.73.232.61-19747 | 498.17ms"
       - "🇰🇿 🔒 VL-TCP-RLT 🇰🇿 KZ-185.136.12.24:443"
       - "🇰🇿 🔒 VL-TCP-RLT 🇰🇿 KZ-109.248.170.119:13447"
       - "🇰🇿 🔒 VL-TCP-RLT 🇰🇿 KZ-5.180.42.57:443"
       - "🇰🇿 🔒 VL-TCP-RLT 🇰🇿 KZ-178.236.17.86:443"
       - "🇰🇿 🔒 VL-TCP-RLT 🇰🇿 KZ-109.248.170.119:13447-1"
-      - "🇰🇿 🔒 VL-TCP-RLT 🇰🇿 KZ-178.236.16.98:35728"
+      - "🇰🇿 🆔ar14n24b 🔒 VL-TCP- ❔ XX 251ms"
       - "🇰🇿 🆔v2ray1_ng 🔒 VL-TCP- ❔ XX 215ms"
       - "🇰🇿 Kazakhstan"
       - "🇰🇿 Kazakhstan-1"
+      - "🇰🇿 vmess-3h-kazakhstan1.09vpn.com:80"
+      - "🇰🇿 vmess-38.107.234.57:80"
       - "🇰🇿 @DeltaKroneckerGithub"
       - "🇰🇿 @DeltaKroneckerGithub-1"
       - "🇰🇿 @DeltaKroneckerGithub-2"
@@ -1027,8 +1079,6 @@ proxy-groups:
       - "🇰🇿 >>@oneclickvpnkeys::KZ"
       - "🇰🇿 024-🇰🇿 KZ tcp-reality ✂️@GheychiAmoozesh"
       - "🇰🇿 063-tcp-reality ✂️@GheychiAmoozesh"
-      - "🇰🇿 @DeltaKroneckerGithub-3"
-      - "🇰🇿 @DeltaKroneckerGithub-4"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"

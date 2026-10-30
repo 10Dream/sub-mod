@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -493,23 +527,49 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "🏳️ RELAY🚩 | sANDwoRM.PAgEs.dEv-443 | 19.58ms"
+  - name: "🏳️ RELAY🚩 | www.calmlunch.com-443 | 2.35ms"
+    type: "trojan"
+    server: "2a06:98c1:3101::6812:202f"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "🏳️ RELAY🚩 | www.calmlunch.com-443 | 3.41ms"
+    type: "trojan"
+    server: "2a06:98c1:3101::6812:202f"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "//assignment?TELEGRAM--B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub--TELEGRAM"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "🏳️ RELAY🚩 | sAnDWORM.PAGEs.Dev-443 | 3.59ms"
     type: "vless"
-    server: "2a06:98c1:3121::3"
+    server: "2a06:98c1:3120::3"
     port: 443
     uuid: "dac5b2de-7df9-4d38-ba41-f98ceb19bd75"
     udp: true
     tls: true
     network: "ws"
-    servername: "sANDwoRM.PAgEs.dEv"
+    servername: "sAnDWORM.PAGEs.Dev"
     client-fingerprint: "randomized"
     alpn:
       - "h2"
       - "http/1.1"
     ws-opts:
-      path: "/7qAIwG3iKJZyPned"
+      path: "/HHm3C6Z9CZtTsN41"
       headers:
-        Host: "sAndworm.paGeS.dEv"
+        Host: "SandWOrm.PagEs.DEV"
   - name: "🇫🇷 🆔capoit 🔓 VM-WS-N/A ❔ XX down"
     type: "vmess"
     server: "2001:bc8:32d7:1a9::2"
@@ -546,14 +606,6 @@ proxies:
     reality-opts:
       public-key: "b4OORnT9Kh_H2jVT2l2w79D1Z5R4W6O_bNhUD1RhHmU"
       short-id: "2a5fdb9a29405afd"
-  - name: "🇫🇮 🆔ar14n24b 🔓 VL-TCP-N/A ❔ XX down"
-    type: "vless"
-    server: "xn-fn-v6-a.rzfp.ir"
-    port: 8080
-    uuid: "c54eed9d-4039-4dc5-b68f-3059e2b3325e"
-    udp: true
-    tls: false
-    network: "tcp"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -568,11 +620,12 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "🏳️ RELAY🚩 | sANDwoRM.PAgEs.dEv-443 | 19.58ms"
+      - "🏳️ RELAY🚩 | www.calmlunch.com-443 | 2.35ms"
+      - "🏳️ RELAY🚩 | www.calmlunch.com-443 | 3.41ms"
+      - "🏳️ RELAY🚩 | sAnDWORM.PAGEs.Dev-443 | 3.59ms"
       - "🇫🇷 🆔capoit 🔓 VM-WS-N/A ❔ XX down"
       - "🇨🇦 🆔capoit 🔒 VL-TCP- ❔ XX down"
       - "🇩🇪 🆔capoit 🔒 VL-TCP- ❔ XX down"
-      - "🇫🇮 🆔ar14n24b 🔓 VL-TCP-N/A ❔ XX down"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -581,11 +634,12 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "🏳️ RELAY🚩 | sANDwoRM.PAgEs.dEv-443 | 19.58ms"
+      - "🏳️ RELAY🚩 | www.calmlunch.com-443 | 2.35ms"
+      - "🏳️ RELAY🚩 | www.calmlunch.com-443 | 3.41ms"
+      - "🏳️ RELAY🚩 | sAnDWORM.PAGEs.Dev-443 | 3.59ms"
       - "🇫🇷 🆔capoit 🔓 VM-WS-N/A ❔ XX down"
       - "🇨🇦 🆔capoit 🔒 VL-TCP- ❔ XX down"
       - "🇩🇪 🆔capoit 🔒 VL-TCP- ❔ XX down"
-      - "🇫🇮 🆔ar14n24b 🔓 VL-TCP-N/A ❔ XX down"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -595,11 +649,12 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "🏳️ RELAY🚩 | sANDwoRM.PAgEs.dEv-443 | 19.58ms"
+      - "🏳️ RELAY🚩 | www.calmlunch.com-443 | 2.35ms"
+      - "🏳️ RELAY🚩 | www.calmlunch.com-443 | 3.41ms"
+      - "🏳️ RELAY🚩 | sAnDWORM.PAGEs.Dev-443 | 3.59ms"
       - "🇫🇷 🆔capoit 🔓 VM-WS-N/A ❔ XX down"
       - "🇨🇦 🆔capoit 🔒 VL-TCP- ❔ XX down"
       - "🇩🇪 🆔capoit 🔒 VL-TCP- ❔ XX down"
-      - "🇫🇮 🆔ar14n24b 🔓 VL-TCP-N/A ❔ XX down"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"

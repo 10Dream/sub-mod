@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -517,20 +551,7 @@ proxies:
       path: "/"
       headers:
         Host: "vms.lifetime18.workers.dev"
-  - name: "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.160-443 | 150.81ms"
-    type: "vless"
-    server: "92.42.201.160"
-    port: 443
-    uuid: "d0c8aa8d-a535-432a-b521-21f0e561f643"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "node-slo05.rkitman.ru"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "8C7evg_SSrJbxMTaUqJoylqB9HSNsmBvmUlgs_c5EiU"
-      short-id: "88d9dc52ef39c8bd"
-  - name: "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.102-443 | 158.38ms"
+  - name: "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.102-443 | 108.58ms"
     type: "vless"
     server: "92.42.201.102"
     port: 443
@@ -557,6 +578,19 @@ proxies:
     reality-opts:
       public-key: "pkIWxbuPAasjatPaHnAaTnCxVj1RkDFsJEWpLUTOcWY"
       short-id: "9917d2350096"
+  - name: "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.42.201.160:443"
+    type: "vless"
+    server: "92.42.201.160"
+    port: 443
+    uuid: "d0c8aa8d-a535-432a-b521-21f0e561f643"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "node-slo05.rkitman.ru"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "8C7evg_SSrJbxMTaUqJoylqB9HSNsmBvmUlgs_c5EiU"
+      short-id: "88d9dc52ef39c8bd"
   - name: "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.42.201.155:443"
     type: "vless"
     server: "92.42.201.155"
@@ -599,9 +633,9 @@ proxy-groups:
     proxies:
       - "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.189.40:8880"
       - "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.188.30:8880"
-      - "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.160-443 | 150.81ms"
-      - "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.102-443 | 158.38ms"
+      - "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.102-443 | 108.58ms"
       - "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.60.78.221:443"
+      - "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.42.201.160:443"
       - "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.42.201.155:443"
       - "🇸🇮 🔒 VL-GRPC-TLS 🇸🇮 SI-92.53.188.36:443"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
@@ -614,9 +648,9 @@ proxy-groups:
     proxies:
       - "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.189.40:8880"
       - "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.188.30:8880"
-      - "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.160-443 | 150.81ms"
-      - "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.102-443 | 158.38ms"
+      - "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.102-443 | 108.58ms"
       - "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.60.78.221:443"
+      - "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.42.201.160:443"
       - "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.42.201.155:443"
       - "🇸🇮 🔒 VL-GRPC-TLS 🇸🇮 SI-92.53.188.36:443"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
@@ -630,9 +664,9 @@ proxy-groups:
     proxies:
       - "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.189.40:8880"
       - "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.188.30:8880"
-      - "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.160-443 | 150.81ms"
-      - "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.102-443 | 158.38ms"
+      - "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.102-443 | 108.58ms"
       - "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.60.78.221:443"
+      - "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.42.201.160:443"
       - "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.42.201.155:443"
       - "🇸🇮 🔒 VL-GRPC-TLS 🇸🇮 SI-92.53.188.36:443"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"

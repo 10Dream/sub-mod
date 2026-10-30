@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -493,19 +527,19 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "🆔soskeynet 🔓 VM-TCP-N/A 🇮🇷 IR 236ms"
+  - name: "🆔soskeynet 🔓 VM-TCP-N/A 🇮🇷 IR 347ms"
     type: "vmess"
-    server: "212.80.8.184"
-    port: 443
-    uuid: "8aafc141-9118-47b0-9d69-7cb0fdd8cb68"
+    server: "dashboard.ojestore.top"
+    port: 5381
+    uuid: "cea74654-bbec-4d52-808f-0d3e57cbd03c"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🆔soskeynet 🔓 VM-TCP-N/A 🇳🇱 NL 150ms"
+  - name: "🆔soskeynet 🔒 VM-WS-TLS 🇭🇰 HK 187ms"
     type: "vmess"
-    server: "185.19.33.123"
-    port: 34029
-    uuid: "577c13ab-311a-432f-83e6-336f0e445fa7"
+    server: "euu1yalfmcqvljex.v.3dns.vip"
+    port: 443
+    uuid: "d237ab38-1974-4b36-94a3-0665ce8587b9"
     alterId: 0
     cipher: "auto"
     udp: true
@@ -517,7 +551,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🆔surfboardv2ray 🔓 VM-WS-N/A 🇬🇧 GB 143ms"
+  - name: "🆔surfboardv2ray 🔓 VM-WS-N/A 🇬🇧 GB 199ms"
     type: "vmess"
     server: "57.128.164.21"
     port: 80
@@ -525,7 +559,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🆔surfboardv2ray 🔓 VM-WS-N/A 🇵🇱 PL 254ms"
+  - name: "🆔surfboardv2ray 🔓 VM-WS-N/A 🇵🇱 PL 255ms"
     type: "vmess"
     server: "54.37.131.126"
     port: 80
@@ -533,7 +567,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🆔surfboardv2ray 🔓 VM-WS-N/A 🇫🇷 FR 149ms"
+  - name: "🆔surfboardv2ray 🔓 VM-WS-N/A 🇫🇷 FR 200ms"
     type: "vmess"
     server: "145.239.55.210"
     port: 80
@@ -541,18 +575,10 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🆔vpnbaz 🔓 VM-TCP-N/A 🇩🇪 DE 196ms"
-    type: "vmess"
-    server: "turknew.net-flowa.com"
-    port: 80
-    uuid: "cd96479e-9c39-4a7f-ba0c-806a83af19ca"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🆔vpnbaz 🔓 VM-TCP-N/A 🇺🇸 US 65ms"
+  - name: "🆔vpnbaz 🔓 VM-TCP-N/A ❔ XX down"
     type: "vmess"
     server: "67.220.95.3"
-    port: 18000
+    port: 443
     uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
     alterId: 0
     cipher: "auto"
@@ -581,87 +607,31 @@ proxies:
     alterId: 0
     cipher: "none"
     udp: true
-  - name: "🆔ar14n24b 🔒 VM-WS-TLS ❔ XX 106ms"
+  - name: "🆔ar14n24b 🔒 VM-WS- ❔ XX 9ms"
     type: "vmess"
-    server: "www.windowsmsidownloads.com"
-    port: 443
-    uuid: "80be2deb-3b27-4775-9bd1-7f2a2b9c261b"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 73ms"
-    type: "vmess"
-    server: "38.110.1.246"
-    port: 18000
-    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 149ms"
-    type: "vmess"
-    server: "185.19.33.52"
-    port: 44845
-    uuid: "72e335d9-1130-4c5b-80bc-55f3cb032543"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🆔ar14n24b 🔓 VM-TCP-N/A 🇳🇱 NL 140ms"
-    type: "vmess"
-    server: "185.19.33.52"
-    port: 44845
-    uuid: "3f1c62fe-fafa-4cb0-8aca-72fa1d36296b"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 396ms"
-    type: "vmess"
-    server: "ir.yzcq.ir"
-    port: 2050
-    uuid: "986bd21b-225d-479a-964e-93a58f15017a"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🆔ar14n24b 🔓 VM-WS-N/A ❔ XX down"
-    type: "vmess"
-    server: "168.138.43.75"
+    server: "172.67.187.145"
     port: 80
-    uuid: "11c3627f-31e8-4695-dfbd-34076e2f1f5d"
+    uuid: "0cf6d970-3f1d-4aae-a989-92a8f76ae3db"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🆔ar14n24b 🔒 VM-GRPC- ❔ XX 219ms"
+  - name: "🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 129ms"
     type: "vmess"
-    server: "185.126.6.177"
-    port: 5645
-    uuid: "0d3c1a3a-2aed-4480-84ef-4ed902148483"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🆔ar14n24b 🔓 VM-WS-N/A ❔ XX 103ms"
-    type: "vmess"
-    server: "23.158.72.131"
+    server: "217.142.138.61"
     port: 80
-    uuid: "8a9aaa70-ced9-11f1-b934-205c6d5f5d78"
+    uuid: "ac1b933d-afff-4487-93ef-f57130a55dff"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX down"
+  - name: "🆔ar14n24b 🔒 VM-TCP- ❔ XX 349ms"
     type: "vmess"
-    server: "38.60.224.173"
-    port: 32153
-    uuid: "5cf1f470-3f70-4589-a2a4-4657ea3a1edf"
+    server: "rubik.plappme.ir"
+    port: 2083
+    uuid: "f25463c6-ce85-4e8b-9894-994b5b63eb48"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🆔ar14n24b 🔓 VM-WS-N/A 🇹🇷 TR 189ms"
-    type: "vmess"
-    server: "153.52.92.43"
-    port: 443
-    uuid: "2dd46701-dc47-5cad-997e-0a770090b178"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "🆔v2ray1_ng 🔓 VM-TCP-N/A 🇺🇸 US 31ms"
+  - name: "🆔v2ray1_ng 🔓 VM-TCP-N/A ❔ XX 17ms"
     type: "vmess"
     server: "43.130.35.53"
     port: 10087
@@ -669,7 +639,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🆔v2ray1_ng 🔓 VM-WS-N/A 🇺🇸 US 154ms"
+  - name: "🆔v2ray1_ng 🔓 VM-WS-N/A ❔ XX 25ms"
     type: "vmess"
     server: "us-23.hihu.net"
     port: 80
@@ -677,7 +647,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A 🇮🇷 IR 589ms"
+  - name: "🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A ❔ XX 485ms"
     type: "vmess"
     server: "asiatun.roshdiran1.ir"
     port: 4242
@@ -685,7 +655,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A 🇮🇷 IR 837ms"
+  - name: "🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A ❔ XX 459ms"
     type: "vmess"
     server: "asiatun.roshdiran1.ir"
     port: 4345
@@ -693,7 +663,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🆔v2ray1_ng 🔓 VM-TCP-N/A 🇺🇸 US 64ms"
+  - name: "🆔v2ray1_ng 🔓 VM-TCP-N/A ❔ XX 52ms"
     type: "vmess"
     server: "67.220.95.3"
     port: 18000
@@ -701,7 +671,23 @@ proxies:
     alterId: 0
     cipher: "aes-128-gcm"
     udp: true
-  - name: "🆔v2ray1_ng 🔒 VM-HTTPUPGRADE- 🇺🇸 US 177ms"
+  - name: "🆔v2ray1_ng 🔒 VM-TCP- ❔ XX down"
+    type: "vmess"
+    server: "38.110.1.246"
+    port: 18000
+    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🆔v2ray1_ng 🔓 VM-TCP-N/A ❔ XX 55ms"
+    type: "vmess"
+    server: "67.220.95.3"
+    port: 18000
+    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🆔v2ray1_ng 🔒 VM-HTTPUPGRADE- ❔ XX 28ms"
     type: "vmess"
     server: "bmi2.kolman.com.de"
     port: 80
@@ -709,7 +695,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🆔v2ray1_ng 🔒 VM-HTTPUPGRADE- 🇺🇸 US 181ms"
+  - name: "🆔v2ray1_ng 🔒 VM-HTTPUPGRADE- ❔ XX 12ms"
     type: "vmess"
     server: "cd0.bmi.ir.kolman.com.de"
     port: 80
@@ -717,11 +703,35 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🆔v2ray1_ng 🔒 VM-WS-TLS 🇺🇸 US 118ms"
+  - name: "🆔v2ray1_ng 🔒 VM-WS-TLS ❔ XX 57ms"
     type: "vmess"
     server: "www.gptcloudai.com"
     port: 443
     uuid: "e70a5b70-f63c-4450-af8b-94990cdf80c0"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🆔v2ray1_ng 🔓 VM-WS-N/A ❔ XX down"
+    type: "vmess"
+    server: "153.52.92.43"
+    port: 443
+    uuid: "@Nitro_Skybot@Nitro_Skybot"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🆔v2ray1_ng 🔓 VM-WS-N/A ❔ XX 168ms"
+    type: "vmess"
+    server: "n5.mobiza.ir"
+    port: 2095
+    uuid: "bca8c159-df05-4bb6-9b75-92aabc2be45f"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🆔v2ray1_ng 🔓 VM-TCP-N/A ❔ XX 65ms"
+    type: "vmess"
+    server: "134.195.196.211"
+    port: 18000
+    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
     alterId: 0
     cipher: "auto"
     udp: true
@@ -739,35 +749,32 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "🆔soskeynet 🔓 VM-TCP-N/A 🇮🇷 IR 236ms"
-      - "🆔soskeynet 🔓 VM-TCP-N/A 🇳🇱 NL 150ms"
+      - "🆔soskeynet 🔓 VM-TCP-N/A 🇮🇷 IR 347ms"
+      - "🆔soskeynet 🔒 VM-WS-TLS 🇭🇰 HK 187ms"
       - "🆔surfboardv2ray 🔓 VM-TCP-N/A 🇩🇪 DE down"
-      - "🆔surfboardv2ray 🔓 VM-WS-N/A 🇬🇧 GB 143ms"
-      - "🆔surfboardv2ray 🔓 VM-WS-N/A 🇵🇱 PL 254ms"
-      - "🆔surfboardv2ray 🔓 VM-WS-N/A 🇫🇷 FR 149ms"
-      - "🆔vpnbaz 🔓 VM-TCP-N/A 🇩🇪 DE 196ms"
-      - "🆔vpnbaz 🔓 VM-TCP-N/A 🇺🇸 US 65ms"
+      - "🆔surfboardv2ray 🔓 VM-WS-N/A 🇬🇧 GB 199ms"
+      - "🆔surfboardv2ray 🔓 VM-WS-N/A 🇵🇱 PL 255ms"
+      - "🆔surfboardv2ray 🔓 VM-WS-N/A 🇫🇷 FR 200ms"
+      - "🆔vpnbaz 🔓 VM-TCP-N/A ❔ XX down"
       - "🆔capoit 🔓 VM-WS-N/A ❔ XX down"
       - "🆔fr33c0nfig 🔒 VM-TCP- ❔ XX down"
       - "🆔spotify_porteghali 🔓 VM-TCP-N/A ❔ XX down"
-      - "🆔ar14n24b 🔒 VM-WS-TLS ❔ XX 106ms"
-      - "🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 73ms"
-      - "🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 149ms"
-      - "🆔ar14n24b 🔓 VM-TCP-N/A 🇳🇱 NL 140ms"
-      - "🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 396ms"
-      - "🆔ar14n24b 🔓 VM-WS-N/A ❔ XX down"
-      - "🆔ar14n24b 🔒 VM-GRPC- ❔ XX 219ms"
-      - "🆔ar14n24b 🔓 VM-WS-N/A ❔ XX 103ms"
-      - "🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX down"
-      - "🆔ar14n24b 🔓 VM-WS-N/A 🇹🇷 TR 189ms"
-      - "🆔v2ray1_ng 🔓 VM-TCP-N/A 🇺🇸 US 31ms"
-      - "🆔v2ray1_ng 🔓 VM-WS-N/A 🇺🇸 US 154ms"
-      - "🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A 🇮🇷 IR 589ms"
-      - "🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A 🇮🇷 IR 837ms"
-      - "🆔v2ray1_ng 🔓 VM-TCP-N/A 🇺🇸 US 64ms"
-      - "🆔v2ray1_ng 🔒 VM-HTTPUPGRADE- 🇺🇸 US 177ms"
-      - "🆔v2ray1_ng 🔒 VM-HTTPUPGRADE- 🇺🇸 US 181ms"
-      - "🆔v2ray1_ng 🔒 VM-WS-TLS 🇺🇸 US 118ms"
+      - "🆔ar14n24b 🔒 VM-WS- ❔ XX 9ms"
+      - "🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 129ms"
+      - "🆔ar14n24b 🔒 VM-TCP- ❔ XX 349ms"
+      - "🆔v2ray1_ng 🔓 VM-TCP-N/A ❔ XX 17ms"
+      - "🆔v2ray1_ng 🔓 VM-WS-N/A ❔ XX 25ms"
+      - "🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A ❔ XX 485ms"
+      - "🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A ❔ XX 459ms"
+      - "🆔v2ray1_ng 🔓 VM-TCP-N/A ❔ XX 52ms"
+      - "🆔v2ray1_ng 🔒 VM-TCP- ❔ XX down"
+      - "🆔v2ray1_ng 🔓 VM-TCP-N/A ❔ XX 55ms"
+      - "🆔v2ray1_ng 🔒 VM-HTTPUPGRADE- ❔ XX 28ms"
+      - "🆔v2ray1_ng 🔒 VM-HTTPUPGRADE- ❔ XX 12ms"
+      - "🆔v2ray1_ng 🔒 VM-WS-TLS ❔ XX 57ms"
+      - "🆔v2ray1_ng 🔓 VM-WS-N/A ❔ XX down"
+      - "🆔v2ray1_ng 🔓 VM-WS-N/A ❔ XX 168ms"
+      - "🆔v2ray1_ng 🔓 VM-TCP-N/A ❔ XX 65ms"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -776,35 +783,32 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "🆔soskeynet 🔓 VM-TCP-N/A 🇮🇷 IR 236ms"
-      - "🆔soskeynet 🔓 VM-TCP-N/A 🇳🇱 NL 150ms"
+      - "🆔soskeynet 🔓 VM-TCP-N/A 🇮🇷 IR 347ms"
+      - "🆔soskeynet 🔒 VM-WS-TLS 🇭🇰 HK 187ms"
       - "🆔surfboardv2ray 🔓 VM-TCP-N/A 🇩🇪 DE down"
-      - "🆔surfboardv2ray 🔓 VM-WS-N/A 🇬🇧 GB 143ms"
-      - "🆔surfboardv2ray 🔓 VM-WS-N/A 🇵🇱 PL 254ms"
-      - "🆔surfboardv2ray 🔓 VM-WS-N/A 🇫🇷 FR 149ms"
-      - "🆔vpnbaz 🔓 VM-TCP-N/A 🇩🇪 DE 196ms"
-      - "🆔vpnbaz 🔓 VM-TCP-N/A 🇺🇸 US 65ms"
+      - "🆔surfboardv2ray 🔓 VM-WS-N/A 🇬🇧 GB 199ms"
+      - "🆔surfboardv2ray 🔓 VM-WS-N/A 🇵🇱 PL 255ms"
+      - "🆔surfboardv2ray 🔓 VM-WS-N/A 🇫🇷 FR 200ms"
+      - "🆔vpnbaz 🔓 VM-TCP-N/A ❔ XX down"
       - "🆔capoit 🔓 VM-WS-N/A ❔ XX down"
       - "🆔fr33c0nfig 🔒 VM-TCP- ❔ XX down"
       - "🆔spotify_porteghali 🔓 VM-TCP-N/A ❔ XX down"
-      - "🆔ar14n24b 🔒 VM-WS-TLS ❔ XX 106ms"
-      - "🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 73ms"
-      - "🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 149ms"
-      - "🆔ar14n24b 🔓 VM-TCP-N/A 🇳🇱 NL 140ms"
-      - "🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 396ms"
-      - "🆔ar14n24b 🔓 VM-WS-N/A ❔ XX down"
-      - "🆔ar14n24b 🔒 VM-GRPC- ❔ XX 219ms"
-      - "🆔ar14n24b 🔓 VM-WS-N/A ❔ XX 103ms"
-      - "🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX down"
-      - "🆔ar14n24b 🔓 VM-WS-N/A 🇹🇷 TR 189ms"
-      - "🆔v2ray1_ng 🔓 VM-TCP-N/A 🇺🇸 US 31ms"
-      - "🆔v2ray1_ng 🔓 VM-WS-N/A 🇺🇸 US 154ms"
-      - "🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A 🇮🇷 IR 589ms"
-      - "🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A 🇮🇷 IR 837ms"
-      - "🆔v2ray1_ng 🔓 VM-TCP-N/A 🇺🇸 US 64ms"
-      - "🆔v2ray1_ng 🔒 VM-HTTPUPGRADE- 🇺🇸 US 177ms"
-      - "🆔v2ray1_ng 🔒 VM-HTTPUPGRADE- 🇺🇸 US 181ms"
-      - "🆔v2ray1_ng 🔒 VM-WS-TLS 🇺🇸 US 118ms"
+      - "🆔ar14n24b 🔒 VM-WS- ❔ XX 9ms"
+      - "🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 129ms"
+      - "🆔ar14n24b 🔒 VM-TCP- ❔ XX 349ms"
+      - "🆔v2ray1_ng 🔓 VM-TCP-N/A ❔ XX 17ms"
+      - "🆔v2ray1_ng 🔓 VM-WS-N/A ❔ XX 25ms"
+      - "🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A ❔ XX 485ms"
+      - "🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A ❔ XX 459ms"
+      - "🆔v2ray1_ng 🔓 VM-TCP-N/A ❔ XX 52ms"
+      - "🆔v2ray1_ng 🔒 VM-TCP- ❔ XX down"
+      - "🆔v2ray1_ng 🔓 VM-TCP-N/A ❔ XX 55ms"
+      - "🆔v2ray1_ng 🔒 VM-HTTPUPGRADE- ❔ XX 28ms"
+      - "🆔v2ray1_ng 🔒 VM-HTTPUPGRADE- ❔ XX 12ms"
+      - "🆔v2ray1_ng 🔒 VM-WS-TLS ❔ XX 57ms"
+      - "🆔v2ray1_ng 🔓 VM-WS-N/A ❔ XX down"
+      - "🆔v2ray1_ng 🔓 VM-WS-N/A ❔ XX 168ms"
+      - "🆔v2ray1_ng 🔓 VM-TCP-N/A ❔ XX 65ms"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -814,35 +818,32 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "🆔soskeynet 🔓 VM-TCP-N/A 🇮🇷 IR 236ms"
-      - "🆔soskeynet 🔓 VM-TCP-N/A 🇳🇱 NL 150ms"
+      - "🆔soskeynet 🔓 VM-TCP-N/A 🇮🇷 IR 347ms"
+      - "🆔soskeynet 🔒 VM-WS-TLS 🇭🇰 HK 187ms"
       - "🆔surfboardv2ray 🔓 VM-TCP-N/A 🇩🇪 DE down"
-      - "🆔surfboardv2ray 🔓 VM-WS-N/A 🇬🇧 GB 143ms"
-      - "🆔surfboardv2ray 🔓 VM-WS-N/A 🇵🇱 PL 254ms"
-      - "🆔surfboardv2ray 🔓 VM-WS-N/A 🇫🇷 FR 149ms"
-      - "🆔vpnbaz 🔓 VM-TCP-N/A 🇩🇪 DE 196ms"
-      - "🆔vpnbaz 🔓 VM-TCP-N/A 🇺🇸 US 65ms"
+      - "🆔surfboardv2ray 🔓 VM-WS-N/A 🇬🇧 GB 199ms"
+      - "🆔surfboardv2ray 🔓 VM-WS-N/A 🇵🇱 PL 255ms"
+      - "🆔surfboardv2ray 🔓 VM-WS-N/A 🇫🇷 FR 200ms"
+      - "🆔vpnbaz 🔓 VM-TCP-N/A ❔ XX down"
       - "🆔capoit 🔓 VM-WS-N/A ❔ XX down"
       - "🆔fr33c0nfig 🔒 VM-TCP- ❔ XX down"
       - "🆔spotify_porteghali 🔓 VM-TCP-N/A ❔ XX down"
-      - "🆔ar14n24b 🔒 VM-WS-TLS ❔ XX 106ms"
-      - "🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 73ms"
-      - "🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 149ms"
-      - "🆔ar14n24b 🔓 VM-TCP-N/A 🇳🇱 NL 140ms"
-      - "🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 396ms"
-      - "🆔ar14n24b 🔓 VM-WS-N/A ❔ XX down"
-      - "🆔ar14n24b 🔒 VM-GRPC- ❔ XX 219ms"
-      - "🆔ar14n24b 🔓 VM-WS-N/A ❔ XX 103ms"
-      - "🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX down"
-      - "🆔ar14n24b 🔓 VM-WS-N/A 🇹🇷 TR 189ms"
-      - "🆔v2ray1_ng 🔓 VM-TCP-N/A 🇺🇸 US 31ms"
-      - "🆔v2ray1_ng 🔓 VM-WS-N/A 🇺🇸 US 154ms"
-      - "🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A 🇮🇷 IR 589ms"
-      - "🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A 🇮🇷 IR 837ms"
-      - "🆔v2ray1_ng 🔓 VM-TCP-N/A 🇺🇸 US 64ms"
-      - "🆔v2ray1_ng 🔒 VM-HTTPUPGRADE- 🇺🇸 US 177ms"
-      - "🆔v2ray1_ng 🔒 VM-HTTPUPGRADE- 🇺🇸 US 181ms"
-      - "🆔v2ray1_ng 🔒 VM-WS-TLS 🇺🇸 US 118ms"
+      - "🆔ar14n24b 🔒 VM-WS- ❔ XX 9ms"
+      - "🆔ar14n24b 🔓 VM-TCP-N/A ❔ XX 129ms"
+      - "🆔ar14n24b 🔒 VM-TCP- ❔ XX 349ms"
+      - "🆔v2ray1_ng 🔓 VM-TCP-N/A ❔ XX 17ms"
+      - "🆔v2ray1_ng 🔓 VM-WS-N/A ❔ XX 25ms"
+      - "🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A ❔ XX 485ms"
+      - "🆔v2ray1_ng 🔓 VM-HTTPUPGRADE-N/A ❔ XX 459ms"
+      - "🆔v2ray1_ng 🔓 VM-TCP-N/A ❔ XX 52ms"
+      - "🆔v2ray1_ng 🔒 VM-TCP- ❔ XX down"
+      - "🆔v2ray1_ng 🔓 VM-TCP-N/A ❔ XX 55ms"
+      - "🆔v2ray1_ng 🔒 VM-HTTPUPGRADE- ❔ XX 28ms"
+      - "🆔v2ray1_ng 🔒 VM-HTTPUPGRADE- ❔ XX 12ms"
+      - "🆔v2ray1_ng 🔒 VM-WS-TLS ❔ XX 57ms"
+      - "🆔v2ray1_ng 🔓 VM-WS-N/A ❔ XX down"
+      - "🆔v2ray1_ng 🔓 VM-WS-N/A ❔ XX 168ms"
+      - "🆔v2ray1_ng 🔓 VM-TCP-N/A ❔ XX 65ms"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"

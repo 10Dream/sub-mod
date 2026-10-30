@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -673,13 +707,6 @@ proxies:
     cipher: "aes-256-cfb"
     password: "bf7v334KKDV3YDhH"
     udp: true
-  - name: "🇮🇹 202.50.253.72"
-    type: "ss"
-    server: "202.50.253.72"
-    port: 19999
-    cipher: "aes-256-gcm"
-    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
-    udp: true
   - name: "🇮🇹 202.50.253.45"
     type: "ss"
     server: "202.50.253.45"
@@ -687,33 +714,20 @@ proxies:
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
-  - name: "🇮🇹 REALITY|IT🇮🇹 | 82.118.16.187-443 | 156.75ms"
+  - name: "🇮🇹 REALITY|IT🇮🇹 | 57.131.38.163-2053 | 114.3ms"
     type: "vless"
-    server: "82.118.16.187"
-    port: 443
-    uuid: "dc2259c4-388e-4285-ba18-df619b6672b6"
+    server: "57.131.38.163"
+    port: 2053
+    uuid: "d4b08cd6-0903-411a-9dac-45dbdf5c9712"
     udp: true
     tls: true
     network: "tcp"
-    servername: "www.cloudflare.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "R5ycsjJ-v024902dMSqTsSdqxUwCFEXMebdBEWFt9VU"
-      short-id: "cd6065902eea7a02"
-  - name: "🇮🇹 REALITY|IT🇮🇹 | 104.105.69.97-443 | 140.64ms"
-    type: "vless"
-    server: "104.105.69.97"
-    port: 443
-    uuid: "694eb5d5-794c-4389-af65-e5a4b8489dae"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "play.google.com"
+    servername: "www.apple.com"
     client-fingerprint: "chrome"
     reality-opts:
-      public-key: "Qr6_9TMQYMCB2hVSYeONcMvxBqIaT0mzPUy8nIivV1g"
-      short-id: "b58b"
-  - name: "🇮🇹 REALITY|IT🇮🇹 | 195.231.37.150-443 | 153.84ms"
+      public-key: "Ej2H5ucT7qKegYcT8wODdlxa-cLHr7F4hDVUHzAhcnc"
+      short-id: "5b8a942318178e7b"
+  - name: "🇮🇹 REALITY|IT🇮🇹 | 195.231.37.150-443 | 99.16ms"
     type: "vless"
     server: "195.231.37.150"
     port: 443
@@ -795,40 +809,54 @@ proxies:
     reality-opts:
       public-key: "G2U8_BvRAgcOw0sX8u_0yYdVAlD8CWLSi-uYjvH07hw"
       short-id: "4fa44664f6a566d3"
-  - name: "🇮🇹 IT🇮🇹+|+202.50.253.81-19999+|+161.54ms"
+  - name: "🇮🇹 🔒 VL-TCP-RLT 🇮🇹 IT-104.105.69.97:443"
+    type: "vless"
+    server: "104.105.69.97"
+    port: 443
+    uuid: "694eb5d5-794c-4389-af65-e5a4b8489dae"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "play.google.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "Qr6_9TMQYMCB2hVSYeONcMvxBqIaT0mzPUy8nIivV1g"
+      short-id: "b58b"
+  - name: "🇮🇹 🇮🇹 Milan, 25, Italy"
     type: "ss"
-    server: "202.50.253.81"
+    server: "202.50.253.72"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
+    udp: true
+  - name: "🇮🇹 IT🇮🇹+|+202.50.253.99-19999+|+102.08ms"
+    type: "ss"
+    server: "202.50.253.99"
     port: 19999
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=7"
     udp: true
-  - name: "🇮🇹 IT🇮🇹+|+202.50.253.63-19999+|+157.08ms"
+  - name: "🇮🇹 IT🇮🇹+|+202.50.253.90-19999+|+102.17ms"
+    type: "ss"
+    server: "202.50.253.90"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=7"
+    udp: true
+  - name: "🇮🇹 IT🇮🇹+|+202.50.253.63-19999+|+102.81ms"
     type: "ss"
     server: "202.50.253.63"
     port: 19999
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=7"
     udp: true
-  - name: "🇮🇹 IT🇮🇹+|+202.50.253.54-19999+|+155.86ms"
+  - name: "🇮🇹 IT🇮🇹+|+202.50.253.54-19999+|+102.31ms"
     type: "ss"
     server: "202.50.253.54"
     port: 19999
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=7"
     udp: true
-  - name: "🇮🇹 🆔ar14n24b 🔒 VL-TCP- 🇮🇹 IT 173ms"
-    type: "vless"
-    server: "57.131.38.163"
-    port: 2053
-    uuid: "d4b08cd6-0903-411a-9dac-45dbdf5c9712"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.apple.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "Ej2H5ucT7qKegYcT8wODdlxa-cLHr7F4hDVUHzAhcnc"
-      short-id: "5b8a942318178e7b"
   - name: "🇮🇹 @DeltaKroneckerGithub"
     type: "trojan"
     server: "91.193.5.121"
@@ -1052,20 +1080,20 @@ proxy-groups:
       - "🇮🇹 🔒 SS-TCP-NA 🇮🇹 IT-202.50.253.99:19999"
       - "🇮🇹 🔒 SS-TCP-NA 🇮🇹 IT-91.201.65.122:9059"
       - "🇮🇹 🔒 SS-TCP-NA 🇮🇹 IT-91.201.65.122:9070"
-      - "🇮🇹 202.50.253.72"
       - "🇮🇹 202.50.253.45"
-      - "🇮🇹 REALITY|IT🇮🇹 | 82.118.16.187-443 | 156.75ms"
-      - "🇮🇹 REALITY|IT🇮🇹 | 104.105.69.97-443 | 140.64ms"
-      - "🇮🇹 REALITY|IT🇮🇹 | 195.231.37.150-443 | 153.84ms"
+      - "🇮🇹 REALITY|IT🇮🇹 | 57.131.38.163-2053 | 114.3ms"
+      - "🇮🇹 REALITY|IT🇮🇹 | 195.231.37.150-443 | 99.16ms"
       - "🇮🇹 🔒 VL-TCP-RLT 🇮🇹 IT-57.131.38.163:2053"
       - "🇮🇹 🔒 VL-TCP-RLT 🇮🇹 IT-31.76.113.51:443"
       - "🇮🇹 🔒 VL-RAW-RLT 🇮🇹 IT-82.118.16.187:443"
       - "🇮🇹 🔒 VL-TCP-RLT 🇮🇹 IT-82.118.16.189:443"
       - "🇮🇹 🔒 VL-TCP-RLT 🇮🇹 IT-31.76.113.231:443"
-      - "🇮🇹 IT🇮🇹+|+202.50.253.81-19999+|+161.54ms"
-      - "🇮🇹 IT🇮🇹+|+202.50.253.63-19999+|+157.08ms"
-      - "🇮🇹 IT🇮🇹+|+202.50.253.54-19999+|+155.86ms"
-      - "🇮🇹 🆔ar14n24b 🔒 VL-TCP- 🇮🇹 IT 173ms"
+      - "🇮🇹 🔒 VL-TCP-RLT 🇮🇹 IT-104.105.69.97:443"
+      - "🇮🇹 🇮🇹 Milan, 25, Italy"
+      - "🇮🇹 IT🇮🇹+|+202.50.253.99-19999+|+102.08ms"
+      - "🇮🇹 IT🇮🇹+|+202.50.253.90-19999+|+102.17ms"
+      - "🇮🇹 IT🇮🇹+|+202.50.253.63-19999+|+102.81ms"
+      - "🇮🇹 IT🇮🇹+|+202.50.253.54-19999+|+102.31ms"
       - "🇮🇹 @DeltaKroneckerGithub"
       - "🇮🇹 Russia"
       - "🇮🇹 >>@configV2rayNG::IT"
@@ -1118,20 +1146,20 @@ proxy-groups:
       - "🇮🇹 🔒 SS-TCP-NA 🇮🇹 IT-202.50.253.99:19999"
       - "🇮🇹 🔒 SS-TCP-NA 🇮🇹 IT-91.201.65.122:9059"
       - "🇮🇹 🔒 SS-TCP-NA 🇮🇹 IT-91.201.65.122:9070"
-      - "🇮🇹 202.50.253.72"
       - "🇮🇹 202.50.253.45"
-      - "🇮🇹 REALITY|IT🇮🇹 | 82.118.16.187-443 | 156.75ms"
-      - "🇮🇹 REALITY|IT🇮🇹 | 104.105.69.97-443 | 140.64ms"
-      - "🇮🇹 REALITY|IT🇮🇹 | 195.231.37.150-443 | 153.84ms"
+      - "🇮🇹 REALITY|IT🇮🇹 | 57.131.38.163-2053 | 114.3ms"
+      - "🇮🇹 REALITY|IT🇮🇹 | 195.231.37.150-443 | 99.16ms"
       - "🇮🇹 🔒 VL-TCP-RLT 🇮🇹 IT-57.131.38.163:2053"
       - "🇮🇹 🔒 VL-TCP-RLT 🇮🇹 IT-31.76.113.51:443"
       - "🇮🇹 🔒 VL-RAW-RLT 🇮🇹 IT-82.118.16.187:443"
       - "🇮🇹 🔒 VL-TCP-RLT 🇮🇹 IT-82.118.16.189:443"
       - "🇮🇹 🔒 VL-TCP-RLT 🇮🇹 IT-31.76.113.231:443"
-      - "🇮🇹 IT🇮🇹+|+202.50.253.81-19999+|+161.54ms"
-      - "🇮🇹 IT🇮🇹+|+202.50.253.63-19999+|+157.08ms"
-      - "🇮🇹 IT🇮🇹+|+202.50.253.54-19999+|+155.86ms"
-      - "🇮🇹 🆔ar14n24b 🔒 VL-TCP- 🇮🇹 IT 173ms"
+      - "🇮🇹 🔒 VL-TCP-RLT 🇮🇹 IT-104.105.69.97:443"
+      - "🇮🇹 🇮🇹 Milan, 25, Italy"
+      - "🇮🇹 IT🇮🇹+|+202.50.253.99-19999+|+102.08ms"
+      - "🇮🇹 IT🇮🇹+|+202.50.253.90-19999+|+102.17ms"
+      - "🇮🇹 IT🇮🇹+|+202.50.253.63-19999+|+102.81ms"
+      - "🇮🇹 IT🇮🇹+|+202.50.253.54-19999+|+102.31ms"
       - "🇮🇹 @DeltaKroneckerGithub"
       - "🇮🇹 Russia"
       - "🇮🇹 >>@configV2rayNG::IT"
@@ -1185,20 +1213,20 @@ proxy-groups:
       - "🇮🇹 🔒 SS-TCP-NA 🇮🇹 IT-202.50.253.99:19999"
       - "🇮🇹 🔒 SS-TCP-NA 🇮🇹 IT-91.201.65.122:9059"
       - "🇮🇹 🔒 SS-TCP-NA 🇮🇹 IT-91.201.65.122:9070"
-      - "🇮🇹 202.50.253.72"
       - "🇮🇹 202.50.253.45"
-      - "🇮🇹 REALITY|IT🇮🇹 | 82.118.16.187-443 | 156.75ms"
-      - "🇮🇹 REALITY|IT🇮🇹 | 104.105.69.97-443 | 140.64ms"
-      - "🇮🇹 REALITY|IT🇮🇹 | 195.231.37.150-443 | 153.84ms"
+      - "🇮🇹 REALITY|IT🇮🇹 | 57.131.38.163-2053 | 114.3ms"
+      - "🇮🇹 REALITY|IT🇮🇹 | 195.231.37.150-443 | 99.16ms"
       - "🇮🇹 🔒 VL-TCP-RLT 🇮🇹 IT-57.131.38.163:2053"
       - "🇮🇹 🔒 VL-TCP-RLT 🇮🇹 IT-31.76.113.51:443"
       - "🇮🇹 🔒 VL-RAW-RLT 🇮🇹 IT-82.118.16.187:443"
       - "🇮🇹 🔒 VL-TCP-RLT 🇮🇹 IT-82.118.16.189:443"
       - "🇮🇹 🔒 VL-TCP-RLT 🇮🇹 IT-31.76.113.231:443"
-      - "🇮🇹 IT🇮🇹+|+202.50.253.81-19999+|+161.54ms"
-      - "🇮🇹 IT🇮🇹+|+202.50.253.63-19999+|+157.08ms"
-      - "🇮🇹 IT🇮🇹+|+202.50.253.54-19999+|+155.86ms"
-      - "🇮🇹 🆔ar14n24b 🔒 VL-TCP- 🇮🇹 IT 173ms"
+      - "🇮🇹 🔒 VL-TCP-RLT 🇮🇹 IT-104.105.69.97:443"
+      - "🇮🇹 🇮🇹 Milan, 25, Italy"
+      - "🇮🇹 IT🇮🇹+|+202.50.253.99-19999+|+102.08ms"
+      - "🇮🇹 IT🇮🇹+|+202.50.253.90-19999+|+102.17ms"
+      - "🇮🇹 IT🇮🇹+|+202.50.253.63-19999+|+102.81ms"
+      - "🇮🇹 IT🇮🇹+|+202.50.253.54-19999+|+102.31ms"
       - "🇮🇹 @DeltaKroneckerGithub"
       - "🇮🇹 Russia"
       - "🇮🇹 >>@configV2rayNG::IT"

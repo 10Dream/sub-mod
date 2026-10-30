@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -542,7 +576,7 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "KpIjwx8W2MbSzezl"
     udp: true
-  - name: "🇿🇦 🆔v2ray1_ng 🔒 SS-TCP-TLS 🇿🇦 ZA down"
+  - name: "🇿🇦 🆔v2ray1_ng 🔒 SS-TCP-TLS ❔ XX down"
     type: "ss"
     server: "20.164.212.103"
     port: 443
@@ -557,6 +591,13 @@ proxies:
     udp: true
     tls: false
     network: "grpc"
+  - name: "🇿🇦 🇿🇦 Isando, GP, South Africa"
+    type: "ss"
+    server: "139.84.247.164"
+    port: 8388
+    cipher: "chacha20-ietf-poly1305"
+    password: "tfAcRikawhNoZAhu"
+    udp: true
   - name: "🇿🇦 @DeltaKroneckerGithub"
     type: "trojan"
     server: "38.54.64.247"
@@ -586,8 +627,9 @@ proxy-groups:
       - "🇿🇦 🔒 SS-TCP-NA 🇿🇦 ZA-20.164.211.25:443"
       - "🇿🇦 🔒 SS-TCP-NA 🇿🇦 ZA-154.205.150.157:990"
       - "🇿🇦 20.87.213.148"
-      - "🇿🇦 🆔v2ray1_ng 🔒 SS-TCP-TLS 🇿🇦 ZA down"
+      - "🇿🇦 🆔v2ray1_ng 🔒 SS-TCP-TLS ❔ XX down"
       - "🇿🇦 🔒 VL-GRPC-NONE 🇿🇦 ZA-192.142.53.38:37321"
+      - "🇿🇦 🇿🇦 Isando, GP, South Africa"
       - "🇿🇦 @DeltaKroneckerGithub"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
@@ -604,8 +646,9 @@ proxy-groups:
       - "🇿🇦 🔒 SS-TCP-NA 🇿🇦 ZA-20.164.211.25:443"
       - "🇿🇦 🔒 SS-TCP-NA 🇿🇦 ZA-154.205.150.157:990"
       - "🇿🇦 20.87.213.148"
-      - "🇿🇦 🆔v2ray1_ng 🔒 SS-TCP-TLS 🇿🇦 ZA down"
+      - "🇿🇦 🆔v2ray1_ng 🔒 SS-TCP-TLS ❔ XX down"
       - "🇿🇦 🔒 VL-GRPC-NONE 🇿🇦 ZA-192.142.53.38:37321"
+      - "🇿🇦 🇿🇦 Isando, GP, South Africa"
       - "🇿🇦 @DeltaKroneckerGithub"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
@@ -623,8 +666,9 @@ proxy-groups:
       - "🇿🇦 🔒 SS-TCP-NA 🇿🇦 ZA-20.164.211.25:443"
       - "🇿🇦 🔒 SS-TCP-NA 🇿🇦 ZA-154.205.150.157:990"
       - "🇿🇦 20.87.213.148"
-      - "🇿🇦 🆔v2ray1_ng 🔒 SS-TCP-TLS 🇿🇦 ZA down"
+      - "🇿🇦 🆔v2ray1_ng 🔒 SS-TCP-TLS ❔ XX down"
       - "🇿🇦 🔒 VL-GRPC-NONE 🇿🇦 ZA-192.142.53.38:37321"
+      - "🇿🇦 🇿🇦 Isando, GP, South Africa"
       - "🇿🇦 @DeltaKroneckerGithub"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"

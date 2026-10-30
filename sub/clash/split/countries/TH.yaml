@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -535,24 +569,6 @@ proxies:
     reality-opts:
       public-key: "MiQ5B4j6In71lWvCi0vO_DkVSDb7sii34bh5efBMswk"
       short-id: "3c032a7e"
-  - name: "🇹🇭 🔒 VL-XHTTP-NONE 🇹🇭 TH-45.144.165.11:80"
-    type: "vless"
-    server: "45.144.165.11"
-    port: 80
-    uuid: "85b62084-d81e-52cd-a016-944f261d34a0"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "🇹🇭 🆔ar14n24b 🔒 VL--N/A ❔ XX 269ms"
-    type: "vless"
-    server: "th001.zestapp778.com"
-    port: 22222
-    uuid: "e9a8144e-5237-488a-afb1-9ca3d8d54c80"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "th001.zestapp778.com"
-    client-fingerprint: "chrome"
   - name: "🇹🇭 @DeltaKroneckerGithub"
     type: "trojan"
     server: "th001.zestapp778.com"
@@ -562,6 +578,14 @@ proxies:
     tls: true
     network: "tcp"
     servername: "th001.zestapp778.com"
+  - name: "🇹🇭 🔒 VL-XHTTP-NONE 🇹🇭 TH-45.144.165.11:80"
+    type: "vless"
+    server: "45.144.165.11"
+    port: 80
+    uuid: "85b62084-d81e-52cd-a016-944f261d34a0"
+    udp: true
+    tls: false
+    network: "xhttp"
   - name: "🇹🇭 82. 🇹🇭 Thailand"
     type: "vmess"
     server: "119.46.51.45"
@@ -595,9 +619,8 @@ proxy-groups:
       - "🇹🇭 🔒 VL-WS-TLS 🇹🇭 TH-43.133.110.81:443"
       - "🇹🇭 🔒 VL-WS-TLS 🇹🇭 TH-103.224.84.70:443"
       - "🇹🇭 🔒 VL-TCP-RLT 🇹🇭 TH-45.154.26.63:443"
-      - "🇹🇭 🔒 VL-XHTTP-NONE 🇹🇭 TH-45.144.165.11:80"
-      - "🇹🇭 🆔ar14n24b 🔒 VL--N/A ❔ XX 269ms"
       - "🇹🇭 @DeltaKroneckerGithub"
+      - "🇹🇭 🔒 VL-XHTTP-NONE 🇹🇭 TH-45.144.165.11:80"
       - "🇹🇭 82. 🇹🇭 Thailand"
       - "🇹🇭 VLESS 163 t.me/iProxyChannel"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
@@ -611,9 +634,8 @@ proxy-groups:
       - "🇹🇭 🔒 VL-WS-TLS 🇹🇭 TH-43.133.110.81:443"
       - "🇹🇭 🔒 VL-WS-TLS 🇹🇭 TH-103.224.84.70:443"
       - "🇹🇭 🔒 VL-TCP-RLT 🇹🇭 TH-45.154.26.63:443"
-      - "🇹🇭 🔒 VL-XHTTP-NONE 🇹🇭 TH-45.144.165.11:80"
-      - "🇹🇭 🆔ar14n24b 🔒 VL--N/A ❔ XX 269ms"
       - "🇹🇭 @DeltaKroneckerGithub"
+      - "🇹🇭 🔒 VL-XHTTP-NONE 🇹🇭 TH-45.144.165.11:80"
       - "🇹🇭 82. 🇹🇭 Thailand"
       - "🇹🇭 VLESS 163 t.me/iProxyChannel"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
@@ -628,9 +650,8 @@ proxy-groups:
       - "🇹🇭 🔒 VL-WS-TLS 🇹🇭 TH-43.133.110.81:443"
       - "🇹🇭 🔒 VL-WS-TLS 🇹🇭 TH-103.224.84.70:443"
       - "🇹🇭 🔒 VL-TCP-RLT 🇹🇭 TH-45.154.26.63:443"
-      - "🇹🇭 🔒 VL-XHTTP-NONE 🇹🇭 TH-45.144.165.11:80"
-      - "🇹🇭 🆔ar14n24b 🔒 VL--N/A ❔ XX 269ms"
       - "🇹🇭 @DeltaKroneckerGithub"
+      - "🇹🇭 🔒 VL-XHTTP-NONE 🇹🇭 TH-45.144.165.11:80"
       - "🇹🇭 82. 🇹🇭 Thailand"
       - "🇹🇭 VLESS 163 t.me/iProxyChannel"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"

@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -572,19 +606,32 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "Bqyimiv3YNgu6dApctpw7t"
     udp: true
-  - name: "🇺🇦 REALITY|UA🇺🇦 | edge-pl01.onvanet.com-443 | 234.49ms"
+  - name: "🇺🇦 REALITY|UA🇺🇦 | 130.0.233.100-8443 | 123.44ms"
     type: "vless"
-    server: "edge-pl01.onvanet.com"
-    port: 443
-    uuid: "ad0fe7ae-3f8b-4586-b692-ca115e4a137f"
+    server: "130.0.233.100"
+    port: 8443
+    uuid: "ccb8e0cd3b764e97bf6dd015830a5510"
     udp: true
     tls: true
-    network: "tcp"
-    servername: "googleapis.com"
-    client-fingerprint: "chrome"
+    network: "xhttp"
+    servername: "ya.ru"
+    client-fingerprint: "random"
     reality-opts:
-      public-key: "Mz9CMB-ETb9PDYuXgE5ze5Qner6pcNWu_Uur3bzKAU0"
-      short-id: "1acae32041107991"
+      public-key: "oJXngdG-SwLxHt2tJonmC-T_6PS4UEACLWj4sbfetno"
+      short-id: "aabbccdd"
+  - name: "🇺🇦 REALITY|UA🇺🇦 | 130.0.233.100-8443 | 122.86ms"
+    type: "vless"
+    server: "130.0.233.100"
+    port: 8443
+    uuid: "72e97eb0d0544970a7ed42d796c6773c"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "ya.ru"
+    client-fingerprint: "random"
+    reality-opts:
+      public-key: "oJXngdG-SwLxHt2tJonmC-T_6PS4UEACLWj4sbfetno"
+      short-id: "aabbccdd"
   - name: "🇺🇦 🔒 VL-TCP-RLT 🇺🇦 UA-91.196.162.89:443"
     type: "vless"
     server: "91.196.162.89"
@@ -612,34 +659,27 @@ proxies:
     reality-opts:
       public-key: "FjcEZNQ8t5E4R04_11T6ghsOutdqwKKrelkuadakoQg"
       short-id: "2a80364e93d9"
-  - name: "🇺🇦 UA🇺🇦+|+kyiv02.npvnot.com-443+|+234.86ms"
-    type: "ss"
-    server: "kyiv02.npvnot.com"
-    port: 443
-    cipher: "aes-256-gcm"
-    password: "MzRlYzA0ZGY0Njc2ZjQ2YTRiMTg2YTkzNjM4OGI1"
-    udp: true
-  - name: "🇺🇦 UA🇺🇦+|+130.0.233.100-33610+|+172.81ms"
+  - name: "🇺🇦 UA🇺🇦+|+130.0.233.100-33610+|+122.26ms"
     type: "ss"
     server: "130.0.233.100"
     port: 33610
     cipher: "chacha20-ietf-poly1305"
     password: "aRNFYKtLOnaPE5FCHI9ylr"
     udp: true
-  - name: "🇺🇦 🆔ar14n24b 🔒 VL-TCP- 🇵🇱 PL down"
+  - name: "🇺🇦 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX down"
     type: "vless"
-    server: "91.196.163.150"
-    port: 8443
-    uuid: "e0216964-ffa1-4d39-82c4-0e40879a470d"
+    server: "92.113.107.120"
+    port: 443
+    uuid: "dbda40e2-25b5-416c-8d35-56d07e8dcdbc"
     udp: true
     tls: true
-    network: "tcp"
-    servername: "stable.nullo.pro"
+    network: "ws"
+    servername: "indigostar.click"
     client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "XYkuP_Keu-yL7EQ8xZc4RTmcVAfp06Z1onV2ZNrlsHM"
-      short-id: "c31f187b"
+    ws-opts:
+      path: "/ws"
+      headers:
+        Host: "indigostar.click"
   - name: "🇺🇦 @DeltaKroneckerGithub"
     type: "trojan"
     server: "130.0.236.88"
@@ -920,12 +960,12 @@ proxy-groups:
       - "🇺🇦 🔒 SS-TCP-NA 🇺🇦 UA-91.196.162.89:2087"
       - "🇺🇦 🔒 SS-TCP-NA 🇺🇦 UA-104.253.216.227:49917"
       - "🇺🇦 🔒 SS-TCP-NA 🇺🇦 UA-130.0.233.100:33610"
-      - "🇺🇦 REALITY|UA🇺🇦 | edge-pl01.onvanet.com-443 | 234.49ms"
+      - "🇺🇦 REALITY|UA🇺🇦 | 130.0.233.100-8443 | 123.44ms"
+      - "🇺🇦 REALITY|UA🇺🇦 | 130.0.233.100-8443 | 122.86ms"
       - "🇺🇦 🔒 VL-TCP-RLT 🇺🇦 UA-91.196.162.89:443"
       - "🇺🇦 🔒 VL-TCP-RLT 🇺🇦 UA-104.253.216.227:443"
-      - "🇺🇦 UA🇺🇦+|+kyiv02.npvnot.com-443+|+234.86ms"
-      - "🇺🇦 UA🇺🇦+|+130.0.233.100-33610+|+172.81ms"
-      - "🇺🇦 🆔ar14n24b 🔒 VL-TCP- 🇵🇱 PL down"
+      - "🇺🇦 UA🇺🇦+|+130.0.233.100-33610+|+122.26ms"
+      - "🇺🇦 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX down"
       - "🇺🇦 @DeltaKroneckerGithub"
       - "🇺🇦 Ukraine"
       - "🇺🇦 Ukraine-1"
@@ -962,12 +1002,12 @@ proxy-groups:
       - "🇺🇦 🔒 SS-TCP-NA 🇺🇦 UA-91.196.162.89:2087"
       - "🇺🇦 🔒 SS-TCP-NA 🇺🇦 UA-104.253.216.227:49917"
       - "🇺🇦 🔒 SS-TCP-NA 🇺🇦 UA-130.0.233.100:33610"
-      - "🇺🇦 REALITY|UA🇺🇦 | edge-pl01.onvanet.com-443 | 234.49ms"
+      - "🇺🇦 REALITY|UA🇺🇦 | 130.0.233.100-8443 | 123.44ms"
+      - "🇺🇦 REALITY|UA🇺🇦 | 130.0.233.100-8443 | 122.86ms"
       - "🇺🇦 🔒 VL-TCP-RLT 🇺🇦 UA-91.196.162.89:443"
       - "🇺🇦 🔒 VL-TCP-RLT 🇺🇦 UA-104.253.216.227:443"
-      - "🇺🇦 UA🇺🇦+|+kyiv02.npvnot.com-443+|+234.86ms"
-      - "🇺🇦 UA🇺🇦+|+130.0.233.100-33610+|+172.81ms"
-      - "🇺🇦 🆔ar14n24b 🔒 VL-TCP- 🇵🇱 PL down"
+      - "🇺🇦 UA🇺🇦+|+130.0.233.100-33610+|+122.26ms"
+      - "🇺🇦 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX down"
       - "🇺🇦 @DeltaKroneckerGithub"
       - "🇺🇦 Ukraine"
       - "🇺🇦 Ukraine-1"
@@ -1005,12 +1045,12 @@ proxy-groups:
       - "🇺🇦 🔒 SS-TCP-NA 🇺🇦 UA-91.196.162.89:2087"
       - "🇺🇦 🔒 SS-TCP-NA 🇺🇦 UA-104.253.216.227:49917"
       - "🇺🇦 🔒 SS-TCP-NA 🇺🇦 UA-130.0.233.100:33610"
-      - "🇺🇦 REALITY|UA🇺🇦 | edge-pl01.onvanet.com-443 | 234.49ms"
+      - "🇺🇦 REALITY|UA🇺🇦 | 130.0.233.100-8443 | 123.44ms"
+      - "🇺🇦 REALITY|UA🇺🇦 | 130.0.233.100-8443 | 122.86ms"
       - "🇺🇦 🔒 VL-TCP-RLT 🇺🇦 UA-91.196.162.89:443"
       - "🇺🇦 🔒 VL-TCP-RLT 🇺🇦 UA-104.253.216.227:443"
-      - "🇺🇦 UA🇺🇦+|+kyiv02.npvnot.com-443+|+234.86ms"
-      - "🇺🇦 UA🇺🇦+|+130.0.233.100-33610+|+172.81ms"
-      - "🇺🇦 🆔ar14n24b 🔒 VL-TCP- 🇵🇱 PL down"
+      - "🇺🇦 UA🇺🇦+|+130.0.233.100-33610+|+122.26ms"
+      - "🇺🇦 🆔ar14n24b 🔒 VL-WS-N/A ❔ XX down"
       - "🇺🇦 @DeltaKroneckerGithub"
       - "🇺🇦 Ukraine"
       - "🇺🇦 Ukraine-1"

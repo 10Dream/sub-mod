@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -684,22 +718,6 @@ proxies:
         Host: "ccc.010304.xyz"
   - name: "🆔️ | @Eag1e_YT『🇩🇪』-4"
     type: "vless"
-    server: "199.232.239.239"
-    port: 443
-    uuid: "36805edb-1e85-4199-a59f-117010b70017"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    client-fingerprint: "firefox"
-    alpn:
-      - "h2"
-    ws-opts:
-      path: "/@CloudVPNchannel/@CloudVPNchannel/@CloudVPNchannel/@CloudVPNchannel/@CloudVPNchannel/@CloudVPNchannel?ed=2056"
-      headers:
-        Host: "mpkoe7ypcibr80p102020123.global.ssl.fastly.net"
-  - name: "🆔️ | @Eag1e_YT『🇩🇪』-5"
-    type: "vless"
     server: "157.90.175.178"
     port: 1222
     uuid: "36c3dcc2-17b6-4478-b8a7-3978e6d5afe9"
@@ -711,7 +729,7 @@ proxies:
     reality-opts:
       public-key: "zpLKK8HuwXJDH9D0O3t5Z_tO3ajkj7VRtXdr6UGy1zE"
       short-id: "a25d0f"
-  - name: "🆔️ | @Eag1e_YT『🇩🇪』-6"
+  - name: "🆔️ | @Eag1e_YT『🇩🇪』-5"
     type: "vless"
     server: "51.38.127.93"
     port: 8080
@@ -725,66 +743,6 @@ proxies:
     reality-opts:
       public-key: "vKnJBC8MN4hGDqu7_C6luBwjVnhq9Wjb6BWkuK_8_z0"
       short-id: "dee5ab9e"
-  - name: "🆔️ | @Eag1e_YT『🇺🇸』-7"
-    type: "vless"
-    server: "wwww.qarvian.ir"
-    port: 443
-    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "cdn.akamai.steamstatic.com"
-    ws-opts:
-      headers:
-        Host: "copy_az_channel_NUFiLTER_17i.global.ssl.fastly.net."
-  - name: "🆔️ | @Eag1e_YT『🇺🇸』-8"
-    type: "vless"
-    server: "199.232.78.160"
-    port: 443
-    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      headers:
-        Host: "copy_az_channel_NUFiLTER_10i.global.ssl.fastly.net."
-  - name: "🆔️ | @Eag1e_YT『🇺🇸』-9"
-    type: "vless"
-    server: "wwww.qarvian.ir"
-    port: 443
-    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "cdn.akamai.steamstatic.com"
-    ws-opts:
-      headers:
-        Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net."
-  - name: "🆔️ | @Eag1e_YT『🇺🇸』-10"
-    type: "vless"
-    server: "146.75.59.186"
-    port: 443
-    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      headers:
-        Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
-  - name: "🆔️ | @Eag1e_YT『🇺🇸』-11"
-    type: "vless"
-    server: "199.232.78.159"
-    port: 443
-    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "cdn.akamai.steamstatic.com"
-    ws-opts:
-      headers:
-        Host: "copy_az_channel_NUFiLTER_8i.global.ssl.fastly.net."
   - name: "🆔️ | @Eag1e_YT『🇮🇹』"
     type: "vless"
     server: "193.163.203.170"
@@ -799,7 +757,7 @@ proxies:
     reality-opts:
       public-key: "GCCZ1ZZjB_nj7yxqFi22bIIWWr_G6rnWUzDcssN_40o"
       short-id: "b28db60d77c50b4f"
-  - name: "🆔️ | @Eag1e_YT『🇩🇪』-7"
+  - name: "🆔️ | @Eag1e_YT『🇩🇪』-6"
     type: "vless"
     server: "169.40.42.235"
     port: 443
@@ -827,7 +785,7 @@ proxies:
     reality-opts:
       public-key: "P7S4UPFlQbmiBr4txyy8NZIMTrmO3UdxyH16WBU-YzY"
       short-id: "19253fae84102271"
-  - name: "🆔️ | @Eag1e_YT『🇩🇪』-8"
+  - name: "🆔️ | @Eag1e_YT『🇩🇪』-7"
     type: "vless"
     server: "152.53.236.22"
     port: 443
@@ -867,14 +825,90 @@ proxies:
     reality-opts:
       public-key: "I0vZxWIjZYvtzlcvGaW01Q1U3M-vHD8iI8BM5KTuuiM"
       short-id: "d3feff5d570d6b"
-  - name: "🆔️ | @Eag1e_YT『🇩🇪』-9"
+  - name: "🆔️ | @Eag1e_YT『🇺🇸』-7"
+    type: "vless"
+    server: "199.232.239.239"
+    port: 443
+    uuid: "40694ced-9a8c-42fd-f5f8-3ac3c8b27fc2"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    client-fingerprint: "firefox"
+    alpn:
+      - "h2"
+    ws-opts:
+      path: "/@CloudVPNchannel/@CloudVPNchannel/@CloudVPNchannel/@CloudVPNchannel/@CloudVPNchannel/@CloudVPNchannel?ed=2056"
+      headers:
+        Host: "mpkoe7ypcibr80p102020123.global.ssl.fastly.net"
+  - name: "🆔️ | @Eag1e_YT『🇺🇸』-8"
+    type: "vless"
+    server: "wwww.qarvian.ir"
+    port: 443
+    uuid: "780aa2f6-1a02-4fa2-bcd0-fa7d469bdff7"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cdn.akamai.steamstatic.com"
+    ws-opts:
+      headers:
+        Host: "copy_az_channel_NUFiLTER_17i.global.ssl.fastly.net."
+  - name: "🆔️ | @Eag1e_YT『🇺🇸』-9"
+    type: "vless"
+    server: "199.232.78.160"
+    port: 443
+    uuid: "780aa2f6-1a02-4fa2-bcd0-fa7d469bdff7"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      headers:
+        Host: "copy_az_channel_NUFiLTER_10i.global.ssl.fastly.net."
+  - name: "🆔️ | @Eag1e_YT『🇺🇸』-10"
+    type: "vless"
+    server: "wwww.qarvian.ir"
+    port: 443
+    uuid: "780aa2f6-1a02-4fa2-bcd0-fa7d469bdff7"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cdn.akamai.steamstatic.com"
+    ws-opts:
+      headers:
+        Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net."
+  - name: "🆔️ | @Eag1e_YT『🇺🇸』-11"
+    type: "vless"
+    server: "146.75.59.186"
+    port: 443
+    uuid: "780aa2f6-1a02-4fa2-bcd0-fa7d469bdff7"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      headers:
+        Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
+  - name: "🆔️ | @Eag1e_YT『🇺🇸』-12"
+    type: "vless"
+    server: "199.232.78.159"
+    port: 443
+    uuid: "780aa2f6-1a02-4fa2-bcd0-fa7d469bdff7"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cdn.akamai.steamstatic.com"
+    ws-opts:
+      headers:
+        Host: "copy_az_channel_NUFiLTER_8i.global.ssl.fastly.net."
+  - name: "🆔️ | @Eag1e_YT『🇩🇪』-8"
     type: "ss"
     server: "156.146.38.169"
     port: 443
     cipher: "aes-128-gcm"
     password: "shadowsocks"
     udp: true
-  - name: "🆔️ | @Eag1e_YT『🇩🇪』-10"
+  - name: "🆔️ | @Eag1e_YT『🇩🇪』-9"
     type: "ss"
     server: "193.29.139.225"
     port: 8080
@@ -932,47 +966,40 @@ proxies:
     udp: true
   - name: "🆔️ | @Eag1e_YT『🇳🇱』-5"
     type: "ss"
-    server: "82.38.31.187"
-    port: 8080
-    cipher: "chacha20-ietf-poly1305"
-    password: "k1dBOmOB4oqi7Ump37a1bQ"
-    udp: true
-  - name: "🆔️ | @Eag1e_YT『🇳🇱』-6"
-    type: "ss"
     server: "82.38.31.10"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "oZIoA69Q8yhcQV8ka3Pa3A"
     udp: true
-  - name: "🆔️ | @Eag1e_YT『🇳🇱』-7"
+  - name: "🆔️ | @Eag1e_YT『🇳🇱』-6"
     type: "ss"
     server: "82.38.31.203"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
     udp: true
-  - name: "🆔️ | @Eag1e_YT『🇳🇱』-8"
+  - name: "🆔️ | @Eag1e_YT『🇳🇱』-7"
     type: "ss"
     server: "82.38.31.47"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "oZIoA69Q8yhcQV8ka3Pa3A"
     udp: true
-  - name: "🆔️ | @Eag1e_YT『🇳🇱』-9"
+  - name: "🆔️ | @Eag1e_YT『🇳🇱』-8"
     type: "ss"
     server: "82.38.31.13"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "oZIoA69Q8yhcQV8ka3Pa3A"
     udp: true
-  - name: "🆔️ | @Eag1e_YT『🇳🇱』-10"
+  - name: "🆔️ | @Eag1e_YT『🇳🇱』-9"
     type: "ss"
     server: "158.173.20.208"
     port: 443
     cipher: "aes-128-gcm"
     password: "shadowsocks"
     udp: true
-  - name: "🆔️ | @Eag1e_YT『🇳🇱』-11"
+  - name: "🆔️ | @Eag1e_YT『🇳🇱』-10"
     type: "ss"
     server: "82.38.31.7"
     port: 8080
@@ -986,42 +1013,35 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "oZIoA69Q8yhcQV8ka3Pa3A"
     udp: true
-  - name: "🆔️ | @Eag1e_YT『🇳🇱』-12"
+  - name: "🆔️ | @Eag1e_YT『🇳🇱』-11"
     type: "ss"
     server: "82.38.31.170"
     port: 443
     cipher: "chacha20-ietf-poly1305"
     password: "oZIoA69Q8yhcQV8ka3Pa3A"
     udp: true
-  - name: "🆔️ | @Eag1e_YT『🇳🇱』-13"
+  - name: "🆔️ | @Eag1e_YT『🇳🇱』-12"
     type: "ss"
     server: "193.29.139.235"
     port: 443
     cipher: "chacha20-ietf-poly1305"
     password: "oZIoA69Q8yhcQV8ka3Pa3A"
     udp: true
-  - name: "🆔️ | @Eag1e_YT『🇳🇱』-14"
+  - name: "🆔️ | @Eag1e_YT『🇳🇱』-13"
     type: "ss"
     server: "82.38.31.191"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
     udp: true
-  - name: "🆔️ | @Eag1e_YT『🇳🇱』-15"
-    type: "ss"
-    server: "82.38.31.82"
-    port: 8080
-    cipher: "chacha20-ietf-poly1305"
-    password: "oZIoA69Q8yhcQV8ka3Pa3A"
-    udp: true
-  - name: "🆔️ | @Eag1e_YT『🇳🇱』-16"
+  - name: "🆔️ | @Eag1e_YT『🇳🇱』-14"
     type: "ss"
     server: "193.29.139.198"
     port: 8080
     cipher: "chacha20-ietf-poly1305"
     password: "k1dBOmOB4oqi7Ump37a1bQ"
     udp: true
-  - name: "🆔️ | @Eag1e_YT『🇳🇱』-17"
+  - name: "🆔️ | @Eag1e_YT『🇳🇱』-15"
     type: "ss"
     server: "193.29.139.202"
     port: 8080
@@ -1049,7 +1069,7 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "oZIoA69Q8yhcQV8ka3Pa3A"
     udp: true
-  - name: "🆔️ | @Eag1e_YT『🇳🇱』-18"
+  - name: "🆔️ | @Eag1e_YT『🇳🇱』-16"
     type: "ss"
     server: "82.38.31.178"
     port: 8080
@@ -1063,14 +1083,14 @@ proxies:
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
-  - name: "🆔️ | @Eag1e_YT『🇳🇱』-19"
+  - name: "🆔️ | @Eag1e_YT『🇳🇱』-17"
     type: "ss"
     server: "82.38.31.149"
     port: 443
     cipher: "chacha20-ietf-poly1305"
     password: "oZIoA69Q8yhcQV8ka3Pa3A"
     udp: true
-  - name: "🆔️ | @Eag1e_YT『🇺🇸』-12"
+  - name: "🆔️ | @Eag1e_YT『🇺🇸』-13"
     type: "trojan"
     server: "199.232.78.120"
     port: 443
@@ -1083,7 +1103,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSus---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn--mitivpn.ac.ir"
-  - name: "🆔️ | @Eag1e_YT『🇺🇸』-13"
+  - name: "🆔️ | @Eag1e_YT『🇺🇸』-14"
     type: "trojan"
     server: "151.101.36.120"
     port: 443
@@ -1096,7 +1116,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSus---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn--mitivpn.ac.ir"
-  - name: "🆔️ | @Eag1e_YT『🇺🇸』-14"
+  - name: "🆔️ | @Eag1e_YT『🇺🇸』-15"
     type: "trojan"
     server: "146.75.57.120"
     port: 443
@@ -1109,7 +1129,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSus---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn--mitivpn.ac.ir"
-  - name: "🆔️ | @Eag1e_YT『🇺🇸』-15"
+  - name: "🆔️ | @Eag1e_YT『🇺🇸』-16"
     type: "trojan"
     server: "167.82.64.120"
     port: 443
@@ -1152,20 +1172,20 @@ proxy-groups:
       - "🆔️ | @Eag1e_YT『🇨🇦』"
       - "🆔️ | @Eag1e_YT『🇩🇪』-4"
       - "🆔️ | @Eag1e_YT『🇩🇪』-5"
+      - "🆔️ | @Eag1e_YT『🇮🇹』"
       - "🆔️ | @Eag1e_YT『🇩🇪』-6"
+      - "🆔️ | @Eag1e_YT『🇨🇭』"
+      - "🆔️ | @Eag1e_YT『🇩🇪』-7"
+      - "🆔️ | @Eag1e_YT『🇨🇾』"
+      - "🆔️ | @Eag1e_YT『🇫🇷』-1"
       - "🆔️ | @Eag1e_YT『🇺🇸』-7"
       - "🆔️ | @Eag1e_YT『🇺🇸』-8"
       - "🆔️ | @Eag1e_YT『🇺🇸』-9"
       - "🆔️ | @Eag1e_YT『🇺🇸』-10"
       - "🆔️ | @Eag1e_YT『🇺🇸』-11"
-      - "🆔️ | @Eag1e_YT『🇮🇹』"
-      - "🆔️ | @Eag1e_YT『🇩🇪』-7"
-      - "🆔️ | @Eag1e_YT『🇨🇭』"
+      - "🆔️ | @Eag1e_YT『🇺🇸』-12"
       - "🆔️ | @Eag1e_YT『🇩🇪』-8"
-      - "🆔️ | @Eag1e_YT『🇨🇾』"
-      - "🆔️ | @Eag1e_YT『🇫🇷』-1"
       - "🆔️ | @Eag1e_YT『🇩🇪』-9"
-      - "🆔️ | @Eag1e_YT『🇩🇪』-10"
       - "🆔️ | @Eag1e_YT『🇳🇱』-1"
       - "🆔️ | @Eag1e_YT『🇳🇱』-2"
       - "🆔️ | @Eag1e_YT『🇳🇱』-3"
@@ -1179,24 +1199,22 @@ proxy-groups:
       - "🆔️ | @Eag1e_YT『🇳🇱』-8"
       - "🆔️ | @Eag1e_YT『🇳🇱』-9"
       - "🆔️ | @Eag1e_YT『🇳🇱』-10"
-      - "🆔️ | @Eag1e_YT『🇳🇱』-11"
       - "🆔️ | @Eag1e_YT『🇺🇳』-2"
+      - "🆔️ | @Eag1e_YT『🇳🇱』-11"
       - "🆔️ | @Eag1e_YT『🇳🇱』-12"
       - "🆔️ | @Eag1e_YT『🇳🇱』-13"
       - "🆔️ | @Eag1e_YT『🇳🇱』-14"
       - "🆔️ | @Eag1e_YT『🇳🇱』-15"
-      - "🆔️ | @Eag1e_YT『🇳🇱』-16"
-      - "🆔️ | @Eag1e_YT『🇳🇱』-17"
       - "🆔️ | @Eag1e_YT『🇮🇹』-1"
       - "🆔️ | @Eag1e_YT『🇹🇯』"
       - "🆔️ | @Eag1e_YT『🇬🇧』-1"
-      - "🆔️ | @Eag1e_YT『🇳🇱』-18"
+      - "🆔️ | @Eag1e_YT『🇳🇱』-16"
       - "🆔️ | @Eag1e_YT『🇮🇹』-2"
-      - "🆔️ | @Eag1e_YT『🇳🇱』-19"
-      - "🆔️ | @Eag1e_YT『🇺🇸』-12"
+      - "🆔️ | @Eag1e_YT『🇳🇱』-17"
       - "🆔️ | @Eag1e_YT『🇺🇸』-13"
       - "🆔️ | @Eag1e_YT『🇺🇸』-14"
       - "🆔️ | @Eag1e_YT『🇺🇸』-15"
+      - "🆔️ | @Eag1e_YT『🇺🇸』-16"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -1221,20 +1239,20 @@ proxy-groups:
       - "🆔️ | @Eag1e_YT『🇨🇦』"
       - "🆔️ | @Eag1e_YT『🇩🇪』-4"
       - "🆔️ | @Eag1e_YT『🇩🇪』-5"
+      - "🆔️ | @Eag1e_YT『🇮🇹』"
       - "🆔️ | @Eag1e_YT『🇩🇪』-6"
+      - "🆔️ | @Eag1e_YT『🇨🇭』"
+      - "🆔️ | @Eag1e_YT『🇩🇪』-7"
+      - "🆔️ | @Eag1e_YT『🇨🇾』"
+      - "🆔️ | @Eag1e_YT『🇫🇷』-1"
       - "🆔️ | @Eag1e_YT『🇺🇸』-7"
       - "🆔️ | @Eag1e_YT『🇺🇸』-8"
       - "🆔️ | @Eag1e_YT『🇺🇸』-9"
       - "🆔️ | @Eag1e_YT『🇺🇸』-10"
       - "🆔️ | @Eag1e_YT『🇺🇸』-11"
-      - "🆔️ | @Eag1e_YT『🇮🇹』"
-      - "🆔️ | @Eag1e_YT『🇩🇪』-7"
-      - "🆔️ | @Eag1e_YT『🇨🇭』"
+      - "🆔️ | @Eag1e_YT『🇺🇸』-12"
       - "🆔️ | @Eag1e_YT『🇩🇪』-8"
-      - "🆔️ | @Eag1e_YT『🇨🇾』"
-      - "🆔️ | @Eag1e_YT『🇫🇷』-1"
       - "🆔️ | @Eag1e_YT『🇩🇪』-9"
-      - "🆔️ | @Eag1e_YT『🇩🇪』-10"
       - "🆔️ | @Eag1e_YT『🇳🇱』-1"
       - "🆔️ | @Eag1e_YT『🇳🇱』-2"
       - "🆔️ | @Eag1e_YT『🇳🇱』-3"
@@ -1248,24 +1266,22 @@ proxy-groups:
       - "🆔️ | @Eag1e_YT『🇳🇱』-8"
       - "🆔️ | @Eag1e_YT『🇳🇱』-9"
       - "🆔️ | @Eag1e_YT『🇳🇱』-10"
-      - "🆔️ | @Eag1e_YT『🇳🇱』-11"
       - "🆔️ | @Eag1e_YT『🇺🇳』-2"
+      - "🆔️ | @Eag1e_YT『🇳🇱』-11"
       - "🆔️ | @Eag1e_YT『🇳🇱』-12"
       - "🆔️ | @Eag1e_YT『🇳🇱』-13"
       - "🆔️ | @Eag1e_YT『🇳🇱』-14"
       - "🆔️ | @Eag1e_YT『🇳🇱』-15"
-      - "🆔️ | @Eag1e_YT『🇳🇱』-16"
-      - "🆔️ | @Eag1e_YT『🇳🇱』-17"
       - "🆔️ | @Eag1e_YT『🇮🇹』-1"
       - "🆔️ | @Eag1e_YT『🇹🇯』"
       - "🆔️ | @Eag1e_YT『🇬🇧』-1"
-      - "🆔️ | @Eag1e_YT『🇳🇱』-18"
+      - "🆔️ | @Eag1e_YT『🇳🇱』-16"
       - "🆔️ | @Eag1e_YT『🇮🇹』-2"
-      - "🆔️ | @Eag1e_YT『🇳🇱』-19"
-      - "🆔️ | @Eag1e_YT『🇺🇸』-12"
+      - "🆔️ | @Eag1e_YT『🇳🇱』-17"
       - "🆔️ | @Eag1e_YT『🇺🇸』-13"
       - "🆔️ | @Eag1e_YT『🇺🇸』-14"
       - "🆔️ | @Eag1e_YT『🇺🇸』-15"
+      - "🆔️ | @Eag1e_YT『🇺🇸』-16"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -1291,20 +1307,20 @@ proxy-groups:
       - "🆔️ | @Eag1e_YT『🇨🇦』"
       - "🆔️ | @Eag1e_YT『🇩🇪』-4"
       - "🆔️ | @Eag1e_YT『🇩🇪』-5"
+      - "🆔️ | @Eag1e_YT『🇮🇹』"
       - "🆔️ | @Eag1e_YT『🇩🇪』-6"
+      - "🆔️ | @Eag1e_YT『🇨🇭』"
+      - "🆔️ | @Eag1e_YT『🇩🇪』-7"
+      - "🆔️ | @Eag1e_YT『🇨🇾』"
+      - "🆔️ | @Eag1e_YT『🇫🇷』-1"
       - "🆔️ | @Eag1e_YT『🇺🇸』-7"
       - "🆔️ | @Eag1e_YT『🇺🇸』-8"
       - "🆔️ | @Eag1e_YT『🇺🇸』-9"
       - "🆔️ | @Eag1e_YT『🇺🇸』-10"
       - "🆔️ | @Eag1e_YT『🇺🇸』-11"
-      - "🆔️ | @Eag1e_YT『🇮🇹』"
-      - "🆔️ | @Eag1e_YT『🇩🇪』-7"
-      - "🆔️ | @Eag1e_YT『🇨🇭』"
+      - "🆔️ | @Eag1e_YT『🇺🇸』-12"
       - "🆔️ | @Eag1e_YT『🇩🇪』-8"
-      - "🆔️ | @Eag1e_YT『🇨🇾』"
-      - "🆔️ | @Eag1e_YT『🇫🇷』-1"
       - "🆔️ | @Eag1e_YT『🇩🇪』-9"
-      - "🆔️ | @Eag1e_YT『🇩🇪』-10"
       - "🆔️ | @Eag1e_YT『🇳🇱』-1"
       - "🆔️ | @Eag1e_YT『🇳🇱』-2"
       - "🆔️ | @Eag1e_YT『🇳🇱』-3"
@@ -1318,24 +1334,22 @@ proxy-groups:
       - "🆔️ | @Eag1e_YT『🇳🇱』-8"
       - "🆔️ | @Eag1e_YT『🇳🇱』-9"
       - "🆔️ | @Eag1e_YT『🇳🇱』-10"
-      - "🆔️ | @Eag1e_YT『🇳🇱』-11"
       - "🆔️ | @Eag1e_YT『🇺🇳』-2"
+      - "🆔️ | @Eag1e_YT『🇳🇱』-11"
       - "🆔️ | @Eag1e_YT『🇳🇱』-12"
       - "🆔️ | @Eag1e_YT『🇳🇱』-13"
       - "🆔️ | @Eag1e_YT『🇳🇱』-14"
       - "🆔️ | @Eag1e_YT『🇳🇱』-15"
-      - "🆔️ | @Eag1e_YT『🇳🇱』-16"
-      - "🆔️ | @Eag1e_YT『🇳🇱』-17"
       - "🆔️ | @Eag1e_YT『🇮🇹』-1"
       - "🆔️ | @Eag1e_YT『🇹🇯』"
       - "🆔️ | @Eag1e_YT『🇬🇧』-1"
-      - "🆔️ | @Eag1e_YT『🇳🇱』-18"
+      - "🆔️ | @Eag1e_YT『🇳🇱』-16"
       - "🆔️ | @Eag1e_YT『🇮🇹』-2"
-      - "🆔️ | @Eag1e_YT『🇳🇱』-19"
-      - "🆔️ | @Eag1e_YT『🇺🇸』-12"
+      - "🆔️ | @Eag1e_YT『🇳🇱』-17"
       - "🆔️ | @Eag1e_YT『🇺🇸』-13"
       - "🆔️ | @Eag1e_YT『🇺🇸』-14"
       - "🆔️ | @Eag1e_YT『🇺🇸』-15"
+      - "🆔️ | @Eag1e_YT『🇺🇸』-16"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"

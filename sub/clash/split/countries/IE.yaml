@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -552,7 +586,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇮🇪 🔒 VL-TCP-TLS 🇮🇪 IE-50.7.5.188:443"
+  - name: "🇮🇪 IE🇮🇪 | ir-new-ded.failspace.top-443 | 169.09ms"
     type: "vless"
     server: "50.7.5.188"
     port: 443
@@ -563,20 +597,7 @@ proxies:
     servername: "ir-new-ded.failspace.top"
     client-fingerprint: "firefox"
     flow: "xtls-rprx-vision"
-  - name: "🇮🇪 IE🇮🇪 | ir-new-ded.failspace.top-443 | 213.54ms"
-    type: "vless"
-    server: "ir-new-ded.failspace.top"
-    port: 443
-    uuid: "cd3bb7d9-7df3-4644-ac05-c260990ac277"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "ir-new-ded.failspace.top"
-    client-fingerprint: "firefox"
-    alpn:
-      - "h2"
-    flow: "xtls-rprx-vision"
-  - name: "🇮🇪 🔒 VL-TCP-TLS 🇮🇪 IE-50.7.5.188:443-1"
+  - name: "🇮🇪 🔒 VL-TCP-TLS 🇮🇪 IE-50.7.5.188:443"
     type: "vless"
     server: "50.7.5.188"
     port: 443
@@ -682,9 +703,8 @@ proxy-groups:
       - "🇮🇪 🔒 SS-TCP-NA 🇮🇪 IE-74.234.59.81:443"
       - "🇮🇪 🔒 SS-TCP-NA 🇮🇪 IE-84.247.48.78:1080"
       - "🇮🇪 🔒 VM-TCP-NA 🇮🇪 IE-54.229.151.97:59236"
+      - "🇮🇪 IE🇮🇪 | ir-new-ded.failspace.top-443 | 169.09ms"
       - "🇮🇪 🔒 VL-TCP-TLS 🇮🇪 IE-50.7.5.188:443"
-      - "🇮🇪 IE🇮🇪 | ir-new-ded.failspace.top-443 | 213.54ms"
-      - "🇮🇪 🔒 VL-TCP-TLS 🇮🇪 IE-50.7.5.188:443-1"
       - "🇮🇪 @DeltaKroneckerGithub"
       - "🇮🇪 @DeltaKroneckerGithub-1"
       - "🇮🇪 @DeltaKroneckerGithub-2"
@@ -708,9 +728,8 @@ proxy-groups:
       - "🇮🇪 🔒 SS-TCP-NA 🇮🇪 IE-74.234.59.81:443"
       - "🇮🇪 🔒 SS-TCP-NA 🇮🇪 IE-84.247.48.78:1080"
       - "🇮🇪 🔒 VM-TCP-NA 🇮🇪 IE-54.229.151.97:59236"
+      - "🇮🇪 IE🇮🇪 | ir-new-ded.failspace.top-443 | 169.09ms"
       - "🇮🇪 🔒 VL-TCP-TLS 🇮🇪 IE-50.7.5.188:443"
-      - "🇮🇪 IE🇮🇪 | ir-new-ded.failspace.top-443 | 213.54ms"
-      - "🇮🇪 🔒 VL-TCP-TLS 🇮🇪 IE-50.7.5.188:443-1"
       - "🇮🇪 @DeltaKroneckerGithub"
       - "🇮🇪 @DeltaKroneckerGithub-1"
       - "🇮🇪 @DeltaKroneckerGithub-2"
@@ -735,9 +754,8 @@ proxy-groups:
       - "🇮🇪 🔒 SS-TCP-NA 🇮🇪 IE-74.234.59.81:443"
       - "🇮🇪 🔒 SS-TCP-NA 🇮🇪 IE-84.247.48.78:1080"
       - "🇮🇪 🔒 VM-TCP-NA 🇮🇪 IE-54.229.151.97:59236"
+      - "🇮🇪 IE🇮🇪 | ir-new-ded.failspace.top-443 | 169.09ms"
       - "🇮🇪 🔒 VL-TCP-TLS 🇮🇪 IE-50.7.5.188:443"
-      - "🇮🇪 IE🇮🇪 | ir-new-ded.failspace.top-443 | 213.54ms"
-      - "🇮🇪 🔒 VL-TCP-TLS 🇮🇪 IE-50.7.5.188:443-1"
       - "🇮🇪 @DeltaKroneckerGithub"
       - "🇮🇪 @DeltaKroneckerGithub-1"
       - "🇮🇪 @DeltaKroneckerGithub-2"

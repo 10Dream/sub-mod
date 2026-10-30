@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -493,19 +527,7 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "🇫🇮202660 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "hysteria2"
-    server: "144.31.239.226"
-    port: 4444
-    password: "10be1dad-9952-4c5e-aa30-db435f69b727"
-    sni: "fl2.nexfile.net"
-  - name: "🏆61@oneclickvpnkeys"
-    type: "hysteria2"
-    server: "179.254.127.159"
-    port: 443
-    password: "23c82941-70f4-4381-90db-bd28e9a902e9"
-    sni: "steel7.hadsvpn.com"
-  - name: "🇩🇪202549 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "👾15@oneclickvpnkeys`"
     type: "hysteria2"
     server: "2.28.226.197"
     port: 443
@@ -513,21 +535,6 @@ proxies:
     sni: "vpn.172908710.dpdns.org"
     obfs: "salamander"
     obfs-password: "27b960aa5b199a215c3a84fd4818e5d2"
-  - name: "🏆63@oneclickvpnkeys"
-    type: "hysteria2"
-    server: "217.60.72.225"
-    port: 443
-    password: "329e13e4-ee7c-4802-ac72-5fcab79c2402"
-    sni: "forshynewh.duckdns.org"
-  - name: "🇫🇷202503 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "hysteria2"
-    server: "51.75.118.5"
-    port: 20222
-    password: "418ddc75-aa9c-4e5d-a9a3-82c50a5a02b6"
-    sni: "www.google.com"
-    skip-cert-verify: true
-    obfs: "salamander"
-    obfs-password: "ad7088dafb02115c"
   - name: "🇷🇺202915 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "hysteria2"
     server: "103.88.243.142"
@@ -535,17 +542,41 @@ proxies:
     password: "41edb44c8e"
     sni: "103.88.243.142"
     skip-cert-verify: true
-  - name: "🇳🇱202768 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "🤖65@oneclickvpnkeys"
     type: "hysteria2"
     server: "144.124.245.52"
     port: 443
     password: "6da2c981-8c77-4340-bda3-93399b7aea26"
     sni: "store.blog-forme.ru"
-  - name: "🇳🇱202773 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "🤖75@oneclickvpnkeys"
     type: "hysteria2"
     server: "store.blog-forme.ru"
     port: 443
     password: "6da2c981-8c77-4340-bda3-93399b7aea26"
+  - name: "🇸🇪203219 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "hysteria2"
+    server: "fenrir.cc.cd"
+    port: 25000
+    password: "EjPhwMiHdy7zTIeM5kP0ZA"
+    sni: "fenrir.cc.cd"
+    obfs: "salamander"
+    obfs-password: "9765192816a553687801bb170ee1c351"
+  - name: "🇸🇪203174 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "hysteria2"
+    server: "fenrir.cc.cd"
+    port: 25000
+    password: "HyDouble_f1NgaW7sHbMefhNf"
+    sni: "fenrir.cc.cd"
+    obfs: "salamander"
+    obfs-password: "9765192816a553687801bb170ee1c351"
+  - name: "🇸🇪203220 | ⚡️Telegram = t.me/SOSkeyNET"
+    type: "hysteria2"
+    server: "fenrir.cc.cd"
+    port: 25000
+    password: "HyWarp_1Duy5hQD__8PVu-k"
+    sni: "fenrir.cc.cd"
+    obfs: "salamander"
+    obfs-password: "9765192816a553687801bb170ee1c351"
   - name: "🇳🇱202941 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "hysteria2"
     server: "147.45.149.88"
@@ -554,31 +585,28 @@ proxies:
     sni: "nl.nobelchat.ru"
     obfs: "salamander"
     obfs-password: "SalamanderNL2026"
-  - name: "🇵🇱202638 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "🇳🇱203103 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "hysteria2"
-    server: "scrap.halyvanedorogo.ru"
-    port: 35076
-    password: "b4c8ee9caa74b7ba0a61"
-    sni: "scrap.halyvanedorogo.ru"
-  - name: "🏆11@oneclickvpnkeys"
-    type: "hysteria2"
-    server: "151.243.169.164"
-    port: 12824
-    password: "d62s7ghfehm742us"
-    sni: "derfderf.ru"
-  - name: "🇩🇪202478 | ⚡️Telegram = t.me/SOSkeyNET"
+    server: "51.15.16.68"
+    port: 24062
+    password: "capadm54312235"
+    sni: "vpn.local"
+    skip-cert-verify: true
+    obfs: "salamander"
+    obfs-password: "ypvL8T4HFIBLoH8q"
+  - name: "🤖14@oneclickvpnkeys"
     type: "hysteria2"
     server: "derfderf.ru"
     port: 12824
     password: "d62s7ghfehm742us"
-  - name: "🇩🇪202468 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "🇭🇰203438 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "hysteria2"
-    server: "179.61.138.145"
-    port: 36264
-    password: "vpnjey"
-    sni: "de2.jey.cc.cd"
+    server: "152.32.254.68"
+    port: 5010
+    password: "eBTe6Ax2pUts8oMEWoYVDfnSlHfkLffQ"
+    sni: "nas.aizhzo.com"
     obfs: "salamander"
-    obfs-password: "Telegram@vpnjey"
+    obfs-password: "7M4RXPFcQyQEGbkxBPfXo4bilMhCW2U9"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -593,19 +621,17 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "🇫🇮202660 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🏆61@oneclickvpnkeys"
-      - "🇩🇪202549 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🏆63@oneclickvpnkeys"
-      - "🇫🇷202503 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "👾15@oneclickvpnkeys`"
       - "🇷🇺202915 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇳🇱202768 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇳🇱202773 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🤖65@oneclickvpnkeys"
+      - "🤖75@oneclickvpnkeys"
+      - "🇸🇪203219 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇪203174 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇪203220 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇳🇱202941 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇵🇱202638 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🏆11@oneclickvpnkeys"
-      - "🇩🇪202478 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇩🇪202468 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱203103 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🤖14@oneclickvpnkeys"
+      - "🇭🇰203438 | ⚡️Telegram = t.me/SOSkeyNET"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -614,19 +640,17 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "🇫🇮202660 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🏆61@oneclickvpnkeys"
-      - "🇩🇪202549 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🏆63@oneclickvpnkeys"
-      - "🇫🇷202503 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "👾15@oneclickvpnkeys`"
       - "🇷🇺202915 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇳🇱202768 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇳🇱202773 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🤖65@oneclickvpnkeys"
+      - "🤖75@oneclickvpnkeys"
+      - "🇸🇪203219 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇪203174 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇪203220 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇳🇱202941 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇵🇱202638 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🏆11@oneclickvpnkeys"
-      - "🇩🇪202478 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇩🇪202468 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱203103 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🤖14@oneclickvpnkeys"
+      - "🇭🇰203438 | ⚡️Telegram = t.me/SOSkeyNET"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -636,19 +660,17 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "🇫🇮202660 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🏆61@oneclickvpnkeys"
-      - "🇩🇪202549 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🏆63@oneclickvpnkeys"
-      - "🇫🇷202503 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "👾15@oneclickvpnkeys`"
       - "🇷🇺202915 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇳🇱202768 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇳🇱202773 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🤖65@oneclickvpnkeys"
+      - "🤖75@oneclickvpnkeys"
+      - "🇸🇪203219 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇪203174 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇸🇪203220 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇳🇱202941 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇵🇱202638 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🏆11@oneclickvpnkeys"
-      - "🇩🇪202478 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇩🇪202468 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🇳🇱203103 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "🤖14@oneclickvpnkeys"
+      - "🇭🇰203438 | ⚡️Telegram = t.me/SOSkeyNET"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"

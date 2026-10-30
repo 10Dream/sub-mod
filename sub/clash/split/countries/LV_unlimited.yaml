@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -541,7 +575,7 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "Vr06rU_v1vFPYeXq9zbsAA"
     udp: true
-  - name: "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 190.12ms"
+  - name: "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 128.39ms"
     type: "trojan"
     server: "lv1.dedushka.top"
     port: 443
@@ -549,7 +583,7 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
-  - name: "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 183.19ms"
+  - name: "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 126.11ms"
     type: "trojan"
     server: "lv1.dedushka.top"
     port: 443
@@ -558,7 +592,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "lv1.dedushka.top"
-  - name: "🇱🇻 REALITY|LV🇱🇻 | 104.252.19.114-8443 | 158.35ms"
+  - name: "🇱🇻 REALITY|LV🇱🇻 | 104.252.19.114-8443 | 462.41ms"
     type: "vless"
     server: "104.252.19.114"
     port: 8443
@@ -681,6 +715,16 @@ proxies:
     reality-opts:
       public-key: "M4Y9h339sntl5wEpiCa7f4IKhJ_8JLzPnAz2IzKlngM"
       short-id: "af4ca5d16438c938"
+  - name: "🇱🇻 LV🇱🇻 | 31.56.196.121-443 | 121.62ms"
+    type: "vless"
+    server: "31.56.196.121"
+    port: 443
+    uuid: "e4c3afb4-e14c-4c31-b03d-44755762bdfd"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
   - name: "🇱🇻 🔒 VL-TCP-RLT 🇱🇻 LV-193.163.203.253:443"
     type: "vless"
     server: "193.163.203.253"
@@ -695,7 +739,7 @@ proxies:
     reality-opts:
       public-key: "gE8LUmGFXik94SoDXNiAG5KprGyhjoRwDuhGebgAVWk"
       short-id: "5ee019e02e6ed99a"
-  - name: "🇱🇻 🆔surfboardv2ray 🔒 VL-TCP- 🇱🇻 LV down"
+  - name: "🇱🇻 🆔surfboardv2ray 🔒 VL-TCP- ❔ XX down"
     type: "vless"
     server: "216.173.71.43"
     port: 443
@@ -709,6 +753,19 @@ proxies:
     reality-opts:
       public-key: "miDhSALrcCvSfc38VjCDYlzNh5M61NMR5IkUli7IN08"
       short-id: "0da7e14db353e7d0"
+  - name: "🇱🇻 🆔ar14n24b 🔒 VL-TCP- ❔ XX 161ms"
+    type: "vless"
+    server: "195.123.213.28"
+    port: 443
+    uuid: "02fcc1a4-ee90-4970-8bbb-4ffaa8109d24"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "NMgy1XgCSXExOg6Tg8xG9lCWttMF6sjdpB41lZy6FWo"
+      short-id: "5c256336e3b673fa"
   - name: "🇱🇻 @DeltaKroneckerGithub"
     type: "trojan"
     server: "185.22.172.249"
@@ -802,19 +859,6 @@ proxies:
       path: "/assignment"
   - name: "🇱🇻 @DeltaKroneckerGithub-2"
     type: "vless"
-    server: "195.123.213.28"
-    port: 443
-    uuid: "02fcc1a4-ee90-4970-8bbb-4ffaa8109d24"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "NMgy1XgCSXExOg6Tg8xG9lCWttMF6sjdpB41lZy6FWo"
-      short-id: "5c256336e3b673fa"
-  - name: "🇱🇻 @DeltaKroneckerGithub-3"
-    type: "vless"
     server: "195.123.208.32"
     port: 443
     uuid: "1ebcb694-875c-4be7-b6a2-d53c8208991b"
@@ -827,7 +871,7 @@ proxies:
     reality-opts:
       public-key: "ICrsmE5hqN7IsDIyHPG2WkDUUFK_VEj9yobLv8zuDwk"
       short-id: "757b9e1ef18e60f0"
-  - name: "🇱🇻 @DeltaKroneckerGithub-4"
+  - name: "🇱🇻 @DeltaKroneckerGithub-3"
     type: "vless"
     server: "45.38.143.210"
     port: 30584
@@ -935,9 +979,9 @@ proxy-groups:
       - "🇱🇻 🔒 TR-TCP-NA 🇱🇻 LV-94.140.112.22:443"
       - "🇱🇻 🔒 SS-TCP-NA 🇱🇻 LV-46.183.217.204:990"
       - "🇱🇻 🔒 SS-TCP-NA 🇱🇻 LV-195.123.209.159:1080"
-      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 190.12ms"
-      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 183.19ms"
-      - "🇱🇻 REALITY|LV🇱🇻 | 104.252.19.114-8443 | 158.35ms"
+      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 128.39ms"
+      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 126.11ms"
+      - "🇱🇻 REALITY|LV🇱🇻 | 104.252.19.114-8443 | 462.41ms"
       - "🇱🇻 🔒 VL-TCP-RLT 🇱🇻 LV-31.57.157.30:80"
       - "🇱🇻 🔒 VL-RAW-RLT 🇱🇻 LV-193.163.203.253:443"
       - "🇱🇻 🔒 VL-TCP-RLT 🇱🇻 LV-188.253.21.106:443"
@@ -946,8 +990,10 @@ proxy-groups:
       - "🇱🇻 🔒 VL-TCP-RLT 🇱🇻 LV-195.123.213.28:443"
       - "🇱🇻 🔒 VL-TCP-RLT 🇱🇻 LV-138.124.180.137:443"
       - "🇱🇻 🔒 VL-TCP-RLT 🇱🇻 LV-45.43.79.92:443"
+      - "🇱🇻 LV🇱🇻 | 31.56.196.121-443 | 121.62ms"
       - "🇱🇻 🔒 VL-TCP-RLT 🇱🇻 LV-193.163.203.253:443"
-      - "🇱🇻 🆔surfboardv2ray 🔒 VL-TCP- 🇱🇻 LV down"
+      - "🇱🇻 🆔surfboardv2ray 🔒 VL-TCP- ❔ XX down"
+      - "🇱🇻 🆔ar14n24b 🔒 VL-TCP- ❔ XX 161ms"
       - "🇱🇻 @DeltaKroneckerGithub"
       - "🇱🇻 @DeltaKroneckerGithub-1"
       - "🇱🇻 Latvia"
@@ -957,7 +1003,6 @@ proxy-groups:
       - "🇱🇻 Latvia-2"
       - "🇱🇻 @DeltaKroneckerGithub-2"
       - "🇱🇻 @DeltaKroneckerGithub-3"
-      - "🇱🇻 @DeltaKroneckerGithub-4"
       - "🇱🇻 >>@oneclickvpnkeys::XX"
       - "🇱🇻 >>@oneclickvpnkeys::XX-1"
       - "🇱🇻 >>@oneclickvpnkeys::XX-2"
@@ -978,9 +1023,9 @@ proxy-groups:
       - "🇱🇻 🔒 TR-TCP-NA 🇱🇻 LV-94.140.112.22:443"
       - "🇱🇻 🔒 SS-TCP-NA 🇱🇻 LV-46.183.217.204:990"
       - "🇱🇻 🔒 SS-TCP-NA 🇱🇻 LV-195.123.209.159:1080"
-      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 190.12ms"
-      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 183.19ms"
-      - "🇱🇻 REALITY|LV🇱🇻 | 104.252.19.114-8443 | 158.35ms"
+      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 128.39ms"
+      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 126.11ms"
+      - "🇱🇻 REALITY|LV🇱🇻 | 104.252.19.114-8443 | 462.41ms"
       - "🇱🇻 🔒 VL-TCP-RLT 🇱🇻 LV-31.57.157.30:80"
       - "🇱🇻 🔒 VL-RAW-RLT 🇱🇻 LV-193.163.203.253:443"
       - "🇱🇻 🔒 VL-TCP-RLT 🇱🇻 LV-188.253.21.106:443"
@@ -989,8 +1034,10 @@ proxy-groups:
       - "🇱🇻 🔒 VL-TCP-RLT 🇱🇻 LV-195.123.213.28:443"
       - "🇱🇻 🔒 VL-TCP-RLT 🇱🇻 LV-138.124.180.137:443"
       - "🇱🇻 🔒 VL-TCP-RLT 🇱🇻 LV-45.43.79.92:443"
+      - "🇱🇻 LV🇱🇻 | 31.56.196.121-443 | 121.62ms"
       - "🇱🇻 🔒 VL-TCP-RLT 🇱🇻 LV-193.163.203.253:443"
-      - "🇱🇻 🆔surfboardv2ray 🔒 VL-TCP- 🇱🇻 LV down"
+      - "🇱🇻 🆔surfboardv2ray 🔒 VL-TCP- ❔ XX down"
+      - "🇱🇻 🆔ar14n24b 🔒 VL-TCP- ❔ XX 161ms"
       - "🇱🇻 @DeltaKroneckerGithub"
       - "🇱🇻 @DeltaKroneckerGithub-1"
       - "🇱🇻 Latvia"
@@ -1000,7 +1047,6 @@ proxy-groups:
       - "🇱🇻 Latvia-2"
       - "🇱🇻 @DeltaKroneckerGithub-2"
       - "🇱🇻 @DeltaKroneckerGithub-3"
-      - "🇱🇻 @DeltaKroneckerGithub-4"
       - "🇱🇻 >>@oneclickvpnkeys::XX"
       - "🇱🇻 >>@oneclickvpnkeys::XX-1"
       - "🇱🇻 >>@oneclickvpnkeys::XX-2"
@@ -1022,9 +1068,9 @@ proxy-groups:
       - "🇱🇻 🔒 TR-TCP-NA 🇱🇻 LV-94.140.112.22:443"
       - "🇱🇻 🔒 SS-TCP-NA 🇱🇻 LV-46.183.217.204:990"
       - "🇱🇻 🔒 SS-TCP-NA 🇱🇻 LV-195.123.209.159:1080"
-      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 190.12ms"
-      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 183.19ms"
-      - "🇱🇻 REALITY|LV🇱🇻 | 104.252.19.114-8443 | 158.35ms"
+      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 128.39ms"
+      - "🇱🇻 LV🇱🇻 | lv1.dedushka.top-443 | 126.11ms"
+      - "🇱🇻 REALITY|LV🇱🇻 | 104.252.19.114-8443 | 462.41ms"
       - "🇱🇻 🔒 VL-TCP-RLT 🇱🇻 LV-31.57.157.30:80"
       - "🇱🇻 🔒 VL-RAW-RLT 🇱🇻 LV-193.163.203.253:443"
       - "🇱🇻 🔒 VL-TCP-RLT 🇱🇻 LV-188.253.21.106:443"
@@ -1033,8 +1079,10 @@ proxy-groups:
       - "🇱🇻 🔒 VL-TCP-RLT 🇱🇻 LV-195.123.213.28:443"
       - "🇱🇻 🔒 VL-TCP-RLT 🇱🇻 LV-138.124.180.137:443"
       - "🇱🇻 🔒 VL-TCP-RLT 🇱🇻 LV-45.43.79.92:443"
+      - "🇱🇻 LV🇱🇻 | 31.56.196.121-443 | 121.62ms"
       - "🇱🇻 🔒 VL-TCP-RLT 🇱🇻 LV-193.163.203.253:443"
-      - "🇱🇻 🆔surfboardv2ray 🔒 VL-TCP- 🇱🇻 LV down"
+      - "🇱🇻 🆔surfboardv2ray 🔒 VL-TCP- ❔ XX down"
+      - "🇱🇻 🆔ar14n24b 🔒 VL-TCP- ❔ XX 161ms"
       - "🇱🇻 @DeltaKroneckerGithub"
       - "🇱🇻 @DeltaKroneckerGithub-1"
       - "🇱🇻 Latvia"
@@ -1044,7 +1092,6 @@ proxy-groups:
       - "🇱🇻 Latvia-2"
       - "🇱🇻 @DeltaKroneckerGithub-2"
       - "🇱🇻 @DeltaKroneckerGithub-3"
-      - "🇱🇻 @DeltaKroneckerGithub-4"
       - "🇱🇻 >>@oneclickvpnkeys::XX"
       - "🇱🇻 >>@oneclickvpnkeys::XX-1"
       - "🇱🇻 >>@oneclickvpnkeys::XX-2"

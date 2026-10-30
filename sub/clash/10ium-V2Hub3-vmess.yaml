@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -493,23 +527,7 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "US🇺🇸 | sg-full.privateip.net-443 | 61.09ms"
-    type: "vmess"
-    server: "sg-full.privateip.net"
-    port: 443
-    uuid: "ecb90d6e-1bbf-42ec-a742-822fad6936da"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "SG🇸🇬 | sg-transit-3.nebulacloud.win-30330 | 421.72ms"
-    type: "vmess"
-    server: "sg-transit-3.nebulacloud.win"
-    port: 30330
-    uuid: "dfa9f875-3805-49d9-8636-46b6899be24e"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "IR🇮🇷 | s1.connect.labex.pro-1007 | 243.72ms"
+  - name: "IR🇮🇷 | s1.connect.labex.pro-1007 | 178.69ms"
     type: "vmess"
     server: "s1.connect.labex.pro"
     port: 1007
@@ -517,7 +535,7 @@ proxies:
     alterId: 0
     cipher: "aes-128-gcm"
     udp: true
-  - name: "IR🇮🇷 | s1.connect.labex.pro-1007 | 240.46ms"
+  - name: "IR🇮🇷 | s1.connect.labex.pro-1007 | 288.01ms"
     type: "vmess"
     server: "s1.connect.labex.pro"
     port: 1007
@@ -525,7 +543,7 @@ proxies:
     alterId: 0
     cipher: "aes-128-gcm"
     udp: true
-  - name: "IR🇮🇷 | s1.connect.bloroxy.net-1074 | 264.27ms"
+  - name: "IR🇮🇷 | s1.connect.bloroxy.net-1074 | 209.18ms"
     type: "vmess"
     server: "s1.connect.bloroxy.net"
     port: 1074
@@ -533,7 +551,23 @@ proxies:
     alterId: 0
     cipher: "aes-128-gcm"
     udp: true
-  - name: "RELAY🚩 | server10.9966338.xyz-443 | 55.98ms"
+  - name: "DE🇩🇪 | oDDJKX2OdVb0VnKF.v.3dns.vip-443 | 1150.55ms"
+    type: "vmess"
+    server: "oDDJKX2OdVb0VnKF.v.3dns.vip"
+    port: 443
+    uuid: "5fb2939933564ae2bd1a6746f65c6f0c"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "RELAY🚩 | dash.mobiza.ir-2095 | 177.17ms"
+    type: "vmess"
+    server: "n5.mobiza.ir"
+    port: 2095
+    uuid: "bca8c159-df05-4bb6-9b75-92aabc2be45f"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "RELAY🚩 | server10.9966338.xyz-443 | 26.49ms"
     type: "vmess"
     server: "mix2.998998.best"
     port: 443
@@ -541,23 +575,15 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "DE🇩🇪 | lucas.ehsanazizi-speed-server.com-2110 | 202.95ms"
+  - name: "IR🇮🇷 | ir.yzcq.ir-2050 | 336.34ms"
     type: "vmess"
-    server: "lucas.ehsanazizi-speed-server.com"
-    port: 2110
-    uuid: "06d4d001-4168-4876-9416-7caecf578f40"
+    server: "ir.yzcq.ir"
+    port: 2050
+    uuid: "986bd21b-225d-479a-964e-93a58f15017a"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 174.38ms"
-    type: "vmess"
-    server: "funnymemes.goalir.co.uk"
-    port: 8880
-    uuid: "57f6abd4-7e42-494d-bf7e-c966bf3f82c4"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 190.06ms"
+  - name: "IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 105.72ms"
     type: "vmess"
     server: "funnymemes.goalir.co.uk"
     port: 8880
@@ -565,15 +591,15 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "TR🇹🇷 | free.ertebatgoostar.ir-443 | 393.29ms"
+  - name: "IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 101.51ms"
     type: "vmess"
-    server: "free.ertebatgoostar.ir"
-    port: 443
-    uuid: "c9eab439-53bf-46e4-ba58-fc368ae1ee8c"
+    server: "funnymemes.goalir.co.uk"
+    port: 8880
+    uuid: "bdfd43ab-e8d5-4e2d-8efe-515379276715"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "RELAY🚩 | server40.9966338.xyz-443 | 64.76ms"
+  - name: "RELAY🚩 | server40.9966338.xyz-443 | 15.24ms"
     type: "vmess"
     server: "eu3.998998.best"
     port: 443
@@ -581,7 +607,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "US🇺🇸 | determined-ambition-as-c856.up.railway.app-443 | 51.84ms"
+  - name: "US🇺🇸 | determined-ambition-as-c856.up.railway.app-443 | 7.14ms"
     type: "vmess"
     server: "determined-ambition-as-c856.up.railway.app"
     port: 443
@@ -589,7 +615,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "AE🇦🇪 | de-d21e56c13c.shamanapp.online-33744 | 609.83ms"
+  - name: "AE🇦🇪 | de-d21e56c13c.shamanapp.online-33744 | 406.03ms"
     type: "vmess"
     server: "de-d21e56c13c.shamanapp.online"
     port: 33744
@@ -597,15 +623,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "IR🇮🇷 | dashboard.ojestore.top-5381 | 395.67ms"
-    type: "vmess"
-    server: "dashboard.ojestore.top"
-    port: 5381
-    uuid: "ef8502b7-9b45-4537-936d-d3af01dee2e3"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "IR🇮🇷 | dashboard.ojestore.top-5381 | 392.64ms"
+  - name: "IR🇮🇷 | dashboard.ojestore.top-5381 | 277.45ms"
     type: "vmess"
     server: "dashboard.ojestore.top"
     port: 5381
@@ -613,15 +631,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "IR🇮🇷 | dashboard.ojeshop.top-5380 | 391.29ms"
-    type: "vmess"
-    server: "dashboard.ojeshop.top"
-    port: 5380
-    uuid: "ef8502b7-9b45-4537-936d-d3af01dee2e3"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "IR🇮🇷 | dashboard.ojeshop.top-5380 | 319.32ms"
+  - name: "IR🇮🇷 | dashboard.ojeshop.top-5380 | 258.25ms"
     type: "vmess"
     server: "dashboard.ojeshop.top"
     port: 5380
@@ -629,15 +639,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "IR🇮🇷 | dashboard.ojedata.top-5382 | 543.19ms"
-    type: "vmess"
-    server: "dashboard.ojedata.top"
-    port: 5382
-    uuid: "ef8502b7-9b45-4537-936d-d3af01dee2e3"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "IR🇮🇷 | dashboard.ojedata.top-5382 | 495.23ms"
+  - name: "IR🇮🇷 | dashboard.ojedata.top-5382 | 416.7ms"
     type: "vmess"
     server: "dashboard.ojedata.top"
     port: 5382
@@ -645,31 +647,39 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "US🇺🇸 | au-full.privateip.net-443 | 88.39ms"
+  - name: "FI🇫🇮 | bmi.ir.draft.co.impossible.com.ir.bmi.ir.com.iran.ir6.ifilmino.com-80 | 201.42ms"
     type: "vmess"
-    server: "au-full.privateip.net"
+    server: "cd0.bmi.ir.kolman.com.de"
+    port: 80
+    uuid: "2da85937-93d9-4509-8491-63b1921cf447"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "DE🇩🇪 | bzqHefRtvpQyiUQb.v.3dns.vip-443 | 976.07ms"
+    type: "vmess"
+    server: "bzqHefRtvpQyiUQb.v.3dns.vip"
     port: 443
-    uuid: "40d748ac-c130-42f0-ad3b-4eeb26c39e42"
+    uuid: "5fb2939933564ae2bd1a6746f65c6f0c"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "IR🇮🇷 | asiatun.roshdiran1.ir-4345 | 886.13ms"
+  - name: "FI🇫🇮 | zeo6-lylp.uti.realoslo-norg.maniyadg7shard.ir-80 | 340.82ms"
     type: "vmess"
-    server: "asiatun.roshdiran1.ir"
-    port: 4345
-    uuid: "558fecaf-bea9-4bca-9e18-2f28240dd2df"
+    server: "bmi2.kolman.com.de"
+    port: 80
+    uuid: "2da85937-93d9-4509-8491-63b1921cf447"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "IR🇮🇷 | asiatun.roshdiran1.ir-4242 | 529.82ms"
+  - name: "SE🇸🇪 | aws.github.sync-bridge.ir-443 | 190.62ms"
     type: "vmess"
-    server: "asiatun.roshdiran1.ir"
-    port: 4242
-    uuid: "558fecaf-bea9-4bca-9e18-2f28240dd2df"
+    server: "aws.github.sync-bridge.ir"
+    port: 443
+    uuid: "f96b01b6-6487-4bba-b3e8-6b9b920a2253"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "GB🇬🇧 | aidrivercat.org-443 | 379.84ms"
+  - name: "CA🇨🇦 | aidrivercat.org-443 | 197.01ms"
     type: "vmess"
     server: "aidrivercat.org"
     port: 443
@@ -677,7 +687,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "IR🇮🇷 | NlS3.zelnora.ir-55306 | 372.07ms"
+  - name: "IR🇮🇷 | NlS3.zelnora.ir-55306 | 253.97ms"
     type: "vmess"
     server: "NlS3.zelnora.ir"
     port: 55306
@@ -685,7 +695,31 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "RELAY🚩 | www.ubuntuupdates.com-443 | 71.19ms"
+  - name: "DE🇩🇪 | BWkTc4i50kvHHerS.v.3dns.vip-443 | 578.13ms"
+    type: "vmess"
+    server: "BWkTc4i50kvHHerS.v.3dns.vip"
+    port: 443
+    uuid: "55b4b202efe0443ca54a0ecba51c4e59"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "DE🇩🇪 | BDznVPKMo9RSXr1s.v.3dns.vip-443 | 164.7ms"
+    type: "vmess"
+    server: "BDznVPKMo9RSXr1s.v.3dns.vip"
+    port: 443
+    uuid: "5fb2939933564ae2bd1a6746f65c6f0c"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "DE🇩🇪 | xGqOpiiJLDgaedNQ.v.3dns.vip-443 | 636.7ms"
+    type: "vmess"
+    server: "xGqOpiiJLDgaedNQ.v.3dns.vip"
+    port: 443
+    uuid: "5fb2939933564ae2bd1a6746f65c6f0c"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "RELAY🚩 | www.ubuntuupdates.com-443 | 37.65ms"
     type: "vmess"
     server: "www.ubuntuupdates.com"
     port: 443
@@ -693,7 +727,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "RELAY🚩 | www.windowssearchtools.com-443 | 92.93ms"
+  - name: "RELAY🚩 | www.windowssearchtools.com-443 | 44.45ms"
     type: "vmess"
     server: "www.windowssearchtools.com"
     port: 443
@@ -701,7 +735,15 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "RELAY🚩 | www.gptcloudai.com-443 | 75.7ms"
+  - name: "RELAY🚩 | www.windowsmsidownloads.com-443 | 43.72ms"
+    type: "vmess"
+    server: "www.windowsmsidownloads.com"
+    port: 443
+    uuid: "80be2deb-3b27-4775-9bd1-7f2a2b9c261b"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "RELAY🚩 | www.gptcloudai.com-443 | 46.4ms"
     type: "vmess"
     server: "www.gptcloudai.com"
     port: 443
@@ -709,15 +751,15 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "US🇺🇸 | uk2-full.privateip.net-443 | 66.56ms"
+  - name: "US🇺🇸 | us-23.hihu.net-80 | 60.49ms"
     type: "vmess"
-    server: "uk2-full.privateip.net"
-    port: 443
-    uuid: "e364b787-6545-42dd-aaa4-9ee76fd21e89"
+    server: "us-23.hihu.net"
+    port: 80
+    uuid: "8a9aaa70-ced9-11f1-b934-205c6d5f5d78"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "US🇺🇸 | 38.110.1.246-18000 | 54.19ms"
+  - name: "US🇺🇸 | 38.110.1.246-18000 | 26.73ms"
     type: "vmess"
     server: "38.110.1.246"
     port: 18000
@@ -725,23 +767,15 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "KR🇰🇷 | 217.142.138.61-80 | 131.69ms"
+  - name: "US🇺🇸 | 172.66.0.251-80 | 2.4ms"
     type: "vmess"
-    server: "217.142.138.61"
+    server: "23.158.72.131"
     port: 80
-    uuid: "ac1b933d-afff-4487-93ef-f57130a55dff"
+    uuid: "8a9aaa70-ced9-11f1-b934-205c6d5f5d78"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "IR🇮🇷 | 212.80.8.184-443 | 230.76ms"
-    type: "vmess"
-    server: "212.80.8.184"
-    port: 443
-    uuid: "8ed21777-4390-483e-b51e-55eb272636ec"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "RELAY🚩 | pages.dev-443 | 37.77ms"
+  - name: "RELAY🚩 | pages.dev-443 | 8.22ms"
     type: "vmess"
     server: "2.189.59.2"
     port: 443
@@ -749,7 +783,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "GB🇬🇧 | aidrivercat.org-443 | 316.3ms"
+  - name: "CA🇨🇦 | aidrivercat.org-443 | 83.8ms"
     type: "vmess"
     server: "193.108.117.54"
     port: 443
@@ -757,7 +791,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "US🇺🇸 | jahfkjha.cfd-443 | 349.28ms"
+  - name: "US🇺🇸 | jahfkjha.cfd-443 | 189.38ms"
     type: "vmess"
     server: "188.114.96.3"
     port: 443
@@ -765,7 +799,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "US🇺🇸 | glweidf.cfd-443 | 52.27ms"
+  - name: "US🇺🇸 | glweidf.cfd-443 | 153.57ms"
     type: "vmess"
     server: "188.114.96.3"
     port: 443
@@ -773,7 +807,47 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "DE🇩🇪 | 178.105.168.171-2110 | 144.13ms"
+  - name: "NL🇳🇱 | 185.19.33.52-44845 | 82.69ms"
+    type: "vmess"
+    server: "185.19.33.52"
+    port: 44845
+    uuid: "a27a7ea0-05eb-4d8a-b053-ea761294418a"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "NL🇳🇱 | 185.19.33.52-44845 | 87.79ms"
+    type: "vmess"
+    server: "185.19.33.52"
+    port: 44845
+    uuid: "72e335d9-1130-4c5b-80bc-55f3cb032543"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "NL🇳🇱 | 185.19.33.52-44845 | 83.67ms"
+    type: "vmess"
+    server: "185.19.33.52"
+    port: 44845
+    uuid: "6c7b2de1-ed4a-4eee-b926-b298e2968e89"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "NL🇳🇱 | 185.19.33.52-44845 | 82.46ms"
+    type: "vmess"
+    server: "185.19.33.52"
+    port: 44845
+    uuid: "3f1c62fe-fafa-4cb0-8aca-72fa1d36296b"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "IR🇮🇷 | 185.126.6.177-5645 | 165.44ms"
+    type: "vmess"
+    server: "185.126.6.177"
+    port: 5645
+    uuid: "0d3c1a3a-2aed-4480-84ef-4ed902148483"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "DE🇩🇪 | 178.105.168.171-2110 | 95.73ms"
     type: "vmess"
     server: "178.105.168.171"
     port: 2110
@@ -781,7 +855,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "RELAY🚩 | 77h2quiet-dream-5c34.foratay741.workers.dev-443 | 49.06ms"
+  - name: "RELAY🚩 | 77h2quiet-dream-5c34.foratay741.workers.dev-443 | 27.98ms"
     type: "vmess"
     server: "173.245.59.8"
     port: 443
@@ -789,7 +863,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "US🇺🇸 | obdii.cfd-443 | 50.42ms"
+  - name: "US🇺🇸 | obdii.cfd-443 | 136.23ms"
     type: "vmess"
     server: "172.67.71.160"
     port: 443
@@ -797,7 +871,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "RELAY🚩 | ukl.lovehk.xyz-443 | 43.87ms"
+  - name: "RELAY🚩 | ukl.lovehk.xyz-443 | 16.64ms"
     type: "vmess"
     server: "172.67.137.209"
     port: 443
@@ -805,7 +879,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "RELAY🚩 | vmess.lbw666.dpdns.org-443 | 1248.3ms"
+  - name: "RELAY🚩 | vmess.lbw666.dpdns.org-443 | 722.19ms"
     type: "vmess"
     server: "172.66.203.67"
     port: 443
@@ -813,15 +887,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "JP🇯🇵 | 172.111.146.64-80 | 110.96ms"
-    type: "vmess"
-    server: "172.111.146.64"
-    port: 80
-    uuid: "05b8c783-7f59-47f9-9923-06a465679f6a"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "NL🇳🇱 | 168.113.215.6-33736 | 132.96ms"
+  - name: "NL🇳🇱 | 168.113.215.6-33736 | 85.09ms"
     type: "vmess"
     server: "168.113.215.6"
     port: 33736
@@ -829,7 +895,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "US🇺🇸 | vspeedfast.org-443 | 386.45ms"
+  - name: "US🇺🇸 | vspeedfast.org-443 | 96.81ms"
     type: "vmess"
     server: "167.17.68.89"
     port: 443
@@ -837,15 +903,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "US🇺🇸 | cdn.sfacg.uk-2083 | 554.33ms"
-    type: "vmess"
-    server: "162.159.135.234"
-    port: 2083
-    uuid: "ac251237-576f-40c8-a543-554960c958b1"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "RU🇷🇺 | 158.160.180.165-24212 | 174.31ms"
+  - name: "RU🇷🇺 | 158.160.180.165-24212 | 133.61ms"
     type: "vmess"
     server: "158.160.180.165"
     port: 24212
@@ -853,15 +911,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "HK🇭🇰 | 156.245.232.239-35043 | 163.38ms"
-    type: "vmess"
-    server: "156.245.232.239"
-    port: 35043
-    uuid: "b15e481d-17e4-41a8-84c2-23d4f0514d9a"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "US🇺🇸 | google.com-80 | 14.19ms"
+  - name: "US🇺🇸 | google.com-80 | 5.86ms"
     type: "vmess"
     server: "15.235.41.200"
     port: 80
@@ -869,15 +919,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "SG🇸🇬 | 149.88.23.207-18000 | 175.35ms"
-    type: "vmess"
-    server: "149.88.23.207"
-    port: 18000
-    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "RELAY🚩 | www.speedtest.net-2082 | 70.01ms"
+  - name: "RELAY🚩 | www.speedtest.net-2082 | 40.41ms"
     type: "vmess"
     server: "147.182.215.158"
     port: 2082
@@ -885,7 +927,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "FR🇫🇷 | google.whatsapp.snapp.torob.basalam.fortresshost.ir.-80 | 433.25ms"
+  - name: "FR🇫🇷 | google.whatsapp.snapp.torob.basalam.fortresshost.ir.-80 | 324.45ms"
     type: "vmess"
     server: "145.239.55.210"
     port: 80
@@ -893,7 +935,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "RELAY🚩 | www.speedtest.net-2082 | 33.45ms"
+  - name: "RELAY🚩 | www.speedtest.net-2082 | 8.42ms"
     type: "vmess"
     server: "144.126.237.85"
     port: 2082
@@ -901,7 +943,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "HK🇭🇰 | www.baidu.com-443 | 2072.28ms"
+  - name: "HK🇭🇰 | www.baidu.com-443 | 838.26ms"
     type: "vmess"
     server: "135.125.134.177"
     port: 443
@@ -909,7 +951,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "CA🇨🇦 | 134.195.196.211-18000 | 60.51ms"
+  - name: "CA🇨🇦 | 134.195.196.211-18000 | 26.48ms"
     type: "vmess"
     server: "134.195.196.211"
     port: 18000
@@ -917,7 +959,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "US🇺🇸 | 129.146.77.248-39495 | 10.4ms"
+  - name: "US🇺🇸 | 129.146.77.248-39495 | 53.58ms"
     type: "vmess"
     server: "129.146.77.248"
     port: 39495
@@ -925,7 +967,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "CN🇨🇳 | 120.48.133.162-10086 | 240.18ms"
+  - name: "CN🇨🇳 | 120.48.133.162-10086 | 278.43ms"
     type: "vmess"
     server: "120.48.133.162"
     port: 10086
@@ -933,15 +975,15 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "CN🇨🇳 | 120.48.133.162-10086 | 219.49ms"
+  - name: "CN🇨🇳 | 120.48.133.162-10086 | 265.62ms"
     type: "vmess"
     server: "120.48.133.162"
     port: 10086
-    uuid: "a8d931b0-6c27-428b-8d86-c20efea3dba7"
+    uuid: "f81d0fc9-c6b0-4dab-a270-6e697e0a367f"
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "RELAY🚩 | nasnet-571299667.rahavard365.co-8080 | 81.64ms"
+  - name: "RELAY🚩 | nasnet-571299667.rahavard365.co-8080 | 10.22ms"
     type: "vmess"
     server: "104.24.169.183"
     port: 8080
@@ -949,7 +991,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "US🇺🇸 | linja05.hwcar.sbs-443 | 50.95ms"
+  - name: "US🇺🇸 | linja05.hwcar.sbs-443 | 128.14ms"
     type: "vmess"
     server: "104.21.94.64"
     port: 443
@@ -957,7 +999,15 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "US🇺🇸 | glweidf.cfd-443 | 55.63ms"
+  - name: "RELAY🚩 | vmess.lbw666.dpdns.org-80 | 475.23ms"
+    type: "vmess"
+    server: "104.21.7.133"
+    port: 80
+    uuid: "0cf6d970-3f1d-4aae-a989-92a8f76ae3db"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "US🇺🇸 | glweidf.cfd-443 | 128.61ms"
     type: "vmess"
     server: "104.21.4.6"
     port: 443
@@ -965,7 +1015,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "US🇺🇸 | glweidf.sbs-443 | 61.16ms"
+  - name: "US🇺🇸 | glweidf.sbs-443 | 257.76ms"
     type: "vmess"
     server: "104.21.15.212"
     port: 443
@@ -973,7 +1023,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "RELAY🚩 | xmivideo.cfd-443 | 51.34ms"
+  - name: "RELAY🚩 | xmivideo.cfd-443 | 22.82ms"
     type: "vmess"
     server: "104.19.32.0"
     port: 443
@@ -981,7 +1031,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "RELAY🚩 | quiet-moon-132a.xetag42714.workers.dev-443 | 43.16ms"
+  - name: "RELAY🚩 | quiet-moon-132a.xetag42714.workers.dev-443 | 25.29ms"
     type: "vmess"
     server: "104.17.197.31"
     port: 443
@@ -989,7 +1039,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "RELAY🚩 | vmess.lbw666.dpdns.org-80 | 484.42ms"
+  - name: "RELAY🚩 | vmess.lbw666.dpdns.org-80 | 633.5ms"
     type: "vmess"
     server: "104.17.147.222"
     port: 80
@@ -997,7 +1047,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "RELAY🚩 | 104.16.61.8-80 | 10.36ms"
+  - name: "RELAY🚩 | 104.16.61.8-80 | 1.86ms"
     type: "vmess"
     server: "104.16.61.8"
     port: 80
@@ -1005,7 +1055,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "DE🇩🇪 | rubika.ir.google.com.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aparat.com.V2ray.com.shw2.ir.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.xn--g28h.dns-dynamic.net.-80 | 246.66ms"
+  - name: "DE🇩🇪 | rubika.ir.google.com.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aparat.com.V2ray.com.shw2.ir.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.xn--g28h.dns-dynamic.net.-80 | 224.48ms"
     type: "vmess"
     server: "104.16.219.108"
     port: 80
@@ -1013,7 +1063,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "ES🇪🇸 | 85.90.217.42-22324 | 173.97ms"
+  - name: "ES🇪🇸 | 85.90.217.42-22324 | 106.22ms"
     type: "vmess"
     server: "85.90.217.42"
     port: 22324
@@ -1021,7 +1071,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "US🇺🇸 | 77.83.141.171-443 | 9.89ms"
+  - name: "US🇺🇸 | 77.83.141.171-443 | 1.4ms"
     type: "vmess"
     server: "77.83.141.171"
     port: 443
@@ -1029,7 +1079,15 @@ proxies:
     alterId: 32
     cipher: "auto"
     udp: true
-  - name: "US🇺🇸 | 67.220.95.3-18000 | 57.54ms"
+  - name: "US🇺🇸 | 67.220.95.3-18000 | 1.99ms"
+    type: "vmess"
+    server: "67.220.95.3"
+    port: 18000
+    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "US🇺🇸 | 67.220.95.3-18000 | 2.37ms"
     type: "vmess"
     server: "67.220.95.3"
     port: 18000
@@ -1037,15 +1095,23 @@ proxies:
     alterId: 0
     cipher: "aes-128-gcm"
     udp: true
-  - name: "US🇺🇸 | 67.220.95.3-18000 | 56.37ms"
+  - name: "US🇺🇸 | 67.220.95.3-18000 | 1.53ms"
     type: "vmess"
     server: "67.220.95.3"
     port: 18000
     uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
     alterId: 0
+    cipher: "none"
+    udp: true
+  - name: "US🇺🇸 | 67.220.85.46-18000 | 6.41ms"
+    type: "vmess"
+    server: "67.220.85.46"
+    port: 18000
+    uuid: "f8c8dc3d-0d37-46b0-8b34-a7232882fcfe"
+    alterId: 0
     cipher: "auto"
     udp: true
-  - name: "US🇺🇸 | mygptagent.org-443 | 266.2ms"
+  - name: "DE🇩🇪 | mygptagent.org-443 | 139.31ms"
     type: "vmess"
     server: "66.163.118.73"
     port: 443
@@ -1053,7 +1119,15 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "US🇺🇸 | google.com-80 | 13.33ms"
+  - name: "IR🇮🇷 | 62.220.121.35-443 | 160.81ms"
+    type: "vmess"
+    server: "62.220.121.35"
+    port: 443
+    uuid: "be1ae321-b91b-426e-8e4e-a2fb008e88b4"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "US🇺🇸 | google.com-80 | 3.05ms"
     type: "vmess"
     server: "57.129.132.223"
     port: 80
@@ -1061,7 +1135,15 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "FR🇫🇷 | google.whatsapp.snapp.torob.basalam.hesanid8.ir.-80 | 410.71ms"
+  - name: "RELAY🚩 | https.http.www.net.com.ramseyv2.ir.-80 | 172.9ms"
+    type: "vmess"
+    server: "57.128.164.21"
+    port: 80
+    uuid: "bda82bcd-f6e2-46ae-9552-673f0b87ac30"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "FR🇫🇷 | google.whatsapp.snapp.torob.basalam.hesanid8.ir.-80 | 584.36ms"
     type: "vmess"
     server: "54.37.131.126"
     port: 80
@@ -1069,7 +1151,15 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "IR🇮🇷 | zula.ir-443 | 432.39ms"
+  - name: "FR🇫🇷 | 51.75.118.5-20222 | 86.68ms"
+    type: "vmess"
+    server: "51.75.118.5"
+    port: 20222
+    uuid: "418ddc75-aa9c-4e5d-a9a3-82c50a5a02b6"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "IR🇮🇷 | zula.ir-443 | 260.95ms"
     type: "vmess"
     server: "49.13.23.221"
     port: 443
@@ -1077,19 +1167,11 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "HK🇭🇰 | 47.244.120.197-44867 | 160.98ms"
+  - name: "US🇺🇸 | rib9jxayoqjgn2kw.v.3dns.vip-443 | 1110.64ms"
     type: "vmess"
-    server: "47.244.120.197"
-    port: 44867
-    uuid: "845e6b08-2919-4290-ade0-5dc7dcea59ca"
-    alterId: 0
-    cipher: "auto"
-    udp: true
-  - name: "US🇺🇸 | 43.130.35.53-10087 | 22.2ms"
-    type: "vmess"
-    server: "43.130.35.53"
-    port: 10087
-    uuid: "8e93b009-f1af-448a-b8ef-b110849a35f0"
+    server: "47.88.79.34"
+    port: 443
+    uuid: "9b31490d-190e-4ef1-af0a-7ccab3e7c3b5"
     alterId: 0
     cipher: "auto"
     udp: true
@@ -1107,81 +1189,87 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "US🇺🇸 | sg-full.privateip.net-443 | 61.09ms"
-      - "SG🇸🇬 | sg-transit-3.nebulacloud.win-30330 | 421.72ms"
-      - "IR🇮🇷 | s1.connect.labex.pro-1007 | 243.72ms"
-      - "IR🇮🇷 | s1.connect.labex.pro-1007 | 240.46ms"
-      - "IR🇮🇷 | s1.connect.bloroxy.net-1074 | 264.27ms"
-      - "RELAY🚩 | server10.9966338.xyz-443 | 55.98ms"
-      - "DE🇩🇪 | lucas.ehsanazizi-speed-server.com-2110 | 202.95ms"
-      - "IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 174.38ms"
-      - "IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 190.06ms"
-      - "TR🇹🇷 | free.ertebatgoostar.ir-443 | 393.29ms"
-      - "RELAY🚩 | server40.9966338.xyz-443 | 64.76ms"
-      - "US🇺🇸 | determined-ambition-as-c856.up.railway.app-443 | 51.84ms"
-      - "AE🇦🇪 | de-d21e56c13c.shamanapp.online-33744 | 609.83ms"
-      - "IR🇮🇷 | dashboard.ojestore.top-5381 | 395.67ms"
-      - "IR🇮🇷 | dashboard.ojestore.top-5381 | 392.64ms"
-      - "IR🇮🇷 | dashboard.ojeshop.top-5380 | 391.29ms"
-      - "IR🇮🇷 | dashboard.ojeshop.top-5380 | 319.32ms"
-      - "IR🇮🇷 | dashboard.ojedata.top-5382 | 543.19ms"
-      - "IR🇮🇷 | dashboard.ojedata.top-5382 | 495.23ms"
-      - "US🇺🇸 | au-full.privateip.net-443 | 88.39ms"
-      - "IR🇮🇷 | asiatun.roshdiran1.ir-4345 | 886.13ms"
-      - "IR🇮🇷 | asiatun.roshdiran1.ir-4242 | 529.82ms"
-      - "GB🇬🇧 | aidrivercat.org-443 | 379.84ms"
-      - "IR🇮🇷 | NlS3.zelnora.ir-55306 | 372.07ms"
-      - "RELAY🚩 | www.ubuntuupdates.com-443 | 71.19ms"
-      - "RELAY🚩 | www.windowssearchtools.com-443 | 92.93ms"
-      - "RELAY🚩 | www.gptcloudai.com-443 | 75.7ms"
-      - "US🇺🇸 | uk2-full.privateip.net-443 | 66.56ms"
-      - "US🇺🇸 | 38.110.1.246-18000 | 54.19ms"
-      - "KR🇰🇷 | 217.142.138.61-80 | 131.69ms"
-      - "IR🇮🇷 | 212.80.8.184-443 | 230.76ms"
-      - "RELAY🚩 | pages.dev-443 | 37.77ms"
-      - "GB🇬🇧 | aidrivercat.org-443 | 316.3ms"
-      - "US🇺🇸 | jahfkjha.cfd-443 | 349.28ms"
-      - "US🇺🇸 | glweidf.cfd-443 | 52.27ms"
-      - "DE🇩🇪 | 178.105.168.171-2110 | 144.13ms"
-      - "RELAY🚩 | 77h2quiet-dream-5c34.foratay741.workers.dev-443 | 49.06ms"
-      - "US🇺🇸 | obdii.cfd-443 | 50.42ms"
-      - "RELAY🚩 | ukl.lovehk.xyz-443 | 43.87ms"
-      - "RELAY🚩 | vmess.lbw666.dpdns.org-443 | 1248.3ms"
-      - "JP🇯🇵 | 172.111.146.64-80 | 110.96ms"
-      - "NL🇳🇱 | 168.113.215.6-33736 | 132.96ms"
-      - "US🇺🇸 | vspeedfast.org-443 | 386.45ms"
-      - "US🇺🇸 | cdn.sfacg.uk-2083 | 554.33ms"
-      - "RU🇷🇺 | 158.160.180.165-24212 | 174.31ms"
-      - "HK🇭🇰 | 156.245.232.239-35043 | 163.38ms"
-      - "US🇺🇸 | google.com-80 | 14.19ms"
-      - "SG🇸🇬 | 149.88.23.207-18000 | 175.35ms"
-      - "RELAY🚩 | www.speedtest.net-2082 | 70.01ms"
-      - "FR🇫🇷 | google.whatsapp.snapp.torob.basalam.fortresshost.ir.-80 | 433.25ms"
-      - "RELAY🚩 | www.speedtest.net-2082 | 33.45ms"
-      - "HK🇭🇰 | www.baidu.com-443 | 2072.28ms"
-      - "CA🇨🇦 | 134.195.196.211-18000 | 60.51ms"
-      - "US🇺🇸 | 129.146.77.248-39495 | 10.4ms"
-      - "CN🇨🇳 | 120.48.133.162-10086 | 240.18ms"
-      - "CN🇨🇳 | 120.48.133.162-10086 | 219.49ms"
-      - "RELAY🚩 | nasnet-571299667.rahavard365.co-8080 | 81.64ms"
-      - "US🇺🇸 | linja05.hwcar.sbs-443 | 50.95ms"
-      - "US🇺🇸 | glweidf.cfd-443 | 55.63ms"
-      - "US🇺🇸 | glweidf.sbs-443 | 61.16ms"
-      - "RELAY🚩 | xmivideo.cfd-443 | 51.34ms"
-      - "RELAY🚩 | quiet-moon-132a.xetag42714.workers.dev-443 | 43.16ms"
-      - "RELAY🚩 | vmess.lbw666.dpdns.org-80 | 484.42ms"
-      - "RELAY🚩 | 104.16.61.8-80 | 10.36ms"
-      - "DE🇩🇪 | rubika.ir.google.com.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aparat.com.V2ray.com.shw2.ir.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.xn--g28h.dns-dynamic.net.-80 | 246.66ms"
-      - "ES🇪🇸 | 85.90.217.42-22324 | 173.97ms"
-      - "US🇺🇸 | 77.83.141.171-443 | 9.89ms"
-      - "US🇺🇸 | 67.220.95.3-18000 | 57.54ms"
-      - "US🇺🇸 | 67.220.95.3-18000 | 56.37ms"
-      - "US🇺🇸 | mygptagent.org-443 | 266.2ms"
-      - "US🇺🇸 | google.com-80 | 13.33ms"
-      - "FR🇫🇷 | google.whatsapp.snapp.torob.basalam.hesanid8.ir.-80 | 410.71ms"
-      - "IR🇮🇷 | zula.ir-443 | 432.39ms"
-      - "HK🇭🇰 | 47.244.120.197-44867 | 160.98ms"
-      - "US🇺🇸 | 43.130.35.53-10087 | 22.2ms"
+      - "IR🇮🇷 | s1.connect.labex.pro-1007 | 178.69ms"
+      - "IR🇮🇷 | s1.connect.labex.pro-1007 | 288.01ms"
+      - "IR🇮🇷 | s1.connect.bloroxy.net-1074 | 209.18ms"
+      - "DE🇩🇪 | oDDJKX2OdVb0VnKF.v.3dns.vip-443 | 1150.55ms"
+      - "RELAY🚩 | dash.mobiza.ir-2095 | 177.17ms"
+      - "RELAY🚩 | server10.9966338.xyz-443 | 26.49ms"
+      - "IR🇮🇷 | ir.yzcq.ir-2050 | 336.34ms"
+      - "IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 105.72ms"
+      - "IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 101.51ms"
+      - "RELAY🚩 | server40.9966338.xyz-443 | 15.24ms"
+      - "US🇺🇸 | determined-ambition-as-c856.up.railway.app-443 | 7.14ms"
+      - "AE🇦🇪 | de-d21e56c13c.shamanapp.online-33744 | 406.03ms"
+      - "IR🇮🇷 | dashboard.ojestore.top-5381 | 277.45ms"
+      - "IR🇮🇷 | dashboard.ojeshop.top-5380 | 258.25ms"
+      - "IR🇮🇷 | dashboard.ojedata.top-5382 | 416.7ms"
+      - "FI🇫🇮 | bmi.ir.draft.co.impossible.com.ir.bmi.ir.com.iran.ir6.ifilmino.com-80 | 201.42ms"
+      - "DE🇩🇪 | bzqHefRtvpQyiUQb.v.3dns.vip-443 | 976.07ms"
+      - "FI🇫🇮 | zeo6-lylp.uti.realoslo-norg.maniyadg7shard.ir-80 | 340.82ms"
+      - "SE🇸🇪 | aws.github.sync-bridge.ir-443 | 190.62ms"
+      - "CA🇨🇦 | aidrivercat.org-443 | 197.01ms"
+      - "IR🇮🇷 | NlS3.zelnora.ir-55306 | 253.97ms"
+      - "DE🇩🇪 | BWkTc4i50kvHHerS.v.3dns.vip-443 | 578.13ms"
+      - "DE🇩🇪 | BDznVPKMo9RSXr1s.v.3dns.vip-443 | 164.7ms"
+      - "DE🇩🇪 | xGqOpiiJLDgaedNQ.v.3dns.vip-443 | 636.7ms"
+      - "RELAY🚩 | www.ubuntuupdates.com-443 | 37.65ms"
+      - "RELAY🚩 | www.windowssearchtools.com-443 | 44.45ms"
+      - "RELAY🚩 | www.windowsmsidownloads.com-443 | 43.72ms"
+      - "RELAY🚩 | www.gptcloudai.com-443 | 46.4ms"
+      - "US🇺🇸 | us-23.hihu.net-80 | 60.49ms"
+      - "US🇺🇸 | 38.110.1.246-18000 | 26.73ms"
+      - "US🇺🇸 | 172.66.0.251-80 | 2.4ms"
+      - "RELAY🚩 | pages.dev-443 | 8.22ms"
+      - "CA🇨🇦 | aidrivercat.org-443 | 83.8ms"
+      - "US🇺🇸 | jahfkjha.cfd-443 | 189.38ms"
+      - "US🇺🇸 | glweidf.cfd-443 | 153.57ms"
+      - "NL🇳🇱 | 185.19.33.52-44845 | 82.69ms"
+      - "NL🇳🇱 | 185.19.33.52-44845 | 87.79ms"
+      - "NL🇳🇱 | 185.19.33.52-44845 | 83.67ms"
+      - "NL🇳🇱 | 185.19.33.52-44845 | 82.46ms"
+      - "IR🇮🇷 | 185.126.6.177-5645 | 165.44ms"
+      - "DE🇩🇪 | 178.105.168.171-2110 | 95.73ms"
+      - "RELAY🚩 | 77h2quiet-dream-5c34.foratay741.workers.dev-443 | 27.98ms"
+      - "US🇺🇸 | obdii.cfd-443 | 136.23ms"
+      - "RELAY🚩 | ukl.lovehk.xyz-443 | 16.64ms"
+      - "RELAY🚩 | vmess.lbw666.dpdns.org-443 | 722.19ms"
+      - "NL🇳🇱 | 168.113.215.6-33736 | 85.09ms"
+      - "US🇺🇸 | vspeedfast.org-443 | 96.81ms"
+      - "RU🇷🇺 | 158.160.180.165-24212 | 133.61ms"
+      - "US🇺🇸 | google.com-80 | 5.86ms"
+      - "RELAY🚩 | www.speedtest.net-2082 | 40.41ms"
+      - "FR🇫🇷 | google.whatsapp.snapp.torob.basalam.fortresshost.ir.-80 | 324.45ms"
+      - "RELAY🚩 | www.speedtest.net-2082 | 8.42ms"
+      - "HK🇭🇰 | www.baidu.com-443 | 838.26ms"
+      - "CA🇨🇦 | 134.195.196.211-18000 | 26.48ms"
+      - "US🇺🇸 | 129.146.77.248-39495 | 53.58ms"
+      - "CN🇨🇳 | 120.48.133.162-10086 | 278.43ms"
+      - "CN🇨🇳 | 120.48.133.162-10086 | 265.62ms"
+      - "RELAY🚩 | nasnet-571299667.rahavard365.co-8080 | 10.22ms"
+      - "US🇺🇸 | linja05.hwcar.sbs-443 | 128.14ms"
+      - "RELAY🚩 | vmess.lbw666.dpdns.org-80 | 475.23ms"
+      - "US🇺🇸 | glweidf.cfd-443 | 128.61ms"
+      - "US🇺🇸 | glweidf.sbs-443 | 257.76ms"
+      - "RELAY🚩 | xmivideo.cfd-443 | 22.82ms"
+      - "RELAY🚩 | quiet-moon-132a.xetag42714.workers.dev-443 | 25.29ms"
+      - "RELAY🚩 | vmess.lbw666.dpdns.org-80 | 633.5ms"
+      - "RELAY🚩 | 104.16.61.8-80 | 1.86ms"
+      - "DE🇩🇪 | rubika.ir.google.com.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aparat.com.V2ray.com.shw2.ir.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.xn--g28h.dns-dynamic.net.-80 | 224.48ms"
+      - "ES🇪🇸 | 85.90.217.42-22324 | 106.22ms"
+      - "US🇺🇸 | 77.83.141.171-443 | 1.4ms"
+      - "US🇺🇸 | 67.220.95.3-18000 | 1.99ms"
+      - "US🇺🇸 | 67.220.95.3-18000 | 2.37ms"
+      - "US🇺🇸 | 67.220.95.3-18000 | 1.53ms"
+      - "US🇺🇸 | 67.220.85.46-18000 | 6.41ms"
+      - "DE🇩🇪 | mygptagent.org-443 | 139.31ms"
+      - "IR🇮🇷 | 62.220.121.35-443 | 160.81ms"
+      - "US🇺🇸 | google.com-80 | 3.05ms"
+      - "RELAY🚩 | https.http.www.net.com.ramseyv2.ir.-80 | 172.9ms"
+      - "FR🇫🇷 | google.whatsapp.snapp.torob.basalam.hesanid8.ir.-80 | 584.36ms"
+      - "FR🇫🇷 | 51.75.118.5-20222 | 86.68ms"
+      - "IR🇮🇷 | zula.ir-443 | 260.95ms"
+      - "US🇺🇸 | rib9jxayoqjgn2kw.v.3dns.vip-443 | 1110.64ms"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -1190,81 +1278,87 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "US🇺🇸 | sg-full.privateip.net-443 | 61.09ms"
-      - "SG🇸🇬 | sg-transit-3.nebulacloud.win-30330 | 421.72ms"
-      - "IR🇮🇷 | s1.connect.labex.pro-1007 | 243.72ms"
-      - "IR🇮🇷 | s1.connect.labex.pro-1007 | 240.46ms"
-      - "IR🇮🇷 | s1.connect.bloroxy.net-1074 | 264.27ms"
-      - "RELAY🚩 | server10.9966338.xyz-443 | 55.98ms"
-      - "DE🇩🇪 | lucas.ehsanazizi-speed-server.com-2110 | 202.95ms"
-      - "IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 174.38ms"
-      - "IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 190.06ms"
-      - "TR🇹🇷 | free.ertebatgoostar.ir-443 | 393.29ms"
-      - "RELAY🚩 | server40.9966338.xyz-443 | 64.76ms"
-      - "US🇺🇸 | determined-ambition-as-c856.up.railway.app-443 | 51.84ms"
-      - "AE🇦🇪 | de-d21e56c13c.shamanapp.online-33744 | 609.83ms"
-      - "IR🇮🇷 | dashboard.ojestore.top-5381 | 395.67ms"
-      - "IR🇮🇷 | dashboard.ojestore.top-5381 | 392.64ms"
-      - "IR🇮🇷 | dashboard.ojeshop.top-5380 | 391.29ms"
-      - "IR🇮🇷 | dashboard.ojeshop.top-5380 | 319.32ms"
-      - "IR🇮🇷 | dashboard.ojedata.top-5382 | 543.19ms"
-      - "IR🇮🇷 | dashboard.ojedata.top-5382 | 495.23ms"
-      - "US🇺🇸 | au-full.privateip.net-443 | 88.39ms"
-      - "IR🇮🇷 | asiatun.roshdiran1.ir-4345 | 886.13ms"
-      - "IR🇮🇷 | asiatun.roshdiran1.ir-4242 | 529.82ms"
-      - "GB🇬🇧 | aidrivercat.org-443 | 379.84ms"
-      - "IR🇮🇷 | NlS3.zelnora.ir-55306 | 372.07ms"
-      - "RELAY🚩 | www.ubuntuupdates.com-443 | 71.19ms"
-      - "RELAY🚩 | www.windowssearchtools.com-443 | 92.93ms"
-      - "RELAY🚩 | www.gptcloudai.com-443 | 75.7ms"
-      - "US🇺🇸 | uk2-full.privateip.net-443 | 66.56ms"
-      - "US🇺🇸 | 38.110.1.246-18000 | 54.19ms"
-      - "KR🇰🇷 | 217.142.138.61-80 | 131.69ms"
-      - "IR🇮🇷 | 212.80.8.184-443 | 230.76ms"
-      - "RELAY🚩 | pages.dev-443 | 37.77ms"
-      - "GB🇬🇧 | aidrivercat.org-443 | 316.3ms"
-      - "US🇺🇸 | jahfkjha.cfd-443 | 349.28ms"
-      - "US🇺🇸 | glweidf.cfd-443 | 52.27ms"
-      - "DE🇩🇪 | 178.105.168.171-2110 | 144.13ms"
-      - "RELAY🚩 | 77h2quiet-dream-5c34.foratay741.workers.dev-443 | 49.06ms"
-      - "US🇺🇸 | obdii.cfd-443 | 50.42ms"
-      - "RELAY🚩 | ukl.lovehk.xyz-443 | 43.87ms"
-      - "RELAY🚩 | vmess.lbw666.dpdns.org-443 | 1248.3ms"
-      - "JP🇯🇵 | 172.111.146.64-80 | 110.96ms"
-      - "NL🇳🇱 | 168.113.215.6-33736 | 132.96ms"
-      - "US🇺🇸 | vspeedfast.org-443 | 386.45ms"
-      - "US🇺🇸 | cdn.sfacg.uk-2083 | 554.33ms"
-      - "RU🇷🇺 | 158.160.180.165-24212 | 174.31ms"
-      - "HK🇭🇰 | 156.245.232.239-35043 | 163.38ms"
-      - "US🇺🇸 | google.com-80 | 14.19ms"
-      - "SG🇸🇬 | 149.88.23.207-18000 | 175.35ms"
-      - "RELAY🚩 | www.speedtest.net-2082 | 70.01ms"
-      - "FR🇫🇷 | google.whatsapp.snapp.torob.basalam.fortresshost.ir.-80 | 433.25ms"
-      - "RELAY🚩 | www.speedtest.net-2082 | 33.45ms"
-      - "HK🇭🇰 | www.baidu.com-443 | 2072.28ms"
-      - "CA🇨🇦 | 134.195.196.211-18000 | 60.51ms"
-      - "US🇺🇸 | 129.146.77.248-39495 | 10.4ms"
-      - "CN🇨🇳 | 120.48.133.162-10086 | 240.18ms"
-      - "CN🇨🇳 | 120.48.133.162-10086 | 219.49ms"
-      - "RELAY🚩 | nasnet-571299667.rahavard365.co-8080 | 81.64ms"
-      - "US🇺🇸 | linja05.hwcar.sbs-443 | 50.95ms"
-      - "US🇺🇸 | glweidf.cfd-443 | 55.63ms"
-      - "US🇺🇸 | glweidf.sbs-443 | 61.16ms"
-      - "RELAY🚩 | xmivideo.cfd-443 | 51.34ms"
-      - "RELAY🚩 | quiet-moon-132a.xetag42714.workers.dev-443 | 43.16ms"
-      - "RELAY🚩 | vmess.lbw666.dpdns.org-80 | 484.42ms"
-      - "RELAY🚩 | 104.16.61.8-80 | 10.36ms"
-      - "DE🇩🇪 | rubika.ir.google.com.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aparat.com.V2ray.com.shw2.ir.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.xn--g28h.dns-dynamic.net.-80 | 246.66ms"
-      - "ES🇪🇸 | 85.90.217.42-22324 | 173.97ms"
-      - "US🇺🇸 | 77.83.141.171-443 | 9.89ms"
-      - "US🇺🇸 | 67.220.95.3-18000 | 57.54ms"
-      - "US🇺🇸 | 67.220.95.3-18000 | 56.37ms"
-      - "US🇺🇸 | mygptagent.org-443 | 266.2ms"
-      - "US🇺🇸 | google.com-80 | 13.33ms"
-      - "FR🇫🇷 | google.whatsapp.snapp.torob.basalam.hesanid8.ir.-80 | 410.71ms"
-      - "IR🇮🇷 | zula.ir-443 | 432.39ms"
-      - "HK🇭🇰 | 47.244.120.197-44867 | 160.98ms"
-      - "US🇺🇸 | 43.130.35.53-10087 | 22.2ms"
+      - "IR🇮🇷 | s1.connect.labex.pro-1007 | 178.69ms"
+      - "IR🇮🇷 | s1.connect.labex.pro-1007 | 288.01ms"
+      - "IR🇮🇷 | s1.connect.bloroxy.net-1074 | 209.18ms"
+      - "DE🇩🇪 | oDDJKX2OdVb0VnKF.v.3dns.vip-443 | 1150.55ms"
+      - "RELAY🚩 | dash.mobiza.ir-2095 | 177.17ms"
+      - "RELAY🚩 | server10.9966338.xyz-443 | 26.49ms"
+      - "IR🇮🇷 | ir.yzcq.ir-2050 | 336.34ms"
+      - "IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 105.72ms"
+      - "IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 101.51ms"
+      - "RELAY🚩 | server40.9966338.xyz-443 | 15.24ms"
+      - "US🇺🇸 | determined-ambition-as-c856.up.railway.app-443 | 7.14ms"
+      - "AE🇦🇪 | de-d21e56c13c.shamanapp.online-33744 | 406.03ms"
+      - "IR🇮🇷 | dashboard.ojestore.top-5381 | 277.45ms"
+      - "IR🇮🇷 | dashboard.ojeshop.top-5380 | 258.25ms"
+      - "IR🇮🇷 | dashboard.ojedata.top-5382 | 416.7ms"
+      - "FI🇫🇮 | bmi.ir.draft.co.impossible.com.ir.bmi.ir.com.iran.ir6.ifilmino.com-80 | 201.42ms"
+      - "DE🇩🇪 | bzqHefRtvpQyiUQb.v.3dns.vip-443 | 976.07ms"
+      - "FI🇫🇮 | zeo6-lylp.uti.realoslo-norg.maniyadg7shard.ir-80 | 340.82ms"
+      - "SE🇸🇪 | aws.github.sync-bridge.ir-443 | 190.62ms"
+      - "CA🇨🇦 | aidrivercat.org-443 | 197.01ms"
+      - "IR🇮🇷 | NlS3.zelnora.ir-55306 | 253.97ms"
+      - "DE🇩🇪 | BWkTc4i50kvHHerS.v.3dns.vip-443 | 578.13ms"
+      - "DE🇩🇪 | BDznVPKMo9RSXr1s.v.3dns.vip-443 | 164.7ms"
+      - "DE🇩🇪 | xGqOpiiJLDgaedNQ.v.3dns.vip-443 | 636.7ms"
+      - "RELAY🚩 | www.ubuntuupdates.com-443 | 37.65ms"
+      - "RELAY🚩 | www.windowssearchtools.com-443 | 44.45ms"
+      - "RELAY🚩 | www.windowsmsidownloads.com-443 | 43.72ms"
+      - "RELAY🚩 | www.gptcloudai.com-443 | 46.4ms"
+      - "US🇺🇸 | us-23.hihu.net-80 | 60.49ms"
+      - "US🇺🇸 | 38.110.1.246-18000 | 26.73ms"
+      - "US🇺🇸 | 172.66.0.251-80 | 2.4ms"
+      - "RELAY🚩 | pages.dev-443 | 8.22ms"
+      - "CA🇨🇦 | aidrivercat.org-443 | 83.8ms"
+      - "US🇺🇸 | jahfkjha.cfd-443 | 189.38ms"
+      - "US🇺🇸 | glweidf.cfd-443 | 153.57ms"
+      - "NL🇳🇱 | 185.19.33.52-44845 | 82.69ms"
+      - "NL🇳🇱 | 185.19.33.52-44845 | 87.79ms"
+      - "NL🇳🇱 | 185.19.33.52-44845 | 83.67ms"
+      - "NL🇳🇱 | 185.19.33.52-44845 | 82.46ms"
+      - "IR🇮🇷 | 185.126.6.177-5645 | 165.44ms"
+      - "DE🇩🇪 | 178.105.168.171-2110 | 95.73ms"
+      - "RELAY🚩 | 77h2quiet-dream-5c34.foratay741.workers.dev-443 | 27.98ms"
+      - "US🇺🇸 | obdii.cfd-443 | 136.23ms"
+      - "RELAY🚩 | ukl.lovehk.xyz-443 | 16.64ms"
+      - "RELAY🚩 | vmess.lbw666.dpdns.org-443 | 722.19ms"
+      - "NL🇳🇱 | 168.113.215.6-33736 | 85.09ms"
+      - "US🇺🇸 | vspeedfast.org-443 | 96.81ms"
+      - "RU🇷🇺 | 158.160.180.165-24212 | 133.61ms"
+      - "US🇺🇸 | google.com-80 | 5.86ms"
+      - "RELAY🚩 | www.speedtest.net-2082 | 40.41ms"
+      - "FR🇫🇷 | google.whatsapp.snapp.torob.basalam.fortresshost.ir.-80 | 324.45ms"
+      - "RELAY🚩 | www.speedtest.net-2082 | 8.42ms"
+      - "HK🇭🇰 | www.baidu.com-443 | 838.26ms"
+      - "CA🇨🇦 | 134.195.196.211-18000 | 26.48ms"
+      - "US🇺🇸 | 129.146.77.248-39495 | 53.58ms"
+      - "CN🇨🇳 | 120.48.133.162-10086 | 278.43ms"
+      - "CN🇨🇳 | 120.48.133.162-10086 | 265.62ms"
+      - "RELAY🚩 | nasnet-571299667.rahavard365.co-8080 | 10.22ms"
+      - "US🇺🇸 | linja05.hwcar.sbs-443 | 128.14ms"
+      - "RELAY🚩 | vmess.lbw666.dpdns.org-80 | 475.23ms"
+      - "US🇺🇸 | glweidf.cfd-443 | 128.61ms"
+      - "US🇺🇸 | glweidf.sbs-443 | 257.76ms"
+      - "RELAY🚩 | xmivideo.cfd-443 | 22.82ms"
+      - "RELAY🚩 | quiet-moon-132a.xetag42714.workers.dev-443 | 25.29ms"
+      - "RELAY🚩 | vmess.lbw666.dpdns.org-80 | 633.5ms"
+      - "RELAY🚩 | 104.16.61.8-80 | 1.86ms"
+      - "DE🇩🇪 | rubika.ir.google.com.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aparat.com.V2ray.com.shw2.ir.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.xn--g28h.dns-dynamic.net.-80 | 224.48ms"
+      - "ES🇪🇸 | 85.90.217.42-22324 | 106.22ms"
+      - "US🇺🇸 | 77.83.141.171-443 | 1.4ms"
+      - "US🇺🇸 | 67.220.95.3-18000 | 1.99ms"
+      - "US🇺🇸 | 67.220.95.3-18000 | 2.37ms"
+      - "US🇺🇸 | 67.220.95.3-18000 | 1.53ms"
+      - "US🇺🇸 | 67.220.85.46-18000 | 6.41ms"
+      - "DE🇩🇪 | mygptagent.org-443 | 139.31ms"
+      - "IR🇮🇷 | 62.220.121.35-443 | 160.81ms"
+      - "US🇺🇸 | google.com-80 | 3.05ms"
+      - "RELAY🚩 | https.http.www.net.com.ramseyv2.ir.-80 | 172.9ms"
+      - "FR🇫🇷 | google.whatsapp.snapp.torob.basalam.hesanid8.ir.-80 | 584.36ms"
+      - "FR🇫🇷 | 51.75.118.5-20222 | 86.68ms"
+      - "IR🇮🇷 | zula.ir-443 | 260.95ms"
+      - "US🇺🇸 | rib9jxayoqjgn2kw.v.3dns.vip-443 | 1110.64ms"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -1274,81 +1368,87 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "US🇺🇸 | sg-full.privateip.net-443 | 61.09ms"
-      - "SG🇸🇬 | sg-transit-3.nebulacloud.win-30330 | 421.72ms"
-      - "IR🇮🇷 | s1.connect.labex.pro-1007 | 243.72ms"
-      - "IR🇮🇷 | s1.connect.labex.pro-1007 | 240.46ms"
-      - "IR🇮🇷 | s1.connect.bloroxy.net-1074 | 264.27ms"
-      - "RELAY🚩 | server10.9966338.xyz-443 | 55.98ms"
-      - "DE🇩🇪 | lucas.ehsanazizi-speed-server.com-2110 | 202.95ms"
-      - "IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 174.38ms"
-      - "IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 190.06ms"
-      - "TR🇹🇷 | free.ertebatgoostar.ir-443 | 393.29ms"
-      - "RELAY🚩 | server40.9966338.xyz-443 | 64.76ms"
-      - "US🇺🇸 | determined-ambition-as-c856.up.railway.app-443 | 51.84ms"
-      - "AE🇦🇪 | de-d21e56c13c.shamanapp.online-33744 | 609.83ms"
-      - "IR🇮🇷 | dashboard.ojestore.top-5381 | 395.67ms"
-      - "IR🇮🇷 | dashboard.ojestore.top-5381 | 392.64ms"
-      - "IR🇮🇷 | dashboard.ojeshop.top-5380 | 391.29ms"
-      - "IR🇮🇷 | dashboard.ojeshop.top-5380 | 319.32ms"
-      - "IR🇮🇷 | dashboard.ojedata.top-5382 | 543.19ms"
-      - "IR🇮🇷 | dashboard.ojedata.top-5382 | 495.23ms"
-      - "US🇺🇸 | au-full.privateip.net-443 | 88.39ms"
-      - "IR🇮🇷 | asiatun.roshdiran1.ir-4345 | 886.13ms"
-      - "IR🇮🇷 | asiatun.roshdiran1.ir-4242 | 529.82ms"
-      - "GB🇬🇧 | aidrivercat.org-443 | 379.84ms"
-      - "IR🇮🇷 | NlS3.zelnora.ir-55306 | 372.07ms"
-      - "RELAY🚩 | www.ubuntuupdates.com-443 | 71.19ms"
-      - "RELAY🚩 | www.windowssearchtools.com-443 | 92.93ms"
-      - "RELAY🚩 | www.gptcloudai.com-443 | 75.7ms"
-      - "US🇺🇸 | uk2-full.privateip.net-443 | 66.56ms"
-      - "US🇺🇸 | 38.110.1.246-18000 | 54.19ms"
-      - "KR🇰🇷 | 217.142.138.61-80 | 131.69ms"
-      - "IR🇮🇷 | 212.80.8.184-443 | 230.76ms"
-      - "RELAY🚩 | pages.dev-443 | 37.77ms"
-      - "GB🇬🇧 | aidrivercat.org-443 | 316.3ms"
-      - "US🇺🇸 | jahfkjha.cfd-443 | 349.28ms"
-      - "US🇺🇸 | glweidf.cfd-443 | 52.27ms"
-      - "DE🇩🇪 | 178.105.168.171-2110 | 144.13ms"
-      - "RELAY🚩 | 77h2quiet-dream-5c34.foratay741.workers.dev-443 | 49.06ms"
-      - "US🇺🇸 | obdii.cfd-443 | 50.42ms"
-      - "RELAY🚩 | ukl.lovehk.xyz-443 | 43.87ms"
-      - "RELAY🚩 | vmess.lbw666.dpdns.org-443 | 1248.3ms"
-      - "JP🇯🇵 | 172.111.146.64-80 | 110.96ms"
-      - "NL🇳🇱 | 168.113.215.6-33736 | 132.96ms"
-      - "US🇺🇸 | vspeedfast.org-443 | 386.45ms"
-      - "US🇺🇸 | cdn.sfacg.uk-2083 | 554.33ms"
-      - "RU🇷🇺 | 158.160.180.165-24212 | 174.31ms"
-      - "HK🇭🇰 | 156.245.232.239-35043 | 163.38ms"
-      - "US🇺🇸 | google.com-80 | 14.19ms"
-      - "SG🇸🇬 | 149.88.23.207-18000 | 175.35ms"
-      - "RELAY🚩 | www.speedtest.net-2082 | 70.01ms"
-      - "FR🇫🇷 | google.whatsapp.snapp.torob.basalam.fortresshost.ir.-80 | 433.25ms"
-      - "RELAY🚩 | www.speedtest.net-2082 | 33.45ms"
-      - "HK🇭🇰 | www.baidu.com-443 | 2072.28ms"
-      - "CA🇨🇦 | 134.195.196.211-18000 | 60.51ms"
-      - "US🇺🇸 | 129.146.77.248-39495 | 10.4ms"
-      - "CN🇨🇳 | 120.48.133.162-10086 | 240.18ms"
-      - "CN🇨🇳 | 120.48.133.162-10086 | 219.49ms"
-      - "RELAY🚩 | nasnet-571299667.rahavard365.co-8080 | 81.64ms"
-      - "US🇺🇸 | linja05.hwcar.sbs-443 | 50.95ms"
-      - "US🇺🇸 | glweidf.cfd-443 | 55.63ms"
-      - "US🇺🇸 | glweidf.sbs-443 | 61.16ms"
-      - "RELAY🚩 | xmivideo.cfd-443 | 51.34ms"
-      - "RELAY🚩 | quiet-moon-132a.xetag42714.workers.dev-443 | 43.16ms"
-      - "RELAY🚩 | vmess.lbw666.dpdns.org-80 | 484.42ms"
-      - "RELAY🚩 | 104.16.61.8-80 | 10.36ms"
-      - "DE🇩🇪 | rubika.ir.google.com.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aparat.com.V2ray.com.shw2.ir.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.xn--g28h.dns-dynamic.net.-80 | 246.66ms"
-      - "ES🇪🇸 | 85.90.217.42-22324 | 173.97ms"
-      - "US🇺🇸 | 77.83.141.171-443 | 9.89ms"
-      - "US🇺🇸 | 67.220.95.3-18000 | 57.54ms"
-      - "US🇺🇸 | 67.220.95.3-18000 | 56.37ms"
-      - "US🇺🇸 | mygptagent.org-443 | 266.2ms"
-      - "US🇺🇸 | google.com-80 | 13.33ms"
-      - "FR🇫🇷 | google.whatsapp.snapp.torob.basalam.hesanid8.ir.-80 | 410.71ms"
-      - "IR🇮🇷 | zula.ir-443 | 432.39ms"
-      - "HK🇭🇰 | 47.244.120.197-44867 | 160.98ms"
-      - "US🇺🇸 | 43.130.35.53-10087 | 22.2ms"
+      - "IR🇮🇷 | s1.connect.labex.pro-1007 | 178.69ms"
+      - "IR🇮🇷 | s1.connect.labex.pro-1007 | 288.01ms"
+      - "IR🇮🇷 | s1.connect.bloroxy.net-1074 | 209.18ms"
+      - "DE🇩🇪 | oDDJKX2OdVb0VnKF.v.3dns.vip-443 | 1150.55ms"
+      - "RELAY🚩 | dash.mobiza.ir-2095 | 177.17ms"
+      - "RELAY🚩 | server10.9966338.xyz-443 | 26.49ms"
+      - "IR🇮🇷 | ir.yzcq.ir-2050 | 336.34ms"
+      - "IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 105.72ms"
+      - "IR🇮🇷 | funnymemes.goalir.co.uk-8880 | 101.51ms"
+      - "RELAY🚩 | server40.9966338.xyz-443 | 15.24ms"
+      - "US🇺🇸 | determined-ambition-as-c856.up.railway.app-443 | 7.14ms"
+      - "AE🇦🇪 | de-d21e56c13c.shamanapp.online-33744 | 406.03ms"
+      - "IR🇮🇷 | dashboard.ojestore.top-5381 | 277.45ms"
+      - "IR🇮🇷 | dashboard.ojeshop.top-5380 | 258.25ms"
+      - "IR🇮🇷 | dashboard.ojedata.top-5382 | 416.7ms"
+      - "FI🇫🇮 | bmi.ir.draft.co.impossible.com.ir.bmi.ir.com.iran.ir6.ifilmino.com-80 | 201.42ms"
+      - "DE🇩🇪 | bzqHefRtvpQyiUQb.v.3dns.vip-443 | 976.07ms"
+      - "FI🇫🇮 | zeo6-lylp.uti.realoslo-norg.maniyadg7shard.ir-80 | 340.82ms"
+      - "SE🇸🇪 | aws.github.sync-bridge.ir-443 | 190.62ms"
+      - "CA🇨🇦 | aidrivercat.org-443 | 197.01ms"
+      - "IR🇮🇷 | NlS3.zelnora.ir-55306 | 253.97ms"
+      - "DE🇩🇪 | BWkTc4i50kvHHerS.v.3dns.vip-443 | 578.13ms"
+      - "DE🇩🇪 | BDznVPKMo9RSXr1s.v.3dns.vip-443 | 164.7ms"
+      - "DE🇩🇪 | xGqOpiiJLDgaedNQ.v.3dns.vip-443 | 636.7ms"
+      - "RELAY🚩 | www.ubuntuupdates.com-443 | 37.65ms"
+      - "RELAY🚩 | www.windowssearchtools.com-443 | 44.45ms"
+      - "RELAY🚩 | www.windowsmsidownloads.com-443 | 43.72ms"
+      - "RELAY🚩 | www.gptcloudai.com-443 | 46.4ms"
+      - "US🇺🇸 | us-23.hihu.net-80 | 60.49ms"
+      - "US🇺🇸 | 38.110.1.246-18000 | 26.73ms"
+      - "US🇺🇸 | 172.66.0.251-80 | 2.4ms"
+      - "RELAY🚩 | pages.dev-443 | 8.22ms"
+      - "CA🇨🇦 | aidrivercat.org-443 | 83.8ms"
+      - "US🇺🇸 | jahfkjha.cfd-443 | 189.38ms"
+      - "US🇺🇸 | glweidf.cfd-443 | 153.57ms"
+      - "NL🇳🇱 | 185.19.33.52-44845 | 82.69ms"
+      - "NL🇳🇱 | 185.19.33.52-44845 | 87.79ms"
+      - "NL🇳🇱 | 185.19.33.52-44845 | 83.67ms"
+      - "NL🇳🇱 | 185.19.33.52-44845 | 82.46ms"
+      - "IR🇮🇷 | 185.126.6.177-5645 | 165.44ms"
+      - "DE🇩🇪 | 178.105.168.171-2110 | 95.73ms"
+      - "RELAY🚩 | 77h2quiet-dream-5c34.foratay741.workers.dev-443 | 27.98ms"
+      - "US🇺🇸 | obdii.cfd-443 | 136.23ms"
+      - "RELAY🚩 | ukl.lovehk.xyz-443 | 16.64ms"
+      - "RELAY🚩 | vmess.lbw666.dpdns.org-443 | 722.19ms"
+      - "NL🇳🇱 | 168.113.215.6-33736 | 85.09ms"
+      - "US🇺🇸 | vspeedfast.org-443 | 96.81ms"
+      - "RU🇷🇺 | 158.160.180.165-24212 | 133.61ms"
+      - "US🇺🇸 | google.com-80 | 5.86ms"
+      - "RELAY🚩 | www.speedtest.net-2082 | 40.41ms"
+      - "FR🇫🇷 | google.whatsapp.snapp.torob.basalam.fortresshost.ir.-80 | 324.45ms"
+      - "RELAY🚩 | www.speedtest.net-2082 | 8.42ms"
+      - "HK🇭🇰 | www.baidu.com-443 | 838.26ms"
+      - "CA🇨🇦 | 134.195.196.211-18000 | 26.48ms"
+      - "US🇺🇸 | 129.146.77.248-39495 | 53.58ms"
+      - "CN🇨🇳 | 120.48.133.162-10086 | 278.43ms"
+      - "CN🇨🇳 | 120.48.133.162-10086 | 265.62ms"
+      - "RELAY🚩 | nasnet-571299667.rahavard365.co-8080 | 10.22ms"
+      - "US🇺🇸 | linja05.hwcar.sbs-443 | 128.14ms"
+      - "RELAY🚩 | vmess.lbw666.dpdns.org-80 | 475.23ms"
+      - "US🇺🇸 | glweidf.cfd-443 | 128.61ms"
+      - "US🇺🇸 | glweidf.sbs-443 | 257.76ms"
+      - "RELAY🚩 | xmivideo.cfd-443 | 22.82ms"
+      - "RELAY🚩 | quiet-moon-132a.xetag42714.workers.dev-443 | 25.29ms"
+      - "RELAY🚩 | vmess.lbw666.dpdns.org-80 | 633.5ms"
+      - "RELAY🚩 | 104.16.61.8-80 | 1.86ms"
+      - "DE🇩🇪 | rubika.ir.google.com.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aparat.com.V2ray.com.shw2.ir.xn--cr8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.xn--g28h.dns-dynamic.net.-80 | 224.48ms"
+      - "ES🇪🇸 | 85.90.217.42-22324 | 106.22ms"
+      - "US🇺🇸 | 77.83.141.171-443 | 1.4ms"
+      - "US🇺🇸 | 67.220.95.3-18000 | 1.99ms"
+      - "US🇺🇸 | 67.220.95.3-18000 | 2.37ms"
+      - "US🇺🇸 | 67.220.95.3-18000 | 1.53ms"
+      - "US🇺🇸 | 67.220.85.46-18000 | 6.41ms"
+      - "DE🇩🇪 | mygptagent.org-443 | 139.31ms"
+      - "IR🇮🇷 | 62.220.121.35-443 | 160.81ms"
+      - "US🇺🇸 | google.com-80 | 3.05ms"
+      - "RELAY🚩 | https.http.www.net.com.ramseyv2.ir.-80 | 172.9ms"
+      - "FR🇫🇷 | google.whatsapp.snapp.torob.basalam.hesanid8.ir.-80 | 584.36ms"
+      - "FR🇫🇷 | 51.75.118.5-20222 | 86.68ms"
+      - "IR🇮🇷 | zula.ir-443 | 260.95ms"
+      - "US🇺🇸 | rib9jxayoqjgn2kw.v.3dns.vip-443 | 1110.64ms"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"

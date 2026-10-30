@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -493,7 +527,7 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "🇫🇷 REALITY|FR🇫🇷 | 51.44.57.46-443 | 132.62ms"
+  - name: "🇫🇷 🔒 VL-HTTP-RLT 🇫🇷 FR-51.44.57.46:443"
     type: "vless"
     server: "51.44.57.46"
     port: 443
@@ -532,7 +566,7 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "🇫🇷 REALITY|FR🇫🇷 | 51.44.57.46-443 | 132.62ms"
+      - "🇫🇷 🔒 VL-HTTP-RLT 🇫🇷 FR-51.44.57.46:443"
       - "🇮🇷 027-🇦🇿 AZ http-reality ✂️@GheychiAmoozesh"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
@@ -542,7 +576,7 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "🇫🇷 REALITY|FR🇫🇷 | 51.44.57.46-443 | 132.62ms"
+      - "🇫🇷 🔒 VL-HTTP-RLT 🇫🇷 FR-51.44.57.46:443"
       - "🇮🇷 027-🇦🇿 AZ http-reality ✂️@GheychiAmoozesh"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
@@ -553,7 +587,7 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "🇫🇷 REALITY|FR🇫🇷 | 51.44.57.46-443 | 132.62ms"
+      - "🇫🇷 🔒 VL-HTTP-RLT 🇫🇷 FR-51.44.57.46:443"
       - "🇮🇷 027-🇦🇿 AZ http-reality ✂️@GheychiAmoozesh"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"

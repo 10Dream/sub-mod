@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -658,6 +692,47 @@ proxies:
     cipher: "chacha20-ietf-poly1305"
     password: "uvKNudV-N8AUCrykPiyznA"
     udp: true
+  - name: "🇨🇿 REALITY|CZ🇨🇿 | server.slavkiti.monster-443 | 289.44ms"
+    type: "vless"
+    server: "server.slavkiti.monster"
+    port: 443
+    uuid: "fad0b9a6-187d-4fcc-96fc-498bc5b3135a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.foxsports.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "J-dv-HrWfQ_IOoyutv0Kg-rO8QwoRwc02dS1dS_tblk"
+      short-id: "8325360e8bd2"
+  - name: "🇨🇿 REALITY|CZ🇨🇿 | 188.130.208.210-443 | 97.62ms"
+    type: "vless"
+    server: "188.130.208.210"
+    port: 443
+    uuid: "08b6dd4b-08df-4aa2-9580-92a3360cf07c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "edge-cz1.lovely.ceo"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "x_sc52Wgwr7bsogvKRA5hHHS5PJpdocqZNW_Up1mty8"
+      short-id: "59ab2fc39ec55bc7"
+  - name: "🇨🇿 REALITY|CZ🇨🇿 | 188.130.208.210-443 | 98.58ms"
+    type: "vless"
+    server: "188.130.208.210"
+    port: 443
+    uuid: "08b6dd4b-08df-4aa2-9580-92a3360cf07c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "edge-cz1.lovely.ceo"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "x_sc52Wgwr7bsogvKRA5hHHS5PJpdocqZNW_Up1mty8"
+      short-id: "59ab2fc39ec55bc7"
   - name: "🇨🇿 🔒 VL-TCP-RLT 🇨🇿 CZ-5.39.202.72:443"
     type: "vless"
     server: "5.39.202.72"
@@ -671,19 +746,6 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "1Wuq1aa8cy2f9HhFVnqUHj8LL-vJtp-QtNR6u5yh8Bg"
-  - name: "🇨🇿 🔒 VL-TCP-RLT 🇨🇿 CZ-188.130.208.210:443"
-    type: "vless"
-    server: "188.130.208.210"
-    port: 443
-    uuid: "08b6dd4b-08df-4aa2-9580-92a3360cf07c"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "edge-cz1.lovely.ceo"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "x_sc52Wgwr7bsogvKRA5hHHS5PJpdocqZNW_Up1mty8"
-      short-id: "59ab2fc39ec55bc7"
   - name: "🇨🇿 🔒 VL-RAW-RLT 🇨🇿 CZ-193.124.17.190:443"
     type: "vless"
     server: "193.124.17.190"
@@ -698,7 +760,7 @@ proxies:
     reality-opts:
       public-key: "J-dv-HrWfQ_IOoyutv0Kg-rO8QwoRwc02dS1dS_tblk"
       short-id: "2a2ce9e42980"
-  - name: "🇨🇿 RELAY🚩 | nb.lovecf.ggff.net-443 | 10.17ms"
+  - name: "🇨🇿 RELAY🚩 | nb.lovecf.ggff.net-443 | 3.02ms"
     type: "vless"
     server: "195.85.23.217"
     port: 443
@@ -711,29 +773,37 @@ proxies:
       path: "/proxyip=us.xiabibi.cf"
       headers:
         Host: "nb.lovecf.ggff.net"
-  - name: "🇨🇿 🔒 VL-TCP-RLT 🇨🇿 CZ-188.130.208.210:443-1"
+  - name: "🇨🇿 CZ🇨🇿 | docker-39b2-8000.prg1.zerops.app-443 | 279.1ms"
     type: "vless"
-    server: "188.130.208.210"
+    server: "docker-39b2-8000.prg1.zerops.app"
     port: 443
-    uuid: "08b6dd4b-08df-4aa2-9580-92a3360cf07c"
+    uuid: "8697894a-35e5-c4cf-125e-583bf78ccc9a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "docker-39b2-8000.prg1.zerops.app"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/ws/8697894a-35e5-c4cf-125e-583bf78ccc9a"
+      headers:
+        Host: "docker-39b2-8000.prg1.zerops.app"
+  - name: "🇨🇿 🆔soskeynet 🔒 VL-TCP- 🇧🇬 BG 311ms"
+    type: "vless"
+    server: "de.soft10.ir"
+    port: 8080
+    uuid: "8be3e9b2-54e6-490c-ad5f-5a372765ffae"
     udp: true
     tls: true
     network: "tcp"
-    servername: "edge-cz1.lovely.ceo"
-    client-fingerprint: "firefox"
+    servername: "staticview.microsoft.com"
+    client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "x_sc52Wgwr7bsogvKRA5hHHS5PJpdocqZNW_Up1mty8"
-      short-id: "59ab2fc39ec55bc7"
-  - name: "🇨🇿 🆔soskeynet 🔓 VL-XHTTP-N/A 🇱🇻 LV 351ms"
-    type: "vless"
-    server: "95.182.85.130"
-    port: 443
-    uuid: "d7a6e04d-0790-4243-8154-2b96a0376dbc"
-    udp: true
-    tls: false
-    network: "xhttp"
-  - name: "🇨🇿 🆔ar14n24b 🔓 VL-WS-N/A ❔ XX 342ms"
+      public-key: "Au0lpWqAPpK0aNuc3Uwcsf7fB1B2w2LXzdC1CVKb1ik"
+      short-id: "a8235bf7eb8fca"
+  - name: "🇨🇿 🆔madshopx 🔓 VL-WS-N/A ❔ XX down"
     type: "vless"
     server: "95.182.85.130"
     port: 442
@@ -745,19 +815,6 @@ proxies:
       path: "/"
       headers:
         Host: "95.182.85.130"
-  - name: "🇨🇿 🆔ar14n24b 🔒 VL-XHTTP-N/A 🇱🇻 LV 793ms"
-    type: "vless"
-    server: "95.182.85.130"
-    port: 8080
-    uuid: "d7a6e04d-0790-4243-8154-2b96a0376dbc"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "95.182.85.130"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-      - "http/1.1"
   - name: "🇨🇿 @DeltaKroneckerGithub"
     type: "trojan"
     server: "195.133.93.81"
@@ -913,20 +970,6 @@ proxies:
       short-id: "1374bddeb25d"
   - name: "🇨🇿 @DeltaKroneckerGithub-9"
     type: "vless"
-    server: "de.soft10.ir"
-    port: 8080
-    uuid: "8be3e9b2-54e6-490c-ad5f-5a372765ffae"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "staticview.microsoft.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "Au0lpWqAPpK0aNuc3Uwcsf7fB1B2w2LXzdC1CVKb1ik"
-      short-id: "a8235bf7eb8fca"
-  - name: "🇨🇿 @DeltaKroneckerGithub-10"
-    type: "vless"
     server: "server.slavkiti.monster"
     port: 443
     uuid: "68cf8d29-5aa0-44b3-88a9-f1a576b6e84c"
@@ -939,7 +982,7 @@ proxies:
     reality-opts:
       public-key: "J-dv-HrWfQ_IOoyutv0Kg-rO8QwoRwc02dS1dS_tblk"
       short-id: "73a9e631a09b"
-  - name: "🇨🇿 @DeltaKroneckerGithub-11"
+  - name: "🇨🇿 @DeltaKroneckerGithub-10"
     type: "vless"
     server: "193.124.17.190"
     port: 443
@@ -953,7 +996,7 @@ proxies:
     reality-opts:
       public-key: "J-dv-HrWfQ_IOoyutv0Kg-rO8QwoRwc02dS1dS_tblk"
       short-id: "73a9e631a09b"
-  - name: "🇨🇿 @DeltaKroneckerGithub-12"
+  - name: "🇨🇿 @DeltaKroneckerGithub-11"
     type: "vless"
     server: "server.slavkiti.monster"
     port: 443
@@ -967,7 +1010,7 @@ proxies:
     reality-opts:
       public-key: "J-dv-HrWfQ_IOoyutv0Kg-rO8QwoRwc02dS1dS_tblk"
       short-id: "2a2ce9e42980"
-  - name: "🇨🇿 @DeltaKroneckerGithub-13"
+  - name: "🇨🇿 @DeltaKroneckerGithub-12"
     type: "vless"
     server: "193.124.17.190"
     port: 443
@@ -981,7 +1024,7 @@ proxies:
     reality-opts:
       public-key: "J-dv-HrWfQ_IOoyutv0Kg-rO8QwoRwc02dS1dS_tblk"
       short-id: "1374bddeb25d"
-  - name: "🇨🇿 @DeltaKroneckerGithub-14"
+  - name: "🇨🇿 @DeltaKroneckerGithub-13"
     type: "vless"
     server: "193.124.17.190"
     port: 443
@@ -995,7 +1038,7 @@ proxies:
     reality-opts:
       public-key: "J-dv-HrWfQ_IOoyutv0Kg-rO8QwoRwc02dS1dS_tblk"
       short-id: "1036b2383b72"
-  - name: "🇨🇿 @DeltaKroneckerGithub-15"
+  - name: "🇨🇿 @DeltaKroneckerGithub-14"
     type: "vless"
     server: "212.102.38.25"
     port: 443
@@ -1009,20 +1052,6 @@ proxies:
     reality-opts:
       public-key: "23cb4W9THzBKsrECsLh-A_FcKZfkAtUONoDze8-GnQE"
       short-id: "e90360ec7cc61b20"
-  - name: "🇨🇿 @DeltaKroneckerGithub-16"
-    type: "vless"
-    server: "server.slavkiti.monster"
-    port: 443
-    uuid: "fad0b9a6-187d-4fcc-96fc-498bc5b3135a"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.foxsports.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "J-dv-HrWfQ_IOoyutv0Kg-rO8QwoRwc02dS1dS_tblk"
-      short-id: "8325360e8bd2"
   - name: "🇨🇿 >>@oneclickvpnkeys::DE"
     type: "vless"
     server: "95.85.230.35"
@@ -1107,19 +1136,6 @@ proxies:
     reality-opts:
       public-key: "_nU9BYxVl5MS4bDnRPnxIDqF341tJXKo0ZmUSktIrnE"
       short-id: "cc8e0ee0b70492fa"
-  - name: "🇨🇿 🇨🇿 | @WhiteDNS | CZ21|6.7MB/s|DNSOK|GPT⁺-CZ"
-    type: "vless"
-    server: "37.46.209.31"
-    port: 443
-    uuid: "6a6ac9b3-b336-44f7-a1c4-a03d6c2fae9e"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "chek.skysafe.online"
-    client-fingerprint: "qq"
-    reality-opts:
-      public-key: "EApxy12MeXpqt-78odxizwcXT6hX9f8XeAcbMDVRAV0"
-      short-id: "6ba7b8109dad11d1"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -1148,14 +1164,15 @@ proxy-groups:
       - "🇨🇿 🔒 SS-TCP-NA 🇨🇿 CZ-46.8.101.107:56137"
       - "🇨🇿 🔒 SS-TCP-NA 🇨🇿 CZ-185.156.174.106:1080"
       - "🇨🇿 🔒 SS-TCP-NA 🇨🇿 CZ-95.182.95.28:56137"
+      - "🇨🇿 REALITY|CZ🇨🇿 | server.slavkiti.monster-443 | 289.44ms"
+      - "🇨🇿 REALITY|CZ🇨🇿 | 188.130.208.210-443 | 97.62ms"
+      - "🇨🇿 REALITY|CZ🇨🇿 | 188.130.208.210-443 | 98.58ms"
       - "🇨🇿 🔒 VL-TCP-RLT 🇨🇿 CZ-5.39.202.72:443"
-      - "🇨🇿 🔒 VL-TCP-RLT 🇨🇿 CZ-188.130.208.210:443"
       - "🇨🇿 🔒 VL-RAW-RLT 🇨🇿 CZ-193.124.17.190:443"
-      - "🇨🇿 RELAY🚩 | nb.lovecf.ggff.net-443 | 10.17ms"
-      - "🇨🇿 🔒 VL-TCP-RLT 🇨🇿 CZ-188.130.208.210:443-1"
-      - "🇨🇿 🆔soskeynet 🔓 VL-XHTTP-N/A 🇱🇻 LV 351ms"
-      - "🇨🇿 🆔ar14n24b 🔓 VL-WS-N/A ❔ XX 342ms"
-      - "🇨🇿 🆔ar14n24b 🔒 VL-XHTTP-N/A 🇱🇻 LV 793ms"
+      - "🇨🇿 RELAY🚩 | nb.lovecf.ggff.net-443 | 3.02ms"
+      - "🇨🇿 CZ🇨🇿 | docker-39b2-8000.prg1.zerops.app-443 | 279.1ms"
+      - "🇨🇿 🆔soskeynet 🔒 VL-TCP- 🇧🇬 BG 311ms"
+      - "🇨🇿 🆔madshopx 🔓 VL-WS-N/A ❔ XX down"
       - "🇨🇿 @DeltaKroneckerGithub"
       - "🇨🇿 @DeltaKroneckerGithub-1"
       - "🇨🇿 @DeltaKroneckerGithub-2"
@@ -1174,8 +1191,6 @@ proxy-groups:
       - "🇨🇿 @DeltaKroneckerGithub-12"
       - "🇨🇿 @DeltaKroneckerGithub-13"
       - "🇨🇿 @DeltaKroneckerGithub-14"
-      - "🇨🇿 @DeltaKroneckerGithub-15"
-      - "🇨🇿 @DeltaKroneckerGithub-16"
       - "🇨🇿 >>@oneclickvpnkeys::DE"
       - "🇨🇿 >>@oneclickvpnkeys::NL"
       - "🇨🇿 10. 🇨🇿 Czechia"
@@ -1183,7 +1198,6 @@ proxy-groups:
       - "🇨🇿 38. 🇩🇪 Germany"
       - "🇨🇿 41. 🇩🇪 Germany"
       - "🇨🇿 125. 🇨🇿 Czechia"
-      - "🇨🇿 🇨🇿 | @WhiteDNS | CZ21|6.7MB/s|DNSOK|GPT⁺-CZ"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -1206,14 +1220,15 @@ proxy-groups:
       - "🇨🇿 🔒 SS-TCP-NA 🇨🇿 CZ-46.8.101.107:56137"
       - "🇨🇿 🔒 SS-TCP-NA 🇨🇿 CZ-185.156.174.106:1080"
       - "🇨🇿 🔒 SS-TCP-NA 🇨🇿 CZ-95.182.95.28:56137"
+      - "🇨🇿 REALITY|CZ🇨🇿 | server.slavkiti.monster-443 | 289.44ms"
+      - "🇨🇿 REALITY|CZ🇨🇿 | 188.130.208.210-443 | 97.62ms"
+      - "🇨🇿 REALITY|CZ🇨🇿 | 188.130.208.210-443 | 98.58ms"
       - "🇨🇿 🔒 VL-TCP-RLT 🇨🇿 CZ-5.39.202.72:443"
-      - "🇨🇿 🔒 VL-TCP-RLT 🇨🇿 CZ-188.130.208.210:443"
       - "🇨🇿 🔒 VL-RAW-RLT 🇨🇿 CZ-193.124.17.190:443"
-      - "🇨🇿 RELAY🚩 | nb.lovecf.ggff.net-443 | 10.17ms"
-      - "🇨🇿 🔒 VL-TCP-RLT 🇨🇿 CZ-188.130.208.210:443-1"
-      - "🇨🇿 🆔soskeynet 🔓 VL-XHTTP-N/A 🇱🇻 LV 351ms"
-      - "🇨🇿 🆔ar14n24b 🔓 VL-WS-N/A ❔ XX 342ms"
-      - "🇨🇿 🆔ar14n24b 🔒 VL-XHTTP-N/A 🇱🇻 LV 793ms"
+      - "🇨🇿 RELAY🚩 | nb.lovecf.ggff.net-443 | 3.02ms"
+      - "🇨🇿 CZ🇨🇿 | docker-39b2-8000.prg1.zerops.app-443 | 279.1ms"
+      - "🇨🇿 🆔soskeynet 🔒 VL-TCP- 🇧🇬 BG 311ms"
+      - "🇨🇿 🆔madshopx 🔓 VL-WS-N/A ❔ XX down"
       - "🇨🇿 @DeltaKroneckerGithub"
       - "🇨🇿 @DeltaKroneckerGithub-1"
       - "🇨🇿 @DeltaKroneckerGithub-2"
@@ -1232,8 +1247,6 @@ proxy-groups:
       - "🇨🇿 @DeltaKroneckerGithub-12"
       - "🇨🇿 @DeltaKroneckerGithub-13"
       - "🇨🇿 @DeltaKroneckerGithub-14"
-      - "🇨🇿 @DeltaKroneckerGithub-15"
-      - "🇨🇿 @DeltaKroneckerGithub-16"
       - "🇨🇿 >>@oneclickvpnkeys::DE"
       - "🇨🇿 >>@oneclickvpnkeys::NL"
       - "🇨🇿 10. 🇨🇿 Czechia"
@@ -1241,7 +1254,6 @@ proxy-groups:
       - "🇨🇿 38. 🇩🇪 Germany"
       - "🇨🇿 41. 🇩🇪 Germany"
       - "🇨🇿 125. 🇨🇿 Czechia"
-      - "🇨🇿 🇨🇿 | @WhiteDNS | CZ21|6.7MB/s|DNSOK|GPT⁺-CZ"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -1265,14 +1277,15 @@ proxy-groups:
       - "🇨🇿 🔒 SS-TCP-NA 🇨🇿 CZ-46.8.101.107:56137"
       - "🇨🇿 🔒 SS-TCP-NA 🇨🇿 CZ-185.156.174.106:1080"
       - "🇨🇿 🔒 SS-TCP-NA 🇨🇿 CZ-95.182.95.28:56137"
+      - "🇨🇿 REALITY|CZ🇨🇿 | server.slavkiti.monster-443 | 289.44ms"
+      - "🇨🇿 REALITY|CZ🇨🇿 | 188.130.208.210-443 | 97.62ms"
+      - "🇨🇿 REALITY|CZ🇨🇿 | 188.130.208.210-443 | 98.58ms"
       - "🇨🇿 🔒 VL-TCP-RLT 🇨🇿 CZ-5.39.202.72:443"
-      - "🇨🇿 🔒 VL-TCP-RLT 🇨🇿 CZ-188.130.208.210:443"
       - "🇨🇿 🔒 VL-RAW-RLT 🇨🇿 CZ-193.124.17.190:443"
-      - "🇨🇿 RELAY🚩 | nb.lovecf.ggff.net-443 | 10.17ms"
-      - "🇨🇿 🔒 VL-TCP-RLT 🇨🇿 CZ-188.130.208.210:443-1"
-      - "🇨🇿 🆔soskeynet 🔓 VL-XHTTP-N/A 🇱🇻 LV 351ms"
-      - "🇨🇿 🆔ar14n24b 🔓 VL-WS-N/A ❔ XX 342ms"
-      - "🇨🇿 🆔ar14n24b 🔒 VL-XHTTP-N/A 🇱🇻 LV 793ms"
+      - "🇨🇿 RELAY🚩 | nb.lovecf.ggff.net-443 | 3.02ms"
+      - "🇨🇿 CZ🇨🇿 | docker-39b2-8000.prg1.zerops.app-443 | 279.1ms"
+      - "🇨🇿 🆔soskeynet 🔒 VL-TCP- 🇧🇬 BG 311ms"
+      - "🇨🇿 🆔madshopx 🔓 VL-WS-N/A ❔ XX down"
       - "🇨🇿 @DeltaKroneckerGithub"
       - "🇨🇿 @DeltaKroneckerGithub-1"
       - "🇨🇿 @DeltaKroneckerGithub-2"
@@ -1291,8 +1304,6 @@ proxy-groups:
       - "🇨🇿 @DeltaKroneckerGithub-12"
       - "🇨🇿 @DeltaKroneckerGithub-13"
       - "🇨🇿 @DeltaKroneckerGithub-14"
-      - "🇨🇿 @DeltaKroneckerGithub-15"
-      - "🇨🇿 @DeltaKroneckerGithub-16"
       - "🇨🇿 >>@oneclickvpnkeys::DE"
       - "🇨🇿 >>@oneclickvpnkeys::NL"
       - "🇨🇿 10. 🇨🇿 Czechia"
@@ -1300,7 +1311,6 @@ proxy-groups:
       - "🇨🇿 38. 🇩🇪 Germany"
       - "🇨🇿 41. 🇩🇪 Germany"
       - "🇨🇿 125. 🇨🇿 Czechia"
-      - "🇨🇿 🇨🇿 | @WhiteDNS | CZ21|6.7MB/s|DNSOK|GPT⁺-CZ"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"

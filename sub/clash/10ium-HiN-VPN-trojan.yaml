@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -493,7 +527,20 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms"
+  - name: "🆔soskeynet 🔓 TR-WS-N/A 🇺🇸 US 9ms"
+    type: "trojan"
+    server: "188.114.97.3"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms"
     type: "trojan"
     server: "199.232.78.160"
     port: 443
@@ -506,7 +553,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSs---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "1--2---3--mitivpn.global.ssl.fastly.net"
-  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 15ms"
+  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-1"
     type: "trojan"
     server: "151.101.56.7"
     port: 443
@@ -519,7 +566,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/D-e2@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn-ss-ss.global.ssl.fastly.net"
-  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms-1"
+  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-2"
     type: "trojan"
     server: "199.232.78.160"
     port: 443
@@ -532,7 +579,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSs---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn-mitivpn-mitivpn---mitivpn--mitivpn.global.ssl.fastly.net"
-  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 13ms"
+  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-3"
     type: "trojan"
     server: "151.101.56.7"
     port: 443
@@ -545,7 +592,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/D-e2@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn-mitivpn-mitivpn---mitivpn--mitivpn.global.ssl.fastly.net"
-  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms-2"
+  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-4"
     type: "trojan"
     server: "199.232.78.160"
     port: 443
@@ -558,7 +605,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSs---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn-ss-mitivpn-----mitivpn.global.ssl.fastly.net"
-  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 6ms"
+  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 3ms"
     type: "trojan"
     server: "199.232.78.160"
     port: 443
@@ -571,7 +618,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSs---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn-ss-mitivpn---mitivpn--mitivpn.global.ssl.fastly.net"
-  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 6ms-1"
+  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-5"
     type: "trojan"
     server: "151.101.56.6"
     port: 443
@@ -584,7 +631,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSus---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn---ss--s---mitivpn-1.global.ssl.fastly.net"
-  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 10ms"
+  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 4ms"
     type: "trojan"
     server: "151.101.56.7"
     port: 443
@@ -597,7 +644,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/D-e2@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn---ss--s---mitivpn-2.global.ssl.fastly.net"
-  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 9ms"
+  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-6"
     type: "trojan"
     server: "167.82.76.27"
     port: 443
@@ -610,7 +657,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSs---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn---ss--s---mitivpn-3.global.ssl.fastly.net"
-  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 10ms-1"
+  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-7"
     type: "trojan"
     server: "199.232.78.160"
     port: 443
@@ -623,7 +670,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/D-e1i@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn---ss--s---mitivpn-4.global.ssl.fastly.net"
-  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 33ms"
+  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 9ms"
     type: "trojan"
     server: "185.31.18.255"
     port: 443
@@ -636,7 +683,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSus---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn-ss-mitivpn---mitivpn--mitivpn.global.ssl.fastly.net"
-  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 6ms-2"
+  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 1ms"
     type: "trojan"
     server: "151.101.56.6"
     port: 443
@@ -649,7 +696,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/D-e2@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn-mitivpn-mitivpn-bb-mitivpn-mitivpn--mitivpn.global.ssl.fastly.net"
-  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 9ms-1"
+  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-8"
     type: "trojan"
     server: "167.82.96.58"
     port: 443
@@ -662,7 +709,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSs---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn-ss-mitivpn---mitivpn--mitivpn.global.ssl.fastly.net"
-  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 14ms"
+  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-9"
     type: "trojan"
     server: "167.82.79.164"
     port: 443
@@ -675,7 +722,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/D-e1i@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn-mitivpn-mitivpn-bb-mitivpn-mitivpn--mitivpn.global.ssl.fastly.net"
-  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 14ms-1"
+  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-10"
     type: "trojan"
     server: "167.82.101.75"
     port: 443
@@ -688,7 +735,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLS4s---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn-ss-mitivpn---mitivpn--mitivpn.global.ssl.fastly.net"
-  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms-3"
+  - name: "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-11"
     type: "trojan"
     server: "199.232.78.20"
     port: 443
@@ -701,20 +748,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/D-ei@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "mitivpn-mitivpn-mitivpn-bb-mitivpn-mitivpn--mitivpn.global.ssl.fastly.net"
-  - name: "🆔vpnbaz 🔒 TR-WS-N/A 🇺🇸 US 7ms"
-    type: "trojan"
-    server: "108.162.194.134"
-    port: 443
-    password: "humanity"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "www.pleadcourt.org"
-    ws-opts:
-      path: "/assignment"
-      headers:
-        Host: "www.pleadcourt.org"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms"
     type: "trojan"
     server: "88.216.69.253"
     port: 443
@@ -727,7 +761,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.pleadcourt.org"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms-1"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-1"
     type: "trojan"
     server: "104.18.45.38"
     port: 443
@@ -740,7 +774,7 @@ proxies:
       path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
       headers:
         Host: "de.mitivpn.in.net"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 11ms"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-2"
     type: "trojan"
     server: "104.18.45.38"
     port: 443
@@ -753,7 +787,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.pleadcourt.org"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 11ms-1"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms"
     type: "trojan"
     server: "104.18.45.38"
     port: 443
@@ -766,7 +800,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.trusteeforward.com"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 8ms"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-3"
     type: "trojan"
     server: "8.47.69.60"
     port: 443
@@ -779,7 +813,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.pleadcourt.org"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 8ms-1"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 13ms"
     type: "trojan"
     server: "8.47.69.60"
     port: 443
@@ -790,7 +824,7 @@ proxies:
     servername: "www.pleadcourt.org"
     ws-opts:
       path: "/assignment"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms-2"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A 🇺🇸 US 10ms"
     type: "trojan"
     server: "8.47.69.60"
     port: 443
@@ -803,7 +837,7 @@ proxies:
       path: "/w4e5yh0p945y3"
       headers:
         Host: "nat11.outsidemyheart.space"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE 12ms"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 13ms-1"
     type: "trojan"
     server: "45.128.76.242"
     port: 443
@@ -815,7 +849,7 @@ proxies:
     ws-opts:
       headers:
         Host: "de.mitivpn.in.net"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-4"
     type: "trojan"
     server: "45.128.76.242"
     port: 443
@@ -828,7 +862,7 @@ proxies:
       path: "/---@VPNine1---@VPNine1/---@VPNine1---@VPNine1/---@VPNine1---@VPNine1/--@VPNine1---@VPNine1/---@VPNine1---@VPNine1/---@VPNine1---@VPNine1"
       headers:
         Host: "de.mitivpn.in.net"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE 11ms"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-5"
     type: "trojan"
     server: "45.128.76.242"
     port: 443
@@ -841,7 +875,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/--@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "de.mitivpn.in.net"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 8ms-2"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-6"
     type: "trojan"
     server: "45.128.76.242"
     port: 443
@@ -854,7 +888,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.pleadcourt.org"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE down"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX down"
     type: "trojan"
     server: "45.147.48.28"
     port: 443
@@ -867,7 +901,7 @@ proxies:
       path: "/"
       headers:
         Host: "de.mitivpn.in.net"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 7ms"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-7"
     type: "trojan"
     server: "109.234.211.232"
     port: 443
@@ -880,7 +914,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 8ms-3"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-1"
     type: "trojan"
     server: "104.27.203.207"
     port: 443
@@ -893,7 +927,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.pleadcourt.org"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-1"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-8"
     type: "trojan"
     server: "104.27.201.80"
     port: 443
@@ -906,7 +940,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.pleadcourt.org"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A 🇺🇸 US 8ms"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-9"
     type: "trojan"
     server: "8.6.112.206"
     port: 443
@@ -918,7 +952,7 @@ proxies:
     ws-opts:
       headers:
         Host: "de.mitivpn.in.net"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 7ms-1"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-2"
     type: "trojan"
     server: "8.6.112.206"
     port: 443
@@ -931,7 +965,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.trusteeforward.com"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 8ms-4"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-3"
     type: "trojan"
     server: "162.159.133.152"
     port: 443
@@ -944,7 +978,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.pleadcourt.org"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 7ms-2"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-10"
     type: "trojan"
     server: "162.159.133.152"
     port: 443
@@ -955,7 +989,7 @@ proxies:
     servername: "www.pleadcourt.org"
     ws-opts:
       path: "/assignment"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 14ms"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-11"
     type: "trojan"
     server: "8.47.69.60"
     port: 443
@@ -968,7 +1002,7 @@ proxies:
       path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
       headers:
         Host: "de.mitivpn.in.net"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE 7ms"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-4"
     type: "trojan"
     server: "45.128.76.242"
     port: 443
@@ -981,7 +1015,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.trusteeforward.com"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE down-1"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX down-1"
     type: "trojan"
     server: "45.147.48.28"
     port: 443
@@ -994,7 +1028,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.pleadcourt.org"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A 🇪🇸 ES 7ms"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-12"
     type: "trojan"
     server: "109.234.211.232"
     port: 443
@@ -1007,7 +1041,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.pleadcourt.org"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A 🇺🇸 US 7ms"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-13"
     type: "trojan"
     server: "104.27.203.207"
     port: 443
@@ -1019,7 +1053,7 @@ proxies:
     ws-opts:
       headers:
         Host: "de.mitivpn.in.net"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms-3"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-14"
     type: "trojan"
     server: "104.27.203.207"
     port: 443
@@ -1032,7 +1066,7 @@ proxies:
       path: "/---@VPNine1---@VPNine1/---@VPNine1---@VPNine1/---@VPNine1---@VPNine1/--@VPNine1---@VPNine1/---@VPNine1---@VPNine1/---@VPNine1---@VPNine1"
       headers:
         Host: "de.mitivpn.in.net"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A 🇺🇸 US 6ms"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 12ms"
     type: "trojan"
     server: "104.27.203.207"
     port: 443
@@ -1045,7 +1079,7 @@ proxies:
       path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/--@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
       headers:
         Host: "de.mitivpn.in.net"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A 🇺🇸 US 6ms-1"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-5"
     type: "trojan"
     server: "172.64.190.13"
     port: 443
@@ -1058,7 +1092,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.pleadcourt.org"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 50ms"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-15"
     type: "trojan"
     server: "104.21.219.160"
     port: 443
@@ -1071,7 +1105,7 @@ proxies:
       path: "/"
       headers:
         Host: "de.mitivpn.in.net"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 15ms"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-16"
     type: "trojan"
     server: "172.66.1.36"
     port: 443
@@ -1084,7 +1118,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.pleadcourt.org"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE down-2"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX down-2"
     type: "trojan"
     server: "45.147.48.28"
     port: 443
@@ -1095,7 +1129,7 @@ proxies:
     servername: "www.pleadcourt.org"
     ws-opts:
       path: "/assignment"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 15ms-1"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-6"
     type: "trojan"
     server: "8.6.112.206"
     port: 443
@@ -1106,7 +1140,7 @@ proxies:
     servername: "nat11.outsidemyheart.space"
     ws-opts:
       path: "/w4e5yh0p945y3?ed=2560"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms-4"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-17"
     type: "trojan"
     server: "109.234.211.232"
     port: 443
@@ -1119,7 +1153,7 @@ proxies:
       path: "/w4e5yh0p945y3"
       headers:
         Host: "nat11.outsidemyheart.space"
-  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 14ms-1"
+  - name: "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-18"
     type: "trojan"
     server: "154.81.141.42"
     port: 443
@@ -1132,7 +1166,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.pleadcourt.org"
-  - name: "🆔lrnbymaa 🔒 TR-WS-N/A ❔ XX 8ms"
+  - name: "🆔lrnbymaa 🔒 TR-WS-N/A ❔ XX 2ms"
     type: "trojan"
     server: "199.232.78.160"
     port: 443
@@ -1154,196 +1188,18 @@ proxies:
     tls: true
     network: "tcp"
     servername: "maps.google.com"
-  - name: "🆔ar14n24b 🔓 TR-WS-N/A 🇺🇸 US 6ms"
+  - name: "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 153ms"
     type: "trojan"
-    server: "151.101.36.120"
-    port: 443
-    password: "MiTiVPN"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/NLSus---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN/---@MiTiVPN---@MiTiVPN"
-      headers:
-        Host: "mitivpn--mitivpn.ac.ir"
-  - name: "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 10ms"
-    type: "trojan"
-    server: "104.18.32.47"
-    port: 443
-    password: "humanity"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "www.calmlunch.com"
-    ws-opts:
-      path: "/assignment"
-  - name: "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 6ms"
-    type: "trojan"
-    server: "104.18.8.83"
-    port: 443
-    password: "humanity"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "www.calmlunch.com"
-    ws-opts:
-      path: "/assignment"
-      headers:
-        Host: "www.calmlunch.com"
-  - name: "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 50ms"
-    type: "trojan"
-    server: "188.114.96.3"
-    port: 2096
-    password: "vP!XvZBNdw.e*ddSgmH!"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "n0q4XPrJ2D4X4PRCQ29L8JKCZd0.pAGES.dev"
-    ws-opts:
-      path: "/tr/ZFttmjSqvda5ohOQ?ed=2560"
-      headers:
-        Host: "n0q4xprj2d4x4prcq29l8jkczd0.pages.dev"
-  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 16ms"
-    type: "trojan"
-    server: "chatgpt.com"
-    port: 443
-    password: "e57m7a2ayx98v1h6"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "wenoos.pecasoou.ir"
-    ws-opts:
-      path: "/---@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY/--@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY"
-      headers:
-        Host: "wenoos.pecasoou.ir"
-  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 17ms"
-    type: "trojan"
-    server: "openai.com"
-    port: 443
-    password: "e57m7a2ayx98v1h6"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "wenoos.pecasoou.ir"
-    ws-opts:
-      path: "/---@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY/--@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY/---@SGV2RAY---@SGV2RAY"
-      headers:
-        Host: "wenoos.pecasoou.ir"
-  - name: "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 158ms"
-    type: "trojan"
-    server: "wwww.qarvian.ir"
-    port: 443
-    password: "MiTiVPN"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
-      headers:
-        Host: "mitivpn--mitivpn.ac.ir"
-  - name: "🆔ar14n24b 🔒 TR-WS-N/A 🇪🇸 ES 145ms"
-    type: "trojan"
-    server: "185.114.72.31"
-    port: 2053
-    password: "humanity"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "www.calmlunch.com"
-    ws-opts:
-      path: "/assignment"
-  - name: "🆔ar14n24b 🔓 TR--N/A ❔ XX 285ms"
-    type: "trojan"
-    server: "64.176.96.237"
-    port: 443
-    password: "Tg3RnK7Xp8B1"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "ash.d50f6225-23b4-3a7b-9f15-a0fb2fc16803.kailib.com"
-  - name: "🆔ar14n24b 🔓 TR--N/A 🇵🇱 PL down"
-    type: "trojan"
-    server: "pl.tronsg.com"
-    port: 443
-    password: "Trojan@82164024"
-    udp: true
-    tls: true
-    network: "tcp"
-  - name: "🆔ar14n24b 🔒 TR-TCP-N/A 🇪🇸 ES 154ms"
-    type: "trojan"
-    server: "66.163.118.244"
+    server: "216.238.104.154"
     port: 443
     password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
     udp: true
     tls: true
     network: "tcp"
-    servername: "api.discovergreatjobsandadvanceyourcareer.com"
-  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 140ms"
+    servername: "findtemporaryworkandfreelancerprojectsonlineplatform.com"
+  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms"
     type: "trojan"
-    server: "95.85.54.197"
-    port: 443
-    password: "humanity"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "www.pleadcourt.org"
-    ws-opts:
-      path: "/assignment"
-      headers:
-        Host: "www.pleadcourt.org"
-  - name: "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 53ms"
-    type: "trojan"
-    server: "104.21.33.59"
-    port: 443
-    password: "humanity"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "www.pleadcourt.org"
-    ws-opts:
-      path: "/assignment"
-  - name: "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 6ms-1"
-    type: "trojan"
-    server: "172.64.145.133"
-    port: 443
-    password: "humanity"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "www.pleadcourt.org"
-    ws-opts:
-      path: "/assignment"
-      headers:
-        Host: "www.pleadcourt.org"
-  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 55ms"
-    type: "trojan"
-    server: "188.114.97.5"
-    port: 443
-    password: "humanity"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "www.pleadcourt.org"
-    ws-opts:
-      path: "/assignment"
-  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 6ms"
-    type: "trojan"
-    server: "172.66.0.1"
-    port: 443
-    password: "humanity"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "www.calmlunch.com"
-    ws-opts:
-      path: "/assignment"
-      headers:
-        Host: "www.calmlunch.com"
-  - name: "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 6ms-2"
-    type: "trojan"
-    server: "104.18.37.127"
+    server: "104.16.34.14"
     port: 443
     password: "humanity"
     udp: true
@@ -1354,36 +1210,512 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.trusteeforward.com"
-  - name: "🆔ar14n24b 🔒 TR-XHTTP-N/A 🇺🇸 US 7ms"
+  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-1"
     type: "trojan"
-    server: "199.232.8.223"
+    server: "104.17.175.201"
     port: 443
-    password: "bY9Tn8mwn4tx9_-L7jqmnETp7DO1UoVu"
+    password: "humanity"
     udp: true
     tls: true
-    network: "xhttp"
-    servername: "www.firefox.com"
-  - name: "🆔ar14n24b 🔓 TR--N/A ❔ XX down"
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-2"
     type: "trojan"
-    server: "66.163.118.62"
+    server: "104.17.206.147"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.trusteeforward.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.trusteeforward.com"
+  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-3"
+    type: "trojan"
+    server: "104.18.192.53"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.pleadcourt.org"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.pleadcourt.org"
+  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-4"
+    type: "trojan"
+    server: "104.20.55.137"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.trusteeforward.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.trusteeforward.com"
+  - name: "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.trusteeforward.com&type=ws&allowInsecure=0&sni=www.trusteeforward.com#🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms"
+    type: "trojan"
+    server: "104.25.238.196"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 138ms"
+    type: "trojan"
+    server: "193.108.119.96"
     port: 443
     password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
     udp: true
     tls: true
     network: "tcp"
-  - name: "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 9ms"
+    servername: "learn.iloverussia2026.com"
+  - name: "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 49ms"
     type: "trojan"
-    server: "167.82.64.46"
+    server: "216.152.155.158"
     port: 443
-    password: "mitivpn"
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "resources.nextjobopportunityandclaimyouridealrole.com"
+  - name: "🆔ar14n24b 🔓 TR-WS-N/A ❔ XX 9ms"
+    type: "trojan"
+    server: "141.101.115.104"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-5"
+    type: "trojan"
+    server: "188.114.98.0"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "🆔ar14n24b 🔓 TR--N/A ❔ XX 140ms"
+    type: "trojan"
+    server: "45.32.157.84"
+    port: 443
+    password: "Tg3RnK7Xp8B1"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ash.d50f6225-23b4-3a7b-9f15-a0fb2fc16803.kailib.com"
+  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-6"
+    type: "trojan"
+    server: "172.66.40.99"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.trusteeforward.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.trusteeforward.com"
+  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 125ms"
+    type: "trojan"
+    server: "212.227.90.142"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 64ms"
+    type: "trojan"
+    server: "131.196.254.151"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.pleadcourt.org"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.pleadcourt.org"
+  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 23ms"
+    type: "trojan"
+    server: "www.pleadcourt.org"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.pleadcourt.org"
+    ws-opts:
+      path: "/assignment"
+  - name: "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 51ms"
+    type: "trojan"
+    server: "216.152.156.81"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.healthcarejobshubenhancemedicalprofessionalskillstoday.com"
+  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 2ms"
+    type: "trojan"
+    server: "146.75.57.120"
+    port: 443
+    password: "MiTiVPN"
     udp: true
     tls: true
     network: "ws"
     servername: "firefox.com"
     ws-opts:
+      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
       headers:
-        Host: "mitivpn-mitivpn.ac.ir"
-  - name: "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 6ms"
+        Host: "mitivpn--mitivpn.ac.ir"
+  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 2ms-1"
+    type: "trojan"
+    server: "167.82.64.120"
+    port: 443
+    password: "MiTiVPN"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
+      headers:
+        Host: "mitivpn--mitivpn.ac.ir"
+  - name: "🆔ar14n24b 🔓 TR--N/A ❔ XX 221ms"
+    type: "trojan"
+    server: "tjadly.m2k699.com"
+    port: 24999
+    password: "29086912-33e4-4e06-ba2b-60f1a195864f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.itunes.com"
+  - name: "🆔ar14n24b 🔒 TR-GRPC-N/A ❔ XX 153ms"
+    type: "trojan"
+    server: "31.76.102.130"
+    port: 41445
+    password: "sBMuYgEz3jve2XtEBh8JPh9trNE-c9bH"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "d1-fl.cloud-cdn.xyz"
+    grpc-opts:
+      grpc-service-name: "ajv"
+  - name: "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 49ms-1"
+    type: "trojan"
+    server: "169.197.140.224"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "resources.discoverfreshgraduatejobsstartyourprofessionaljourney.com"
+  - name: "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 61ms"
+    type: "trojan"
+    server: "216.152.147.85"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn.connectingpeoplewithgreatjobs.com"
+  - name: "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 30ms"
+    type: "trojan"
+    server: "66.163.114.45"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn.findconnectwithemployersandbuildprofessionalnetwork.com"
+  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-7"
+    type: "trojan"
+    server: "188.114.97.2"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.pleadcourt.org"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.pleadcourt.org"
+  - name: "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 49ms-2"
+    type: "trojan"
+    server: "169.197.140.171"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn.discoverfreshgraduatejobsstartyourprofessionaljourney.com"
+  - name: "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 63ms"
+    type: "trojan"
+    server: "216.152.147.48"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "courses.connectingpeoplewithgreatjobs.com"
+  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-8"
+    type: "trojan"
+    server: "8.6.112.6"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmloud.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmloud.com"
+  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 2ms-2"
+    type: "trojan"
+    server: "199.232.78.160"
+    port: 443
+    password: "MiTiVPN"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ssl.fastly.com"
+    ws-opts:
+      path: "@mehrosaboran"
+      headers:
+        Host: "mitivpn---ss--s---mitivpn-44.global.ssl.fastly.net"
+  - name: "🆔ar14n24b 🔓 TR-WS-N/A ❔ XX 140ms"
+    type: "trojan"
+    server: "147.135.213.72"
+    port: 20236
+    password: "aee6m5uhj7ezxm8i"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/trojan-4"
+  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 10ms"
+    type: "trojan"
+    server: "104.18.49.85"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.trusteeforward.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.trusteeforward.com"
+  - name: "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 61ms-1"
+    type: "trojan"
+    server: "216.152.147.93"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "connectingpeoplewithgreatjobs.com"
+  - name: "🆔ar14n24b 🔓 TR-WS-N/A ❔ XX 141ms"
+    type: "trojan"
+    server: "51.68.34.78"
+    port: 20155
+    password: "5365cb12-83e2-4e12-8098-c9673ed7f540"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/bp-trojan"
+  - name: "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 79ms"
+    type: "trojan"
+    server: "us001.zestapp778.com"
+    port: 57277
+    password: "5t6i121em5lkmsmk"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "us001.zestapp778.com"
+  - name: "🆔ar14n24b 🔓 TR--N/A ❔ XX 44ms"
+    type: "trojan"
+    server: "blog.findlocaljobnetworkandbuildcommunityconnections.com"
+    port: 443
+    password: "dba20dcb635e430fa4d3bfc303a149d2"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "blog.findlocaljobnetworkandbuildcommunityconnections.com"
+  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-9"
+    type: "trojan"
+    server: "185.18.250.252"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 49ms-3"
+    type: "trojan"
+    server: "216.152.155.59"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "api.nextjobopportunityandclaimyouridealrole.com"
+  - name: "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 30ms-1"
+    type: "trojan"
+    server: "66.163.114.126"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "resources.findconnectwithemployersandbuildprofessionalnetwork.com"
+  - name: "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 31ms"
+    type: "trojan"
+    server: "66.163.114.245"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "findconnectwithemployersandbuildprofessionalnetwork.com"
+  - name: "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 141ms"
+    type: "trojan"
+    server: "66.163.118.131"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.discovergreatjobsandadvanceyourcareer.com"
+  - name: "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 141ms-1"
+    type: "trojan"
+    server: "66.163.118.166"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "learn.discovergreatjobsandadvanceyourcareer.com"
+  - name: "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 55ms"
+    type: "trojan"
+    server: "66.163.122.25"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn.searchnationwidecareerchangehelperandguidancetoday.com"
+  - name: "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 52ms"
+    type: "trojan"
+    server: "66.163.122.81"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "courses.searchnationwidecareerchangehelperandguidancetoday.com"
+  - name: "🆔ar14n24b 🔓 TR-WS-N/A ❔ XX 9ms-1"
+    type: "trojan"
+    server: "104.17.121.9"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 22ms"
+    type: "trojan"
+    server: "104.25.108.234"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 63ms-1"
+    type: "trojan"
+    server: "216.152.147.152"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "learn.connectingpeoplewithgreatjobs.com"
+  - name: "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 167ms"
+    type: "trojan"
+    server: "64.176.163.182"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "exploreeducationsectoropportunitiestodayandadvancecareers.com"
+  - name: "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 33ms"
+    type: "trojan"
+    server: "5.78.92.27"
+    port: 8443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 9ms"
+    type: "trojan"
+    server: "108.162.194.134"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.pleadcourt.org"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.pleadcourt.org"
+  - name: "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 9ms-1"
     type: "trojan"
     server: "8.47.69.0"
     port: 443
@@ -1396,7 +1728,20 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.pleadcourt.org"
-  - name: "🆔v2ray1_ng 🔒 TR-TCP-N/A 🇺🇸 US 67ms"
+  - name: "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 9ms-2"
+    type: "trojan"
+    server: "172.64.145.133"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.pleadcourt.org"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.pleadcourt.org"
+  - name: "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 52ms"
     type: "trojan"
     server: "66.163.122.7"
     port: 443
@@ -1405,7 +1750,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.searchnationwidecareerchangehelperandguidancetoday.com"
-  - name: "🆔v2ray1_ng 🔒 TR-TCP-N/A 🇺🇸 US down"
+  - name: "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 4ms"
     type: "trojan"
     server: "66.163.112.76"
     port: 443
@@ -1414,7 +1759,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "api.unlockyourfuturefindyourperfectcareer.com"
-  - name: "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 152ms"
+  - name: "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 135ms"
     type: "trojan"
     server: "193.108.119.29"
     port: 443
@@ -1423,7 +1768,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "blog.iloverussia2026.com"
-  - name: "🆔v2ray1_ng 🔒 TR-TCP-N/A 🇩🇪 DE 145ms"
+  - name: "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 135ms-1"
     type: "trojan"
     server: "193.108.119.78"
     port: 443
@@ -1432,7 +1777,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.iloverussia2026.com"
-  - name: "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 174ms"
+  - name: "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 152ms"
     type: "trojan"
     server: "208.69.78.19"
     port: 443
@@ -1441,7 +1786,58 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.yourultimateprofessionalcareerhub.com"
-  - name: "🆔madshopx 🔒 TR-WS-N/A ❔ XX 8ms"
+  - name: "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 135ms-2"
+    type: "trojan"
+    server: "193.108.119.15"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "courses.iloverussia2026.com"
+  - name: "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 10ms"
+    type: "trojan"
+    server: "172.64.152.23"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+      headers:
+        Host: "www.calmlunch.com"
+  - name: "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 51ms"
+    type: "trojan"
+    server: "66.163.122.113"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "api.searchnationwidecareerchangehelperandguidancetoday.com"
+  - name: "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX down"
+    type: "trojan"
+    server: "216.152.156.49"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cdn.healthcarejobshubenhancemedicalprofessionalskillstoday.com"
+  - name: "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 10ms-1"
+    type: "trojan"
+    server: "185.18.250.252"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
+  - name: "🆔madshopx 🔒 TR-WS-N/A ❔ XX 2ms"
     type: "trojan"
     server: "146.75.57.120"
     port: 443
@@ -1454,19 +1850,6 @@ proxies:
       path: "/?TELEGRAM------TOOTFFARANGI "
       headers:
         Host: "mitivpn--mitivpn.ac.ir"
-  - name: "🆔configx2ray 🔒 TR-WS-N/A ❔ XX 69ms"
-    type: "trojan"
-    server: "188.114.97.6"
-    port: 443
-    password: "humanity"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "www.calmlunch.com"
-    ws-opts:
-      path: "/assignment"
-      headers:
-        Host: "www.calmlunch.com"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -1481,86 +1864,120 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 15ms"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms-1"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 13ms"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms-2"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 6ms"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 6ms-1"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 10ms"
+      - "🆔soskeynet 🔓 TR-WS-N/A 🇺🇸 US 9ms"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-1"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-2"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-3"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-4"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 3ms"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-5"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 4ms"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-6"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-7"
       - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 9ms"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 10ms-1"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 33ms"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 6ms-2"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 9ms-1"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 14ms"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 14ms-1"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms-3"
-      - "🆔vpnbaz 🔒 TR-WS-N/A 🇺🇸 US 7ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 11ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 11ms-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 8ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 8ms-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms-2"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE 12ms"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 1ms"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-8"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-9"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-10"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-11"
       - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE 11ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 8ms-2"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE down"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 7ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 8ms-3"
       - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇺🇸 US 8ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 7ms-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 8ms-4"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 7ms-2"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 14ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE 7ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE down-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇪🇸 ES 7ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇺🇸 US 7ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms-3"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇺🇸 US 6ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇺🇸 US 6ms-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 50ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 15ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE down-2"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 15ms-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms-4"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 14ms-1"
-      - "🆔lrnbymaa 🔒 TR-WS-N/A ❔ XX 8ms"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-2"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-3"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 13ms"
+      - "🆔conectvpn10 🔒 TR-WS-N/A 🇺🇸 US 10ms"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 13ms-1"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-4"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-5"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-6"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX down"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-7"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-1"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-8"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-9"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-2"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-3"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-10"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-11"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-4"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX down-1"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-12"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-13"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-14"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 12ms"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-5"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-15"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-16"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX down-2"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-6"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-17"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-18"
+      - "🆔lrnbymaa 🔒 TR-WS-N/A ❔ XX 2ms"
       - "🆔spotify_porteghali 🔒 TR-TCP- ❔ XX down"
-      - "🆔ar14n24b 🔓 TR-WS-N/A 🇺🇸 US 6ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 10ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 6ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 50ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 16ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 17ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 158ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇪🇸 ES 145ms"
-      - "🆔ar14n24b 🔓 TR--N/A ❔ XX 285ms"
-      - "🆔ar14n24b 🔓 TR--N/A 🇵🇱 PL down"
-      - "🆔ar14n24b 🔒 TR-TCP-N/A 🇪🇸 ES 154ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 140ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 53ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 6ms-1"
-      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 55ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 6ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 6ms-2"
-      - "🆔ar14n24b 🔒 TR-XHTTP-N/A 🇺🇸 US 7ms"
-      - "🆔ar14n24b 🔓 TR--N/A ❔ XX down"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 153ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-1"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-2"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-3"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-4"
+      - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.trusteeforward.com&type=ws&allowInsecure=0&sni=www.trusteeforward.com#🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 138ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 49ms"
+      - "🆔ar14n24b 🔓 TR-WS-N/A ❔ XX 9ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-5"
+      - "🆔ar14n24b 🔓 TR--N/A ❔ XX 140ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-6"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 125ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 64ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 23ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 51ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 2ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 2ms-1"
+      - "🆔ar14n24b 🔓 TR--N/A ❔ XX 221ms"
+      - "🆔ar14n24b 🔒 TR-GRPC-N/A ❔ XX 153ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 49ms-1"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 61ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 30ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-7"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 49ms-2"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 63ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-8"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 2ms-2"
+      - "🆔ar14n24b 🔓 TR-WS-N/A ❔ XX 140ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 10ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 61ms-1"
+      - "🆔ar14n24b 🔓 TR-WS-N/A ❔ XX 141ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 79ms"
+      - "🆔ar14n24b 🔓 TR--N/A ❔ XX 44ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-9"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 49ms-3"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 30ms-1"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 31ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 141ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 141ms-1"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 55ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 52ms"
+      - "🆔ar14n24b 🔓 TR-WS-N/A ❔ XX 9ms-1"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 22ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 63ms-1"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 167ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 33ms"
       - "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 9ms"
-      - "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 6ms"
-      - "🆔v2ray1_ng 🔒 TR-TCP-N/A 🇺🇸 US 67ms"
-      - "🆔v2ray1_ng 🔒 TR-TCP-N/A 🇺🇸 US down"
+      - "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 9ms-1"
+      - "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 9ms-2"
+      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 52ms"
+      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 4ms"
+      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 135ms"
+      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 135ms-1"
       - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 152ms"
-      - "🆔v2ray1_ng 🔒 TR-TCP-N/A 🇩🇪 DE 145ms"
-      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 174ms"
-      - "🆔madshopx 🔒 TR-WS-N/A ❔ XX 8ms"
-      - "🆔configx2ray 🔒 TR-WS-N/A ❔ XX 69ms"
+      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 135ms-2"
+      - "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 10ms"
+      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 51ms"
+      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX down"
+      - "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 10ms-1"
+      - "🆔madshopx 🔒 TR-WS-N/A ❔ XX 2ms"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -1569,86 +1986,120 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 15ms"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms-1"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 13ms"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms-2"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 6ms"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 6ms-1"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 10ms"
+      - "🆔soskeynet 🔓 TR-WS-N/A 🇺🇸 US 9ms"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-1"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-2"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-3"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-4"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 3ms"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-5"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 4ms"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-6"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-7"
       - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 9ms"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 10ms-1"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 33ms"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 6ms-2"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 9ms-1"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 14ms"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 14ms-1"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms-3"
-      - "🆔vpnbaz 🔒 TR-WS-N/A 🇺🇸 US 7ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 11ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 11ms-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 8ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 8ms-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms-2"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE 12ms"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 1ms"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-8"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-9"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-10"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-11"
       - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE 11ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 8ms-2"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE down"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 7ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 8ms-3"
       - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇺🇸 US 8ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 7ms-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 8ms-4"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 7ms-2"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 14ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE 7ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE down-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇪🇸 ES 7ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇺🇸 US 7ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms-3"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇺🇸 US 6ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇺🇸 US 6ms-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 50ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 15ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE down-2"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 15ms-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms-4"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 14ms-1"
-      - "🆔lrnbymaa 🔒 TR-WS-N/A ❔ XX 8ms"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-2"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-3"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 13ms"
+      - "🆔conectvpn10 🔒 TR-WS-N/A 🇺🇸 US 10ms"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 13ms-1"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-4"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-5"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-6"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX down"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-7"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-1"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-8"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-9"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-2"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-3"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-10"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-11"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-4"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX down-1"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-12"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-13"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-14"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 12ms"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-5"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-15"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-16"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX down-2"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-6"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-17"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-18"
+      - "🆔lrnbymaa 🔒 TR-WS-N/A ❔ XX 2ms"
       - "🆔spotify_porteghali 🔒 TR-TCP- ❔ XX down"
-      - "🆔ar14n24b 🔓 TR-WS-N/A 🇺🇸 US 6ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 10ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 6ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 50ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 16ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 17ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 158ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇪🇸 ES 145ms"
-      - "🆔ar14n24b 🔓 TR--N/A ❔ XX 285ms"
-      - "🆔ar14n24b 🔓 TR--N/A 🇵🇱 PL down"
-      - "🆔ar14n24b 🔒 TR-TCP-N/A 🇪🇸 ES 154ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 140ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 53ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 6ms-1"
-      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 55ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 6ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 6ms-2"
-      - "🆔ar14n24b 🔒 TR-XHTTP-N/A 🇺🇸 US 7ms"
-      - "🆔ar14n24b 🔓 TR--N/A ❔ XX down"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 153ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-1"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-2"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-3"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-4"
+      - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.trusteeforward.com&type=ws&allowInsecure=0&sni=www.trusteeforward.com#🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 138ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 49ms"
+      - "🆔ar14n24b 🔓 TR-WS-N/A ❔ XX 9ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-5"
+      - "🆔ar14n24b 🔓 TR--N/A ❔ XX 140ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-6"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 125ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 64ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 23ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 51ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 2ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 2ms-1"
+      - "🆔ar14n24b 🔓 TR--N/A ❔ XX 221ms"
+      - "🆔ar14n24b 🔒 TR-GRPC-N/A ❔ XX 153ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 49ms-1"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 61ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 30ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-7"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 49ms-2"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 63ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-8"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 2ms-2"
+      - "🆔ar14n24b 🔓 TR-WS-N/A ❔ XX 140ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 10ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 61ms-1"
+      - "🆔ar14n24b 🔓 TR-WS-N/A ❔ XX 141ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 79ms"
+      - "🆔ar14n24b 🔓 TR--N/A ❔ XX 44ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-9"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 49ms-3"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 30ms-1"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 31ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 141ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 141ms-1"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 55ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 52ms"
+      - "🆔ar14n24b 🔓 TR-WS-N/A ❔ XX 9ms-1"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 22ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 63ms-1"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 167ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 33ms"
       - "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 9ms"
-      - "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 6ms"
-      - "🆔v2ray1_ng 🔒 TR-TCP-N/A 🇺🇸 US 67ms"
-      - "🆔v2ray1_ng 🔒 TR-TCP-N/A 🇺🇸 US down"
+      - "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 9ms-1"
+      - "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 9ms-2"
+      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 52ms"
+      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 4ms"
+      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 135ms"
+      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 135ms-1"
       - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 152ms"
-      - "🆔v2ray1_ng 🔒 TR-TCP-N/A 🇩🇪 DE 145ms"
-      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 174ms"
-      - "🆔madshopx 🔒 TR-WS-N/A ❔ XX 8ms"
-      - "🆔configx2ray 🔒 TR-WS-N/A ❔ XX 69ms"
+      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 135ms-2"
+      - "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 10ms"
+      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 51ms"
+      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX down"
+      - "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 10ms-1"
+      - "🆔madshopx 🔒 TR-WS-N/A ❔ XX 2ms"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -1658,86 +2109,120 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 15ms"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms-1"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 13ms"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms-2"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 6ms"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 6ms-1"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 10ms"
+      - "🆔soskeynet 🔓 TR-WS-N/A 🇺🇸 US 9ms"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-1"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-2"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-3"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-4"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 3ms"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-5"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 4ms"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-6"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-7"
       - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 9ms"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 10ms-1"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 33ms"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 6ms-2"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 9ms-1"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 14ms"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 14ms-1"
-      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 7ms-3"
-      - "🆔vpnbaz 🔒 TR-WS-N/A 🇺🇸 US 7ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 11ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 11ms-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 8ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 8ms-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms-2"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE 12ms"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 1ms"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-8"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-9"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-10"
+      - "🆔configfa 🔒 TR-WS-N/A 🇺🇸 US 2ms-11"
       - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE 11ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 8ms-2"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE down"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 7ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 8ms-3"
       - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇺🇸 US 8ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 7ms-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 8ms-4"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 7ms-2"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 14ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE 7ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE down-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇪🇸 ES 7ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇺🇸 US 7ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms-3"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇺🇸 US 6ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇺🇸 US 6ms-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 50ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 15ms"
-      - "🆔conectvpn10 🔒 TR-WS-N/A 🇩🇪 DE down-2"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 15ms-1"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms-4"
-      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 14ms-1"
-      - "🆔lrnbymaa 🔒 TR-WS-N/A ❔ XX 8ms"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-2"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-3"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 13ms"
+      - "🆔conectvpn10 🔒 TR-WS-N/A 🇺🇸 US 10ms"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 13ms-1"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-4"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-5"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-6"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX down"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-7"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-1"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-8"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-9"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-2"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-3"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-10"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-11"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-4"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX down-1"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-12"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-13"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-14"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 12ms"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-5"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-15"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-16"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX down-2"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 10ms-6"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-17"
+      - "🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-18"
+      - "🆔lrnbymaa 🔒 TR-WS-N/A ❔ XX 2ms"
       - "🆔spotify_porteghali 🔒 TR-TCP- ❔ XX down"
-      - "🆔ar14n24b 🔓 TR-WS-N/A 🇺🇸 US 6ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 10ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 6ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 50ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 16ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 17ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 158ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇪🇸 ES 145ms"
-      - "🆔ar14n24b 🔓 TR--N/A ❔ XX 285ms"
-      - "🆔ar14n24b 🔓 TR--N/A 🇵🇱 PL down"
-      - "🆔ar14n24b 🔒 TR-TCP-N/A 🇪🇸 ES 154ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 140ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 53ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 6ms-1"
-      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 55ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 6ms"
-      - "🆔ar14n24b 🔒 TR-WS-N/A 🇺🇸 US 6ms-2"
-      - "🆔ar14n24b 🔒 TR-XHTTP-N/A 🇺🇸 US 7ms"
-      - "🆔ar14n24b 🔓 TR--N/A ❔ XX down"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 153ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-1"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-2"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-3"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-4"
+      - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.trusteeforward.com&type=ws&allowInsecure=0&sni=www.trusteeforward.com#🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 138ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 49ms"
+      - "🆔ar14n24b 🔓 TR-WS-N/A ❔ XX 9ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-5"
+      - "🆔ar14n24b 🔓 TR--N/A ❔ XX 140ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-6"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 125ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 64ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 23ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 51ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 2ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 2ms-1"
+      - "🆔ar14n24b 🔓 TR--N/A ❔ XX 221ms"
+      - "🆔ar14n24b 🔒 TR-GRPC-N/A ❔ XX 153ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 49ms-1"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 61ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 30ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-7"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 49ms-2"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 63ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-8"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 2ms-2"
+      - "🆔ar14n24b 🔓 TR-WS-N/A ❔ XX 140ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 10ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 61ms-1"
+      - "🆔ar14n24b 🔓 TR-WS-N/A ❔ XX 141ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 79ms"
+      - "🆔ar14n24b 🔓 TR--N/A ❔ XX 44ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 9ms-9"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 49ms-3"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 30ms-1"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 31ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 141ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 141ms-1"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 55ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 52ms"
+      - "🆔ar14n24b 🔓 TR-WS-N/A ❔ XX 9ms-1"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 22ms"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 63ms-1"
+      - "🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 167ms"
+      - "🆔ar14n24b 🔒 TR-WS-N/A ❔ XX 33ms"
       - "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 9ms"
-      - "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 6ms"
-      - "🆔v2ray1_ng 🔒 TR-TCP-N/A 🇺🇸 US 67ms"
-      - "🆔v2ray1_ng 🔒 TR-TCP-N/A 🇺🇸 US down"
+      - "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 9ms-1"
+      - "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 9ms-2"
+      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 52ms"
+      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 4ms"
+      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 135ms"
+      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 135ms-1"
       - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 152ms"
-      - "🆔v2ray1_ng 🔒 TR-TCP-N/A 🇩🇪 DE 145ms"
-      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 174ms"
-      - "🆔madshopx 🔒 TR-WS-N/A ❔ XX 8ms"
-      - "🆔configx2ray 🔒 TR-WS-N/A ❔ XX 69ms"
+      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 135ms-2"
+      - "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 10ms"
+      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX 51ms"
+      - "🆔v2ray1_ng 🔒 TR-TCP-N/A ❔ XX down"
+      - "🆔v2ray1_ng 🔒 TR-WS-N/A ❔ XX 10ms-1"
+      - "🆔madshopx 🔒 TR-WS-N/A ❔ XX 2ms"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"

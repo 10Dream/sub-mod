@@ -1,0 +1,2990 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
+port: 7892
+socks-port: 7891
+mixed-port: 7890
+allow-lan: true
+mode: "rule"
+log-level: "warning"
+external-controller: "0.0.0.0:9090"
+secret: ""
+ipv6: true
+dns:
+  enable: true
+  listen: "0.0.0.0:53"
+  ipv6: false
+  prefer-h3: false
+  cache-algorithm: "arc"
+  use-hosts: true
+  use-system-hosts: true
+  respect-rules: false
+  enhanced-mode: "fake-ip"
+  fake-ip-range: "198.18.0.1/16"
+  fake-ip-filter-mode: "blacklist"
+  fake-ip-filter:
+    - "geosite:private"
+    - "+.lan"
+    - "+.localdomain"
+    - "+.invalid"
+    - "+.localhost"
+    - "+.test"
+    - "+.local"
+    - "+.home.arpa"
+    - "+.arpa"
+    - "+.ir"
+    - "time.*.com"
+    - "time.*.gov"
+    - "time.*.apple.com"
+    - "ntp.*.com"
+    - "+.pool.ntp.org"
+    - "+.ntp.org"
+    - "time.asis.io"
+    - "time.windows.com"
+    - "time.apple.com"
+    - "connectivitycheck.gstatic.com"
+    - "connectivitycheck.android.com"
+    - "clients3.google.com"
+    - "captive.apple.com"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "router.asus.com"
+    - "tplinkwifi.net"
+    - "tplinkrepeater.net"
+    - "tplinkap.net"
+    - "routerlogin.net"
+    - "routerlogin.com"
+    - "melogin.cn"
+    - "falogin.cn"
+    - "tendawifi.com"
+    - "leike.cc"
+    - "miwifi.com"
+    - "goforward.link"
+    - "+.plex.direct"
+  nameserver-policy:
+    geosite:private: "system"
+    +.arpa: "system"
+    +.lan: "system"
+    +.local: "system"
+    +.home.arpa: "system"
+    router.asus.com: "system"
+    tplinkwifi.net: "system"
+    tplinkrepeater.net: "system"
+    tplinkap.net: "system"
+    routerlogin.net: "system"
+    routerlogin.com: "system"
+    melogin.cn: "system"
+    falogin.cn: "system"
+    tendawifi.com: "system"
+    leike.cc: "system"
+    miwifi.com: "system"
+    goforward.link: "system"
+  default-nameserver:
+    - "tcp://1.1.1.1"
+    - "tcp://8.8.8.8"
+    - "1.1.1.1"
+    - "8.8.8.8"
+    - "9.9.9.9"
+    - "tcp://1.0.0.1"
+    - "tcp://8.8.4.4"
+    - "tcp://9.9.9.9"
+    - "tcp://149.112.112.112"
+    - "tcp://208.67.222.222"
+    - "tcp://208.67.220.220"
+  nameserver:
+    - "https://freedns.controld.com/p2#نوع انتخاب پروکسی 🔀"
+  fallback:
+    - "https://dns.adguard-dns.com/dns-query#نوع انتخاب پروکسی 🔀"
+  fallback-lazy-query: true
+  fallback-filter:
+    geoip: false
+    ipcidr:
+      - "10.10.34.34/32"
+      - "10.10.34.35/32"
+      - "10.10.34.36/32"
+      - "127.0.0.1/32"
+      - "240.0.0.0/4"
+  proxy-server-nameserver:
+    - "tcp://1.1.1.1"
+    - "tcp://8.8.8.8"
+    - "tcp://9.9.9.9"
+    - "1.1.1.1"
+    - "8.8.8.8"
+    - "9.9.9.9"
+    - "tcp://1.0.0.1"
+    - "tcp://8.8.4.4"
+    - "tcp://149.112.112.112"
+    - "tcp://208.67.222.222"
+    - "tcp://208.67.220.220"
+  direct-nameserver:
+    - "78.157.42.100"
+    - "78.157.42.101"
+    - "tcp://78.157.42.100"
+    - "tcp://78.157.42.101"
+  direct-nameserver-follow-policy: true
+sniffer:
+  enable: true
+  force-dns-mapping: false
+  parse-pure-ip: false
+  override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
+tun:
+  enable: true
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+  auto-route: true
+  auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
+rule-providers:
+  DownloadManagers:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/DownloadManagers.yaml"
+    interval: 86400
+    path: "./ruleset/DownloadManagers.yaml"
+  Download:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Download.yaml"
+    interval: 86400
+    path: "./ruleset/Download.yaml"
+  stremio:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/stremio.yaml"
+    interval: 86400
+    path: "./ruleset/stremio.yaml"
+  BanProgramAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanProgramAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanProgramAD.yaml"
+  BanAD:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanAD.yaml"
+    interval: 86400
+    path: "./ruleset/BanAD.yaml"
+  PrivateTracker:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/PrivateTracker.yaml"
+    interval: 86400
+    path: "./ruleset/PrivateTracker.yaml"
+  category_public_tracker:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-public-tracker.yaml"
+    interval: 86400
+    path: "./ruleset/category_public_tracker.yaml"
+  malware:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/malware.yaml"
+    interval: 86400
+    path: "./ruleset/malware.yaml"
+  phishing:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/phishing.yaml"
+    interval: 86400
+    path: "./ruleset/phishing.yaml"
+  cryptominers:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/cryptominers.yaml"
+    interval: 86400
+    path: "./ruleset/cryptominers.yaml"
+  warninglist:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/warning-list.yaml"
+    interval: 86400
+    path: "./ruleset/warninglist.yaml"
+  Ponzi:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/Ponzi.yaml"
+    interval: 86400
+    path: "./ruleset/Ponzi.yaml"
+  LiteAds:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/LiteAds.yaml"
+    interval: 86400
+    path: "./ruleset/LiteAds.yaml"
+  iran_ads:
+    type: "http"
+    behavior: "domain"
+    url: "https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    interval: 86400
+    path: "./ruleset/iran_ads.yaml"
+  PersianBlocker:
+    type: "http"
+    behavior: "domain"
+    url: "https://github.com/MasterKia/iran-hosted-domains/releases/latest/download/clash_rules_ads.yaml"
+    interval: 86400
+    path: "./ruleset/PersianBlocker.yaml"
+  ads:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/category-ads-all.yaml"
+    interval: 86400
+    path: "./ruleset/ads.yaml"
+  BanEasyList:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/BanEasyList.yaml"
+    interval: 86400
+    path: "./ruleset/BanEasyList.yaml"
+  twitch:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/twitch.yaml"
+    interval: 86400
+    path: "./ruleset/twitch.yaml"
+  telegram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/telegram.yaml"
+    interval: 86400
+    path: "./ruleset/telegram.yaml"
+  YouTube:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTube.yaml"
+    interval: 86400
+    path: "./ruleset/YouTube.yaml"
+  youtube:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/youtube.yaml"
+    interval: 86400
+    path: "./ruleset/youtube.yaml"
+  YouTubeMusic:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/YouTubeMusic.yaml"
+    interval: 86400
+    path: "./ruleset/YouTubeMusic.yaml"
+  Chotwitter:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/twitter.yaml"
+    interval: 86400
+    path: "./ruleset/Chotwitter.yaml"
+  mihTwitter:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Twitter.yaml"
+    interval: 86400
+    path: "./ruleset/mihTwitter.yaml"
+  Domtwitter:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/twitter.yaml"
+    interval: 86400
+    path: "./ruleset/Domtwitter.yaml"
+  DomainSpotify:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/spotify.yaml"
+    interval: 86400
+    path: "./ruleset/DomainSpotify.yaml"
+  mihspotify:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Spotify.yaml"
+    interval: 86400
+    path: "./ruleset/mihSpotify.yaml"
+  instagram:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/instagram.yaml"
+    interval: 86400
+    path: "./ruleset/instagram.yaml"
+  Ai:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/Ai.yaml"
+    interval: 86400
+    path: "./ruleset/Ai.yaml"
+  category-ai:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-ai-!cn.yaml"
+    interval: 86400
+    path: "./ruleset/category-ai.yaml"
+  censor:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/censor.yaml"
+    interval: 86400
+    path: "./ruleset/censor.yaml"
+  apps:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/apps.yaml"
+    interval: 86400
+    path: "./ruleset/apps.yaml"
+  iran:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/iran.yaml"
+    interval: 86400
+    path: "./ruleset/iran.yaml"
+  arvancloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/arvancloud.yaml"
+    interval: 86400
+    path: "./ruleset/arvancloud.yaml"
+  derakcloud:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/derakcloud.yaml"
+    interval: 86400
+    path: "./ruleset/derakcloud.yaml"
+  iranserver:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/iranserver.yaml"
+    interval: 86400
+    path: "./ruleset/iranserver.yaml"
+  parspack:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/parspack.yaml"
+    interval: 86400
+    path: "./ruleset/parspack.yaml"
+  irasn:
+    type: "http"
+    format: "yaml"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.yaml"
+    interval: 86400
+    path: "./ruleset/irasn.yaml"
+  ircidr:
+    type: "http"
+    format: "yaml"
+    behavior: "ipcidr"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ircidr.yaml"
+    interval: 86400
+    path: "./ruleset/ircidr.yaml"
+  ir:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://github.com/chocolate4u/Iran-clash-rules/releases/latest/download/ir.yaml"
+    interval: 86400
+    path: "./ruleset/ir.yaml"
+  category_ir:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/category-ir.yaml"
+    interval: 86400
+    path: "./ruleset/category_ir.yaml"
+  whatsapp:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/whatsapp.yaml"
+    interval: 86400
+    path: "./ruleset/whatsapp.yaml"
+  steam:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/main/steam.yaml"
+    interval: 86400
+    path: "./ruleset/steam.yaml"
+  SteamRegionCheck:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/SteamRegionCheck.yaml"
+    interval: 86400
+    path: "./ruleset/SteamRegionCheck.yaml"
+  game:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/game.yaml"
+    interval: 86400
+    path: "./ruleset/game.yaml"
+  GameDownload:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/GameDownload.yaml"
+    interval: 86400
+    path: "./ruleset/GameDownload.yaml"
+  category-games:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/category-games.yaml"
+    interval: 86400
+    path: "./ruleset/category-games.yaml"
+  Xbox:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/mihomo_rule/refs/heads/main/list/Xbox.yaml"
+    interval: 86400
+    path: "./ruleset/Xbox.yaml"
+  discord:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/discord.yaml"
+    interval: 86400
+    path: "./ruleset/discord.yaml"
+  xiaomi_white_list:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_white_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_white_list.yaml"
+  xiaomi_block_list:
+    type: "http"
+    format: "yaml"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/xiaomi_block_list.yaml"
+    interval: 86400
+    path: "./ruleset/xiaomi_block_list.yaml"
+  windows:
+    type: "http"
+    behavior: "classical"
+    url: "https://raw.githubusercontent.com/10ium/clash_rules/refs/heads/main/windows.yaml"
+    interval: 86400
+    path: "./ruleset/windows.yaml"
+  cloudflare:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/cloudflare.yaml"
+    interval: 86400
+    path: "./ruleset/cloudflare.yaml"
+  github:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/github.yaml"
+    interval: 86400
+    path: "./ruleset/xgithub.yaml"
+  google-play:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google-play.yaml"
+    interval: 86400
+    path: "./ruleset/google-play.yaml"
+  google:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/refs/heads/generated/google.yaml"
+    interval: 86400
+    path: "./ruleset/google.yaml"
+  local_ips:
+    type: "http"
+    behavior: "ipcidr"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/local-ips.yaml"
+    interval: 86400
+    path: "./ruleset/local_ips.yaml"
+  private:
+    type: "http"
+    behavior: "domain"
+    url: "https://raw.githubusercontent.com/10ium/V2rayDomains2Clash/generated/private.yaml"
+    interval: 86400
+    path: "./ruleset/private.yaml"
+proxies:
+  - name: "🇺🇸US-173.244.56.9-0106"
+    type: "ss"
+    server: "173.244.56.9"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "🇺🇸US-173.244.56.6-0105"
+    type: "ss"
+    server: "173.244.56.6"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "🇺🇸US-156.146.38.167-0174"
+    type: "ss"
+    server: "156.146.38.167"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "🇺🇸US-156.146.38.170-0156"
+    type: "ss"
+    server: "156.146.38.170"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "🇺🇸US-156.146.38.168-0159"
+    type: "ss"
+    server: "156.146.38.168"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "🇺🇸US-64.74.163.69-0176"
+    type: "ss"
+    server: "64.74.163.69"
+    port: 18766
+    cipher: "aes-128-gcm"
+    password: "4efe1af272e7292139b889f6a63ee071"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.174-0073"
+    type: "ss"
+    server: "82.38.31.174"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.193-0102"
+    type: "ss"
+    server: "82.38.31.193"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.206-0101"
+    type: "ss"
+    server: "82.38.31.206"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇳🇱NL-193.29.139.168-0092"
+    type: "ss"
+    server: "193.29.139.168"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "QCXDxuDlTTMD7jtgHUjIoj"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.202-0074"
+    type: "ss"
+    server: "82.38.31.202"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.216-0109"
+    type: "ss"
+    server: "82.38.31.216"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.187-0089"
+    type: "ss"
+    server: "82.38.31.187"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.174-0095"
+    type: "ss"
+    server: "82.38.31.174"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧GB-82.110.60.9-0088"
+    type: "ss"
+    server: "82.110.60.9"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
+    udp: true
+  - name: "🇨🇦CA-149.22.95.183-0112"
+    type: "ss"
+    server: "149.22.95.183"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.159-0075"
+    type: "ss"
+    server: "82.38.31.159"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.155-0071"
+    type: "ss"
+    server: "82.38.31.155"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.210-0078"
+    type: "ss"
+    server: "82.38.31.210"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇳🇱NL-193.29.139.204-0094"
+    type: "ss"
+    server: "193.29.139.204"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.212-0086"
+    type: "ss"
+    server: "82.38.31.212"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.194-0087"
+    type: "ss"
+    server: "82.38.31.194"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.208-0093"
+    type: "ss"
+    server: "82.38.31.208"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.162-0098"
+    type: "ss"
+    server: "82.38.31.162"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.170-0091"
+    type: "ss"
+    server: "82.38.31.170"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.207-0076"
+    type: "ss"
+    server: "82.38.31.207"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.186-0082"
+    type: "ss"
+    server: "82.38.31.186"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.184-0100"
+    type: "ss"
+    server: "82.38.31.184"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.214-0079"
+    type: "ss"
+    server: "82.38.31.214"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.217-0104"
+    type: "ss"
+    server: "82.38.31.217"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇳🇱NL-193.29.139.235-0077"
+    type: "ss"
+    server: "193.29.139.235"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇺🇸US-37.19.198.244-0070"
+    type: "ss"
+    server: "37.19.198.244"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.180-0097"
+    type: "ss"
+    server: "82.38.31.180"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.171-0083"
+    type: "ss"
+    server: "82.38.31.171"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇺🇸US-37.19.198.243-0103"
+    type: "ss"
+    server: "37.19.198.243"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "🇺🇸US-37.19.198.236-0107"
+    type: "ss"
+    server: "37.19.198.236"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "🇺🇸US-37.19.198.160-0114"
+    type: "ss"
+    server: "37.19.198.160"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "🇸🇪SE-70.34.212.124-0108"
+    type: "ss"
+    server: "70.34.212.124"
+    port: 8388
+    cipher: "aes-256-gcm"
+    password: "AxIYWtskJWIIaefW"
+    udp: true
+  - name: "🇨🇦CA-137.184.174.93-0069"
+    type: "ss"
+    server: "137.184.174.93"
+    port: 8080
+    cipher: "rc4-md5"
+    password: "14fFPrbezE3HDZzsMOr6"
+    udp: true
+  - name: "🇫🇷FR-51.255.13.232-0111"
+    type: "ss"
+    server: "51.255.13.232"
+    port: 8388
+    cipher: "chacha20-ietf-poly1305"
+    password: "BqnqToih0PbU"
+    udp: true
+  - name: "🇮🇹IT-57.131.48.45-0113"
+    type: "ss"
+    server: "57.131.48.45"
+    port: 8388
+    cipher: "aes-256-gcm"
+    password: "itzvpn@321"
+    udp: true
+  - name: "🇳🇱NL-109.201.152.181-0115"
+    type: "ss"
+    server: "109.201.152.181"
+    port: 443
+    cipher: "aes-128-cfb"
+    password: "shadowsocks"
+    udp: true
+  - name: "🇺🇸US-172.96.160.250-0430"
+    type: "ss"
+    server: "ruot.ayucloudservices.nl"
+    port: 35031
+    cipher: "aes-128-gcm"
+    password: "85590bd2-807b-49b9-af20-1101c18b9eda"
+    udp: true
+  - name: "🇯🇵JP-149.22.87.241-0123"
+    type: "ss"
+    server: "149.22.87.241"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "🇯🇵JP-149.22.87.240-0129"
+    type: "ss"
+    server: "149.22.87.240"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "🇯🇵JP-149.22.87.204-0124"
+    type: "ss"
+    server: "149.22.87.204"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "🇩🇪DE-209.46.102.22-0116"
+    type: "ss"
+    server: "209.46.102.22"
+    port: 8388
+    cipher: "chacha20-ietf-poly1305"
+    password: "1hhrqrokj3ag"
+    udp: true
+  - name: "🇸🇬SG-68.183.227.4-0141"
+    type: "ss"
+    server: "68.183.227.4"
+    port: 8080
+    cipher: "rc4-md5"
+    password: "14fFPrbezE3HDZzsMOr6"
+    udp: true
+  - name: "🇳🇱NL-158.173.20.171-0117"
+    type: "ss"
+    server: "158.173.20.171"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "🇫🇮FI-185.103.110.68-0198"
+    type: "ss"
+    server: "185.103.110.68"
+    port: 18283
+    cipher: "aes-128-gcm"
+    password: "f9300a9bf39ae0347c3a3bfbc4dd7754"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.34-0125"
+    type: "ss"
+    server: "82.38.31.34"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.49-0137"
+    type: "ss"
+    server: "82.38.31.49"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.42-0140"
+    type: "ss"
+    server: "82.38.31.42"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇩🇪DE-8.209.74.72-0131"
+    type: "ss"
+    server: "8.209.74.72"
+    port: 20001
+    cipher: "chacha20-ietf-poly1305"
+    password: "PWpjPo3tqhPN4yRZ"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.149-0133"
+    type: "ss"
+    server: "82.38.31.149"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.66-0134"
+    type: "ss"
+    server: "82.38.31.66"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.62-0130"
+    type: "ss"
+    server: "82.38.31.62"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.10-0121"
+    type: "ss"
+    server: "82.38.31.10"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.2-0132"
+    type: "ss"
+    server: "82.38.31.2"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.82-0128"
+    type: "ss"
+    server: "82.38.31.82"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.48-0138"
+    type: "ss"
+    server: "82.38.31.48"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.47-0136"
+    type: "ss"
+    server: "82.38.31.47"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇺🇸US-156.146.38.169-0160"
+    type: "ss"
+    server: "156.146.38.169"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.46-0135"
+    type: "ss"
+    server: "82.38.31.46"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.3-0120"
+    type: "ss"
+    server: "82.38.31.3"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.16-0145"
+    type: "ss"
+    server: "82.38.31.16"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.61-0139"
+    type: "ss"
+    server: "82.38.31.61"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.35-0122"
+    type: "ss"
+    server: "82.38.31.35"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇬🇧GB-141.98.101.181-0142"
+    type: "ss"
+    server: "141.98.101.181"
+    port: 443
+    cipher: "aes-128-gcm"
+    password: "shadowsocks"
+    udp: true
+  - name: "🇳🇱NL-193.29.139.151-0126"
+    type: "ss"
+    server: "193.29.139.151"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "oZIoA69Q8yhcQV8ka3Pa3A"
+    udp: true
+  - name: "🇳🇴NO-185.213.23.63-0161"
+    type: "ss"
+    server: "185.213.23.63"
+    port: 990
+    cipher: "chacha20-ietf-poly1305"
+    password: "ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44="
+    udp: true
+  - name: "🇳🇱NL-40.113.154.234-0228"
+    type: "ss"
+    server: "c3.nastuh.link"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "y7KeRTzmH0vXT2kp"
+    udp: true
+  - name: "🇫🇷FR-54.36.174.140-0773"
+    type: "ss"
+    server: "54.36.174.140"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "e5c65ph"
+    udp: true
+  - name: "🇨🇦CA-51.222.200.165-0184"
+    type: "ss"
+    server: "51.222.200.165"
+    port: 5000
+    cipher: "aes-256-gcm"
+    password: "Y6R9pAtvxxzmGC"
+    udp: true
+  - name: "🇺🇸US-15.204.247.206-0152"
+    type: "ss"
+    server: "15.204.247.206"
+    port: 4444
+    cipher: "aes-256-gcm"
+    password: "pKEW8JPByTVTLtM"
+    udp: true
+  - name: "🇨🇦CA-51.222.136.236-0163"
+    type: "ss"
+    server: "51.222.136.236"
+    port: 8882
+    cipher: "aes-256-gcm"
+    password: "kDWvXYZoTBcGkC4"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.218-0096"
+    type: "ss"
+    server: "82.38.31.218"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇿🇦ZA-102.133.165.160-0149"
+    type: "ss"
+    server: "102.133.165.160"
+    port: 16233
+    cipher: "chacha20-ietf-poly1305"
+    password: "Xsy8Ox4yOV3xLlpxtjzs3X"
+    udp: true
+  - name: "🇬🇧GB-149.102.132.184-0179"
+    type: "ss"
+    server: "149.102.132.184"
+    port: 443
+    cipher: "aes-256-gcm"
+    password: "g5h5jleTRSyO3Rk4"
+    udp: true
+  - name: "🇹🇭TH-103.107.52.106-0437"
+    type: "ss"
+    server: "103.107.52.106"
+    port: 52351
+    cipher: "aes-256-gcm"
+    password: "sxajCTwrlK0zl+zmHpX0p0jXIfatnzlLzWlSQ950L1c="
+    udp: true
+  - name: "🇯🇵JP-84.247.155.196-0192"
+    type: "ss"
+    server: "84.247.155.196"
+    port: 80
+    cipher: "aes-256-gcm"
+    password: "3eOFeNssde7PYYMv"
+    udp: true
+  - name: "🇫🇮FI-185.103.110.66-0201"
+    type: "ss"
+    server: "185.103.110.66"
+    port: 18280
+    cipher: "aes-128-gcm"
+    password: "f9300a9bf39ae0347c3a3bfbc4dd7754"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.199-0240"
+    type: "ss"
+    server: "82.38.31.199"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇬🇧GB-149.102.132.184-0189"
+    type: "ss"
+    server: "149.102.132.184"
+    port: 80
+    cipher: "aes-256-gcm"
+    password: "g5h5jleTRSyO3Rk4"
+    udp: true
+  - name: "🇨🇭CH-132.243.175.144-0215"
+    type: "ss"
+    server: "132.243.175.144"
+    port: 8388
+    cipher: "chacha20-ietf-poly1305"
+    password: "e8KgS8fD0yDqYFpgN4G5piCOt9aFyqA3"
+    udp: true
+  - name: "🇰🇷KR-218.237.185.234-5173"
+    type: "ss"
+    server: "p141.panda001.net"
+    port: 4652
+    cipher: "aes-256-cfb"
+    password: "qwerREWQ@@"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.205-0084"
+    type: "ss"
+    server: "82.38.31.205"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.176-0185"
+    type: "ss"
+    server: "82.38.31.176"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇨🇦CA-51.222.141.125-0213"
+    type: "ss"
+    server: "51.222.141.125"
+    port: 445
+    cipher: "aes-256-gcm"
+    password: "zDNVedRFPQexG9v"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.219-0188"
+    type: "ss"
+    server: "82.38.31.219"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.203-0080"
+    type: "ss"
+    server: "82.38.31.203"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇹🇭TH-103.107.52.106-0164"
+    type: "ss"
+    server: "pphfree2.mvpnpvpn.de5.net"
+    port: 52351
+    cipher: "aes-256-gcm"
+    password: "sxajCTwrlK0zl+zmHpX0p0jXIfatnzlLzWlSQ950L1c="
+    udp: true
+  - name: "🇺🇸US-140.82.63.79-0067"
+    type: "ss"
+    server: "140.82.63.79"
+    port: 8388
+    cipher: "chacha20-ietf-poly1305"
+    password: "ZoZtfPOyVvmKARUN"
+    udp: true
+  - name: "🇿🇦ZA-102.37.156.224-0442"
+    type: "ss"
+    server: "102.37.156.224"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "aduB9HGxQHjA2SBMRjkHX6"
+    udp: true
+  - name: "🇯🇵JP-84.247.155.196-0181"
+    type: "ss"
+    server: "84.247.155.196"
+    port: 443
+    cipher: "aes-256-gcm"
+    password: "3eOFeNssde7PYYMv"
+    udp: true
+  - name: "🇨🇦CA-51.222.155.32-0202"
+    type: "ss"
+    server: "51.222.155.32"
+    port: 5003
+    cipher: "aes-256-gcm"
+    password: "g5MeD6Ft3CWlJId"
+    udp: true
+  - name: "🇩🇪DE-57.129.113.16-0216"
+    type: "ss"
+    server: "57.129.113.16"
+    port: 8388
+    cipher: "chacha20-ietf-poly1305"
+    password: "NcAXc0UZI6yQJE1p8QmOv8"
+    udp: true
+  - name: "🇨🇦CA-51.222.12.127-0414"
+    type: "ss"
+    server: "51.222.12.127"
+    port: 445
+    cipher: "aes-256-gcm"
+    password: "zDNVedRFPQexG9v"
+    udp: true
+  - name: "🇰🇷KR-211.178.105.134-0175"
+    type: "ss"
+    server: "211.178.105.134"
+    port: 6123
+    cipher: "aes-256-cfb"
+    password: "qwerREWQ@@"
+    udp: true
+  - name: "🇺🇸US-198.98.53.130-5105"
+    type: "ss"
+    server: "198.98.53.130"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "eDfN7SODQceIOmIAbtJJtK"
+    udp: true
+  - name: "🇬🇧GB-94.156.250.148-0148"
+    type: "ss"
+    server: "94.156.250.148"
+    port: 7001
+    cipher: "aes-256-gcm"
+    password: "RexnBgU7EV5ADxG"
+    udp: true
+  - name: "🇺🇸US-172.96.160.250-0173"
+    type: "ss"
+    server: "ruot.ayucloudservices.nl"
+    port: 35016
+    cipher: "aes-128-gcm"
+    password: "9c51ca33-a332-4de5-8677-5624e940097c"
+    udp: true
+  - name: "🇸🇬SG-45.128.12.20-0144"
+    type: "ss"
+    server: "45.128.12.20"
+    port: 14249
+    cipher: "chacha20-ietf-poly1305"
+    password: "9epp3o9ng8ej59uv"
+    udp: true
+  - name: "🇺🇸US-172.96.160.250-0143"
+    type: "ss"
+    server: "ruot.ayucloudservices.nl"
+    port: 40022
+    cipher: "aes-128-gcm"
+    password: "49b07b98-6b76-4c70-b046-39be88e75abf"
+    udp: true
+  - name: "🇬🇧GB-13.135.199.253-0119"
+    type: "ss"
+    server: "13.135.199.253"
+    port: 443
+    cipher: "aes-256-cfb"
+    password: "amazonskr05"
+    udp: true
+  - name: "🇬🇧GB-13.40.25.145-0118"
+    type: "ss"
+    server: "13.40.25.145"
+    port: 443
+    cipher: "aes-256-cfb"
+    password: "amazonskr05"
+    udp: true
+  - name: "🇫🇷FR-51.77.225.200-0110"
+    type: "ss"
+    server: "51.77.225.200"
+    port: 8388
+    cipher: "chacha20-ietf-poly1305"
+    password: "zRZNBszYyWo5"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.181-0099"
+    type: "ss"
+    server: "82.38.31.181"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.191-0090"
+    type: "ss"
+    server: "82.38.31.191"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.192-0085"
+    type: "ss"
+    server: "82.38.31.192"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.179-0081"
+    type: "ss"
+    server: "82.38.31.179"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇳🇱NL-193.29.139.147-0072"
+    type: "ss"
+    server: "193.29.139.147"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇨🇦CA-15.175.220.220-0193"
+    type: "ss"
+    server: "15.175.220.220"
+    port: 443
+    cipher: "aes-256-cfb"
+    password: "amazonskr05"
+    udp: true
+  - name: "🇺🇸US-138.199.42.68-0068"
+    type: "ss"
+    server: "138.199.42.68"
+    port: 8080
+    cipher: "rc4-md5"
+    password: "14fFPrbezE3HDZzsMOr6"
+    udp: true
+  - name: "🇭🇰HK-103.149.182.79-0204"
+    type: "ss"
+    server: "103.149.182.79"
+    port: 8388
+    cipher: "chacha20-ietf"
+    password: "asd123456"
+    udp: true
+  - name: "🇨🇦CA-51.79.85.185-0206"
+    type: "ss"
+    server: "51.79.85.185"
+    port: 8118
+    cipher: "aes-256-gcm"
+    password: "cdBIDV42DCwnfIN"
+    udp: true
+  - name: "🇭🇰HK-103.141.221.124-0209"
+    type: "ss"
+    server: "103.141.221.124"
+    port: 8388
+    cipher: "chacha20-ietf"
+    password: "asd123456"
+    udp: true
+  - name: "🇭🇰HK-103.141.221.101-0210"
+    type: "ss"
+    server: "103.141.221.101"
+    port: 8388
+    cipher: "chacha20-ietf"
+    password: "asd123456"
+    udp: true
+  - name: "🇭🇰HK-103.149.182.105-0211"
+    type: "ss"
+    server: "103.149.182.105"
+    port: 8388
+    cipher: "chacha20-ietf"
+    password: "asd123456"
+    udp: true
+  - name: "🇰🇷KR-211.174.113.172-0214"
+    type: "ss"
+    server: "211.174.113.172"
+    port: 49642
+    cipher: "aes-256-gcm"
+    password: "ac9c0a7b"
+    udp: true
+  - name: "🇰🇷KR-211.174.113.172-0217"
+    type: "ss"
+    server: "ce1fc2d8.krkt.hkssip.com"
+    port: 49642
+    cipher: "aes-256-gcm"
+    password: "ac9c0a7b"
+    udp: true
+  - name: "🇩🇪DE-145.239.1.100-0221"
+    type: "ss"
+    server: "145.239.1.100"
+    port: 8080
+    cipher: "aes-256-gcm"
+    password: "KixLvKzwjekG00rm"
+    udp: true
+  - name: "🇷🇴RO-194.68.44.42-0225"
+    type: "ss"
+    server: "194.68.44.42"
+    port: 64546
+    cipher: "chacha20-ietf-poly1305"
+    password: "U83u9OGpvSatIUW7LsWffr"
+    udp: true
+  - name: "🇳🇱NL-193.29.139.223-0229"
+    type: "ss"
+    server: "193.29.139.223"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇺🇸US-172.96.160.250-0230"
+    type: "ss"
+    server: "ruot.ayucloudservices.nl"
+    port: 40040
+    cipher: "aes-128-gcm"
+    password: "edad69d9-ea99-4ce9-bae8-8fedc2afcbf4"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.189-0231"
+    type: "ss"
+    server: "82.38.31.189"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇬🇧GB-82.38.31.190-0232"
+    type: "ss"
+    server: "82.38.31.190"
+    port: 8080
+    cipher: "chacha20-ietf-poly1305"
+    password: "k1dBOmOB4oqi7Ump37a1bQ"
+    udp: true
+  - name: "🇨🇦CA-3.97.11.240-0233"
+    type: "ss"
+    server: "3.97.11.240"
+    port: 443
+    cipher: "aes-256-cfb"
+    password: "amazonskr05"
+    udp: true
+  - name: "🇬🇧GB-149.102.149.207-0239"
+    type: "ss"
+    server: "149.102.149.207"
+    port: 443
+    cipher: "aes-256-gcm"
+    password: "LXchLsIwtCeUAUgu"
+    udp: true
+  - name: "🏁RELAY-104.21.7.133-0775"
+    type: "vmess"
+    server: "cf.0sm.com"
+    port: 80
+    uuid: "0cf6d970-3f1d-4aae-a989-92a8f76ae3db"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🏁RELAY-172.66.203.67-0776"
+    type: "vmess"
+    server: "172.66.203.67"
+    port: 443
+    uuid: "0cf6d970-3f1d-4aae-a989-92a8f76ae3db"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇮🇳IN-152.67.8.205-0195"
+    type: "vmess"
+    server: "152.67.8.205"
+    port: 80
+    uuid: "9db4c708-aef8-4359-821b-38e47990be0d"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🏁RELAY-172.64.147.77-1101"
+    type: "vmess"
+    server: "eu3.998998.best"
+    port: 443
+    uuid: "5504eaa8-1395-402f-8e0e-75ecd762e627"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰HK-47.243.153.153-0770"
+    type: "vmess"
+    server: "47.243.153.153"
+    port: 443
+    uuid: "f23bb427-c1f9-4373-876c-2f43e9f790f3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰HK-156.245.232.239-5162"
+    type: "vmess"
+    server: "156.245.232.239"
+    port: 35043
+    uuid: "b15e481d-17e4-41a8-84c2-23d4f0514d9a"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇰🇷KR-52.78.213.224-1702"
+    type: "vmess"
+    server: "52.78.213.224"
+    port: 80
+    uuid: "6f442823-6b73-4b31-f1f5-aa1e907b051e"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇯🇵JP-172.111.146.64-0151"
+    type: "vmess"
+    server: "172.111.146.64"
+    port: 80
+    uuid: "05b8c783-7f59-47f9-9923-06a465679f6a"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰HK-8.218.195.61-0150"
+    type: "vmess"
+    server: "ex1ogt73nzpqkac2.v.3dns.vip"
+    port: 443
+    uuid: "f23bb427-c1f9-4373-876c-2f43e9f790f3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰HK-8.218.195.61-0147"
+    type: "vmess"
+    server: "8.218.195.61"
+    port: 443
+    uuid: "f23bb427-c1f9-4373-876c-2f43e9f790f3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇩🇪DE-91.98.101.145-0065"
+    type: "vmess"
+    server: "az.hk01.paopaocloud.cyou"
+    port: 10035
+    uuid: "d8c5b486-84bb-3887-a1d9-07455ea608f2"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇯🇵JP-172.105.238.164-0060"
+    type: "vmess"
+    server: "172.105.238.164"
+    port: 443
+    uuid: "3706161f-3ee3-48e5-bfcf-0d856cc6f0ab"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇯🇵JP-172.105.239.241-0059"
+    type: "vmess"
+    server: "172.105.239.241"
+    port: 443
+    uuid: "3706161f-3ee3-48e5-bfcf-0d856cc6f0ab"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🏁RELAY-172.64.154.200-0057"
+    type: "vmess"
+    server: "172.64.154.200"
+    port: 443
+    uuid: "a8030afd-812a-4afe-a766-9c76ff3eddd4"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇻🇳VN-103.186.149.132-0053"
+    type: "vmess"
+    server: "103.186.149.132"
+    port: 80
+    uuid: "67468d89-cf87-443c-baca-49f1e73b5991"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇩🇪DE-91.195.240.12-0048"
+    type: "vmess"
+    server: "us.kapok.buzz"
+    port: 443
+    uuid: "eb4550a1-bd63-4f9c-b4b6-fdd24b440728"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇩🇪DE-91.98.101.145-0043"
+    type: "vmess"
+    server: "db01.paopaocloud.cyou"
+    port: 443
+    uuid: "d8c5b486-84bb-3887-a1d9-07455ea608f2"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🏁RELAY-172.64.155.30-0038"
+    type: "vmess"
+    server: "172.64.155.30"
+    port: 2053
+    uuid: "8afc6cdf-4f0a-4725-a44c-5dacdc2b2784"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇩🇪DE-91.98.101.145-0034"
+    type: "vmess"
+    server: "ah.yd01.paopaocloud.cyou"
+    port: 10015
+    uuid: "d8c5b486-84bb-3887-a1d9-07455ea608f2"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇰🇷KR-43.108.40.127-0212"
+    type: "vmess"
+    server: "baBfGGlhjs86aTxZ.v.3dns.vip"
+    port: 443
+    uuid: "b89b702b-31ef-4f6a-85df-c264795a987b"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🏁RELAY-172.64.153.200-0033"
+    type: "vmess"
+    server: "172.64.153.200"
+    port: 443
+    uuid: "a8030afd-812a-4afe-a766-9c76ff3eddd4"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🏁RELAY-172.64.155.200-0032"
+    type: "vmess"
+    server: "172.64.155.200"
+    port: 443
+    uuid: "a8030afd-812a-4afe-a766-9c76ff3eddd4"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🏁RELAY-141.101.114.33-0025"
+    type: "vmess"
+    server: "141.101.114.33"
+    port: 443
+    uuid: "e5a88ce2-fc1b-45d1-9c5f-553721d28004"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇸🇬SG-8.222.249.101-0218"
+    type: "vmess"
+    server: "K5DYRTmkNsLnAj8V.v.3dns.vip"
+    port: 443
+    uuid: "b89b702b-31ef-4f6a-85df-c264795a987b"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇭🇰HK-8.217.13.103-0219"
+    type: "vmess"
+    server: "8.217.13.103"
+    port: 443
+    uuid: "f23bb427-c1f9-4373-876c-2f43e9f790f3"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🏁RELAY-198.41.212.30-0024"
+    type: "vmess"
+    server: "198.41.212.30"
+    port: 443
+    uuid: "105c635f-918d-4b2a-8c9d-d5426e94eb4b"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇰🇷KR-3.35.168.225-0168"
+    type: "trojan"
+    server: "noted-cougar.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "noted-cougar.rooster465.autos"
+  - name: "🇰🇷KR-3.36.50.213-0208"
+    type: "trojan"
+    server: "pure-kodiak.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "pure-kodiak.rooster465.autos"
+  - name: "🇰🇷KR-3.34.131.153-0178"
+    type: "trojan"
+    server: "pretty-rat.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "pretty-rat.rooster465.autos"
+  - name: "🇸🇬SG-54.151.181.75-0186"
+    type: "trojan"
+    server: "moral-basilisk.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "moral-basilisk.rooster465.autos"
+  - name: "🇸🇬SG-56.10.9.77-0200"
+    type: "trojan"
+    server: "inviting-ferret.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "inviting-ferret.rooster465.autos"
+  - name: "🇸🇬SG-3.1.252.137-0203"
+    type: "trojan"
+    server: "brave-tomcat.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "brave-tomcat.rooster465.autos"
+  - name: "🇰🇷KR-3.34.131.153-0199"
+    type: "trojan"
+    server: "3.34.131.153"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "pretty-rat.rooster465.autos"
+  - name: "🇰🇷KR-43.201.100.203-0207"
+    type: "trojan"
+    server: "optimum-snapper.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "optimum-snapper.rooster465.autos"
+  - name: "🇰🇷KR-3.35.207.188-0180"
+    type: "trojan"
+    server: "main-fawn.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "main-fawn.rooster465.autos"
+  - name: "🇰🇷KR-3.34.192.47-0170"
+    type: "trojan"
+    server: "central-jawfish.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "central-jawfish.rooster465.autos"
+  - name: "🇸🇬SG-18.141.136.8-0205"
+    type: "trojan"
+    server: "musical-mouse.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "musical-mouse.rooster465.autos"
+  - name: "🇸🇬SG-47.131.250.125-0155"
+    type: "trojan"
+    server: "simple-molly.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "simple-molly.rooster465.autos"
+  - name: "🇨🇳CN-183.236.51.4-4829"
+    type: "trojan"
+    server: "183.236.51.4"
+    port: 10825
+    password: "7d223bae-e183-4bf6-89c3-e327b15df490"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "🇯🇵JP-176.34.5.100-0157"
+    type: "trojan"
+    server: "assuring-skink.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "assuring-skink.rooster465.autos"
+  - name: "🇯🇵JP-13.193.213.184-0154"
+    type: "trojan"
+    server: "stable-python.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "stable-python.rooster465.autos"
+  - name: "🇯🇵JP-18.183.212.83-0162"
+    type: "trojan"
+    server: "normal-macaque.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "normal-macaque.rooster465.autos"
+  - name: "🇯🇵JP-54.238.153.132-0153"
+    type: "trojan"
+    server: "obliging-louse.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "obliging-louse.rooster465.autos"
+  - name: "🇯🇵JP-13.114.99.222-0165"
+    type: "trojan"
+    server: "allowed-poodle.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "allowed-poodle.rooster465.autos"
+  - name: "🇯🇵JP-3.112.29.244-0166"
+    type: "trojan"
+    server: "evident-ant.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "evident-ant.rooster465.autos"
+  - name: "🇯🇵JP-13.230.91.226-0167"
+    type: "trojan"
+    server: "musical-terrier.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "musical-terrier.rooster465.autos"
+  - name: "🇩🇪DE-3.75.93.113-0169"
+    type: "trojan"
+    server: "meet-goshawk.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "meet-goshawk.rooster465.autos"
+  - name: "🇯🇵JP-13.230.139.12-0171"
+    type: "trojan"
+    server: "brief-glider.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "brief-glider.rooster465.autos"
+  - name: "🇯🇵JP-54.65.177.190-0172"
+    type: "trojan"
+    server: "winning-marten.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "winning-marten.rooster465.autos"
+  - name: "🇯🇵JP-54.249.36.167-0146"
+    type: "trojan"
+    server: "comic-poodle.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "comic-poodle.rooster465.autos"
+  - name: "🇯🇵JP-43.207.198.39-0177"
+    type: "trojan"
+    server: "fancy-javelin.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fancy-javelin.rooster465.autos"
+  - name: "🇯🇵JP-43.206.225.188-0127"
+    type: "trojan"
+    server: "warm-krill.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "warm-krill.rooster465.autos"
+  - name: "🇯🇵JP-18.183.167.216-0182"
+    type: "trojan"
+    server: "amazed-mako.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "amazed-mako.rooster465.autos"
+  - name: "🇮🇪IE-54.72.130.222-0183"
+    type: "trojan"
+    server: "adapting-basilisk.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "adapting-basilisk.rooster465.autos"
+  - name: "🇺🇸US-16.144.66.136-0187"
+    type: "trojan"
+    server: "alert-titmouse.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "alert-titmouse.rooster465.autos"
+  - name: "🇩🇪DE-63.178.198.94-0190"
+    type: "trojan"
+    server: "pleased-albacore.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "pleased-albacore.rooster465.autos"
+  - name: "🇮🇪IE-3.253.106.233-0191"
+    type: "trojan"
+    server: "loved-shark.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "loved-shark.rooster465.autos"
+  - name: "🇰🇷KR-13.125.69.162-0194"
+    type: "trojan"
+    server: "engaging-toucan.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "engaging-toucan.rooster465.autos"
+  - name: "🇮🇪IE-3.253.106.233-0196"
+    type: "trojan"
+    server: "3.253.106.233"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "loved-shark.rooster465.autos"
+  - name: "🇯🇵JP-3.112.188.176-0197"
+    type: "trojan"
+    server: "live-stallion.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "live-stallion.rooster465.autos"
+  - name: "🇨🇳CN-183.236.51.3-0220"
+    type: "trojan"
+    server: "183.236.51.3"
+    port: 10819
+    password: "7d223bae-e183-4bf6-89c3-e327b15df490"
+    udp: true
+    tls: true
+    network: "tcp"
+  - name: "🇰🇷KR-52.78.42.192-0222"
+    type: "trojan"
+    server: "working-tomcat.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "working-tomcat.rooster465.autos"
+  - name: "🇯🇵JP-54.249.55.154-0223"
+    type: "trojan"
+    server: "prime-corgi.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "prime-corgi.rooster465.autos"
+  - name: "🇰🇷KR-13.125.29.37-0224"
+    type: "trojan"
+    server: "fancy-skink.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fancy-skink.rooster465.autos"
+  - name: "🇰🇷KR-43.203.120.240-0226"
+    type: "trojan"
+    server: "cunning-grub.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "cunning-grub.rooster465.autos"
+  - name: "🇰🇷KR-3.35.214.220-0227"
+    type: "trojan"
+    server: "glorious-lark.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "glorious-lark.rooster465.autos"
+  - name: "🇰🇷KR-3.39.225.215-0238"
+    type: "trojan"
+    server: "kind-stork.rooster465.autos"
+    port: 443
+    password: "UX82473651"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "kind-stork.rooster465.autos"
+proxy-groups:
+  - name: "نوع انتخاب پروکسی 🔀"
+    type: "select"
+    proxies:
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "توزیع بار چرخشی ⚖️"
+      - "قطع اینترنت ⛔"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/412721/choose.svg"
+  - name: "دستی 🤏🏻"
+    type: "select"
+    lazy: true
+    proxies:
+      - "🇺🇸US-173.244.56.9-0106"
+      - "🇺🇸US-173.244.56.6-0105"
+      - "🇺🇸US-156.146.38.167-0174"
+      - "🇺🇸US-156.146.38.170-0156"
+      - "🇺🇸US-156.146.38.168-0159"
+      - "🇺🇸US-64.74.163.69-0176"
+      - "🇬🇧GB-82.38.31.174-0073"
+      - "🇬🇧GB-82.38.31.193-0102"
+      - "🇬🇧GB-82.38.31.206-0101"
+      - "🇳🇱NL-193.29.139.168-0092"
+      - "🇬🇧GB-82.38.31.202-0074"
+      - "🇬🇧GB-82.38.31.216-0109"
+      - "🇬🇧GB-82.38.31.187-0089"
+      - "🇬🇧GB-82.38.31.174-0095"
+      - "🇬🇧GB-82.110.60.9-0088"
+      - "🇨🇦CA-149.22.95.183-0112"
+      - "🇬🇧GB-82.38.31.159-0075"
+      - "🇬🇧GB-82.38.31.155-0071"
+      - "🇬🇧GB-82.38.31.210-0078"
+      - "🇳🇱NL-193.29.139.204-0094"
+      - "🇬🇧GB-82.38.31.212-0086"
+      - "🇬🇧GB-82.38.31.194-0087"
+      - "🇬🇧GB-82.38.31.208-0093"
+      - "🇬🇧GB-82.38.31.162-0098"
+      - "🇬🇧GB-82.38.31.170-0091"
+      - "🇬🇧GB-82.38.31.207-0076"
+      - "🇬🇧GB-82.38.31.186-0082"
+      - "🇬🇧GB-82.38.31.184-0100"
+      - "🇬🇧GB-82.38.31.214-0079"
+      - "🇬🇧GB-82.38.31.217-0104"
+      - "🇳🇱NL-193.29.139.235-0077"
+      - "🇺🇸US-37.19.198.244-0070"
+      - "🇬🇧GB-82.38.31.180-0097"
+      - "🇬🇧GB-82.38.31.171-0083"
+      - "🇺🇸US-37.19.198.243-0103"
+      - "🇺🇸US-37.19.198.236-0107"
+      - "🇺🇸US-37.19.198.160-0114"
+      - "🇸🇪SE-70.34.212.124-0108"
+      - "🇨🇦CA-137.184.174.93-0069"
+      - "🇫🇷FR-51.255.13.232-0111"
+      - "🇮🇹IT-57.131.48.45-0113"
+      - "🇳🇱NL-109.201.152.181-0115"
+      - "🇺🇸US-172.96.160.250-0430"
+      - "🇯🇵JP-149.22.87.241-0123"
+      - "🇯🇵JP-149.22.87.240-0129"
+      - "🇯🇵JP-149.22.87.204-0124"
+      - "🇩🇪DE-209.46.102.22-0116"
+      - "🇸🇬SG-68.183.227.4-0141"
+      - "🇳🇱NL-158.173.20.171-0117"
+      - "🇫🇮FI-185.103.110.68-0198"
+      - "🇬🇧GB-82.38.31.34-0125"
+      - "🇬🇧GB-82.38.31.49-0137"
+      - "🇬🇧GB-82.38.31.42-0140"
+      - "🇩🇪DE-8.209.74.72-0131"
+      - "🇬🇧GB-82.38.31.149-0133"
+      - "🇬🇧GB-82.38.31.66-0134"
+      - "🇬🇧GB-82.38.31.62-0130"
+      - "🇬🇧GB-82.38.31.10-0121"
+      - "🇬🇧GB-82.38.31.2-0132"
+      - "🇬🇧GB-82.38.31.82-0128"
+      - "🇬🇧GB-82.38.31.48-0138"
+      - "🇬🇧GB-82.38.31.47-0136"
+      - "🇺🇸US-156.146.38.169-0160"
+      - "🇬🇧GB-82.38.31.46-0135"
+      - "🇬🇧GB-82.38.31.3-0120"
+      - "🇬🇧GB-82.38.31.16-0145"
+      - "🇬🇧GB-82.38.31.61-0139"
+      - "🇬🇧GB-82.38.31.35-0122"
+      - "🇬🇧GB-141.98.101.181-0142"
+      - "🇳🇱NL-193.29.139.151-0126"
+      - "🇳🇴NO-185.213.23.63-0161"
+      - "🇳🇱NL-40.113.154.234-0228"
+      - "🇫🇷FR-54.36.174.140-0773"
+      - "🇨🇦CA-51.222.200.165-0184"
+      - "🇺🇸US-15.204.247.206-0152"
+      - "🇨🇦CA-51.222.136.236-0163"
+      - "🇬🇧GB-82.38.31.218-0096"
+      - "🇿🇦ZA-102.133.165.160-0149"
+      - "🇬🇧GB-149.102.132.184-0179"
+      - "🇹🇭TH-103.107.52.106-0437"
+      - "🇯🇵JP-84.247.155.196-0192"
+      - "🇫🇮FI-185.103.110.66-0201"
+      - "🇬🇧GB-82.38.31.199-0240"
+      - "🇬🇧GB-149.102.132.184-0189"
+      - "🇨🇭CH-132.243.175.144-0215"
+      - "🇰🇷KR-218.237.185.234-5173"
+      - "🇬🇧GB-82.38.31.205-0084"
+      - "🇬🇧GB-82.38.31.176-0185"
+      - "🇨🇦CA-51.222.141.125-0213"
+      - "🇬🇧GB-82.38.31.219-0188"
+      - "🇬🇧GB-82.38.31.203-0080"
+      - "🇹🇭TH-103.107.52.106-0164"
+      - "🇺🇸US-140.82.63.79-0067"
+      - "🇿🇦ZA-102.37.156.224-0442"
+      - "🇯🇵JP-84.247.155.196-0181"
+      - "🇨🇦CA-51.222.155.32-0202"
+      - "🇩🇪DE-57.129.113.16-0216"
+      - "🇨🇦CA-51.222.12.127-0414"
+      - "🇰🇷KR-211.178.105.134-0175"
+      - "🇺🇸US-198.98.53.130-5105"
+      - "🇬🇧GB-94.156.250.148-0148"
+      - "🇺🇸US-172.96.160.250-0173"
+      - "🇸🇬SG-45.128.12.20-0144"
+      - "🇺🇸US-172.96.160.250-0143"
+      - "🇬🇧GB-13.135.199.253-0119"
+      - "🇬🇧GB-13.40.25.145-0118"
+      - "🇫🇷FR-51.77.225.200-0110"
+      - "🇬🇧GB-82.38.31.181-0099"
+      - "🇬🇧GB-82.38.31.191-0090"
+      - "🇬🇧GB-82.38.31.192-0085"
+      - "🇬🇧GB-82.38.31.179-0081"
+      - "🇳🇱NL-193.29.139.147-0072"
+      - "🇨🇦CA-15.175.220.220-0193"
+      - "🇺🇸US-138.199.42.68-0068"
+      - "🇭🇰HK-103.149.182.79-0204"
+      - "🇨🇦CA-51.79.85.185-0206"
+      - "🇭🇰HK-103.141.221.124-0209"
+      - "🇭🇰HK-103.141.221.101-0210"
+      - "🇭🇰HK-103.149.182.105-0211"
+      - "🇰🇷KR-211.174.113.172-0214"
+      - "🇰🇷KR-211.174.113.172-0217"
+      - "🇩🇪DE-145.239.1.100-0221"
+      - "🇷🇴RO-194.68.44.42-0225"
+      - "🇳🇱NL-193.29.139.223-0229"
+      - "🇺🇸US-172.96.160.250-0230"
+      - "🇬🇧GB-82.38.31.189-0231"
+      - "🇬🇧GB-82.38.31.190-0232"
+      - "🇨🇦CA-3.97.11.240-0233"
+      - "🇬🇧GB-149.102.149.207-0239"
+      - "🏁RELAY-104.21.7.133-0775"
+      - "🏁RELAY-172.66.203.67-0776"
+      - "🇮🇳IN-152.67.8.205-0195"
+      - "🏁RELAY-172.64.147.77-1101"
+      - "🇭🇰HK-47.243.153.153-0770"
+      - "🇭🇰HK-156.245.232.239-5162"
+      - "🇰🇷KR-52.78.213.224-1702"
+      - "🇯🇵JP-172.111.146.64-0151"
+      - "🇭🇰HK-8.218.195.61-0150"
+      - "🇭🇰HK-8.218.195.61-0147"
+      - "🇩🇪DE-91.98.101.145-0065"
+      - "🇯🇵JP-172.105.238.164-0060"
+      - "🇯🇵JP-172.105.239.241-0059"
+      - "🏁RELAY-172.64.154.200-0057"
+      - "🇻🇳VN-103.186.149.132-0053"
+      - "🇩🇪DE-91.195.240.12-0048"
+      - "🇩🇪DE-91.98.101.145-0043"
+      - "🏁RELAY-172.64.155.30-0038"
+      - "🇩🇪DE-91.98.101.145-0034"
+      - "🇰🇷KR-43.108.40.127-0212"
+      - "🏁RELAY-172.64.153.200-0033"
+      - "🏁RELAY-172.64.155.200-0032"
+      - "🏁RELAY-141.101.114.33-0025"
+      - "🇸🇬SG-8.222.249.101-0218"
+      - "🇭🇰HK-8.217.13.103-0219"
+      - "🏁RELAY-198.41.212.30-0024"
+      - "🇰🇷KR-3.35.168.225-0168"
+      - "🇰🇷KR-3.36.50.213-0208"
+      - "🇰🇷KR-3.34.131.153-0178"
+      - "🇸🇬SG-54.151.181.75-0186"
+      - "🇸🇬SG-56.10.9.77-0200"
+      - "🇸🇬SG-3.1.252.137-0203"
+      - "🇰🇷KR-3.34.131.153-0199"
+      - "🇰🇷KR-43.201.100.203-0207"
+      - "🇰🇷KR-3.35.207.188-0180"
+      - "🇰🇷KR-3.34.192.47-0170"
+      - "🇸🇬SG-18.141.136.8-0205"
+      - "🇸🇬SG-47.131.250.125-0155"
+      - "🇨🇳CN-183.236.51.4-4829"
+      - "🇯🇵JP-176.34.5.100-0157"
+      - "🇯🇵JP-13.193.213.184-0154"
+      - "🇯🇵JP-18.183.212.83-0162"
+      - "🇯🇵JP-54.238.153.132-0153"
+      - "🇯🇵JP-13.114.99.222-0165"
+      - "🇯🇵JP-3.112.29.244-0166"
+      - "🇯🇵JP-13.230.91.226-0167"
+      - "🇩🇪DE-3.75.93.113-0169"
+      - "🇯🇵JP-13.230.139.12-0171"
+      - "🇯🇵JP-54.65.177.190-0172"
+      - "🇯🇵JP-54.249.36.167-0146"
+      - "🇯🇵JP-43.207.198.39-0177"
+      - "🇯🇵JP-43.206.225.188-0127"
+      - "🇯🇵JP-18.183.167.216-0182"
+      - "🇮🇪IE-54.72.130.222-0183"
+      - "🇺🇸US-16.144.66.136-0187"
+      - "🇩🇪DE-63.178.198.94-0190"
+      - "🇮🇪IE-3.253.106.233-0191"
+      - "🇰🇷KR-13.125.69.162-0194"
+      - "🇮🇪IE-3.253.106.233-0196"
+      - "🇯🇵JP-3.112.188.176-0197"
+      - "🇨🇳CN-183.236.51.3-0220"
+      - "🇰🇷KR-52.78.42.192-0222"
+      - "🇯🇵JP-54.249.55.154-0223"
+      - "🇰🇷KR-13.125.29.37-0224"
+      - "🇰🇷KR-43.203.120.240-0226"
+      - "🇰🇷KR-3.35.214.220-0227"
+      - "🇰🇷KR-3.39.225.215-0238"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
+  - name: "خودکار (بهترین پینگ) 🤖"
+    type: "url-test"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 30
+    tolerance: 50
+    lazy: true
+    proxies:
+      - "🇺🇸US-173.244.56.9-0106"
+      - "🇺🇸US-173.244.56.6-0105"
+      - "🇺🇸US-156.146.38.167-0174"
+      - "🇺🇸US-156.146.38.170-0156"
+      - "🇺🇸US-156.146.38.168-0159"
+      - "🇺🇸US-64.74.163.69-0176"
+      - "🇬🇧GB-82.38.31.174-0073"
+      - "🇬🇧GB-82.38.31.193-0102"
+      - "🇬🇧GB-82.38.31.206-0101"
+      - "🇳🇱NL-193.29.139.168-0092"
+      - "🇬🇧GB-82.38.31.202-0074"
+      - "🇬🇧GB-82.38.31.216-0109"
+      - "🇬🇧GB-82.38.31.187-0089"
+      - "🇬🇧GB-82.38.31.174-0095"
+      - "🇬🇧GB-82.110.60.9-0088"
+      - "🇨🇦CA-149.22.95.183-0112"
+      - "🇬🇧GB-82.38.31.159-0075"
+      - "🇬🇧GB-82.38.31.155-0071"
+      - "🇬🇧GB-82.38.31.210-0078"
+      - "🇳🇱NL-193.29.139.204-0094"
+      - "🇬🇧GB-82.38.31.212-0086"
+      - "🇬🇧GB-82.38.31.194-0087"
+      - "🇬🇧GB-82.38.31.208-0093"
+      - "🇬🇧GB-82.38.31.162-0098"
+      - "🇬🇧GB-82.38.31.170-0091"
+      - "🇬🇧GB-82.38.31.207-0076"
+      - "🇬🇧GB-82.38.31.186-0082"
+      - "🇬🇧GB-82.38.31.184-0100"
+      - "🇬🇧GB-82.38.31.214-0079"
+      - "🇬🇧GB-82.38.31.217-0104"
+      - "🇳🇱NL-193.29.139.235-0077"
+      - "🇺🇸US-37.19.198.244-0070"
+      - "🇬🇧GB-82.38.31.180-0097"
+      - "🇬🇧GB-82.38.31.171-0083"
+      - "🇺🇸US-37.19.198.243-0103"
+      - "🇺🇸US-37.19.198.236-0107"
+      - "🇺🇸US-37.19.198.160-0114"
+      - "🇸🇪SE-70.34.212.124-0108"
+      - "🇨🇦CA-137.184.174.93-0069"
+      - "🇫🇷FR-51.255.13.232-0111"
+      - "🇮🇹IT-57.131.48.45-0113"
+      - "🇳🇱NL-109.201.152.181-0115"
+      - "🇺🇸US-172.96.160.250-0430"
+      - "🇯🇵JP-149.22.87.241-0123"
+      - "🇯🇵JP-149.22.87.240-0129"
+      - "🇯🇵JP-149.22.87.204-0124"
+      - "🇩🇪DE-209.46.102.22-0116"
+      - "🇸🇬SG-68.183.227.4-0141"
+      - "🇳🇱NL-158.173.20.171-0117"
+      - "🇫🇮FI-185.103.110.68-0198"
+      - "🇬🇧GB-82.38.31.34-0125"
+      - "🇬🇧GB-82.38.31.49-0137"
+      - "🇬🇧GB-82.38.31.42-0140"
+      - "🇩🇪DE-8.209.74.72-0131"
+      - "🇬🇧GB-82.38.31.149-0133"
+      - "🇬🇧GB-82.38.31.66-0134"
+      - "🇬🇧GB-82.38.31.62-0130"
+      - "🇬🇧GB-82.38.31.10-0121"
+      - "🇬🇧GB-82.38.31.2-0132"
+      - "🇬🇧GB-82.38.31.82-0128"
+      - "🇬🇧GB-82.38.31.48-0138"
+      - "🇬🇧GB-82.38.31.47-0136"
+      - "🇺🇸US-156.146.38.169-0160"
+      - "🇬🇧GB-82.38.31.46-0135"
+      - "🇬🇧GB-82.38.31.3-0120"
+      - "🇬🇧GB-82.38.31.16-0145"
+      - "🇬🇧GB-82.38.31.61-0139"
+      - "🇬🇧GB-82.38.31.35-0122"
+      - "🇬🇧GB-141.98.101.181-0142"
+      - "🇳🇱NL-193.29.139.151-0126"
+      - "🇳🇴NO-185.213.23.63-0161"
+      - "🇳🇱NL-40.113.154.234-0228"
+      - "🇫🇷FR-54.36.174.140-0773"
+      - "🇨🇦CA-51.222.200.165-0184"
+      - "🇺🇸US-15.204.247.206-0152"
+      - "🇨🇦CA-51.222.136.236-0163"
+      - "🇬🇧GB-82.38.31.218-0096"
+      - "🇿🇦ZA-102.133.165.160-0149"
+      - "🇬🇧GB-149.102.132.184-0179"
+      - "🇹🇭TH-103.107.52.106-0437"
+      - "🇯🇵JP-84.247.155.196-0192"
+      - "🇫🇮FI-185.103.110.66-0201"
+      - "🇬🇧GB-82.38.31.199-0240"
+      - "🇬🇧GB-149.102.132.184-0189"
+      - "🇨🇭CH-132.243.175.144-0215"
+      - "🇰🇷KR-218.237.185.234-5173"
+      - "🇬🇧GB-82.38.31.205-0084"
+      - "🇬🇧GB-82.38.31.176-0185"
+      - "🇨🇦CA-51.222.141.125-0213"
+      - "🇬🇧GB-82.38.31.219-0188"
+      - "🇬🇧GB-82.38.31.203-0080"
+      - "🇹🇭TH-103.107.52.106-0164"
+      - "🇺🇸US-140.82.63.79-0067"
+      - "🇿🇦ZA-102.37.156.224-0442"
+      - "🇯🇵JP-84.247.155.196-0181"
+      - "🇨🇦CA-51.222.155.32-0202"
+      - "🇩🇪DE-57.129.113.16-0216"
+      - "🇨🇦CA-51.222.12.127-0414"
+      - "🇰🇷KR-211.178.105.134-0175"
+      - "🇺🇸US-198.98.53.130-5105"
+      - "🇬🇧GB-94.156.250.148-0148"
+      - "🇺🇸US-172.96.160.250-0173"
+      - "🇸🇬SG-45.128.12.20-0144"
+      - "🇺🇸US-172.96.160.250-0143"
+      - "🇬🇧GB-13.135.199.253-0119"
+      - "🇬🇧GB-13.40.25.145-0118"
+      - "🇫🇷FR-51.77.225.200-0110"
+      - "🇬🇧GB-82.38.31.181-0099"
+      - "🇬🇧GB-82.38.31.191-0090"
+      - "🇬🇧GB-82.38.31.192-0085"
+      - "🇬🇧GB-82.38.31.179-0081"
+      - "🇳🇱NL-193.29.139.147-0072"
+      - "🇨🇦CA-15.175.220.220-0193"
+      - "🇺🇸US-138.199.42.68-0068"
+      - "🇭🇰HK-103.149.182.79-0204"
+      - "🇨🇦CA-51.79.85.185-0206"
+      - "🇭🇰HK-103.141.221.124-0209"
+      - "🇭🇰HK-103.141.221.101-0210"
+      - "🇭🇰HK-103.149.182.105-0211"
+      - "🇰🇷KR-211.174.113.172-0214"
+      - "🇰🇷KR-211.174.113.172-0217"
+      - "🇩🇪DE-145.239.1.100-0221"
+      - "🇷🇴RO-194.68.44.42-0225"
+      - "🇳🇱NL-193.29.139.223-0229"
+      - "🇺🇸US-172.96.160.250-0230"
+      - "🇬🇧GB-82.38.31.189-0231"
+      - "🇬🇧GB-82.38.31.190-0232"
+      - "🇨🇦CA-3.97.11.240-0233"
+      - "🇬🇧GB-149.102.149.207-0239"
+      - "🏁RELAY-104.21.7.133-0775"
+      - "🏁RELAY-172.66.203.67-0776"
+      - "🇮🇳IN-152.67.8.205-0195"
+      - "🏁RELAY-172.64.147.77-1101"
+      - "🇭🇰HK-47.243.153.153-0770"
+      - "🇭🇰HK-156.245.232.239-5162"
+      - "🇰🇷KR-52.78.213.224-1702"
+      - "🇯🇵JP-172.111.146.64-0151"
+      - "🇭🇰HK-8.218.195.61-0150"
+      - "🇭🇰HK-8.218.195.61-0147"
+      - "🇩🇪DE-91.98.101.145-0065"
+      - "🇯🇵JP-172.105.238.164-0060"
+      - "🇯🇵JP-172.105.239.241-0059"
+      - "🏁RELAY-172.64.154.200-0057"
+      - "🇻🇳VN-103.186.149.132-0053"
+      - "🇩🇪DE-91.195.240.12-0048"
+      - "🇩🇪DE-91.98.101.145-0043"
+      - "🏁RELAY-172.64.155.30-0038"
+      - "🇩🇪DE-91.98.101.145-0034"
+      - "🇰🇷KR-43.108.40.127-0212"
+      - "🏁RELAY-172.64.153.200-0033"
+      - "🏁RELAY-172.64.155.200-0032"
+      - "🏁RELAY-141.101.114.33-0025"
+      - "🇸🇬SG-8.222.249.101-0218"
+      - "🇭🇰HK-8.217.13.103-0219"
+      - "🏁RELAY-198.41.212.30-0024"
+      - "🇰🇷KR-3.35.168.225-0168"
+      - "🇰🇷KR-3.36.50.213-0208"
+      - "🇰🇷KR-3.34.131.153-0178"
+      - "🇸🇬SG-54.151.181.75-0186"
+      - "🇸🇬SG-56.10.9.77-0200"
+      - "🇸🇬SG-3.1.252.137-0203"
+      - "🇰🇷KR-3.34.131.153-0199"
+      - "🇰🇷KR-43.201.100.203-0207"
+      - "🇰🇷KR-3.35.207.188-0180"
+      - "🇰🇷KR-3.34.192.47-0170"
+      - "🇸🇬SG-18.141.136.8-0205"
+      - "🇸🇬SG-47.131.250.125-0155"
+      - "🇨🇳CN-183.236.51.4-4829"
+      - "🇯🇵JP-176.34.5.100-0157"
+      - "🇯🇵JP-13.193.213.184-0154"
+      - "🇯🇵JP-18.183.212.83-0162"
+      - "🇯🇵JP-54.238.153.132-0153"
+      - "🇯🇵JP-13.114.99.222-0165"
+      - "🇯🇵JP-3.112.29.244-0166"
+      - "🇯🇵JP-13.230.91.226-0167"
+      - "🇩🇪DE-3.75.93.113-0169"
+      - "🇯🇵JP-13.230.139.12-0171"
+      - "🇯🇵JP-54.65.177.190-0172"
+      - "🇯🇵JP-54.249.36.167-0146"
+      - "🇯🇵JP-43.207.198.39-0177"
+      - "🇯🇵JP-43.206.225.188-0127"
+      - "🇯🇵JP-18.183.167.216-0182"
+      - "🇮🇪IE-54.72.130.222-0183"
+      - "🇺🇸US-16.144.66.136-0187"
+      - "🇩🇪DE-63.178.198.94-0190"
+      - "🇮🇪IE-3.253.106.233-0191"
+      - "🇰🇷KR-13.125.69.162-0194"
+      - "🇮🇪IE-3.253.106.233-0196"
+      - "🇯🇵JP-3.112.188.176-0197"
+      - "🇨🇳CN-183.236.51.3-0220"
+      - "🇰🇷KR-52.78.42.192-0222"
+      - "🇯🇵JP-54.249.55.154-0223"
+      - "🇰🇷KR-13.125.29.37-0224"
+      - "🇰🇷KR-43.203.120.240-0226"
+      - "🇰🇷KR-3.35.214.220-0227"
+      - "🇰🇷KR-3.39.225.215-0238"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
+  - name: "توزیع بار چرخشی ⚖️"
+    type: "load-balance"
+    strategy: "round-robin"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 30
+    lazy: true
+    timeout: 1500
+    proxies:
+      - "🇺🇸US-173.244.56.9-0106"
+      - "🇺🇸US-173.244.56.6-0105"
+      - "🇺🇸US-156.146.38.167-0174"
+      - "🇺🇸US-156.146.38.170-0156"
+      - "🇺🇸US-156.146.38.168-0159"
+      - "🇺🇸US-64.74.163.69-0176"
+      - "🇬🇧GB-82.38.31.174-0073"
+      - "🇬🇧GB-82.38.31.193-0102"
+      - "🇬🇧GB-82.38.31.206-0101"
+      - "🇳🇱NL-193.29.139.168-0092"
+      - "🇬🇧GB-82.38.31.202-0074"
+      - "🇬🇧GB-82.38.31.216-0109"
+      - "🇬🇧GB-82.38.31.187-0089"
+      - "🇬🇧GB-82.38.31.174-0095"
+      - "🇬🇧GB-82.110.60.9-0088"
+      - "🇨🇦CA-149.22.95.183-0112"
+      - "🇬🇧GB-82.38.31.159-0075"
+      - "🇬🇧GB-82.38.31.155-0071"
+      - "🇬🇧GB-82.38.31.210-0078"
+      - "🇳🇱NL-193.29.139.204-0094"
+      - "🇬🇧GB-82.38.31.212-0086"
+      - "🇬🇧GB-82.38.31.194-0087"
+      - "🇬🇧GB-82.38.31.208-0093"
+      - "🇬🇧GB-82.38.31.162-0098"
+      - "🇬🇧GB-82.38.31.170-0091"
+      - "🇬🇧GB-82.38.31.207-0076"
+      - "🇬🇧GB-82.38.31.186-0082"
+      - "🇬🇧GB-82.38.31.184-0100"
+      - "🇬🇧GB-82.38.31.214-0079"
+      - "🇬🇧GB-82.38.31.217-0104"
+      - "🇳🇱NL-193.29.139.235-0077"
+      - "🇺🇸US-37.19.198.244-0070"
+      - "🇬🇧GB-82.38.31.180-0097"
+      - "🇬🇧GB-82.38.31.171-0083"
+      - "🇺🇸US-37.19.198.243-0103"
+      - "🇺🇸US-37.19.198.236-0107"
+      - "🇺🇸US-37.19.198.160-0114"
+      - "🇸🇪SE-70.34.212.124-0108"
+      - "🇨🇦CA-137.184.174.93-0069"
+      - "🇫🇷FR-51.255.13.232-0111"
+      - "🇮🇹IT-57.131.48.45-0113"
+      - "🇳🇱NL-109.201.152.181-0115"
+      - "🇺🇸US-172.96.160.250-0430"
+      - "🇯🇵JP-149.22.87.241-0123"
+      - "🇯🇵JP-149.22.87.240-0129"
+      - "🇯🇵JP-149.22.87.204-0124"
+      - "🇩🇪DE-209.46.102.22-0116"
+      - "🇸🇬SG-68.183.227.4-0141"
+      - "🇳🇱NL-158.173.20.171-0117"
+      - "🇫🇮FI-185.103.110.68-0198"
+      - "🇬🇧GB-82.38.31.34-0125"
+      - "🇬🇧GB-82.38.31.49-0137"
+      - "🇬🇧GB-82.38.31.42-0140"
+      - "🇩🇪DE-8.209.74.72-0131"
+      - "🇬🇧GB-82.38.31.149-0133"
+      - "🇬🇧GB-82.38.31.66-0134"
+      - "🇬🇧GB-82.38.31.62-0130"
+      - "🇬🇧GB-82.38.31.10-0121"
+      - "🇬🇧GB-82.38.31.2-0132"
+      - "🇬🇧GB-82.38.31.82-0128"
+      - "🇬🇧GB-82.38.31.48-0138"
+      - "🇬🇧GB-82.38.31.47-0136"
+      - "🇺🇸US-156.146.38.169-0160"
+      - "🇬🇧GB-82.38.31.46-0135"
+      - "🇬🇧GB-82.38.31.3-0120"
+      - "🇬🇧GB-82.38.31.16-0145"
+      - "🇬🇧GB-82.38.31.61-0139"
+      - "🇬🇧GB-82.38.31.35-0122"
+      - "🇬🇧GB-141.98.101.181-0142"
+      - "🇳🇱NL-193.29.139.151-0126"
+      - "🇳🇴NO-185.213.23.63-0161"
+      - "🇳🇱NL-40.113.154.234-0228"
+      - "🇫🇷FR-54.36.174.140-0773"
+      - "🇨🇦CA-51.222.200.165-0184"
+      - "🇺🇸US-15.204.247.206-0152"
+      - "🇨🇦CA-51.222.136.236-0163"
+      - "🇬🇧GB-82.38.31.218-0096"
+      - "🇿🇦ZA-102.133.165.160-0149"
+      - "🇬🇧GB-149.102.132.184-0179"
+      - "🇹🇭TH-103.107.52.106-0437"
+      - "🇯🇵JP-84.247.155.196-0192"
+      - "🇫🇮FI-185.103.110.66-0201"
+      - "🇬🇧GB-82.38.31.199-0240"
+      - "🇬🇧GB-149.102.132.184-0189"
+      - "🇨🇭CH-132.243.175.144-0215"
+      - "🇰🇷KR-218.237.185.234-5173"
+      - "🇬🇧GB-82.38.31.205-0084"
+      - "🇬🇧GB-82.38.31.176-0185"
+      - "🇨🇦CA-51.222.141.125-0213"
+      - "🇬🇧GB-82.38.31.219-0188"
+      - "🇬🇧GB-82.38.31.203-0080"
+      - "🇹🇭TH-103.107.52.106-0164"
+      - "🇺🇸US-140.82.63.79-0067"
+      - "🇿🇦ZA-102.37.156.224-0442"
+      - "🇯🇵JP-84.247.155.196-0181"
+      - "🇨🇦CA-51.222.155.32-0202"
+      - "🇩🇪DE-57.129.113.16-0216"
+      - "🇨🇦CA-51.222.12.127-0414"
+      - "🇰🇷KR-211.178.105.134-0175"
+      - "🇺🇸US-198.98.53.130-5105"
+      - "🇬🇧GB-94.156.250.148-0148"
+      - "🇺🇸US-172.96.160.250-0173"
+      - "🇸🇬SG-45.128.12.20-0144"
+      - "🇺🇸US-172.96.160.250-0143"
+      - "🇬🇧GB-13.135.199.253-0119"
+      - "🇬🇧GB-13.40.25.145-0118"
+      - "🇫🇷FR-51.77.225.200-0110"
+      - "🇬🇧GB-82.38.31.181-0099"
+      - "🇬🇧GB-82.38.31.191-0090"
+      - "🇬🇧GB-82.38.31.192-0085"
+      - "🇬🇧GB-82.38.31.179-0081"
+      - "🇳🇱NL-193.29.139.147-0072"
+      - "🇨🇦CA-15.175.220.220-0193"
+      - "🇺🇸US-138.199.42.68-0068"
+      - "🇭🇰HK-103.149.182.79-0204"
+      - "🇨🇦CA-51.79.85.185-0206"
+      - "🇭🇰HK-103.141.221.124-0209"
+      - "🇭🇰HK-103.141.221.101-0210"
+      - "🇭🇰HK-103.149.182.105-0211"
+      - "🇰🇷KR-211.174.113.172-0214"
+      - "🇰🇷KR-211.174.113.172-0217"
+      - "🇩🇪DE-145.239.1.100-0221"
+      - "🇷🇴RO-194.68.44.42-0225"
+      - "🇳🇱NL-193.29.139.223-0229"
+      - "🇺🇸US-172.96.160.250-0230"
+      - "🇬🇧GB-82.38.31.189-0231"
+      - "🇬🇧GB-82.38.31.190-0232"
+      - "🇨🇦CA-3.97.11.240-0233"
+      - "🇬🇧GB-149.102.149.207-0239"
+      - "🏁RELAY-104.21.7.133-0775"
+      - "🏁RELAY-172.66.203.67-0776"
+      - "🇮🇳IN-152.67.8.205-0195"
+      - "🏁RELAY-172.64.147.77-1101"
+      - "🇭🇰HK-47.243.153.153-0770"
+      - "🇭🇰HK-156.245.232.239-5162"
+      - "🇰🇷KR-52.78.213.224-1702"
+      - "🇯🇵JP-172.111.146.64-0151"
+      - "🇭🇰HK-8.218.195.61-0150"
+      - "🇭🇰HK-8.218.195.61-0147"
+      - "🇩🇪DE-91.98.101.145-0065"
+      - "🇯🇵JP-172.105.238.164-0060"
+      - "🇯🇵JP-172.105.239.241-0059"
+      - "🏁RELAY-172.64.154.200-0057"
+      - "🇻🇳VN-103.186.149.132-0053"
+      - "🇩🇪DE-91.195.240.12-0048"
+      - "🇩🇪DE-91.98.101.145-0043"
+      - "🏁RELAY-172.64.155.30-0038"
+      - "🇩🇪DE-91.98.101.145-0034"
+      - "🇰🇷KR-43.108.40.127-0212"
+      - "🏁RELAY-172.64.153.200-0033"
+      - "🏁RELAY-172.64.155.200-0032"
+      - "🏁RELAY-141.101.114.33-0025"
+      - "🇸🇬SG-8.222.249.101-0218"
+      - "🇭🇰HK-8.217.13.103-0219"
+      - "🏁RELAY-198.41.212.30-0024"
+      - "🇰🇷KR-3.35.168.225-0168"
+      - "🇰🇷KR-3.36.50.213-0208"
+      - "🇰🇷KR-3.34.131.153-0178"
+      - "🇸🇬SG-54.151.181.75-0186"
+      - "🇸🇬SG-56.10.9.77-0200"
+      - "🇸🇬SG-3.1.252.137-0203"
+      - "🇰🇷KR-3.34.131.153-0199"
+      - "🇰🇷KR-43.201.100.203-0207"
+      - "🇰🇷KR-3.35.207.188-0180"
+      - "🇰🇷KR-3.34.192.47-0170"
+      - "🇸🇬SG-18.141.136.8-0205"
+      - "🇸🇬SG-47.131.250.125-0155"
+      - "🇨🇳CN-183.236.51.4-4829"
+      - "🇯🇵JP-176.34.5.100-0157"
+      - "🇯🇵JP-13.193.213.184-0154"
+      - "🇯🇵JP-18.183.212.83-0162"
+      - "🇯🇵JP-54.238.153.132-0153"
+      - "🇯🇵JP-13.114.99.222-0165"
+      - "🇯🇵JP-3.112.29.244-0166"
+      - "🇯🇵JP-13.230.91.226-0167"
+      - "🇩🇪DE-3.75.93.113-0169"
+      - "🇯🇵JP-13.230.139.12-0171"
+      - "🇯🇵JP-54.65.177.190-0172"
+      - "🇯🇵JP-54.249.36.167-0146"
+      - "🇯🇵JP-43.207.198.39-0177"
+      - "🇯🇵JP-43.206.225.188-0127"
+      - "🇯🇵JP-18.183.167.216-0182"
+      - "🇮🇪IE-54.72.130.222-0183"
+      - "🇺🇸US-16.144.66.136-0187"
+      - "🇩🇪DE-63.178.198.94-0190"
+      - "🇮🇪IE-3.253.106.233-0191"
+      - "🇰🇷KR-13.125.69.162-0194"
+      - "🇮🇪IE-3.253.106.233-0196"
+      - "🇯🇵JP-3.112.188.176-0197"
+      - "🇨🇳CN-183.236.51.3-0220"
+      - "🇰🇷KR-52.78.42.192-0222"
+      - "🇯🇵JP-54.249.55.154-0223"
+      - "🇰🇷KR-13.125.29.37-0224"
+      - "🇰🇷KR-43.203.120.240-0226"
+      - "🇰🇷KR-3.35.214.220-0227"
+      - "🇰🇷KR-3.39.225.215-0238"
+    icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
+  - name: "دانلود منیجر 📥"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.sadeemrdp.com/fonts/apps/IDM-Logo.svg"
+  - name: "تلگرام 💬"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
+  - name: "یوتیوب ▶️"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/475700/youtube-color.svg"
+  - name: "گوگل 🌍"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/475656/google-color.svg"
+  - name: "هوش مصنوعی 🤖"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/306500/openai.svg"
+  - name: "توییتر 🐦"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/475689/twitter-color.svg"
+  - name: "اینستاگرام 📸"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/452229/instagram-1.svg"
+  - name: "کلودفلر ☁️"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://icon.icepanel.io/Technology/svg/Cloudflare.svg"
+  - name: "گیتهاب 🐙"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/355033/github.svg"
+  - name: "اسپاتیفای 🎵"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/475684/spotify-color.svg"
+  - name: "واتس آپ 🟢"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/WhatsApp_Logo_green.svg"
+  - name: "تبلیغات 🆎"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/336358/ad.svg"
+  - name: "تبلیغات اپ ها 🍃"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/12172/smartphone-ad.svg"
+  - name: "رهگیری جهانی 🛑"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/298725/tracking-track.svg"
+  - name: "المنت 💬"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Element_(software)_logo_(2020).svg"
+  - name: "تیم اسپیک 🎧"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/teamspeak/default.svg"
+  - name: "دلتاچت ✉️"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Delta_chat_(Instant_Messenger)_logo.svg"
+  - name: "سایتای مخرب ⚠️"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://www.svgrepo.com/show/381135/cyber-crime-cyber-phishing-fraud-hack-money.svg"
+  - name: "استیم 🖥️"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/452107/steam.svg"
+  - name: "گیم 🎮"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/167729/game-controller.svg"
+  - name: "توییچ 📡"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@develop/icons/twitch.svg"
+  - name: "سایتای ایرانی 🇮🇷"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Iran_%28civil%29.svg"
+  - name: "ویندوز 🧊"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "اجازه ندادن 🚫"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+    icon: "https://icon.icepanel.io/Technology/svg/Windows-11.svg"
+  - name: "دیسکورد 🗣️"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/brands/discord.svg"
+  - name: "استریمیو 🎬"
+    type: "select"
+    proxies:
+      - "نوع انتخاب پروکسی 🔀"
+      - "بدون فیلترشکن 🛡️"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://stremio.github.io/stremio-addon-guide/img/stremio.svg"
+  - name: "انی دسک 🔴"
+    type: "select"
+    proxies:
+      - "بدون فیلترشکن 🛡️"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "اجازه ندادن 🚫"
+    icon: "https://www.svgrepo.com/show/331289/anydesk.svg"
+  - name: "سایتای سانسوری 🤬"
+    type: "select"
+    proxies:
+      - "اجازه ندادن 🚫"
+      - "نوع انتخاب پروکسی 🔀"
+      - "خودکار (بهترین پینگ) 🤖"
+      - "دستی 🤏🏻"
+      - "بدون فیلترشکن 🛡️"
+    icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/clapperboard.svg"
+  - name: "بدون فیلترشکن 🛡️"
+    type: "select"
+    proxies:
+      - "DIRECT"
+    hidden: true
+    icon: "https://www.svgrepo.com/show/6318/connection.svg"
+  - name: "قطع اینترنت ⛔"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+    icon: "https://www.svgrepo.com/show/305372/wifi-off.svg"
+  - name: "اجازه ندادن 🚫"
+    type: "select"
+    proxies:
+      - "REJECT"
+    hidden: true
+    icon: "https://www.svgrepo.com/show/444307/gui-ban.svg"
+rules:
+  - "IP-CIDR,127.0.0.0/8,بدون فیلترشکن 🛡️,no-resolve"
+  - "DOMAIN,localhost,بدون فیلترشکن 🛡️"
+  - "RULE-SET,local_ips,بدون فیلترشکن 🛡️"
+  - "RULE-SET,private,بدون فیلترشکن 🛡️"
+  - "RULE-SET,DownloadManagers,دانلود منیجر 📥"
+  - "RULE-SET,Download,دانلود منیجر 📥"
+  - "RULE-SET,stremio,استریمیو 🎬"
+  - "PROCESS-NAME,im.vector.app,المنت 💬"
+  - "PROCESS-NAME,io.element.android.x,المنت 💬"
+  - "PROCESS-NAME,Element.exe,المنت 💬"
+  - "DOMAIN-SUFFIX,aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,chat.aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,site.aklispro.sbs,المنت 💬"
+  - "DOMAIN-SUFFIX,electonet.xyz,المنت 💬"
+  - "DOMAIN-SUFFIX,chat.electonet.xyz,المنت 💬"
+  - "DOMAIN-SUFFIX,rainbuwu.ir,المنت 💬"
+  - "DOMAIN-SUFFIX,cinny.rainbuwu.ir,المنت 💬"
+  - "PROCESS-NAME,chat.delta,دلتاچت ✉️"
+  - "PROCESS-NAME,DeltaChat.exe,دلتاچت ✉️"
+  - "DOMAIN-SUFFIX,arsalandalvand.ir,دلتاچت ✉️"
+  - "DST-PORT,993,دلتاچت ✉️"
+  - "DST-PORT,465,دلتاچت ✉️"
+  - "DST-PORT,587,دلتاچت ✉️"
+  - "PROCESS-NAME,com.teamspeak.ts3client,تیم اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win64.exe,تیم اسپیک 🎧"
+  - "PROCESS-NAME,ts3client_win32.exe,تیم اسپیک 🎧"
+  - "PROCESS-NAME,TeamSpeak.exe,تیم اسپیک 🎧"
+  - "DOMAIN-SUFFIX,ag.tssq.ir,تیم اسپیک 🎧"
+  - "DST-PORT,9987,تیم اسپیک 🎧"
+  - "RULE-SET,BanProgramAD,تبلیغات اپ ها 🍃"
+  - "RULE-SET,BanAD,رهگیری جهانی 🛑"
+  - "RULE-SET,PrivateTracker,رهگیری جهانی 🛑"
+  - "RULE-SET,category_public_tracker,رهگیری جهانی 🛑"
+  - "RULE-SET,malware,سایتای مخرب ⚠️"
+  - "RULE-SET,phishing,سایتای مخرب ⚠️"
+  - "RULE-SET,cryptominers,سایتای مخرب ⚠️"
+  - "RULE-SET,warninglist,سایتای مخرب ⚠️"
+  - "RULE-SET,Ponzi,سایتای مخرب ⚠️"
+  - "RULE-SET,LiteAds,تبلیغات 🆎"
+  - "RULE-SET,iran_ads,تبلیغات 🆎"
+  - "RULE-SET,PersianBlocker,تبلیغات 🆎"
+  - "RULE-SET,ads,تبلیغات 🆎"
+  - "RULE-SET,BanEasyList,تبلیغات 🆎"
+  - "RULE-SET,twitch,توییچ 📡"
+  - "PROCESS-NAME,Telegram.exe,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger,تلگرام 💬"
+  - "PROCESS-NAME,org.telegram.messenger.web,تلگرام 💬"
+  - "RULE-SET,telegram,تلگرام 💬"
+  - "RULE-SET,YouTube,یوتیوب ▶️"
+  - "RULE-SET,youtube,یوتیوب ▶️"
+  - "RULE-SET,YouTubeMusic,یوتیوب ▶️"
+  - "PROCESS-NAME,com.anydesk.anydeskandroid,انی دسک 🔴"
+  - "PROCESS-NAME,AnyDesk.exe,انی دسک 🔴"
+  - "DOMAIN-SUFFIX,anydesk.com,انی دسک 🔴"
+  - "PROCESS-NAME,rustdesk.exe,انی دسک 🔴"
+  - "PROCESS-NAME,com.carriez.flutter_hbb,انی دسک 🔴"
+  - "PROCESS-NAME,dorsandesk.exe,انی دسک 🔴"
+  - "PROCESS-NAME,Twitter.exe,توییتر 🐦"
+  - "PROCESS-NAME,com.twitter.android,توییتر 🐦"
+  - "RULE-SET,Chotwitter,توییتر 🐦"
+  - "RULE-SET,mihTwitter,توییتر 🐦"
+  - "RULE-SET,Domtwitter,توییتر 🐦"
+  - "PROCESS-NAME,com.spotify.music,اسپاتیفای 🎵"
+  - "PROCESS-NAME,Spotify.exe,اسپاتیفای 🎵"
+  - "RULE-SET,DomainSpotify,اسپاتیفای 🎵"
+  - "RULE-SET,mihspotify,اسپاتیفای 🎵"
+  - "PROCESS-NAME,com.instagram.android,اینستاگرام 📸"
+  - "RULE-SET,instagram,اینستاگرام 📸"
+  - "RULE-SET,censor,سایتای سانسوری 🤬"
+  - "RULE-SET,apps,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,iran,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,arvancloud,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,derakcloud,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,iranserver,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,parspack,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,irasn,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,ircidr,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,ir,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,category_ir,سایتای ایرانی 🇮🇷"
+  - "DOMAIN-SUFFIX,unimics.com,سایتای ایرانی 🇮🇷"
+  - "RULE-SET,whatsapp,واتس آپ 🟢"
+  - "RULE-SET,Ai,هوش مصنوعی 🤖"
+  - "RULE-SET,category-ai,هوش مصنوعی 🤖"
+  - "RULE-SET,google-play,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,google,گوگل 🌍"
+  - "RULE-SET,steam,استیم 🖥️"
+  - "RULE-SET,SteamRegionCheck,استیم 🖥️"
+  - "RULE-SET,game,گیم 🎮"
+  - "RULE-SET,GameDownload,گیم 🎮"
+  - "RULE-SET,category-games,گیم 🎮"
+  - "RULE-SET,Xbox,گیم 🎮"
+  - "RULE-SET,discord,دیسکورد 🗣️"
+  - "RULE-SET,xiaomi_white_list,نوع انتخاب پروکسی 🔀"
+  - "RULE-SET,xiaomi_block_list,تبلیغات اپ ها 🍃"
+  - "RULE-SET,windows,ویندوز 🧊"
+  - "RULE-SET,cloudflare,کلودفلر ☁️"
+  - "RULE-SET,github,گیتهاب 🐙"
+  - "PROCESS-NAME,com.android.vending,نوع انتخاب پروکسی 🔀"
+  - "PROCESS-NAME,com.google.android.gms,نوع انتخاب پروکسی 🔀"
+  - "IP-CIDR,10.10.34.0/24,نوع انتخاب پروکسی 🔀"
+  - "MATCH,نوع انتخاب پروکسی 🔀"

@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -521,6 +555,13 @@ proxies:
       path: "/"
       headers:
         Host: "shuma.ccwu.cc"
+  - name: "🇮🇸 NL🇳🇱+|+2380.n9ne.com.tr-34319+|+383.07ms"
+    type: "ss"
+    server: "2380.n9ne.com.tr"
+    port: 34319
+    cipher: "chacha20-ietf-poly1305"
+    password: "SqJYP4gDS1I6XGkioX3RCE3BimKj8dtj"
+    udp: true
   - name: "🇮🇸 58. 🇮🇸 Iceland"
     type: "vless"
     server: "185.146.234.242"
@@ -551,6 +592,7 @@ proxy-groups:
     proxies:
       - "🇮🇸 🔒 VL-WS-TLS 🇮🇸 IS-195.246.230.125:443"
       - "🇮🇸 🔒 VL-WS-TLS 🇮🇸 IS-151.243.181.99:443"
+      - "🇮🇸 NL🇳🇱+|+2380.n9ne.com.tr-34319+|+383.07ms"
       - "🇮🇸 58. 🇮🇸 Iceland"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
@@ -562,6 +604,7 @@ proxy-groups:
     proxies:
       - "🇮🇸 🔒 VL-WS-TLS 🇮🇸 IS-195.246.230.125:443"
       - "🇮🇸 🔒 VL-WS-TLS 🇮🇸 IS-151.243.181.99:443"
+      - "🇮🇸 NL🇳🇱+|+2380.n9ne.com.tr-34319+|+383.07ms"
       - "🇮🇸 58. 🇮🇸 Iceland"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
@@ -574,6 +617,7 @@ proxy-groups:
     proxies:
       - "🇮🇸 🔒 VL-WS-TLS 🇮🇸 IS-195.246.230.125:443"
       - "🇮🇸 🔒 VL-WS-TLS 🇮🇸 IS-151.243.181.99:443"
+      - "🇮🇸 NL🇳🇱+|+2380.n9ne.com.tr-34319+|+383.07ms"
       - "🇮🇸 58. 🇮🇸 Iceland"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"

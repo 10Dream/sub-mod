@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -493,20 +527,32 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "@vpnclashfa - 2197"
+  - name: "@vpnclashfa - 2274"
     type: "vless"
-    server: "tyxyrytyro-51255165170-direct.araghchy.com"
+    server: "web.turbooserver.net.tr"
+    port: 8443
+    uuid: "turboo-server"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "@vpnclashfa - 2273"
+    type: "vless"
+    server: "www.speedtest.net"
     port: 443
-    uuid: "tyxyrytyro"
+    uuid: "telegram-id-Arfilter"
     udp: true
     tls: true
-    network: "tcp"
-    servername: "tyxyrytyro-51255165170-direct.araghchy.com"
-    client-fingerprint: "chrome"
+    network: "ws"
+    servername: "t.arfilter2.blog"
+    client-fingerprint: "firefox"
     alpn:
       - "h2"
-    flow: "xtls-rprx-vision"
-  - name: "@vpnclashfa - 2196"
+      - "http/1.1"
+    ws-opts:
+      path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray?ed=2048"
+      headers:
+        Host: "t.arfilter2.blog"
+  - name: "@vpnclashfa - 2272"
     type: "vless"
     server: "www.speedtest.net"
     port: 443
@@ -523,7 +569,7 @@ proxies:
       path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray?ed=2048"
       headers:
         Host: "e.arfilter2.blog"
-  - name: "@vpnclashfa - 2195"
+  - name: "@vpnclashfa - 2271"
     type: "vless"
     server: "speedtest.net"
     port: 80
@@ -535,7 +581,7 @@ proxies:
       path: "/-Arfilter-TEL--@Arfilter-TEL--@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEl--@Arfilter?ed=80"
       headers:
         Host: "Sudoos.global.ssl.fastly.net"
-  - name: "@vpnclashfa - 2194"
+  - name: "@vpnclashfa - 2270"
     type: "vless"
     server: "speedtest.net"
     port: 80
@@ -547,7 +593,7 @@ proxies:
       path: "/-Arfilter-TEL--@Arfilter-TEL--@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEl--@Arfilter?ed=80"
       headers:
         Host: "Sudo.global.ssl.fastly.net"
-  - name: "@vpnclashfa - 2193"
+  - name: "@vpnclashfa - 2269"
     type: "vless"
     server: "speedtest.net"
     port: 80
@@ -559,7 +605,7 @@ proxies:
       path: "/-Arfilter-TEL--@Arfilter-TEL--@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEL--@Arfilter?ed=80"
       headers:
         Host: "Sudo.global.ssl.fastly.net"
-  - name: "@vpnclashfa - 2192"
+  - name: "@vpnclashfa - 2268"
     type: "vless"
     server: "156.243.83.167"
     port: 443
@@ -573,7 +619,7 @@ proxies:
       path: "/-Arfilter-TEL--@Arfilter-TEL--@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEl--@Arfilter?ed=2048"
       headers:
         Host: "cdn-alman4.arfilter2.blog"
-  - name: "@vpnclashfa - 2191"
+  - name: "@vpnclashfa - 2267"
     type: "vless"
     server: "156.243.83.167"
     port: 443
@@ -587,7 +633,7 @@ proxies:
       path: "/-Arfilter-TEL--@Arfilter-TEL--@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEl--@Arfilter?ed=2048"
       headers:
         Host: "cdn-alman3.arfilter2.blog"
-  - name: "@vpnclashfa - 2190"
+  - name: "@vpnclashfa - 2266"
     type: "vless"
     server: "156.243.83.167"
     port: 443
@@ -601,7 +647,7 @@ proxies:
       path: "/-Arfilter-TEL--@Arfilter-TEL--@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEl--@Arfilter?ed=2048"
       headers:
         Host: "cdn-alman2.arfilter2.blog"
-  - name: "@vpnclashfa - 2189"
+  - name: "@vpnclashfa - 2265"
     type: "vless"
     server: "156.243.83.167"
     port: 443
@@ -615,7 +661,7 @@ proxies:
       path: "/-Arfilter-TEL--@Arfilter-TEL--@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL--@ArFilter-JOIN-@Arfilter-TEL--@Arfilter-JOIN-@Arfilter-TEL-@Arfilter-TEl--@Arfilter?ed=2048"
       headers:
         Host: "cdn-alman1.arfilter2.blog"
-  - name: "@vpnclashfa - 2188"
+  - name: "@vpnclashfa - 2264"
     type: "vless"
     server: "25.129.197.233"
     port: 2052
@@ -623,37 +669,7 @@ proxies:
     udp: true
     tls: false
     network: "xhttp"
-  - name: "@vpnclashfa - 2187"
-    type: "vless"
-    server: "185.234.65.232"
-    port: 4423
-    uuid: "telegram-id-ArV2ray"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "animejs.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "D4fo-UBIrSlLx3R8qu3iWSoynAvArdXpn5uZoDEt3Uc"
-      short-id: "b740"
-    grpc-opts:
-      grpc-service-name: "telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2rayy"
-  - name: "@vpnclashfa - 2186"
-    type: "vless"
-    server: "185.234.65.145"
-    port: 4423
-    uuid: "telegram-id-ArV2ray"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "animejs.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "D4fo-UBIrSlLx3R8qu3iWSoynAvArdXpn5uZoDEt3Uc"
-      short-id: "b740"
-    grpc-opts:
-      grpc-service-name: "telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2rayy"
-  - name: "@vpnclashfa - 2185"
+  - name: "@vpnclashfa - 2263"
     type: "vless"
     server: "185.234.65.143"
     port: 4423
@@ -668,22 +684,7 @@ proxies:
       short-id: "7a0bea4731381dda"
     grpc-opts:
       grpc-service-name: "telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2rayy"
-  - name: "@vpnclashfa - 2184"
-    type: "vless"
-    server: "185.234.65.133"
-    port: 4423
-    uuid: "telegram-id-ArV2ray"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "tgju.org"
-    client-fingerprint: "firefox"
-    reality-opts:
-      public-key: "uXUe3HEy4MjZ2nqFa8eMxxB24AxQEbxGdEAbdjxEMgQ"
-      short-id: "7a0bea4731381dda"
-    grpc-opts:
-      grpc-service-name: "telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2rayy"
-  - name: "@vpnclashfa - 2183"
+  - name: "@vpnclashfa - 2262"
     type: "vless"
     server: "185.234.65.132"
     port: 443
@@ -698,7 +699,7 @@ proxies:
       short-id: "7a0bea4731381dda"
     grpc-opts:
       grpc-service-name: "telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2rayy"
-  - name: "@vpnclashfa - 2182"
+  - name: "@vpnclashfa - 2261"
     type: "vless"
     server: "185.234.65.122"
     port: 443
@@ -713,7 +714,7 @@ proxies:
       short-id: "7a0bea4731381dda"
     grpc-opts:
       grpc-service-name: "telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2rayy"
-  - name: "@vpnclashfa - 2181"
+  - name: "@vpnclashfa - 2260"
     type: "vless"
     server: "185.234.65.122"
     port: 443
@@ -728,7 +729,7 @@ proxies:
       short-id: "7a0bea4731381dda"
     grpc-opts:
       grpc-service-name: "telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray"
-  - name: "@vpnclashfa - 2180"
+  - name: "@vpnclashfa - 2259"
     type: "vless"
     server: "185.146.173.37"
     port: 80
@@ -739,8 +740,32 @@ proxies:
     ws-opts:
       path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray?ed=2048"
       headers:
-        Host: "10.v.v.v.V-_-_-V2ray-_-_-v.v.V.zula.ir.xn--9iqtb0z3kmg58ejur.www.speedtest.net.arV2ray.Host."
-  - name: "@vpnclashfa - 2179"
+        Host: "5.v.V.v.V-_-_-V2ray-_-_-v.V.v.V.soft98.ir.www.Zula.ir.Bahrane.iR."
+  - name: "@vpnclashfa - 2258"
+    type: "vless"
+    server: "185.146.173.37"
+    port: 80
+    uuid: "telegram-id-ArV2ray"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray?ed=2048"
+      headers:
+        Host: "5.v.V.v.V-_-_-V2ray-_-_-v.V.v.V.s.soft98.ir.www.Zula.ir.Bahrane.iR."
+  - name: "@vpnclashfa - 2257"
+    type: "vless"
+    server: "185.146.173.37"
+    port: 8080
+    uuid: "telegram-id-ArV2ray"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray?ed=2048"
+      headers:
+        Host: "3.V.v.V.v.V.v.V-_-_-V2ray-_-_-v.V.v.V.xn--9iqtb0z3kmg58ejur6wfbwf9muugk7rck30b0frbqkvk2bye0bm1a.arV2ray.Host."
+  - name: "@vpnclashfa - 2256"
     type: "vless"
     server: "185.146.173.25"
     port: 80
@@ -752,7 +777,7 @@ proxies:
       path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray?ed=2048"
       headers:
         Host: "4.V.v.V.v.V.v.V.v.V-_-_-V2ray-_-_-v.V.v.V.xn--9iqtb0z3kmg58ejur6wfbwf9muugk7rck30b0frbqkvk2bye0bm1a.bahrane.iR."
-  - name: "@vpnclashfa - 2178"
+  - name: "@vpnclashfa - 2255"
     type: "vless"
     server: "185.146.173.25"
     port: 80
@@ -764,7 +789,7 @@ proxies:
       path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray?ed=2048"
       headers:
         Host: "10.v.V.v.V.v.V.v.V-_-_-V2ray-_-_-v.V.v.V.zula.ir.xn--9iqtb0z3kmg58ejur6wfbwf9muugk7rck30b0frbqkvk2bye0bm1a.arV2ray.Host."
-  - name: "@vpnclashfa - 2177"
+  - name: "@vpnclashfa - 2254"
     type: "vless"
     server: "185.146.173.25"
     port: 80
@@ -776,7 +801,7 @@ proxies:
       path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray?ed=2048"
       headers:
         Host: "1.v.v.V-_-_-V2ray-_-_-V.v.v.ww.speedtest.net.www.Zula.ir.check-host.net.mashtimJi.iR."
-  - name: "@vpnclashfa - 2176"
+  - name: "@vpnclashfa - 2253"
     type: "vless"
     server: "185.146.173.237"
     port: 80
@@ -788,7 +813,7 @@ proxies:
       path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray?ed=2048"
       headers:
         Host: "4.v.v.V-_-_-V2ray-_-_-V.v.v.v.www.speedtest.net.www.zula.ir.vu.cloudflare.com.mashtimJi.iR."
-  - name: "@vpnclashfa - 2175"
+  - name: "@vpnclashfa - 2252"
     type: "vless"
     server: "185.146.173.237"
     port: 80
@@ -799,8 +824,8 @@ proxies:
     ws-opts:
       path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray?ed=2048"
       headers:
-        Host: "7.v.v.v.V-_-_-v2ray-_-_-V.v.v.v.ns.cloudflare.com.mehpOw.Ir."
-  - name: "@vpnclashfa - 2174"
+        Host: "7.V.v.V.v.V.v.V.v.V-_-_-V2ray-_-_-V.v.V.v.xn--9IqTb0z3kmg58ejur6wfbwf9muugk7rCk30b0frbqkVk2bye0b.mehpOw.Ir."
+  - name: "@vpnclashfa - 2251"
     type: "vless"
     server: "185.146.173.237"
     port: 80
@@ -811,8 +836,20 @@ proxies:
     ws-opts:
       path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray?ed=2048"
       headers:
-        Host: "7.v.V.v.V.v.V-_-_-V2ray-_-_-V.v.V.v.xn--9IqTb0z3kmg58ejur6wfbwf9muugk7rC.mehpOw.Ir."
-  - name: "@vpnclashfa - 2173"
+        Host: "4.v.v.V-_-_-V2ray-_-_-V.v.v.www.speedtest.net.www.zula.ir.cloudflare.com.mashtimJi.iR."
+  - name: "@vpnclashfa - 2250"
+    type: "vless"
+    server: "185.146.173.237"
+    port: 80
+    uuid: "telegram-id-ArV2ray"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray?ed=2048"
+      headers:
+        Host: "14.v.V.v.V-_-_-V2ray-_-_-V.v.V.o.www.speedtest.net.Zula.ir.mehpOw.Ir."
+  - name: "@vpnclashfa - 2249"
     type: "vless"
     server: "185.146.173.237"
     port: 80
@@ -824,31 +861,19 @@ proxies:
       path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray?ed=2048"
       headers:
         Host: "13.v.V.v.V-_-_-V2ray-_-_-V.v.V.v.check-host.net.Zula.ir.mehPow.iR."
-  - name: "@vpnclashfa - 2172"
+  - name: "@vpnclashfa - 2248"
     type: "vless"
     server: "185.146.173.237"
-    port: 80
+    port: 8080
     uuid: "telegram-id-ArV2ray"
     udp: true
     tls: false
     network: "ws"
     ws-opts:
-      path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ARV2ray?ed=2048"
+      path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray?ed=2048"
       headers:
-        Host: "11.v.V.v.V-_-_-V2ray-_-_-V.v.V.v.xn--9iqtb0z3kmg58ejur.Zula.ir.bahraNe.iR."
-  - name: "@vpnclashfa - 2171"
-    type: "vless"
-    server: "185.146.173.237"
-    port: 80
-    uuid: "telegram-id-ArV2ray"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ARV2ray?ed=2048"
-      headers:
-        Host: "11.v.V.v.V-_-_-V2ray-_-_-V.v.V.v.c.xn--9iqtb0z3kmg58ejur.Zula.ir.bahraNe.iR."
-  - name: "@vpnclashfa - 2170"
+        Host: "3.V.v.V.v.V.v.V.v.V-_-_-V2ray-_-_-v.V.v.V.xn--9iqtb0z3kmg58ejur6wfbwf9muugk7rck30b0frbqkvk2bye0bm1a.arV2ray.Host."
+  - name: "@vpnclashfa - 2247"
     type: "vless"
     server: "185.146.173.158"
     port: 80
@@ -859,8 +884,8 @@ proxies:
     ws-opts:
       path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray?ed=2048"
       headers:
-        Host: "8.v.v.V-_-_-V2ray-_-_-V.v.v.v.www.speedtest.net.z.Zula.ir.cloudflare.com.bahrane.IR."
-  - name: "@vpnclashfa - 2169"
+        Host: "9.v.v.V-_-_-V2ray-_-V.v.v.v.das.cloudflare.com.w.speedtest.net.zula.ir.mashtiMji.iR."
+  - name: "@vpnclashfa - 2246"
     type: "vless"
     server: "185.146.173.158"
     port: 80
@@ -869,22 +894,10 @@ proxies:
     tls: false
     network: "ws"
     ws-opts:
-      path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-arV2ray?ed=2048"
+      path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-arV2ray?ed"
       headers:
-        Host: "12.v.V.v.V-_-_-V2ray-_-_-V.v.V.speedtest.net.ww.Zula.ir.bahranE.iR."
-  - name: "@vpnclashfa - 2168"
-    type: "vless"
-    server: "185.146.173.158"
-    port: 80
-    uuid: "telegram-id-ArV2ray"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray?ed=2048"
-      headers:
-        Host: "9.v.v.V-_-_-V2ray-_-V.v.v.v.dash.cloudflare.com.w.speedtest.net.zula.ir.mashtiMji.iR."
-  - name: "@vpnclashfa - 2166"
+        Host: "12.v.V.v.V-_-_-V2ray-_-_-V.v.V.s.speedtest.net.wf.Zula.ir.bahranE.iR."
+  - name: "@vpnclashfa - 2245"
     type: "vless"
     server: "185.146.173.158"
     port: 8080
@@ -896,19 +909,22 @@ proxies:
       path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray?ed"
       headers:
         Host: "2.V2ray.kb.soft98.ir.www.farsroid.com.deb.debian.org.bahrane.iR."
-  - name: "@vpnclashfa - 2165"
+  - name: "@vpnclashfa - 2244"
     type: "vless"
-    server: "151.101.2.216"
-    port: 80
-    uuid: "telegram-ArV2ray"
+    server: "185.234.65.122"
+    port: 443
+    uuid: "telegram-id-ArV2ray1"
     udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/telegram-ArV2ry,telegram-ArV2ry,telegram-ArV2ry,telegram-ArV2ry,telegram-ArV2ry,telegram-ArV2ry,telegram-ArV2ry,telegram-ArV2ry,telegram-ArV2ry,telegram-ArV2ry,telegram-ArV2ry"
-      headers:
-        Host: "4.fer66osowk.net"
-  - name: "@vpnclashfa - 2164"
+    tls: true
+    network: "grpc"
+    servername: "tgju.org"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "uXUe3HEy4MjZ2nqFa8eMxxB24AxQEbxGdEAbdjxEMgQ"
+      short-id: "7a0bea4731381dda"
+    grpc-opts:
+      grpc-service-name: "telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray"
+  - name: "@vpnclashfa - 2243"
     type: "vless"
     server: "rgiw5k0gg5-1492025789-direct.kheibarr.com"
     port: 443
@@ -918,43 +934,61 @@ proxies:
     network: "tcp"
     servername: "rgiw5k0gg5-1492025789-direct.kheibarr.com"
     flow: "xtls-rprx-vision"
-  - name: "@vpnclashfa - 2163"
+  - name: "@vpnclashfa - 2242"
     type: "vless"
-    server: "ct.877774.xyz"
-    port: 443
-    uuid: "fffd4cb3-d5e2-4a11-936e-b8da5b240b8d"
+    server: "2a0d:5940:97:3::"
+    port: 25365
+    uuid: "join--ZEDMODEON"
     udp: true
     tls: true
-    network: "ws"
-    servername: "se-sto.862400.xyz"
-    ws-opts:
-      path: "/announcement?ed=2048fp=random"
-      headers:
-        Host: "se-sto.862400.xyz"
-  - name: "@vpnclashfa - 2162"
+    network: "grpc"
+    servername: "sourceforge.net"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "eL9g0pO8fpS5L317XTbM07yHeIj1fzueEndBl1ZG3GA"
+      short-id: "bc797289"
+    grpc-opts:
+      grpc-service-name: "ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON"
+  - name: "@vpnclashfa - 2241"
     type: "vless"
-    server: "194.59.9.25"
+    server: "snapp.ir"
+    port: 80
+    uuid: "ffa37367-6313-4cc5-86bd-3d8dc879c24e"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "ar.liarashop.ir"
+  - name: "@vpnclashfa - 2240"
+    type: "vless"
+    server: "xray1-direct-mci1-fs-ce.freesocks.work"
     port: 443
-    uuid: "ffd57de6-db06-475c-9a4b-11d27432ff25"
+    uuid: "ff9053c2-3358-47e0-aa3b-72bf99e1d231"
     udp: true
     tls: true
     network: "tcp"
-    servername: "cdn.cloudflare.steamstatic.com"
-    client-fingerprint: "firefox"
+    servername: "dl.google.com"
+    client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "YcVdYV6VTyAYBWd-CnCa1L0PMIqjLWmcdh-A5gvVGDo"
-      short-id: "dbf156f058f98611"
-  - name: "@vpnclashfa - 2161"
+      public-key: "7j3hmlHrEDk3Kjx-dFG3E3jf0c6PZF45trIPFsuKWmI"
+  - name: "@vpnclashfa - 2239"
     type: "vless"
-    server: "36sw.smarteracloud.com"
-    port: 443
-    uuid: "ffb6d3c1-103d-4168-9b75-e1cb5b7212b9"
+    server: "193.56.135.212"
+    port: 9543
+    uuid: "ff6d2dda-7b90-404e-9951-34b3124bfdfa"
     udp: true
     tls: true
-    network: "xhttp"
-    servername: "Tp013HrJ3f.TrUsTfOrTeAm.CoM"
-  - name: "@vpnclashfa - 2160"
+    network: "tcp"
+    servername: "storage.yandexcloud.net"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "M6Ck7wUfOLhQl4582CBnaXwscPEP6SCpdEkUDzoj4Fc"
+      short-id: "123abcde"
+  - name: "@vpnclashfa - 2238"
     type: "vless"
     server: "176.98.176.86"
     port: 9543
@@ -968,20 +1002,7 @@ proxies:
     reality-opts:
       public-key: "M6Ck7wUfOLhQl4582CBnaXwscPEP6SCpdEkUDzoj4Fc"
       short-id: "123abcdf"
-  - name: "@vpnclashfa - 2159"
-    type: "vless"
-    server: "199.232.78.159"
-    port: 443
-    uuid: "ff6ca702-5469-44a8-aca8-d87a29f08d53"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "google.com"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "swedwneeji.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 2158"
+  - name: "@vpnclashfa - 2237"
     type: "vless"
     server: "c1.greewebservices.ir"
     port: 443
@@ -993,7 +1014,7 @@ proxies:
     client-fingerprint: "chrome"
     alpn:
       - "h2"
-  - name: "@vpnclashfa - 2157"
+  - name: "@vpnclashfa - 2235"
     type: "vless"
     server: "91.210.169.181"
     port: 443
@@ -1006,7 +1027,7 @@ proxies:
       path: "/api/connect"
       headers:
         Host: "wstg.datasynctrue.online"
-  - name: "@vpnclashfa - 2156"
+  - name: "@vpnclashfa - 2234"
     type: "vless"
     server: "200.165.231.209"
     port: 443
@@ -1019,7 +1040,7 @@ proxies:
       path: "/api/connect"
       headers:
         Host: "wstg.datasynctrue.online"
-  - name: "@vpnclashfa - 2154"
+  - name: "@vpnclashfa - 2233"
     type: "vless"
     server: "188.114.98.0"
     port: 443
@@ -1030,20 +1051,7 @@ proxies:
     servername: "dev.twistsparrow.xyz"
     ws-opts:
       path: "/"
-  - name: "@vpnclashfa - 2153"
-    type: "vless"
-    server: "188.114.98.0"
-    port: 443
-    uuid: "fef4a93d-eb4f-4657-b56b-32a0dc060045"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "dev.twistsparrow.xyz"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "dev.twistsparrow.xyz"
-  - name: "@vpnclashfa - 2152"
+  - name: "@vpnclashfa - 2232"
     type: "vless"
     server: "arsnew.netbazshop.ir"
     port: 32634
@@ -1051,20 +1059,61 @@ proxies:
     udp: true
     tls: false
     network: "xhttp"
-  - name: "@vpnclashfa - 2151"
+  - name: "@vpnclashfa - 2231"
     type: "vless"
-    server: "122.10.117.1"
-    port: 11674
-    uuid: "fe40f32a-b03d-4ada-8bee-00f41b766098"
+    server: "104.18.26.94"
+    port: 80
+    uuid: "fed517b1-ca69-48f2-a0e8-b6e56641664b"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      headers:
+        Host: "esetsecuritylicense.kaxlmn.workers.dev"
+  - name: "@vpnclashfa - 2230"
+    type: "vless"
+    server: "83.219.97.18"
+    port: 443
+    uuid: "fe551942-d6e5-4361-ae5c-1f2e9077cd79"
     udp: true
     tls: true
     network: "tcp"
-    servername: "apple.com"
+    servername: "fi5.silalink.sbs"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "F-yU1O5Q00eeyUdst7ZGDsgo4xS5mrdNwg0UcfsrVQs"
-      short-id: "d889b977"
-  - name: "@vpnclashfa - 2150"
+      public-key: "32XFmS-ifqooBFY89KNP3ZrqgSBOd3vel9GlNinL6yw"
+      short-id: "03"
+  - name: "@vpnclashfa - 2229"
+    type: "vless"
+    server: "ru.rush-server.com"
+    port: 443
+    uuid: "fe444095-ab4b-45b5-8f25-2c2576fb1968"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "findmypackets.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "mza5Hn1aolSz65qu-UwvBP3oesxMe25r11o4nxvikF0"
+      short-id: "93ae75024604f796"
+  - name: "@vpnclashfa - 2228"
+    type: "vless"
+    server: "cf1.w3bschool.ir"
+    port: 2083
+    uuid: "fe12ec72-4d23-4958-b495-494296774d6a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "ch.topdigit.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+    ws-opts:
+      path: "/path"
+      headers:
+        Host: "ch.topdigit.ir"
+  - name: "@vpnclashfa - 2227"
     type: "vless"
     server: "188.114.97.6"
     port: 443
@@ -1079,7 +1128,7 @@ proxies:
       path: "/fp=chrome"
       headers:
         Host: "edgetunnel-4uw.pages.dev"
-  - name: "TELEGRAM--MARAMBASHI--MARAMBASHI?ed=2560&security=tls&encryption=none&host=edgetunnel-4uw.pages.dev&type=ws&sni=edgetunnel-4uw.pages.dev#@vpnclashfa - 2149"
+  - name: "TELEGRAM--MARAMBASHI--MARAMBASHI?ed=2560&security=tls&encryption=none&host=edgetunnel-4uw.pages.dev&type=ws&sni=edgetunnel-4uw.pages.dev#@vpnclashfa - 2226"
     type: "vless"
     server: "188.114.97.6"
     port: 443
@@ -1087,7 +1136,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "@vpnclashfa - 2148"
+  - name: "@vpnclashfa - 2225"
     type: "vless"
     server: "188.114.97.6"
     port: 443
@@ -1102,9 +1151,9 @@ proxies:
       path: "/"
       headers:
         Host: "edgetunnel-4uw.pages.dev"
-  - name: "@vpnclashfa - 2147"
+  - name: "@vpnclashfa - 2224"
     type: "vless"
-    server: "104.21.201.219"
+    server: "104.21.5.115"
     port: 443
     uuid: "fdc48be3-a615-41ac-8bd1-ed844c931048"
     udp: true
@@ -1112,20 +1161,22 @@ proxies:
     network: "ws"
     servername: "edgetunnel-4uw.pages.dev"
     ws-opts:
-      path: "/"
+      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI?ed=512"
       headers:
         Host: "edgetunnel-4uw.pages.dev"
-  - name: "@vpnclashfa - 2146"
+  - name: "@vpnclashfa - 2223"
     type: "vless"
-    server: "tulip.amydoodles.com"
+    server: "104.17.108.69"
     port: 443
-    uuid: "fd65fd49-beaf-4dbf-b689-bcc53595bd89"
+    uuid: "fd6fb48f-b324-4a82-9dcd-f8bdb1bd5301"
     udp: true
     tls: true
     network: "xhttp"
-    servername: "cdn.akamai.steamstatic.com"
+    servername: "htsmart-live-s9t1kuzl.avexilon.ir"
     client-fingerprint: "firefox"
-  - name: "@vpnclashfa - 2145"
+    alpn:
+      - "h2"
+  - name: "@vpnclashfa - 2222"
     type: "vless"
     server: "193.160.141.27"
     port: 443
@@ -1137,31 +1188,20 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
-  - name: "@vpnclashfa - 2143"
+  - name: "@vpnclashfa - 2219"
     type: "vless"
-    server: "147.45.47.89"
-    port: 443
-    uuid: "fd0a5c32-afc0-4d57-b95a-ca6ec8f93e87"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "ozon.ru"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
-  - name: "@vpnclashfa - 2142"
-    type: "vless"
-    server: "147.45.46.178"
+    server: "193.160.141.27"
     port: 443
     uuid: "fd0a5c32-afc0-4d57-b95a-ca6ec8f93e87"
     udp: true
     tls: true
     network: "tcp"
     servername: "abuse.ozon.ru"
+    client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
-  - name: "@vpnclashfa - 2141"
+  - name: "@vpnclashfa - 2218"
     type: "vless"
     server: "147.45.46.169"
     port: 443
@@ -1173,16 +1213,7 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
-  - name: "@vpnclashfa - 2139"
-    type: "vless"
-    server: "199.232.20.113"
-    port: 443
-    uuid: "fcdfed39-51aa-4bb5-beb7-61b0357e36b9"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.firefox.com"
-  - name: "@vpnclashfa - 2138"
+  - name: "@vpnclashfa - 2217"
     type: "vless"
     server: "199.232.20.113"
     port: 443
@@ -1194,7 +1225,7 @@ proxies:
     client-fingerprint: "chrome"
     alpn:
       - "h2"
-  - name: "@vpnclashfa - 2137"
+  - name: "@vpnclashfa - 2216"
     type: "vless"
     server: "146.75.57.238"
     port: 443
@@ -1203,42 +1234,19 @@ proxies:
     tls: true
     network: "tcp"
     servername: "cdn.akamai.steamstatic.com"
-  - name: "@vpnclashfa - 2136"
+  - name: "@vpnclashfa - 2215"
     type: "vless"
-    server: "free.sahanwickramasinghe.me"
-    port: 80
-    uuid: "fcdb24e3-5e66-4c45-b89e-ac9441f4dcda"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/"
-  - name: "@vpnclashfa - 2135"
-    type: "vless"
-    server: "free.sahanwickramasinghe.me"
-    port: 80
-    uuid: "fcdb24e3-5e66-4c45-b89e-ac9441f4dcda"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "free.sahanwickramasinghe.me"
-  - name: "@vpnclashfa - 2134"
-    type: "vless"
-    server: "srv1.segara.ir"
-    port: 8443
-    uuid: "fcadb901-a3e1-425c-bbb5-229c4d45ef7a"
+    server: "146.75.57.238"
+    port: 443
+    uuid: "fcdfed39-51aa-4bb5-beb7-61b0357e36b9"
     udp: true
     tls: true
-    network: "tcp"
-    servername: "play-apps-features.googleusercontent.com"
+    network: "xhttp"
+    servername: "cdn.akamai.steamstatic.com"
     client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "bpqWvZAEHPgZ-kGrJDu6INWZ6InPJxXdJei3VxcAJR8"
-      short-id: "ae4931ddfcb70677"
-  - name: "@vpnclashfa - 2133"
+    alpn:
+      - "h2"
+  - name: "@vpnclashfa - 2214"
     type: "vless"
     server: "208.103.161.170"
     port: 443
@@ -1252,7 +1260,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "@vpnclashfa - 2132"
+  - name: "@vpnclashfa - 2213"
     type: "vless"
     server: "188.114.97.6"
     port: 443
@@ -1266,7 +1274,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "@vpnclashfa - 2131"
+  - name: "@vpnclashfa - 2212"
     type: "vless"
     server: "185.18.250.252"
     port: 443
@@ -1279,7 +1287,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "@vpnclashfa - 2130"
+  - name: "@vpnclashfa - 2211"
     type: "vless"
     server: "141.193.213.10"
     port: 443
@@ -1292,7 +1300,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "@vpnclashfa - 2129"
+  - name: "@vpnclashfa - 2210"
     type: "vless"
     server: "104.16.71.213"
     port: 443
@@ -1306,21 +1314,7 @@ proxies:
       path: "/tsghdws"
       headers:
         Host: "octopusss4.com"
-  - name: "@vpnclashfa - 2128"
-    type: "vless"
-    server: "u6.luxcloud.space"
-    port: 443
-    uuid: "fc87e0d6-0f6a-423a-828e-1fed7e7ef29c"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "u6.luxcloud.space"
-    client-fingerprint: "firefox"
-    alpn:
-      - "h2"
-      - "http/1.1"
-    flow: "xtls-rprx-vision"
-  - name: "@vpnclashfa - 2127"
+  - name: "@vpnclashfa - 2209"
     type: "vless"
     server: "116.204.164.60"
     port: 7443
@@ -1333,7 +1327,20 @@ proxies:
       path: "/@Marisa_kristi"
       headers:
         Host: "o-85ley6knn8ut.6nvkygqh144t7xtdyvh0y3o4gzo3ujhnk8n.workers.dev"
-  - name: "@vpnclashfa - 2126"
+  - name: "@vpnclashfa - 2208"
+    type: "vless"
+    server: "188.114.98.0"
+    port: 443
+    uuid: "fc7d2cfe-f5ef-40c8-a848-a0bdc11f6349"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "vpn.cintaku.qzz.io"
+    ws-opts:
+      path: "/vlessws"
+      headers:
+        Host: "vpn.cintaku.qzz.io"
+  - name: "@vpnclashfa - 2207"
     type: "vless"
     server: "xray2-direct-mci1-fs-ce.freesocks.work"
     port: 443
@@ -1346,7 +1353,7 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "7j3hmlHrEDk3Kjx-dFG3E3jf0c6PZF45trIPFsuKWmI"
-  - name: "@vpnclashfa - 2125"
+  - name: "@vpnclashfa - 2206"
     type: "vless"
     server: "104.24.143.37"
     port: 443
@@ -1359,7 +1366,7 @@ proxies:
       path: "/ws"
       headers:
         Host: "bomb.pasta-makers.online"
-  - name: "@vpnclashfa - 2124"
+  - name: "@vpnclashfa - 2205"
     type: "vless"
     server: "77.237.90.153"
     port: 443
@@ -1371,7 +1378,7 @@ proxies:
       path: "/"
       headers:
         Host: "soft98.ir"
-  - name: "@vpnclashfa - 2123"
+  - name: "@vpnclashfa - 2204"
     type: "vless"
     server: "188.241.54.208"
     port: 443
@@ -1385,24 +1392,7 @@ proxies:
     reality-opts:
       public-key: "qlVZ2ehdXHCxIADkf5swgXT2ZHrpSP7HM6SKTBMQXRU"
       short-id: "456bf62e2b728b97"
-  - name: "@vpnclashfa - 2122"
-    type: "vless"
-    server: "live.wkrq.com"
-    port: 443
-    uuid: "fb789853-e3f3-450f-9289-78e3e9f3d3e2"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "live.wkrq.com"
-    client-fingerprint: "firefox"
-    alpn:
-      - "h2"
-      - "http/1.1"
-    ws-opts:
-      path: "/@custom_config?ed=2560"
-      headers:
-        Host: "downloadlynet.ir."
-  - name: "@vpnclashfa - 2121"
+  - name: "@vpnclashfa - 2203"
     type: "vless"
     server: "13.140.84.224"
     port: 8080
@@ -1415,15 +1405,59 @@ proxies:
     reality-opts:
       public-key: "9biluVYF5OTaHEoOKf2_HU38ij1wcCVB-64sBVCbaRw"
       short-id: "70a1"
-  - name: "@vpnclashfa - 2120"
+  - name: "@vpnclashfa - 2202"
     type: "vless"
-    server: "5.188.190.158"
-    port: 23958
-    uuid: "fb39cc1d-566d-57ec-864a-eadaa0d59edb"
+    server: "108.162.192.79"
+    port: 443
+    uuid: "fb710ee0-f2d3-421c-8556-d23e5075f57e"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "bpb-worker-panel-chf.pages.dev"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/?ed=2048"
+      headers:
+        Host: "bpb-worker-panel-chf.pages.dev"
+  - name: "@vpnclashfa - 2201"
+    type: "vless"
+    server: "dns5.m3hrzd.ir"
+    port: 8055
+    uuid: "fafeee6d-5b45-4325-85ce-092cda561141"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "race.egistration.ir"
+    client-fingerprint: "edge"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "4ExW95eL_lG7-vBq744NvIrYYm9tQyl33xf5mqNvEho"
+      short-id: "967a1145531e3868"
+  - name: "@vpnclashfa - 2200"
+    type: "vless"
+    server: "94.249.241.154"
+    port: 3408
+    uuid: "fafc7c16-f890-45ee-a856-02df225172dd"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "de3.vpvr4ib84nuv6hdkt.ru"
+    client-fingerprint: "random"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "3eXf94GSzRaECZwUCsF-aQbtxFo5FInM8uUhnyTRjFI"
+      short-id: "0f56deee14619eb2"
+  - name: "@vpnclashfa - 2199"
+    type: "vless"
+    server: "2.26.49.222"
+    port: 8445
+    uuid: "fafc7c16-f890-45ee-a856-02df225172dd"
     udp: true
     tls: false
     network: "tcp"
-  - name: "@vpnclashfa - 2119"
+  - name: "@vpnclashfa - 2198"
     type: "vless"
     server: "server.slavkiti.monster"
     port: 443
@@ -1437,32 +1471,20 @@ proxies:
     reality-opts:
       public-key: "J-dv-HrWfQ_IOoyutv0Kg-rO8QwoRwc02dS1dS_tblk"
       short-id: "8325360e8bd2"
-  - name: "@vpnclashfa - 2118"
+  - name: "@vpnclashfa - 2197"
     type: "vless"
-    server: "xray1-direct-mci1-fs-ce.freesocks.work"
-    port: 443
-    uuid: "fa670a1a-71b7-441d-841d-8955f6ed5147"
+    server: "104.18.152.231"
+    port: 2053
+    uuid: "fa937ff5-89cc-49a4-9bf9-da2b7285070d"
     udp: true
     tls: true
-    network: "tcp"
-    servername: "dl.google.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "7j3hmlHrEDk3Kjx-dFG3E3jf0c6PZF45trIPFsuKWmI"
-  - name: "@vpnclashfa - 2117"
-    type: "vless"
-    server: "ser1.plasmoon.ir"
-    port: 2026
-    uuid: "fa5be8ca-4201-4490-ac69-0df80ea27d91"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "tun1.plasmoon.ir"
+    network: "xhttp"
+    servername: "bulghari.appleseraj.ir"
     client-fingerprint: "chrome"
     alpn:
+      - "h2"
       - "http/1.1"
-  - name: "@vpnclashfa - 2116"
+  - name: "@vpnclashfa - 2196"
     type: "vless"
     server: "45.82.136.188"
     port: 443
@@ -1474,20 +1496,7 @@ proxies:
     client-fingerprint: "chrome"
     ws-opts:
       path: "/"
-  - name: "@vpnclashfa - 2115"
-    type: "vless"
-    server: "159.69.114.213"
-    port: 8443
-    uuid: "f9ce83cc-d862-4233-abc8-b58cd8b5f546"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdn.discordapp.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
-  - name: "@vpnclashfa - 2114"
+  - name: "@vpnclashfa - 2195"
     type: "vless"
     server: "31.76.68.245"
     port: 443
@@ -1501,7 +1510,7 @@ proxies:
     reality-opts:
       public-key: "INbgA5nXpjZ2P1f6lY7sMBlDM3ZMV8RX3cw-RRGM0mM"
       short-id: "f22e97cfd4d9"
-  - name: "@vpnclashfa - 2112"
+  - name: "@vpnclashfa - 2193"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
@@ -1513,7 +1522,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_17i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 2111"
+  - name: "@vpnclashfa - 2192"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
@@ -1526,7 +1535,7 @@ proxies:
       path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
       headers:
         Host: "copy_az_channel_NUFiLTER_17i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 2110"
+  - name: "@vpnclashfa - 2191"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
@@ -1539,7 +1548,7 @@ proxies:
       path: "/"
       headers:
         Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 2108"
+  - name: "@vpnclashfa - 2190"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
@@ -1552,21 +1561,7 @@ proxies:
       path: "/"
       headers:
         Host: "copy_az_channel_NUFiLTER_17i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 2107"
-    type: "vless"
-    server: "www.qarvian.ir"
-    port: 443
-    uuid: "f9a9aa1f-75fb-4490-9155-85567af7a0ff"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "cdn.akamai.steamstatic.com"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/?TELEGRAM--B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub-B2Hub--TELEGRAM"
-      headers:
-        Host: "copy_az_channel_NUFiLTER_17i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 2106"
+  - name: "@vpnclashfa - 2189"
     type: "vless"
     server: "199.232.78.160"
     port: 443
@@ -1578,20 +1573,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_10i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 2105"
-    type: "vless"
-    server: "199.232.78.160"
-    port: 443
-    uuid: "f9a9aa1f-75fb-4490-9155-85567af7a0ff"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
-      headers:
-        Host: "copy_az_channel_NUFiLTER_10i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 2104"
+  - name: "@vpnclashfa - 2188"
     type: "vless"
     server: "199.232.78.160"
     port: 443
@@ -1604,7 +1586,7 @@ proxies:
       path: "/"
       headers:
         Host: "copy_az_channel_NUFiLTER_10i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 2103"
+  - name: "@vpnclashfa - 2186"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -1616,7 +1598,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_8i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 2102"
+  - name: "@vpnclashfa - 2185"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -1629,7 +1611,7 @@ proxies:
       path: "/"
       headers:
         Host: "copy_az_channel_NUFiLTER_8i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 2101"
+  - name: "@vpnclashfa - 2184"
     type: "vless"
     server: "167.82.64.64"
     port: 443
@@ -1642,19 +1624,7 @@ proxies:
       path: "/"
       headers:
         Host: "copy_az_channel_NUFiLTER_17i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 2099"
-    type: "vless"
-    server: "146.75.59.186"
-    port: 443
-    uuid: "f9a9aa1f-75fb-4490-9155-85567af7a0ff"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      headers:
-        Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 2098"
+  - name: "@vpnclashfa - 2182"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -1667,7 +1637,7 @@ proxies:
       path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
       headers:
         Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 2097"
+  - name: "@vpnclashfa - 2181"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -1680,43 +1650,18 @@ proxies:
       path: "/"
       headers:
         Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 2096"
+  - name: "@vpnclashfa - 2180"
     type: "vless"
-    server: "199.232.96.150"
-    port: 443
-    uuid: "f9991b8e-7d19-49e7-ae1d-70ce37d7ca16"
+    server: "194.87.143.165"
+    port: 8443
+    uuid: "f9613819-d2fe-4b3a-a2e6-40c184c6854c"
     udp: true
     tls: true
-    network: "xhttp"
-    servername: "firefox.com"
-    client-fingerprint: "firefox"
-  - name: "@vpnclashfa - 2095"
-    type: "vless"
-    server: "167.82.76.31"
-    port: 443
-    uuid: "f9991b8e-7d19-49e7-ae1d-70ce37d7ca16"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "firefox.com"
-    client-fingerprint: "safari"
-    alpn:
-      - "h3"
-      - "h2"
-  - name: "@vpnclashfa - 2094"
-    type: "vless"
-    server: "167.82.76.31"
-    port: 443
-    uuid: "f9991b8e-7d19-49e7-ae1d-70ce37d7ca16"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "speedtest.net"
-    client-fingerprint: "firefox"
-    alpn:
-      - "h3"
-      - "h2"
-  - name: "@vpnclashfa - 2093"
+    network: "ws"
+    client-fingerprint: "random"
+    ws-opts:
+      path: "/"
+  - name: "@vpnclashfa - 2179"
     type: "vless"
     server: "ee.h1cloud.net"
     port: 25895
@@ -1725,11 +1670,11 @@ proxies:
     tls: true
     network: "tcp"
     servername: "www.samsung.com"
-    client-fingerprint: "chrome"
+    client-fingerprint: "firefox"
     reality-opts:
       public-key: "jOVKSP-bS9OkILJ8Epz8hadh6qhavCrOiJYeF0NCn0k"
       short-id: "a73f0410d728c823"
-  - name: "@vpnclashfa - 2092"
+  - name: "@vpnclashfa - 2178"
     type: "vless"
     server: "cd.zovip2.ir"
     port: 443
@@ -1742,19 +1687,23 @@ proxies:
       path: "/gropcdn"
       headers:
         Host: "gadfather.zovip2.ir"
-  - name: "@vpnclashfa - 2091"
+  - name: "@vpnclashfa - 2176"
     type: "vless"
-    server: "www.speedtest.net"
-    port: 80
-    uuid: "f8eec5de-eed9-4363-a5c8-26ef7993f47b"
+    server: "cd.zovip2.ir"
+    port: 443
+    uuid: "f8efa59f-005f-4af4-b683-5df293fc982b"
     udp: true
-    tls: false
+    tls: true
     network: "ws"
+    servername: "gadfather.zovip2.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
     ws-opts:
-      path: "/melov2ray/melov2ray/melov2ray/melov2ray/melov2ray/melov2ray/melov2ray"
+      path: "/gropcdn"
       headers:
-        Host: "ch1.dontbow.store."
-  - name: "@vpnclashfa - 2090"
+        Host: "gadfather.zovip2.ir"
+  - name: "@vpnclashfa - 2175"
     type: "vless"
     server: "sw.golangwikito.cfd"
     port: 443
@@ -1768,22 +1717,9 @@ proxies:
     reality-opts:
       public-key: "Kb8SsVPprs46BJSUNp5JvWLI-TFEiHmlBOXLQd37Glg"
       short-id: "a1037b25dcef6aa7"
-  - name: "@vpnclashfa - 2089"
+  - name: "@vpnclashfa - 2174"
     type: "vless"
-    server: "45.194.66.202"
-    port: 443
-    uuid: "f8d52ece-fad4-478d-875d-df6eed3befa7"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "pl.golangwikito.cfd"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "DsTVLCehsKvfFGtNZU5leKOLTlEp28qeifHYtRKOFwg"
-      short-id: "f8b695e5c59d028c"
-  - name: "@vpnclashfa - 2088"
-    type: "vless"
-    server: "31.77.129.151"
+    server: "ge-s-1.pythonmakemigreat.wiki"
     port: 443
     uuid: "f8d52ece-fad4-478d-875d-df6eed3befa7"
     udp: true
@@ -1794,7 +1730,48 @@ proxies:
     reality-opts:
       public-key: "5fkwwCKZzMsE6Eb_b3iqluu-1AWIfnYl-p0N3EL9Al8"
       short-id: "2c9a2790ad5900b2"
-  - name: "@vpnclashfa - 2087"
+  - name: "@vpnclashfa - 2173"
+    type: "vless"
+    server: "fr.golangwikito.cfd"
+    port: 443
+    uuid: "f8d52ece-fad4-478d-875d-df6eed3befa7"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fr.golangwikito.cfd"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "isYQuhKDrgc7IQ7G0LHywFnt57wffrkZ-er18DkVsBA"
+      short-id: "e6d589857d1cec5e"
+  - name: "@vpnclashfa - 2172"
+    type: "vless"
+    server: "fr.golangwikito.cfd"
+    port: 443
+    uuid: "f8d52ece-fad4-478d-875d-df6eed3befa7"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "fr.golangwikito.cfd"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "isYQuhKDrgc7IQ7G0LHywFnt57wffrkZ-er18DkVsBA"
+      short-id: "e6d589857d1cec5e"
+  - name: "@vpnclashfa - 2171"
+    type: "vless"
+    server: "45.194.66.193"
+    port: 443
+    uuid: "f8d52ece-fad4-478d-875d-df6eed3befa7"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "pl.golangwikito.cfd"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "DsTVLCehsKvfFGtNZU5leKOLTlEp28qeifHYtRKOFwg"
+      short-id: "acccaaaa9f72147d"
+  - name: "@vpnclashfa - 2170"
     type: "vless"
     server: "2.26.98.95"
     port: 443
@@ -1807,7 +1784,7 @@ proxies:
     reality-opts:
       public-key: "5fkwwCKZzMsE6Eb_b3iqluu-1AWIfnYl-p0N3EL9Al8"
       short-id: "2c9a2790ad5900b2"
-  - name: "@vpnclashfa - 2086"
+  - name: "@vpnclashfa - 2169"
     type: "vless"
     server: "177.3.222.100"
     port: 443
@@ -1821,72 +1798,76 @@ proxies:
     reality-opts:
       public-key: "5fkwwCKZzMsE6Eb_b3iqluu-1AWIfnYl-p0N3EL9Al8"
       short-id: "2c9a2790ad5900b2"
-  - name: "@vpnclashfa - 2085"
+  - name: "@vpnclashfa - 2168"
     type: "vless"
-    server: "188.114.96.3"
-    port: 2095
-    uuid: "f8ae1d19-44c5-4cc3-ab1c-24e452ed15a0"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "main-news-day-rubikairanjahan.fars-news.org"
-  - name: "@vpnclashfa - 2084"
-    type: "vless"
-    server: "104.17.165.123"
-    port: 8443
-    uuid: "f85f60b1-2b96-49e9-8bde-b656d1516df0"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "gx8rw8fz783ncefn332y7uyfsvb59o820mryrxu1cj19jiuuur.zjde5.de5.net"
-    client-fingerprint: "chrome"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/?ed=2560"
-      headers:
-        Host: "gx8rw8fz783ncefn332y7uyfsvb59o820mryrxu1cj19jiuuur.zjde5.de5.net"
-  - name: "@vpnclashfa - 2083"
-    type: "vless"
-    server: "62.133.63.154"
-    port: 8443
-    uuid: "f85e436354ba409d9cce61a0d2185c0f"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "ya.ru"
-    client-fingerprint: "random"
-    reality-opts:
-      public-key: "BY4c_1BeR31g3UxzO8GCtvi2yKLatiUII7VjuzXMGC8"
-      short-id: "aabbccdd"
-  - name: "@vpnclashfa - 2082"
-    type: "vless"
-    server: "s1.test.anti-zapret.com"
-    port: 8443
-    uuid: "f82332b2-dc8c-eac4-ac12-f276e37e278a"
+    server: "103.172.197.3"
+    port: 16006
+    uuid: "f8c9d2a1-da40-4f90-b671-11772a0b13d6"
     udp: true
     tls: true
     network: "tcp"
-    servername: "s1.test.anti-zapret.com"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "0AVsyS7udTbxKRdSyQ2rtFC63icDQOVWq8FvAhhU-WY"
-      short-id: "58fbcddfaae3ade9"
-  - name: "@vpnclashfa - 2081"
+      public-key: "ll7JTP628PuBMZJvx6fuhGSmCRSURnReAetmhCEL8GU"
+  - name: "@vpnclashfa - 2167"
     type: "vless"
-    server: "193.58.121.241"
+    server: "213.182.201.15"
+    port: 3090
+    uuid: "f8b74d3c-4c21-4667-a3e7-412d8a5598f6"
+    udp: true
+    tls: false
+    network: "grpc"
+    grpc-opts:
+      grpc-service-name: "vless"
+  - name: "@vpnclashfa - 2166"
+    type: "vless"
+    server: "uk-tube-01.stre4m.net"
+    port: 443
+    uuid: "f85ba8bb-a3da-4389-a67a-2b0afde7bbc1"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "jobinvest.ru"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
+  - name: "@vpnclashfa - 2165"
+    type: "vless"
+    server: "94.156.112.43"
     port: 443
     uuid: "f811a2e8-08ed-4b30-b44c-449a7cab54d8"
     udp: true
     tls: true
     network: "tcp"
-    servername: "23sept.live"
+    servername: "newblocksgerm.site"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "y0wgEdmPNIKlAMJHeC0teOW_fBnX8tmRE8n1CwOZSwU"
-  - name: "@vpnclashfa - 2080"
+      public-key: "_aURfmVUjvCRZipDI2eqMO0VQa64BJRGYFOdlBFi1XQ"
+  - name: "@vpnclashfa - 2164"
+    type: "vless"
+    server: "188.244.122.58"
+    port: 443
+    uuid: "f775978b-6e22-41a8-ae5e-5f9779e6745f"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "juzibaipiao.5112233.xyz"
+    ws-opts:
+      path: "/"
+  - name: "@vpnclashfa - 2163"
+    type: "vless"
+    server: "167.68.11.146"
+    port: 443
+    uuid: "f775978b-6e22-41a8-ae5e-5f9779e6745f"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "juzibaipiao.5112233.xyz"
+    ws-opts:
+      path: "/"
+  - name: "@vpnclashfa - 2162"
     type: "vless"
     server: "2.28.142.170"
     port: 443
@@ -1898,17 +1879,21 @@ proxies:
     reality-opts:
       public-key: "IqFTx4k5VQydmffvavaOHDXBtdgDxX26A6NtsVvDfhw"
       short-id: "d485c3d5248d6b51"
-  - name: "@vpnclashfa - 2079"
+  - name: "@vpnclashfa - 2161"
     type: "vless"
-    server: "194.36.37.59"
-    port: 10004
-    uuid: "f7376394-cd54-11f1-bb6a-bff6d0326f6a"
+    server: "45.196.201.100"
+    port: 443
+    uuid: "f75814f6-8f81-4847-b792-168c41f2dc85"
     udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/vpnjantit"
-  - name: "@vpnclashfa - 2078"
+    tls: true
+    network: "tcp"
+    servername: "storage.yandex.net"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "zii4nGNapnFKL6SN8GzWNqFlElBvUCUFUThEP0kFH04"
+      short-id: "c6ef72e4635d15a5"
+  - name: "@vpnclashfa - 2160"
     type: "vless"
     server: "84.32.189.22"
     port: 443
@@ -1922,47 +1907,35 @@ proxies:
     reality-opts:
       public-key: "2zLFL9xRZ_hAqBHIUpZrj3z5o5Bvt3OAFy5yDat7h0U"
       short-id: "2aef5875"
-  - name: "@vpnclashfa - 2077"
+  - name: "@vpnclashfa - 2159"
     type: "vless"
-    server: "nl1.cleanset.net"
-    port: 45821
-    uuid: "f73538f3-737d-41d8-b1e7-8a6bd8d2e7c0"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.samsung.com"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "RymFn9pFlHaMQpps5joHsmg0fOeWcaQiMOLR5IIfuWY"
-  - name: "@vpnclashfa - 2076"
-    type: "vless"
-    server: "72.60.189.172"
-    port: 443
-    uuid: "f6f62b37-e002-42c2-8c32-51fe3da6750f"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.apple.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "ciEOYnFRicl1_ibRKw70jTDZKIMV7R88Qic4GpVzSXA"
-      short-id: "55cbb453c4bea99b"
-  - name: "@vpnclashfa - 2075"
-    type: "vless"
-    server: "185.146.173.95"
-    port: 2095
-    uuid: "f6f0196d-4484-4a17-9553-0c4b646cde7c"
+    server: "blit11.hamrahcore.ir"
+    port: 719
+    uuid: "f6ba0c34-cd24-4831-9a22-4a61c4d67462"
     udp: true
     tls: false
     network: "ws"
     ws-opts:
-      path: "/"
+      path: "/api/v2/xtrnwqjbkr?ed=2560"
       headers:
-        Host: "V2ray-_-_-_-_-_-ShhProxy.TelegramChannelJoinBede.com."
-  - name: "@vpnclashfa - 2074"
+        Host: "play.google.com"
+  - name: "@vpnclashfa - 2158"
     type: "vless"
-    server: "150.241.73.74"
+    server: "172.67.216.168"
+    port: 443
+    uuid: "f69d4594-2d18-4266-abc4-eeb9c5604ca5"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.12reddddddd.bf"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/975e3406-9ac4-45fc-a12b-30fbe810c75f"
+      headers:
+        Host: "www.12reddddddd.bf"
+  - name: "@vpnclashfa - 2157"
+    type: "vless"
+    server: "144.31.218.18"
     port: 443
     uuid: "f692629b-3557-488a-9c9b-60775331e423"
     udp: true
@@ -1973,20 +1946,7 @@ proxies:
       public-key: "f3Mwf_vaM2TDw1X8HZORkYPLY0-DE5smNYgHuhrQLTA"
     grpc-opts:
       grpc-service-name: "fi1cosmos"
-  - name: "@vpnclashfa - 2073"
-    type: "vless"
-    server: "150.241.72.37"
-    port: 443
-    uuid: "f692629b-3557-488a-9c9b-60775331e423"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "fi1-cosmostechnology.ru"
-    reality-opts:
-      public-key: "f3Mwf_vaM2TDw1X8HZORkYPLY0-DE5smNYgHuhrQLTA"
-    grpc-opts:
-      grpc-service-name: "fi1cosmos"
-  - name: "@vpnclashfa - 2072"
+  - name: "@vpnclashfa - 2156"
     type: "vless"
     server: "78.47.197.126"
     port: 8080
@@ -1994,7 +1954,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "@vpnclashfa - 2071"
+  - name: "@vpnclashfa - 2155"
     type: "vless"
     server: "77.91.68.70"
     port: 55983
@@ -2007,19 +1967,7 @@ proxies:
     reality-opts:
       public-key: "nWQ7b9l9X6N3PrXLgIzOvMM8iSYrqjVHEb9ikWxqYSg"
       short-id: "0e"
-  - name: "@vpnclashfa - 2070"
-    type: "vless"
-    server: "77.91.68.70"
-    port: 55983
-    uuid: "f667a096-5231-4cfb-8759-92bb32473139"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "yahoo.com"
-    reality-opts:
-      public-key: "nWQ7b9l9X6N3PrXLgIzOvMM8iSYrqjVHEb9ikWxqYSg"
-      short-id: "0e"
-  - name: "@vpnclashfa - 2069"
+  - name: "@vpnclashfa - 2154"
     type: "vless"
     server: "185.146.173.37"
     port: 80
@@ -2031,7 +1979,7 @@ proxies:
       path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray?ed=2048"
       headers:
         Host: "1.v.v.V-_-_-V2ray-_-_-V.v.v.mv.speedtest.net.www.Zula.ir.check-host.net.5.cakesfoodapp.COM."
-  - name: "@vpnclashfa - 2067"
+  - name: "@vpnclashfa - 2153"
     type: "vless"
     server: "159.246.55.253"
     port: 2096
@@ -2045,7 +1993,7 @@ proxies:
       path: "/Telegram🇨🇳+@WangCai2+/?ed=2560"
       headers:
         Host: "gaosir.unfeeling.sbs"
-  - name: "@vpnclashfa - 2066"
+  - name: "@vpnclashfa - 2152"
     type: "vless"
     server: "129.121.95.159"
     port: 443
@@ -2059,7 +2007,7 @@ proxies:
       path: "/connect"
       headers:
         Host: "129.121.95.159"
-  - name: "@vpnclashfa - 2065"
+  - name: "@vpnclashfa - 2151"
     type: "vless"
     server: "koviraaa.kovira2.ir"
     port: 8443
@@ -2067,7 +2015,7 @@ proxies:
     udp: true
     tls: false
     network: "xhttp"
-  - name: "@vpnclashfa - 2064"
+  - name: "@vpnclashfa - 2150"
     type: "vless"
     server: "koviraaa.kovira2.ir"
     port: 443
@@ -2075,7 +2023,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "@vpnclashfa - 2063"
+  - name: "@vpnclashfa - 2149"
     type: "vless"
     server: "93.114.98.23"
     port: 443
@@ -2085,7 +2033,7 @@ proxies:
     network: "tcp"
     servername: "ty7v85hv2391.dx1dx.com"
     flow: "xtls-rprx-vision"
-  - name: "@vpnclashfa - 2062"
+  - name: "@vpnclashfa - 2148"
     type: "vless"
     server: "45.90.57.119"
     port: 8443
@@ -2098,7 +2046,7 @@ proxies:
     reality-opts:
       public-key: "L6DeK_a25_ZjPKFOrQLoCPWuXi5KCIH_EcRpARmCwkI"
       short-id: "16036bbef04d0509"
-  - name: "@vpnclashfa - 2061"
+  - name: "@vpnclashfa - 2146"
     type: "vless"
     server: "ov-france1.09vpn.com"
     port: 80
@@ -2108,19 +2056,7 @@ proxies:
     network: "ws"
     ws-opts:
       path: "/vless/"
-  - name: "@vpnclashfa - 2060"
-    type: "vless"
-    server: "ov-france1.09vpn.com"
-    port: 80
-    uuid: "f5c47e9c-914a-4a91-a81e-a5a77bc10fc1"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/vless/"
-      headers:
-        Host: "OV-France1.09vpn.com"
-  - name: "@vpnclashfa - 2059"
+  - name: "@vpnclashfa - 2145"
     type: "vless"
     server: "62.60.233.157"
     port: 8444
@@ -2134,7 +2070,21 @@ proxies:
       public-key: "FWitre1jinQR7qz5HQ0q2Q4Gg9xA9B0SyizCziN7Ch0"
     grpc-opts:
       grpc-service-name: "GunService"
-  - name: "@vpnclashfa - 2058"
+  - name: "@vpnclashfa - 2144"
+    type: "vless"
+    server: "193.233.253.180"
+    port: 8444
+    uuid: "f55e9aba-7b14-4f6f-b59a-d5b3d45c9309"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "github.com"
+    reality-opts:
+      public-key: "FWitre1jinQR7qz5HQ0q2Q4Gg9xA9B0SyizCziN7Ch0"
+      short-id: "457fab2ac885dbe0"
+    grpc-opts:
+      grpc-service-name: "GunService"
+  - name: "@vpnclashfa - 2143"
     type: "vless"
     server: "185.200.199.75"
     port: 8444
@@ -2148,7 +2098,7 @@ proxies:
       public-key: "FWitre1jinQR7qz5HQ0q2Q4Gg9xA9B0SyizCziN7Ch0"
     grpc-opts:
       grpc-service-name: "GunService"
-  - name: "@vpnclashfa - 2057"
+  - name: "@vpnclashfa - 2142"
     type: "vless"
     server: "185.200.199.199"
     port: 8444
@@ -2163,7 +2113,7 @@ proxies:
       short-id: "457fab2ac885dbe0"
     grpc-opts:
       grpc-service-name: "GunService"
-  - name: "@vpnclashfa - 2056"
+  - name: "@vpnclashfa - 2141"
     type: "vless"
     server: "185.192.22.159"
     port: 8444
@@ -2177,7 +2127,7 @@ proxies:
       short-id: "457fab2ac885dbe0"
     grpc-opts:
       grpc-service-name: "GunService"
-  - name: "@vpnclashfa - 2053"
+  - name: "@vpnclashfa - 2138"
     type: "vless"
     server: "185.115.34.209"
     port: 8444
@@ -2190,7 +2140,7 @@ proxies:
       public-key: "FWitre1jinQR7qz5HQ0q2Q4Gg9xA9B0SyizCziN7Ch0"
     grpc-opts:
       grpc-service-name: "GunService"
-  - name: "@vpnclashfa - 2052"
+  - name: "@vpnclashfa - 2137"
     type: "vless"
     server: "185.115.34.209"
     port: 8444
@@ -2204,7 +2154,7 @@ proxies:
       public-key: "FWitre1jinQR7qz5HQ0q2Q4Gg9xA9B0SyizCziN7Ch0"
     grpc-opts:
       grpc-service-name: "GunService"
-  - name: "@vpnclashfa - 2050"
+  - name: "@vpnclashfa - 2135"
     type: "vless"
     server: "178.17.57.33"
     port: 8444
@@ -2219,7 +2169,7 @@ proxies:
       short-id: "457fab2ac885dbe0"
     grpc-opts:
       grpc-service-name: "GunService"
-  - name: "@vpnclashfa - 2049"
+  - name: "@vpnclashfa - 2134"
     type: "vless"
     server: "178.17.57.33"
     port: 8444
@@ -2234,21 +2184,7 @@ proxies:
       short-id: "457fab2ac885dbe0"
     grpc-opts:
       grpc-service-name: "GunService"
-  - name: "@vpnclashfa - 2047"
-    type: "vless"
-    server: "153.80.241.206"
-    port: 8444
-    uuid: "f55e9aba-7b14-4f6f-b59a-d5b3d45c9309"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "github.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "FWitre1jinQR7qz5HQ0q2Q4Gg9xA9B0SyizCziN7Ch0"
-    grpc-opts:
-      grpc-service-name: "GunService"
-  - name: "@vpnclashfa - 2046"
+  - name: "@vpnclashfa - 2133"
     type: "vless"
     server: "147.45.60.160"
     port: 8444
@@ -2262,9 +2198,9 @@ proxies:
       public-key: "FWitre1jinQR7qz5HQ0q2Q4Gg9xA9B0SyizCziN7Ch0"
     grpc-opts:
       grpc-service-name: "GunService"
-  - name: "@vpnclashfa - 2045"
+  - name: "@vpnclashfa - 2132"
     type: "vless"
-    server: "147.45.60.160"
+    server: "138.124.63.224"
     port: 8444
     uuid: "f55e9aba-7b14-4f6f-b59a-d5b3d45c9309"
     udp: true
@@ -2273,9 +2209,10 @@ proxies:
     servername: "github.com"
     reality-opts:
       public-key: "FWitre1jinQR7qz5HQ0q2Q4Gg9xA9B0SyizCziN7Ch0"
+      short-id: "457fab2ac885dbe0"
     grpc-opts:
       grpc-service-name: "GunService"
-  - name: "@vpnclashfa - 2044"
+  - name: "@vpnclashfa - 2131"
     type: "vless"
     server: "45.130.125.114"
     port: 8443
@@ -2289,7 +2226,7 @@ proxies:
       path: "/"
       headers:
         Host: "srv75.perfectbulk.info"
-  - name: "@vpnclashfa - 2043"
+  - name: "@vpnclashfa - 2130"
     type: "vless"
     server: "188.114.97.6"
     port: 8443
@@ -2302,20 +2239,15 @@ proxies:
     ws-opts:
       headers:
         Host: "srv75.perfectbulk.info"
-  - name: "@vpnclashfa - 2042"
+  - name: "@vpnclashfa - 2129"
     type: "vless"
-    server: "213.152.165.205"
-    port: 2095
-    uuid: "f3ac0d2c-4b86-4f53-8070-89f69daba8f5"
+    server: "162.19.239.79"
+    port: 443
+    uuid: "f37a7c04-4699-46e0-b2d1-b3cf0551c0f0"
     udp: true
-    tls: true
+    tls: false
     network: "tcp"
-    servername: "www.apple.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "OKksVHWL5JepTv7if7Ta_L_7vn8OxW0INwV71HJM1jI"
-      short-id: "3869d49a9a79e06a"
-  - name: "@vpnclashfa - 2041"
+  - name: "@vpnclashfa - 2128"
     type: "vless"
     server: "xray1-direct-mci1-fs-ce.freesocks.work"
     port: 443
@@ -2328,19 +2260,35 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "7j3hmlHrEDk3Kjx-dFG3E3jf0c6PZF45trIPFsuKWmI"
-  - name: "@vpnclashfa - 2040"
+  - name: "@vpnclashfa - 2127"
     type: "vless"
-    server: "3.170.185.102"
-    port: 80
-    uuid: "f27894bf-349c-44e6-a0ce-4c787e18476f"
+    server: "94.183.154.216"
+    port: 2001
+    uuid: "f3212c28-27b0-4188-851e-c367f58f3127"
     udp: true
-    tls: false
+    tls: true
+    network: "tcp"
+    servername: "www.filimo.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "_3keWobK7ZaY3zcm452rOAQU1cwEhIAMfdSbifhi_UU"
+      short-id: "051e7b231954ec0b"
+  - name: "@vpnclashfa - 2126"
+    type: "vless"
+    server: "172.66.128.146"
+    port: 443
+    uuid: "f27b6f65-6e59-4f89-b929-afa397ca587f"
+    udp: true
+    tls: true
     network: "ws"
+    servername: "n.bitpulse.me"
+    client-fingerprint: "unsafe"
     ws-opts:
-      path: "/GDkX4xpB/"
+      path: "/019bcbad-3813-7cce-8786-3ac0e418f128?ed"
       headers:
-        Host: "duatoup3wk8q2.cloudfront.net"
-  - name: "@vpnclashfa - 2039"
+        Host: "n.bitpulse.me"
+  - name: "@vpnclashfa - 2125"
     type: "vless"
     server: "104.16.191.195"
     port: 80
@@ -2354,10 +2302,30 @@ proxies:
       path: "/vpn?ed=2560"
       headers:
         Host: "barayeiran.mahiozonboroon.qzz.io"
-  - name: "@vpnclashfa - 2038"
+  - name: "@vpnclashfa - 2124"
     type: "vless"
-    server: "p11real3.greewebservices.ir"
-    port: 2202
+    server: "pl-cfe6b10b7f.shamanapp.online"
+    port: 34451
+    uuid: "f259a2e5-fd8d-4db9-a3ac-6b26322cffa9"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "pl-cfe6b10b7f.shamanapp.online"
+    client-fingerprint: "firefox"
+  - name: "@vpnclashfa - 2123"
+    type: "vless"
+    server: "31.59.143.242"
+    port: 34451
+    uuid: "f259a2e5-fd8d-4db9-a3ac-6b26322cffa9"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "pl-cfe6b10b7f.shamanapp.online"
+    client-fingerprint: "firefox"
+  - name: "@vpnclashfa - 2122"
+    type: "vless"
+    server: "p1real4.greewebservices.ir"
+    port: 1260
     uuid: "f234330e-f9df-46e3-8f60-b2af5173c147"
     udp: true
     tls: true
@@ -2366,8 +2334,8 @@ proxies:
     client-fingerprint: "ios"
     reality-opts:
       public-key: "xQnXh5EfPDhcEBB7rRiLca33GYrMEeUa35domLL_yA8"
-      short-id: "e3085d4fc679ba12"
-  - name: "@vpnclashfa - 2037"
+      short-id: "9b60d3"
+  - name: "@vpnclashfa - 2121"
     type: "vless"
     server: "185.146.173.37"
     port: 80
@@ -2379,7 +2347,7 @@ proxies:
       path: "/telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray,telegram-ArV2ray?ed=2048"
       headers:
         Host: "1.v.v.V-_-_-V2ray-_-_-V.v.v.mv.speedtest.net.www.Zula.ir.check-host.net.4.cakesfoodapp.COM."
-  - name: "@vpnclashfa - 2036"
+  - name: "@vpnclashfa - 2120"
     type: "vless"
     server: "104.20.66.92"
     port: 80
@@ -2391,7 +2359,7 @@ proxies:
       path: "/SvnProBot-V2ray69Speed.ir.shop.com?ed=2048"
       headers:
         Host: "vstorep.hamrahmarzban.com"
-  - name: "@vpnclashfa - 2035"
+  - name: "@vpnclashfa - 2119"
     type: "vless"
     server: "146.75.57.111"
     port: 443
@@ -2403,15 +2371,15 @@ proxies:
     client-fingerprint: "chrome"
     alpn:
       - "h2"
-  - name: "@vpnclashfa - 2033"
+  - name: "@vpnclashfa - 2117"
     type: "vless"
-    server: "zmaoz.faculty.ucdavis.edu"
+    server: "www.speedtest.net"
     port: 443
     uuid: "f13b0d60-ab23-49c3-8e4f-fc31ca6fbeca"
     udp: true
     tls: true
     network: "ws"
-    servername: "Zmaoz.Faculty.Ucdavis.Edu"
+    servername: "pages.dev"
     client-fingerprint: "firefox"
     alpn:
       - "h2"
@@ -2419,8 +2387,19 @@ proxies:
     ws-opts:
       path: "/@custom_config?ed=2560"
       headers:
-        Host: "downloadlynet.ir."
-  - name: "@vpnclashfa - 2032"
+        Host: "jobinja.pages.dev"
+  - name: "@vpnclashfa - 2116"
+    type: "vless"
+    server: "hys42.wba-pn.ru"
+    port: 443
+    uuid: "f0d24eb0-a88a-455f-92b8-3a99c38dfb0c"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "hys42.wba-pn.ru"
+    ws-opts:
+      path: "/"
+  - name: "@vpnclashfa - 2115"
     type: "vless"
     server: "77.91.69.169"
     port: 19226
@@ -2434,7 +2413,7 @@ proxies:
     reality-opts:
       public-key: "PQjgf7GxBd2tDXf0zl9Z5rTZo7LdsWj0hGZLH-lJ-Uk"
       short-id: "7c"
-  - name: "@vpnclashfa - 2031"
+  - name: "@vpnclashfa - 2114"
     type: "vless"
     server: "89.106.206.57"
     port: 443
@@ -2448,7 +2427,7 @@ proxies:
       path: "/6d2fed050b30"
       headers:
         Host: "fcs013.getdcz.me"
-  - name: "@vpnclashfa - 2030"
+  - name: "@vpnclashfa - 2113"
     type: "vless"
     server: "tg1.cdnphotos.org"
     port: 443
@@ -2458,7 +2437,7 @@ proxies:
     network: "xhttp"
     servername: "tg1.cdnphotos.org"
     client-fingerprint: "random"
-  - name: "&security=tls&encryption=none&insecure=0&fp=random&type=xhttp&allowInsecure=0&sni=tg1.cdnphotos.org#@vpnclashfa - 2029"
+  - name: "&security=tls&encryption=none&insecure=0&fp=random&type=xhttp&allowInsecure=0&sni=tg1.cdnphotos.org#@vpnclashfa - 2112"
     type: "vless"
     server: "tg1.cdnphotos.org"
     port: 443
@@ -2466,7 +2445,17 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "@vpnclashfa - 2027"
+  - name: "@vpnclashfa - 2110"
+    type: "vless"
+    server: "185.126.93.226"
+    port: 443
+    uuid: "f04cc810-aaf2-4a7b-8cad-356cdd30d394"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "tg1.cdnphotos.org"
+    client-fingerprint: "firefox"
+  - name: "@vpnclashfa - 2109"
     type: "vless"
     server: "a.paydar.site"
     port: 443
@@ -2474,19 +2463,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "@vpnclashfa - 2026"
-    type: "vless"
-    server: "185.146.173.58"
-    port: 8080
-    uuid: "efc3a5bd-2dfd-4942-af6c-5a03302e2731"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/servernet"
-      headers:
-        Host: "sxc22.servernet.fun."
-  - name: "@vpnclashfa - 2025"
+  - name: "@vpnclashfa - 2108"
     type: "vless"
     server: "swcdnmega.surverssss.pro"
     port: 8443
@@ -2499,30 +2476,7 @@ proxies:
       public-key: "vGUZigu8NwSiqOSTu1PSfPnlXsdhpm58ZjuWvIJM81U"
     grpc-opts:
       grpc-service-name: "grpc"
-  - name: "@vpnclashfa - 2024"
-    type: "vless"
-    server: "sw1.hidenet.xyz"
-    port: 8443
-    uuid: "efa9d618-443e-4d9a-9c67-c4b3d9d73995"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "sw1.hidenet.xyz"
-    reality-opts:
-      public-key: "KytvB8Lzvah7cEpkRxXCWhaVAdjIrGZgZ-i_RWW8i0E"
-    grpc-opts:
-      grpc-service-name: "grpc"
-  - name: "@vpnclashfa - 2023"
-    type: "vless"
-    server: "game-survival.surverssss.pro"
-    port: 8443
-    uuid: "efa9d618-443e-4d9a-9c67-c4b3d9d73995"
-    udp: true
-    tls: false
-    network: "grpc"
-    grpc-opts:
-      grpc-service-name: "grpc"
-  - name: "@vpnclashfa - 2022"
+  - name: "@vpnclashfa - 2107"
     type: "vless"
     server: "pitercdn1.surverssss.pro"
     port: 8443
@@ -2535,19 +2489,7 @@ proxies:
       public-key: "5GM_0NRxR5zX7i8OfgIlkcA-YmHgv75XNO7JH-z_OF4"
     grpc-opts:
       grpc-service-name: "grpc"
-  - name: "@vpnclashfa - 2021"
-    type: "vless"
-    server: "zula.ir"
-    port: 80
-    uuid: "ef9b2fd0-6239-4163-9212-4574879bbc24"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "851b4f8a7cf8b6cf67c8a6ebb3afc69e974f5a4813d7bdd0293d29fe0f24d63b.speedtest.net.简化的.24.time.ir.double-standard.الله.under__line.سلام.pinobin.ir."
-  - name: "@vpnclashfa - 2020"
+  - name: "@vpnclashfa - 2106"
     type: "vless"
     server: "chatgpt.com"
     port: 443
@@ -2562,7 +2504,22 @@ proxies:
       - "http/1.1"
     ws-opts:
       path: "/check"
-  - name: "@vpnclashfa - 2019"
+  - name: "@vpnclashfa - 2105"
+    type: "vless"
+    server: "chatgpt.com"
+    port: 443
+    uuid: "ef8e608b-3edc-4235-8963-b6334f44b88e"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "uk-02p.allhubb.info"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/check"
+  - name: "@vpnclashfa - 2104"
     type: "vless"
     server: "us2-full.privateip.net"
     port: 443
@@ -2571,7 +2528,41 @@ proxies:
     tls: true
     network: "tcp"
     flow: "xtls-rprx-vision"
-  - name: "TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=512&host=t1s1.rittbo.kdns.fr&sni=t1s1.rittbo.kdns.fr&insecure=0&allowInsecure=0#@vpnclashfa - 2018"
+  - name: "@vpnclashfa - 2103"
+    type: "vless"
+    server: "188.137.158.199"
+    port: 443
+    uuid: "ef328563-cda1-4530-9b0a-988cc5a74d78"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "softice.net"
+    flow: "xtls-rprx-vision"
+  - name: "@vpnclashfa - 2102"
+    type: "vless"
+    server: "188.137.158.159"
+    port: 443
+    uuid: "ef328563-cda1-4530-9b0a-988cc5a74d78"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "softice.net"
+    flow: "xtls-rprx-vision"
+  - name: "@vpnclashfa - 2101"
+    type: "vless"
+    server: "allrevolt.r8volt.com"
+    port: 443
+    uuid: "eefcf749-fcfc-4321-b974-2828d4acb15c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "guerrilla-games.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "imTeVCUujulNZ2LJNaZrWlOGcN0tgm0km15N8jc55j4"
+      short-id: "dcd651ed"
+  - name: "TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=512&host=t1s1.rittbo.kdns.fr&sni=t1s1.rittbo.kdns.fr&insecure=0&allowInsecure=0#@vpnclashfa - 2100"
     type: "vless"
     server: "173.245.58.87"
     port: 443
@@ -2581,7 +2572,7 @@ proxies:
     network: "ws"
     ws-opts:
       path: "/fp"
-  - name: "@vpnclashfa - 2017"
+  - name: "@vpnclashfa - 2099"
     type: "vless"
     server: "173.245.58.76"
     port: 443
@@ -2594,37 +2585,9 @@ proxies:
       path: "/fp"
       headers:
         Host: "t1s1.rittbo.kdns.fr"
-  - name: "@vpnclashfa - 2016"
+  - name: "@vpnclashfa - 2098"
     type: "vless"
-    server: "173.245.58.70"
-    port: 2053
-    uuid: "eeb6823c-b926-4ea2-866a-5542edd26e59"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "t1s1.rittbo.kdns.fr"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "t1s1.rittbo.kdns.fr"
-  - name: "@vpnclashfa - 2015"
-    type: "vless"
-    server: "172.66.45.6"
-    port: 443
-    uuid: "eeb6823c-b926-4ea2-866a-5542edd26e59"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "t1s1.rittbo.kdns.fr"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/?TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=512"
-      headers:
-        Host: "t1s1.rittbo.kdns.fr"
-  - name: "@vpnclashfa - 2014"
-    type: "vless"
-    server: "172.64.145.94"
+    server: "172.64.145.65"
     port: 443
     uuid: "eeb6823c-b926-4ea2-866a-5542edd26e59"
     udp: true
@@ -2636,7 +2599,21 @@ proxies:
       path: "/?TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=525"
       headers:
         Host: "t1s1.rittbo.kdns.fr"
-  - name: "@vpnclashfa - 2013"
+  - name: "@vpnclashfa - 2097"
+    type: "vless"
+    server: "172.64.145.200"
+    port: 443
+    uuid: "eeb6823c-b926-4ea2-866a-5542edd26e59"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "t1s1.rittbo.kdns.fr"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/?TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=525"
+      headers:
+        Host: "t1s1.rittbo.kdns.fr"
+  - name: "@vpnclashfa - 2096"
     type: "vless"
     server: "162.159.38.119"
     port: 443
@@ -2646,10 +2623,10 @@ proxies:
     network: "ws"
     servername: "t1s1.rittbo.kdns.fr"
     ws-opts:
-      path: "/?TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=512"
+      path: "/"
       headers:
         Host: "t1s1.rittbo.kdns.fr"
-  - name: "TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=2560&host=t1s1.rittbo.kdns.fr&sni=t1s1.rittbo.kdns.fr&insecure=0&allowInsecure=0#@vpnclashfa - 2012"
+  - name: "TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=2560&host=t1s1.rittbo.kdns.fr&sni=t1s1.rittbo.kdns.fr&insecure=0&allowInsecure=0#@vpnclashfa - 2095"
     type: "vless"
     server: "162.159.11.57"
     port: 2083
@@ -2659,9 +2636,35 @@ proxies:
     network: "ws"
     ws-opts:
       path: "/fp"
-  - name: "@vpnclashfa - 2011"
+  - name: "@vpnclashfa - 2094"
     type: "vless"
-    server: "104.26.4.60"
+    server: "104.21.47.19"
+    port: 443
+    uuid: "eeb6823c-b926-4ea2-866a-5542edd26e59"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "t1s1.rittbo.kdns.fr"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "t1s1.rittbo.kdns.fr"
+  - name: "@vpnclashfa - 2093"
+    type: "vless"
+    server: "104.21.227.134"
+    port: 443
+    uuid: "eeb6823c-b926-4ea2-866a-5542edd26e59"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "t1s1.rittbo.kdns.fr"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "t1s1.rittbo.kdns.fr"
+  - name: "@vpnclashfa - 2092"
+    type: "vless"
+    server: "104.21.227.134"
     port: 443
     uuid: "eeb6823c-b926-4ea2-866a-5542edd26e59"
     udp: true
@@ -2673,34 +2676,7 @@ proxies:
       path: "/"
       headers:
         Host: "t1s1.rittbo.kdns.fr"
-  - name: "@vpnclashfa - 2010"
-    type: "vless"
-    server: "104.21.227.134"
-    port: 443
-    uuid: "eeb6823c-b926-4ea2-866a-5542edd26e59"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "t1s1.rittbo.kdns.fr"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "t1s1.rittbo.kdns.fr"
-  - name: "@vpnclashfa - 2009"
-    type: "vless"
-    server: "104.21.227.134"
-    port: 443
-    uuid: "eeb6823c-b926-4ea2-866a-5542edd26e59"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "t1s1.rittbo.kdns.fr"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "t1s1.rittbo.kdns.fr"
-  - name: "@vpnclashfa - 2008"
+  - name: "@vpnclashfa - 2091"
     type: "vless"
     server: "104.16.71.213"
     port: 443
@@ -2713,7 +2689,33 @@ proxies:
       path: "/"
       headers:
         Host: "t1s1.rittbo.kdns.fr"
-  - name: "@vpnclashfa - 2007"
+  - name: "@vpnclashfa - 2090"
+    type: "vless"
+    server: "199.232.78.159"
+    port: 443
+    uuid: "eea97160-a606-4552-97ad-8acc1ce863e1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "speedtest.net"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "azdddaiji5.global.ssl.fastly.net"
+  - name: "@vpnclashfa - 2089"
+    type: "vless"
+    server: "199.232.78.159"
+    port: 443
+    uuid: "eea97160-a606-4552-97ad-8acc1ce863e1"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "speedtest.net"
+    ws-opts:
+      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
+      headers:
+        Host: "azdddaiji5.global.ssl.fastly.net"
+  - name: "@vpnclashfa - 2088"
     type: "vless"
     server: "193.160.141.81"
     port: 8443
@@ -2726,20 +2728,31 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
-  - name: "@vpnclashfa - 2006"
+  - name: "@vpnclashfa - 2087"
     type: "vless"
-    server: "s2ray.bot.cd"
-    port: 443
-    uuid: "ee5f31d3-b1b3-48b4-87b2-c444abb0cb84"
+    server: "193.160.141.81"
+    port: 8443
+    uuid: "ee82f319-ab92-425d-8e04-28a29f33f670"
     udp: true
     tls: true
-    network: "ws"
-    servername: "s2ray.bot.cd"
-    ws-opts:
-      path: "/nova-d0f5e5"
-      headers:
-        Host: "s2ray.bot.cd"
-  - name: "@vpnclashfa - 2005"
+    network: "tcp"
+    servername: "apple.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc"
+  - name: "@vpnclashfa - 2086"
+    type: "vless"
+    server: "93.152.224.207"
+    port: 8443
+    uuid: "ee78c844-83b6-4508-b1f9-b3f00c8e0556"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "twitch.tv"
+    reality-opts:
+      public-key: "qlE96V8EuBoDsWz4DaeGYx5XEUbOcs-o0aK-Z9U4cC8"
+      short-id: "fd0ccc8b9788b8aa"
+  - name: "@vpnclashfa - 2085"
     type: "vless"
     server: "7f04cd81df04143f.de-1.globalmymusic.com"
     port: 443
@@ -2753,7 +2766,48 @@ proxies:
     reality-opts:
       public-key: "lsDSttIgw1roTVhNzcliywH74lXtRShbmMOoxUjQtkw"
       short-id: "b684d13617792bb2"
-  - name: "@vpnclashfa - 2004"
+  - name: "@vpnclashfa - 2084"
+    type: "vless"
+    server: "84.32.109.20"
+    port: 443
+    uuid: "ee18d188-14cc-417e-beb1-70e4add6d023"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "litv.nztvpn.com"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "3jySGemfaqPZ2vM66Qtzo5SotO3eoRn1FeGaKp6KBQ4"
+      short-id: "0da7e14db353e7d0"
+  - name: "@vpnclashfa - 2083"
+    type: "vless"
+    server: "216.173.71.43"
+    port: 443
+    uuid: "ee18d188-14cc-417e-beb1-70e4add6d023"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "lv.nztvpn.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "miDhSALrcCvSfc38VjCDYlzNh5M61NMR5IkUli7IN08"
+      short-id: "0da7e14db353e7d0"
+  - name: "@vpnclashfa - 2082"
+    type: "vless"
+    server: "195.133.80.152"
+    port: 443
+    uuid: "ee18d188-14cc-417e-beb1-70e4add6d023"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "pl3.nztvpn.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "UcFVpzbYTy8Iym6ZnCAtLQK-MeRg6wZuyni4xEOKG18"
+      short-id: "0da7e14db353e7d0"
+  - name: "@vpnclashfa - 2081"
     type: "vless"
     server: "188.253.26.216"
     port: 443
@@ -2766,7 +2820,7 @@ proxies:
     reality-opts:
       public-key: "noszGxmy754-TNyz9eM8EyHiaCRF2T4cu3El6GKb6n0"
       short-id: "0da7e14db353e7d0"
-  - name: "@vpnclashfa - 2003"
+  - name: "@vpnclashfa - 2080"
     type: "vless"
     server: "142.91.108.25"
     port: 443
@@ -2775,12 +2829,12 @@ proxies:
     tls: true
     network: "tcp"
     servername: "jp3.nztvpn.com"
-    client-fingerprint: "chrome"
+    client-fingerprint: "firefox"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "9ZCYjybxMQ7JpE39B8u_Bo-alI1LIbt5ER0E-4yMjiM"
       short-id: "ea36c03d86f91287"
-  - name: "@vpnclashfa - 2002"
+  - name: "@vpnclashfa - 2079"
     type: "vless"
     server: "95.85.253.241"
     port: 2087
@@ -2789,7 +2843,7 @@ proxies:
     tls: true
     network: "tcp"
     servername: "95.85.253.241"
-  - name: "@vpnclashfa - 2001"
+  - name: "@vpnclashfa - 2078"
     type: "vless"
     server: "145.223.68.58"
     port: 443
@@ -2802,20 +2856,59 @@ proxies:
     reality-opts:
       public-key: "qc2DcqT9zPPZr6ePZ7ukxACWrYhRNIBjDIjCK7veyQg"
       short-id: "a44ff7d2e80213c2"
-  - name: "@vpnclashfa - 2000"
+  - name: "@vpnclashfa - 2077"
     type: "vless"
-    server: "104.19.140.106"
+    server: "chart.videofriend.site"
     port: 443
-    uuid: "ecd01b9c-8172-41a4-be72-6167fd7d932d"
+    uuid: "ed8704b8-9e9e-48e6-b55b-ae9079ab3a59"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "chart.videofriend.site"
+    client-fingerprint: "random"
+    reality-opts:
+      public-key: "kcXhnfHyVJyjNjIdoLUpM17d2TNrxviP4qGSLmjvLB4"
+    grpc-opts:
+      grpc-service-name: "grpc-tunnel"
+  - name: "@vpnclashfa - 2076"
+    type: "vless"
+    server: "95.164.36.59"
+    port: 443
+    uuid: "ecf605cd-bddf-45db-a3d4-a254c776ef52"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "sourceforge.net"
+    client-fingerprint: "chrome"
+    grpc-opts:
+      grpc-service-name: "grpc"
+  - name: "@vpnclashfa - 2075"
+    type: "vless"
+    server: "xray1-direct-mci1-fs-ce.freesocks.work"
+    port: 443
+    uuid: "eccd70d1-ee28-4123-a1dd-4cac94c7139c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "dl.google.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "7j3hmlHrEDk3Kjx-dFG3E3jf0c6PZF45trIPFsuKWmI"
+  - name: "@vpnclashfa - 2074"
+    type: "vless"
+    server: "199.232.78.159"
+    port: 443
+    uuid: "eccc053a-7196-47cb-a4b5-f4b8bfd743d9"
     udp: true
     tls: true
     network: "ws"
-    servername: "afrcloud1.c01.kr"
+    servername: "firefox.com"
     ws-opts:
-      path: "/194.127.193.124=24467"
+      path: "/"
       headers:
-        Host: "afrcloud1.c01.kr"
-  - name: "@vpnclashfa - 1999"
+        Host: "copy_az_channel_NUFiLTER_5i.global.ssl.fastly.net."
+  - name: "@vpnclashfa - 2073"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -2828,7 +2921,7 @@ proxies:
       path: "/?TELEGRAM-TOOTFFARANGI"
       headers:
         Host: "copy_az_channel_NUFiLTER_5i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 1998"
+  - name: "@vpnclashfa - 2072"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -2841,20 +2934,7 @@ proxies:
       path: "/?TELEGRAM-DailyConfigs"
       headers:
         Host: "copy_az_channel_NUFiLTER_5i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 1997"
-    type: "vless"
-    server: "146.75.59.186"
-    port: 443
-    uuid: "eccc053a-7196-47cb-a4b5-f4b8bfd743d9"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "copy_az_channel_NUFiLTER_3i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 1996"
+  - name: "@vpnclashfa - 2071"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -2867,7 +2947,7 @@ proxies:
       path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET"
       headers:
         Host: "copy_az_channel_NUFiLTER_5i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 1995"
+  - name: "@vpnclashfa - 2070"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -2880,7 +2960,20 @@ proxies:
       path: "/?TELEGRAM-MUSICLOVERS85"
       headers:
         Host: "copy_az_channel_NUFiLTER_4i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 1993"
+  - name: "@vpnclashfa - 2069"
+    type: "vless"
+    server: "146.75.59.186"
+    port: 443
+    uuid: "eccc053a-7196-47cb-a4b5-f4b8bfd743d9"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "firefox.com"
+    ws-opts:
+      path: "/?TELEGRAM-DailyConfigs"
+      headers:
+        Host: "copy_az_channel_NUFiLTER_4i.global.ssl.fastly.net."
+  - name: "@vpnclashfa - 2068"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -2893,7 +2986,7 @@ proxies:
       path: "/?TELEGRAM-DailyConfigs"
       headers:
         Host: "copy_az_channel_NUFiLTER_3i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 1992"
+  - name: "@vpnclashfa - 2067"
     type: "vless"
     server: "www.speedtest.net"
     port: 443
@@ -2910,31 +3003,7 @@ proxies:
       path: "/@custom_config?ed=2560"
       headers:
         Host: "jobinja.pages.dev"
-  - name: "@vpnclashfa - 1991"
-    type: "vless"
-    server: "static.77.119.140.128.clients.your-server.de"
-    port: 8443
-    uuid: "ec6dd85c-9d6f-4b9a-ab20-eda504a55d1e"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "static.29.209.99.91.clients.your-server.de"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h2"
-      - "http/1.1"
-    flow: "xtls-rprx-vision"
-  - name: "@vpnclashfa - 1990"
-    type: "vless"
-    server: "136.148.216.123"
-    port: 26226
-    uuid: "ec572cf0-1337-4c51-b4ec-ff2f538c1f4c"
-    udp: true
-    tls: false
-    network: "grpc"
-    grpc-opts:
-      grpc-service-name: "69effd3120f4"
-  - name: "@vpnclashfa - 1989"
+  - name: "@vpnclashfa - 2066"
     type: "vless"
     server: "206.245.146.248"
     port: 2085
@@ -2944,7 +3013,7 @@ proxies:
     network: "grpc"
     grpc-opts:
       grpc-service-name: "vless"
-  - name: "@vpnclashfa - 1988"
+  - name: "@vpnclashfa - 2065"
     type: "vless"
     server: "ads04.vxmaxpro.online"
     port: 443
@@ -2957,7 +3026,7 @@ proxies:
     reality-opts:
       public-key: "D8uvi--0Aq7Hjc7cYnfcJGY0h4SSBCrPh7wEp1mvFlw"
       short-id: "b7b70c104ad267b8"
-  - name: "@vpnclashfa - 1987"
+  - name: "@vpnclashfa - 2064"
     type: "vless"
     server: "217.69.167.125"
     port: 43000
@@ -2971,7 +3040,7 @@ proxies:
     reality-opts:
       public-key: "NXN75t-gk0tpVh74Thc7nPBXM4fytgMOZafDzSe8xAk"
       short-id: "353fdd95"
-  - name: "@vpnclashfa - 1986"
+  - name: "@vpnclashfa - 2063"
     type: "vless"
     server: "tgfree.rush-server.com"
     port: 443
@@ -2985,7 +3054,7 @@ proxies:
     reality-opts:
       public-key: "mza5Hn1aolSz65qu-UwvBP3oesxMe25r11o4nxvikF0"
       short-id: "64c1fe36c7846400"
-  - name: "@vpnclashfa - 1985"
+  - name: "@vpnclashfa - 2062"
     type: "vless"
     server: "tgfree.rush-server.com"
     port: 443
@@ -2999,7 +3068,7 @@ proxies:
     reality-opts:
       public-key: "mza5Hn1aolSz65qu-UwvBP3oesxMe25r11o4nxvikF0"
       short-id: "64c1fe36c7846400"
-  - name: "@vpnclashfa - 1983"
+  - name: "@vpnclashfa - 2061"
     type: "vless"
     server: "195.133.73.65"
     port: 443
@@ -3013,7 +3082,7 @@ proxies:
     reality-opts:
       public-key: "mza5Hn1aolSz65qu-UwvBP3oesxMe25r11o4nxvikF0"
       short-id: "64c1fe36c7846400"
-  - name: "@vpnclashfa - 1982"
+  - name: "@vpnclashfa - 2060"
     type: "vless"
     server: "104.171.133.209"
     port: 443
@@ -3026,7 +3095,7 @@ proxies:
     reality-opts:
       public-key: "mza5Hn1aolSz65qu-UwvBP3oesxMe25r11o4nxvikF0"
       short-id: "64c1fe36c7846400"
-  - name: "@vpnclashfa - 1980"
+  - name: "@vpnclashfa - 2058"
     type: "vless"
     server: "104.171.133.209"
     port: 443
@@ -3034,33 +3103,20 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "@vpnclashfa - 1979"
+  - name: "@vpnclashfa - 2057"
     type: "vless"
-    server: "kkpln47w.senbilarsin.ir"
-    port: 9000
-    uuid: "ebaac78a-64f7-4d6a-8897-a4b420069378"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "play.google.com"
-    client-fingerprint: "random"
-    reality-opts:
-      public-key: "WQ7QZiqj2Mf85EtNDYU2vTJjC2D7I5mPDMEIcIZeeF4"
-      short-id: "b8f43f12cabaa3e5"
-  - name: "@vpnclashfa - 1978"
-    type: "vless"
-    server: "qq.utiltools.ru"
+    server: "xray2-direct-mci1-fs-ce.freesocks.work"
     port: 443
-    uuid: "eb78e1f0-d921-4ca9-a889-261fcc5a0547"
+    uuid: "eb82b9e1-b214-444a-9dfe-a777c3f50c46"
     udp: true
     tls: true
     network: "tcp"
-    servername: "qq.utiltools.ru"
+    servername: "dl.google.com"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "drY21DHNOr6ezJLA2B10mzTExeJ9-gVBfTBNLwVBtWI"
-  - name: "@vpnclashfa - 1977"
+      public-key: "7j3hmlHrEDk3Kjx-dFG3E3jf0c6PZF45trIPFsuKWmI"
+  - name: "@vpnclashfa - 2056"
     type: "vless"
     server: "qq.utiltools.ru"
     port: 443
@@ -3073,15 +3129,32 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "drY21DHNOr6ezJLA2B10mzTExeJ9-gVBfTBNLwVBtWI"
-  - name: "@vpnclashfa - 1976"
+  - name: "@vpnclashfa - 2055"
     type: "vless"
-    server: "45.13.119.219"
-    port: 8888
-    uuid: "eb77be10-9d9e-527b-a78d-8caaf58992d6"
+    server: "13.140.90.29"
+    port: 49054
+    uuid: "eb6ba095-8184-4a85-992f-7a42049124cc"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "token.safebrowsing.apple"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "4vWyTSLXJwt3k3nHFM7o6I5xzV8QijATPS_THsiUlQM"
+      short-id: "2c98412b4dc3fed0"
+  - name: "@vpnclashfa - 2054"
+    type: "vless"
+    server: "190.93.247.155"
+    port: 80
+    uuid: "eb5af328-bbd9-44ad-a978-7385e2971114"
     udp: true
     tls: false
-    network: "tcp"
-  - name: "@vpnclashfa - 1975"
+    network: "ws"
+    ws-opts:
+      path: "/vless @hopev2ray ,@hopev2ray ,@hopev2ray"
+      headers:
+        Host: "De2.vless.site."
+  - name: "@vpnclashfa - 2053"
     type: "vless"
     server: "172.64.148.162"
     port: 443
@@ -3095,21 +3168,21 @@ proxies:
       - "h3"
       - "h2"
       - "http/1.1"
-  - name: "@vpnclashfa - 1974"
+  - name: "@vpnclashfa - 2052"
     type: "vless"
-    server: "104.20.32.111"
+    server: "ae.cdn.stun.su"
     port: 443
-    uuid: "eb3168be-aa17-45f0-a41f-1e9c035f6f44"
+    uuid: "eb071647-72a6-46be-8e89-ff3d228d52f6"
     udp: true
     tls: true
-    network: "xhttp"
-    servername: "app.bitzynet.xyz"
+    network: "tcp"
+    servername: "ae.cdn.stun.su"
     client-fingerprint: "chrome"
-    alpn:
-      - "h3"
-      - "h2"
-      - "http/1.1"
-  - name: "@vpnclashfa - 1973"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "xJIswEHrphk8LCn-DyJxw4uypPkouxPgNsfiyjRU-3w"
+      short-id: "41a0b29e95aaea87"
+  - name: "@vpnclashfa - 2051"
     type: "vless"
     server: "103.133.1.160"
     port: 80
@@ -3121,9 +3194,23 @@ proxies:
       path: "/ws"
       headers:
         Host: "soft-shadow-1e33.xicav73335.workers.dev"
-  - name: "@vpnclashfa - 1972"
+  - name: "@vpnclashfa - 2050"
     type: "vless"
-    server: "217.216.218.162"
+    server: "nln10.mobileemdad.top"
+    port: 443
+    uuid: "eab53369-a78a-4130-866a-5a797c17933d"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "delivery.mp.microsoft.com"
+    client-fingerprint: "edge"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "PjR-SM4fOm2fY4mTqWoqZDRyxontvpailM0gBqUxlUQ"
+      short-id: "070a23aed243"
+  - name: "@vpnclashfa - 2049"
+    type: "vless"
+    server: "217.216.218.151"
     port: 443
     uuid: "eaa34d9f-662d-4378-8210-3508b5eee727"
     udp: true
@@ -3133,7 +3220,7 @@ proxies:
     reality-opts:
       public-key: "B4gdMxfjdXtFuqg-Ek9CDKiJT6QQiKb-tV2VODt_ik0"
       short-id: "def9b800fb6a3ddb"
-  - name: "@vpnclashfa - 1971"
+  - name: "@vpnclashfa - 2048"
     type: "vless"
     server: "217.216.218.123"
     port: 443
@@ -3145,7 +3232,7 @@ proxies:
     reality-opts:
       public-key: "B4gdMxfjdXtFuqg-Ek9CDKiJT6QQiKb-tV2VODt_ik0"
       short-id: "def9b800fb6a3ddb"
-  - name: "@vpnclashfa - 1970"
+  - name: "@vpnclashfa - 2047"
     type: "vless"
     server: "217.216.218.108"
     port: 443
@@ -3157,7 +3244,7 @@ proxies:
     reality-opts:
       public-key: "B4gdMxfjdXtFuqg-Ek9CDKiJT6QQiKb-tV2VODt_ik0"
       short-id: "def9b800fb6a3ddb"
-  - name: "@vpnclashfa - 1968"
+  - name: "@vpnclashfa - 2046"
     type: "vless"
     server: "89.124.82.95"
     port: 443
@@ -3171,7 +3258,7 @@ proxies:
     reality-opts:
       public-key: "n4TFeuXAigmWJ9sXqnyicRkw3vcXy27ARfvhhsA61kI"
       short-id: "0bd0285f0c4f8f05"
-  - name: "@vpnclashfa - 1967"
+  - name: "@vpnclashfa - 2045"
     type: "vless"
     server: "de.fastly80-3.hosting-ip.com"
     port: 80
@@ -3188,19 +3275,22 @@ proxies:
       path: "/@custom_config?ed=2048"
       headers:
         Host: "leader-of-www.com"
-  - name: "@vpnclashfa - 1966"
+  - name: "@vpnclashfa - 2044"
     type: "vless"
-    server: "185.178.208.140"
+    server: "chatgpt.com"
     port: 443
-    uuid: "ea277838-a188-44f1-a2e8-94aa110c4f27"
+    uuid: "ea3f180c-8141-4e03-b11c-4d542767a417"
     udp: true
     tls: true
-    network: "xhttp"
-    servername: "static.bakarova-top.ru"
-    client-fingerprint: "chrome"
+    network: "ws"
+    servername: "e4xf3l6qfdu-shhc8axat6695v4t9e6p.pages.dev"
     alpn:
-      - "h2"
-  - name: "@vpnclashfa - 1965"
+      - "http/1.1"
+    ws-opts:
+      path: "/eyJqdW5rIjoidmo5SG5sY2oyMGNKYiIsInByb3RvY29sIjoidmwiLCJtb2RlIjoicHJveHlpcCIsInBhbmVsSVBzIjpbXX0="
+      headers:
+        Host: "e4xf3l6qfdu-shhc8axat6695v4t9e6p.pages.dev"
+  - name: "@vpnclashfa - 2043"
     type: "vless"
     server: "185.178.208.140"
     port: 443
@@ -3210,7 +3300,7 @@ proxies:
     network: "xhttp"
     servername: "static.bakarova-top.ru"
     client-fingerprint: "firefox"
-  - name: "@vpnclashfa - 1964"
+  - name: "@vpnclashfa - 2041"
     type: "vless"
     server: "141.98.7.193"
     port: 2083
@@ -3219,30 +3309,34 @@ proxies:
     tls: true
     network: "tcp"
     servername: "141.98.7.193"
-  - name: "@vpnclashfa - 1963"
+  - name: "@vpnclashfa - 2040"
     type: "vless"
-    server: "141.98.7.193"
-    port: 2053
-    uuid: "e9e60f73-1618-491c-a85b-477bdc959ae6"
+    server: "racknarock.sorixset.ir"
+    port: 4123
+    uuid: "e9d5cda8-eca9-4100-adb0-d857a7221e4a"
     udp: true
     tls: true
     network: "tcp"
-    servername: "141.98.7.193"
-  - name: "@vpnclashfa - 1962"
-    type: "vless"
-    server: "ateam.an0nymousteam.qd.je"
-    port: 443
-    uuid: "e9c8ee9c-745d-4382-be43-db706d3b9626"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "yt.be"
+    servername: "www.technolife.com"
     client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "c5qxVvASL-c0klSYJIzU1h2ndQWOQOmwWi0xgxESWWI"
-      short-id: "a4fbc0982d"
-  - name: "@vpnclashfa - 1961"
+      public-key: "o99jHUwk4g942D1EKMNODQXCnI90o_J76rZH7PhPvzU"
+      short-id: "50ddc4b90bffd5b7"
+  - name: "@vpnclashfa - 2039"
+    type: "vless"
+    server: "ipc6.l1i.xyz"
+    port: 443
+    uuid: "e9b0ed2b-19e5-44d0-b120-1ed974ab38aa"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "dl2.vetdl.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+  - name: "@vpnclashfa - 2038"
     type: "vless"
     server: "ipc5.l1i.xyz"
     port: 443
@@ -3256,7 +3350,35 @@ proxies:
       - "h3"
       - "h2"
       - "http/1.1"
-  - name: "@vpnclashfa - 1960"
+  - name: "@vpnclashfa - 2037"
+    type: "vless"
+    server: "ipc5.l1i.xyz"
+    port: 443
+    uuid: "e9b0ed2b-19e5-44d0-b120-1ed974ab38aa"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "dl.myner.ir"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+  - name: "@vpnclashfa - 2036"
+    type: "vless"
+    server: "ipc3.l1i.xyz"
+    port: 443
+    uuid: "e9b0ed2b-19e5-44d0-b120-1ed974ab38aa"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "dl2.vetdl.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
+  - name: "@vpnclashfa - 2035"
     type: "vless"
     server: "ipc3.l1i.xyz"
     port: 443
@@ -3270,9 +3392,9 @@ proxies:
       - "h3"
       - "h2"
       - "http/1.1"
-  - name: "@vpnclashfa - 1959"
+  - name: "@vpnclashfa - 2034"
     type: "vless"
-    server: "ipc1.l1i.xyz"
+    server: "ipc2.l1i.xyz"
     port: 443
     uuid: "e9b0ed2b-19e5-44d0-b120-1ed974ab38aa"
     udp: true
@@ -3284,7 +3406,7 @@ proxies:
       - "h3"
       - "h2"
       - "http/1.1"
-  - name: "@vpnclashfa - 1958"
+  - name: "@vpnclashfa - 2033"
     type: "vless"
     server: "wwww.qarvian.ir"
     port: 443
@@ -3296,20 +3418,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_17i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 1957"
-    type: "vless"
-    server: "wwww.qarvian.ir"
-    port: 443
-    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "cdn.akamai.steamstatic.com"
-    ws-opts:
-      path: "/?TELEGRAM---------TOOTFFARANGI"
-      headers:
-        Host: "copy_az_channel_NUFiLTER_7i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 1956"
+  - name: "@vpnclashfa - 2032"
     type: "vless"
     server: "199.232.78.160"
     port: 443
@@ -3321,7 +3430,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_10i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 1955"
+  - name: "@vpnclashfa - 2031"
     type: "vless"
     server: "199.232.78.159"
     port: 443
@@ -3333,7 +3442,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_8i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 1954"
+  - name: "@vpnclashfa - 2030"
     type: "vless"
     server: "146.75.59.186"
     port: 443
@@ -3345,30 +3454,7 @@ proxies:
     ws-opts:
       headers:
         Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 1953"
-    type: "vless"
-    server: "146.75.59.186"
-    port: 443
-    uuid: "e9a9d2ba-8c33-4e5e-a903-efa595db2fff"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "firefox.com"
-    ws-opts:
-      path: "/?TELEGRAM---------TOOTFFARANGI"
-      headers:
-        Host: "copy_az_channel_NUFiLTER_6i.global.ssl.fastly.net."
-  - name: "@vpnclashfa - 1952"
-    type: "vless"
-    server: "us007.zestapp778.com"
-    port: 18580
-    uuid: "e9a8144e-5237-488a-afb1-9ca3d8d54c80"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "us007.zestapp778.com"
-    client-fingerprint: "chrome"
-  - name: "@vpnclashfa - 1951"
+  - name: "@vpnclashfa - 2029"
     type: "vless"
     server: "us001.zestapp778.com"
     port: 54857
@@ -3378,7 +3464,7 @@ proxies:
     network: "tcp"
     servername: "us001.zestapp778.com"
     client-fingerprint: "chrome"
-  - name: "@vpnclashfa - 1950"
+  - name: "@vpnclashfa - 2028"
     type: "vless"
     server: "th001.zestapp778.com"
     port: 22222
@@ -3388,17 +3474,7 @@ proxies:
     network: "tcp"
     servername: "th001.zestapp778.com"
     client-fingerprint: "chrome"
-  - name: "@vpnclashfa - 1949"
-    type: "vless"
-    server: "fr001.zestapp778.com"
-    port: 28484
-    uuid: "e9a8144e-5237-488a-afb1-9ca3d8d54c80"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "fr001.zestapp778.com"
-    client-fingerprint: "chrome"
-  - name: "@vpnclashfa - 1948"
+  - name: "@vpnclashfa - 2027"
     type: "vless"
     server: "ca001.zestapp778.com"
     port: 32355
@@ -3408,9 +3484,9 @@ proxies:
     network: "tcp"
     servername: "ca001.zestapp778.com"
     client-fingerprint: "chrome"
-  - name: "@vpnclashfa - 1947"
+  - name: "@vpnclashfa - 2026"
     type: "vless"
-    server: "45.77.54.204"
+    server: "45.76.85.31"
     port: 33770
     uuid: "e9a8144e-5237-488a-afb1-9ca3d8d54c80"
     udp: true
@@ -3418,17 +3494,7 @@ proxies:
     network: "tcp"
     servername: "de001.zestapp778.com"
     client-fingerprint: "firefox"
-  - name: "@vpnclashfa - 1946"
-    type: "vless"
-    server: "38.60.248.63"
-    port: 44559
-    uuid: "e9a8144e-5237-488a-afb1-9ca3d8d54c80"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "en001.zestapp778.com"
-    client-fingerprint: "firefox"
-  - name: "@vpnclashfa - 1945"
+  - name: "@vpnclashfa - 2025"
     type: "vless"
     server: "38.60.197.220"
     port: 44559
@@ -3438,60 +3504,7 @@ proxies:
     network: "tcp"
     servername: "en001.zestapp778.com"
     client-fingerprint: "firefox"
-  - name: "@vpnclashfa - 1944"
-    type: "vless"
-    server: "216.128.173.124"
-    port: 15040
-    uuid: "e9a8144e-5237-488a-afb1-9ca3d8d54c80"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "br.zestapp778.com"
-    client-fingerprint: "firefox"
-  - name: "@vpnclashfa - 1943"
-    type: "vless"
-    server: "152.175.8.61"
-    port: 36155
-    uuid: "e9a8144e-5237-488a-afb1-9ca3d8d54c80"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "hk014.zestapp778.com"
-    client-fingerprint: "firefox"
-  - name: "@vpnclashfa - 1942"
-    type: "vless"
-    server: "152.175.6.229"
-    port: 31884
-    uuid: "e9a8144e-5237-488a-afb1-9ca3d8d54c80"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "hk010.zestapp778.com"
-    client-fingerprint: "firefox"
-  - name: "@vpnclashfa - 1941"
-    type: "vless"
-    server: "130.94.24.180"
-    port: 22222
-    uuid: "e9a8144e-5237-488a-afb1-9ca3d8d54c80"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "th001.zestapp778.com"
-    client-fingerprint: "firefox"
-  - name: "@vpnclashfa - 1940"
-    type: "vless"
-    server: "5.253.42.164"
-    port: 40443
-    uuid: "e99ba96d-dec8-42eb-be53-19e71eef7cab"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "deepl.com"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "g77ZJbm18JEotapmVRjaXi133MzkbhkU2lxhVeXx8zw"
-      short-id: "68a8"
-  - name: "@vpnclashfa - 1939"
+  - name: "@vpnclashfa - 2024"
     type: "vless"
     server: "104.25.131.154"
     port: 8880
@@ -3506,7 +3519,7 @@ proxies:
       path: "/C5itOz6YmbLanD7F?ed=2560"
       headers:
         Host: "vngsupply.ip-ddns.com"
-  - name: "@vpnclashfa - 1938"
+  - name: "@vpnclashfa - 2023"
     type: "vless"
     server: "178.104.219.134"
     port: 8880
@@ -3514,17 +3527,37 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "@vpnclashfa - 1937"
+  - name: "@vpnclashfa - 2022"
     type: "vless"
-    server: "66.33.22.234"
-    port: 26452
-    uuid: "e98595be-6464-410d-9404-eed1979fe2c8"
+    server: "cdn2.ir53.indevs.in"
+    port: 443
+    uuid: "e9378202-c7db-4204-a41c-ce981fa927d4"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "cdn2.ir53.indevs.in"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/varzesh3.com"
+      headers:
+        Host: "cdn2.ir53.indevs.in"
+  - name: "@vpnclashfa - 2021"
+    type: "vless"
+    server: "188.114.97.3"
+    port: 2086
+    uuid: "e8c65e10-4030-418d-96b0-12c5650f9d9e"
     udp: true
     tls: false
-    network: "httpupgrade"
-  - name: "@vpnclashfa - 1936"
+    network: "ws"
+    ws-opts:
+      path: "//Jdv2rayng-V2rayngjd-telegram-jd_vpn?ed=80"
+      headers:
+        Host: "jD.neT.v2rayng6.6.6.6.ir.Com.Site.xn--fhq0la447aac5504dea701axr1g.SaMaN.Monster."
+  - name: "@vpnclashfa - 2020"
     type: "vless"
-    server: "162.159.135.232"
+    server: "162.159.136.232"
     port: 2086
     uuid: "e8c65e10-4030-418d-96b0-12c5650f9d9e"
     udp: true
@@ -3534,7 +3567,19 @@ proxies:
       path: "//Jdv2rayng-V2rayngjd-telegram-jd_vpn?ed"
       headers:
         Host: "jD.neT.v2rayng6.6.6.6.ir.Com.Site.xn--fhq0la447aac5504dea701axr1g.SaMaN.Monster."
-  - name: "@vpnclashfa - 1935"
+  - name: "@vpnclashfa - 2019"
+    type: "vless"
+    server: "162.159.136.232"
+    port: 2086
+    uuid: "e8c65e10-4030-418d-96b0-12c5650f9d9e"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "//Jdv2rayng-V2rayngjd-telegram-jd_vpn?ed=80"
+      headers:
+        Host: "jD.neT.v2rayng6.6.6.6.ir.Com.Site.xn--fhq0la447aac5504dea701axr1g.SaMaN.Monster."
+  - name: "@vpnclashfa - 2018"
     type: "vless"
     server: "nasnet-162191099-direct.mbghalibaf.com"
     port: 443
@@ -3545,7 +3590,17 @@ proxies:
     alpn:
       - "h2"
     flow: "xtls-rprx-vision"
-  - name: "@vpnclashfa - 1934"
+  - name: "@vpnclashfa - 2017"
+    type: "vless"
+    server: "162.19.10.99"
+    port: 443
+    uuid: "e8b1500b-e9e8-5492-8312-f4eadf7d0767"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "nasnet-162191099-direct.mbghalibaf.com"
+    flow: "xtls-rprx-vision"
+  - name: "@vpnclashfa - 2016"
     type: "vless"
     server: "162.19.10.99"
     port: 443
@@ -3556,7 +3611,20 @@ proxies:
     servername: "nasnet-162191099-direct.mbghalibaf.com"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
-  - name: "@vpnclashfa - 1933"
+  - name: "@vpnclashfa - 2015"
+    type: "vless"
+    server: "162.19.10.99"
+    port: 443
+    uuid: "e8b1500b-e9e8-5492-8312-f4eadf7d0767"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "nasnet-162191099-direct.mbghalibaf.com"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+    flow: "xtls-rprx-vision"
+  - name: "@vpnclashfa - 2013"
     type: "vless"
     server: "54.37.136.194"
     port: 2053
@@ -3568,7 +3636,7 @@ proxies:
     reality-opts:
       public-key: "Vemd9Jjk5xKO8qSC3g8VVagwcb4J1BcTvp86CswQC0A"
       short-id: "50ba05992b05c1c3"
-  - name: "@vpnclashfa - 1932"
+  - name: "@vpnclashfa - 2012"
     type: "vless"
     server: "54.37.136.194"
     port: 2053
@@ -3581,20 +3649,7 @@ proxies:
     reality-opts:
       public-key: "Vemd9Jjk5xKO8qSC3g8VVagwcb4J1BcTvp86CswQC0A"
       short-id: "50ba05992b05c1c3"
-  - name: "@vpnclashfa - 1931"
-    type: "vless"
-    server: "54.37.136.194"
-    port: 2053
-    uuid: "e8a432c8-5d84-49a5-b822-67ed761a58f9"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "Vemd9Jjk5xKO8qSC3g8VVagwcb4J1BcTvp86CswQC0A"
-      short-id: "50ba05992b05c1c3"
-  - name: "@vpnclashfa - 1928"
+  - name: "@vpnclashfa - 2010"
     type: "vless"
     server: "167.82.76.31"
     port: 443
@@ -3607,20 +3662,20 @@ proxies:
     alpn:
       - "h2"
       - "http/1.1"
-  - name: "@vpnclashfa - 1927"
+  - name: "@vpnclashfa - 2009"
     type: "vless"
-    server: "103.35.189.42"
-    port: 8443
-    uuid: "e8410a35-9b9c-4312-8f67-240b160855dc"
+    server: "fbda.n9ne.com.tr"
+    port: 32305
+    uuid: "e81e1114-99b5-4fea-aafc-84426e845a14"
     udp: true
     tls: true
     network: "tcp"
-    servername: "172.67.173.11"
-    client-fingerprint: "chrome"
+    servername: "n9ne.com.tr"
+    client-fingerprint: "qq"
     reality-opts:
-      public-key: "t_XMV-WyVYbcDCIgiSSCi3bSPDdW1rqKFa9ZoI8b4RA"
-      short-id: "dbdf78b1df376900"
-  - name: "@vpnclashfa - 1926"
+      public-key: "N0pcDQ1sE3GDa4lTRaMB7W6_S1c3v1rb_5fW5u5WhBc"
+      short-id: "a73f4e48c6587639"
+  - name: "@vpnclashfa - 2008"
     type: "vless"
     server: "f0b7.n9ne.com.tr"
     port: 35306
@@ -3633,10 +3688,10 @@ proxies:
     reality-opts:
       public-key: "NHurz_4uphCHgIbrnr3HRzfsq-LmIaPaUopWwHNJ8HU"
       short-id: "ceb4496ab0cc7a9f"
-  - name: "@vpnclashfa - 1925"
+  - name: "@vpnclashfa - 2007"
     type: "vless"
-    server: "bb9c.n9ne.com.tr"
-    port: 31315
+    server: "docs.n9ne.com.tr"
+    port: 8444
     uuid: "e81e1114-99b5-4fea-aafc-84426e845a14"
     udp: true
     tls: true
@@ -3644,9 +3699,22 @@ proxies:
     servername: "n9ne.com.tr"
     client-fingerprint: "qq"
     reality-opts:
-      public-key: "G_fcBwJ4uL_Vvh99Xjxto1Cq70t2QlTjhIgz4jty6hk"
-      short-id: "59ecc680e8ea79d1"
-  - name: "@vpnclashfa - 1924"
+      public-key: "DhMAmplGrCBD7hwyDu7u2unWxsxMpZVKk_d7e3OZCWE"
+      short-id: "15f380e8388ee5a0"
+  - name: "@vpnclashfa - 2006"
+    type: "vless"
+    server: "93fc.n9ne.com.tr"
+    port: 31316
+    uuid: "e81e1114-99b5-4fea-aafc-84426e845a14"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "n9ne.com.tr"
+    client-fingerprint: "qq"
+    reality-opts:
+      public-key: "QDwBE99Ao8pBd7Kp_4BLEgm_W0gdnjLTRwnRThmfVHY"
+      short-id: "24f2e35ce5bc9899"
+  - name: "@vpnclashfa - 2005"
     type: "vless"
     server: "6ed2.n9ne.com.tr"
     port: 33304
@@ -3659,20 +3727,7 @@ proxies:
     reality-opts:
       public-key: "idRd6zY-_ZNr48i8dC_rHn-UsjDxD3KWxWSKwkbl11A"
       short-id: "b71da54a38c13fbd"
-  - name: "@vpnclashfa - 1923"
-    type: "vless"
-    server: "382d.n9ne.com.tr"
-    port: 33303
-    uuid: "e81e1114-99b5-4fea-aafc-84426e845a14"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "n9ne.com.tr"
-    client-fingerprint: "qq"
-    reality-opts:
-      public-key: "p6B2mBPsdjNOY64TTplBXRcsrh3sL0SzqVlbyCRR8Us"
-      short-id: "dd4ef91df2f00d60"
-  - name: "@vpnclashfa - 1922"
+  - name: "@vpnclashfa - 2004"
     type: "vless"
     server: "vip-tun.korluma.ir"
     port: 8010
@@ -3680,15 +3735,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "@vpnclashfa - 1921"
-    type: "vless"
-    server: "vip-tun.korluma.ir"
-    port: 22068
-    uuid: "e7e1e726-b30f-477a-a308-3138e62a8d21"
-    udp: true
-    tls: false
-    network: "tcp"
-  - name: "@vpnclashfa - 1920"
+  - name: "@vpnclashfa - 2003"
     type: "vless"
     server: "vip-tun.korluma.ir"
     port: 15088
@@ -3696,7 +3743,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "@vpnclashfa - 1919"
+  - name: "@vpnclashfa - 2002"
     type: "vless"
     server: "vip-tun.korluma.ir"
     port: 14256
@@ -3704,15 +3751,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "@vpnclashfa - 1918"
-    type: "vless"
-    server: "viptun-conf.korluma.ir"
-    port: 22068
-    uuid: "e7e1e726-b30f-477a-a308-3138e62a8d21"
-    udp: true
-    tls: false
-    network: "tcp"
-  - name: "@vpnclashfa - 1917"
+  - name: "@vpnclashfa - 2001"
     type: "vless"
     server: "w907rj.orbitacorp.dev"
     port: 443
@@ -3727,7 +3766,7 @@ proxies:
       short-id: "98e90c117acf8155"
     grpc-opts:
       grpc-service-name: "1f251e273f"
-  - name: "@vpnclashfa - 1916"
+  - name: "@vpnclashfa - 2000"
     type: "vless"
     server: "205.237.110.254"
     port: 443
@@ -3736,12 +3775,22 @@ proxies:
     tls: true
     network: "tcp"
     servername: "zsit.eu-cdn294.com"
-    client-fingerprint: "firefox"
+    client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "IG6lxrx_xkGOoBuo3DC8sgQoIFmqVgznIr0qOuNO0w4"
       short-id: "cd2d53510b4df2a8"
-  - name: "@vpnclashfa - 1915"
+  - name: "@vpnclashfa - 1999"
+    type: "vless"
+    server: "163.172.213.174"
+    port: 80
+    uuid: "e73df646-1f62-41bf-8c50-653497d603d0"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/vless/"
+  - name: "@vpnclashfa - 1998"
     type: "vless"
     server: "cf.877774.xyz"
     port: 443
@@ -3755,7 +3804,7 @@ proxies:
       path: "/cart/docs/www/proxyip=108.160.132.132"
       headers:
         Host: "lucasjow.us.ci"
-  - name: "@vpnclashfa - 1914"
+  - name: "@vpnclashfa - 1997"
     type: "vless"
     server: "cf.090227.xyz"
     port: 443
@@ -3769,7 +3818,7 @@ proxies:
       path: "/cart/docs/www/proxyip=108.160.132.132"
       headers:
         Host: "lucasjow.us.ci"
-  - name: "TELEGRAM---MARAMBASHI---MARAMBASHI---MARAMBASHI---MARAMBASHI&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1913"
+  - name: "Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1996"
     type: "vless"
     server: "b2n.ir"
     port: 443
@@ -3777,23 +3826,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "@vpnclashfa - 1910"
-    type: "vless"
-    server: "190.93.246.21"
-    port: 443
-    uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "lucasjow.us.ci"
-    client-fingerprint: "chrome"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2560"
-      headers:
-        Host: "lucasjow.us.ci"
-  - name: "@vpnclashfa - 1909"
+  - name: "@vpnclashfa - 1995"
     type: "vless"
     server: "188.114.98.0"
     port: 443
@@ -3809,7 +3842,7 @@ proxies:
       path: "/cart/docs/www/proxyip?ed"
       headers:
         Host: "lucasjow.us.ci"
-  - name: "@vpnclashfa - 1908"
+  - name: "@vpnclashfa - 1994"
     type: "vless"
     server: "188.114.98.0"
     port: 443
@@ -3825,7 +3858,7 @@ proxies:
       path: "/?Telegram---bored_vpn"
       headers:
         Host: "lucasjow.us.ci"
-  - name: "@vpnclashfa - 1907"
+  - name: "@vpnclashfa - 1993"
     type: "vless"
     server: "188.114.98.0"
     port: 443
@@ -3841,23 +3874,7 @@ proxies:
       path: "/?Telegram---TEHRANARGO"
       headers:
         Host: "lucasjow.us.ci"
-  - name: "@vpnclashfa - 1906"
-    type: "vless"
-    server: "188.114.98.0"
-    port: 443
-    uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "lucasjow.us.ci"
-    client-fingerprint: "chrome"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/?TELEGRAM--i10VPN?ed"
-      headers:
-        Host: "lucasjow.us.ci"
-  - name: "@vpnclashfa - 1905"
+  - name: "@vpnclashfa - 1992"
     type: "vless"
     server: "188.114.97.6"
     port: 443
@@ -3872,7 +3889,7 @@ proxies:
     ws-opts:
       headers:
         Host: "lucasjow.us.ci"
-  - name: "@vpnclashfa - 1904"
+  - name: "@vpnclashfa - 1991"
     type: "vless"
     server: "188.114.97.6"
     port: 443
@@ -3888,7 +3905,7 @@ proxies:
       path: "/cart/docs/www/proxyip"
       headers:
         Host: "lucasjow.us.ci"
-  - name: "@vpnclashfa - 1903"
+  - name: "@vpnclashfa - 1990"
     type: "vless"
     server: "188.114.97.6"
     port: 443
@@ -3904,7 +3921,7 @@ proxies:
       path: "/cart/docs/www/proxyip=108.160.132.132"
       headers:
         Host: "lucasjow.us.ci"
-  - name: "Telegram---@MTMVPN&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1902"
+  - name: "&security=tls&encryption=none&host=lucasjow.us.ci&type=ws&sni=lucasjow.us.ci#@vpnclashfa - 1989"
     type: "vless"
     server: "188.114.97.6"
     port: 443
@@ -3912,7 +3929,20 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "@vpnclashfa - 1899"
+  - name: "@vpnclashfa - 1988"
+    type: "vless"
+    server: "188.114.97.6"
+    port: 443
+    uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "lucasjow.us.ci"
+    ws-opts:
+      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET?ed=2560"
+      headers:
+        Host: "lucasjow.us.ci"
+  - name: "@vpnclashfa - 1987"
     type: "vless"
     server: "188.114.97.6"
     port: 443
@@ -3925,10 +3955,10 @@ proxies:
     alpn:
       - "http/1.1"
     ws-opts:
-      path: "/?TELEGRAM--MTMVPN--MTMVPN--MTMVPN--MTMVPN?ed=2560"
+      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET?ed=2560"
       headers:
         Host: "lucasjow.us.ci"
-  - name: "@vpnclashfa - 1898"
+  - name: "@vpnclashfa - 1986"
     type: "vless"
     server: "188.114.97.6"
     port: 443
@@ -3944,9 +3974,88 @@ proxies:
       path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed"
       headers:
         Host: "lucasjow.us.ci"
-  - name: "@vpnclashfa - 1897"
+  - name: "@vpnclashfa - 1984"
     type: "vless"
-    server: "188.114.97.6"
+    server: "172.67.155.65"
+    port: 8443
+    uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "lucasjow.us.ci"
+    ws-opts:
+      path: "/cart/docs/www/proxyip"
+      headers:
+        Host: "lucasjow.us.ci"
+  - name: "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&encryption=none&host=lucasjow.us.ci&type=ws&sni=lucasjow.us.ci#@vpnclashfa - 1982"
+    type: "vless"
+    server: "172.67.155.65"
+    port: 8443
+    uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "@vpnclashfa - 1981"
+    type: "vless"
+    server: "172.67.155.65"
+    port: 2053
+    uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "lucasjow.us.ci"
+    ws-opts:
+      path: "/cart/docs/www/proxyip"
+      headers:
+        Host: "lucasjow.us.ci"
+  - name: "@vpnclashfa - 1980"
+    type: "vless"
+    server: "172.67.155.65"
+    port: 2053
+    uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "lucasjow.us.ci"
+    ws-opts:
+      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET?ed=2560"
+      headers:
+        Host: "lucasjow.us.ci"
+  - name: "Telegram---pirozi_ArGaP---pirozi_ArGaP---pirozi_ArGaP---pirozi_ArGaP&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://10.58.5.2&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1979"
+    type: "vless"
+    server: "162.159.250.29"
+    port: 443
+    uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1978"
+    type: "vless"
+    server: "104.21.91.244"
+    port: 443
+    uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "@vpnclashfa - 1977"
+    type: "vless"
+    server: "104.21.91.244"
+    port: 443
+    uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "lucasjow.us.ci"
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/?TELEGRAM--MTMVPN--MTMVPN--MTMVPN--MTMVPN?ed=2560"
+      headers:
+        Host: "lucasjow.us.ci"
+  - name: "@vpnclashfa - 1976"
+    type: "vless"
+    server: "104.21.91.244"
     port: 443
     uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
     udp: true
@@ -3960,127 +4069,73 @@ proxies:
       path: "/?TELEGRAM--MARAMBASHI--MARAMBASHI--MARAMBASHI--MARAMBASHI?ed=2560"
       headers:
         Host: "lucasjow.us.ci"
-  - name: "@vpnclashfa - 1896"
+  - name: "@vpnclashfa - 1975"
     type: "vless"
-    server: "172.67.155.65"
-    port: 8443
-    uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "lucasjow.us.ci"
-    ws-opts:
-      path: "/cart/docs/www/proxyip"
-      headers:
-        Host: "lucasjow.us.ci"
-  - name: "@vpnclashfa - 1892"
-    type: "vless"
-    server: "172.67.155.65"
-    port: 2053
-    uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "lucasjow.us.ci"
-    ws-opts:
-      path: "/cart/docs/www/proxyip"
-      headers:
-        Host: "lucasjow.us.ci"
-  - name: "@vpnclashfa - 1891"
-    type: "vless"
-    server: "172.67.155.65"
-    port: 2053
-    uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "lucasjow.us.ci"
-    ws-opts:
-      path: "/?Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET?ed=2560"
-      headers:
-        Host: "lucasjow.us.ci"
-  - name: "Telegram---pirozi_ArGaP---pirozi_ArGaP---pirozi_ArGaP---pirozi_ArGaP&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://10.58.5.2&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1890"
-    type: "vless"
-    server: "162.159.250.29"
+    server: "leg.goodmaximum.com"
     port: 443
-    uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
-    udp: true
-    tls: false
-    network: "tcp"
-  - name: "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1889"
-    type: "vless"
-    server: "104.21.91.244"
-    port: 443
-    uuid: "e6df2095-a73c-4043-8693-8d5a03686870"
-    udp: true
-    tls: false
-    network: "tcp"
-  - name: "@vpnclashfa - 1888"
-    type: "vless"
-    server: "www.speedtest.net"
-    port: 443
-    uuid: "e66a4642-52fd-464c-8019-70bb3a26156f"
+    uuid: "e653f585-9924-000f-8d5d-c15c3ab95270"
     udp: true
     tls: true
     network: "grpc"
-    servername: "www.felafel.org"
+    servername: "cloud.nimhogoa.com"
     client-fingerprint: "chrome"
-    alpn:
-      - "h3"
-      - "h2"
-      - "http/1.1"
+    reality-opts:
+      public-key: "fPSR5GZpxhOV6Rh7VzMtS4AeRN7ipyNX4waG9JzJzxQ"
+      short-id: "99181028b56c8702"
     grpc-opts:
-      grpc-service-name: "@ConfigTell,@ConfigTell,@ConfigTell"
-  - name: "@vpnclashfa - 1887"
+      grpc-service-name: "QToNrKDvQT5AfnFM"
+  - name: "@vpnclashfa - 1974"
     type: "vless"
-    server: "172.64.150.28"
-    port: 2082
-    uuid: "e5cc16a6-ea42-46b2-82ae-ad2157e1641b"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      headers:
-        Host: "hhlfy.twiladaphne.ndjp.net"
-  - name: "@vpnclashfa - 1886"
-    type: "vless"
-    server: "172.64.150.28"
-    port: 2082
-    uuid: "e5cc16a6-ea42-46b2-82ae-ad2157e1641b"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/fp"
-      headers:
-        Host: "hhlfy.twiladaphne.ndjp.net"
-  - name: "@vpnclashfa - 1885"
-    type: "vless"
-    server: "172.64.150.28"
-    port: 2082
-    uuid: "e5cc16a6-ea42-46b2-82ae-ad2157e1641b"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "hhlfy.twiladaphne.ndjp.net"
-  - name: "@vpnclashfa - 1884"
-    type: "vless"
-    server: "104.18.37.228"
+    server: "leg.goodmaximum.com"
     port: 443
-    uuid: "e5cc16a6-ea42-46b2-82ae-ad2157e1641b"
+    uuid: "e653f585-9924-000f-8d5d-c15c3ab95270"
     udp: true
     tls: true
+    network: "grpc"
+    servername: "cloud.nimhogoa.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "fPSR5GZpxhOV6Rh7VzMtS4AeRN7ipyNX4waG9JzJzxQ"
+    grpc-opts:
+      grpc-service-name: "QToNrKDvQT5AfnFM"
+  - name: "@vpnclashfa - 1973"
+    type: "vless"
+    server: "xray2-direct-mci1-fs-ce.freesocks.work"
+    port: 443
+    uuid: "e5e86104-34b5-4224-a765-683654c1d879"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "dl.google.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "7j3hmlHrEDk3Kjx-dFG3E3jf0c6PZF45trIPFsuKWmI"
+  - name: "@vpnclashfa - 1972"
+    type: "vless"
+    server: "172.64.150.28"
+    port: 2082
+    uuid: "e5cc16a6-ea42-46b2-82ae-ad2157e1641b"
+    udp: true
+    tls: false
     network: "ws"
     servername: "hhlfy.twiladaphne.ndjp.net"
-    client-fingerprint: "chrome"
+    ws-opts:
+      headers:
+        Host: "hhlfy.twiladaphne.ndjp.net"
+  - name: "@vpnclashfa - 1971"
+    type: "vless"
+    server: "172.64.150.28"
+    port: 2082
+    uuid: "e5cc16a6-ea42-46b2-82ae-ad2157e1641b"
+    udp: true
+    tls: false
+    network: "ws"
     ws-opts:
       path: "/fp"
       headers:
         Host: "hhlfy.twiladaphne.ndjp.net"
-  - name: "@vpnclashfa - 1883"
+  - name: "@vpnclashfa - 1970"
     type: "vless"
     server: "104.18.35.86"
     port: 8080
@@ -4093,7 +4148,7 @@ proxies:
       path: "/sg-melbi"
       headers:
         Host: "hhlfy.twiladaphne.ndjp.net"
-  - name: "@vpnclashfa - 1882"
+  - name: "@vpnclashfa - 1969"
     type: "vless"
     server: "104.18.0.181"
     port: 2082
@@ -4106,7 +4161,7 @@ proxies:
       path: "/fp"
       headers:
         Host: "hhlfy.twiladaphne.ndjp.net"
-  - name: "@vpnclashfa - 1881"
+  - name: "@vpnclashfa - 1968"
     type: "vless"
     server: "83.217.9.140"
     port: 8443
@@ -4119,43 +4174,41 @@ proxies:
     reality-opts:
       public-key: "H5Gvl2XvCOOCRokfx_P9AwLGioo15QWaqvJptvlkhDg"
       short-id: "aabbccdd"
-  - name: "@vpnclashfa - 1880"
+  - name: "@vpnclashfa - 1967"
     type: "vless"
-    server: "201.51.10.240"
+    server: "epam.com"
     port: 443
-    uuid: "e580c6ba-f942-49d2-a224-bf07fbff9b96"
+    uuid: "e53eacb6-cd30-4964-a57c-febcb5151b98"
     udp: true
     tls: true
-    network: "tcp"
-    servername: "cdn6.goonars.com"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "VWDBW2RS3o-oFBrSNdpncoaVVU8KixbPNHoj4-Wy7lM"
-      short-id: "04a69fc6"
-  - name: "@vpnclashfa - 1879"
-    type: "vless"
-    server: "170.168.99.3"
-    port: 443
-    uuid: "e51796bb-3305-ac88-f39d-22fd9dd63b4f"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "cdn.steamstatic.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "R8Mogel1wypEIpcUXnGmG1cuzT9POghNhqJcw4-CLx0"
-  - name: "@vpnclashfa - 1878"
-    type: "vless"
-    server: "31.56.196.121"
-    port: 443
-    uuid: "e4c3afb4-e14c-4c31-b03d-44755762bdfd"
-    udp: true
-    tls: false
     network: "ws"
+    servername: "wallweb-4r0.pages.dev"
     ws-opts:
       path: "/"
-  - name: "@vpnclashfa - 1877"
+      headers:
+        Host: "wallweb-4r0.pages.dev"
+  - name: "@vpnclashfa - 1966"
+    type: "vless"
+    server: "172.64.153.22"
+    port: 8443
+    uuid: "e53a92c7-4a78-49cc-ab01-917661058b9a"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "egaxhxw0p031z8iyfgjt9fyhhb1hwj4vr3gn0xoxqu901o8ruij.zjde5.de5.net"
+    ws-opts:
+      path: "/?ed=2560"
+      headers:
+        Host: "egaxhxw0p031z8iyfgjt9fyhhb1hwj4vr3gn0xoxqu901o8ruij.zjde5.de5.net"
+  - name: "@vpnclashfa - 1965"
+    type: "vless"
+    server: "159.194.217.26"
+    port: 443
+    uuid: "e48e4377-1f29-485b-80d4-85fd4fa27bfa"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "@vpnclashfa - 1964"
     type: "vless"
     server: "45.82.251.78"
     port: 8880
@@ -4163,7 +4216,7 @@ proxies:
     udp: true
     tls: false
     network: "grpc"
-  - name: "@vpnclashfa - 1876"
+  - name: "@vpnclashfa - 1963"
     type: "vless"
     server: "172.67.249.36"
     port: 443
@@ -4174,7 +4227,7 @@ proxies:
     servername: "pqh30v5.carwashipdir.shop"
     alpn:
       - "h2"
-  - name: "@vpnclashfa - 1875"
+  - name: "@vpnclashfa - 1962"
     type: "vless"
     server: "78.141.221.126"
     port: 25585
@@ -4182,7 +4235,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "@vpnclashfa - 1874"
+  - name: "@vpnclashfa - 1961"
     type: "vless"
     server: "140.82.34.114"
     port: 25585
@@ -4190,7 +4243,7 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "@vpnclashfa - 1873"
+  - name: "@vpnclashfa - 1960"
     type: "vless"
     server: "63.184.103.244"
     port: 22224
@@ -4198,18 +4251,34 @@ proxies:
     udp: true
     tls: false
     network: "tcp"
-  - name: "@vpnclashfa - 1872"
+  - name: "@vpnclashfa - 1959"
     type: "vless"
-    server: "52.47.119.246"
+    server: "52.57.117.158"
     port: 22223
     uuid: "e4514801-0d5a-42ba-869f-39bd605aef9e"
     udp: true
     tls: false
     network: "tcp"
-  - name: "@vpnclashfa - 1871"
+  - name: "@vpnclashfa - 1958"
     type: "vless"
     server: "52.47.119.246"
-    port: 22222
+    port: 22224
+    uuid: "e4514801-0d5a-42ba-869f-39bd605aef9e"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "@vpnclashfa - 1957"
+    type: "vless"
+    server: "51.44.93.72"
+    port: 22223
+    uuid: "e4514801-0d5a-42ba-869f-39bd605aef9e"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "@vpnclashfa - 1956"
+    type: "vless"
+    server: "51.44.38.228"
+    port: 22224
     uuid: "e4514801-0d5a-42ba-869f-39bd605aef9e"
     udp: true
     tls: false
@@ -4228,27 +4297,97 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
+      - "@vpnclashfa - 2274"
+      - "@vpnclashfa - 2273"
+      - "@vpnclashfa - 2272"
+      - "@vpnclashfa - 2271"
+      - "@vpnclashfa - 2270"
+      - "@vpnclashfa - 2269"
+      - "@vpnclashfa - 2268"
+      - "@vpnclashfa - 2267"
+      - "@vpnclashfa - 2266"
+      - "@vpnclashfa - 2265"
+      - "@vpnclashfa - 2264"
+      - "@vpnclashfa - 2263"
+      - "@vpnclashfa - 2262"
+      - "@vpnclashfa - 2261"
+      - "@vpnclashfa - 2260"
+      - "@vpnclashfa - 2259"
+      - "@vpnclashfa - 2258"
+      - "@vpnclashfa - 2257"
+      - "@vpnclashfa - 2256"
+      - "@vpnclashfa - 2255"
+      - "@vpnclashfa - 2254"
+      - "@vpnclashfa - 2253"
+      - "@vpnclashfa - 2252"
+      - "@vpnclashfa - 2251"
+      - "@vpnclashfa - 2250"
+      - "@vpnclashfa - 2249"
+      - "@vpnclashfa - 2248"
+      - "@vpnclashfa - 2247"
+      - "@vpnclashfa - 2246"
+      - "@vpnclashfa - 2245"
+      - "@vpnclashfa - 2244"
+      - "@vpnclashfa - 2243"
+      - "@vpnclashfa - 2242"
+      - "@vpnclashfa - 2241"
+      - "@vpnclashfa - 2240"
+      - "@vpnclashfa - 2239"
+      - "@vpnclashfa - 2238"
+      - "@vpnclashfa - 2237"
+      - "@vpnclashfa - 2235"
+      - "@vpnclashfa - 2234"
+      - "@vpnclashfa - 2233"
+      - "@vpnclashfa - 2232"
+      - "@vpnclashfa - 2231"
+      - "@vpnclashfa - 2230"
+      - "@vpnclashfa - 2229"
+      - "@vpnclashfa - 2228"
+      - "@vpnclashfa - 2227"
+      - "TELEGRAM--MARAMBASHI--MARAMBASHI?ed=2560&security=tls&encryption=none&host=edgetunnel-4uw.pages.dev&type=ws&sni=edgetunnel-4uw.pages.dev#@vpnclashfa - 2226"
+      - "@vpnclashfa - 2225"
+      - "@vpnclashfa - 2224"
+      - "@vpnclashfa - 2223"
+      - "@vpnclashfa - 2222"
+      - "@vpnclashfa - 2219"
+      - "@vpnclashfa - 2218"
+      - "@vpnclashfa - 2217"
+      - "@vpnclashfa - 2216"
+      - "@vpnclashfa - 2215"
+      - "@vpnclashfa - 2214"
+      - "@vpnclashfa - 2213"
+      - "@vpnclashfa - 2212"
+      - "@vpnclashfa - 2211"
+      - "@vpnclashfa - 2210"
+      - "@vpnclashfa - 2209"
+      - "@vpnclashfa - 2208"
+      - "@vpnclashfa - 2207"
+      - "@vpnclashfa - 2206"
+      - "@vpnclashfa - 2205"
+      - "@vpnclashfa - 2204"
+      - "@vpnclashfa - 2203"
+      - "@vpnclashfa - 2202"
+      - "@vpnclashfa - 2201"
+      - "@vpnclashfa - 2200"
+      - "@vpnclashfa - 2199"
+      - "@vpnclashfa - 2198"
       - "@vpnclashfa - 2197"
       - "@vpnclashfa - 2196"
       - "@vpnclashfa - 2195"
-      - "@vpnclashfa - 2194"
       - "@vpnclashfa - 2193"
       - "@vpnclashfa - 2192"
       - "@vpnclashfa - 2191"
       - "@vpnclashfa - 2190"
       - "@vpnclashfa - 2189"
       - "@vpnclashfa - 2188"
-      - "@vpnclashfa - 2187"
       - "@vpnclashfa - 2186"
       - "@vpnclashfa - 2185"
       - "@vpnclashfa - 2184"
-      - "@vpnclashfa - 2183"
       - "@vpnclashfa - 2182"
       - "@vpnclashfa - 2181"
       - "@vpnclashfa - 2180"
       - "@vpnclashfa - 2179"
       - "@vpnclashfa - 2178"
-      - "@vpnclashfa - 2177"
       - "@vpnclashfa - 2176"
       - "@vpnclashfa - 2175"
       - "@vpnclashfa - 2174"
@@ -4258,6 +4397,7 @@ proxy-groups:
       - "@vpnclashfa - 2170"
       - "@vpnclashfa - 2169"
       - "@vpnclashfa - 2168"
+      - "@vpnclashfa - 2167"
       - "@vpnclashfa - 2166"
       - "@vpnclashfa - 2165"
       - "@vpnclashfa - 2164"
@@ -4269,23 +4409,22 @@ proxy-groups:
       - "@vpnclashfa - 2158"
       - "@vpnclashfa - 2157"
       - "@vpnclashfa - 2156"
+      - "@vpnclashfa - 2155"
       - "@vpnclashfa - 2154"
       - "@vpnclashfa - 2153"
       - "@vpnclashfa - 2152"
       - "@vpnclashfa - 2151"
       - "@vpnclashfa - 2150"
-      - "TELEGRAM--MARAMBASHI--MARAMBASHI?ed=2560&security=tls&encryption=none&host=edgetunnel-4uw.pages.dev&type=ws&sni=edgetunnel-4uw.pages.dev#@vpnclashfa - 2149"
+      - "@vpnclashfa - 2149"
       - "@vpnclashfa - 2148"
-      - "@vpnclashfa - 2147"
       - "@vpnclashfa - 2146"
       - "@vpnclashfa - 2145"
+      - "@vpnclashfa - 2144"
       - "@vpnclashfa - 2143"
       - "@vpnclashfa - 2142"
       - "@vpnclashfa - 2141"
-      - "@vpnclashfa - 2139"
       - "@vpnclashfa - 2138"
       - "@vpnclashfa - 2137"
-      - "@vpnclashfa - 2136"
       - "@vpnclashfa - 2135"
       - "@vpnclashfa - 2134"
       - "@vpnclashfa - 2133"
@@ -4303,14 +4442,14 @@ proxy-groups:
       - "@vpnclashfa - 2121"
       - "@vpnclashfa - 2120"
       - "@vpnclashfa - 2119"
-      - "@vpnclashfa - 2118"
       - "@vpnclashfa - 2117"
       - "@vpnclashfa - 2116"
       - "@vpnclashfa - 2115"
       - "@vpnclashfa - 2114"
-      - "@vpnclashfa - 2112"
-      - "@vpnclashfa - 2111"
+      - "@vpnclashfa - 2113"
+      - "&security=tls&encryption=none&insecure=0&fp=random&type=xhttp&allowInsecure=0&sni=tg1.cdnphotos.org#@vpnclashfa - 2112"
       - "@vpnclashfa - 2110"
+      - "@vpnclashfa - 2109"
       - "@vpnclashfa - 2108"
       - "@vpnclashfa - 2107"
       - "@vpnclashfa - 2106"
@@ -4319,11 +4458,12 @@ proxy-groups:
       - "@vpnclashfa - 2103"
       - "@vpnclashfa - 2102"
       - "@vpnclashfa - 2101"
+      - "TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=512&host=t1s1.rittbo.kdns.fr&sni=t1s1.rittbo.kdns.fr&insecure=0&allowInsecure=0#@vpnclashfa - 2100"
       - "@vpnclashfa - 2099"
       - "@vpnclashfa - 2098"
       - "@vpnclashfa - 2097"
       - "@vpnclashfa - 2096"
-      - "@vpnclashfa - 2095"
+      - "TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=2560&host=t1s1.rittbo.kdns.fr&sni=t1s1.rittbo.kdns.fr&insecure=0&allowInsecure=0#@vpnclashfa - 2095"
       - "@vpnclashfa - 2094"
       - "@vpnclashfa - 2093"
       - "@vpnclashfa - 2092"
@@ -4350,6 +4490,7 @@ proxy-groups:
       - "@vpnclashfa - 2071"
       - "@vpnclashfa - 2070"
       - "@vpnclashfa - 2069"
+      - "@vpnclashfa - 2068"
       - "@vpnclashfa - 2067"
       - "@vpnclashfa - 2066"
       - "@vpnclashfa - 2065"
@@ -4358,20 +4499,22 @@ proxy-groups:
       - "@vpnclashfa - 2062"
       - "@vpnclashfa - 2061"
       - "@vpnclashfa - 2060"
-      - "@vpnclashfa - 2059"
       - "@vpnclashfa - 2058"
       - "@vpnclashfa - 2057"
       - "@vpnclashfa - 2056"
+      - "@vpnclashfa - 2055"
+      - "@vpnclashfa - 2054"
       - "@vpnclashfa - 2053"
       - "@vpnclashfa - 2052"
+      - "@vpnclashfa - 2051"
       - "@vpnclashfa - 2050"
       - "@vpnclashfa - 2049"
+      - "@vpnclashfa - 2048"
       - "@vpnclashfa - 2047"
       - "@vpnclashfa - 2046"
       - "@vpnclashfa - 2045"
       - "@vpnclashfa - 2044"
       - "@vpnclashfa - 2043"
-      - "@vpnclashfa - 2042"
       - "@vpnclashfa - 2041"
       - "@vpnclashfa - 2040"
       - "@vpnclashfa - 2039"
@@ -4379,11 +4522,13 @@ proxy-groups:
       - "@vpnclashfa - 2037"
       - "@vpnclashfa - 2036"
       - "@vpnclashfa - 2035"
+      - "@vpnclashfa - 2034"
       - "@vpnclashfa - 2033"
       - "@vpnclashfa - 2032"
       - "@vpnclashfa - 2031"
       - "@vpnclashfa - 2030"
-      - "&security=tls&encryption=none&insecure=0&fp=random&type=xhttp&allowInsecure=0&sni=tg1.cdnphotos.org#@vpnclashfa - 2029"
+      - "@vpnclashfa - 2029"
+      - "@vpnclashfa - 2028"
       - "@vpnclashfa - 2027"
       - "@vpnclashfa - 2026"
       - "@vpnclashfa - 2025"
@@ -4393,14 +4538,12 @@ proxy-groups:
       - "@vpnclashfa - 2021"
       - "@vpnclashfa - 2020"
       - "@vpnclashfa - 2019"
-      - "TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=512&host=t1s1.rittbo.kdns.fr&sni=t1s1.rittbo.kdns.fr&insecure=0&allowInsecure=0#@vpnclashfa - 2018"
+      - "@vpnclashfa - 2018"
       - "@vpnclashfa - 2017"
       - "@vpnclashfa - 2016"
       - "@vpnclashfa - 2015"
-      - "@vpnclashfa - 2014"
       - "@vpnclashfa - 2013"
-      - "TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=2560&host=t1s1.rittbo.kdns.fr&sni=t1s1.rittbo.kdns.fr&insecure=0&allowInsecure=0#@vpnclashfa - 2012"
-      - "@vpnclashfa - 2011"
+      - "@vpnclashfa - 2012"
       - "@vpnclashfa - 2010"
       - "@vpnclashfa - 2009"
       - "@vpnclashfa - 2008"
@@ -4415,22 +4558,23 @@ proxy-groups:
       - "@vpnclashfa - 1999"
       - "@vpnclashfa - 1998"
       - "@vpnclashfa - 1997"
-      - "@vpnclashfa - 1996"
+      - "Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1996"
       - "@vpnclashfa - 1995"
+      - "@vpnclashfa - 1994"
       - "@vpnclashfa - 1993"
       - "@vpnclashfa - 1992"
       - "@vpnclashfa - 1991"
       - "@vpnclashfa - 1990"
-      - "@vpnclashfa - 1989"
+      - "&security=tls&encryption=none&host=lucasjow.us.ci&type=ws&sni=lucasjow.us.ci#@vpnclashfa - 1989"
       - "@vpnclashfa - 1988"
       - "@vpnclashfa - 1987"
       - "@vpnclashfa - 1986"
-      - "@vpnclashfa - 1985"
-      - "@vpnclashfa - 1983"
-      - "@vpnclashfa - 1982"
+      - "@vpnclashfa - 1984"
+      - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&encryption=none&host=lucasjow.us.ci&type=ws&sni=lucasjow.us.ci#@vpnclashfa - 1982"
+      - "@vpnclashfa - 1981"
       - "@vpnclashfa - 1980"
-      - "@vpnclashfa - 1979"
-      - "@vpnclashfa - 1978"
+      - "Telegram---pirozi_ArGaP---pirozi_ArGaP---pirozi_ArGaP---pirozi_ArGaP&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://10.58.5.2&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1979"
+      - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1978"
       - "@vpnclashfa - 1977"
       - "@vpnclashfa - 1976"
       - "@vpnclashfa - 1975"
@@ -4439,6 +4583,7 @@ proxy-groups:
       - "@vpnclashfa - 1972"
       - "@vpnclashfa - 1971"
       - "@vpnclashfa - 1970"
+      - "@vpnclashfa - 1969"
       - "@vpnclashfa - 1968"
       - "@vpnclashfa - 1967"
       - "@vpnclashfa - 1966"
@@ -4452,82 +4597,6 @@ proxy-groups:
       - "@vpnclashfa - 1958"
       - "@vpnclashfa - 1957"
       - "@vpnclashfa - 1956"
-      - "@vpnclashfa - 1955"
-      - "@vpnclashfa - 1954"
-      - "@vpnclashfa - 1953"
-      - "@vpnclashfa - 1952"
-      - "@vpnclashfa - 1951"
-      - "@vpnclashfa - 1950"
-      - "@vpnclashfa - 1949"
-      - "@vpnclashfa - 1948"
-      - "@vpnclashfa - 1947"
-      - "@vpnclashfa - 1946"
-      - "@vpnclashfa - 1945"
-      - "@vpnclashfa - 1944"
-      - "@vpnclashfa - 1943"
-      - "@vpnclashfa - 1942"
-      - "@vpnclashfa - 1941"
-      - "@vpnclashfa - 1940"
-      - "@vpnclashfa - 1939"
-      - "@vpnclashfa - 1938"
-      - "@vpnclashfa - 1937"
-      - "@vpnclashfa - 1936"
-      - "@vpnclashfa - 1935"
-      - "@vpnclashfa - 1934"
-      - "@vpnclashfa - 1933"
-      - "@vpnclashfa - 1932"
-      - "@vpnclashfa - 1931"
-      - "@vpnclashfa - 1928"
-      - "@vpnclashfa - 1927"
-      - "@vpnclashfa - 1926"
-      - "@vpnclashfa - 1925"
-      - "@vpnclashfa - 1924"
-      - "@vpnclashfa - 1923"
-      - "@vpnclashfa - 1922"
-      - "@vpnclashfa - 1921"
-      - "@vpnclashfa - 1920"
-      - "@vpnclashfa - 1919"
-      - "@vpnclashfa - 1918"
-      - "@vpnclashfa - 1917"
-      - "@vpnclashfa - 1916"
-      - "@vpnclashfa - 1915"
-      - "@vpnclashfa - 1914"
-      - "TELEGRAM---MARAMBASHI---MARAMBASHI---MARAMBASHI---MARAMBASHI&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1913"
-      - "@vpnclashfa - 1910"
-      - "@vpnclashfa - 1909"
-      - "@vpnclashfa - 1908"
-      - "@vpnclashfa - 1907"
-      - "@vpnclashfa - 1906"
-      - "@vpnclashfa - 1905"
-      - "@vpnclashfa - 1904"
-      - "@vpnclashfa - 1903"
-      - "Telegram---@MTMVPN&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1902"
-      - "@vpnclashfa - 1899"
-      - "@vpnclashfa - 1898"
-      - "@vpnclashfa - 1897"
-      - "@vpnclashfa - 1896"
-      - "@vpnclashfa - 1892"
-      - "@vpnclashfa - 1891"
-      - "Telegram---pirozi_ArGaP---pirozi_ArGaP---pirozi_ArGaP---pirozi_ArGaP&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://10.58.5.2&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1890"
-      - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1889"
-      - "@vpnclashfa - 1888"
-      - "@vpnclashfa - 1887"
-      - "@vpnclashfa - 1886"
-      - "@vpnclashfa - 1885"
-      - "@vpnclashfa - 1884"
-      - "@vpnclashfa - 1883"
-      - "@vpnclashfa - 1882"
-      - "@vpnclashfa - 1881"
-      - "@vpnclashfa - 1880"
-      - "@vpnclashfa - 1879"
-      - "@vpnclashfa - 1878"
-      - "@vpnclashfa - 1877"
-      - "@vpnclashfa - 1876"
-      - "@vpnclashfa - 1875"
-      - "@vpnclashfa - 1874"
-      - "@vpnclashfa - 1873"
-      - "@vpnclashfa - 1872"
-      - "@vpnclashfa - 1871"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -4536,27 +4605,97 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
+      - "@vpnclashfa - 2274"
+      - "@vpnclashfa - 2273"
+      - "@vpnclashfa - 2272"
+      - "@vpnclashfa - 2271"
+      - "@vpnclashfa - 2270"
+      - "@vpnclashfa - 2269"
+      - "@vpnclashfa - 2268"
+      - "@vpnclashfa - 2267"
+      - "@vpnclashfa - 2266"
+      - "@vpnclashfa - 2265"
+      - "@vpnclashfa - 2264"
+      - "@vpnclashfa - 2263"
+      - "@vpnclashfa - 2262"
+      - "@vpnclashfa - 2261"
+      - "@vpnclashfa - 2260"
+      - "@vpnclashfa - 2259"
+      - "@vpnclashfa - 2258"
+      - "@vpnclashfa - 2257"
+      - "@vpnclashfa - 2256"
+      - "@vpnclashfa - 2255"
+      - "@vpnclashfa - 2254"
+      - "@vpnclashfa - 2253"
+      - "@vpnclashfa - 2252"
+      - "@vpnclashfa - 2251"
+      - "@vpnclashfa - 2250"
+      - "@vpnclashfa - 2249"
+      - "@vpnclashfa - 2248"
+      - "@vpnclashfa - 2247"
+      - "@vpnclashfa - 2246"
+      - "@vpnclashfa - 2245"
+      - "@vpnclashfa - 2244"
+      - "@vpnclashfa - 2243"
+      - "@vpnclashfa - 2242"
+      - "@vpnclashfa - 2241"
+      - "@vpnclashfa - 2240"
+      - "@vpnclashfa - 2239"
+      - "@vpnclashfa - 2238"
+      - "@vpnclashfa - 2237"
+      - "@vpnclashfa - 2235"
+      - "@vpnclashfa - 2234"
+      - "@vpnclashfa - 2233"
+      - "@vpnclashfa - 2232"
+      - "@vpnclashfa - 2231"
+      - "@vpnclashfa - 2230"
+      - "@vpnclashfa - 2229"
+      - "@vpnclashfa - 2228"
+      - "@vpnclashfa - 2227"
+      - "TELEGRAM--MARAMBASHI--MARAMBASHI?ed=2560&security=tls&encryption=none&host=edgetunnel-4uw.pages.dev&type=ws&sni=edgetunnel-4uw.pages.dev#@vpnclashfa - 2226"
+      - "@vpnclashfa - 2225"
+      - "@vpnclashfa - 2224"
+      - "@vpnclashfa - 2223"
+      - "@vpnclashfa - 2222"
+      - "@vpnclashfa - 2219"
+      - "@vpnclashfa - 2218"
+      - "@vpnclashfa - 2217"
+      - "@vpnclashfa - 2216"
+      - "@vpnclashfa - 2215"
+      - "@vpnclashfa - 2214"
+      - "@vpnclashfa - 2213"
+      - "@vpnclashfa - 2212"
+      - "@vpnclashfa - 2211"
+      - "@vpnclashfa - 2210"
+      - "@vpnclashfa - 2209"
+      - "@vpnclashfa - 2208"
+      - "@vpnclashfa - 2207"
+      - "@vpnclashfa - 2206"
+      - "@vpnclashfa - 2205"
+      - "@vpnclashfa - 2204"
+      - "@vpnclashfa - 2203"
+      - "@vpnclashfa - 2202"
+      - "@vpnclashfa - 2201"
+      - "@vpnclashfa - 2200"
+      - "@vpnclashfa - 2199"
+      - "@vpnclashfa - 2198"
       - "@vpnclashfa - 2197"
       - "@vpnclashfa - 2196"
       - "@vpnclashfa - 2195"
-      - "@vpnclashfa - 2194"
       - "@vpnclashfa - 2193"
       - "@vpnclashfa - 2192"
       - "@vpnclashfa - 2191"
       - "@vpnclashfa - 2190"
       - "@vpnclashfa - 2189"
       - "@vpnclashfa - 2188"
-      - "@vpnclashfa - 2187"
       - "@vpnclashfa - 2186"
       - "@vpnclashfa - 2185"
       - "@vpnclashfa - 2184"
-      - "@vpnclashfa - 2183"
       - "@vpnclashfa - 2182"
       - "@vpnclashfa - 2181"
       - "@vpnclashfa - 2180"
       - "@vpnclashfa - 2179"
       - "@vpnclashfa - 2178"
-      - "@vpnclashfa - 2177"
       - "@vpnclashfa - 2176"
       - "@vpnclashfa - 2175"
       - "@vpnclashfa - 2174"
@@ -4566,6 +4705,7 @@ proxy-groups:
       - "@vpnclashfa - 2170"
       - "@vpnclashfa - 2169"
       - "@vpnclashfa - 2168"
+      - "@vpnclashfa - 2167"
       - "@vpnclashfa - 2166"
       - "@vpnclashfa - 2165"
       - "@vpnclashfa - 2164"
@@ -4577,23 +4717,22 @@ proxy-groups:
       - "@vpnclashfa - 2158"
       - "@vpnclashfa - 2157"
       - "@vpnclashfa - 2156"
+      - "@vpnclashfa - 2155"
       - "@vpnclashfa - 2154"
       - "@vpnclashfa - 2153"
       - "@vpnclashfa - 2152"
       - "@vpnclashfa - 2151"
       - "@vpnclashfa - 2150"
-      - "TELEGRAM--MARAMBASHI--MARAMBASHI?ed=2560&security=tls&encryption=none&host=edgetunnel-4uw.pages.dev&type=ws&sni=edgetunnel-4uw.pages.dev#@vpnclashfa - 2149"
+      - "@vpnclashfa - 2149"
       - "@vpnclashfa - 2148"
-      - "@vpnclashfa - 2147"
       - "@vpnclashfa - 2146"
       - "@vpnclashfa - 2145"
+      - "@vpnclashfa - 2144"
       - "@vpnclashfa - 2143"
       - "@vpnclashfa - 2142"
       - "@vpnclashfa - 2141"
-      - "@vpnclashfa - 2139"
       - "@vpnclashfa - 2138"
       - "@vpnclashfa - 2137"
-      - "@vpnclashfa - 2136"
       - "@vpnclashfa - 2135"
       - "@vpnclashfa - 2134"
       - "@vpnclashfa - 2133"
@@ -4611,14 +4750,14 @@ proxy-groups:
       - "@vpnclashfa - 2121"
       - "@vpnclashfa - 2120"
       - "@vpnclashfa - 2119"
-      - "@vpnclashfa - 2118"
       - "@vpnclashfa - 2117"
       - "@vpnclashfa - 2116"
       - "@vpnclashfa - 2115"
       - "@vpnclashfa - 2114"
-      - "@vpnclashfa - 2112"
-      - "@vpnclashfa - 2111"
+      - "@vpnclashfa - 2113"
+      - "&security=tls&encryption=none&insecure=0&fp=random&type=xhttp&allowInsecure=0&sni=tg1.cdnphotos.org#@vpnclashfa - 2112"
       - "@vpnclashfa - 2110"
+      - "@vpnclashfa - 2109"
       - "@vpnclashfa - 2108"
       - "@vpnclashfa - 2107"
       - "@vpnclashfa - 2106"
@@ -4627,11 +4766,12 @@ proxy-groups:
       - "@vpnclashfa - 2103"
       - "@vpnclashfa - 2102"
       - "@vpnclashfa - 2101"
+      - "TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=512&host=t1s1.rittbo.kdns.fr&sni=t1s1.rittbo.kdns.fr&insecure=0&allowInsecure=0#@vpnclashfa - 2100"
       - "@vpnclashfa - 2099"
       - "@vpnclashfa - 2098"
       - "@vpnclashfa - 2097"
       - "@vpnclashfa - 2096"
-      - "@vpnclashfa - 2095"
+      - "TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=2560&host=t1s1.rittbo.kdns.fr&sni=t1s1.rittbo.kdns.fr&insecure=0&allowInsecure=0#@vpnclashfa - 2095"
       - "@vpnclashfa - 2094"
       - "@vpnclashfa - 2093"
       - "@vpnclashfa - 2092"
@@ -4658,6 +4798,7 @@ proxy-groups:
       - "@vpnclashfa - 2071"
       - "@vpnclashfa - 2070"
       - "@vpnclashfa - 2069"
+      - "@vpnclashfa - 2068"
       - "@vpnclashfa - 2067"
       - "@vpnclashfa - 2066"
       - "@vpnclashfa - 2065"
@@ -4666,20 +4807,22 @@ proxy-groups:
       - "@vpnclashfa - 2062"
       - "@vpnclashfa - 2061"
       - "@vpnclashfa - 2060"
-      - "@vpnclashfa - 2059"
       - "@vpnclashfa - 2058"
       - "@vpnclashfa - 2057"
       - "@vpnclashfa - 2056"
+      - "@vpnclashfa - 2055"
+      - "@vpnclashfa - 2054"
       - "@vpnclashfa - 2053"
       - "@vpnclashfa - 2052"
+      - "@vpnclashfa - 2051"
       - "@vpnclashfa - 2050"
       - "@vpnclashfa - 2049"
+      - "@vpnclashfa - 2048"
       - "@vpnclashfa - 2047"
       - "@vpnclashfa - 2046"
       - "@vpnclashfa - 2045"
       - "@vpnclashfa - 2044"
       - "@vpnclashfa - 2043"
-      - "@vpnclashfa - 2042"
       - "@vpnclashfa - 2041"
       - "@vpnclashfa - 2040"
       - "@vpnclashfa - 2039"
@@ -4687,11 +4830,13 @@ proxy-groups:
       - "@vpnclashfa - 2037"
       - "@vpnclashfa - 2036"
       - "@vpnclashfa - 2035"
+      - "@vpnclashfa - 2034"
       - "@vpnclashfa - 2033"
       - "@vpnclashfa - 2032"
       - "@vpnclashfa - 2031"
       - "@vpnclashfa - 2030"
-      - "&security=tls&encryption=none&insecure=0&fp=random&type=xhttp&allowInsecure=0&sni=tg1.cdnphotos.org#@vpnclashfa - 2029"
+      - "@vpnclashfa - 2029"
+      - "@vpnclashfa - 2028"
       - "@vpnclashfa - 2027"
       - "@vpnclashfa - 2026"
       - "@vpnclashfa - 2025"
@@ -4701,14 +4846,12 @@ proxy-groups:
       - "@vpnclashfa - 2021"
       - "@vpnclashfa - 2020"
       - "@vpnclashfa - 2019"
-      - "TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=512&host=t1s1.rittbo.kdns.fr&sni=t1s1.rittbo.kdns.fr&insecure=0&allowInsecure=0#@vpnclashfa - 2018"
+      - "@vpnclashfa - 2018"
       - "@vpnclashfa - 2017"
       - "@vpnclashfa - 2016"
       - "@vpnclashfa - 2015"
-      - "@vpnclashfa - 2014"
       - "@vpnclashfa - 2013"
-      - "TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=2560&host=t1s1.rittbo.kdns.fr&sni=t1s1.rittbo.kdns.fr&insecure=0&allowInsecure=0#@vpnclashfa - 2012"
-      - "@vpnclashfa - 2011"
+      - "@vpnclashfa - 2012"
       - "@vpnclashfa - 2010"
       - "@vpnclashfa - 2009"
       - "@vpnclashfa - 2008"
@@ -4723,22 +4866,23 @@ proxy-groups:
       - "@vpnclashfa - 1999"
       - "@vpnclashfa - 1998"
       - "@vpnclashfa - 1997"
-      - "@vpnclashfa - 1996"
+      - "Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1996"
       - "@vpnclashfa - 1995"
+      - "@vpnclashfa - 1994"
       - "@vpnclashfa - 1993"
       - "@vpnclashfa - 1992"
       - "@vpnclashfa - 1991"
       - "@vpnclashfa - 1990"
-      - "@vpnclashfa - 1989"
+      - "&security=tls&encryption=none&host=lucasjow.us.ci&type=ws&sni=lucasjow.us.ci#@vpnclashfa - 1989"
       - "@vpnclashfa - 1988"
       - "@vpnclashfa - 1987"
       - "@vpnclashfa - 1986"
-      - "@vpnclashfa - 1985"
-      - "@vpnclashfa - 1983"
-      - "@vpnclashfa - 1982"
+      - "@vpnclashfa - 1984"
+      - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&encryption=none&host=lucasjow.us.ci&type=ws&sni=lucasjow.us.ci#@vpnclashfa - 1982"
+      - "@vpnclashfa - 1981"
       - "@vpnclashfa - 1980"
-      - "@vpnclashfa - 1979"
-      - "@vpnclashfa - 1978"
+      - "Telegram---pirozi_ArGaP---pirozi_ArGaP---pirozi_ArGaP---pirozi_ArGaP&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://10.58.5.2&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1979"
+      - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1978"
       - "@vpnclashfa - 1977"
       - "@vpnclashfa - 1976"
       - "@vpnclashfa - 1975"
@@ -4747,6 +4891,7 @@ proxy-groups:
       - "@vpnclashfa - 1972"
       - "@vpnclashfa - 1971"
       - "@vpnclashfa - 1970"
+      - "@vpnclashfa - 1969"
       - "@vpnclashfa - 1968"
       - "@vpnclashfa - 1967"
       - "@vpnclashfa - 1966"
@@ -4760,82 +4905,6 @@ proxy-groups:
       - "@vpnclashfa - 1958"
       - "@vpnclashfa - 1957"
       - "@vpnclashfa - 1956"
-      - "@vpnclashfa - 1955"
-      - "@vpnclashfa - 1954"
-      - "@vpnclashfa - 1953"
-      - "@vpnclashfa - 1952"
-      - "@vpnclashfa - 1951"
-      - "@vpnclashfa - 1950"
-      - "@vpnclashfa - 1949"
-      - "@vpnclashfa - 1948"
-      - "@vpnclashfa - 1947"
-      - "@vpnclashfa - 1946"
-      - "@vpnclashfa - 1945"
-      - "@vpnclashfa - 1944"
-      - "@vpnclashfa - 1943"
-      - "@vpnclashfa - 1942"
-      - "@vpnclashfa - 1941"
-      - "@vpnclashfa - 1940"
-      - "@vpnclashfa - 1939"
-      - "@vpnclashfa - 1938"
-      - "@vpnclashfa - 1937"
-      - "@vpnclashfa - 1936"
-      - "@vpnclashfa - 1935"
-      - "@vpnclashfa - 1934"
-      - "@vpnclashfa - 1933"
-      - "@vpnclashfa - 1932"
-      - "@vpnclashfa - 1931"
-      - "@vpnclashfa - 1928"
-      - "@vpnclashfa - 1927"
-      - "@vpnclashfa - 1926"
-      - "@vpnclashfa - 1925"
-      - "@vpnclashfa - 1924"
-      - "@vpnclashfa - 1923"
-      - "@vpnclashfa - 1922"
-      - "@vpnclashfa - 1921"
-      - "@vpnclashfa - 1920"
-      - "@vpnclashfa - 1919"
-      - "@vpnclashfa - 1918"
-      - "@vpnclashfa - 1917"
-      - "@vpnclashfa - 1916"
-      - "@vpnclashfa - 1915"
-      - "@vpnclashfa - 1914"
-      - "TELEGRAM---MARAMBASHI---MARAMBASHI---MARAMBASHI---MARAMBASHI&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1913"
-      - "@vpnclashfa - 1910"
-      - "@vpnclashfa - 1909"
-      - "@vpnclashfa - 1908"
-      - "@vpnclashfa - 1907"
-      - "@vpnclashfa - 1906"
-      - "@vpnclashfa - 1905"
-      - "@vpnclashfa - 1904"
-      - "@vpnclashfa - 1903"
-      - "Telegram---@MTMVPN&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1902"
-      - "@vpnclashfa - 1899"
-      - "@vpnclashfa - 1898"
-      - "@vpnclashfa - 1897"
-      - "@vpnclashfa - 1896"
-      - "@vpnclashfa - 1892"
-      - "@vpnclashfa - 1891"
-      - "Telegram---pirozi_ArGaP---pirozi_ArGaP---pirozi_ArGaP---pirozi_ArGaP&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://10.58.5.2&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1890"
-      - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1889"
-      - "@vpnclashfa - 1888"
-      - "@vpnclashfa - 1887"
-      - "@vpnclashfa - 1886"
-      - "@vpnclashfa - 1885"
-      - "@vpnclashfa - 1884"
-      - "@vpnclashfa - 1883"
-      - "@vpnclashfa - 1882"
-      - "@vpnclashfa - 1881"
-      - "@vpnclashfa - 1880"
-      - "@vpnclashfa - 1879"
-      - "@vpnclashfa - 1878"
-      - "@vpnclashfa - 1877"
-      - "@vpnclashfa - 1876"
-      - "@vpnclashfa - 1875"
-      - "@vpnclashfa - 1874"
-      - "@vpnclashfa - 1873"
-      - "@vpnclashfa - 1872"
-      - "@vpnclashfa - 1871"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -4845,27 +4914,97 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
+      - "@vpnclashfa - 2274"
+      - "@vpnclashfa - 2273"
+      - "@vpnclashfa - 2272"
+      - "@vpnclashfa - 2271"
+      - "@vpnclashfa - 2270"
+      - "@vpnclashfa - 2269"
+      - "@vpnclashfa - 2268"
+      - "@vpnclashfa - 2267"
+      - "@vpnclashfa - 2266"
+      - "@vpnclashfa - 2265"
+      - "@vpnclashfa - 2264"
+      - "@vpnclashfa - 2263"
+      - "@vpnclashfa - 2262"
+      - "@vpnclashfa - 2261"
+      - "@vpnclashfa - 2260"
+      - "@vpnclashfa - 2259"
+      - "@vpnclashfa - 2258"
+      - "@vpnclashfa - 2257"
+      - "@vpnclashfa - 2256"
+      - "@vpnclashfa - 2255"
+      - "@vpnclashfa - 2254"
+      - "@vpnclashfa - 2253"
+      - "@vpnclashfa - 2252"
+      - "@vpnclashfa - 2251"
+      - "@vpnclashfa - 2250"
+      - "@vpnclashfa - 2249"
+      - "@vpnclashfa - 2248"
+      - "@vpnclashfa - 2247"
+      - "@vpnclashfa - 2246"
+      - "@vpnclashfa - 2245"
+      - "@vpnclashfa - 2244"
+      - "@vpnclashfa - 2243"
+      - "@vpnclashfa - 2242"
+      - "@vpnclashfa - 2241"
+      - "@vpnclashfa - 2240"
+      - "@vpnclashfa - 2239"
+      - "@vpnclashfa - 2238"
+      - "@vpnclashfa - 2237"
+      - "@vpnclashfa - 2235"
+      - "@vpnclashfa - 2234"
+      - "@vpnclashfa - 2233"
+      - "@vpnclashfa - 2232"
+      - "@vpnclashfa - 2231"
+      - "@vpnclashfa - 2230"
+      - "@vpnclashfa - 2229"
+      - "@vpnclashfa - 2228"
+      - "@vpnclashfa - 2227"
+      - "TELEGRAM--MARAMBASHI--MARAMBASHI?ed=2560&security=tls&encryption=none&host=edgetunnel-4uw.pages.dev&type=ws&sni=edgetunnel-4uw.pages.dev#@vpnclashfa - 2226"
+      - "@vpnclashfa - 2225"
+      - "@vpnclashfa - 2224"
+      - "@vpnclashfa - 2223"
+      - "@vpnclashfa - 2222"
+      - "@vpnclashfa - 2219"
+      - "@vpnclashfa - 2218"
+      - "@vpnclashfa - 2217"
+      - "@vpnclashfa - 2216"
+      - "@vpnclashfa - 2215"
+      - "@vpnclashfa - 2214"
+      - "@vpnclashfa - 2213"
+      - "@vpnclashfa - 2212"
+      - "@vpnclashfa - 2211"
+      - "@vpnclashfa - 2210"
+      - "@vpnclashfa - 2209"
+      - "@vpnclashfa - 2208"
+      - "@vpnclashfa - 2207"
+      - "@vpnclashfa - 2206"
+      - "@vpnclashfa - 2205"
+      - "@vpnclashfa - 2204"
+      - "@vpnclashfa - 2203"
+      - "@vpnclashfa - 2202"
+      - "@vpnclashfa - 2201"
+      - "@vpnclashfa - 2200"
+      - "@vpnclashfa - 2199"
+      - "@vpnclashfa - 2198"
       - "@vpnclashfa - 2197"
       - "@vpnclashfa - 2196"
       - "@vpnclashfa - 2195"
-      - "@vpnclashfa - 2194"
       - "@vpnclashfa - 2193"
       - "@vpnclashfa - 2192"
       - "@vpnclashfa - 2191"
       - "@vpnclashfa - 2190"
       - "@vpnclashfa - 2189"
       - "@vpnclashfa - 2188"
-      - "@vpnclashfa - 2187"
       - "@vpnclashfa - 2186"
       - "@vpnclashfa - 2185"
       - "@vpnclashfa - 2184"
-      - "@vpnclashfa - 2183"
       - "@vpnclashfa - 2182"
       - "@vpnclashfa - 2181"
       - "@vpnclashfa - 2180"
       - "@vpnclashfa - 2179"
       - "@vpnclashfa - 2178"
-      - "@vpnclashfa - 2177"
       - "@vpnclashfa - 2176"
       - "@vpnclashfa - 2175"
       - "@vpnclashfa - 2174"
@@ -4875,6 +5014,7 @@ proxy-groups:
       - "@vpnclashfa - 2170"
       - "@vpnclashfa - 2169"
       - "@vpnclashfa - 2168"
+      - "@vpnclashfa - 2167"
       - "@vpnclashfa - 2166"
       - "@vpnclashfa - 2165"
       - "@vpnclashfa - 2164"
@@ -4886,23 +5026,22 @@ proxy-groups:
       - "@vpnclashfa - 2158"
       - "@vpnclashfa - 2157"
       - "@vpnclashfa - 2156"
+      - "@vpnclashfa - 2155"
       - "@vpnclashfa - 2154"
       - "@vpnclashfa - 2153"
       - "@vpnclashfa - 2152"
       - "@vpnclashfa - 2151"
       - "@vpnclashfa - 2150"
-      - "TELEGRAM--MARAMBASHI--MARAMBASHI?ed=2560&security=tls&encryption=none&host=edgetunnel-4uw.pages.dev&type=ws&sni=edgetunnel-4uw.pages.dev#@vpnclashfa - 2149"
+      - "@vpnclashfa - 2149"
       - "@vpnclashfa - 2148"
-      - "@vpnclashfa - 2147"
       - "@vpnclashfa - 2146"
       - "@vpnclashfa - 2145"
+      - "@vpnclashfa - 2144"
       - "@vpnclashfa - 2143"
       - "@vpnclashfa - 2142"
       - "@vpnclashfa - 2141"
-      - "@vpnclashfa - 2139"
       - "@vpnclashfa - 2138"
       - "@vpnclashfa - 2137"
-      - "@vpnclashfa - 2136"
       - "@vpnclashfa - 2135"
       - "@vpnclashfa - 2134"
       - "@vpnclashfa - 2133"
@@ -4920,14 +5059,14 @@ proxy-groups:
       - "@vpnclashfa - 2121"
       - "@vpnclashfa - 2120"
       - "@vpnclashfa - 2119"
-      - "@vpnclashfa - 2118"
       - "@vpnclashfa - 2117"
       - "@vpnclashfa - 2116"
       - "@vpnclashfa - 2115"
       - "@vpnclashfa - 2114"
-      - "@vpnclashfa - 2112"
-      - "@vpnclashfa - 2111"
+      - "@vpnclashfa - 2113"
+      - "&security=tls&encryption=none&insecure=0&fp=random&type=xhttp&allowInsecure=0&sni=tg1.cdnphotos.org#@vpnclashfa - 2112"
       - "@vpnclashfa - 2110"
+      - "@vpnclashfa - 2109"
       - "@vpnclashfa - 2108"
       - "@vpnclashfa - 2107"
       - "@vpnclashfa - 2106"
@@ -4936,11 +5075,12 @@ proxy-groups:
       - "@vpnclashfa - 2103"
       - "@vpnclashfa - 2102"
       - "@vpnclashfa - 2101"
+      - "TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=512&host=t1s1.rittbo.kdns.fr&sni=t1s1.rittbo.kdns.fr&insecure=0&allowInsecure=0#@vpnclashfa - 2100"
       - "@vpnclashfa - 2099"
       - "@vpnclashfa - 2098"
       - "@vpnclashfa - 2097"
       - "@vpnclashfa - 2096"
-      - "@vpnclashfa - 2095"
+      - "TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=2560&host=t1s1.rittbo.kdns.fr&sni=t1s1.rittbo.kdns.fr&insecure=0&allowInsecure=0#@vpnclashfa - 2095"
       - "@vpnclashfa - 2094"
       - "@vpnclashfa - 2093"
       - "@vpnclashfa - 2092"
@@ -4967,6 +5107,7 @@ proxy-groups:
       - "@vpnclashfa - 2071"
       - "@vpnclashfa - 2070"
       - "@vpnclashfa - 2069"
+      - "@vpnclashfa - 2068"
       - "@vpnclashfa - 2067"
       - "@vpnclashfa - 2066"
       - "@vpnclashfa - 2065"
@@ -4975,20 +5116,22 @@ proxy-groups:
       - "@vpnclashfa - 2062"
       - "@vpnclashfa - 2061"
       - "@vpnclashfa - 2060"
-      - "@vpnclashfa - 2059"
       - "@vpnclashfa - 2058"
       - "@vpnclashfa - 2057"
       - "@vpnclashfa - 2056"
+      - "@vpnclashfa - 2055"
+      - "@vpnclashfa - 2054"
       - "@vpnclashfa - 2053"
       - "@vpnclashfa - 2052"
+      - "@vpnclashfa - 2051"
       - "@vpnclashfa - 2050"
       - "@vpnclashfa - 2049"
+      - "@vpnclashfa - 2048"
       - "@vpnclashfa - 2047"
       - "@vpnclashfa - 2046"
       - "@vpnclashfa - 2045"
       - "@vpnclashfa - 2044"
       - "@vpnclashfa - 2043"
-      - "@vpnclashfa - 2042"
       - "@vpnclashfa - 2041"
       - "@vpnclashfa - 2040"
       - "@vpnclashfa - 2039"
@@ -4996,11 +5139,13 @@ proxy-groups:
       - "@vpnclashfa - 2037"
       - "@vpnclashfa - 2036"
       - "@vpnclashfa - 2035"
+      - "@vpnclashfa - 2034"
       - "@vpnclashfa - 2033"
       - "@vpnclashfa - 2032"
       - "@vpnclashfa - 2031"
       - "@vpnclashfa - 2030"
-      - "&security=tls&encryption=none&insecure=0&fp=random&type=xhttp&allowInsecure=0&sni=tg1.cdnphotos.org#@vpnclashfa - 2029"
+      - "@vpnclashfa - 2029"
+      - "@vpnclashfa - 2028"
       - "@vpnclashfa - 2027"
       - "@vpnclashfa - 2026"
       - "@vpnclashfa - 2025"
@@ -5010,14 +5155,12 @@ proxy-groups:
       - "@vpnclashfa - 2021"
       - "@vpnclashfa - 2020"
       - "@vpnclashfa - 2019"
-      - "TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=512&host=t1s1.rittbo.kdns.fr&sni=t1s1.rittbo.kdns.fr&insecure=0&allowInsecure=0#@vpnclashfa - 2018"
+      - "@vpnclashfa - 2018"
       - "@vpnclashfa - 2017"
       - "@vpnclashfa - 2016"
       - "@vpnclashfa - 2015"
-      - "@vpnclashfa - 2014"
       - "@vpnclashfa - 2013"
-      - "TELEGRAM-MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI_MARAMBASHI?ed=2560&host=t1s1.rittbo.kdns.fr&sni=t1s1.rittbo.kdns.fr&insecure=0&allowInsecure=0#@vpnclashfa - 2012"
-      - "@vpnclashfa - 2011"
+      - "@vpnclashfa - 2012"
       - "@vpnclashfa - 2010"
       - "@vpnclashfa - 2009"
       - "@vpnclashfa - 2008"
@@ -5032,22 +5175,23 @@ proxy-groups:
       - "@vpnclashfa - 1999"
       - "@vpnclashfa - 1998"
       - "@vpnclashfa - 1997"
-      - "@vpnclashfa - 1996"
+      - "Telegram---MTMVPN---MTMVPN---MTMVPN---MTMVPN&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1996"
       - "@vpnclashfa - 1995"
+      - "@vpnclashfa - 1994"
       - "@vpnclashfa - 1993"
       - "@vpnclashfa - 1992"
       - "@vpnclashfa - 1991"
       - "@vpnclashfa - 1990"
-      - "@vpnclashfa - 1989"
+      - "&security=tls&encryption=none&host=lucasjow.us.ci&type=ws&sni=lucasjow.us.ci#@vpnclashfa - 1989"
       - "@vpnclashfa - 1988"
       - "@vpnclashfa - 1987"
       - "@vpnclashfa - 1986"
-      - "@vpnclashfa - 1985"
-      - "@vpnclashfa - 1983"
-      - "@vpnclashfa - 1982"
+      - "@vpnclashfa - 1984"
+      - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&encryption=none&host=lucasjow.us.ci&type=ws&sni=lucasjow.us.ci#@vpnclashfa - 1982"
+      - "@vpnclashfa - 1981"
       - "@vpnclashfa - 1980"
-      - "@vpnclashfa - 1979"
-      - "@vpnclashfa - 1978"
+      - "Telegram---pirozi_ArGaP---pirozi_ArGaP---pirozi_ArGaP---pirozi_ArGaP&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://10.58.5.2&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1979"
+      - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1978"
       - "@vpnclashfa - 1977"
       - "@vpnclashfa - 1976"
       - "@vpnclashfa - 1975"
@@ -5056,6 +5200,7 @@ proxy-groups:
       - "@vpnclashfa - 1972"
       - "@vpnclashfa - 1971"
       - "@vpnclashfa - 1970"
+      - "@vpnclashfa - 1969"
       - "@vpnclashfa - 1968"
       - "@vpnclashfa - 1967"
       - "@vpnclashfa - 1966"
@@ -5069,82 +5214,6 @@ proxy-groups:
       - "@vpnclashfa - 1958"
       - "@vpnclashfa - 1957"
       - "@vpnclashfa - 1956"
-      - "@vpnclashfa - 1955"
-      - "@vpnclashfa - 1954"
-      - "@vpnclashfa - 1953"
-      - "@vpnclashfa - 1952"
-      - "@vpnclashfa - 1951"
-      - "@vpnclashfa - 1950"
-      - "@vpnclashfa - 1949"
-      - "@vpnclashfa - 1948"
-      - "@vpnclashfa - 1947"
-      - "@vpnclashfa - 1946"
-      - "@vpnclashfa - 1945"
-      - "@vpnclashfa - 1944"
-      - "@vpnclashfa - 1943"
-      - "@vpnclashfa - 1942"
-      - "@vpnclashfa - 1941"
-      - "@vpnclashfa - 1940"
-      - "@vpnclashfa - 1939"
-      - "@vpnclashfa - 1938"
-      - "@vpnclashfa - 1937"
-      - "@vpnclashfa - 1936"
-      - "@vpnclashfa - 1935"
-      - "@vpnclashfa - 1934"
-      - "@vpnclashfa - 1933"
-      - "@vpnclashfa - 1932"
-      - "@vpnclashfa - 1931"
-      - "@vpnclashfa - 1928"
-      - "@vpnclashfa - 1927"
-      - "@vpnclashfa - 1926"
-      - "@vpnclashfa - 1925"
-      - "@vpnclashfa - 1924"
-      - "@vpnclashfa - 1923"
-      - "@vpnclashfa - 1922"
-      - "@vpnclashfa - 1921"
-      - "@vpnclashfa - 1920"
-      - "@vpnclashfa - 1919"
-      - "@vpnclashfa - 1918"
-      - "@vpnclashfa - 1917"
-      - "@vpnclashfa - 1916"
-      - "@vpnclashfa - 1915"
-      - "@vpnclashfa - 1914"
-      - "TELEGRAM---MARAMBASHI---MARAMBASHI---MARAMBASHI---MARAMBASHI&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1913"
-      - "@vpnclashfa - 1910"
-      - "@vpnclashfa - 1909"
-      - "@vpnclashfa - 1908"
-      - "@vpnclashfa - 1907"
-      - "@vpnclashfa - 1906"
-      - "@vpnclashfa - 1905"
-      - "@vpnclashfa - 1904"
-      - "@vpnclashfa - 1903"
-      - "Telegram---@MTMVPN&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1902"
-      - "@vpnclashfa - 1899"
-      - "@vpnclashfa - 1898"
-      - "@vpnclashfa - 1897"
-      - "@vpnclashfa - 1896"
-      - "@vpnclashfa - 1892"
-      - "@vpnclashfa - 1891"
-      - "Telegram---pirozi_ArGaP---pirozi_ArGaP---pirozi_ArGaP---pirozi_ArGaP&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://10.58.5.2&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1890"
-      - "Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&alpn=http/1.1&encryption=none&insecure=0&host=lucasjow.us.ci&fp=chrome&ech=cloudflare-ech.com+udp://1.1.1.1&type=ws&allowInsecure=0&sni=lucasjow.us.ci#@vpnclashfa - 1889"
-      - "@vpnclashfa - 1888"
-      - "@vpnclashfa - 1887"
-      - "@vpnclashfa - 1886"
-      - "@vpnclashfa - 1885"
-      - "@vpnclashfa - 1884"
-      - "@vpnclashfa - 1883"
-      - "@vpnclashfa - 1882"
-      - "@vpnclashfa - 1881"
-      - "@vpnclashfa - 1880"
-      - "@vpnclashfa - 1879"
-      - "@vpnclashfa - 1878"
-      - "@vpnclashfa - 1877"
-      - "@vpnclashfa - 1876"
-      - "@vpnclashfa - 1875"
-      - "@vpnclashfa - 1874"
-      - "@vpnclashfa - 1873"
-      - "@vpnclashfa - 1872"
-      - "@vpnclashfa - 1871"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"

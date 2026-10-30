@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -507,18 +541,7 @@ proxies:
     reality-opts:
       public-key: "GcraWawjMdjBJLD_HvSZ3BQuHvFnSWjbesCkMeCaITY"
       short-id: "5b4a12ef7e1694dd"
-  - name: "🇮🇩 US🇺🇸 | id-full.privateip.net-443 | 80.41ms"
-    type: "vless"
-    server: "172.232.250.227"
-    port: 443
-    uuid: "ad4492d1-6858-4841-bd50-1dff56dedcb7"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "id-full.privateip.net"
-    ws-opts:
-      path: "/VLESS"
-  - name: "🇮🇩 RELAY🚩 | sourceforge.net-443 | 89.7ms"
+  - name: "🇮🇩 RELAY🚩 | sourceforge.net-443 | 96.92ms"
     type: "vless"
     server: "188.119.113.68"
     port: 443
@@ -630,8 +653,7 @@ proxy-groups:
     lazy: true
     proxies:
       - "🇮🇩 🔒 VL-TCP-RLT 🇮🇩 ID-202.10.40.89:8443"
-      - "🇮🇩 US🇺🇸 | id-full.privateip.net-443 | 80.41ms"
-      - "🇮🇩 RELAY🚩 | sourceforge.net-443 | 89.7ms"
+      - "🇮🇩 RELAY🚩 | sourceforge.net-443 | 96.92ms"
       - "🇮🇩 @DeltaKroneckerGithub"
       - "🇮🇩 @DeltaKroneckerGithub-1"
       - "🇮🇩 Singapore"
@@ -651,8 +673,7 @@ proxy-groups:
     lazy: true
     proxies:
       - "🇮🇩 🔒 VL-TCP-RLT 🇮🇩 ID-202.10.40.89:8443"
-      - "🇮🇩 US🇺🇸 | id-full.privateip.net-443 | 80.41ms"
-      - "🇮🇩 RELAY🚩 | sourceforge.net-443 | 89.7ms"
+      - "🇮🇩 RELAY🚩 | sourceforge.net-443 | 96.92ms"
       - "🇮🇩 @DeltaKroneckerGithub"
       - "🇮🇩 @DeltaKroneckerGithub-1"
       - "🇮🇩 Singapore"
@@ -673,8 +694,7 @@ proxy-groups:
     timeout: 1500
     proxies:
       - "🇮🇩 🔒 VL-TCP-RLT 🇮🇩 ID-202.10.40.89:8443"
-      - "🇮🇩 US🇺🇸 | id-full.privateip.net-443 | 80.41ms"
-      - "🇮🇩 RELAY🚩 | sourceforge.net-443 | 89.7ms"
+      - "🇮🇩 RELAY🚩 | sourceforge.net-443 | 96.92ms"
       - "🇮🇩 @DeltaKroneckerGithub"
       - "🇮🇩 @DeltaKroneckerGithub-1"
       - "🇮🇩 Singapore"

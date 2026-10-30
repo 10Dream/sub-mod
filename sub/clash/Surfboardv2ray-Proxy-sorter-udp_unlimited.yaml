@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -493,21 +527,6 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "@V2rayng_mar_ket"
-    type: "hysteria2"
-    server: "109.104.153.124"
-    port: 11592
-    password: "35d26d53bc"
-    sni: "srv-0e5387.frd21.ru"
-    obfs: "salamander"
-    obfs-password: "87d72c2949c0ca85bbda09459244e374"
-  - name: "🇷🇺202915 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "hysteria2"
-    server: "103.88.243.142"
-    port: 11592
-    password: "41edb44c8e"
-    sni: "103.88.243.142"
-    skip-cert-verify: true
   - name: "@Begoo_VPN ²⁹⁰"
     type: "hysteria2"
     server: "91.142.73.159"
@@ -542,7 +561,7 @@ proxies:
     skip-cert-verify: true
     obfs: "salamander"
     obfs-password: "KevinZakarian"
-  - name: "🇳🇱202941 | ⚡️Telegram = t.me/SOSkeyNET"
+  - name: "@vpnbaz🍂"
     type: "hysteria2"
     server: "147.45.149.88"
     port: 8443
@@ -654,14 +673,14 @@ proxies:
     skip-cert-verify: true
     obfs: "salamander"
     obfs-password: "@JavidnamanIran-Javid-SHAH-KingRezaPahlavi"
-  - name: "@V2rayng_mar_ket-1"
+  - name: "@tootffarangi🍓"
     type: "hysteria2"
-    server: "155.94.134.183"
-    port: 11592
-    password: "ca78f919e6"
-    sni: "srv-3fc7c9.21freedom.net"
+    server: "152.32.254.68"
+    port: 5010
+    password: "eBTe6Ax2pUts8oMEWoYVDfnSlHfkLffQ"
+    sni: "nas.aizhzo.com"
     obfs: "salamander"
-    obfs-password: "ec66908dbc46e6920143d9b684adf277"
+    obfs-password: "7M4RXPFcQyQEGbkxBPfXo4bilMhCW2U9"
   - name: "@Selinc"
     type: "hysteria2"
     server: "nas.aizhzo.com"
@@ -756,13 +775,11 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "@V2rayng_mar_ket"
-      - "🇷🇺202915 | ⚡️Telegram = t.me/SOSkeyNET"
       - "@Begoo_VPN ²⁹⁰"
       - "@confiig_hub"
       - "Telegram 🆔@Cnetvpn 🇺🇲"
       - "🩵+@Azarakhsh_Proxy+🩷"
-      - "🇳🇱202941 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@vpnbaz🍂"
       - "Telegram@vpnjey"
       - "Telegram@vpnjey-1"
       - "Telegram@vpnjey-2"
@@ -775,7 +792,7 @@ proxy-groups:
       - "@KAFING_2"
       - "@KAFING_2-1"
       - "@KAFING_2-2"
-      - "@V2rayng_mar_ket-1"
+      - "@tootffarangi🍓"
       - "@Selinc"
       - "@Capoit"
       - "Telegram 🆔@Cnetvpn 🇺🇲-1"
@@ -794,13 +811,11 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "@V2rayng_mar_ket"
-      - "🇷🇺202915 | ⚡️Telegram = t.me/SOSkeyNET"
       - "@Begoo_VPN ²⁹⁰"
       - "@confiig_hub"
       - "Telegram 🆔@Cnetvpn 🇺🇲"
       - "🩵+@Azarakhsh_Proxy+🩷"
-      - "🇳🇱202941 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@vpnbaz🍂"
       - "Telegram@vpnjey"
       - "Telegram@vpnjey-1"
       - "Telegram@vpnjey-2"
@@ -813,7 +828,7 @@ proxy-groups:
       - "@KAFING_2"
       - "@KAFING_2-1"
       - "@KAFING_2-2"
-      - "@V2rayng_mar_ket-1"
+      - "@tootffarangi🍓"
       - "@Selinc"
       - "@Capoit"
       - "Telegram 🆔@Cnetvpn 🇺🇲-1"
@@ -833,13 +848,11 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "@V2rayng_mar_ket"
-      - "🇷🇺202915 | ⚡️Telegram = t.me/SOSkeyNET"
       - "@Begoo_VPN ²⁹⁰"
       - "@confiig_hub"
       - "Telegram 🆔@Cnetvpn 🇺🇲"
       - "🩵+@Azarakhsh_Proxy+🩷"
-      - "🇳🇱202941 | ⚡️Telegram = t.me/SOSkeyNET"
+      - "@vpnbaz🍂"
       - "Telegram@vpnjey"
       - "Telegram@vpnjey-1"
       - "Telegram@vpnjey-2"
@@ -852,7 +865,7 @@ proxy-groups:
       - "@KAFING_2"
       - "@KAFING_2-1"
       - "@KAFING_2-2"
-      - "@V2rayng_mar_ket-1"
+      - "@tootffarangi🍓"
       - "@Selinc"
       - "@Capoit"
       - "Telegram 🆔@Cnetvpn 🇺🇲-1"

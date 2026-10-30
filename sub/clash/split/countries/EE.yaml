@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -563,20 +597,20 @@ proxies:
       path: "/"
       headers:
         Host: "vms.lifetime59.workers.dev"
-  - name: "🇪🇪 REALITY|EE🇪🇪 | 79.98.37.106-443 | 164.51ms"
+  - name: "🇪🇪 REALITY|EE🇪🇪 | ee.h1cloud.net-25895 | 198.9ms"
     type: "vless"
-    server: "79.98.37.106"
-    port: 443
-    uuid: "846cedee-2a52-0001-a0b9-11850ead6a8b"
+    server: "ee.h1cloud.net"
+    port: 25895
+    uuid: "f90b7d43-69e2-4b46-a672-8029bc6796a2"
     udp: true
     tls: true
     network: "tcp"
-    servername: "ee-central.v8x2b.lol"
+    servername: "www.samsung.com"
     client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "USSepsAbvP9LpByHLV2xD2H8dq8GAJ6G0fINEqD4PAw"
-  - name: "🇪🇪 REALITY|EE🇪🇪 | 132.243.65.82-443 | 166.28ms"
+      public-key: "jOVKSP-bS9OkILJ8Epz8hadh6qhavCrOiJYeF0NCn0k"
+      short-id: "a73f0410d728c823"
+  - name: "🇪🇪 REALITY|EE🇪🇪 | 132.243.65.82-443 | 121.26ms"
     type: "vless"
     server: "132.243.65.82"
     port: 443
@@ -629,17 +663,20 @@ proxies:
     reality-opts:
       public-key: "l1mx_plNc2oiWxJCcZLh3SGfFU-5QxYpgQ__Ea59WEg"
       short-id: "4a7b1c8d"
-  - name: "🇪🇪 EE🇪🇪 | ee-2e06d85dc0.shamanapp.online-34451 | 366.32ms"
+  - name: "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-79.98.37.106:443"
     type: "vless"
-    server: "ee-2e06d85dc0.shamanapp.online"
-    port: 34451
-    uuid: "b3a11068-1a7e-4643-85de-7c82cce46943"
+    server: "79.98.37.106"
+    port: 443
+    uuid: "846cedee-2a52-0001-a0b9-11850ead6a8b"
     udp: true
     tls: true
-    network: "xhttp"
-    servername: "ee-2e06d85dc0.shamanapp.online"
+    network: "tcp"
+    servername: "ee-central.v8x2b.lol"
     client-fingerprint: "chrome"
-  - name: "🇪🇪 EE🇪🇪 | ee-2e06d85dc0.shamanapp.online-34451 | 371.39ms"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "USSepsAbvP9LpByHLV2xD2H8dq8GAJ6G0fINEqD4PAw"
+  - name: "🇪🇪 EE🇪🇪 | ee-2e06d85dc0.shamanapp.online-34451 | 799.58ms"
     type: "vless"
     server: "ee-2e06d85dc0.shamanapp.online"
     port: 34451
@@ -651,6 +688,23 @@ proxies:
     alpn:
       - "h2"
       - "http/1.1"
+  - name: "🇪🇪 EE🇪🇪 | 13.143.239.32-443 | 113.04ms"
+    type: "vless"
+    server: "13.143.239.32"
+    port: 443
+    uuid: "9d785de7-9f8f-4779-8591-f98aab3edd6b"
+    udp: true
+    tls: false
+    network: "tcp"
+  - name: "🇪🇪 EE🇪🇪 | ee-2e06d85dc0.shamanapp.online-34451 | 403.32ms"
+    type: "vless"
+    server: "ee-2e06d85dc0.shamanapp.online"
+    port: 34451
+    uuid: "5d9fb46f-c4bc-4d6e-9a26-a4d5f51abd28"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "ee-2e06d85dc0.shamanapp.online"
   - name: "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-146.19.143.218:443-1"
     type: "vless"
     server: "146.19.143.218"
@@ -664,7 +718,7 @@ proxies:
     reality-opts:
       public-key: "l1mx_plNc2oiWxJCcZLh3SGfFU-5QxYpgQ__Ea59WEg"
       short-id: "4a7b1c8d"
-  - name: "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-79.98.37.106:443"
+  - name: "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-79.98.37.106:443-1"
     type: "vless"
     server: "79.98.37.106"
     port: 443
@@ -677,15 +731,16 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "USSepsAbvP9LpByHLV2xD2H8dq8GAJ6G0fINEqD4PAw"
-  - name: "🇪🇪 🆔ar14n24b 🔒 VL-XHTTP-N/A 🇪🇪 EE 380ms"
+  - name: "🇪🇪 🆔ar14n24b 🔒 VL-XHTTP-N/A ❔ XX 160ms"
     type: "vless"
-    server: "ee-2e06d85dc0.shamanapp.online"
+    server: "31.56.187.35"
     port: 34451
     uuid: "5d9fb46f-c4bc-4d6e-9a26-a4d5f51abd28"
     udp: true
     tls: true
     network: "xhttp"
     servername: "ee-2e06d85dc0.shamanapp.online"
+    client-fingerprint: "firefox"
   - name: "🇪🇪 @DeltaKroneckerGithub"
     type: "trojan"
     server: "45.139.194.60"
@@ -785,19 +840,6 @@ proxies:
     reality-opts:
       public-key: "l1mx_plNc2oiWxJCcZLh3SGfFU-5QxYpgQ__Ea59WEg"
       short-id: "4a7b1c8d"
-  - name: "🇪🇪 United States"
-    type: "vless"
-    server: "ee.h1cloud.net"
-    port: 25895
-    uuid: "f90b7d43-69e2-4b46-a672-8029bc6796a2"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.samsung.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "jOVKSP-bS9OkILJ8Epz8hadh6qhavCrOiJYeF0NCn0k"
-      short-id: "a73f0410d728c823"
   - name: "🇪🇪 @DeltaKroneckerGithub-10"
     type: "vless"
     server: "13.143.176.83"
@@ -870,16 +912,18 @@ proxy-groups:
       - "🇪🇪 🔒 TR-WS-TLS 🇪🇪 EE-23.230.179.152:443"
       - "🇪🇪 🔒 VL-WS-TLS 🇪🇪 EE-45.80.108.236:443"
       - "🇪🇪 🔒 VL-WS-NONE 🇪🇪 EE-185.159.247.30:8880"
-      - "🇪🇪 REALITY|EE🇪🇪 | 79.98.37.106-443 | 164.51ms"
-      - "🇪🇪 REALITY|EE🇪🇪 | 132.243.65.82-443 | 166.28ms"
+      - "🇪🇪 REALITY|EE🇪🇪 | ee.h1cloud.net-25895 | 198.9ms"
+      - "🇪🇪 REALITY|EE🇪🇪 | 132.243.65.82-443 | 121.26ms"
       - "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-13.143.239.125:443"
       - "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-132.243.65.161:443"
       - "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-146.19.143.218:443"
-      - "🇪🇪 EE🇪🇪 | ee-2e06d85dc0.shamanapp.online-34451 | 366.32ms"
-      - "🇪🇪 EE🇪🇪 | ee-2e06d85dc0.shamanapp.online-34451 | 371.39ms"
-      - "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-146.19.143.218:443-1"
       - "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-79.98.37.106:443"
-      - "🇪🇪 🆔ar14n24b 🔒 VL-XHTTP-N/A 🇪🇪 EE 380ms"
+      - "🇪🇪 EE🇪🇪 | ee-2e06d85dc0.shamanapp.online-34451 | 799.58ms"
+      - "🇪🇪 EE🇪🇪 | 13.143.239.32-443 | 113.04ms"
+      - "🇪🇪 EE🇪🇪 | ee-2e06d85dc0.shamanapp.online-34451 | 403.32ms"
+      - "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-146.19.143.218:443-1"
+      - "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-79.98.37.106:443-1"
+      - "🇪🇪 🆔ar14n24b 🔒 VL-XHTTP-N/A ❔ XX 160ms"
       - "🇪🇪 @DeltaKroneckerGithub"
       - "🇪🇪 @DeltaKroneckerGithub-1"
       - "🇪🇪 @DeltaKroneckerGithub-2"
@@ -891,7 +935,6 @@ proxy-groups:
       - "🇪🇪 @DeltaKroneckerGithub-8"
       - "🇪🇪 @DeltaKroneckerGithub-9"
       - "🇪🇪 Brazil"
-      - "🇪🇪 United States"
       - "🇪🇪 @DeltaKroneckerGithub-10"
       - "🇪🇪 @DeltaKroneckerGithub-11"
       - "🇪🇪 >>@oneclickvpnkeys::EE"
@@ -911,16 +954,18 @@ proxy-groups:
       - "🇪🇪 🔒 TR-WS-TLS 🇪🇪 EE-23.230.179.152:443"
       - "🇪🇪 🔒 VL-WS-TLS 🇪🇪 EE-45.80.108.236:443"
       - "🇪🇪 🔒 VL-WS-NONE 🇪🇪 EE-185.159.247.30:8880"
-      - "🇪🇪 REALITY|EE🇪🇪 | 79.98.37.106-443 | 164.51ms"
-      - "🇪🇪 REALITY|EE🇪🇪 | 132.243.65.82-443 | 166.28ms"
+      - "🇪🇪 REALITY|EE🇪🇪 | ee.h1cloud.net-25895 | 198.9ms"
+      - "🇪🇪 REALITY|EE🇪🇪 | 132.243.65.82-443 | 121.26ms"
       - "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-13.143.239.125:443"
       - "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-132.243.65.161:443"
       - "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-146.19.143.218:443"
-      - "🇪🇪 EE🇪🇪 | ee-2e06d85dc0.shamanapp.online-34451 | 366.32ms"
-      - "🇪🇪 EE🇪🇪 | ee-2e06d85dc0.shamanapp.online-34451 | 371.39ms"
-      - "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-146.19.143.218:443-1"
       - "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-79.98.37.106:443"
-      - "🇪🇪 🆔ar14n24b 🔒 VL-XHTTP-N/A 🇪🇪 EE 380ms"
+      - "🇪🇪 EE🇪🇪 | ee-2e06d85dc0.shamanapp.online-34451 | 799.58ms"
+      - "🇪🇪 EE🇪🇪 | 13.143.239.32-443 | 113.04ms"
+      - "🇪🇪 EE🇪🇪 | ee-2e06d85dc0.shamanapp.online-34451 | 403.32ms"
+      - "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-146.19.143.218:443-1"
+      - "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-79.98.37.106:443-1"
+      - "🇪🇪 🆔ar14n24b 🔒 VL-XHTTP-N/A ❔ XX 160ms"
       - "🇪🇪 @DeltaKroneckerGithub"
       - "🇪🇪 @DeltaKroneckerGithub-1"
       - "🇪🇪 @DeltaKroneckerGithub-2"
@@ -932,7 +977,6 @@ proxy-groups:
       - "🇪🇪 @DeltaKroneckerGithub-8"
       - "🇪🇪 @DeltaKroneckerGithub-9"
       - "🇪🇪 Brazil"
-      - "🇪🇪 United States"
       - "🇪🇪 @DeltaKroneckerGithub-10"
       - "🇪🇪 @DeltaKroneckerGithub-11"
       - "🇪🇪 >>@oneclickvpnkeys::EE"
@@ -953,16 +997,18 @@ proxy-groups:
       - "🇪🇪 🔒 TR-WS-TLS 🇪🇪 EE-23.230.179.152:443"
       - "🇪🇪 🔒 VL-WS-TLS 🇪🇪 EE-45.80.108.236:443"
       - "🇪🇪 🔒 VL-WS-NONE 🇪🇪 EE-185.159.247.30:8880"
-      - "🇪🇪 REALITY|EE🇪🇪 | 79.98.37.106-443 | 164.51ms"
-      - "🇪🇪 REALITY|EE🇪🇪 | 132.243.65.82-443 | 166.28ms"
+      - "🇪🇪 REALITY|EE🇪🇪 | ee.h1cloud.net-25895 | 198.9ms"
+      - "🇪🇪 REALITY|EE🇪🇪 | 132.243.65.82-443 | 121.26ms"
       - "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-13.143.239.125:443"
       - "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-132.243.65.161:443"
       - "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-146.19.143.218:443"
-      - "🇪🇪 EE🇪🇪 | ee-2e06d85dc0.shamanapp.online-34451 | 366.32ms"
-      - "🇪🇪 EE🇪🇪 | ee-2e06d85dc0.shamanapp.online-34451 | 371.39ms"
-      - "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-146.19.143.218:443-1"
       - "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-79.98.37.106:443"
-      - "🇪🇪 🆔ar14n24b 🔒 VL-XHTTP-N/A 🇪🇪 EE 380ms"
+      - "🇪🇪 EE🇪🇪 | ee-2e06d85dc0.shamanapp.online-34451 | 799.58ms"
+      - "🇪🇪 EE🇪🇪 | 13.143.239.32-443 | 113.04ms"
+      - "🇪🇪 EE🇪🇪 | ee-2e06d85dc0.shamanapp.online-34451 | 403.32ms"
+      - "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-146.19.143.218:443-1"
+      - "🇪🇪 🔒 VL-TCP-RLT 🇪🇪 EE-79.98.37.106:443-1"
+      - "🇪🇪 🆔ar14n24b 🔒 VL-XHTTP-N/A ❔ XX 160ms"
       - "🇪🇪 @DeltaKroneckerGithub"
       - "🇪🇪 @DeltaKroneckerGithub-1"
       - "🇪🇪 @DeltaKroneckerGithub-2"
@@ -974,7 +1020,6 @@ proxy-groups:
       - "🇪🇪 @DeltaKroneckerGithub-8"
       - "🇪🇪 @DeltaKroneckerGithub-9"
       - "🇪🇪 Brazil"
-      - "🇪🇪 United States"
       - "🇪🇪 @DeltaKroneckerGithub-10"
       - "🇪🇪 @DeltaKroneckerGithub-11"
       - "🇪🇪 >>@oneclickvpnkeys::EE"

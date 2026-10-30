@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -531,19 +565,7 @@ proxies:
       path: "/"
       headers:
         Host: "shuma.ccwu.cc"
-  - name: "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 273.95ms"
-    type: "vless"
-    server: "77.91.68.70"
-    port: 55983
-    uuid: "f667a096-5231-4cfb-8759-92bb32473139"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "yahoo.com"
-    reality-opts:
-      public-key: "nWQ7b9l9X6N3PrXLgIzOvMM8iSYrqjVHEb9ikWxqYSg"
-      short-id: "0e"
-  - name: "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 261.51ms"
+  - name: "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 262.3ms"
     type: "vless"
     server: "77.91.68.70"
     port: 55983
@@ -556,47 +578,18 @@ proxies:
     reality-opts:
       public-key: "nWQ7b9l9X6N3PrXLgIzOvMM8iSYrqjVHEb9ikWxqYSg"
       short-id: "0e"
-  - name: "🇦🇲 REALITY|AM🇦🇲 | ar.zanzelo.ir-3022 | 430.18ms"
+  - name: "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 254.05ms"
     type: "vless"
-    server: "ar.zanzelo.ir"
-    port: 3022
-    uuid: "ce334334-3ab8-45a2-8af7-f151f413e402"
+    server: "77.91.68.70"
+    port: 55983
+    uuid: "f667a096-5231-4cfb-8759-92bb32473139"
     udp: true
     tls: true
     network: "tcp"
-    servername: "play.google.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
+    servername: "yahoo.com"
     reality-opts:
-      public-key: "KVrKzcMWnFc8-s2Cre3PUS3ojMvugd1BxS9on54vBW0"
-      short-id: "f2e1c0296f7f5a8a"
-  - name: "🇦🇲 REALITY|AM🇦🇲 | ru17.oshost.network-443 | 344.69ms"
-    type: "vless"
-    server: "ru17.oshost.network"
-    port: 443
-    uuid: "afbd410e-1663-4f40-9d3b-df5117aa23ca"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "ru17.oshost.network"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "g--okRGkuStMgPF1OoFz9xoJEQMEWD6KAKzvUUA2GHI"
-      short-id: "3d41300b11960f87"
-  - name: "🇦🇲 REALITY|AM🇦🇲 | 194.36.36.152-443 | 271.57ms"
-    type: "vless"
-    server: "194.36.36.152"
-    port: 443
-    uuid: "4b1be712-774c-4b65-8491-a3339e124a70"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "am1.pc-nodalys.top"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "v36yrZJ-5Zikx9eh_SXaoDS2GuobOA4_WLagBVO0vxk"
-      short-id: "a9c3f7e2"
+      public-key: "nWQ7b9l9X6N3PrXLgIzOvMM8iSYrqjVHEb9ikWxqYSg"
+      short-id: "0e"
   - name: "🇦🇲 🔒 VL-TCP-RLT 🇦🇲 AM-185.202.113.108:443"
     type: "vless"
     server: "185.202.113.108"
@@ -610,18 +603,19 @@ proxies:
     reality-opts:
       public-key: "SfZ0hMKMM1KUDFQnnrDLRGru6d4tlWdOBjCtC9R9V3s"
       short-id: "b6"
-  - name: "🇦🇲 RELAY🚩 | shuma.ccwu.cc-443 | 231.32ms"
+  - name: "🇦🇲 🔒 VL-TCP-RLT 🇦🇲 AM-194.36.36.152:443"
     type: "vless"
-    server: "2.56.204.183"
+    server: "194.36.36.152"
     port: 443
-    uuid: "c18b978e-1c4e-415c-8bea-07942b563a64"
+    uuid: "4b1be712-774c-4b65-8491-a3339e124a70"
     udp: true
     tls: true
-    network: "ws"
-    servername: "shuma.ccwu.cc"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/"
+    network: "tcp"
+    servername: "am1.pc-nodalys.top"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "v36yrZJ-5Zikx9eh_SXaoDS2GuobOA4_WLagBVO0vxk"
+      short-id: "a9c3f7e2"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -639,13 +633,10 @@ proxy-groups:
       - "🇦🇲 🔒 VL-WS-NONE 🇦🇲 AM-194.36.37.59:10004"
       - "🇦🇲 🔒 VL-WS-TLS 🇦🇲 AM-2.56.207.67:443"
       - "🇦🇲 🔒 VL-WS-TLS 🇦🇲 AM-2.56.204.183:443"
-      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 273.95ms"
-      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 261.51ms"
-      - "🇦🇲 REALITY|AM🇦🇲 | ar.zanzelo.ir-3022 | 430.18ms"
-      - "🇦🇲 REALITY|AM🇦🇲 | ru17.oshost.network-443 | 344.69ms"
-      - "🇦🇲 REALITY|AM🇦🇲 | 194.36.36.152-443 | 271.57ms"
+      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 262.3ms"
+      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 254.05ms"
       - "🇦🇲 🔒 VL-TCP-RLT 🇦🇲 AM-185.202.113.108:443"
-      - "🇦🇲 RELAY🚩 | shuma.ccwu.cc-443 | 231.32ms"
+      - "🇦🇲 🔒 VL-TCP-RLT 🇦🇲 AM-194.36.36.152:443"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -657,13 +648,10 @@ proxy-groups:
       - "🇦🇲 🔒 VL-WS-NONE 🇦🇲 AM-194.36.37.59:10004"
       - "🇦🇲 🔒 VL-WS-TLS 🇦🇲 AM-2.56.207.67:443"
       - "🇦🇲 🔒 VL-WS-TLS 🇦🇲 AM-2.56.204.183:443"
-      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 273.95ms"
-      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 261.51ms"
-      - "🇦🇲 REALITY|AM🇦🇲 | ar.zanzelo.ir-3022 | 430.18ms"
-      - "🇦🇲 REALITY|AM🇦🇲 | ru17.oshost.network-443 | 344.69ms"
-      - "🇦🇲 REALITY|AM🇦🇲 | 194.36.36.152-443 | 271.57ms"
+      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 262.3ms"
+      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 254.05ms"
       - "🇦🇲 🔒 VL-TCP-RLT 🇦🇲 AM-185.202.113.108:443"
-      - "🇦🇲 RELAY🚩 | shuma.ccwu.cc-443 | 231.32ms"
+      - "🇦🇲 🔒 VL-TCP-RLT 🇦🇲 AM-194.36.36.152:443"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -676,13 +664,10 @@ proxy-groups:
       - "🇦🇲 🔒 VL-WS-NONE 🇦🇲 AM-194.36.37.59:10004"
       - "🇦🇲 🔒 VL-WS-TLS 🇦🇲 AM-2.56.207.67:443"
       - "🇦🇲 🔒 VL-WS-TLS 🇦🇲 AM-2.56.204.183:443"
-      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 273.95ms"
-      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 261.51ms"
-      - "🇦🇲 REALITY|AM🇦🇲 | ar.zanzelo.ir-3022 | 430.18ms"
-      - "🇦🇲 REALITY|AM🇦🇲 | ru17.oshost.network-443 | 344.69ms"
-      - "🇦🇲 REALITY|AM🇦🇲 | 194.36.36.152-443 | 271.57ms"
+      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 262.3ms"
+      - "🇦🇲 REALITY|AM🇦🇲 | 77.91.68.70-55983 | 254.05ms"
       - "🇦🇲 🔒 VL-TCP-RLT 🇦🇲 AM-185.202.113.108:443"
-      - "🇦🇲 RELAY🚩 | shuma.ccwu.cc-443 | 231.32ms"
+      - "🇦🇲 🔒 VL-TCP-RLT 🇦🇲 AM-194.36.36.152:443"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"

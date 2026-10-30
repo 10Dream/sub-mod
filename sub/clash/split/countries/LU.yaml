@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -520,7 +554,7 @@ proxies:
       path: "/assignment?ed"
       headers:
         Host: "www.volumeroot.com"
-  - name: "🇱🇺 RELAY🚩 | www.volumeroot.com-443 | 10.2ms"
+  - name: "🇱🇺 RELAY🚩 | www.volumeroot.com-443 | 3.01ms"
     type: "trojan"
     server: "188.42.145.180"
     port: 443
@@ -533,7 +567,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.volumeroot.com"
-  - name: "🇱🇺 RELAY🚩 | www.volumeroot.com-443 | 10.13ms"
+  - name: "🇱🇺 RELAY🚩 | www.volumeroot.com-443 | 3.2ms"
     type: "trojan"
     server: "188.42.145.180"
     port: 443
@@ -544,7 +578,7 @@ proxies:
     servername: "www.volumeroot.com"
     ws-opts:
       path: "/assignment"
-  - name: "🇱🇺 RELAY🚩 | wWw.Volumeroot.cOm.-443 | 11.99ms"
+  - name: "🇱🇺 RELAY🚩 | wWw.Volumeroot.cOm.-443 | 3.22ms"
     type: "trojan"
     server: "188.42.145.180"
     port: 443
@@ -557,7 +591,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.volumerOot.coM."
-  - name: "🇱🇺 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.volumeroot.com&type=ws&allowInsecure=0&sni=www.volumeroot.com#RELAY🚩 | www.volumeroot.com-443 | 13.27ms"
+  - name: "🇱🇺 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.volumeroot.com&type=ws&allowInsecure=0&sni=www.volumeroot.com#RELAY🚩 | www.volumeroot.com-443 | 2.17ms"
     type: "trojan"
     server: "188.42.145.180"
     port: 443
@@ -581,10 +615,10 @@ proxy-groups:
     proxies:
       - "🇱🇺 🔒 VL-WS-TLS 🇱🇺 LU-107.189.2.206:8443"
       - "🇱🇺 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&allowInsecure=0#🔒 TR-WS-TLS 🇱🇺 LU-188.42.145.180:443"
-      - "🇱🇺 RELAY🚩 | www.volumeroot.com-443 | 10.2ms"
-      - "🇱🇺 RELAY🚩 | www.volumeroot.com-443 | 10.13ms"
-      - "🇱🇺 RELAY🚩 | wWw.Volumeroot.cOm.-443 | 11.99ms"
-      - "🇱🇺 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.volumeroot.com&type=ws&allowInsecure=0&sni=www.volumeroot.com#RELAY🚩 | www.volumeroot.com-443 | 13.27ms"
+      - "🇱🇺 RELAY🚩 | www.volumeroot.com-443 | 3.01ms"
+      - "🇱🇺 RELAY🚩 | www.volumeroot.com-443 | 3.2ms"
+      - "🇱🇺 RELAY🚩 | wWw.Volumeroot.cOm.-443 | 3.22ms"
+      - "🇱🇺 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.volumeroot.com&type=ws&allowInsecure=0&sni=www.volumeroot.com#RELAY🚩 | www.volumeroot.com-443 | 2.17ms"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -595,10 +629,10 @@ proxy-groups:
     proxies:
       - "🇱🇺 🔒 VL-WS-TLS 🇱🇺 LU-107.189.2.206:8443"
       - "🇱🇺 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&allowInsecure=0#🔒 TR-WS-TLS 🇱🇺 LU-188.42.145.180:443"
-      - "🇱🇺 RELAY🚩 | www.volumeroot.com-443 | 10.2ms"
-      - "🇱🇺 RELAY🚩 | www.volumeroot.com-443 | 10.13ms"
-      - "🇱🇺 RELAY🚩 | wWw.Volumeroot.cOm.-443 | 11.99ms"
-      - "🇱🇺 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.volumeroot.com&type=ws&allowInsecure=0&sni=www.volumeroot.com#RELAY🚩 | www.volumeroot.com-443 | 13.27ms"
+      - "🇱🇺 RELAY🚩 | www.volumeroot.com-443 | 3.01ms"
+      - "🇱🇺 RELAY🚩 | www.volumeroot.com-443 | 3.2ms"
+      - "🇱🇺 RELAY🚩 | wWw.Volumeroot.cOm.-443 | 3.22ms"
+      - "🇱🇺 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.volumeroot.com&type=ws&allowInsecure=0&sni=www.volumeroot.com#RELAY🚩 | www.volumeroot.com-443 | 2.17ms"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -610,10 +644,10 @@ proxy-groups:
     proxies:
       - "🇱🇺 🔒 VL-WS-TLS 🇱🇺 LU-107.189.2.206:8443"
       - "🇱🇺 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&allowInsecure=0#🔒 TR-WS-TLS 🇱🇺 LU-188.42.145.180:443"
-      - "🇱🇺 RELAY🚩 | www.volumeroot.com-443 | 10.2ms"
-      - "🇱🇺 RELAY🚩 | www.volumeroot.com-443 | 10.13ms"
-      - "🇱🇺 RELAY🚩 | wWw.Volumeroot.cOm.-443 | 11.99ms"
-      - "🇱🇺 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.volumeroot.com&type=ws&allowInsecure=0&sni=www.volumeroot.com#RELAY🚩 | www.volumeroot.com-443 | 13.27ms"
+      - "🇱🇺 RELAY🚩 | www.volumeroot.com-443 | 3.01ms"
+      - "🇱🇺 RELAY🚩 | www.volumeroot.com-443 | 3.2ms"
+      - "🇱🇺 RELAY🚩 | wWw.Volumeroot.cOm.-443 | 3.22ms"
+      - "🇱🇺 Telegram---PLANB_NET---PLANB_NET---PLANB_NET---PLANB_NET&security=tls&insecure=0&host=www.volumeroot.com&type=ws&allowInsecure=0&sni=www.volumeroot.com#RELAY🚩 | www.volumeroot.com-443 | 2.17ms"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"

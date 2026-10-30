@@ -1,12 +1,18 @@
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: "strict"
+profile:
+  store-selected: true
+  store-fake-ip: true
 port: 7892
 socks-port: 7891
 mixed-port: 7890
 allow-lan: true
 mode: "rule"
-log-level: "info"
+log-level: "warning"
 external-controller: "0.0.0.0:9090"
 secret: ""
-ipv6: false
+ipv6: true
 dns:
   enable: true
   listen: "0.0.0.0:53"
@@ -121,14 +127,42 @@ dns:
   direct-nameserver-follow-policy: true
 sniffer:
   enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
+  force-dns-mapping: false
+  parse-pure-ip: false
   override-destination: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - "8080-8880"
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
 tun:
   enable: true
-  stack: "mixed"
+  stack: "mips"
+  dns-mode: "hijack"
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
   auto-route: true
   auto-detect-interface: true
+  strict-route: true
+  route-exclude-address:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
+    - "::1/128"
+    - "fc00::/7"
+    - "fe80::/10"
 rule-providers:
   DownloadManagers:
     type: "http"
@@ -599,6 +633,15 @@ proxies:
     tls: true
     network: "tcp"
     servername: "api.discovergreatjobsandadvanceyourcareer.com"
+  - name: "🇪🇸 66.163.118.166"
+    type: "trojan"
+    server: "66.163.118.166"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "learn.discovergreatjobsandadvanceyourcareer.com"
   - name: "🇪🇸 🔒 SS-TCP-NA 🇪🇸 ES-5.188.181.201:9014"
     type: "ss"
     server: "5.188.181.201"
@@ -606,24 +649,6 @@ proxies:
     cipher: "aes-256-cfb"
     password: "KnJGad3FqTvjqbaX"
     udp: true
-  - name: "🇪🇸 ES🇪🇸 | resources.discovergreatjobsandadvanceyourcareer.com-443 | 201.32ms"
-    type: "trojan"
-    server: "66.163.118.251"
-    port: 443
-    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "resources.discovergreatjobsandadvanceyourcareer.com"
-  - name: "🇪🇸 ES🇪🇸 | www.discovergreatjobsandadvanceyourcareer.com-443 | 187.01ms"
-    type: "trojan"
-    server: "66.163.118.131"
-    port: 443
-    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.discovergreatjobsandadvanceyourcareer.com"
   - name: "🇪🇸 🔒 VM-TCP-NA 🇪🇸 ES-85.90.217.42:22324"
     type: "vmess"
     server: "85.90.217.42"
@@ -632,7 +657,34 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇪🇸 REALITY|ES🇪🇸 | 193.238.154.78-443 | 161.45ms"
+  - name: "🇪🇸 REALITY|ES🇪🇸 | 83.97.79.93-8443 | 78.62ms"
+    type: "vless"
+    server: "83.97.79.93"
+    port: 8443
+    uuid: "e0216964-ffa1-4d39-82c4-0e40879a470d"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "ger.nullo.pro"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "e8vusEkL9FTC7oxFCp8biOWMFH-e-1IN21V6YNynGDg"
+      short-id: "6350d1647a4880"
+  - name: "🇪🇸 REALITY|ES🇪🇸 | 83.147.18.3-443 | 77.04ms"
+    type: "vless"
+    server: "83.147.18.3"
+    port: 443
+    uuid: "9f61cdf4-810d-4052-bbc7-2da0c8e20104"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "3iVJAIGPx6JMlhlRmfpGrHkSmLpHJ4CPvBBH7KsFrFA"
+      short-id: "fd8cf7e1173f0edb"
+  - name: "🇪🇸 REALITY|ES🇪🇸 | 193.238.154.78-443 | 110.79ms"
     type: "vless"
     server: "193.238.154.78"
     port: 443
@@ -645,19 +697,21 @@ proxies:
     reality-opts:
       public-key: "4eE3K8Eac-ELze-LwRyJolqmhPqgCVqwQM1DKu6i0Ts"
       short-id: "e93d46ee3735069e"
-  - name: "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.6-443 | 170.7ms"
+  - name: "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.8-8443 | 101.25ms"
     type: "vless"
-    server: "170.168.97.6"
-    port: 443
-    uuid: "1e4668ca-6526-84ac-2a53-28bbc209da13"
+    server: "170.168.97.8"
+    port: 8443
+    uuid: "4350213a-b4e7-262a-0bd7-bd16957cf71a"
     udp: true
     tls: true
-    network: "xhttp"
-    servername: "cdn.steamstatic.com"
+    network: "grpc"
+    servername: "www.hp.com"
     client-fingerprint: "chrome"
     reality-opts:
-      public-key: "jYD82Xg6TRu2lR0XINMWxKb8dNycDwF-H28ZrtiafUo"
-  - name: "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.6-443 | 159.1ms"
+      public-key: "QzFNQqkvBnDKIyjXUHJQe9jruaw9G5AV44vDC-qvnlo"
+    grpc-opts:
+      grpc-service-name: "TunService"
+  - name: "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.6-443 | 101.4ms"
     type: "vless"
     server: "170.168.97.6"
     port: 443
@@ -800,6 +854,16 @@ proxies:
     network: "grpc"
     grpc-opts:
       grpc-service-name: "vless"
+  - name: "🇪🇸 🔒 VL-GRPC-NONE 🇪🇸 ES-213.182.201.15:3090"
+    type: "vless"
+    server: "213.182.201.15"
+    port: 3090
+    uuid: "f8b74d3c-4c21-4667-a3e7-412d8a5598f6"
+    udp: true
+    tls: false
+    network: "grpc"
+    grpc-opts:
+      grpc-service-name: "vless"
   - name: "🇪🇸 🔒 VL-GRPC-TLS 🇪🇸 ES-46.28.71.135:443"
     type: "vless"
     server: "46.28.71.135"
@@ -811,17 +875,7 @@ proxies:
     servername: "l97bke0sf1.hat.onl"
     grpc-opts:
       grpc-service-name: "v1.segment.UWfv4bkH4bz1Hs3u.ts"
-  - name: "🇪🇸 🔒 VL-GRPC-NONE 🇪🇸 ES-213.182.201.15:3090"
-    type: "vless"
-    server: "213.182.201.15"
-    port: 3090
-    uuid: "f8b74d3c-4c21-4667-a3e7-412d8a5598f6"
-    udp: true
-    tls: false
-    network: "grpc"
-    grpc-opts:
-      grpc-service-name: "vless"
-  - name: "🇪🇸 US🇺🇸 | mygptagent.org-443 | 266.2ms"
+  - name: "🇪🇸 DE🇩🇪 | mygptagent.org-443 | 139.31ms"
     type: "vmess"
     server: "66.163.118.73"
     port: 443
@@ -829,7 +883,7 @@ proxies:
     alterId: 0
     cipher: "auto"
     udp: true
-  - name: "🇪🇸 ES🇪🇸 | 213.182.201.139-3090 | 132.46ms"
+  - name: "🇪🇸 ES🇪🇸 | 213.182.201.139-3090 | 92.45ms"
     type: "vless"
     server: "213.182.201.139"
     port: 3090
@@ -839,7 +893,7 @@ proxies:
     network: "grpc"
     grpc-opts:
       grpc-service-name: "vless"
-  - name: "🇪🇸 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 7ms"
+  - name: "🇪🇸 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms"
     type: "trojan"
     server: "109.234.211.232"
     port: 443
@@ -852,7 +906,7 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "🇪🇸 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms"
+  - name: "🇪🇸 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-1"
     type: "trojan"
     server: "109.234.211.232"
     port: 443
@@ -865,28 +919,15 @@ proxies:
       path: "/w4e5yh0p945y3"
       headers:
         Host: "nat11.outsidemyheart.space"
-  - name: "🇪🇸 🆔ar14n24b 🔒 VL-TCP- ❔ XX down"
-    type: "vless"
-    server: "83.147.18.3"
-    port: 443
-    uuid: "9f61cdf4-810d-4052-bbc7-2da0c8e20104"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "3iVJAIGPx6JMlhlRmfpGrHkSmLpHJ4CPvBBH7KsFrFA"
-      short-id: "fd8cf7e1173f0edb"
-  - name: "🇪🇸 🆔ar14n24b 🔓 TR--N/A ❔ XX down"
+  - name: "🇪🇸 🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 141ms"
     type: "trojan"
-    server: "66.163.118.62"
+    server: "66.163.118.131"
     port: 443
     password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
     udp: true
     tls: true
     network: "tcp"
+    servername: "www.discovergreatjobsandadvanceyourcareer.com"
   - name: "🇪🇸 @DeltaKroneckerGithub"
     type: "trojan"
     server: "65.20.102.54"
@@ -897,6 +938,15 @@ proxies:
     network: "tcp"
     servername: "www.gpt123.one"
   - name: "🇪🇸 @DeltaKroneckerGithub-1"
+    type: "trojan"
+    server: "66.163.118.251"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "resources.discovergreatjobsandadvanceyourcareer.com"
+  - name: "🇪🇸 @DeltaKroneckerGithub-2"
     type: "trojan"
     server: "212.227.144.37"
     port: 8443
@@ -909,16 +959,15 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "🇪🇸 @DeltaKroneckerGithub-2"
+  - name: "🇪🇸 @DeltaKroneckerGithub-3"
     type: "trojan"
-    server: "66.163.118.166"
+    server: "66.163.118.62"
     port: 443
     password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
     udp: true
     tls: true
     network: "tcp"
-    servername: "learn.discovergreatjobsandadvanceyourcareer.com"
-  - name: "🇪🇸 @DeltaKroneckerGithub-3"
+  - name: "🇪🇸 @DeltaKroneckerGithub-4"
     type: "trojan"
     server: "185.114.72.31"
     port: 2053
@@ -994,7 +1043,7 @@ proxies:
     servername: "www.calmlunch.com"
     ws-opts:
       path: "/assignment"
-  - name: "🇪🇸 @DeltaKroneckerGithub-4"
+  - name: "🇪🇸 @DeltaKroneckerGithub-5"
     type: "vless"
     server: "46.28.71.247"
     port: 443
@@ -1007,7 +1056,7 @@ proxies:
     reality-opts:
       public-key: "v4MuZIvFrTPT5GHMSaPryUAbIZlLstmsUTzmC1E-JTE"
       short-id: "0dfc23fe80778c00"
-  - name: "🇪🇸 @DeltaKroneckerGithub-5"
+  - name: "🇪🇸 @DeltaKroneckerGithub-6"
     type: "vless"
     server: "212.227.235.66"
     port: 2053
@@ -1020,7 +1069,7 @@ proxies:
     reality-opts:
       public-key: "7Y6Xb5Ql_03K25x8yKUSOKI2JTOMyv2nyCcFza90uxk"
       short-id: "29e8dcd2b37aaa7f"
-  - name: "🇪🇸 @DeltaKroneckerGithub-6"
+  - name: "🇪🇸 @DeltaKroneckerGithub-7"
     type: "vless"
     server: "85.90.217.42"
     port: 443
@@ -1028,7 +1077,7 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
-  - name: "🇪🇸 @DeltaKroneckerGithub-7"
+  - name: "🇪🇸 @DeltaKroneckerGithub-8"
     type: "vless"
     server: "es.srv.dvzh.net"
     port: 443
@@ -1042,7 +1091,7 @@ proxies:
     reality-opts:
       public-key: "9GEc6lOjnGQyyE1951OZSBMWt4uCXsOjKyj9fysxHH0"
       short-id: "e0ccc8c2f487d913"
-  - name: "🇪🇸 @DeltaKroneckerGithub-8"
+  - name: "🇪🇸 @DeltaKroneckerGithub-9"
     type: "vless"
     server: "83.147.18.75"
     port: 443
@@ -1093,13 +1142,14 @@ proxy-groups:
       - "🇪🇸 🔒 VL-WS-TLS 🇪🇸 ES-95.85.89.70:81"
       - "🇪🇸 🔒 TR-TCP-TLS 🇪🇸 ES-66.163.118.62:443"
       - "🇪🇸 🔒 TR-TCP-TLS 🇪🇸 ES-66.163.118.244:443"
+      - "🇪🇸 66.163.118.166"
       - "🇪🇸 🔒 SS-TCP-NA 🇪🇸 ES-5.188.181.201:9014"
-      - "🇪🇸 ES🇪🇸 | resources.discovergreatjobsandadvanceyourcareer.com-443 | 201.32ms"
-      - "🇪🇸 ES🇪🇸 | www.discovergreatjobsandadvanceyourcareer.com-443 | 187.01ms"
       - "🇪🇸 🔒 VM-TCP-NA 🇪🇸 ES-85.90.217.42:22324"
-      - "🇪🇸 REALITY|ES🇪🇸 | 193.238.154.78-443 | 161.45ms"
-      - "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.6-443 | 170.7ms"
-      - "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.6-443 | 159.1ms"
+      - "🇪🇸 REALITY|ES🇪🇸 | 83.97.79.93-8443 | 78.62ms"
+      - "🇪🇸 REALITY|ES🇪🇸 | 83.147.18.3-443 | 77.04ms"
+      - "🇪🇸 REALITY|ES🇪🇸 | 193.238.154.78-443 | 110.79ms"
+      - "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.8-8443 | 101.25ms"
+      - "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.6-443 | 101.4ms"
       - "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-83.97.79.93:8443"
       - "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-212.227.235.66:2053"
       - "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-193.238.154.78:443"
@@ -1110,28 +1160,28 @@ proxy-groups:
       - "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-46.28.71.247:443"
       - "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-179.255.189.51:443"
       - "🇪🇸 🔒 VL-GRPC-NONE 🇪🇸 ES-213.182.201.12:3090"
-      - "🇪🇸 🔒 VL-GRPC-TLS 🇪🇸 ES-46.28.71.135:443"
       - "🇪🇸 🔒 VL-GRPC-NONE 🇪🇸 ES-213.182.201.15:3090"
-      - "🇪🇸 US🇺🇸 | mygptagent.org-443 | 266.2ms"
-      - "🇪🇸 ES🇪🇸 | 213.182.201.139-3090 | 132.46ms"
-      - "🇪🇸 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 7ms"
-      - "🇪🇸 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms"
-      - "🇪🇸 🆔ar14n24b 🔒 VL-TCP- ❔ XX down"
-      - "🇪🇸 🆔ar14n24b 🔓 TR--N/A ❔ XX down"
+      - "🇪🇸 🔒 VL-GRPC-TLS 🇪🇸 ES-46.28.71.135:443"
+      - "🇪🇸 DE🇩🇪 | mygptagent.org-443 | 139.31ms"
+      - "🇪🇸 ES🇪🇸 | 213.182.201.139-3090 | 92.45ms"
+      - "🇪🇸 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms"
+      - "🇪🇸 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-1"
+      - "🇪🇸 🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 141ms"
       - "🇪🇸 @DeltaKroneckerGithub"
       - "🇪🇸 @DeltaKroneckerGithub-1"
       - "🇪🇸 @DeltaKroneckerGithub-2"
       - "🇪🇸 @DeltaKroneckerGithub-3"
+      - "🇪🇸 @DeltaKroneckerGithub-4"
       - "🇪🇸 Germany"
       - "🇪🇸 Spain"
       - "🇪🇸 Ukraine"
       - "🇪🇸 Spain-1"
       - "🇪🇸 Germany-1"
-      - "🇪🇸 @DeltaKroneckerGithub-4"
       - "🇪🇸 @DeltaKroneckerGithub-5"
       - "🇪🇸 @DeltaKroneckerGithub-6"
       - "🇪🇸 @DeltaKroneckerGithub-7"
       - "🇪🇸 @DeltaKroneckerGithub-8"
+      - "🇪🇸 @DeltaKroneckerGithub-9"
       - "🇪🇸 24. 🇪🇸 Spain"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
@@ -1150,13 +1200,14 @@ proxy-groups:
       - "🇪🇸 🔒 VL-WS-TLS 🇪🇸 ES-95.85.89.70:81"
       - "🇪🇸 🔒 TR-TCP-TLS 🇪🇸 ES-66.163.118.62:443"
       - "🇪🇸 🔒 TR-TCP-TLS 🇪🇸 ES-66.163.118.244:443"
+      - "🇪🇸 66.163.118.166"
       - "🇪🇸 🔒 SS-TCP-NA 🇪🇸 ES-5.188.181.201:9014"
-      - "🇪🇸 ES🇪🇸 | resources.discovergreatjobsandadvanceyourcareer.com-443 | 201.32ms"
-      - "🇪🇸 ES🇪🇸 | www.discovergreatjobsandadvanceyourcareer.com-443 | 187.01ms"
       - "🇪🇸 🔒 VM-TCP-NA 🇪🇸 ES-85.90.217.42:22324"
-      - "🇪🇸 REALITY|ES🇪🇸 | 193.238.154.78-443 | 161.45ms"
-      - "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.6-443 | 170.7ms"
-      - "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.6-443 | 159.1ms"
+      - "🇪🇸 REALITY|ES🇪🇸 | 83.97.79.93-8443 | 78.62ms"
+      - "🇪🇸 REALITY|ES🇪🇸 | 83.147.18.3-443 | 77.04ms"
+      - "🇪🇸 REALITY|ES🇪🇸 | 193.238.154.78-443 | 110.79ms"
+      - "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.8-8443 | 101.25ms"
+      - "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.6-443 | 101.4ms"
       - "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-83.97.79.93:8443"
       - "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-212.227.235.66:2053"
       - "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-193.238.154.78:443"
@@ -1167,28 +1218,28 @@ proxy-groups:
       - "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-46.28.71.247:443"
       - "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-179.255.189.51:443"
       - "🇪🇸 🔒 VL-GRPC-NONE 🇪🇸 ES-213.182.201.12:3090"
-      - "🇪🇸 🔒 VL-GRPC-TLS 🇪🇸 ES-46.28.71.135:443"
       - "🇪🇸 🔒 VL-GRPC-NONE 🇪🇸 ES-213.182.201.15:3090"
-      - "🇪🇸 US🇺🇸 | mygptagent.org-443 | 266.2ms"
-      - "🇪🇸 ES🇪🇸 | 213.182.201.139-3090 | 132.46ms"
-      - "🇪🇸 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 7ms"
-      - "🇪🇸 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms"
-      - "🇪🇸 🆔ar14n24b 🔒 VL-TCP- ❔ XX down"
-      - "🇪🇸 🆔ar14n24b 🔓 TR--N/A ❔ XX down"
+      - "🇪🇸 🔒 VL-GRPC-TLS 🇪🇸 ES-46.28.71.135:443"
+      - "🇪🇸 DE🇩🇪 | mygptagent.org-443 | 139.31ms"
+      - "🇪🇸 ES🇪🇸 | 213.182.201.139-3090 | 92.45ms"
+      - "🇪🇸 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms"
+      - "🇪🇸 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-1"
+      - "🇪🇸 🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 141ms"
       - "🇪🇸 @DeltaKroneckerGithub"
       - "🇪🇸 @DeltaKroneckerGithub-1"
       - "🇪🇸 @DeltaKroneckerGithub-2"
       - "🇪🇸 @DeltaKroneckerGithub-3"
+      - "🇪🇸 @DeltaKroneckerGithub-4"
       - "🇪🇸 Germany"
       - "🇪🇸 Spain"
       - "🇪🇸 Ukraine"
       - "🇪🇸 Spain-1"
       - "🇪🇸 Germany-1"
-      - "🇪🇸 @DeltaKroneckerGithub-4"
       - "🇪🇸 @DeltaKroneckerGithub-5"
       - "🇪🇸 @DeltaKroneckerGithub-6"
       - "🇪🇸 @DeltaKroneckerGithub-7"
       - "🇪🇸 @DeltaKroneckerGithub-8"
+      - "🇪🇸 @DeltaKroneckerGithub-9"
       - "🇪🇸 24. 🇪🇸 Spain"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
@@ -1208,13 +1259,14 @@ proxy-groups:
       - "🇪🇸 🔒 VL-WS-TLS 🇪🇸 ES-95.85.89.70:81"
       - "🇪🇸 🔒 TR-TCP-TLS 🇪🇸 ES-66.163.118.62:443"
       - "🇪🇸 🔒 TR-TCP-TLS 🇪🇸 ES-66.163.118.244:443"
+      - "🇪🇸 66.163.118.166"
       - "🇪🇸 🔒 SS-TCP-NA 🇪🇸 ES-5.188.181.201:9014"
-      - "🇪🇸 ES🇪🇸 | resources.discovergreatjobsandadvanceyourcareer.com-443 | 201.32ms"
-      - "🇪🇸 ES🇪🇸 | www.discovergreatjobsandadvanceyourcareer.com-443 | 187.01ms"
       - "🇪🇸 🔒 VM-TCP-NA 🇪🇸 ES-85.90.217.42:22324"
-      - "🇪🇸 REALITY|ES🇪🇸 | 193.238.154.78-443 | 161.45ms"
-      - "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.6-443 | 170.7ms"
-      - "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.6-443 | 159.1ms"
+      - "🇪🇸 REALITY|ES🇪🇸 | 83.97.79.93-8443 | 78.62ms"
+      - "🇪🇸 REALITY|ES🇪🇸 | 83.147.18.3-443 | 77.04ms"
+      - "🇪🇸 REALITY|ES🇪🇸 | 193.238.154.78-443 | 110.79ms"
+      - "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.8-8443 | 101.25ms"
+      - "🇪🇸 REALITY|ES🇪🇸 | 170.168.97.6-443 | 101.4ms"
       - "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-83.97.79.93:8443"
       - "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-212.227.235.66:2053"
       - "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-193.238.154.78:443"
@@ -1225,28 +1277,28 @@ proxy-groups:
       - "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-46.28.71.247:443"
       - "🇪🇸 🔒 VL-TCP-RLT 🇪🇸 ES-179.255.189.51:443"
       - "🇪🇸 🔒 VL-GRPC-NONE 🇪🇸 ES-213.182.201.12:3090"
-      - "🇪🇸 🔒 VL-GRPC-TLS 🇪🇸 ES-46.28.71.135:443"
       - "🇪🇸 🔒 VL-GRPC-NONE 🇪🇸 ES-213.182.201.15:3090"
-      - "🇪🇸 US🇺🇸 | mygptagent.org-443 | 266.2ms"
-      - "🇪🇸 ES🇪🇸 | 213.182.201.139-3090 | 132.46ms"
-      - "🇪🇸 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 7ms"
-      - "🇪🇸 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 6ms"
-      - "🇪🇸 🆔ar14n24b 🔒 VL-TCP- ❔ XX down"
-      - "🇪🇸 🆔ar14n24b 🔓 TR--N/A ❔ XX down"
+      - "🇪🇸 🔒 VL-GRPC-TLS 🇪🇸 ES-46.28.71.135:443"
+      - "🇪🇸 DE🇩🇪 | mygptagent.org-443 | 139.31ms"
+      - "🇪🇸 ES🇪🇸 | 213.182.201.139-3090 | 92.45ms"
+      - "🇪🇸 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms"
+      - "🇪🇸 🆔conectvpn10 🔒 TR-WS-N/A ❔ XX 9ms-1"
+      - "🇪🇸 🆔ar14n24b 🔒 TR-TCP-N/A ❔ XX 141ms"
       - "🇪🇸 @DeltaKroneckerGithub"
       - "🇪🇸 @DeltaKroneckerGithub-1"
       - "🇪🇸 @DeltaKroneckerGithub-2"
       - "🇪🇸 @DeltaKroneckerGithub-3"
+      - "🇪🇸 @DeltaKroneckerGithub-4"
       - "🇪🇸 Germany"
       - "🇪🇸 Spain"
       - "🇪🇸 Ukraine"
       - "🇪🇸 Spain-1"
       - "🇪🇸 Germany-1"
-      - "🇪🇸 @DeltaKroneckerGithub-4"
       - "🇪🇸 @DeltaKroneckerGithub-5"
       - "🇪🇸 @DeltaKroneckerGithub-6"
       - "🇪🇸 @DeltaKroneckerGithub-7"
       - "🇪🇸 @DeltaKroneckerGithub-8"
+      - "🇪🇸 @DeltaKroneckerGithub-9"
       - "🇪🇸 24. 🇪🇸 Spain"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
