@@ -527,33 +527,49 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "62.210.91.2"
+  - name: "46.29.255.123"
     type: "vless"
-    server: "62.210.91.2"
-    port: 23576
-    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    server: "46.29.255.123"
+    port: 59539
+    uuid: "30572b57-f5ab-4eb8-82d4-a24d399b99f6"
     udp: true
     tls: true
     network: "tcp"
-    servername: "fuck.rkn"
+    servername: "cloudflare-dns.com"
+    client-fingerprint: "firefox"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-      short-id: "01"
-  - name: "du-rov.secureservice.top"
+      public-key: "R6mPqCsjZMWauci4LHw7Qp1LGKmBd-sxMXplyOn9bSQ"
+  - name: "hw7.divarkhaghazi.com"
     type: "vless"
-    server: "du-rov.secureservice.top"
-    port: 8443
-    uuid: "c53ea5e9-ed8b-4990-805d-7f1d6451426c"
+    server: "hw7.divarkhaghazi.com"
+    port: 465
+    uuid: "d0d3d49c-56e8-40e1-9e83-793d03f83d93"
     udp: true
     tls: true
-    network: "tcp"
-    servername: "du-rov.secureservice.top"
-    client-fingerprint: "random"
-    flow: "xtls-rprx-vision"
+    network: "ws"
+    servername: "hw7.divarkhaghazi.com."
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "hw7.divarkhaghazi.com."
+  - name: "bg5.univesalsrv.com"
+    type: "vless"
+    server: "bg5.univesalsrv.com"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    client-fingerprint: "chrome"
     reality-opts:
-      public-key: "fSVfR9NB-6J6smrZlavi0GWd8JfDh0aXuEkKbtuFzUI"
-      short-id: "3cbc3d737fb9c4af"
+      public-key: "RDWvDEygSk1eyAQhIK95H9EteFbrS2d9JEjBrco54Bw"
+      short-id: "1a3102bb8e51399e"
+    grpc-opts:
+      grpc-service-name: "gw.v2.RelayService"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -568,8 +584,9 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "62.210.91.2"
-      - "du-rov.secureservice.top"
+      - "46.29.255.123"
+      - "hw7.divarkhaghazi.com"
+      - "bg5.univesalsrv.com"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -578,8 +595,9 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "62.210.91.2"
-      - "du-rov.secureservice.top"
+      - "46.29.255.123"
+      - "hw7.divarkhaghazi.com"
+      - "bg5.univesalsrv.com"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -589,8 +607,9 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "62.210.91.2"
-      - "du-rov.secureservice.top"
+      - "46.29.255.123"
+      - "hw7.divarkhaghazi.com"
+      - "bg5.univesalsrv.com"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"
