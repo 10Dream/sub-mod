@@ -527,20 +527,49 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "51.158.206.19"
+  - name: "144.31.140.125"
     type: "vless"
-    server: "51.158.206.19"
-    port: 23576
-    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    server: "144.31.140.125"
+    port: 8443
+    uuid: "f5e70ce3-cfb4-4df1-b25c-d19bfae627c0"
     udp: true
     tls: true
     network: "tcp"
-    servername: "fuck.rkn"
+    servername: "twitch.tv"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "wgyw3OxZw4HEzedNdY_eHdcVkrtT7GEeZSHfzcZ8iDo"
+      short-id: "168c15efac9df5fd"
+  - name: "152.32.167.33"
+    type: "vless"
+    server: "152.32.167.33"
+    port: 443
+    uuid: "91ad30e9-ab06-4b4c-9fb9-1c2aa97d8b3a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.amazon.com"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-      short-id: "01"
+      public-key: "Q8QwBSGN6J-FqgDV1pYNm0VThS_xNRyQ3DPPa9YZ3j4"
+      short-id: "cff998a4"
+  - name: "150.40.126.22"
+    type: "vless"
+    server: "150.40.126.22"
+    port: 443
+    uuid: "2f35965a-9a9b-45fd-ba32-987296dfb6be"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "rs4.univesalsrv.com"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "sXsJ4ET-50TYqlhKZf03nPQr2JIy1F0D4m6lOsI0cAs"
+      short-id: "861ac7d66953e55f"
+    grpc-opts:
+      grpc-service-name: "media.v1.StreamService"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -555,7 +584,9 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "51.158.206.19"
+      - "144.31.140.125"
+      - "152.32.167.33"
+      - "150.40.126.22"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -564,7 +595,9 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "51.158.206.19"
+      - "144.31.140.125"
+      - "152.32.167.33"
+      - "150.40.126.22"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -574,7 +607,9 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "51.158.206.19"
+      - "144.31.140.125"
+      - "152.32.167.33"
+      - "150.40.126.22"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"
