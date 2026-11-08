@@ -527,20 +527,34 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "🇨🇭 🔒 VL-WS-TLS 🇨🇭 CH-185.18.250.252:443"
-    type: "vless"
-    server: "185.18.250.252"
-    port: 443
-    uuid: "f77299ea-e13d-417d-8cdc-ce5566dfc94b"
+  - name: "🇨🇭 🔒 TR-WS-NA 🇨🇭 CH-91.245.225.79:2053"
+    type: "trojan"
+    server: "91.245.225.79"
+    port: 2053
+    password: "humanity"
     udp: true
     tls: true
     network: "ws"
-    servername: "edu.ruangguru.com.r3xxe.eu.cc"
-    client-fingerprint: "chrome"
+    servername: "www.calmlunch.com"
     ws-opts:
-      path: "/nl-tw"
+      path: "/assignment"
+  - name: "🇨🇭 🔒 VL-WS-TLS 🇨🇭 CH-185.18.250.127:2096"
+    type: "vless"
+    server: "185.18.250.127"
+    port: 2096
+    uuid: "2ee26119-94e5-40b4-ba3a-16354021b600"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "69565ce3109804e7813f98ee.mmdbay.blog"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h2"
+      - "http/1.1"
+    ws-opts:
+      path: "/graphql"
       headers:
-        Host: "edu.ruangguru.com.r3xxe.eu.cc"
+        Host: "69565ce3109804e7813f98ee.mmdbay.blog"
   - name: "🇨🇭 🔒 VL-WS-TLS 🇨🇭 CH-185.18.250.245:443"
     type: "vless"
     server: "185.18.250.245"
@@ -555,6 +569,17 @@ proxies:
       path: "/nl-tw"
       headers:
         Host: "edu.ruangguru.com.r3xxe.eu.cc"
+  - name: "🇨🇭 🔒 TR-WS-TLS 🇨🇭 CH-185.18.250.252:443"
+    type: "trojan"
+    server: "185.18.250.252"
+    port: 443
+    password: "humanity"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "www.calmlunch.com"
+    ws-opts:
+      path: "/assignment"
   - name: "🇨🇭 🔒 TR-WS-TLS 🇨🇭 CH-185.18.250.245:443"
     type: "trojan"
     server: "185.18.250.245"
@@ -568,52 +593,44 @@ proxies:
       path: "/assignment"
       headers:
         Host: "www.calmlunch.com"
-  - name: "🇨🇭 🔒 TR-WS-TLS 🇨🇭 CH-185.18.250.252:443"
-    type: "trojan"
+  - name: "🇨🇭 🔒 VL-WS-TLS 🇨🇭 CH-185.18.250.252:443"
+    type: "vless"
     server: "185.18.250.252"
     port: 443
-    password: "humanity"
+    uuid: "f77299ea-e13d-417d-8cdc-ce5566dfc94b"
     udp: true
     tls: true
     network: "ws"
-    servername: "www.calmlunch.com"
+    servername: "edu.ruangguru.com.r3xxe.eu.cc"
+    client-fingerprint: "chrome"
     ws-opts:
-      path: "/assignment"
-  - name: "🇨🇭 🔒 TR-WS-NA 🇨🇭 CH-91.245.225.79:2053"
-    type: "trojan"
-    server: "91.245.225.79"
-    port: 2053
-    password: "humanity"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "www.calmlunch.com"
-    ws-opts:
-      path: "/assignment"
+      path: "/nl-tw"
+      headers:
+        Host: "edu.ruangguru.com.r3xxe.eu.cc"
   - name: "🇨🇭 🇨🇭 Zurich, ZH, Switzerland"
-    type: "ss"
-    server: "186.190.215.251"
-    port: 19999
-    cipher: "aes-256-gcm"
-    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
-    udp: true
-  - name: "🇨🇭 🇨🇭 Zurich, ZH, Switzerland-1"
     type: "ss"
     server: "23.166.88.189"
     port: 19999
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
+  - name: "🇨🇭 🇨🇭 Zurich, ZH, Switzerland-1"
+    type: "ss"
+    server: "23.166.88.127"
+    port: 19999
+    cipher: "aes-256-gcm"
+    password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
+    udp: true
   - name: "🇨🇭 🇨🇭 Zurich, ZH, Switzerland-2"
     type: "ss"
-    server: "79.127.184.104"
+    server: "186.190.215.251"
     port: 19999
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
     udp: true
   - name: "🇨🇭 🇨🇭 Zurich, ZH, Switzerland-3"
     type: "ss"
-    server: "23.166.88.127"
+    server: "79.127.184.104"
     port: 19999
     cipher: "aes-256-gcm"
     password: "ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4="
@@ -628,8 +645,9 @@ proxies:
     plugin: "v2ray-plugin"
     plugin-opts:
       mode: "websocket"
-      path: "/59fc5f8c-5697-4eb8-acf2-8ae363f203a2/?ed\\=2560"
       host: "woshinidie-et3.pages.dev"
+      path: "/59fc5f8c-5697-4eb8-acf2-8ae363f203a2/?ed\\=2560"
+      mux: false
   - name: "🇨🇭 @DeltaKroneckerGithub-1"
     type: "ss"
     server: "138.124.111.115"
@@ -640,18 +658,17 @@ proxies:
     plugin: "v2ray-plugin"
     plugin-opts:
       mode: "websocket"
-      host: "woshinidie-et3.pages.dev"
       path: "/59fc5f8c-5697-4eb8-acf2-8ae363f203a2/?ed\\=2560"
-      mux: false
+      host: "woshinidie-et3.pages.dev"
   - name: "🇨🇭 @DeltaKroneckerGithub-2"
     type: "trojan"
-    server: "208.69.78.158"
-    port: 443
-    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    server: "83.228.230.226"
+    port: 8443
+    password: "SoftNetConnect"
     udp: true
     tls: true
     network: "tcp"
-    servername: "api.yourultimateprofessionalcareerhub.com"
+    servername: "play.google.com"
   - name: "🇨🇭 @DeltaKroneckerGithub-3"
     type: "trojan"
     server: "83.228.224.161"
@@ -671,21 +688,22 @@ proxies:
     servername: "courses.yourultimateprofessionalcareerhub.com"
   - name: "🇨🇭 @DeltaKroneckerGithub-5"
     type: "trojan"
-    server: "208.69.78.60"
+    server: "208.69.78.208"
     port: 443
     password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
     udp: true
     tls: true
     network: "tcp"
-    servername: "cdn.yourultimateprofessionalcareerhub.com"
+    servername: "resources.yourultimateprofessionalcareerhub.com"
   - name: "🇨🇭 @DeltaKroneckerGithub-6"
     type: "trojan"
-    server: "208.69.78.33"
+    server: "84.234.29.238"
     port: 443
-    password: "32dd0fc0-cf2d-42f0-8680-efc77042550c"
+    password: "Masir_Sefid"
     udp: true
     tls: true
     network: "tcp"
+    servername: "store.steampowered.com"
   - name: "🇨🇭 @DeltaKroneckerGithub-7"
     type: "trojan"
     server: "208.69.78.29"
@@ -706,22 +724,21 @@ proxies:
     servername: "yourultimateprofessionalcareerhub.com"
   - name: "🇨🇭 @DeltaKroneckerGithub-9"
     type: "trojan"
-    server: "84.234.29.238"
-    port: 443
-    password: "Masir_Sefid"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "store.steampowered.com"
-  - name: "🇨🇭 @DeltaKroneckerGithub-10"
-    type: "trojan"
-    server: "208.69.78.208"
+    server: "208.69.78.60"
     port: 443
     password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
     udp: true
     tls: true
     network: "tcp"
-    servername: "resources.yourultimateprofessionalcareerhub.com"
+    servername: "cdn.yourultimateprofessionalcareerhub.com"
+  - name: "🇨🇭 @DeltaKroneckerGithub-10"
+    type: "trojan"
+    server: "208.69.78.33"
+    port: 443
+    password: "32dd0fc0-cf2d-42f0-8680-efc77042550c"
+    udp: true
+    tls: true
+    network: "tcp"
   - name: "🇨🇭 @DeltaKroneckerGithub-11"
     type: "trojan"
     server: "208.69.78.19"
@@ -730,6 +747,15 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
+  - name: "🇨🇭 @DeltaKroneckerGithub-12"
+    type: "trojan"
+    server: "208.69.78.158"
+    port: 443
+    password: "0ab6c98dae3b48e8b9c4a776b6c9c19a"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "api.yourultimateprofessionalcareerhub.com"
   - name: "🇨🇭 🆔️ | @Eag1e_YT『🇨🇭』"
     type: "vless"
     server: "208.69.78.217"
@@ -1011,34 +1037,19 @@ proxies:
     tls: true
     network: "grpc"
     servername: "world.yahoo.com:443"
-  - name: "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-138.124.64.23:443"
+  - name: "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-45.90.57.119:8443"
     type: "vless"
-    server: "138.124.64.23"
-    port: 443
-    uuid: "1ce68480-ed58-488b-965a-758fe9d6da76"
+    server: "45.90.57.119"
+    port: 8443
+    uuid: "f5e70ce3-cfb4-4df1-b25c-d19bfae627c0"
     udp: true
     tls: true
     network: "tcp"
-    servername: "google.com"
-    client-fingerprint: "chrome"
+    servername: "twitch.tv"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "_4ATNuZQh5uHkrwQY5Z4h0HsudsGqTRIBkuJSRmQuBU"
-      short-id: "6ba85179e30d4fc2"
-  - name: "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-179.43.166.190:443"
-    type: "vless"
-    server: "179.43.166.190"
-    port: 443
-    uuid: "90157e25-cee1-4217-921e-91f300bc1a24"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "perevodchiki.su"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "1vSZjvhZO01oAEH3b7eebR1qF5dLU1Dq2E7xu8pwGSs"
-      short-id: "428ef87fd47a3a32"
+      public-key: "L6DeK_a25_ZjPKFOrQLoCPWuXi5KCIH_EcRpARmCwkI"
+      short-id: "16036bbef04d0509"
   - name: "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-138.124.60.146:443"
     type: "vless"
     server: "138.124.60.146"
@@ -1052,20 +1063,14 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "mJ-0fJDvKp0rhuyUvs1bw4RasRRM-BEOAl9iAZ8gXy0"
-  - name: "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-46.19.138.214:443"
+  - name: "🇨🇭 🔒 VL-TCP-NA 🇨🇭 CH-45.59.124.123:443"
     type: "vless"
-    server: "46.19.138.214"
+    server: "45.59.124.123"
     port: 443
-    uuid: "90157e25-cee1-4217-921e-91f300bc1a24"
+    uuid: "81a9c236-bfdb-4446-9ce5-6abcce975053"
     udp: true
-    tls: true
+    tls: false
     network: "tcp"
-    servername: "perevodchiki.su"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "1vSZjvhZO01oAEH3b7eebR1qF5dLU1Dq2E7xu8pwGSs"
-      short-id: "428ef87fd47a3a32"
   - name: "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-131.123.34.193:1350"
     type: "vless"
     server: "131.123.34.193"
@@ -1093,6 +1098,13 @@ proxies:
     reality-opts:
       public-key: "nR-NstIy4LLdPIppEeRg6bfmRiKkWZPEpq2SwkpHoDo"
       short-id: "f95dc5db701621f2"
+  - name: "🇨🇭 🔒 SS-TCP-NA 🇨🇭 CH-146.70.26.156:1080"
+    type: "ss"
+    server: "146.70.26.156"
+    port: 1080
+    cipher: "chacha20-ietf-poly1305"
+    password: "XF0klw7870vXn3uQIxe19Q"
+    udp: true
   - name: "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-131.123.34.193:5455"
     type: "vless"
     server: "131.123.34.193"
@@ -1106,40 +1118,67 @@ proxies:
     reality-opts:
       public-key: "xQnXh5EfPDhcEBB7rRiLca33GYrMEeUa35domLL_yA8"
       short-id: "e3085d4fc679ba12"
-  - name: "🇨🇭 🔒 SS-TCP-NA 🇨🇭 CH-146.70.26.156:1080"
-    type: "ss"
-    server: "146.70.26.156"
-    port: 1080
-    cipher: "chacha20-ietf-poly1305"
-    password: "XF0klw7870vXn3uQIxe19Q"
-    udp: true
-  - name: "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-45.90.57.119:8443"
+  - name: "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-46.19.138.214:443"
     type: "vless"
-    server: "45.90.57.119"
-    port: 8443
-    uuid: "f5e70ce3-cfb4-4df1-b25c-d19bfae627c0"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "twitch.tv"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "L6DeK_a25_ZjPKFOrQLoCPWuXi5KCIH_EcRpARmCwkI"
-      short-id: "16036bbef04d0509"
-  - name: "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-45.90.59.15:443"
-    type: "vless"
-    server: "45.90.59.15"
+    server: "46.19.138.214"
     port: 443
-    uuid: "3950b45e-740d-4dca-ac95-505ec8534592"
+    uuid: "90157e25-cee1-4217-921e-91f300bc1a24"
     udp: true
     tls: true
     network: "tcp"
-    servername: "www.cloudflare.com"
+    servername: "perevodchiki.su"
     client-fingerprint: "firefox"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "P7S4UPFlQbmiBr4txyy8NZIMTrmO3UdxyH16WBU-YzY"
-      short-id: "19253fae84102271"
+      public-key: "1vSZjvhZO01oAEH3b7eebR1qF5dLU1Dq2E7xu8pwGSs"
+      short-id: "428ef87fd47a3a32"
+  - name: "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-46.19.138.214:443-1"
+    type: "vless"
+    server: "46.19.138.214"
+    port: 443
+    uuid: "90157e25-cee1-4217-921e-91f300bc1a24"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "perevodchiki.su"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1vSZjvhZO01oAEH3b7eebR1qF5dLU1Dq2E7xu8pwGSs"
+      short-id: "428ef87fd47a3a32"
+  - name: "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-138.124.64.23:443"
+    type: "vless"
+    server: "138.124.64.23"
+    port: 443
+    uuid: "1ce68480-ed58-488b-965a-758fe9d6da76"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "google.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "_4ATNuZQh5uHkrwQY5Z4h0HsudsGqTRIBkuJSRmQuBU"
+      short-id: "6ba85179e30d4fc2"
+  - name: "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-94.26.35.217:443"
+    type: "vless"
+    server: "94.26.35.217"
+    port: 443
+    uuid: "54066259-28a1-47dc-b0f7-e7715f27918e"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "537df6t.ch5.h1clayd.click"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "LHkKUZNBp93VjTHD9fpoj44-4WB-TQbDpa5A929nSwE"
+      short-id: "e368a430524df0fa"
+  - name: "🇨🇭 🔒 SS-TCP-NA 🇨🇭 CH-86.106.84.196:13263"
+    type: "ss"
+    server: "86.106.84.196"
+    port: 13263
+    cipher: "aes-128-gcm"
+    password: "635f4fea537503ab56b1cbb3d085bc8b7"
+    udp: true
   - name: "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-138.124.39.252:443"
     type: "vless"
     server: "138.124.39.252"
@@ -1153,26 +1192,11 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "zBMeyXgwFrSUKT60bU85vFEKWzcsprb7NtILQAezrgI"
-  - name: "🇨🇭 🔒 VL-TCP-NA 🇨🇭 CH-45.59.124.123:443"
-    type: "vless"
-    server: "45.59.124.123"
-    port: 443
-    uuid: "81a9c236-bfdb-4446-9ce5-6abcce975053"
-    udp: true
-    tls: false
-    network: "tcp"
-  - name: "🇨🇭 🔒 SS-TCP-NA 🇨🇭 CH-86.106.84.196:13263"
-    type: "ss"
-    server: "86.106.84.196"
-    port: 13263
-    cipher: "aes-128-gcm"
-    password: "635f4fea537503ab56b1cbb3d085bc8b7"
-    udp: true
-  - name: "🇨🇭 @DeltaKroneckerGithub-12"
+  - name: "🇨🇭 @DeltaKroneckerGithub-13"
     type: "vless"
     server: "1c.hlclub.tech"
-    port: 8446
-    uuid: "dac0e736-5c69-4b7c-8b1d-27cbbc3bd948"
+    port: 27020
+    uuid: "d199d953-be71-4e19-807b-7df54286733f"
     udp: true
     tls: true
     network: "grpc"
@@ -1183,20 +1207,6 @@ proxies:
       short-id: "555ac69b22424282"
     grpc-opts:
       grpc-service-name: "grpc-tunnel"
-  - name: "🇨🇭 @DeltaKroneckerGithub-13"
-    type: "vless"
-    server: "prvtch.titun.su"
-    port: 443
-    uuid: "90157e25-cee1-4217-921e-91f300bc1a24"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "perevodchiki.su"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "1vSZjvhZO01oAEH3b7eebR1qF5dLU1Dq2E7xu8pwGSs"
-      short-id: "428ef87fd47a3a32"
   - name: "🇨🇭 @DeltaKroneckerGithub-14"
     type: "vless"
     server: "179.43.166.190"
@@ -1213,6 +1223,49 @@ proxies:
       short-id: "428ef87fd47a3a32"
   - name: "🇨🇭 @DeltaKroneckerGithub-15"
     type: "vless"
+    server: "prvtch.titun.su"
+    port: 443
+    uuid: "90157e25-cee1-4217-921e-91f300bc1a24"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "perevodchiki.su"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "1vSZjvhZO01oAEH3b7eebR1qF5dLU1Dq2E7xu8pwGSs"
+      short-id: "428ef87fd47a3a32"
+  - name: "🇨🇭 @DeltaKroneckerGithub-16"
+    type: "vless"
+    server: "45.90.59.15"
+    port: 443
+    uuid: "3950b45e-740d-4dca-ac95-505ec8534592"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "P7S4UPFlQbmiBr4txyy8NZIMTrmO3UdxyH16WBU-YzY"
+      short-id: "19253fae84102271"
+  - name: "🇨🇭 @DeltaKroneckerGithub-17"
+    type: "vless"
+    server: "1c.hlclub.tech"
+    port: 8446
+    uuid: "dac0e736-5c69-4b7c-8b1d-27cbbc3bd948"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "1c.hlclub.tech"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "XxWn04baea-nyjxLud3mjo15Xz1DNwlDOOken4qHNVA"
+      short-id: "555ac69b22424282"
+    grpc-opts:
+      grpc-service-name: "grpc-tunnel"
+  - name: "🇨🇭 @DeltaKroneckerGithub-18"
+    type: "vless"
     server: "208.69.78.217"
     port: 2053
     uuid: "c0dd6d59-1573-43af-8b70-1470b2632a6d"
@@ -1224,7 +1277,7 @@ proxies:
     reality-opts:
       public-key: "A49ue7zXSusJZdErPAewg3jqGdUFIO1a9xOunEKJfC0"
       short-id: "ad86e2d52ff40ebd"
-  - name: "🇨🇭 @DeltaKroneckerGithub-16"
+  - name: "🇨🇭 @DeltaKroneckerGithub-19"
     type: "vless"
     server: "45.95.232.233"
     port: 8446
@@ -1239,45 +1292,19 @@ proxies:
       short-id: "555ac69b22424282"
     grpc-opts:
       grpc-service-name: "grpc-tunnel"
-  - name: "🇨🇭 @DeltaKroneckerGithub-17"
+  - name: "🇨🇭 🔒 VL-XHTTP-RLT 🇨🇭 CH-94.26.35.217:443"
     type: "vless"
-    server: "138.124.64.236"
+    server: "94.26.35.217"
     port: 443
-    uuid: "db80088c-32a1-4cb8-a907-0f3cb7844152"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "pl3.japancase.site"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "COvqGpB7lUdZshmbn5zdqiVi81n8Iyha8RbEHtK93xc"
-      short-id: "5037f0423dc4e4ff"
-  - name: "🇨🇭 🔒 VL-GRPC-RLT 🇨🇭 CH-167.148.183.51:444"
-    type: "vless"
-    server: "167.148.183.51"
-    port: 444
-    uuid: "318c935d-c195-41d3-99ad-9bbcfdab3386"
-    udp: true
-    tls: true
-    network: "grpc"
-    servername: "ch.srv.vbuste.ru"
-    client-fingerprint: "firefox"
-    reality-opts:
-      public-key: "0-or5ogGhYbBgsVSrSC2Fhxyp2BN97Y9pqIdg61Qd08"
-      short-id: "4be4110078ebed4a"
-  - name: "🇨🇭 🔒 VL-XHTTP-RLT 🇨🇭 CH-176.65.144.221:443"
-    type: "vless"
-    server: "176.65.144.221"
-    port: 443
-    uuid: "89564b16-7ced-465d-a8f3-61389547e96e"
+    uuid: "54066259-28a1-47dc-b0f7-e7715f27918e"
     udp: true
     tls: true
     network: "xhttp"
-    servername: "sw.cloudvienta.com"
+    servername: "d0f7fax.ch5.h1clayd.click"
+    client-fingerprint: "firefox"
     reality-opts:
-      public-key: "KcFNW-Yq9YucHEGiEe2ZEnIbxEuCmyO3S6yTglZR7ws"
-      short-id: "7ea8737c31629437"
+      public-key: "OqpjppFQ222BTeRXlK6fh7nP5ePkkNCLlUH1-CvkmBc"
+      short-id: "f245401987e85cad"
   - name: "🇨🇭 🔒 VL-XHTTP-RLT 🇨🇭 CH-185.191.238.195:8443"
     type: "vless"
     server: "185.191.238.195"
@@ -1291,6 +1318,19 @@ proxies:
     reality-opts:
       public-key: "Gu_QdtOX6E8pZcYvDWgHKA5dxcit7hrpU27sizCEWXg"
       short-id: "e0"
+  - name: "🇨🇭 🔒 VL-XHTTP-RLT 🇨🇭 CH-138.124.252.24:443"
+    type: "vless"
+    server: "138.124.252.24"
+    port: 443
+    uuid: "293c982c-7d4e-44ac-bb11-72eacee55cd3"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "makee.qikbro.com"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "dQadA8TP5tRVF_SxqNRexInmD_oGuEGopGJ-YdG_Z24"
+      short-id: "c9154b81e0169400"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -1305,11 +1345,12 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "🇨🇭 🔒 VL-WS-TLS 🇨🇭 CH-185.18.250.252:443"
-      - "🇨🇭 🔒 VL-WS-TLS 🇨🇭 CH-185.18.250.245:443"
-      - "🇨🇭 🔒 TR-WS-TLS 🇨🇭 CH-185.18.250.245:443"
-      - "🇨🇭 🔒 TR-WS-TLS 🇨🇭 CH-185.18.250.252:443"
       - "🇨🇭 🔒 TR-WS-NA 🇨🇭 CH-91.245.225.79:2053"
+      - "🇨🇭 🔒 VL-WS-TLS 🇨🇭 CH-185.18.250.127:2096"
+      - "🇨🇭 🔒 VL-WS-TLS 🇨🇭 CH-185.18.250.245:443"
+      - "🇨🇭 🔒 TR-WS-TLS 🇨🇭 CH-185.18.250.252:443"
+      - "🇨🇭 🔒 TR-WS-TLS 🇨🇭 CH-185.18.250.245:443"
+      - "🇨🇭 🔒 VL-WS-TLS 🇨🇭 CH-185.18.250.252:443"
       - "🇨🇭 🇨🇭 Zurich, ZH, Switzerland"
       - "🇨🇭 🇨🇭 Zurich, ZH, Switzerland-1"
       - "🇨🇭 🇨🇭 Zurich, ZH, Switzerland-2"
@@ -1326,6 +1367,7 @@ proxy-groups:
       - "🇨🇭 @DeltaKroneckerGithub-9"
       - "🇨🇭 @DeltaKroneckerGithub-10"
       - "🇨🇭 @DeltaKroneckerGithub-11"
+      - "🇨🇭 @DeltaKroneckerGithub-12"
       - "🇨🇭 🆔️ | @Eag1e_YT『🇨🇭』"
       - "🇨🇭 🆔ar14n24b 🔒 VL-GRPC- ❔ XX 121ms"
       - "🇨🇭 🆔ar14n24b 🔒 VL-TCP- ❔ XX 114ms"
@@ -1352,28 +1394,29 @@ proxy-groups:
       - "🇨🇭 REALITY|US🇺🇸 | world.yahoo.com:443-4016 | 4.33ms"
       - "🇨🇭 REALITY|US🇺🇸 | world.yahoo.com:443-3716 | 13.46ms"
       - "🇨🇭 REALITY|US🇺🇸 | world.yahoo.com:443-1726 | 5.15ms"
-      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-138.124.64.23:443"
-      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-179.43.166.190:443"
+      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-45.90.57.119:8443"
       - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-138.124.60.146:443"
-      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-46.19.138.214:443"
+      - "🇨🇭 🔒 VL-TCP-NA 🇨🇭 CH-45.59.124.123:443"
       - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-131.123.34.193:1350"
       - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-132.243.174.128:443"
-      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-131.123.34.193:5455"
       - "🇨🇭 🔒 SS-TCP-NA 🇨🇭 CH-146.70.26.156:1080"
-      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-45.90.57.119:8443"
-      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-45.90.59.15:443"
-      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-138.124.39.252:443"
-      - "🇨🇭 🔒 VL-TCP-NA 🇨🇭 CH-45.59.124.123:443"
+      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-131.123.34.193:5455"
+      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-46.19.138.214:443"
+      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-46.19.138.214:443-1"
+      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-138.124.64.23:443"
+      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-94.26.35.217:443"
       - "🇨🇭 🔒 SS-TCP-NA 🇨🇭 CH-86.106.84.196:13263"
-      - "🇨🇭 @DeltaKroneckerGithub-12"
+      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-138.124.39.252:443"
       - "🇨🇭 @DeltaKroneckerGithub-13"
       - "🇨🇭 @DeltaKroneckerGithub-14"
       - "🇨🇭 @DeltaKroneckerGithub-15"
       - "🇨🇭 @DeltaKroneckerGithub-16"
       - "🇨🇭 @DeltaKroneckerGithub-17"
-      - "🇨🇭 🔒 VL-GRPC-RLT 🇨🇭 CH-167.148.183.51:444"
-      - "🇨🇭 🔒 VL-XHTTP-RLT 🇨🇭 CH-176.65.144.221:443"
+      - "🇨🇭 @DeltaKroneckerGithub-18"
+      - "🇨🇭 @DeltaKroneckerGithub-19"
+      - "🇨🇭 🔒 VL-XHTTP-RLT 🇨🇭 CH-94.26.35.217:443"
       - "🇨🇭 🔒 VL-XHTTP-RLT 🇨🇭 CH-185.191.238.195:8443"
+      - "🇨🇭 🔒 VL-XHTTP-RLT 🇨🇭 CH-138.124.252.24:443"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -1382,11 +1425,12 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "🇨🇭 🔒 VL-WS-TLS 🇨🇭 CH-185.18.250.252:443"
-      - "🇨🇭 🔒 VL-WS-TLS 🇨🇭 CH-185.18.250.245:443"
-      - "🇨🇭 🔒 TR-WS-TLS 🇨🇭 CH-185.18.250.245:443"
-      - "🇨🇭 🔒 TR-WS-TLS 🇨🇭 CH-185.18.250.252:443"
       - "🇨🇭 🔒 TR-WS-NA 🇨🇭 CH-91.245.225.79:2053"
+      - "🇨🇭 🔒 VL-WS-TLS 🇨🇭 CH-185.18.250.127:2096"
+      - "🇨🇭 🔒 VL-WS-TLS 🇨🇭 CH-185.18.250.245:443"
+      - "🇨🇭 🔒 TR-WS-TLS 🇨🇭 CH-185.18.250.252:443"
+      - "🇨🇭 🔒 TR-WS-TLS 🇨🇭 CH-185.18.250.245:443"
+      - "🇨🇭 🔒 VL-WS-TLS 🇨🇭 CH-185.18.250.252:443"
       - "🇨🇭 🇨🇭 Zurich, ZH, Switzerland"
       - "🇨🇭 🇨🇭 Zurich, ZH, Switzerland-1"
       - "🇨🇭 🇨🇭 Zurich, ZH, Switzerland-2"
@@ -1403,6 +1447,7 @@ proxy-groups:
       - "🇨🇭 @DeltaKroneckerGithub-9"
       - "🇨🇭 @DeltaKroneckerGithub-10"
       - "🇨🇭 @DeltaKroneckerGithub-11"
+      - "🇨🇭 @DeltaKroneckerGithub-12"
       - "🇨🇭 🆔️ | @Eag1e_YT『🇨🇭』"
       - "🇨🇭 🆔ar14n24b 🔒 VL-GRPC- ❔ XX 121ms"
       - "🇨🇭 🆔ar14n24b 🔒 VL-TCP- ❔ XX 114ms"
@@ -1429,28 +1474,29 @@ proxy-groups:
       - "🇨🇭 REALITY|US🇺🇸 | world.yahoo.com:443-4016 | 4.33ms"
       - "🇨🇭 REALITY|US🇺🇸 | world.yahoo.com:443-3716 | 13.46ms"
       - "🇨🇭 REALITY|US🇺🇸 | world.yahoo.com:443-1726 | 5.15ms"
-      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-138.124.64.23:443"
-      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-179.43.166.190:443"
+      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-45.90.57.119:8443"
       - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-138.124.60.146:443"
-      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-46.19.138.214:443"
+      - "🇨🇭 🔒 VL-TCP-NA 🇨🇭 CH-45.59.124.123:443"
       - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-131.123.34.193:1350"
       - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-132.243.174.128:443"
-      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-131.123.34.193:5455"
       - "🇨🇭 🔒 SS-TCP-NA 🇨🇭 CH-146.70.26.156:1080"
-      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-45.90.57.119:8443"
-      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-45.90.59.15:443"
-      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-138.124.39.252:443"
-      - "🇨🇭 🔒 VL-TCP-NA 🇨🇭 CH-45.59.124.123:443"
+      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-131.123.34.193:5455"
+      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-46.19.138.214:443"
+      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-46.19.138.214:443-1"
+      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-138.124.64.23:443"
+      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-94.26.35.217:443"
       - "🇨🇭 🔒 SS-TCP-NA 🇨🇭 CH-86.106.84.196:13263"
-      - "🇨🇭 @DeltaKroneckerGithub-12"
+      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-138.124.39.252:443"
       - "🇨🇭 @DeltaKroneckerGithub-13"
       - "🇨🇭 @DeltaKroneckerGithub-14"
       - "🇨🇭 @DeltaKroneckerGithub-15"
       - "🇨🇭 @DeltaKroneckerGithub-16"
       - "🇨🇭 @DeltaKroneckerGithub-17"
-      - "🇨🇭 🔒 VL-GRPC-RLT 🇨🇭 CH-167.148.183.51:444"
-      - "🇨🇭 🔒 VL-XHTTP-RLT 🇨🇭 CH-176.65.144.221:443"
+      - "🇨🇭 @DeltaKroneckerGithub-18"
+      - "🇨🇭 @DeltaKroneckerGithub-19"
+      - "🇨🇭 🔒 VL-XHTTP-RLT 🇨🇭 CH-94.26.35.217:443"
       - "🇨🇭 🔒 VL-XHTTP-RLT 🇨🇭 CH-185.191.238.195:8443"
+      - "🇨🇭 🔒 VL-XHTTP-RLT 🇨🇭 CH-138.124.252.24:443"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -1460,11 +1506,12 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "🇨🇭 🔒 VL-WS-TLS 🇨🇭 CH-185.18.250.252:443"
-      - "🇨🇭 🔒 VL-WS-TLS 🇨🇭 CH-185.18.250.245:443"
-      - "🇨🇭 🔒 TR-WS-TLS 🇨🇭 CH-185.18.250.245:443"
-      - "🇨🇭 🔒 TR-WS-TLS 🇨🇭 CH-185.18.250.252:443"
       - "🇨🇭 🔒 TR-WS-NA 🇨🇭 CH-91.245.225.79:2053"
+      - "🇨🇭 🔒 VL-WS-TLS 🇨🇭 CH-185.18.250.127:2096"
+      - "🇨🇭 🔒 VL-WS-TLS 🇨🇭 CH-185.18.250.245:443"
+      - "🇨🇭 🔒 TR-WS-TLS 🇨🇭 CH-185.18.250.252:443"
+      - "🇨🇭 🔒 TR-WS-TLS 🇨🇭 CH-185.18.250.245:443"
+      - "🇨🇭 🔒 VL-WS-TLS 🇨🇭 CH-185.18.250.252:443"
       - "🇨🇭 🇨🇭 Zurich, ZH, Switzerland"
       - "🇨🇭 🇨🇭 Zurich, ZH, Switzerland-1"
       - "🇨🇭 🇨🇭 Zurich, ZH, Switzerland-2"
@@ -1481,6 +1528,7 @@ proxy-groups:
       - "🇨🇭 @DeltaKroneckerGithub-9"
       - "🇨🇭 @DeltaKroneckerGithub-10"
       - "🇨🇭 @DeltaKroneckerGithub-11"
+      - "🇨🇭 @DeltaKroneckerGithub-12"
       - "🇨🇭 🆔️ | @Eag1e_YT『🇨🇭』"
       - "🇨🇭 🆔ar14n24b 🔒 VL-GRPC- ❔ XX 121ms"
       - "🇨🇭 🆔ar14n24b 🔒 VL-TCP- ❔ XX 114ms"
@@ -1507,28 +1555,29 @@ proxy-groups:
       - "🇨🇭 REALITY|US🇺🇸 | world.yahoo.com:443-4016 | 4.33ms"
       - "🇨🇭 REALITY|US🇺🇸 | world.yahoo.com:443-3716 | 13.46ms"
       - "🇨🇭 REALITY|US🇺🇸 | world.yahoo.com:443-1726 | 5.15ms"
-      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-138.124.64.23:443"
-      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-179.43.166.190:443"
+      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-45.90.57.119:8443"
       - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-138.124.60.146:443"
-      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-46.19.138.214:443"
+      - "🇨🇭 🔒 VL-TCP-NA 🇨🇭 CH-45.59.124.123:443"
       - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-131.123.34.193:1350"
       - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-132.243.174.128:443"
-      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-131.123.34.193:5455"
       - "🇨🇭 🔒 SS-TCP-NA 🇨🇭 CH-146.70.26.156:1080"
-      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-45.90.57.119:8443"
-      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-45.90.59.15:443"
-      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-138.124.39.252:443"
-      - "🇨🇭 🔒 VL-TCP-NA 🇨🇭 CH-45.59.124.123:443"
+      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-131.123.34.193:5455"
+      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-46.19.138.214:443"
+      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-46.19.138.214:443-1"
+      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-138.124.64.23:443"
+      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-94.26.35.217:443"
       - "🇨🇭 🔒 SS-TCP-NA 🇨🇭 CH-86.106.84.196:13263"
-      - "🇨🇭 @DeltaKroneckerGithub-12"
+      - "🇨🇭 🔒 VL-TCP-RLT 🇨🇭 CH-138.124.39.252:443"
       - "🇨🇭 @DeltaKroneckerGithub-13"
       - "🇨🇭 @DeltaKroneckerGithub-14"
       - "🇨🇭 @DeltaKroneckerGithub-15"
       - "🇨🇭 @DeltaKroneckerGithub-16"
       - "🇨🇭 @DeltaKroneckerGithub-17"
-      - "🇨🇭 🔒 VL-GRPC-RLT 🇨🇭 CH-167.148.183.51:444"
-      - "🇨🇭 🔒 VL-XHTTP-RLT 🇨🇭 CH-176.65.144.221:443"
+      - "🇨🇭 @DeltaKroneckerGithub-18"
+      - "🇨🇭 @DeltaKroneckerGithub-19"
+      - "🇨🇭 🔒 VL-XHTTP-RLT 🇨🇭 CH-94.26.35.217:443"
       - "🇨🇭 🔒 VL-XHTTP-RLT 🇨🇭 CH-185.191.238.195:8443"
+      - "🇨🇭 🔒 VL-XHTTP-RLT 🇨🇭 CH-138.124.252.24:443"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"
