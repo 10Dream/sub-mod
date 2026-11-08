@@ -527,6 +527,27 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
+  - name: "MTB"
+    type: "wireguard"
+    server: "162.159.192.16"
+    port: 2408
+    ip: "172.16.0.2"
+    private-key: "cGDF8LGMLFg7Kiv08cg1f3k/rpqKjjYcSuq5obpyb0w="
+    public-key: "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo="
+    allowed-ips:
+      - "0.0.0.0/0"
+    udp: true
+    remote-dns-resolve: true
+    reserved:
+      - 152
+      - 253
+      - 137
+    mtu: 1280
+    persistent-keepalive: 5
+    amnezia-wg-option:
+      jc: 5
+      jmin: 5
+      jmax: 10
   - name: "🇨🇦209370 | ⚡️Telegram = t.me/SOSkeyNET"
     type: "wireguard"
     server: "162.159.192.18"
@@ -569,27 +590,6 @@ proxies:
       jc: 5
       jmin: 5
       jmax: 10
-  - name: "🇨🇦208355 | ⚡️Telegram = t.me/SOSkeyNET"
-    type: "wireguard"
-    server: "162.159.192.9"
-    port: 908
-    ip: "172.16.0.2"
-    private-key: "mLg6m6bTAW4v0nY7RrUkDHGqzAvQba4cE5y+zIv2Tlo="
-    public-key: "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo="
-    allowed-ips:
-      - "0.0.0.0/0"
-    udp: true
-    remote-dns-resolve: true
-    reserved:
-      - 105
-      - 162
-      - 228
-    mtu: 1280
-    persistent-keepalive: 5
-    amnezia-wg-option:
-      jc: 5
-      jmin: 5
-      jmax: 10
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -604,9 +604,9 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
+      - "MTB"
       - "🇨🇦209370 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦208952 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇨🇦208355 | ⚡️Telegram = t.me/SOSkeyNET"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -615,9 +615,9 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
+      - "MTB"
       - "🇨🇦209370 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦208952 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇨🇦208355 | ⚡️Telegram = t.me/SOSkeyNET"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -627,9 +627,9 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
+      - "MTB"
       - "🇨🇦209370 | ⚡️Telegram = t.me/SOSkeyNET"
       - "🇨🇦208952 | ⚡️Telegram = t.me/SOSkeyNET"
-      - "🇨🇦208355 | ⚡️Telegram = t.me/SOSkeyNET"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"
