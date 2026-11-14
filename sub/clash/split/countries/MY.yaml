@@ -527,22 +527,20 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-85.211.176.217:53617"
-    type: "vmess"
-    server: "85.211.176.217"
-    port: 53617
-    uuid: "6E571484-4166-4699-8F58-B34A1823691F"
-    alterId: 0
-    cipher: "auto"
+  - name: "🇲🇾 🔒 VL-WS-TLS 🇲🇾 MY-216.173.67.159:443"
+    type: "vless"
+    server: "216.173.67.159"
+    port: 443
+    uuid: "c18b978e-1c4e-415c-8bea-07942b563a64"
     udp: true
-  - name: "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-20.17.157.86:36803"
-    type: "vmess"
-    server: "20.17.157.86"
-    port: 36803
-    uuid: "a6ab6513-6ec3-327f-a068-b89fe72954b8"
-    alterId: 0
-    cipher: "auto"
-    udp: true
+    tls: true
+    network: "ws"
+    servername: "shuma.ccwu.cc"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "shuma.ccwu.cc"
   - name: "🇲🇾 🔒 VL-WS-TLS 🇲🇾 MY-216.173.67.119:443"
     type: "vless"
     server: "216.173.67.119"
@@ -571,27 +569,35 @@ proxies:
       path: "/"
       headers:
         Host: "shuma.ccwu.cc"
-  - name: "🇲🇾 🔒 VL-WS-TLS 🇲🇾 MY-216.173.67.159:443"
-    type: "vless"
-    server: "216.173.67.159"
-    port: 443
-    uuid: "c18b978e-1c4e-415c-8bea-07942b563a64"
+  - name: "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-85.211.180.131:53617"
+    type: "vmess"
+    server: "85.211.180.131"
+    port: 53617
+    uuid: "6E571484-4166-4699-8F58-B34A1823691F"
+    alterId: 0
+    cipher: "auto"
     udp: true
-    tls: true
-    network: "ws"
-    servername: "shuma.ccwu.cc"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "shuma.ccwu.cc"
+  - name: "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-20.17.158.225:36803"
+    type: "vmess"
+    server: "20.17.158.225"
+    port: 36803
+    uuid: "a6ab6513-6ec3-327f-a068-b89fe72954b8"
+    alterId: 0
+    cipher: "auto"
+    udp: true
   - name: "🇲🇾 @DeltaKroneckerGithub"
     type: "ss"
-    server: "47.250.212.59"
-    port: 2053
+    server: "96.126.190.196"
+    port: 443
     cipher: "none"
     password: "59fc5f8c-5697-4eb8-acf2-8ae363f203a2"
     udp: true
+    plugin: "v2ray-plugin"
+    plugin-opts:
+      mode: "websocket"
+      host: "woshinidie-et3.pages.dev"
+      path: "/59fc5f8c-5697-4eb8-acf2-8ae363f203a2/?ed\\=2560"
+      mux: false
   - name: "🇲🇾 @DeltaKroneckerGithub-1"
     type: "ss"
     server: "96.126.190.196"
@@ -606,17 +612,11 @@ proxies:
       host: "woshinidie-et3.pages.dev"
   - name: "🇲🇾 @DeltaKroneckerGithub-2"
     type: "ss"
-    server: "96.126.190.196"
-    port: 443
+    server: "47.250.212.59"
+    port: 2053
     cipher: "none"
     password: "59fc5f8c-5697-4eb8-acf2-8ae363f203a2"
     udp: true
-    plugin: "v2ray-plugin"
-    plugin-opts:
-      mode: "websocket"
-      host: "woshinidie-et3.pages.dev"
-      path: "/59fc5f8c-5697-4eb8-acf2-8ae363f203a2/?ed\\=2560"
-      mux: false
   - name: "🇲🇾 @DeltaKroneckerGithub-3"
     type: "trojan"
     server: "210.187.176.154"
@@ -634,14 +634,6 @@ proxies:
     udp: true
     tls: true
     network: "tcp"
-  - name: "🇲🇾 Malaysia"
-    type: "vmess"
-    server: "47.250.135.244"
-    port: 10000
-    uuid: "aedc66b8-99d7-4a21-8310-61870e7f870d"
-    alterId: 0
-    cipher: "auto"
-    udp: true
   - name: "🇲🇾 🔒 TR-TCP-NA 🇲🇾 MY-47.250.84.25:443"
     type: "trojan"
     server: "47.250.84.25"
@@ -651,9 +643,17 @@ proxies:
     tls: true
     network: "tcp"
     servername: "47.250.84.25"
-  - name: "🇲🇾 🔒 VL-TCP-RLT 🇲🇾 MY-56.69.201.178:443"
+  - name: "🇲🇾 vmess-47.250.135.244:10000"
+    type: "vmess"
+    server: "47.250.135.244"
+    port: 10000
+    uuid: "aedc66b8-99d7-4a21-8310-61870e7f870d"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇲🇾 🔒 VL-TCP-RLT 🇲🇾 MY-56.69.155.46:443"
     type: "vless"
-    server: "56.69.201.178"
+    server: "56.69.155.46"
     port: 443
     uuid: "53fd4cd0-15fd-4352-9d6b-d18770049c86"
     udp: true
@@ -665,9 +665,9 @@ proxies:
     reality-opts:
       public-key: "R6q8qhMxgq3ynJPUgudaRkcDXj0qgoc_UU1N0SWGLwM"
       short-id: "ed77ac35a310"
-  - name: "🇲🇾 🔒 VL-TCP-RLT 🇲🇾 MY-56.68.98.109:443"
+  - name: "🇲🇾 🔒 VL-TCP-RLT 🇲🇾 MY-43.216.251.239:443"
     type: "vless"
-    server: "56.68.98.109"
+    server: "43.216.251.239"
     port: 443
     uuid: "53fd4cd0-15fd-4352-9d6b-d18770049c86"
     udp: true
@@ -713,20 +713,20 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-85.211.176.217:53617"
-      - "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-20.17.157.86:36803"
+      - "🇲🇾 🔒 VL-WS-TLS 🇲🇾 MY-216.173.67.159:443"
       - "🇲🇾 🔒 VL-WS-TLS 🇲🇾 MY-216.173.67.119:443"
       - "🇲🇾 🔒 VL-WS-TLS 🇲🇾 MY-216.173.67.144:443"
-      - "🇲🇾 🔒 VL-WS-TLS 🇲🇾 MY-216.173.67.159:443"
+      - "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-85.211.180.131:53617"
+      - "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-20.17.158.225:36803"
       - "🇲🇾 @DeltaKroneckerGithub"
       - "🇲🇾 @DeltaKroneckerGithub-1"
       - "🇲🇾 @DeltaKroneckerGithub-2"
       - "🇲🇾 @DeltaKroneckerGithub-3"
       - "🇲🇾 @DeltaKroneckerGithub-4"
-      - "🇲🇾 Malaysia"
       - "🇲🇾 🔒 TR-TCP-NA 🇲🇾 MY-47.250.84.25:443"
-      - "🇲🇾 🔒 VL-TCP-RLT 🇲🇾 MY-56.69.201.178:443"
-      - "🇲🇾 🔒 VL-TCP-RLT 🇲🇾 MY-56.68.98.109:443"
+      - "🇲🇾 vmess-47.250.135.244:10000"
+      - "🇲🇾 🔒 VL-TCP-RLT 🇲🇾 MY-56.69.155.46:443"
+      - "🇲🇾 🔒 VL-TCP-RLT 🇲🇾 MY-43.216.251.239:443"
       - "🇲🇾 @DeltaKroneckerGithub-5"
       - "🇲🇾 150-ws ✂️@GheychiAmoozesh"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
@@ -737,20 +737,20 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-85.211.176.217:53617"
-      - "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-20.17.157.86:36803"
+      - "🇲🇾 🔒 VL-WS-TLS 🇲🇾 MY-216.173.67.159:443"
       - "🇲🇾 🔒 VL-WS-TLS 🇲🇾 MY-216.173.67.119:443"
       - "🇲🇾 🔒 VL-WS-TLS 🇲🇾 MY-216.173.67.144:443"
-      - "🇲🇾 🔒 VL-WS-TLS 🇲🇾 MY-216.173.67.159:443"
+      - "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-85.211.180.131:53617"
+      - "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-20.17.158.225:36803"
       - "🇲🇾 @DeltaKroneckerGithub"
       - "🇲🇾 @DeltaKroneckerGithub-1"
       - "🇲🇾 @DeltaKroneckerGithub-2"
       - "🇲🇾 @DeltaKroneckerGithub-3"
       - "🇲🇾 @DeltaKroneckerGithub-4"
-      - "🇲🇾 Malaysia"
       - "🇲🇾 🔒 TR-TCP-NA 🇲🇾 MY-47.250.84.25:443"
-      - "🇲🇾 🔒 VL-TCP-RLT 🇲🇾 MY-56.69.201.178:443"
-      - "🇲🇾 🔒 VL-TCP-RLT 🇲🇾 MY-56.68.98.109:443"
+      - "🇲🇾 vmess-47.250.135.244:10000"
+      - "🇲🇾 🔒 VL-TCP-RLT 🇲🇾 MY-56.69.155.46:443"
+      - "🇲🇾 🔒 VL-TCP-RLT 🇲🇾 MY-43.216.251.239:443"
       - "🇲🇾 @DeltaKroneckerGithub-5"
       - "🇲🇾 150-ws ✂️@GheychiAmoozesh"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
@@ -762,20 +762,20 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-85.211.176.217:53617"
-      - "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-20.17.157.86:36803"
+      - "🇲🇾 🔒 VL-WS-TLS 🇲🇾 MY-216.173.67.159:443"
       - "🇲🇾 🔒 VL-WS-TLS 🇲🇾 MY-216.173.67.119:443"
       - "🇲🇾 🔒 VL-WS-TLS 🇲🇾 MY-216.173.67.144:443"
-      - "🇲🇾 🔒 VL-WS-TLS 🇲🇾 MY-216.173.67.159:443"
+      - "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-85.211.180.131:53617"
+      - "🇲🇾 🔒 VM-WS-NA 🇲🇾 MY-20.17.158.225:36803"
       - "🇲🇾 @DeltaKroneckerGithub"
       - "🇲🇾 @DeltaKroneckerGithub-1"
       - "🇲🇾 @DeltaKroneckerGithub-2"
       - "🇲🇾 @DeltaKroneckerGithub-3"
       - "🇲🇾 @DeltaKroneckerGithub-4"
-      - "🇲🇾 Malaysia"
       - "🇲🇾 🔒 TR-TCP-NA 🇲🇾 MY-47.250.84.25:443"
-      - "🇲🇾 🔒 VL-TCP-RLT 🇲🇾 MY-56.69.201.178:443"
-      - "🇲🇾 🔒 VL-TCP-RLT 🇲🇾 MY-56.68.98.109:443"
+      - "🇲🇾 vmess-47.250.135.244:10000"
+      - "🇲🇾 🔒 VL-TCP-RLT 🇲🇾 MY-56.69.155.46:443"
+      - "🇲🇾 🔒 VL-TCP-RLT 🇲🇾 MY-43.216.251.239:443"
       - "🇲🇾 @DeltaKroneckerGithub-5"
       - "🇲🇾 150-ws ✂️@GheychiAmoozesh"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
