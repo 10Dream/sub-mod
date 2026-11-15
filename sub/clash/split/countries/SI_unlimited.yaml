@@ -527,6 +527,30 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
+  - name: "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.189.40:8880"
+    type: "vless"
+    server: "92.53.189.40"
+    port: 8880
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "vms.lifetime19.workers.dev"
+  - name: "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.188.30:8880"
+    type: "vless"
+    server: "92.53.188.30"
+    port: 8880
+    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "vms.lifetime18.workers.dev"
   - name: "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.160-14443 | 151.54ms"
     type: "vless"
     server: "92.42.201.160"
@@ -553,20 +577,6 @@ proxies:
     reality-opts:
       public-key: "mGTe1s-luknrPURs4KI4fjdCXZAq03f_-b7by6Dr-CI"
       short-id: "e204defc87a8949e"
-  - name: "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.60.78.221:443"
-    type: "vless"
-    server: "92.60.78.221"
-    port: 443
-    uuid: "6897c181-24b1-4880-8660-e6c5c7ee13c7"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.tradingview.com"
-    client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "pkIWxbuPAasjatPaHnAaTnCxVj1RkDFsJEWpLUTOcWY"
-      short-id: "9917d2350096"
   - name: "🇸🇮 SI🇸🇮 | node-slo02.rkitman.ru-443 | 520.85ms"
     type: "vless"
     server: "92.42.201.107"
@@ -590,30 +600,20 @@ proxies:
       - "h3"
       - "h2"
       - "http/1.1"
-  - name: "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.189.40:8880"
+  - name: "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.60.78.221:443"
     type: "vless"
-    server: "92.53.189.40"
-    port: 8880
-    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
+    server: "92.60.78.221"
+    port: 443
+    uuid: "6897c181-24b1-4880-8660-e6c5c7ee13c7"
     udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "vms.lifetime19.workers.dev"
-  - name: "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.188.30:8880"
-    type: "vless"
-    server: "92.53.188.30"
-    port: 8880
-    uuid: "6202b230-417c-4d8e-b624-0f71afa9c75d"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "vms.lifetime18.workers.dev"
+    tls: true
+    network: "tcp"
+    servername: "www.tradingview.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "pkIWxbuPAasjatPaHnAaTnCxVj1RkDFsJEWpLUTOcWY"
+      short-id: "9917d2350096"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -628,13 +628,13 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.160-14443 | 151.54ms"
-      - "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.155-14443 | 156.88ms"
-      - "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.60.78.221:443"
-      - "🇸🇮 SI🇸🇮 | node-slo02.rkitman.ru-443 | 520.85ms"
-      - "🇸🇮 US🇺🇸 | pqh23v4.hiddendom.shop-443 | 44.72ms"
       - "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.189.40:8880"
       - "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.188.30:8880"
+      - "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.160-14443 | 151.54ms"
+      - "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.155-14443 | 156.88ms"
+      - "🇸🇮 SI🇸🇮 | node-slo02.rkitman.ru-443 | 520.85ms"
+      - "🇸🇮 US🇺🇸 | pqh23v4.hiddendom.shop-443 | 44.72ms"
+      - "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.60.78.221:443"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -643,13 +643,13 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.160-14443 | 151.54ms"
-      - "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.155-14443 | 156.88ms"
-      - "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.60.78.221:443"
-      - "🇸🇮 SI🇸🇮 | node-slo02.rkitman.ru-443 | 520.85ms"
-      - "🇸🇮 US🇺🇸 | pqh23v4.hiddendom.shop-443 | 44.72ms"
       - "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.189.40:8880"
       - "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.188.30:8880"
+      - "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.160-14443 | 151.54ms"
+      - "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.155-14443 | 156.88ms"
+      - "🇸🇮 SI🇸🇮 | node-slo02.rkitman.ru-443 | 520.85ms"
+      - "🇸🇮 US🇺🇸 | pqh23v4.hiddendom.shop-443 | 44.72ms"
+      - "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.60.78.221:443"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -659,13 +659,13 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.160-14443 | 151.54ms"
-      - "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.155-14443 | 156.88ms"
-      - "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.60.78.221:443"
-      - "🇸🇮 SI🇸🇮 | node-slo02.rkitman.ru-443 | 520.85ms"
-      - "🇸🇮 US🇺🇸 | pqh23v4.hiddendom.shop-443 | 44.72ms"
       - "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.189.40:8880"
       - "🇸🇮 🔒 VL-WS-NONE 🇸🇮 SI-92.53.188.30:8880"
+      - "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.160-14443 | 151.54ms"
+      - "🇸🇮 REALITY|SI🇸🇮 | 92.42.201.155-14443 | 156.88ms"
+      - "🇸🇮 SI🇸🇮 | node-slo02.rkitman.ru-443 | 520.85ms"
+      - "🇸🇮 US🇺🇸 | pqh23v4.hiddendom.shop-443 | 44.72ms"
+      - "🇸🇮 🔒 VL-TCP-RLT 🇸🇮 SI-92.60.78.221:443"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"
