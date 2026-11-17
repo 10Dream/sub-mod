@@ -527,14 +527,21 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "🇷🇸 🔒 SS-TCP-NA 🇷🇸 RS-146.70.221.238:1080"
-    type: "ss"
-    server: "146.70.221.238"
-    port: 1080
-    cipher: "chacha20-ietf-poly1305"
-    password: "XF0klw7870vXn3uQIxe19Q"
+  - name: "🇷🇸 🔒 VL-WS-TLS 🇷🇸 RS-185.105.108.92:8443"
+    type: "vless"
+    server: "185.105.108.92"
+    port: 8443
+    uuid: "c18b978e-1c4e-415c-8bea-07942b563a64"
     udp: true
-  - name: "🇷🇸 RS🇷🇸 | rs.nebulaguard.org-5443 | 614.82ms"
+    tls: true
+    network: "ws"
+    servername: "shuma.ccwu.cc"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "shuma.ccwu.cc"
+  - name: "🇷🇸 @DeltaKroneckerGithub"
     type: "trojan"
     server: "38.180.101.235"
     port: 5443
@@ -543,6 +550,13 @@ proxies:
     tls: true
     network: "tcp"
     servername: "rs.nebulaguard.org"
+  - name: "🇷🇸 🔒 SS-TCP-NA 🇷🇸 RS-146.70.221.238:1080"
+    type: "ss"
+    server: "146.70.221.238"
+    port: 1080
+    cipher: "chacha20-ietf-poly1305"
+    password: "XF0klw7870vXn3uQIxe19Q"
+    udp: true
   - name: "🇷🇸 🔒 VL-GRPC-RLT 🇷🇸 RS-150.40.126.21:443"
     type: "vless"
     server: "150.40.126.21"
@@ -660,21 +674,7 @@ proxies:
       short-id: "1469af2040b7c323"
     grpc-opts:
       grpc-service-name: "media.v1.ObjectService"
-  - name: "🇷🇸 🔒 VL-WS-TLS 🇷🇸 RS-185.105.108.92:8443"
-    type: "vless"
-    server: "185.105.108.92"
-    port: 8443
-    uuid: "c18b978e-1c4e-415c-8bea-07942b563a64"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "shuma.ccwu.cc"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "shuma.ccwu.cc"
-  - name: "🇷🇸 @DeltaKroneckerGithub"
+  - name: "🇷🇸 @DeltaKroneckerGithub-1"
     type: "vless"
     server: "netherlanddocjac.whooisthebest.ir"
     port: 10000
@@ -687,7 +687,7 @@ proxies:
     reality-opts:
       public-key: "Du5pk4KuMNA1sRcSpmuoLuC0HmxDBmFljFNfUzqxKiM"
       short-id: "cd0a1986719e44c8"
-  - name: "🇷🇸 @DeltaKroneckerGithub-1"
+  - name: "🇷🇸 @DeltaKroneckerGithub-2"
     type: "vless"
     server: "bg.spirako.com"
     port: 8443
@@ -745,8 +745,9 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
+      - "🇷🇸 🔒 VL-WS-TLS 🇷🇸 RS-185.105.108.92:8443"
+      - "🇷🇸 @DeltaKroneckerGithub"
       - "🇷🇸 🔒 SS-TCP-NA 🇷🇸 RS-146.70.221.238:1080"
-      - "🇷🇸 RS🇷🇸 | rs.nebulaguard.org-5443 | 614.82ms"
       - "🇷🇸 🔒 VL-GRPC-RLT 🇷🇸 RS-150.40.126.21:443"
       - "🇷🇸 🔒 VL-GRPC-RLT 🇷🇸 RS-150.40.126.24:443"
       - "🇷🇸 🔒 VL-GRPC-RLT 🇷🇸 RS-150.40.126.22:443"
@@ -755,9 +756,8 @@ proxy-groups:
       - "🇷🇸 🆔ar14n24b 🔒 VL-TCP- 🇧🇬 BG 222ms"
       - "🇷🇸 🆔vpnserverrr 🔒 VL-GRPC- ❔ XX down"
       - "🇷🇸 🆔vpnserverrr 🔒 VL-GRPC- ❔ XX down-1"
-      - "🇷🇸 🔒 VL-WS-TLS 🇷🇸 RS-185.105.108.92:8443"
-      - "🇷🇸 @DeltaKroneckerGithub"
       - "🇷🇸 @DeltaKroneckerGithub-1"
+      - "🇷🇸 @DeltaKroneckerGithub-2"
       - "🇷🇸 🔒 VL-GRPC-RLT 🇷🇸 RS-150.40.126.19:443-1"
       - "🇷🇸 🔒 VL-GRPC-RLT 🇷🇸 RS-150.40.126.24:443-1"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
@@ -768,8 +768,9 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
+      - "🇷🇸 🔒 VL-WS-TLS 🇷🇸 RS-185.105.108.92:8443"
+      - "🇷🇸 @DeltaKroneckerGithub"
       - "🇷🇸 🔒 SS-TCP-NA 🇷🇸 RS-146.70.221.238:1080"
-      - "🇷🇸 RS🇷🇸 | rs.nebulaguard.org-5443 | 614.82ms"
       - "🇷🇸 🔒 VL-GRPC-RLT 🇷🇸 RS-150.40.126.21:443"
       - "🇷🇸 🔒 VL-GRPC-RLT 🇷🇸 RS-150.40.126.24:443"
       - "🇷🇸 🔒 VL-GRPC-RLT 🇷🇸 RS-150.40.126.22:443"
@@ -778,9 +779,8 @@ proxy-groups:
       - "🇷🇸 🆔ar14n24b 🔒 VL-TCP- 🇧🇬 BG 222ms"
       - "🇷🇸 🆔vpnserverrr 🔒 VL-GRPC- ❔ XX down"
       - "🇷🇸 🆔vpnserverrr 🔒 VL-GRPC- ❔ XX down-1"
-      - "🇷🇸 🔒 VL-WS-TLS 🇷🇸 RS-185.105.108.92:8443"
-      - "🇷🇸 @DeltaKroneckerGithub"
       - "🇷🇸 @DeltaKroneckerGithub-1"
+      - "🇷🇸 @DeltaKroneckerGithub-2"
       - "🇷🇸 🔒 VL-GRPC-RLT 🇷🇸 RS-150.40.126.19:443-1"
       - "🇷🇸 🔒 VL-GRPC-RLT 🇷🇸 RS-150.40.126.24:443-1"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
@@ -792,8 +792,9 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
+      - "🇷🇸 🔒 VL-WS-TLS 🇷🇸 RS-185.105.108.92:8443"
+      - "🇷🇸 @DeltaKroneckerGithub"
       - "🇷🇸 🔒 SS-TCP-NA 🇷🇸 RS-146.70.221.238:1080"
-      - "🇷🇸 RS🇷🇸 | rs.nebulaguard.org-5443 | 614.82ms"
       - "🇷🇸 🔒 VL-GRPC-RLT 🇷🇸 RS-150.40.126.21:443"
       - "🇷🇸 🔒 VL-GRPC-RLT 🇷🇸 RS-150.40.126.24:443"
       - "🇷🇸 🔒 VL-GRPC-RLT 🇷🇸 RS-150.40.126.22:443"
@@ -802,9 +803,8 @@ proxy-groups:
       - "🇷🇸 🆔ar14n24b 🔒 VL-TCP- 🇧🇬 BG 222ms"
       - "🇷🇸 🆔vpnserverrr 🔒 VL-GRPC- ❔ XX down"
       - "🇷🇸 🆔vpnserverrr 🔒 VL-GRPC- ❔ XX down-1"
-      - "🇷🇸 🔒 VL-WS-TLS 🇷🇸 RS-185.105.108.92:8443"
-      - "🇷🇸 @DeltaKroneckerGithub"
       - "🇷🇸 @DeltaKroneckerGithub-1"
+      - "🇷🇸 @DeltaKroneckerGithub-2"
       - "🇷🇸 🔒 VL-GRPC-RLT 🇷🇸 RS-150.40.126.19:443-1"
       - "🇷🇸 🔒 VL-GRPC-RLT 🇷🇸 RS-150.40.126.24:443-1"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
