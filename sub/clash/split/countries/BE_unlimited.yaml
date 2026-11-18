@@ -527,13 +527,20 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
-    type: "ss"
-    server: "185.210.217.94"
-    port: 1080
-    cipher: "chacha20-ietf-poly1305"
-    password: "XF0klw7870vXn3uQIxe19Q"
+  - name: "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
+    type: "vless"
+    server: "194.71.227.213"
+    port: 443
+    uuid: "c18b978e-1c4e-415c-8bea-07942b563a64"
     udp: true
+    tls: true
+    network: "ws"
+    servername: "shuma.ccwu.cc"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "shuma.ccwu.cc"
   - name: "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.164-443 | 142.72ms"
     type: "vless"
     server: "109.69.218.164"
@@ -559,19 +566,13 @@ proxies:
     flow: "xtls-rprx-vision"
     reality-opts:
       public-key: "cv_KJnMzQUZruACPbH-BCgLWrYqPm2dbUymg-gW_sVc"
-  - name: "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.163:443"
-    type: "vless"
-    server: "109.69.218.163"
-    port: 443
-    uuid: "664f65f4-33b3-43a3-b9e5-68192d1d428e"
+  - name: "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
+    type: "ss"
+    server: "185.210.217.94"
+    port: 1080
+    cipher: "chacha20-ietf-poly1305"
+    password: "XF0klw7870vXn3uQIxe19Q"
     udp: true
-    tls: true
-    network: "tcp"
-    servername: "zealous-vortex.cdn.cachefleet.com"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "cv_KJnMzQUZruACPbH-BCgLWrYqPm2dbUymg-gW_sVc"
   - name: "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-31.77.237.165:443"
     type: "vless"
     server: "31.77.237.165"
@@ -586,6 +587,19 @@ proxies:
     reality-opts:
       public-key: "dh8czg12AdXJyLQSzSNI7fNWnFCbbDnkOsRx02_eUmk"
       short-id: "536c2528b834d390"
+  - name: "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.163:443"
+    type: "vless"
+    server: "109.69.218.163"
+    port: 443
+    uuid: "664f65f4-33b3-43a3-b9e5-68192d1d428e"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "zealous-vortex.cdn.cachefleet.com"
+    client-fingerprint: "firefox"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "cv_KJnMzQUZruACPbH-BCgLWrYqPm2dbUymg-gW_sVc"
   - name: "🇧🇪 🔒 VL-HTTPUPGRADE-NA 🇧🇪 BE-188.95.12.226:2095"
     type: "vless"
     server: "188.95.12.226"
@@ -594,20 +608,6 @@ proxies:
     udp: true
     tls: false
     network: "httpupgrade"
-  - name: "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
-    type: "vless"
-    server: "194.71.227.213"
-    port: 443
-    uuid: "c18b978e-1c4e-415c-8bea-07942b563a64"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "shuma.ccwu.cc"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "shuma.ccwu.cc"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -622,13 +622,13 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
+      - "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
       - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.164-443 | 142.72ms"
       - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.172-443 | 150.07ms"
-      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.163:443"
+      - "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
       - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-31.77.237.165:443"
+      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.163:443"
       - "🇧🇪 🔒 VL-HTTPUPGRADE-NA 🇧🇪 BE-188.95.12.226:2095"
-      - "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -637,13 +637,13 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
+      - "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
       - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.164-443 | 142.72ms"
       - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.172-443 | 150.07ms"
-      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.163:443"
+      - "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
       - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-31.77.237.165:443"
+      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.163:443"
       - "🇧🇪 🔒 VL-HTTPUPGRADE-NA 🇧🇪 BE-188.95.12.226:2095"
-      - "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -653,13 +653,13 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
+      - "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
       - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.164-443 | 142.72ms"
       - "🇧🇪 REALITY|BE🇧🇪 | 109.69.218.172-443 | 150.07ms"
-      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.163:443"
+      - "🇧🇪 🔒 SS-TCP-NA 🇧🇪 BE-185.210.217.94:1080"
       - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-31.77.237.165:443"
+      - "🇧🇪 🔒 VL-TCP-RLT 🇧🇪 BE-109.69.218.163:443"
       - "🇧🇪 🔒 VL-HTTPUPGRADE-NA 🇧🇪 BE-188.95.12.226:2095"
-      - "🇧🇪 🔒 VL-WS-TLS 🇧🇪 BE-194.71.227.213:443"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"
