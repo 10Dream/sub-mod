@@ -527,27 +527,6 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "🇩🇰 🔒 SS-TCP-NA 🇩🇰 DK-37.120.131.62:1080"
-    type: "ss"
-    server: "37.120.131.62"
-    port: 1080
-    cipher: "chacha20-ietf-poly1305"
-    password: "XF0klw7870vXn3uQIxe19Q"
-    udp: true
-  - name: "🇩🇰 🔒 VL-TCP-RLT 🇩🇰 DK-217.78.237.118:8443"
-    type: "vless"
-    server: "217.78.237.118"
-    port: 8443
-    uuid: "483c6187-3c8d-436b-8413-536c2c87b70c"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "gcsp.ch"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "uWoKxXeFb0l5-mZnpGpoW9lCY4KmOeayGklp2WUNgxA"
-      short-id: "d90cf6b5"
   - name: "🇩🇰 🔒 VL-WS-TLS 🇩🇰 DK-193.180.209.136:443"
     type: "vless"
     server: "193.180.209.136"
@@ -562,22 +541,27 @@ proxies:
       path: "/"
       headers:
         Host: "shuma.ccwu.cc"
-  - name: "🇩🇰 🔒 VL-WS-TLS 🇩🇰 DK-193.181.209.210:443"
+  - name: "🇩🇰 🔒 SS-TCP-NA 🇩🇰 DK-37.120.131.62:1080"
+    type: "ss"
+    server: "37.120.131.62"
+    port: 1080
+    cipher: "chacha20-ietf-poly1305"
+    password: "XF0klw7870vXn3uQIxe19Q"
+    udp: true
+  - name: "🇩🇰 🔒 VL-TCP-RLT 🇩🇰 DK-135.136.33.134:8443"
     type: "vless"
-    server: "193.181.209.210"
-    port: 443
-    uuid: "80a06811-f74b-4b82-ac99-7e66c2a98e1c"
+    server: "135.136.33.134"
+    port: 8443
+    uuid: "9a597d68-6688-4046-bf24-a5a541e115e0"
     udp: true
     tls: true
-    network: "ws"
-    servername: "clover.filnex.baby"
-    client-fingerprint: "firefox"
-    alpn:
-      - "http/1.1"
-    ws-opts:
-      path: "/api/de6/stream"
-      headers:
-        Host: "clover.filnex.baby"
+    network: "tcp"
+    servername: "www.apple.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "6FI4VM9WlQEGVjyCvLDQLz1jOkrzzhtfGl9eQTBn6HU"
+      short-id: "f8d0271b4b5f9efc"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -592,10 +576,9 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "🇩🇰 🔒 SS-TCP-NA 🇩🇰 DK-37.120.131.62:1080"
-      - "🇩🇰 🔒 VL-TCP-RLT 🇩🇰 DK-217.78.237.118:8443"
       - "🇩🇰 🔒 VL-WS-TLS 🇩🇰 DK-193.180.209.136:443"
-      - "🇩🇰 🔒 VL-WS-TLS 🇩🇰 DK-193.181.209.210:443"
+      - "🇩🇰 🔒 SS-TCP-NA 🇩🇰 DK-37.120.131.62:1080"
+      - "🇩🇰 🔒 VL-TCP-RLT 🇩🇰 DK-135.136.33.134:8443"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -604,10 +587,9 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "🇩🇰 🔒 SS-TCP-NA 🇩🇰 DK-37.120.131.62:1080"
-      - "🇩🇰 🔒 VL-TCP-RLT 🇩🇰 DK-217.78.237.118:8443"
       - "🇩🇰 🔒 VL-WS-TLS 🇩🇰 DK-193.180.209.136:443"
-      - "🇩🇰 🔒 VL-WS-TLS 🇩🇰 DK-193.181.209.210:443"
+      - "🇩🇰 🔒 SS-TCP-NA 🇩🇰 DK-37.120.131.62:1080"
+      - "🇩🇰 🔒 VL-TCP-RLT 🇩🇰 DK-135.136.33.134:8443"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -617,10 +599,9 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "🇩🇰 🔒 SS-TCP-NA 🇩🇰 DK-37.120.131.62:1080"
-      - "🇩🇰 🔒 VL-TCP-RLT 🇩🇰 DK-217.78.237.118:8443"
       - "🇩🇰 🔒 VL-WS-TLS 🇩🇰 DK-193.180.209.136:443"
-      - "🇩🇰 🔒 VL-WS-TLS 🇩🇰 DK-193.181.209.210:443"
+      - "🇩🇰 🔒 SS-TCP-NA 🇩🇰 DK-37.120.131.62:1080"
+      - "🇩🇰 🔒 VL-TCP-RLT 🇩🇰 DK-135.136.33.134:8443"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"
