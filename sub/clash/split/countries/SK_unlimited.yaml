@@ -527,20 +527,38 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "🇸🇰 🔒 VL-WS-TLS 🇸🇰 SK-89.46.42.92:2053"
+  - name: "🇸🇰 🔒 SS-TCP-NA 🇸🇰 SK-156.146.40.84:1080"
+    type: "ss"
+    server: "156.146.40.84"
+    port: 1080
+    cipher: "chacha20-ietf-poly1305"
+    password: "Vr06rU_v1vFPYeXq9zbsAA"
+    udp: true
+  - name: "🇸🇰 REALITY|SK🇸🇰 | 196.245.153.112-443 | 180.85ms"
     type: "vless"
-    server: "89.46.42.92"
-    port: 2053
-    uuid: "c18b978e-1c4e-415c-8bea-07942b563a64"
+    server: "196.245.153.112"
+    port: 443
+    uuid: "474638a5-dc58-4453-9e40-70bcaa4ef74c"
     udp: true
     tls: true
-    network: "ws"
-    servername: "shuma.ccwu.cc"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/"
-      headers:
-        Host: "shuma.ccwu.cc"
+    network: "tcp"
+    servername: "b998f03d.de-p2.h1clayd.click"
+    reality-opts:
+      public-key: "RjoTK5x2_y3hb4nsOUnjii7IAu6gy5GrC-VN-H_AIh0"
+      short-id: "c10f4100fa3a8d47"
+  - name: "🇸🇰 🔒 VL-TCP-RLT 🇸🇰 SK-196.245.153.156:443"
+    type: "vless"
+    server: "196.245.153.156"
+    port: 443
+    uuid: "cda0862a-0f87-4be9-8ed8-1d0c9e382839"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "f0d7aft.nl17.h1clayd.click"
+    client-fingerprint: "firefox"
+    reality-opts:
+      public-key: "kkCGiCQCKnkozJR1KKCRNtmdBECmThCgI9VSv7iDcWI"
+      short-id: "8956c57cb4c4f8d2"
   - name: "🇸🇰 @v2FreeHub | Slovakia 🇸🇰"
     type: "vless"
     server: "76574ct.nl8.h1clayd.click"
@@ -632,38 +650,20 @@ proxies:
     reality-opts:
       public-key: "l-GzBDuNuhnjxoRlZqKvT7jAt_sbVAxhGFsAttO5kXs"
       short-id: "361d0dd59c70516f"
-  - name: "🇸🇰 REALITY|SK🇸🇰 | 196.245.153.112-443 | 180.85ms"
+  - name: "🇸🇰 🔒 VL-WS-TLS 🇸🇰 SK-89.46.42.92:2053"
     type: "vless"
-    server: "196.245.153.112"
-    port: 443
-    uuid: "474638a5-dc58-4453-9e40-70bcaa4ef74c"
+    server: "89.46.42.92"
+    port: 2053
+    uuid: "c18b978e-1c4e-415c-8bea-07942b563a64"
     udp: true
     tls: true
-    network: "tcp"
-    servername: "b998f03d.de-p2.h1clayd.click"
-    reality-opts:
-      public-key: "RjoTK5x2_y3hb4nsOUnjii7IAu6gy5GrC-VN-H_AIh0"
-      short-id: "c10f4100fa3a8d47"
-  - name: "🇸🇰 🔒 SS-TCP-NA 🇸🇰 SK-156.146.40.84:1080"
-    type: "ss"
-    server: "156.146.40.84"
-    port: 1080
-    cipher: "chacha20-ietf-poly1305"
-    password: "Vr06rU_v1vFPYeXq9zbsAA"
-    udp: true
-  - name: "🇸🇰 🔒 VL-TCP-RLT 🇸🇰 SK-196.245.153.156:443"
-    type: "vless"
-    server: "196.245.153.156"
-    port: 443
-    uuid: "cda0862a-0f87-4be9-8ed8-1d0c9e382839"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "f0d7aft.nl17.h1clayd.click"
-    client-fingerprint: "firefox"
-    reality-opts:
-      public-key: "kkCGiCQCKnkozJR1KKCRNtmdBECmThCgI9VSv7iDcWI"
-      short-id: "8956c57cb4c4f8d2"
+    network: "ws"
+    servername: "shuma.ccwu.cc"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/"
+      headers:
+        Host: "shuma.ccwu.cc"
   - name: "🇸🇰 @DeltaKroneckerGithub"
     type: "vless"
     server: "196.245.153.92"
@@ -693,7 +693,9 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "🇸🇰 🔒 VL-WS-TLS 🇸🇰 SK-89.46.42.92:2053"
+      - "🇸🇰 🔒 SS-TCP-NA 🇸🇰 SK-156.146.40.84:1080"
+      - "🇸🇰 REALITY|SK🇸🇰 | 196.245.153.112-443 | 180.85ms"
+      - "🇸🇰 🔒 VL-TCP-RLT 🇸🇰 SK-196.245.153.156:443"
       - "🇸🇰 @v2FreeHub | Slovakia 🇸🇰"
       - "🇸🇰 @v2FreeHub | Slovakia 🇸🇰-1"
       - "🇸🇰 @v2FreeHub | Slovakia 🇸🇰-2"
@@ -701,9 +703,7 @@ proxy-groups:
       - "🇸🇰 @v2FreeHub | Slovakia 🇸🇰-4"
       - "🇸🇰 @v2FreeHub | Slovakia 🇸🇰-5"
       - "🇸🇰 @v2FreeHub | Slovakia 🇸🇰-6"
-      - "🇸🇰 REALITY|SK🇸🇰 | 196.245.153.112-443 | 180.85ms"
-      - "🇸🇰 🔒 SS-TCP-NA 🇸🇰 SK-156.146.40.84:1080"
-      - "🇸🇰 🔒 VL-TCP-RLT 🇸🇰 SK-196.245.153.156:443"
+      - "🇸🇰 🔒 VL-WS-TLS 🇸🇰 SK-89.46.42.92:2053"
       - "🇸🇰 @DeltaKroneckerGithub"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
@@ -713,7 +713,9 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "🇸🇰 🔒 VL-WS-TLS 🇸🇰 SK-89.46.42.92:2053"
+      - "🇸🇰 🔒 SS-TCP-NA 🇸🇰 SK-156.146.40.84:1080"
+      - "🇸🇰 REALITY|SK🇸🇰 | 196.245.153.112-443 | 180.85ms"
+      - "🇸🇰 🔒 VL-TCP-RLT 🇸🇰 SK-196.245.153.156:443"
       - "🇸🇰 @v2FreeHub | Slovakia 🇸🇰"
       - "🇸🇰 @v2FreeHub | Slovakia 🇸🇰-1"
       - "🇸🇰 @v2FreeHub | Slovakia 🇸🇰-2"
@@ -721,9 +723,7 @@ proxy-groups:
       - "🇸🇰 @v2FreeHub | Slovakia 🇸🇰-4"
       - "🇸🇰 @v2FreeHub | Slovakia 🇸🇰-5"
       - "🇸🇰 @v2FreeHub | Slovakia 🇸🇰-6"
-      - "🇸🇰 REALITY|SK🇸🇰 | 196.245.153.112-443 | 180.85ms"
-      - "🇸🇰 🔒 SS-TCP-NA 🇸🇰 SK-156.146.40.84:1080"
-      - "🇸🇰 🔒 VL-TCP-RLT 🇸🇰 SK-196.245.153.156:443"
+      - "🇸🇰 🔒 VL-WS-TLS 🇸🇰 SK-89.46.42.92:2053"
       - "🇸🇰 @DeltaKroneckerGithub"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
@@ -734,7 +734,9 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "🇸🇰 🔒 VL-WS-TLS 🇸🇰 SK-89.46.42.92:2053"
+      - "🇸🇰 🔒 SS-TCP-NA 🇸🇰 SK-156.146.40.84:1080"
+      - "🇸🇰 REALITY|SK🇸🇰 | 196.245.153.112-443 | 180.85ms"
+      - "🇸🇰 🔒 VL-TCP-RLT 🇸🇰 SK-196.245.153.156:443"
       - "🇸🇰 @v2FreeHub | Slovakia 🇸🇰"
       - "🇸🇰 @v2FreeHub | Slovakia 🇸🇰-1"
       - "🇸🇰 @v2FreeHub | Slovakia 🇸🇰-2"
@@ -742,9 +744,7 @@ proxy-groups:
       - "🇸🇰 @v2FreeHub | Slovakia 🇸🇰-4"
       - "🇸🇰 @v2FreeHub | Slovakia 🇸🇰-5"
       - "🇸🇰 @v2FreeHub | Slovakia 🇸🇰-6"
-      - "🇸🇰 REALITY|SK🇸🇰 | 196.245.153.112-443 | 180.85ms"
-      - "🇸🇰 🔒 SS-TCP-NA 🇸🇰 SK-156.146.40.84:1080"
-      - "🇸🇰 🔒 VL-TCP-RLT 🇸🇰 SK-196.245.153.156:443"
+      - "🇸🇰 🔒 VL-WS-TLS 🇸🇰 SK-89.46.42.92:2053"
       - "🇸🇰 @DeltaKroneckerGithub"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
