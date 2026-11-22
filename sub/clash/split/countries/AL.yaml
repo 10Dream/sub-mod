@@ -527,30 +527,33 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "🇦🇱 🔒 VL-WS-NONE 🇦🇱 AL-85.155.228.30:8080"
+  - name: "🇦🇱 REALITY|AL🇦🇱 | 151.123.187.198-443 | 174.64ms"
     type: "vless"
-    server: "85.155.228.30"
-    port: 8080
-    uuid: "64526f52-9f3e-4ae8-b090-2a794f8cc4e0"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/real"
-  - name: "🇦🇱 🔒 VL-TCP-RLT 🇦🇱 AL-144.31.131.38:443"
-    type: "vless"
-    server: "144.31.131.38"
+    server: "151.123.187.198"
     port: 443
-    uuid: "adc11f30-e4cb-4985-bf5e-f9ded69c019f"
+    uuid: "b24ad12f-f6ce-4f0b-a264-d58a76104026"
     udp: true
     tls: true
     network: "tcp"
-    servername: "prod.pl-node-01.security-sbrf.ru"
+    servername: "al2.magazinnarubeva.ru"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "trN5x0amt2YuVzF2vZnK294YBAuh_zl5QkZjPyWz-TI"
+      short-id: "8718c58d3d51db59"
+  - name: "🇦🇱 🔒 VL-TCP-RLT 🇦🇱 AL-31.171.152.222:8443"
+    type: "vless"
+    server: "31.171.152.222"
+    port: 8443
+    uuid: "9a597d68-6688-4046-bf24-a5a541e115e0"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.apple.com"
     client-fingerprint: "chrome"
     flow: "xtls-rprx-vision"
     reality-opts:
-      public-key: "fNfokzklCF4l_c8k8PciOCjm5ecNoF_sNLjEtaO-xzI"
-      short-id: "db04ce8bdb8900f1"
+      public-key: "6FI4VM9WlQEGVjyCvLDQLz1jOkrzzhtfGl9eQTBn6HU"
+      short-id: "f8d0271b4b5f9efc"
   - name: "🇦🇱 🔒 VL-TCP-RLT 🇦🇱 AL-85.155.228.24:443"
     type: "vless"
     server: "85.155.228.24"
@@ -565,6 +568,20 @@ proxies:
     reality-opts:
       public-key: "2IBUcPHOhFulmJaICe_xuRBJVgjDqVXB8fjHVdbdOQA"
       short-id: "e114ca996877ce3a"
+  - name: "🇦🇱 🔒 VL-TCP-RLT 🇦🇱 AL-144.31.131.38:443"
+    type: "vless"
+    server: "144.31.131.38"
+    port: 443
+    uuid: "adc11f30-e4cb-4985-bf5e-f9ded69c019f"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "prod.pl-node-01.security-sbrf.ru"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "fNfokzklCF4l_c8k8PciOCjm5ecNoF_sNLjEtaO-xzI"
+      short-id: "db04ce8bdb8900f1"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -579,9 +596,10 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "🇦🇱 🔒 VL-WS-NONE 🇦🇱 AL-85.155.228.30:8080"
-      - "🇦🇱 🔒 VL-TCP-RLT 🇦🇱 AL-144.31.131.38:443"
+      - "🇦🇱 REALITY|AL🇦🇱 | 151.123.187.198-443 | 174.64ms"
+      - "🇦🇱 🔒 VL-TCP-RLT 🇦🇱 AL-31.171.152.222:8443"
       - "🇦🇱 🔒 VL-TCP-RLT 🇦🇱 AL-85.155.228.24:443"
+      - "🇦🇱 🔒 VL-TCP-RLT 🇦🇱 AL-144.31.131.38:443"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -590,9 +608,10 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "🇦🇱 🔒 VL-WS-NONE 🇦🇱 AL-85.155.228.30:8080"
-      - "🇦🇱 🔒 VL-TCP-RLT 🇦🇱 AL-144.31.131.38:443"
+      - "🇦🇱 REALITY|AL🇦🇱 | 151.123.187.198-443 | 174.64ms"
+      - "🇦🇱 🔒 VL-TCP-RLT 🇦🇱 AL-31.171.152.222:8443"
       - "🇦🇱 🔒 VL-TCP-RLT 🇦🇱 AL-85.155.228.24:443"
+      - "🇦🇱 🔒 VL-TCP-RLT 🇦🇱 AL-144.31.131.38:443"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -602,9 +621,10 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "🇦🇱 🔒 VL-WS-NONE 🇦🇱 AL-85.155.228.30:8080"
-      - "🇦🇱 🔒 VL-TCP-RLT 🇦🇱 AL-144.31.131.38:443"
+      - "🇦🇱 REALITY|AL🇦🇱 | 151.123.187.198-443 | 174.64ms"
+      - "🇦🇱 🔒 VL-TCP-RLT 🇦🇱 AL-31.171.152.222:8443"
       - "🇦🇱 🔒 VL-TCP-RLT 🇦🇱 AL-85.155.228.24:443"
+      - "🇦🇱 🔒 VL-TCP-RLT 🇦🇱 AL-144.31.131.38:443"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"
