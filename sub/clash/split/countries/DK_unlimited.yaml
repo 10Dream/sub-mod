@@ -527,7 +527,35 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "🇩🇰 🔒 VL-TCP-NONE 🇩🇰 DK-87.58.159.20:443"
+  - name: "🇩🇰 🔒 SS-TCP-NA 🇩🇰 DK-45.153.48.114:443"
+    type: "ss"
+    server: "45.153.48.114"
+    port: 443
+    cipher: "chacha20-ietf-poly1305"
+    password: "ICTOtROjrAqIotsEYTG8Nc"
+    udp: true
+  - name: "🇩🇰 🔒 SS-TCP-NA 🇩🇰 DK-37.120.131.62:1080"
+    type: "ss"
+    server: "37.120.131.62"
+    port: 1080
+    cipher: "chacha20-ietf-poly1305"
+    password: "XF0klw7870vXn3uQIxe19Q"
+    udp: true
+  - name: "🇩🇰 REALITY|DK🇩🇰 | 135.136.33.134-8443 | 163.27ms"
+    type: "vless"
+    server: "135.136.33.134"
+    port: 8443
+    uuid: "9a597d68-6688-4046-bf24-a5a541e115e0"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.apple.com"
+    client-fingerprint: "chrome"
+    flow: "xtls-rprx-vision"
+    reality-opts:
+      public-key: "6FI4VM9WlQEGVjyCvLDQLz1jOkrzzhtfGl9eQTBn6HU"
+      short-id: "f8d0271b4b5f9efc"
+  - name: "🇩🇰 🆔ar14n24b 🔓 VL-TCP-N/A ❔ XX 88ms"
     type: "vless"
     server: "87.58.159.20"
     port: 443
@@ -549,34 +577,28 @@ proxies:
       path: "/"
       headers:
         Host: "shuma.ccwu.cc"
-  - name: "🇩🇰 REALITY|DK🇩🇰 | 135.136.33.134-8443 | 163.27ms"
+  - name: "🇩🇰 🔒 VL-HTTP-TLS 🇩🇰 DK-140.248.69.254:443"
     type: "vless"
-    server: "135.136.33.134"
-    port: 8443
-    uuid: "9a597d68-6688-4046-bf24-a5a541e115e0"
+    server: "140.248.69.254"
+    port: 443
+    uuid: "410bc842-c3df-4fc5-9e11-0feab5c97d64"
     udp: true
     tls: true
-    network: "tcp"
-    servername: "www.apple.com"
+    network: "http"
+    servername: "google.com"
     client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "6FI4VM9WlQEGVjyCvLDQLz1jOkrzzhtfGl9eQTBn6HU"
-      short-id: "f8d0271b4b5f9efc"
-  - name: "🇩🇰 🔒 SS-TCP-NA 🇩🇰 DK-37.120.131.62:1080"
-    type: "ss"
-    server: "37.120.131.62"
-    port: 1080
-    cipher: "chacha20-ietf-poly1305"
-    password: "XF0klw7870vXn3uQIxe19Q"
-    udp: true
-  - name: "🇩🇰 🆔ar14n24b 🔒 SS-TCP-TLS ❔ XX 104ms"
-    type: "ss"
-    server: "45.153.48.114"
+    alpn:
+      - "h2"
+  - name: "🇩🇰 🔒 VL-HTTP-TLS 🇩🇰 DK-140.248.69.254:443-1"
+    type: "vless"
+    server: "140.248.69.254"
     port: 443
-    cipher: "chacha20-ietf-poly1305"
-    password: "ICTOtROjrAqIotsEYTG8Nc"
+    uuid: "633c1bb0-60d5-41fb-a9c4-11f408b264ec"
     udp: true
+    tls: true
+    network: "http"
+    servername: "speedtest.net"
+    client-fingerprint: "chrome"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -591,11 +613,13 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "🇩🇰 🔒 VL-TCP-NONE 🇩🇰 DK-87.58.159.20:443"
-      - "🇩🇰 🔒 VL-WS-TLS 🇩🇰 DK-193.180.209.136:443"
-      - "🇩🇰 REALITY|DK🇩🇰 | 135.136.33.134-8443 | 163.27ms"
+      - "🇩🇰 🔒 SS-TCP-NA 🇩🇰 DK-45.153.48.114:443"
       - "🇩🇰 🔒 SS-TCP-NA 🇩🇰 DK-37.120.131.62:1080"
-      - "🇩🇰 🆔ar14n24b 🔒 SS-TCP-TLS ❔ XX 104ms"
+      - "🇩🇰 REALITY|DK🇩🇰 | 135.136.33.134-8443 | 163.27ms"
+      - "🇩🇰 🆔ar14n24b 🔓 VL-TCP-N/A ❔ XX 88ms"
+      - "🇩🇰 🔒 VL-WS-TLS 🇩🇰 DK-193.180.209.136:443"
+      - "🇩🇰 🔒 VL-HTTP-TLS 🇩🇰 DK-140.248.69.254:443"
+      - "🇩🇰 🔒 VL-HTTP-TLS 🇩🇰 DK-140.248.69.254:443-1"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -604,11 +628,13 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "🇩🇰 🔒 VL-TCP-NONE 🇩🇰 DK-87.58.159.20:443"
-      - "🇩🇰 🔒 VL-WS-TLS 🇩🇰 DK-193.180.209.136:443"
-      - "🇩🇰 REALITY|DK🇩🇰 | 135.136.33.134-8443 | 163.27ms"
+      - "🇩🇰 🔒 SS-TCP-NA 🇩🇰 DK-45.153.48.114:443"
       - "🇩🇰 🔒 SS-TCP-NA 🇩🇰 DK-37.120.131.62:1080"
-      - "🇩🇰 🆔ar14n24b 🔒 SS-TCP-TLS ❔ XX 104ms"
+      - "🇩🇰 REALITY|DK🇩🇰 | 135.136.33.134-8443 | 163.27ms"
+      - "🇩🇰 🆔ar14n24b 🔓 VL-TCP-N/A ❔ XX 88ms"
+      - "🇩🇰 🔒 VL-WS-TLS 🇩🇰 DK-193.180.209.136:443"
+      - "🇩🇰 🔒 VL-HTTP-TLS 🇩🇰 DK-140.248.69.254:443"
+      - "🇩🇰 🔒 VL-HTTP-TLS 🇩🇰 DK-140.248.69.254:443-1"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -618,11 +644,13 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "🇩🇰 🔒 VL-TCP-NONE 🇩🇰 DK-87.58.159.20:443"
-      - "🇩🇰 🔒 VL-WS-TLS 🇩🇰 DK-193.180.209.136:443"
-      - "🇩🇰 REALITY|DK🇩🇰 | 135.136.33.134-8443 | 163.27ms"
+      - "🇩🇰 🔒 SS-TCP-NA 🇩🇰 DK-45.153.48.114:443"
       - "🇩🇰 🔒 SS-TCP-NA 🇩🇰 DK-37.120.131.62:1080"
-      - "🇩🇰 🆔ar14n24b 🔒 SS-TCP-TLS ❔ XX 104ms"
+      - "🇩🇰 REALITY|DK🇩🇰 | 135.136.33.134-8443 | 163.27ms"
+      - "🇩🇰 🆔ar14n24b 🔓 VL-TCP-N/A ❔ XX 88ms"
+      - "🇩🇰 🔒 VL-WS-TLS 🇩🇰 DK-193.180.209.136:443"
+      - "🇩🇰 🔒 VL-HTTP-TLS 🇩🇰 DK-140.248.69.254:443"
+      - "🇩🇰 🔒 VL-HTTP-TLS 🇩🇰 DK-140.248.69.254:443-1"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"
