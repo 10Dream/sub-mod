@@ -527,46 +527,6 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "🇧🇷 🔒 SS-TCP-NA 🇧🇷 BR-185.192.124.188:990"
-    type: "ss"
-    server: "185.192.124.188"
-    port: 990
-    cipher: "chacha20-ietf-poly1305"
-    password: "f8f7aCzcPKbsF8p3"
-    udp: true
-  - name: "🇧🇷 🔒 SS-TCP-NA 🇧🇷 BR-38.54.57.90:990"
-    type: "ss"
-    server: "38.54.57.90"
-    port: 990
-    cipher: "chacha20-ietf-poly1305"
-    password: "ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44="
-    udp: true
-  - name: "🇧🇷 RELAY🚩 | mamafrance.baklajann.ru-443 | 87.42ms"
-    type: "vless"
-    server: "185.133.35.86"
-    port: 443
-    uuid: "d795a9ec-5ed0-4309-ba6c-edc09b818669"
-    udp: true
-    tls: true
-    network: "xhttp"
-    servername: "mamafrance.baklajann.ru"
-    client-fingerprint: "chrome"
-    alpn:
-      - "h3"
-      - "h2"
-      - "http/1.1"
-  - name: "🇧🇷 🔒 VL-WS-NA 🇧🇷 BR-202.61.73.205:80"
-    type: "vless"
-    server: "202.61.73.205"
-    port: 80
-    uuid: "e13cf851-b4fd-413b-8d49-146e6eb8e5d4"
-    udp: true
-    tls: false
-    network: "ws"
-    ws-opts:
-      path: "/platform117"
-      headers:
-        Host: "platform117.halalkhor.info"
   - name: "🇧🇷 🔒 VL-WS-NA 🇧🇷 BR-202.61.73.50:80"
     type: "vless"
     server: "202.61.73.50"
@@ -589,9 +549,57 @@ proxies:
       path: "/"
       headers:
         Host: "shuma.ccwu.cc"
+  - name: "🇧🇷 🔒 VL-WS-NA 🇧🇷 BR-202.61.73.205:80"
+    type: "vless"
+    server: "202.61.73.205"
+    port: 80
+    uuid: "e13cf851-b4fd-413b-8d49-146e6eb8e5d4"
+    udp: true
+    tls: false
+    network: "ws"
+    ws-opts:
+      path: "/platform117"
+      headers:
+        Host: "platform117.halalkhor.info"
+  - name: "🇧🇷 🔒 VL-XHTTP-TLS 🇧🇷 BR-185.133.35.86:443"
+    type: "vless"
+    server: "185.133.35.86"
+    port: 443
+    uuid: "d795a9ec-5ed0-4309-ba6c-edc09b818669"
+    udp: true
+    tls: true
+    network: "xhttp"
+    servername: "mamafrance.baklajann.ru"
+    client-fingerprint: "chrome"
+    alpn:
+      - "h3"
+      - "h2"
+      - "http/1.1"
   - name: "🇧🇷 🔒 VM-TCP-TLS 🇧🇷 BR-103.14.27.207:1270"
     type: "vmess"
     server: "103.14.27.207"
+    port: 1270
+    uuid: "5c040f1d-45db-43bd-8d46-e4950e433735"
+    alterId: 0
+    cipher: "auto"
+    udp: true
+  - name: "🇧🇷 🔒 SS-TCP-NA 🇧🇷 BR-185.192.124.188:990"
+    type: "ss"
+    server: "185.192.124.188"
+    port: 990
+    cipher: "chacha20-ietf-poly1305"
+    password: "f8f7aCzcPKbsF8p3"
+    udp: true
+  - name: "🇧🇷 🔒 SS-TCP-NA 🇧🇷 BR-38.54.57.90:990"
+    type: "ss"
+    server: "38.54.57.90"
+    port: 990
+    cipher: "chacha20-ietf-poly1305"
+    password: "ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44="
+    udp: true
+  - name: "🇧🇷 vmess-103.88.232.55:1270"
+    type: "vmess"
+    server: "103.88.232.55"
     port: 1270
     uuid: "5c040f1d-45db-43bd-8d46-e4950e433735"
     alterId: 0
@@ -681,14 +689,6 @@ proxies:
       path: "/platform117"
       headers:
         Host: "platform117.halalkhor.info"
-  - name: "🇧🇷 vmess-103.88.232.55:1270"
-    type: "vmess"
-    server: "103.88.232.55"
-    port: 1270
-    uuid: "5c040f1d-45db-43bd-8d46-e4950e433735"
-    alterId: 0
-    cipher: "auto"
-    udp: true
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -703,13 +703,14 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "🇧🇷 🔒 SS-TCP-NA 🇧🇷 BR-185.192.124.188:990"
-      - "🇧🇷 🔒 SS-TCP-NA 🇧🇷 BR-38.54.57.90:990"
-      - "🇧🇷 RELAY🚩 | mamafrance.baklajann.ru-443 | 87.42ms"
-      - "🇧🇷 🔒 VL-WS-NA 🇧🇷 BR-202.61.73.205:80"
       - "🇧🇷 🔒 VL-WS-NA 🇧🇷 BR-202.61.73.50:80"
       - "🇧🇷 🔒 VL-WS-TLS 🇧🇷 BR-157.151.4.93:443"
+      - "🇧🇷 🔒 VL-WS-NA 🇧🇷 BR-202.61.73.205:80"
+      - "🇧🇷 🔒 VL-XHTTP-TLS 🇧🇷 BR-185.133.35.86:443"
       - "🇧🇷 🔒 VM-TCP-TLS 🇧🇷 BR-103.14.27.207:1270"
+      - "🇧🇷 🔒 SS-TCP-NA 🇧🇷 BR-185.192.124.188:990"
+      - "🇧🇷 🔒 SS-TCP-NA 🇧🇷 BR-38.54.57.90:990"
+      - "🇧🇷 vmess-103.88.232.55:1270"
       - "🇧🇷 @DeltaKroneckerGithub"
       - "🇧🇷 @DeltaKroneckerGithub-1"
       - "🇧🇷 @DeltaKroneckerGithub-2"
@@ -717,7 +718,6 @@ proxy-groups:
       - "🇧🇷 @DeltaKroneckerGithub-4"
       - "🇧🇷 @DeltaKroneckerGithub-5"
       - "🇧🇷 @DeltaKroneckerGithub-6"
-      - "🇧🇷 vmess-103.88.232.55:1270"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -726,13 +726,14 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "🇧🇷 🔒 SS-TCP-NA 🇧🇷 BR-185.192.124.188:990"
-      - "🇧🇷 🔒 SS-TCP-NA 🇧🇷 BR-38.54.57.90:990"
-      - "🇧🇷 RELAY🚩 | mamafrance.baklajann.ru-443 | 87.42ms"
-      - "🇧🇷 🔒 VL-WS-NA 🇧🇷 BR-202.61.73.205:80"
       - "🇧🇷 🔒 VL-WS-NA 🇧🇷 BR-202.61.73.50:80"
       - "🇧🇷 🔒 VL-WS-TLS 🇧🇷 BR-157.151.4.93:443"
+      - "🇧🇷 🔒 VL-WS-NA 🇧🇷 BR-202.61.73.205:80"
+      - "🇧🇷 🔒 VL-XHTTP-TLS 🇧🇷 BR-185.133.35.86:443"
       - "🇧🇷 🔒 VM-TCP-TLS 🇧🇷 BR-103.14.27.207:1270"
+      - "🇧🇷 🔒 SS-TCP-NA 🇧🇷 BR-185.192.124.188:990"
+      - "🇧🇷 🔒 SS-TCP-NA 🇧🇷 BR-38.54.57.90:990"
+      - "🇧🇷 vmess-103.88.232.55:1270"
       - "🇧🇷 @DeltaKroneckerGithub"
       - "🇧🇷 @DeltaKroneckerGithub-1"
       - "🇧🇷 @DeltaKroneckerGithub-2"
@@ -740,7 +741,6 @@ proxy-groups:
       - "🇧🇷 @DeltaKroneckerGithub-4"
       - "🇧🇷 @DeltaKroneckerGithub-5"
       - "🇧🇷 @DeltaKroneckerGithub-6"
-      - "🇧🇷 vmess-103.88.232.55:1270"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -750,13 +750,14 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "🇧🇷 🔒 SS-TCP-NA 🇧🇷 BR-185.192.124.188:990"
-      - "🇧🇷 🔒 SS-TCP-NA 🇧🇷 BR-38.54.57.90:990"
-      - "🇧🇷 RELAY🚩 | mamafrance.baklajann.ru-443 | 87.42ms"
-      - "🇧🇷 🔒 VL-WS-NA 🇧🇷 BR-202.61.73.205:80"
       - "🇧🇷 🔒 VL-WS-NA 🇧🇷 BR-202.61.73.50:80"
       - "🇧🇷 🔒 VL-WS-TLS 🇧🇷 BR-157.151.4.93:443"
+      - "🇧🇷 🔒 VL-WS-NA 🇧🇷 BR-202.61.73.205:80"
+      - "🇧🇷 🔒 VL-XHTTP-TLS 🇧🇷 BR-185.133.35.86:443"
       - "🇧🇷 🔒 VM-TCP-TLS 🇧🇷 BR-103.14.27.207:1270"
+      - "🇧🇷 🔒 SS-TCP-NA 🇧🇷 BR-185.192.124.188:990"
+      - "🇧🇷 🔒 SS-TCP-NA 🇧🇷 BR-38.54.57.90:990"
+      - "🇧🇷 vmess-103.88.232.55:1270"
       - "🇧🇷 @DeltaKroneckerGithub"
       - "🇧🇷 @DeltaKroneckerGithub-1"
       - "🇧🇷 @DeltaKroneckerGithub-2"
@@ -764,7 +765,6 @@ proxy-groups:
       - "🇧🇷 @DeltaKroneckerGithub-4"
       - "🇧🇷 @DeltaKroneckerGithub-5"
       - "🇧🇷 @DeltaKroneckerGithub-6"
-      - "🇧🇷 vmess-103.88.232.55:1270"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"
