@@ -527,60 +527,59 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "62.210.91.10"
+  - name: "139.162.27.96"
     type: "vless"
-    server: "62.210.91.10"
-    port: 23576
-    uuid: "48ff2b70-e180-582f-8866-d9a2edeed5f5"
+    server: "139.162.27.96"
+    port: 2096
+    uuid: "6e59d5c5-7aa3-4c36-a4c4-e3b899525ed2"
     udp: true
     tls: true
-    network: "tcp"
-    servername: "fuck.rkn"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s"
-      short-id: "01"
-  - name: "swe1.baterium.space"
-    type: "vless"
-    server: "swe1.baterium.space"
-    port: 443
-    uuid: "7d63243c-983e-44db-a1b8-13dc3fd6f7a2"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "cdnjs.com"
-    client-fingerprint: "qq"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "mg2MoLpb8B51aZiko_nW2SBRoaudv-O6HLHx8VYP7Do"
-  - name: "82.39.171.12"
-    type: "vless"
-    server: "82.39.171.12"
-    port: 443
-    uuid: "d65cc14c-f53f-4fe2-b262-97856601319c"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "yahoo.com"
+    network: "ws"
+    servername: "free-server.techsonic.dev"
     client-fingerprint: "chrome"
-    flow: "xtls-rprx-vision"
-    reality-opts:
-      public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
-      short-id: "c39cc7310a"
-  - name: "vde.b.qaz.it.com"
+    ws-opts:
+      path: "/free-server.techsonic.dev"
+      headers:
+        Host: "free-server.techsonic.dev"
+  - name: "103.106.229.177"
     type: "vless"
-    server: "vde.b.qaz.it.com"
-    port: 9543
-    uuid: "920b3cd9-4f82-4669-bbd2-d4a28b9052c6"
+    server: "103.106.229.177"
+    port: 21002
+    uuid: "67952583-8572-42e1-943d-0602794f885b"
     udp: true
     tls: true
     network: "tcp"
-    servername: "storage.yandexcloud.net"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
     reality-opts:
-      public-key: "M6Ck7wUfOLhQl4582CBnaXwscPEP6SCpdEkUDzoj4Fc"
-      short-id: "123abcdf"
+      public-key: "IRaSB0ImgMO7fsrIbh9i3Pz-bgo5F1jKeC51Fpfs9AA"
+      short-id: "d9a6b52e98121db2"
+  - name: "103.106.229.37"
+    type: "vless"
+    server: "103.106.229.37"
+    port: 21002
+    uuid: "41b1c169-5905-4d98-b6a6-56896c25737c"
+    udp: true
+    tls: true
+    network: "tcp"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "HZwHZBP3x4Yo4UQiHcypRJIU_UdZY5OAapQM8RUqVAU"
+      short-id: "3ab8d93dd9b1a5be"
+  - name: "103.106.229.177-1"
+    type: "vless"
+    server: "103.106.229.177"
+    port: 21004
+    uuid: "67952583-8572-42e1-943d-0602794f885b"
+    udp: true
+    tls: true
+    network: "raw"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
+    reality-opts:
+      public-key: "IRaSB0ImgMO7fsrIbh9i3Pz-bgo5F1jKeC51Fpfs9AA"
+      short-id: "4e0418d648f86141"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -595,10 +594,10 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "62.210.91.10"
-      - "swe1.baterium.space"
-      - "82.39.171.12"
-      - "vde.b.qaz.it.com"
+      - "139.162.27.96"
+      - "103.106.229.177"
+      - "103.106.229.37"
+      - "103.106.229.177-1"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -607,10 +606,10 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "62.210.91.10"
-      - "swe1.baterium.space"
-      - "82.39.171.12"
-      - "vde.b.qaz.it.com"
+      - "139.162.27.96"
+      - "103.106.229.177"
+      - "103.106.229.37"
+      - "103.106.229.177-1"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -620,10 +619,10 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "62.210.91.10"
-      - "swe1.baterium.space"
-      - "82.39.171.12"
-      - "vde.b.qaz.it.com"
+      - "139.162.27.96"
+      - "103.106.229.177"
+      - "103.106.229.37"
+      - "103.106.229.177-1"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"
