@@ -527,20 +527,62 @@ rule-providers:
     interval: 86400
     path: "./ruleset/private.yaml"
 proxies:
-  - name: "92.118.206.218"
+  - name: "152.228.139.33"
     type: "vless"
-    server: "92.118.206.218"
-    port: 8443
-    uuid: "c53ea5e9-ed8b-4990-805d-7f1d6451426c"
+    server: "152.228.139.33"
+    port: 35108
+    uuid: "81dc0b61-f9fe-4ad6-8b4e-b8c067b73712"
+    udp: true
+    tls: true
+    network: "grpc"
+    servername: "www.nvidia.com"
+    client-fingerprint: "random"
+    reality-opts:
+      public-key: "X_lOw5Zz4SJBa1cRHV4dAq5msYE-ClY5-WNcBmBWRxg"
+      short-id: "52add08b86a5ccea"
+    grpc-opts:
+      grpc-service-name: "grpc-common3"
+  - name: "139.162.27.96"
+    type: "vless"
+    server: "139.162.27.96"
+    port: 2096
+    uuid: "6e59d5c5-7aa3-4c36-a4c4-e3b899525ed2"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "free-server.techsonic.dev"
+    client-fingerprint: "chrome"
+    ws-opts:
+      path: "/free-server.techsonic.dev"
+      headers:
+        Host: "free-server.techsonic.dev"
+  - name: "hw8.iranichergh.com"
+    type: "vless"
+    server: "hw8.iranichergh.com"
+    port: 993
+    uuid: "978d2a58-bd01-4b61-b953-dc8e66728460"
+    udp: true
+    tls: true
+    network: "ws"
+    servername: "hw8.iranichergh.com."
+    client-fingerprint: "chrome"
+    alpn:
+      - "http/1.1"
+    ws-opts:
+      path: "/"
+  - name: "103.106.229.177"
+    type: "vless"
+    server: "103.106.229.177"
+    port: 21002
+    uuid: "67952583-8572-42e1-943d-0602794f885b"
     udp: true
     tls: true
     network: "tcp"
-    servername: "dur.sky-vault.top"
-    client-fingerprint: "firefox"
-    flow: "xtls-rprx-vision"
+    servername: "www.cloudflare.com"
+    client-fingerprint: "chrome"
     reality-opts:
-      public-key: "fSVfR9NB-6J6smrZlavi0GWd8JfDh0aXuEkKbtuFzUI"
-      short-id: "3cbc3d737fb9c4af"
+      public-key: "IRaSB0ImgMO7fsrIbh9i3Pz-bgo5F1jKeC51Fpfs9AA"
+      short-id: "d9a6b52e98121db2"
   - name: "82.39.171.12"
     type: "vless"
     server: "82.39.171.12"
@@ -569,46 +611,6 @@ proxies:
     reality-opts:
       public-key: "e2RLf57Li_-MDZGE9ss1BWPgP54mqRb5PfXhW2jcVVg"
       short-id: "c39cc7310a"
-  - name: "139.162.27.96"
-    type: "vless"
-    server: "139.162.27.96"
-    port: 2096
-    uuid: "6e59d5c5-7aa3-4c36-a4c4-e3b899525ed2"
-    udp: true
-    tls: true
-    network: "ws"
-    servername: "free-server.techsonic.dev"
-    client-fingerprint: "chrome"
-    ws-opts:
-      path: "/free-server.techsonic.dev"
-      headers:
-        Host: "free-server.techsonic.dev"
-  - name: "103.106.229.177"
-    type: "vless"
-    server: "103.106.229.177"
-    port: 21004
-    uuid: "67952583-8572-42e1-943d-0602794f885b"
-    udp: true
-    tls: true
-    network: "raw"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "IRaSB0ImgMO7fsrIbh9i3Pz-bgo5F1jKeC51Fpfs9AA"
-      short-id: "4e0418d648f86141"
-  - name: "103.106.229.177-1"
-    type: "vless"
-    server: "103.106.229.177"
-    port: 21002
-    uuid: "67952583-8572-42e1-943d-0602794f885b"
-    udp: true
-    tls: true
-    network: "tcp"
-    servername: "www.cloudflare.com"
-    client-fingerprint: "chrome"
-    reality-opts:
-      public-key: "IRaSB0ImgMO7fsrIbh9i3Pz-bgo5F1jKeC51Fpfs9AA"
-      short-id: "d9a6b52e98121db2"
 proxy-groups:
   - name: "نوع انتخاب پروکسی 🔀"
     type: "select"
@@ -623,12 +625,12 @@ proxy-groups:
     type: "select"
     lazy: true
     proxies:
-      - "92.118.206.218"
+      - "152.228.139.33"
+      - "139.162.27.96"
+      - "hw8.iranichergh.com"
+      - "103.106.229.177"
       - "82.39.171.12"
       - "82.39.171.12-1"
-      - "139.162.27.96"
-      - "103.106.229.177"
-      - "103.106.229.177-1"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/hand.svg"
   - name: "خودکار (بهترین پینگ) 🤖"
     type: "url-test"
@@ -637,12 +639,12 @@ proxy-groups:
     tolerance: 50
     lazy: true
     proxies:
-      - "92.118.206.218"
+      - "152.228.139.33"
+      - "139.162.27.96"
+      - "hw8.iranichergh.com"
+      - "103.106.229.177"
       - "82.39.171.12"
       - "82.39.171.12-1"
-      - "139.162.27.96"
-      - "103.106.229.177"
-      - "103.106.229.177-1"
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.61.0/icons/refresh-cw.svg"
   - name: "توزیع بار چرخشی ⚖️"
     type: "load-balance"
@@ -652,12 +654,12 @@ proxy-groups:
     lazy: true
     timeout: 1500
     proxies:
-      - "92.118.206.218"
+      - "152.228.139.33"
+      - "139.162.27.96"
+      - "hw8.iranichergh.com"
+      - "103.106.229.177"
       - "82.39.171.12"
       - "82.39.171.12-1"
-      - "139.162.27.96"
-      - "103.106.229.177"
-      - "103.106.229.177-1"
     icon: "https://www.svgrepo.com/show/388466/rotating-forward.svg"
   - name: "دانلود منیجر 📥"
     type: "select"
